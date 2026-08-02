@@ -1,0 +1,24 @@
+{
+    "schemaVersion":  1,
+    "id":  "interview-csharp-positive-quantity-001",
+    "version":  1,
+    "title":  "Refuser une quantité négative",
+    "level":  "junior",
+    "durationMinutes":  5,
+    "skills":  [
+                   "csharp.exceptions"
+               ],
+    "question":  "Comment résoudriez-vous « Refuser une quantité négative » et comment prouveriez-vous les bornes ?",
+    "observableCriteria":  [
+                               "Le contrat et une borne sont explicitement reformulés",
+                               "La complexité et un test de réfutation sont justifiés"
+                           ],
+    "modelAnswer":  "Lever une exception de contrat seulement pour une valeur négative. La preuve comprend un cas nominal, une borne et un cas différent des exemples ; O(1) en temps et O(1) en espace.",
+    "commonMistakes":  [
+                           "Réciter le code sans invariant ni méthode de test"
+                       ],
+    "variants":  [
+                     "Changer une borne ou le volume tout en conservant la même règle de refuser une quantité négative."
+                 ],
+    "license":  "CC-BY-4.0"
+}

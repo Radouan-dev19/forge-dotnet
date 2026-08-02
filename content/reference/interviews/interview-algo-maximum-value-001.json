@@ -1,0 +1,24 @@
+{
+    "schemaVersion":  1,
+    "id":  "interview-algo-maximum-value-001",
+    "version":  1,
+    "title":  "Calculer le maximum signé",
+    "level":  "junior",
+    "durationMinutes":  5,
+    "skills":  [
+                   "algorithm.search"
+               ],
+    "question":  "Comment résoudriez-vous « Calculer le maximum signé » et comment prouveriez-vous les bornes ?",
+    "observableCriteria":  [
+                               "Le contrat et une borne sont explicitement reformulés",
+                               "La complexité et un test de réfutation sont justifiés"
+                           ],
+    "modelAnswer":  "Initialiser depuis le premier élément pour respecter les tableaux négatifs. La preuve comprend un cas nominal, une borne et un cas différent des exemples ; O(n) en temps et O(1) en espace.",
+    "commonMistakes":  [
+                           "Réciter le code sans invariant ni méthode de test"
+                       ],
+    "variants":  [
+                     "Changer une borne ou le volume tout en conservant la même règle de calculer le maximum signé."
+                 ],
+    "license":  "CC-BY-4.0"
+}

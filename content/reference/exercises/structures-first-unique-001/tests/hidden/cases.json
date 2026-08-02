@@ -1,0 +1,25 @@
+{
+    "schemaVersion":  1,
+    "cases":  [
+                  {
+                      "name":  "Hidden_Case1",
+                      "message":  "Trouver le premier caractère unique — cas 1 hidden incorrect.",
+                      "arguments":  [
+                                        "x"
+                                    ],
+                      "expected":  "x",
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_Case2",
+                      "message":  "Trouver le premier caractère unique — cas 2 hidden incorrect.",
+                      "arguments":  [
+                                        ""
+                                    ],
+                      "expected":  "",
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  }
+              ]
+}

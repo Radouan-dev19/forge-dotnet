@@ -1,0 +1,81 @@
+{
+    "schemaVersion":  1,
+    "id":  "structures-first-unique-001",
+    "version":  1,
+    "title":  "Trouver le premier caractère unique",
+    "kind":  "algorithm",
+    "difficulty":  2,
+    "skills":  [
+                   "structures.dictionary"
+               ],
+    "prerequisites":  [
+                          "structures-stacks-queues-001"
+                      ],
+    "estimatedMinutes":  30,
+    "statement":  "statement.md",
+    "constraints":  [
+                        "Conserver exactement la signature publique",
+                        "Compter puis reparcourir dans l’ordre d’origine pour choisir le premier.",
+                        "Ne pas modifier les entrées reçues sauf mention explicite"
+                    ],
+    "examples":  [
+                     {
+                         "input":  "[{\"value\":[\"swiss\"],\"Count\":1},\"w\"]",
+                         "output":  "[{\"value\":[\"aabb\"],\"Count\":1},\"\"]"
+                     }
+                 ],
+    "reflectionFields":  [
+                             "reformulation",
+                             "inputs",
+                             "expectedOutput",
+                             "edgeCases",
+                             "hypothesis",
+                             "plan"
+                         ],
+    "starterPath":  "starter/",
+    "visibleTestsPath":  "tests/visible/",
+    "hiddenTestsPath":  "tests/hidden/",
+    "hints":  [
+                  {
+                      "level":  1,
+                      "kind":  "socratic",
+                      "content":  "Quel invariant de « Trouver le premier caractère unique » doit rester vrai pour les cas limites ?"
+                  },
+                  {
+                      "level":  2,
+                      "kind":  "location",
+                      "content":  "Concentrez la décision dans la méthode FirstUnique, sans état global."
+                  },
+                  {
+                      "level":  3,
+                      "kind":  "strategy",
+                      "content":  "Compter puis reparcourir dans l’ordre d’origine pour choisir le premier."
+                  },
+                  {
+                      "level":  4,
+                      "kind":  "partial-pseudocode",
+                      "content":  "valider les bornes ; parcourir ou décider ; retourner un nouveau résultat déterministe"
+                  }
+              ],
+    "solution":  {
+                     "path":  "solution/",
+                     "unlock":  {
+                                    "seriousAttempts":  2,
+                                    "minimumDelayMinutes":  10
+                                }
+                 },
+    "explanation":  "explanation.md",
+    "complexity":  "O(n) attendu en temps et O(k) en espace",
+    "commonMistakes":  [
+                           "Coder uniquement les exemples visibles",
+                           "Oublier une borne ou modifier une entrée",
+                           "Annoncer une complexité sans compter les opérations dominantes"
+                       ],
+    "variantId":  "structures-parenthesis-depth-001",
+    "reviewCards":  [
+                        "card-structures-first-unique-001-rule",
+                        "card-structures-first-unique-001-edge"
+                    ],
+    "interviewQuestionId":  "interview-structures-first-unique-001",
+    "license":  "CC-BY-4.0"
+}

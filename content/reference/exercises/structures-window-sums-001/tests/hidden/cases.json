@@ -1,0 +1,37 @@
+{
+    "schemaVersion":  1,
+    "cases":  [
+                  {
+                      "name":  "Hidden_Case1",
+                      "message":  "Calculer des fenêtres glissantes — cas 1 hidden incorrect.",
+                      "arguments":  [
+                                        [
+                                            1,
+                                            2
+                                        ],
+                                        3
+                                    ],
+                      "expected":  [
+
+                                   ],
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_Case2",
+                      "message":  "Calculer des fenêtres glissantes — cas 2 hidden incorrect.",
+                      "arguments":  [
+                                        [
+                                            1,
+                                            2
+                                        ],
+                                        0
+                                    ],
+                      "expected":  [
+
+                                   ],
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  }
+              ]
+}

@@ -1,0 +1,81 @@
+{
+    "schemaVersion":  1,
+    "id":  "structures-factorial-001",
+    "version":  1,
+    "title":  "Définir un cas de base récursif",
+    "kind":  "algorithm",
+    "difficulty":  2,
+    "skills":  [
+                   "structures.recursion"
+               ],
+    "prerequisites":  [
+                          "structures-stacks-queues-001"
+                      ],
+    "estimatedMinutes":  30,
+    "statement":  "statement.md",
+    "constraints":  [
+                        "Conserver exactement la signature publique",
+                        "Le cas de base couvre zéro et chaque appel réduit strictement la valeur.",
+                        "Ne pas modifier les entrées reçues sauf mention explicite"
+                    ],
+    "examples":  [
+                     {
+                         "input":  "[{\"value\":[0],\"Count\":1},1]",
+                         "output":  "[{\"value\":[5],\"Count\":1},120]"
+                     }
+                 ],
+    "reflectionFields":  [
+                             "reformulation",
+                             "inputs",
+                             "expectedOutput",
+                             "edgeCases",
+                             "hypothesis",
+                             "plan"
+                         ],
+    "starterPath":  "starter/",
+    "visibleTestsPath":  "tests/visible/",
+    "hiddenTestsPath":  "tests/hidden/",
+    "hints":  [
+                  {
+                      "level":  1,
+                      "kind":  "socratic",
+                      "content":  "Quel invariant de « Définir un cas de base récursif » doit rester vrai pour les cas limites ?"
+                  },
+                  {
+                      "level":  2,
+                      "kind":  "location",
+                      "content":  "Concentrez la décision dans la méthode Factorial, sans état global."
+                  },
+                  {
+                      "level":  3,
+                      "kind":  "strategy",
+                      "content":  "Le cas de base couvre zéro et chaque appel réduit strictement la valeur."
+                  },
+                  {
+                      "level":  4,
+                      "kind":  "partial-pseudocode",
+                      "content":  "valider les bornes ; parcourir ou décider ; retourner un nouveau résultat déterministe"
+                  }
+              ],
+    "solution":  {
+                     "path":  "solution/",
+                     "unlock":  {
+                                    "seriousAttempts":  2,
+                                    "minimumDelayMinutes":  10
+                                }
+                 },
+    "explanation":  "explanation.md",
+    "complexity":  "O(n) en temps et O(n) en pile",
+    "commonMistakes":  [
+                           "Coder uniquement les exemples visibles",
+                           "Oublier une borne ou modifier une entrée",
+                           "Annoncer une complexité sans compter les opérations dominantes"
+                       ],
+    "variantId":  "structures-recursive-sum-001",
+    "reviewCards":  [
+                        "card-structures-factorial-001-rule",
+                        "card-structures-factorial-001-edge"
+                    ],
+    "interviewQuestionId":  "interview-structures-factorial-001",
+    "license":  "CC-BY-4.0"
+}

@@ -1,0 +1,27 @@
+{
+    "schemaVersion":  1,
+    "cases":  [
+                  {
+                      "name":  "Hidden_Case1",
+                      "message":  "Compter des jours inclusifs — cas 1 hidden incorrect.",
+                      "arguments":  [
+                                        "2026-12-31",
+                                        "2027-01-01"
+                                    ],
+                      "expected":  2,
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_Case2",
+                      "message":  "Compter des jours inclusifs — cas 2 hidden incorrect.",
+                      "arguments":  [
+                                        "2026-07-03",
+                                        "2026-07-01"
+                                    ],
+                      "expected":  0,
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  }
+              ]
+}

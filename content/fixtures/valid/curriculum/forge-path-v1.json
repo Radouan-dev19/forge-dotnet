@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "id": "forge-path-v1",
+  "version": 1,
+  "title": "Parcours de validation minimal",
+  "description": "Fixture minimale permettant de vérifier le contrat d'un parcours sans publier un catalogue.",
+  "weeks": 1,
+  "modules": [
+    {
+      "id": "module-fondamentaux",
+      "title": "Fondamentaux",
+      "weeks": [1],
+      "prerequisites": [],
+      "lessonIds": ["lesson-types-001"],
+      "exerciseIds": ["exercise-total-001"]
+    }
+  ],
+  "license": "CC-BY-4.0"
+}

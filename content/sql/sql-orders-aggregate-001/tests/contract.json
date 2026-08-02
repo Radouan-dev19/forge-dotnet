@@ -1,0 +1,12 @@
+{
+  "week": 9,
+  "family": "aggregations",
+  "mode": "sql",
+  "datasetRevision": "orders-aggregate-v1",
+  "expectedRows": [["1","2","195.5"],["2","1","40.25"]],
+  "equivalentQuery": "WITH BillableOrders AS (SELECT CustomerId, Total FROM dbo.Orders WHERE Status <> N'Cancelled') SELECT CustomerId, COUNT_BIG(*) AS OrderCount, SUM(Total) AS TotalAmount FROM BillableOrders GROUP BY CustomerId HAVING SUM(Total) >= 20;",
+  "negativeQuery": "SELECT CustomerId, COUNT_BIG(*) AS OrderCount, SUM(Total) AS TotalAmount FROM dbo.Orders GROUP BY CustomerId HAVING SUM(Total) >= 20;",
+  "dirtySql": "UPDATE dbo.Orders SET Total = 0;",
+  "resetProbeSql": "SELECT SUM(Total) FROM dbo.Orders;",
+  "resetExpected": "265.75"
+}

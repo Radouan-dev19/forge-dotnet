@@ -1,0 +1,25 @@
+{
+    "schemaVersion":  1,
+    "cases":  [
+                  {
+                      "name":  "Hidden_Case1",
+                      "message":  "Normaliser un nom client — cas 1 hidden incorrect.",
+                      "arguments":  [
+                                        "   "
+                                    ],
+                      "expected":  "(inconnu)",
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_Case2",
+                      "message":  "Normaliser un nom client — cas 2 hidden incorrect.",
+                      "arguments":  [
+                                        "Zoë"
+                                    ],
+                      "expected":  "ZOË",
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  }
+              ]
+}

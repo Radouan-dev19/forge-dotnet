@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "id": "forge-diagnostic-rubric",
+  "version": 1,
+  "bankId": "forge-diagnostic-initial",
+  "bankVersion": 1,
+  "difficultyWeights": [
+    { "difficulty": 1, "weight": 1 },
+    { "difficulty": 2, "weight": 2 },
+    { "difficulty": 3, "weight": 3 }
+  ],
+  "domains": [
+    { "id": "logic", "weight": 0.8, "critical": false },
+    { "id": "csharp", "weight": 1.2, "critical": true },
+    { "id": "reading", "weight": 0.9, "critical": false },
+    { "id": "debugging", "weight": 1.2, "critical": true },
+    { "id": "sql", "weight": 1.2, "critical": true },
+    { "id": "http", "weight": 1.1, "critical": true },
+    { "id": "git", "weight": 0.8, "critical": false },
+    { "id": "testing", "weight": 1.1, "critical": true },
+    { "id": "english", "weight": 0.7, "critical": false }
+  ],
+  "thresholds": {
+    "criticalGapScore": 50,
+    "developingLowerBound": 35,
+    "operationalLowerBound": 55,
+    "strongLowerBound": 75
+  },
+  "wilsonZ": 1.96
+}

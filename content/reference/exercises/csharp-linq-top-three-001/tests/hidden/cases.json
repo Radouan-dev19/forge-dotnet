@@ -1,0 +1,37 @@
+{
+    "schemaVersion":  1,
+    "cases":  [
+                  {
+                      "name":  "Hidden_Case1",
+                      "message":  "Sélectionner les trois plus grands — cas 1 hidden incorrect.",
+                      "arguments":  [
+                                        [
+
+                                        ]
+                                    ],
+                      "expected":  [
+
+                                   ],
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_Case2",
+                      "message":  "Sélectionner les trois plus grands — cas 2 hidden incorrect.",
+                      "arguments":  [
+                                        [
+                                            3,
+                                            3,
+                                            1
+                                        ]
+                                    ],
+                      "expected":  [
+                                       3,
+                                       3,
+                                       1
+                                   ],
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  }
+              ]
+}

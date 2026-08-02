@@ -1,0 +1,81 @@
+{
+    "schemaVersion":  1,
+    "id":  "csharp-array-positive-sum-001",
+    "version":  1,
+    "title":  "Sommer les valeurs positives",
+    "kind":  "csharp",
+    "difficulty":  1,
+    "skills":  [
+                   "csharp.arrays"
+               ],
+    "prerequisites":  [
+                          "collections-arrays-001"
+                      ],
+    "estimatedMinutes":  30,
+    "statement":  "statement.md",
+    "constraints":  [
+                        "Conserver exactement la signature publique",
+                        "Ignorer zéro et les négatifs sans modifier le tableau reçu.",
+                        "Ne pas modifier les entrées reçues sauf mention explicite"
+                    ],
+    "examples":  [
+                     {
+                         "input":  "[{\"value\":[[1,-2,3]],\"Count\":1},4]",
+                         "output":  "[{\"value\":[[]],\"Count\":1},0]"
+                     }
+                 ],
+    "reflectionFields":  [
+                             "reformulation",
+                             "inputs",
+                             "expectedOutput",
+                             "edgeCases",
+                             "hypothesis",
+                             "plan"
+                         ],
+    "starterPath":  "starter/",
+    "visibleTestsPath":  "tests/visible/",
+    "hiddenTestsPath":  "tests/hidden/",
+    "hints":  [
+                  {
+                      "level":  1,
+                      "kind":  "socratic",
+                      "content":  "Quel invariant de « Sommer les valeurs positives » doit rester vrai pour les cas limites ?"
+                  },
+                  {
+                      "level":  2,
+                      "kind":  "location",
+                      "content":  "Concentrez la décision dans la méthode PositiveSum, sans état global."
+                  },
+                  {
+                      "level":  3,
+                      "kind":  "strategy",
+                      "content":  "Ignorer zéro et les négatifs sans modifier le tableau reçu."
+                  },
+                  {
+                      "level":  4,
+                      "kind":  "partial-pseudocode",
+                      "content":  "valider les bornes ; parcourir ou décider ; retourner un nouveau résultat déterministe"
+                  }
+              ],
+    "solution":  {
+                     "path":  "solution/",
+                     "unlock":  {
+                                    "seriousAttempts":  2,
+                                    "minimumDelayMinutes":  10
+                                }
+                 },
+    "explanation":  "explanation.md",
+    "complexity":  "O(n) en temps et O(1) en espace",
+    "commonMistakes":  [
+                           "Coder uniquement les exemples visibles",
+                           "Oublier une borne ou modifier une entrée",
+                           "Annoncer une complexité sans compter les opérations dominantes"
+                       ],
+    "variantId":  "csharp-string-palindrome-001",
+    "reviewCards":  [
+                        "card-csharp-array-positive-sum-001-rule",
+                        "card-csharp-array-positive-sum-001-edge"
+                    ],
+    "interviewQuestionId":  "interview-csharp-array-positive-sum-001",
+    "license":  "CC-BY-4.0"
+}

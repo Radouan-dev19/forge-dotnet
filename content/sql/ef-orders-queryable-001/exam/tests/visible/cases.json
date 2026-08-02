@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "cases": [
+    {
+      "name": "FiltersAtSeventy",
+      "message": "Le filtre doit être traduit en SQL et la projection ne doit laisser aucune entité suivie.",
+      "arguments": [70],
+      "expected": "1,2|true|0",
+      "expectedException": null,
+      "argumentsUnchanged": true
+    }
+  ]
+}

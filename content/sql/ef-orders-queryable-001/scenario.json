@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "id": "ef-orders-queryable-001",
+  "version": 1,
+  "title": "Composer un IQueryable traduit côté serveur",
+  "difficulty": 3,
+  "skills": ["ef.iqueryable", "ef.translation"],
+  "prerequisites": ["ef-orders-tracking-001"],
+  "estimatedMinutes": 40,
+  "image": "mcr.microsoft.com/mssql/server@sha256:b1395aa51b4ec39981883560f1379ea9eba2a1c0719bf8e6477902769316bb79",
+  "datasetPath": "dataset.sql",
+  "visibleSchemaPath": "schema.sql",
+  "permissions": ["select"],
+  "resetScriptPath": "reset.sql",
+  "statementPath": "statement.md",
+  "expectedResult": {
+    "ordered": true,
+    "columns": ["OrderId", "CustomerName", "Total"],
+    "numericTolerance": 0.01
+  },
+  "timeoutSeconds": 10,
+  "maxRows": 20,
+  "effectAssertions": [
+    "Le filtre minimum est paramétré dans le SQL généré avant matérialisation",
+    "Seules les colonnes de la projection sont retournées"
+  ],
+  "solutionPath": "solution.md",
+  "license": "CC-BY-4.0"
+}

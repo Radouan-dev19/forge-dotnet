@@ -1,0 +1,115 @@
+@page "/dashboard"
+@inject GetLocalProfile GetLocalProfile
+@inject DashboardService DashboardService
+
+<PageTitle>Tableau de bord — Forge.NET</PageTitle>
+
+<h1>Tableau de bord factuel</h1>
+
+@if (_profile is null || _dashboard is null)
+{
+    <p role="status">Chargement des mesures locales…</p>
+}
+else
+{
+    <p class="notice">@_dashboard.MeasurementNote</p>
+
+    <section class="info-panel" aria-labelledby="objective-title">
+        <h2 id="objective-title">Objectif</h2>
+        <p><strong>Objectif professionnel déclaré :</strong> @DisplayOrUnavailable(_profile.ProfessionalGoal)</p>
+        <p><strong>Objectif du plan accepté :</strong> @DisplayOrUnavailable(_dashboard.NextObjective)</p>
+    </section>
+
+    <section class="info-panel" aria-labelledby="activity-title">
+        <h2 id="activity-title">Activité et autonomie</h2>
+        <dl class="summary-list">
+            <dt>Temps actif observable</dt>
+            <dd>@FormatMinutes(_dashboard.ActiveMinutes)</dd>
+            <dt>Seuil d’inactivité</dt>
+            <dd>@_dashboard.InactivityThresholdMinutes minutes</dd>
+            <dt>Réussite au premier essai</dt>
+            <dd>@FormatRate(_dashboard.FirstAttemptSuccessRate)</dd>
+            <dt>Réussite avant solution</dt>
+            <dd>@FormatRate(_dashboard.BeforeSolutionSuccessRate)</dd>
+            <dt>Tentatives observées</dt>
+            <dd>@_dashboard.AttemptCount</dd>
+            <dt>Indices utilisés</dt>
+            <dd>@_dashboard.HintUsageCount</dd>
+            <dt>Solutions consultées</dt>
+            <dd>@_dashboard.SolutionViewCount</dd>
+        </dl>
+    </section>
+
+    <section class="info-panel" aria-labelledby="reviews-title">
+        <h2 id="reviews-title">Révisions</h2>
+        <p><strong>Dues aujourd’hui :</strong> @_dashboard.DueReviewCount</p>
+        <p><strong>Prochaine échéance connue :</strong> @(_dashboard.NextReviewDate?.ToString("dd/MM/yyyy") ?? "Indisponible")</p>
+        <a href="reviews">Ouvrir la file de révisions</a>
+    </section>
+
+    <section class="info-panel" aria-labelledby="exam-metrics-title">
+        <h2 id="exam-metrics-title">Examens</h2>
+        <dl class="summary-list">
+            <dt>Terminés</dt><dd>@_dashboard.CompletedExamCount</dd>
+            <dt>Abandonnés</dt><dd>@_dashboard.AbandonedExamCount</dd>
+            <dt>Temps écoulé</dt><dd>@_dashboard.TimedOutExamCount</dd>
+            <dt>Score moyen des examens terminés</dt><dd>@FormatRate(_dashboard.AverageExamScore)</dd>
+        </dl>
+        <a href="exams">Accéder aux examens</a>
+    </section>
+
+    <section class="info-panel" aria-labelledby="skills-title">
+        <h2 id="skills-title">Forces et faiblesses mesurées</h2>
+        <h3>Forces relatives</h3>
+        @if (_dashboard.Strengths.Count == 0)
+        {
+            <p>Indisponible : aucune preuve de maîtrise mesurée.</p>
+        }
+        else
+        {
+            <ul>@foreach (DashboardDomainView domain in _dashboard.Strengths) { <li>@domain.Label : @domain.Score.ToString("0.##") / 100</li> }</ul>
+        }
+        <h3>Faiblesses relatives</h3>
+        @if (_dashboard.Weaknesses.Count == 0)
+        {
+            <p>Indisponible : aucune preuve de maîtrise mesurée.</p>
+        }
+        else
+        {
+            <ul>@foreach (DashboardDomainView domain in _dashboard.Weaknesses) { <li>@domain.Label : @domain.Score.ToString("0.##") / 100 (seuil @domain.RequiredScore.ToString("0.##"))</li> }</ul>
+        }
+    </section>
+
+    <section class="info-panel" aria-labelledby="gates-title">
+        <h2 id="gates-title">Portes</h2>
+        @foreach (MasteryGateView gate in _dashboard.Gates)
+        {
+            <article>
+                <h3>@gate.Label — @(gate.IsOpen ? "ouverte" : "fermée")</h3>
+                @if (!gate.IsOpen) { <ul>@foreach (string blocker in gate.Blockers) { <li>@blocker</li> }</ul> }
+            </article>
+        }
+        <p>Aucune moyenne ne compense une compétence critique ou un livrable absent.</p>
+    </section>
+}
+
+@code {
+    private UserProfile? _profile;
+    private LearningDashboardView? _dashboard;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _profile = await GetLocalProfile.ExecuteAsync();
+        _dashboard = await DashboardService.GetAsync();
+    }
+
+    private static string DisplayOrUnavailable(string? value) =>
+        string.IsNullOrWhiteSpace(value) ? "Indisponible" : value;
+
+    private static string FormatRate(decimal? value) =>
+        value is null ? "Indisponible" : $"{value.Value:0.##} %";
+
+    private static string FormatMinutes(int? value) =>
+        value is null ? "Indisponible" : $"{value.Value} minute(s)";
+}
+

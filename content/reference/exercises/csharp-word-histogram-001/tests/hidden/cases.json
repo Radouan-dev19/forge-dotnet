@@ -1,0 +1,29 @@
+{
+    "schemaVersion":  1,
+    "cases":  [
+                  {
+                      "name":  "Hidden_Case1",
+                      "message":  "Construire un histogramme de mots — cas 1 hidden incorrect.",
+                      "arguments":  [
+                                        "A a"
+                                    ],
+                      "expected":  {
+                                       "A":  2
+                                   },
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_Case2",
+                      "message":  "Construire un histogramme de mots — cas 2 hidden incorrect.",
+                      "arguments":  [
+                                        "un"
+                                    ],
+                      "expected":  {
+                                       "un":  1
+                                   },
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  }
+              ]
+}

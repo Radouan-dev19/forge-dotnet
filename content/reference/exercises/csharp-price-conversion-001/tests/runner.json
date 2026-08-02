@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "suiteId": "csharp-price-conversion-001.v1",
+  "exerciseId": "csharp-price-conversion-001",
+  "exerciseVersion": 1,
+  "typeName": "Submission",
+  "methodName": "ToCents",
+  "parameterTypes": ["decimal"],
+  "returnType": "int"
+}

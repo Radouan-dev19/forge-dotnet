@@ -1,0 +1,9 @@
+{
+  "schemaVersion": 1,
+  "cases": [
+    { "name": "Hidden_BelowThreshold", "message": "La borne inférieure du seuil est incorrecte.", "arguments": [79.99, false], "expected": 4.90 },
+    { "name": "Hidden_AboveThreshold", "message": "Une commande standard élevée doit être gratuite.", "arguments": [125.50, false], "expected": 0 },
+    { "name": "Hidden_ExpressLowTotal", "message": "Le tarif express ne dépend pas du total valide.", "arguments": [0, true], "expected": 9.90 },
+    { "name": "Hidden_NegativeRejected", "message": "Un total négatif doit être refusé.", "arguments": [-0.01, false], "expectedException": "ArgumentOutOfRangeException" }
+  ]
+}

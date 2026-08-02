@@ -1,0 +1,24 @@
+{
+    "schemaVersion":  1,
+    "id":  "interview-csharp-dictionary-default-001",
+    "version":  1,
+    "title":  "Lire un stock absent",
+    "level":  "junior",
+    "durationMinutes":  5,
+    "skills":  [
+                   "csharp.dictionaries"
+               ],
+    "question":  "Comment résoudriez-vous « Lire un stock absent » et comment prouveriez-vous les bornes ?",
+    "observableCriteria":  [
+                               "Le contrat et une borne sont explicitement reformulés",
+                               "La complexité et un test de réfutation sont justifiés"
+                           ],
+    "modelAnswer":  "Distinguer une clé absente d’une exception et ne jamais muter le dictionnaire. La preuve comprend un cas nominal, une borne et un cas différent des exemples ; O(1) amorti en temps et O(1) en espace.",
+    "commonMistakes":  [
+                           "Réciter le code sans invariant ni méthode de test"
+                       ],
+    "variants":  [
+                     "Changer une borne ou le volume tout en conservant la même règle de lire un stock absent."
+                 ],
+    "license":  "CC-BY-4.0"
+}

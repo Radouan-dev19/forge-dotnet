@@ -1,0 +1,12 @@
+{
+    "schemaVersion":  1,
+    "suiteId":  "debug-array-empty-001",
+    "exerciseId":  "debug-array-empty-001",
+    "exerciseVersion":  1,
+    "typeName":  "Submission",
+    "methodName":  "Average",
+    "parameterTypes":  [
+                           "int[]"
+                       ],
+    "returnType":  "decimal"
+}

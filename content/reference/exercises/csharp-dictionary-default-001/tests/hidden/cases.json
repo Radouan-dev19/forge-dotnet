@@ -1,0 +1,31 @@
+{
+    "schemaVersion":  1,
+    "cases":  [
+                  {
+                      "name":  "Hidden_Case1",
+                      "message":  "Lire un stock absent — cas 1 hidden incorrect.",
+                      "arguments":  [
+                                        {
+
+                                        },
+                                        "pen"
+                                    ],
+                      "expected":  0,
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_Case2",
+                      "message":  "Lire un stock absent — cas 2 hidden incorrect.",
+                      "arguments":  [
+                                        {
+                                            "pen":  3
+                                        },
+                                        " "
+                                    ],
+                      "expected":  0,
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  }
+              ]
+}

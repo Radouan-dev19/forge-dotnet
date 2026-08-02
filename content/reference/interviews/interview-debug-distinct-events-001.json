@@ -1,0 +1,24 @@
+{
+    "schemaVersion":  1,
+    "id":  "interview-debug-distinct-events-001",
+    "version":  1,
+    "title":  "Dédupliquer des événements",
+    "level":  "junior",
+    "durationMinutes":  5,
+    "skills":  [
+                   "debugging.data"
+               ],
+    "question":  "Comment résoudriez-vous « Dédupliquer des événements » et comment prouveriez-vous les bornes ?",
+    "observableCriteria":  [
+                               "Le contrat et une borne sont explicitement reformulés",
+                               "La complexité et un test de réfutation sont justifiés"
+                           ],
+    "modelAnswer":  "Définir la casse et ignorer les segments vides sans inventer de normalisation. La preuve comprend un cas nominal, une borne et un cas différent des exemples ; O(n) attendu en temps et O(n) en espace.",
+    "commonMistakes":  [
+                           "Réciter le code sans invariant ni méthode de test"
+                       ],
+    "variants":  [
+                     "Changer une borne ou le volume tout en conservant la même règle de dédupliquer des événements."
+                 ],
+    "license":  "CC-BY-4.0"
+}

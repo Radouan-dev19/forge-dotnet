@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "cases": [
+    {
+      "name": "TrackedAndReadOnlyOrder2",
+      "message": "Le comportement de tracking doit rester vrai pour une autre entité.",
+      "arguments": [2],
+      "expected": "true|true|1",
+      "expectedException": null,
+      "argumentsUnchanged": true
+    }
+  ]
+}

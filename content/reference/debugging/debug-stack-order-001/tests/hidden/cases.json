@@ -1,0 +1,25 @@
+{
+    "schemaVersion":  1,
+    "cases":  [
+                  {
+                      "name":  "Hidden_Case1",
+                      "message":  "Pile lue dans le mauvais ordre — cas 1.",
+                      "arguments":  [
+                                        "ab"
+                                    ],
+                      "expected":  "ba",
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_Case2",
+                      "message":  "Pile lue dans le mauvais ordre — cas 2.",
+                      "arguments":  [
+                                        "x"
+                                    ],
+                      "expected":  "x",
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  }
+              ]
+}

@@ -1,0 +1,101 @@
+@page "/settings"
+@inject ILocalDataBackupService BackupService
+@inject ILocalDataLocation DataLocation
+
+<PageTitle>Paramètres — Forge.NET</PageTitle>
+
+<h1>Paramètres</h1>
+
+<section class="info-panel">
+    <h2>Langue d’interface</h2>
+    <p>La préférence se configure depuis la page <a href="profile">Profil</a>. L’interface française est la seule traduction complète de cet incrément.</p>
+</section>
+
+<section class="info-panel">
+    <h2>Données locales</h2>
+    <p>La progression est enregistrée dans SQLite sur cet appareil, hors du répertoire public de l’application.</p>
+    <p><strong>Base active :</strong> <code>@DataLocation.DatabasePath</code></p>
+
+    <div class="form-field">
+        <label for="backup-path">Archive de sauvegarde</label>
+        <input id="backup-path" @bind="_archivePath" @bind:event="oninput" autocomplete="off" />
+        <p class="field-help">Le chemin doit être absolu et se terminer par <code>.backup.zip</code>.</p>
+    </div>
+
+    <button class="btn btn-primary" type="button" @onclick="CreateBackupAsync" disabled="@_isBusy">
+        Créer la sauvegarde
+    </button>
+
+    <label class="checkbox-field" for="confirm-restore">
+        <InputCheckbox id="confirm-restore" @bind-Value="_restoreConfirmed" />
+        Je confirme vouloir remplacer les données actives par cette sauvegarde.
+    </label>
+    <button class="btn btn-secondary" type="button" @onclick="RestoreAsync" disabled="@(!_restoreConfirmed || _isBusy)">
+        Restaurer la sauvegarde
+    </button>
+</section>
+
+@if (!string.IsNullOrWhiteSpace(_statusMessage))
+{
+    <p role="status" class="@(_isError ? "error-message" : "success-message")">@_statusMessage</p>
+}
+
+@code {
+    private string _archivePath = string.Empty;
+    private string? _statusMessage;
+    private bool _restoreConfirmed;
+    private bool _isBusy;
+    private bool _isError;
+
+    protected override void OnInitialized()
+    {
+        _archivePath = DataLocation.GetSuggestedBackupPath(DateTimeOffset.UtcNow);
+    }
+
+    private async Task CreateBackupAsync()
+    {
+        await ExecuteAsync(async () =>
+        {
+            var result = await BackupService.CreateBackupAsync(_archivePath);
+            return $"Sauvegarde créée et vérifiée : {result.ArchivePath}";
+        });
+    }
+
+    private async Task RestoreAsync()
+    {
+        if (!_restoreConfirmed)
+        {
+            return;
+        }
+
+        await ExecuteAsync(async () =>
+        {
+            var result = await BackupService.RestoreAsync(_archivePath);
+            _restoreConfirmed = false;
+            return string.IsNullOrEmpty(result.RecoveryDatabasePath)
+                ? "Sauvegarde restaurée et contrôlée."
+                : $"Sauvegarde restaurée et contrôlée. Copie de récupération : {result.RecoveryDatabasePath}";
+        });
+    }
+
+    private async Task ExecuteAsync(Func<Task<string>> operation)
+    {
+        _isBusy = true;
+        _isError = false;
+        _statusMessage = null;
+
+        try
+        {
+            _statusMessage = await operation();
+        }
+        catch (Exception exception)
+        {
+            _isError = true;
+            _statusMessage = $"Opération refusée : {exception.Message}";
+        }
+        finally
+        {
+            _isBusy = false;
+        }
+    }
+}

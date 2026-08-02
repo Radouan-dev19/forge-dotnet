@@ -1,0 +1,59 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://forge-dotnet.local/schemas/v1/curriculum.schema.json",
+  "title": "Parcours Forge.NET v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "id", "version", "title", "description", "weeks", "modules", "license"],
+  "properties": {
+    "schemaVersion": { "type": "integer", "const": 1 },
+    "id": { "type": "string", "pattern": "^[a-z0-9]+(?:[.-][a-z0-9]+)*$", "minLength": 3, "maxLength": 128 },
+    "version": { "type": "integer", "minimum": 1 },
+    "title": { "type": "string", "minLength": 3, "maxLength": 200 },
+    "description": { "type": "string", "minLength": 20, "maxLength": 1000 },
+    "weeks": { "type": "integer", "minimum": 1, "maximum": 24 },
+    "modules": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 48,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "title", "weeks", "prerequisites", "lessonIds", "exerciseIds"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^[a-z0-9]+(?:[.-][a-z0-9]+)*$" },
+          "title": { "type": "string", "minLength": 3, "maxLength": 200 },
+          "weeks": {
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 24,
+            "uniqueItems": true,
+            "items": { "type": "integer", "minimum": 1, "maximum": 24 }
+          },
+          "prerequisites": {
+            "type": "array",
+            "maxItems": 20,
+            "uniqueItems": true,
+            "items": { "type": "string", "pattern": "^[a-z0-9]+(?:[.-][a-z0-9]+)*$" }
+          },
+          "lessonIds": {
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 50,
+            "uniqueItems": true,
+            "items": { "type": "string", "pattern": "^[a-z0-9]+(?:[.-][a-z0-9]+)*$" }
+          },
+          "exerciseIds": {
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 80,
+            "uniqueItems": true,
+            "items": { "type": "string", "pattern": "^[a-z0-9]+(?:[.-][a-z0-9]+)*$" }
+          }
+        }
+      }
+    },
+    "license": { "type": "string", "pattern": "^[A-Za-z0-9.-]+$", "minLength": 3, "maxLength": 80 },
+    "attribution": { "type": "string", "minLength": 3, "maxLength": 300 }
+  }
+}

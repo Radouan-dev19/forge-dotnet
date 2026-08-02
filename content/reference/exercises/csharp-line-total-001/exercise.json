@@ -1,0 +1,81 @@
+{
+    "schemaVersion":  1,
+    "id":  "csharp-line-total-001",
+    "version":  1,
+    "title":  "Composer un total de ligne",
+    "kind":  "csharp",
+    "difficulty":  2,
+    "skills":  [
+                   "csharp.composition"
+               ],
+    "prerequisites":  [
+                          "oop-encapsulation-001"
+                      ],
+    "estimatedMinutes":  30,
+    "statement":  "statement.md",
+    "constraints":  [
+                        "Conserver exactement la signature publique",
+                        "Valider les deux invariants puis multiplier avant l’unique arrondi.",
+                        "Ne pas modifier les entrées reçues sauf mention explicite"
+                    ],
+    "examples":  [
+                     {
+                         "input":  "[{\"value\":[2.5,3],\"Count\":2},7.5]",
+                         "output":  "[{\"value\":[0,4],\"Count\":2},0]"
+                     }
+                 ],
+    "reflectionFields":  [
+                             "reformulation",
+                             "inputs",
+                             "expectedOutput",
+                             "edgeCases",
+                             "hypothesis",
+                             "plan"
+                         ],
+    "starterPath":  "starter/",
+    "visibleTestsPath":  "tests/visible/",
+    "hiddenTestsPath":  "tests/hidden/",
+    "hints":  [
+                  {
+                      "level":  1,
+                      "kind":  "socratic",
+                      "content":  "Quel invariant de « Composer un total de ligne » doit rester vrai pour les cas limites ?"
+                  },
+                  {
+                      "level":  2,
+                      "kind":  "location",
+                      "content":  "Concentrez la décision dans la méthode LineTotal, sans état global."
+                  },
+                  {
+                      "level":  3,
+                      "kind":  "strategy",
+                      "content":  "Valider les deux invariants puis multiplier avant l’unique arrondi."
+                  },
+                  {
+                      "level":  4,
+                      "kind":  "partial-pseudocode",
+                      "content":  "valider les bornes ; parcourir ou décider ; retourner un nouveau résultat déterministe"
+                  }
+              ],
+    "solution":  {
+                     "path":  "solution/",
+                     "unlock":  {
+                                    "seriousAttempts":  2,
+                                    "minimumDelayMinutes":  10
+                                }
+                 },
+    "explanation":  "explanation.md",
+    "complexity":  "O(1) en temps et O(1) en espace",
+    "commonMistakes":  [
+                           "Coder uniquement les exemples visibles",
+                           "Oublier une borne ou modifier une entrée",
+                           "Annoncer une complexité sans compter les opérations dominantes"
+                       ],
+    "variantId":  "csharp-payment-fee-001",
+    "reviewCards":  [
+                        "card-csharp-line-total-001-rule",
+                        "card-csharp-line-total-001-edge"
+                    ],
+    "interviewQuestionId":  "interview-csharp-line-total-001",
+    "license":  "CC-BY-4.0"
+}

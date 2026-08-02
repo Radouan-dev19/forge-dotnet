@@ -1,0 +1,24 @@
+{
+    "schemaVersion":  1,
+    "id":  "interview-debug-safe-divide-001",
+    "version":  1,
+    "title":  "Prévenir une division invalide",
+    "level":  "junior",
+    "durationMinutes":  5,
+    "skills":  [
+                   "debugging.data"
+               ],
+    "question":  "Comment résoudriez-vous « Prévenir une division invalide » et comment prouveriez-vous les bornes ?",
+    "observableCriteria":  [
+                               "Le contrat et une borne sont explicitement reformulés",
+                               "La complexité et un test de réfutation sont justifiés"
+                           ],
+    "modelAnswer":  "Traiter le diviseur nul et conserver la division entière annoncée. La preuve comprend un cas nominal, une borne et un cas différent des exemples ; O(1) en temps et O(1) en espace.",
+    "commonMistakes":  [
+                           "Réciter le code sans invariant ni méthode de test"
+                       ],
+    "variants":  [
+                     "Changer une borne ou le volume tout en conservant la même règle de prévenir une division invalide."
+                 ],
+    "license":  "CC-BY-4.0"
+}

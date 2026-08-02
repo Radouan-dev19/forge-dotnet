@@ -1,0 +1,123 @@
+services:
+  forge-dotnet:
+    image: forge-dotnet:local
+    build:
+      context: .
+      dockerfile: src/ForgeDotNet.Web/Dockerfile
+    init: true
+    environment:
+      ASPNETCORE_ENVIRONMENT: Production
+      ASPNETCORE_HTTP_PORTS: "8080"
+      DOTNET_EnableDiagnostics: "0"
+      CodeRunner__Mode: Manual
+      LocalData__DirectoryPath: /var/lib/forge-dotnet/data
+      SqlLab__Enabled: ${FORGE_SQL_LAB_ENABLED:-false}
+      SqlLab__Server: sql-lab
+      SqlLab__Port: "1433"
+      SqlLab__AdministratorPasswordFile: /run/secrets/sql_lab_sa_password
+      Web__UseHttpsRedirection: "false"
+    ports:
+      - "127.0.0.1:${FORGE_HTTP_PORT:-5012}:8080"
+    volumes:
+      - forge-dotnet-data:/var/lib/forge-dotnet
+    secrets:
+      - sql_lab_sa_password
+    networks:
+      - default
+      - sql-lab-internal
+    read_only: true
+    tmpfs:
+      - /tmp:size=64m,mode=1777
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://127.0.0.1:8080/health"]
+      interval: 5s
+      timeout: 3s
+      retries: 12
+      start_period: 15s
+
+  sql-lab:
+    profiles: ["sql-lab"]
+    image: forge-dotnet-sql-lab:2022-cu21
+    build:
+      context: docker/sql-lab
+      dockerfile: Dockerfile
+    container_name: forge-dotnet-sql-lab
+    hostname: sql-lab
+    user: "10001:10001"
+    working_dir: /var/opt/mssql
+    environment:
+      ACCEPT_EULA: "Y"
+      HOME: /var/opt/mssql
+      MSSQL_PID: Developer
+      MSSQL_MEMORY_LIMIT_MB: "1536"
+    secrets:
+      - sql_lab_sa_password
+    networks:
+      - sql-lab-internal
+    tmpfs:
+      - /tmp:size=67108864,uid=10001,gid=0,mode=1777
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+      - seccomp=./docker/sql-lab/seccomp.json
+    pids_limit: 512
+    mem_limit: 2g
+    cpus: 2.0
+    init: true
+    restart: "no"
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - >-
+          /opt/mssql-tools18/bin/sqlcmd -S 127.0.0.1 -U sa
+          -P "$$(cat /run/secrets/sql_lab_sa_password)" -C -b -Q "SELECT 1" >/dev/null
+      interval: 5s
+      timeout: 5s
+      retries: 30
+      start_period: 30s
+
+  sql-lab-test-bridge:
+    profiles: ["sql-lab-test"]
+    image: forge-dotnet-sql-lab:2022-cu21
+    entrypoint: ["/usr/bin/python3", "/usr/local/bin/sql-lab-bridge.py"]
+    depends_on:
+      sql-lab:
+        condition: service_healthy
+    user: "10001:10001"
+    ports:
+      - "127.0.0.1:${FORGE_SQL_LAB_PORT:-14333}:14333"
+    networks:
+      - sql-lab-internal
+      - sql-lab-test-egress
+    read_only: true
+    tmpfs:
+      - /tmp:size=16777216,uid=10001,gid=10001,mode=1777
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+      - seccomp=./docker/sql-lab/seccomp.json
+    pids_limit: 32
+    mem_limit: 64m
+    cpus: 0.25
+    restart: "no"
+
+volumes:
+  forge-dotnet-data:
+    name: ${FORGE_DATA_VOLUME:-forge-dotnet-data}
+
+networks:
+  sql-lab-internal:
+    name: forge-dotnet-sql-lab-internal
+    internal: true
+  sql-lab-test-egress:
+    name: forge-dotnet-sql-lab-test-egress
+
+secrets:
+  sql_lab_sa_password:
+    file: ${SQL_LAB_SA_PASSWORD_FILE:-./docker/sql-lab/not-configured.txt}

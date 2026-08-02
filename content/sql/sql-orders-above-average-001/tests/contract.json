@@ -1,0 +1,14 @@
+{
+  "week": 9,
+  "family": "scalar-subquery",
+  "mode": "sql",
+  "datasetRevision": "s1-s10-orders-v1",
+  "expectedRows": [["3","70"],["5","100"]],
+  "equivalentQuery": "SELECT OrderId, Total FROM dbo.Orders WHERE Total \u003e (SELECT AVG(Total) FROM dbo.Orders) ORDER BY OrderId;",
+  "negativeQuery": "SELECT CustomerId FROM dbo.Customers WHERE 1 = 0;",
+  "dirtySql": "UPDATE dbo.Orders SET Total = 0 WHERE OrderId = 5;",
+  "resetProbeSql": "SELECT Total FROM dbo.Orders WHERE OrderId = 5;",
+  "resetExpected": "100.00",
+  "planIndex": null,
+  "stabilityMutationSql": null
+}

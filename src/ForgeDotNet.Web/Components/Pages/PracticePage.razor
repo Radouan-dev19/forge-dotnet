@@ -1,0 +1,553 @@
+@page "/practice/{ExerciseId}"
+@inject PracticeService Practice
+@inject RunExercise Runner
+@inject IManualCodeRunPackageExporter ManualExporter
+@inject IJSRuntime JavaScript
+@implements IDisposable
+
+<PageTitle>@(_activity?.Title ?? "Pratique") — Forge.NET</PageTitle>
+
+@if (_isLoading)
+{
+    <h1>Pratique manuelle</h1>
+    <p role="status">Chargement de l’activité…</p>
+}
+else if (_activity is null)
+{
+    <h1>Activité indisponible</h1>
+    <p class="error-message" role="alert">@_error</p>
+    <a href="practice">Retour aux exercices</a>
+}
+else
+{
+    <header class="practice-panel">
+        <p class="eyebrow">Exercice v@_activity.ExerciseVersion · difficulté @_activity.Difficulty</p>
+        <h1>@_activity.Title</h1>
+        <p>@_activity.EstimatedMinutes minutes · état v@_activity.Version</p>
+        <p><strong>@_activity.StateLabel</strong></p>
+        <p class="notice" role="status">
+            Le code n’est jamais exécuté dans le processus Web. Un runner Docker configuré utilise un conteneur
+            éphémère isolé ; sinon le mode manuel reste explicite et ne produit aucune validation automatique.
+        </p>
+    </header>
+
+    @if (_status is not null)
+    {
+        <p class="success-message" role="status">@_status</p>
+    }
+    @if (_error is not null)
+    {
+        <p class="error-message" role="alert">@_error</p>
+    }
+
+    <section class="practice-panel" aria-labelledby="statement-title">
+        <h2 id="statement-title">Énoncé</h2>
+        <pre class="practice-content">@_activity.Statement</pre>
+        <h3>Contraintes</h3>
+        <ul>
+            @foreach (string constraint in _activity.Constraints)
+            {
+                <li>@constraint</li>
+            }
+        </ul>
+        <h3>Exemples</h3>
+        <dl class="practice-examples">
+            @foreach (PracticeExerciseExample example in _activity.Examples)
+            {
+                <dt>Entrée</dt><dd>@example.Input</dd>
+                <dt>Sortie</dt><dd>@example.Output</dd>
+            }
+        </dl>
+    </section>
+
+    <section class="practice-panel" aria-labelledby="reflection-title">
+        <h2 id="reflection-title">1. Réflexion préalable</h2>
+        <p>Les six champs sont contrôlés côté serveur. La réflexion est figée après la première tentative ou le premier indice.</p>
+        @if (_activity.CanEditReflection)
+        {
+            <EditForm Model="_reflection" OnSubmit="SaveReflectionAsync" FormName="practice-reflection">
+                <PracticeTextArea Id="reflection-reformulation" Label="Reformulation du problème" Help="20 caractères minimum" @bind-Value="_reflection.Reformulation" />
+                <PracticeTextArea Id="reflection-inputs" Label="Entrées" Help="10 caractères minimum" @bind-Value="_reflection.Inputs" />
+                <PracticeTextArea Id="reflection-output" Label="Sortie attendue" Help="10 caractères minimum" @bind-Value="_reflection.ExpectedOutput" />
+                <PracticeTextArea Id="reflection-edges" Label="Cas limites" Help="20 caractères minimum" @bind-Value="_reflection.EdgeCases" />
+                <PracticeTextArea Id="reflection-hypothesis" Label="Hypothèse" Help="20 caractères minimum" @bind-Value="_reflection.Hypothesis" />
+                <PracticeTextArea Id="reflection-plan" Label="Plan de résolution" Help="30 caractères minimum" @bind-Value="_reflection.Plan" />
+                <button class="btn btn-primary" type="submit" disabled="@_busy">Enregistrer et figer au premier acte</button>
+            </EditForm>
+        }
+        else if (_activity.Reflection is not null)
+        {
+            <dl class="practice-reflection-summary">
+                <dt>Reformulation</dt><dd>@_activity.Reflection.Reformulation</dd>
+                <dt>Entrées</dt><dd>@_activity.Reflection.Inputs</dd>
+                <dt>Sortie attendue</dt><dd>@_activity.Reflection.ExpectedOutput</dd>
+                <dt>Cas limites</dt><dd>@_activity.Reflection.EdgeCases</dd>
+                <dt>Hypothèse</dt><dd>@_activity.Reflection.Hypothesis</dd>
+                <dt>Plan</dt><dd>@_activity.Reflection.Plan</dd>
+            </dl>
+        }
+    </section>
+
+    <section class="practice-panel" aria-labelledby="hints-title">
+        <h2 id="hints-title">2. Indices progressifs</h2>
+        <p>Chaque niveau est enregistré. Il est impossible de sauter un niveau ou de récupérer directement un indice futur.</p>
+        @if (_activity.UsedHints.Count == 0)
+        {
+            <p>Aucun indice consulté.</p>
+        }
+        else
+        {
+            <ol class="practice-history">
+                @foreach (PracticeHintUsageView hint in _activity.UsedHints)
+                {
+                    <li>
+                        <h3>H@(hint.Level) — @hint.KindLabel</h3>
+                        <p>@hint.Content</p>
+                        <p class="field-help">Consulté le @hint.UsedAtUtc.ToLocalTime().ToString("g").</p>
+                    </li>
+                }
+            </ol>
+        }
+        @if (_activity.CanUseHint && _activity.NextHintLevel is not null)
+        {
+            <button class="btn btn-outline-secondary" type="button" disabled="@_busy" @onclick="UnlockNextHintAsync">
+                Débloquer H@_activity.NextHintLevel
+            </button>
+        }
+    </section>
+
+    <section class="practice-panel" aria-labelledby="attempt-title">
+        <h2 id="attempt-title">3. Tentatives manuelles</h2>
+        <p>
+            Une tentative sérieuse contient une proposition substantielle, une déclaration de vérification manuelle
+            et des observations utiles. La détection des doublons réduit les contournements sans prétendre détecter toute triche.
+        </p>
+        @if (_activity.CanSubmitAttempt)
+        {
+            <EditForm Model="_attempt" OnSubmit="SubmitAttemptAsync" FormName="practice-attempt">
+                <div class="form-field">
+                    <label for="attempt-submission">Proposition ou code travaillé</label>
+                    <textarea id="attempt-submission" rows="10" maxlength="@PracticeRules.MaximumAttemptLength" @bind="_attempt.SubmissionText" @bind:event="oninput"></textarea>
+                    <p class="field-help">80 caractères minimum pour pouvoir compter comme tentative sérieuse.</p>
+                </div>
+                <div class="form-field">
+                    <label for="attempt-verification">Observations de vérification manuelle</label>
+                    <textarea id="attempt-verification" rows="5" maxlength="@PracticeRules.MaximumVerificationNotesLength" @bind="_attempt.ManualVerificationNotes" @bind:event="oninput"></textarea>
+                    <p class="field-help">Décrire les cas relus ou testés hors de Forge.NET et le résultat observé.</p>
+                </div>
+                <label class="checkbox-field">
+                    <input type="checkbox" @bind="_attempt.ManualCheckDeclared" />
+                    J’atteste avoir effectué cette vérification manuellement ; Forge.NET ne l’a pas validée.
+                </label>
+                <button class="btn btn-primary" type="submit" disabled="@_busy">Enregistrer la tentative</button>
+            </EditForm>
+        }
+
+        @if (_activity.Attempts.Count > 0)
+        {
+            <h3>Historique et comparaison textuelle</h3>
+            <ol class="practice-history">
+                @foreach (PracticeAttemptView attempt in _activity.Attempts)
+                {
+                    <li>
+                        <h4>Tentative @attempt.Sequence — @attempt.DecisionLabel</h4>
+                        <pre class="practice-content">@attempt.SubmissionText</pre>
+                        <p><strong>Vérification déclarée :</strong> @(attempt.ManualCheckDeclared ? "oui" : "non")</p>
+                        <p>@attempt.ManualVerificationNotes</p>
+                        <p>@attempt.ComparisonSummary</p>
+                        <p class="field-help">Enregistrée le @attempt.SubmittedAtUtc.ToLocalTime().ToString("g").</p>
+                    </li>
+                }
+            </ol>
+        }
+    </section>
+
+    <section class="practice-panel" aria-labelledby="runner-title">
+        <h2 id="runner-title">4. Compilation et tests isolés</h2>
+        <p class="notice" role="status">
+            Le serveur transmet uniquement les fichiers autorisés à l’adaptateur configuré. Docker reste désactivé
+            sans image immuable et suite de tests serveur approuvée. Aucun résultat ne produit à lui seul une maîtrise.
+        </p>
+        <p>
+            La compilation et les tests sont présentés séparément. Un échec caché reste expurgé et un runner
+            indisponible ne produit aucune validation automatique. L’export ZIP permet un travail manuel hors Forge.NET.
+        </p>
+        @if (_activity.CanSubmitAttempt)
+        {
+            <div class="actions">
+                <button class="btn btn-primary"
+                        type="button"
+                        disabled="@(_runnerBusy || string.IsNullOrWhiteSpace(_attempt.SubmissionText))"
+                        @onclick="RunSubmissionAsync">
+                    Lancer compilation et tests
+                </button>
+                <button class="btn btn-outline-secondary"
+                        type="button"
+                        disabled="@(_runnerBusy || string.IsNullOrWhiteSpace(_attempt.SubmissionText))"
+                        @onclick="ExportManualPackageAsync">
+                    Exporter le ZIP manuel
+                </button>
+                @if (_runnerBusy)
+                {
+                    <button class="btn btn-outline-secondary" type="button" @onclick="CancelRunner">
+                        Annuler l’exécution
+                    </button>
+                }
+            </div>
+            <p class="field-help">La proposition n’est jamais journalisée et l’historique ne conserve pas son contenu.</p>
+        }
+        else
+        {
+            <p>Enregistrez la réflexion puis commencez une tentative avant d’utiliser le runner ou l’export manuel.</p>
+        }
+
+        @if (_runnerStatus is not null)
+        {
+            <p class="success-message" role="status">@_runnerStatus</p>
+        }
+        @if (_runnerError is not null)
+        {
+            <p class="error-message" role="alert">@_runnerError</p>
+        }
+
+        @if (_runHistory.Count > 0)
+        {
+            <h3>Historique volatil des exécutions</h3>
+            <p class="field-help">Cet historique borné ne persiste pas après le redémarrage du serveur.</p>
+            <div class="runner-history">
+                @foreach (CodeRunResult result in _runHistory)
+                {
+                    <RunnerResultPanel Result="result" />
+                }
+            </div>
+        }
+    </section>
+
+    <section class="practice-panel" aria-labelledby="solution-gate-title">
+        <h2 id="solution-gate-title">5. Solution protégée</h2>
+        <p>
+            Tentatives sérieuses : @_activity.SolutionEligibility.SeriousAttemptCount / @_activity.SolutionEligibility.RequiredSeriousAttempts.
+            @_activity.SolutionEligibility.Reason
+        </p>
+        @if (_activity.SolutionEligibility.RemainingDelaySeconds > 0)
+        {
+            <p>Délai serveur restant : environ @_activity.SolutionEligibility.RemainingDelaySeconds secondes.</p>
+            <button class="btn btn-outline-secondary" type="button" disabled="@_busy" @onclick="RefreshAsync">Actualiser le délai</button>
+        }
+        @if (_activity.SolutionEligibility.CanViewSolution)
+        {
+            <button class="btn btn-primary" type="button" disabled="@_busy" @onclick="ViewSolutionAsync">
+                Consulter la solution et marquer non maîtrisé
+            </button>
+        }
+
+        @if (_activity.Solution is not null)
+        {
+            <div class="practice-solution">
+                <h3>Solution consultée — activité non maîtrisée</h3>
+                <pre class="practice-content">@_activity.Solution</pre>
+                <h3>Explication éditoriale</h3>
+                <pre class="practice-content">@_activity.Explanation</pre>
+            </div>
+        }
+    </section>
+
+    @if (_activity.CanCompletePostSolutionWork)
+    {
+        <section class="practice-panel" aria-labelledby="post-solution-title">
+            <h2 id="post-solution-title">6. Reprise obligatoire après solution</h2>
+            <p>L’explication personnelle et la variante sont requises, mais ne produisent aucun score de maîtrise.</p>
+            <p><strong>Variante :</strong> @_activity.VariantTitle</p>
+            <pre class="practice-content">@_activity.VariantStatement</pre>
+            <EditForm Model="_postSolution" OnSubmit="CompletePostSolutionAsync" FormName="practice-post-solution">
+                <div class="form-field">
+                    <label for="personal-explanation">Explication avec mes propres mots</label>
+                    <textarea id="personal-explanation" rows="7" maxlength="@PracticeRules.MaximumPostSolutionLength" @bind="_postSolution.PersonalExplanation" @bind:event="oninput"></textarea>
+                </div>
+                <div class="form-field">
+                    <label for="variant-submission">Proposition pour la variante</label>
+                    <textarea id="variant-submission" rows="9" maxlength="@PracticeRules.MaximumPostSolutionLength" @bind="_postSolution.VariantSubmission" @bind:event="oninput"></textarea>
+                </div>
+                <button class="btn btn-primary" type="submit" disabled="@_busy">Enregistrer la reprise non maîtrisée</button>
+            </EditForm>
+        </section>
+    }
+    else if (_activity.State == PracticeActivityState.PostSolutionCompleted)
+    {
+        <section class="practice-panel" aria-labelledby="post-complete-title">
+            <h2 id="post-complete-title">Reprise renseignée — toujours non maîtrisée</h2>
+            <h3>Explication personnelle</h3>
+            <p>@_activity.PersonalExplanation</p>
+            <h3>Proposition de variante</h3>
+            <pre class="practice-content">@_activity.VariantSubmission</pre>
+        </section>
+    }
+
+    <section class="practice-panel" aria-labelledby="limits-title">
+        <h2 id="limits-title">Traçabilité et limites</h2>
+        <ul>
+            <li>Révision privée du contenu : @_activity.ContentRevision[..12].</li>
+            <li>Aucun test caché, chemin de solution ou résultat automatique n’est exposé.</li>
+            <li>Aucun score de maîtrise ni révision planifiée n’est calculé.</li>
+        </ul>
+        <a href="practice">Retour aux exercices</a>
+    </section>
+}
+
+@code {
+    [Parameter]
+    public string ExerciseId { get; set; } = string.Empty;
+
+    private readonly ReflectionForm _reflection = new();
+    private readonly AttemptForm _attempt = new();
+    private readonly PostSolutionForm _postSolution = new();
+    private IReadOnlyList<CodeRunResult> _runHistory = Array.Empty<CodeRunResult>();
+    private PracticeActivityView? _activity;
+    private CancellationTokenSource? _runnerCancellation;
+    private bool _isLoading = true;
+    private bool _busy;
+    private bool _runnerBusy;
+    private string? _status;
+    private string? _error;
+    private string? _runnerStatus;
+    private string? _runnerError;
+
+    protected override async Task OnParametersSetAsync() => await LoadAsync();
+
+    private async Task LoadAsync()
+    {
+        _isLoading = true;
+        try
+        {
+            _activity = await Practice.GetOrStartAsync(ExerciseId);
+            _runHistory = Runner.GetHistory(ExerciseId);
+            if (_activity.Attempts.Count == 0 && string.IsNullOrWhiteSpace(_attempt.SubmissionText))
+            {
+                _attempt.SubmissionText = _activity.Starter;
+            }
+            CopyReflection();
+            _error = null;
+        }
+        catch (Exception exception)
+        {
+            _activity = null;
+            _error = exception.Message;
+        }
+        finally
+        {
+            _isLoading = false;
+        }
+    }
+
+    private async Task RefreshAsync()
+    {
+        await ExecuteAsync(() => Practice.GetOrStartAsync(ExerciseId).AsTask(), "État du délai serveur actualisé.");
+    }
+
+    private async Task SaveReflectionAsync() => await ExecuteAsync(
+        () => Practice.SaveReflectionAsync(
+            ExerciseId,
+            _activity!.Version,
+            new PracticeReflectionInput(
+                _reflection.Reformulation,
+                _reflection.Inputs,
+                _reflection.ExpectedOutput,
+                _reflection.EdgeCases,
+                _reflection.Hypothesis,
+                _reflection.Plan)).AsTask(),
+        "Réflexion enregistrée. Elle sera figée au premier indice ou à la première tentative.");
+
+    private async Task UnlockNextHintAsync()
+    {
+        int level = _activity?.NextHintLevel ?? 0;
+        await ExecuteAsync(
+            () => Practice.UnlockHintAsync(ExerciseId, _activity!.Version, level).AsTask(),
+            $"Indice H{level} débloqué et tracé.");
+    }
+
+    private async Task SubmitAttemptAsync()
+    {
+        await ExecuteAsync(
+            () => Practice.SubmitAttemptAsync(
+                ExerciseId,
+                _activity!.Version,
+                new PracticeAttemptInput(
+                    _attempt.SubmissionText,
+                    _attempt.ManualVerificationNotes,
+                    _attempt.ManualCheckDeclared)).AsTask(),
+            "Tentative enregistrée sans exécution automatique.");
+        if (_error is null)
+        {
+            _attempt.SubmissionText = string.Empty;
+            _attempt.ManualVerificationNotes = string.Empty;
+            _attempt.ManualCheckDeclared = false;
+        }
+    }
+
+    private async Task ViewSolutionAsync() => await ExecuteAsync(
+        () => Practice.ViewSolutionAsync(ExerciseId, _activity!.Version).AsTask(),
+        "Solution consultée : l’activité est explicitement non maîtrisée.");
+
+    private async Task CompletePostSolutionAsync() => await ExecuteAsync(
+        () => Practice.CompletePostSolutionWorkAsync(
+            ExerciseId,
+            _activity!.Version,
+            _postSolution.PersonalExplanation,
+            _postSolution.VariantSubmission).AsTask(),
+        "Explication et variante enregistrées ; aucune maîtrise n’est attribuée.");
+
+    private async Task RunSubmissionAsync()
+    {
+        if (_activity is null || _runnerBusy || string.IsNullOrWhiteSpace(_attempt.SubmissionText))
+        {
+            return;
+        }
+
+        _runnerCancellation?.Dispose();
+        _runnerCancellation = new CancellationTokenSource();
+        _runnerBusy = true;
+        _runnerStatus = null;
+        _runnerError = null;
+        try
+        {
+            _ = await Runner.ExecuteAsync(
+                CreateRunnerCommand(Guid.NewGuid()),
+                _runnerCancellation.Token);
+            _runnerStatus = "Résultat ajouté à l’historique ; aucune maîtrise automatique n’est attribuée.";
+        }
+        catch (Exception exception)
+        {
+            _runnerError = exception.Message;
+        }
+        finally
+        {
+            _runnerBusy = false;
+            _runnerCancellation.Dispose();
+            _runnerCancellation = null;
+            _runHistory = Runner.GetHistory(ExerciseId);
+        }
+    }
+
+    private void CancelRunner()
+    {
+        _runnerStatus = "Annulation de l’exécution demandée…";
+        _runnerCancellation?.Cancel();
+    }
+
+    private async Task ExportManualPackageAsync()
+    {
+        if (_activity is null || _runnerBusy || string.IsNullOrWhiteSpace(_attempt.SubmissionText))
+        {
+            return;
+        }
+
+        _runnerBusy = true;
+        _runnerStatus = null;
+        _runnerError = null;
+        try
+        {
+            RunExerciseCommand command = CreateRunnerCommand(Guid.NewGuid());
+            var request = new CodeRunRequest(
+                command.RequestId,
+                command.ExerciseId,
+                command.ExerciseVersion,
+                command.ContentRevision,
+                command.SourceFiles);
+            ManualCodeRunPackage package = await ManualExporter.ExportAsync(request);
+            using var stream = new MemoryStream(package.Content.ToArray(), writable: false);
+            using var streamReference = new DotNetStreamReference(stream);
+            await JavaScript.InvokeVoidAsync(
+                "forgeDownloads.downloadFileFromStream",
+                package.FileName,
+                streamReference);
+            _runnerStatus = "ZIP manuel exporté ; Forge.NET n’a ni exécuté ni validé son contenu.";
+        }
+        catch (Exception exception)
+        {
+            _runnerError = exception.Message;
+        }
+        finally
+        {
+            _runnerBusy = false;
+        }
+    }
+
+    private RunExerciseCommand CreateRunnerCommand(Guid requestId) => new(
+        requestId,
+        _activity!.ExerciseId,
+        _activity.ExerciseVersion,
+        _activity.ContentRevision,
+        Array.AsReadOnly([
+            new CodeRunSourceFile("Submission.cs", _attempt.SubmissionText),
+        ]));
+
+    private async Task ExecuteAsync(Func<Task<PracticeActivityView>> operation, string successMessage)
+    {
+        if (_busy)
+        {
+            return;
+        }
+
+        _busy = true;
+        try
+        {
+            _activity = await operation();
+            _status = successMessage;
+            _error = null;
+            CopyReflection();
+        }
+        catch (Exception exception)
+        {
+            _status = null;
+            _error = exception.Message;
+        }
+        finally
+        {
+            _busy = false;
+        }
+    }
+
+    private void CopyReflection()
+    {
+        if (_activity?.Reflection is null)
+        {
+            return;
+        }
+
+        _reflection.Reformulation = _activity.Reflection.Reformulation;
+        _reflection.Inputs = _activity.Reflection.Inputs;
+        _reflection.ExpectedOutput = _activity.Reflection.ExpectedOutput;
+        _reflection.EdgeCases = _activity.Reflection.EdgeCases;
+        _reflection.Hypothesis = _activity.Reflection.Hypothesis;
+        _reflection.Plan = _activity.Reflection.Plan;
+    }
+
+    public void Dispose()
+    {
+        _runnerCancellation?.Cancel();
+        _runnerCancellation?.Dispose();
+    }
+
+    private sealed class ReflectionForm
+    {
+        public string Reformulation { get; set; } = string.Empty;
+        public string Inputs { get; set; } = string.Empty;
+        public string ExpectedOutput { get; set; } = string.Empty;
+        public string EdgeCases { get; set; } = string.Empty;
+        public string Hypothesis { get; set; } = string.Empty;
+        public string Plan { get; set; } = string.Empty;
+    }
+
+    private sealed class AttemptForm
+    {
+        public string SubmissionText { get; set; } = string.Empty;
+        public string ManualVerificationNotes { get; set; } = string.Empty;
+        public bool ManualCheckDeclared { get; set; }
+    }
+
+    private sealed class PostSolutionForm
+    {
+        public string PersonalExplanation { get; set; } = string.Empty;
+        public string VariantSubmission { get; set; } = string.Empty;
+    }
+}

@@ -1,0 +1,24 @@
+{
+    "schemaVersion":  1,
+    "id":  "interview-algo-unique-count-001",
+    "version":  1,
+    "title":  "Compter les valeurs distinctes",
+    "level":  "junior",
+    "durationMinutes":  5,
+    "skills":  [
+                   "algorithm.complexity"
+               ],
+    "question":  "Comment résoudriez-vous « Compter les valeurs distinctes » et comment prouveriez-vous les bornes ?",
+    "observableCriteria":  [
+                               "Le contrat et une borne sont explicitement reformulés",
+                               "La complexité et un test de réfutation sont justifiés"
+                           ],
+    "modelAnswer":  "Utiliser un ensemble et compter zéro, négatifs et doublons. La preuve comprend un cas nominal, une borne et un cas différent des exemples ; O(n) attendu en temps et O(n) en espace.",
+    "commonMistakes":  [
+                           "Réciter le code sans invariant ni méthode de test"
+                       ],
+    "variants":  [
+                     "Changer une borne ou le volume tout en conservant la même règle de compter les valeurs distinctes."
+                 ],
+    "license":  "CC-BY-4.0"
+}

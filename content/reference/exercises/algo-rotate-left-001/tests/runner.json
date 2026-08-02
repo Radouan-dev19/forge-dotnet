@@ -1,0 +1,13 @@
+{
+    "schemaVersion":  1,
+    "suiteId":  "algo-rotate-left-001.v1",
+    "exerciseId":  "algo-rotate-left-001",
+    "exerciseVersion":  1,
+    "typeName":  "Submission",
+    "methodName":  "RotateLeft",
+    "parameterTypes":  [
+                           "int[]",
+                           "int"
+                       ],
+    "returnType":  "int[]"
+}

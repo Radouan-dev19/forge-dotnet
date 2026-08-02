@@ -1,0 +1,24 @@
+{
+    "schemaVersion":  1,
+    "cases":  [
+                  {
+                      "name":  "Hidden_Case1",
+                      "message":  "Borner un délai de retry — cas 1 hidden incorrect.",
+                      "arguments":  [
+                                        10
+                                    ],
+                      "expected":  3200,
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_Case2",
+                      "message":  "Borner un délai de retry — cas 2 hidden incorrect.",
+                      "arguments":  [
+                                        -1
+                                    ],
+                      "expectedException":  "ArgumentOutOfRangeException",
+                      "argumentsUnchanged":  false
+                  }
+              ]
+}

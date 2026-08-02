@@ -1,0 +1,59 @@
+@page "/practice"
+@inject PracticeService Practice
+
+<PageTitle>Pratique manuelle — Forge.NET</PageTitle>
+
+<h1>Pratique manuelle</h1>
+
+<section class="practice-panel" aria-labelledby="practice-intro-title">
+    <h2 id="practice-intro-title">Protocole anti-dépendance</h2>
+    <p>
+        Forge.NET exige une réflexion structurée avant les indices, trace les tentatives et protège les solutions.
+        Cet incrément n’exécute, ne compile et ne teste aucun code.
+    </p>
+    <p class="notice" role="status">
+        Toute vérification est une déclaration manuelle de l’utilisateur ; elle ne constitue ni une réussite automatique,
+        ni une preuve de maîtrise.
+    </p>
+</section>
+
+@if (_error is not null)
+{
+    <p class="error-message" role="alert">@_error</p>
+}
+else if (_exercises is null)
+{
+    <p role="status">Chargement des exercices publiés…</p>
+}
+else
+{
+    <section class="practice-panel" aria-labelledby="exercise-list-title">
+        <h2 id="exercise-list-title">Exercices disponibles</h2>
+        <ul class="practice-exercise-list">
+            @foreach (PracticeExerciseSummaryView exercise in _exercises)
+            {
+                <li>
+                    <a href="practice/@exercise.Id">@exercise.Title</a>
+                    <p>Difficulté @exercise.Difficulty · @exercise.EstimatedMinutes minutes · contenu v@(exercise.Version)</p>
+                </li>
+            }
+        </ul>
+    </section>
+}
+
+@code {
+    private IReadOnlyList<PracticeExerciseSummaryView>? _exercises;
+    private string? _error;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            _exercises = await Practice.ListAsync();
+        }
+        catch (Exception exception)
+        {
+            _error = exception.Message;
+        }
+    }
+}

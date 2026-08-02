@@ -1,0 +1,13 @@
+<div class="form-field">
+    <label for="@Id">@Label</label>
+    <textarea id="@Id" rows="5" maxlength="@DebugLabRules.MaximumTextLength" value="@Value" @oninput="OnInput"></textarea>
+    <p class="field-help">Observation précise requise ; les champs sont contrôlés côté serveur.</p>
+</div>
+
+@code {
+    [Parameter, EditorRequired] public string Id { get; set; } = string.Empty;
+    [Parameter, EditorRequired] public string Label { get; set; } = string.Empty;
+    [Parameter] public string Value { get; set; } = string.Empty;
+    [Parameter] public EventCallback<string> ValueChanged { get; set; }
+    private Task OnInput(ChangeEventArgs args) => ValueChanged.InvokeAsync(Convert.ToString(args.Value) ?? string.Empty);
+}

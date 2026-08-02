@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "id": "interview-types-001",
+  "version": 1,
+  "title": "Choix d'un type monétaire",
+  "level": "junior",
+  "durationMinutes": 5,
+  "skills": [
+    "csharp.types"
+  ],
+  "question": "Quel type C# choisirais-tu pour un montant financier et pourquoi ?",
+  "observableCriteria": [
+    "Le candidat distingue précision décimale et binaire",
+    "Le candidat décrit un test portant sur un arrondi"
+  ],
+  "modelAnswer": "J'utiliserais decimal pour représenter le montant, puis je testerais explicitement les règles d'arrondi du domaine.",
+  "commonMistakes": [
+    "Choisir double sans discuter de la représentation binaire"
+  ],
+  "variants": [
+    "Comparer le choix pour une mesure scientifique et pour un prix"
+  ],
+  "license": "CC-BY-4.0"
+}

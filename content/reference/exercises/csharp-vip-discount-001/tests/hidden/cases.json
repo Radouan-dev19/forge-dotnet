@@ -1,0 +1,26 @@
+{
+    "schemaVersion":  1,
+    "cases":  [
+                  {
+                      "name":  "Hidden_Case1",
+                      "message":  "Appliquer une politique VIP — cas 1 hidden incorrect.",
+                      "arguments":  [
+                                        10.05,
+                                        true
+                                    ],
+                      "expected":  9.05,
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_Case2",
+                      "message":  "Appliquer une politique VIP — cas 2 hidden incorrect.",
+                      "arguments":  [
+                                        -1,
+                                        false
+                                    ],
+                      "expectedException":  "ArgumentOutOfRangeException",
+                      "argumentsUnchanged":  false
+                  }
+              ]
+}

@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "id": "sql-orders-cte-001",
+  "version": 1,
+  "title": "Structurer un agrégat mensuel avec une CTE",
+  "difficulty": 3,
+  "skills": ["sql.cte", "sql.aggregate", "sql.date"],
+  "prerequisites": ["sql-orders-subquery-001"],
+  "estimatedMinutes": 40,
+  "image": "mcr.microsoft.com/mssql/server@sha256:b1395aa51b4ec39981883560f1379ea9eba2a1c0719bf8e6477902769316bb79",
+  "datasetPath": "dataset.sql",
+  "visibleSchemaPath": "schema.sql",
+  "permissions": ["select"],
+  "resetScriptPath": "reset.sql",
+  "statementPath": "statement.md",
+  "expectedResult": {
+    "ordered": true,
+    "columns": ["RevenueMonth", "PaidRevenue"],
+    "numericTolerance": 0.01
+  },
+  "timeoutSeconds": 5,
+  "maxRows": 12,
+  "effectAssertions": [
+    "Seules les commandes Paid contribuent au revenu mensuel et aucune donnée ne change"
+  ],
+  "solutionPath": "solution.md",
+  "license": "CC-BY-4.0"
+}

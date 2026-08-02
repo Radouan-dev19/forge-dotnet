@@ -1,0 +1,65 @@
+@page "/learn"
+@inject BrowseLessons BrowseLessons
+
+<PageTitle>Apprendre — Forge.NET</PageTitle>
+
+<h1>Apprendre</h1>
+
+<form class="reader-search" method="get" action="/learn">
+    <label for="lesson-search">Rechercher une leçon par titre, objectif ou compétence</label>
+    <div class="search-row">
+        <input id="lesson-search" name="q" type="search" maxlength="120" value="@_searchQuery" />
+        <button class="btn btn-primary" type="submit">Rechercher</button>
+    </div>
+</form>
+
+@if (_library is null)
+{
+    <p role="status">Chargement du parcours…</p>
+}
+else
+{
+    <header class="reader-library-header">
+        <p class="eyebrow">Parcours local</p>
+        <h2>@_library.Title</h2>
+        <p>@_library.Description</p>
+    </header>
+
+    @if (_library.Modules.Count == 0)
+    {
+        <p class="notice" role="status">Aucune leçon ne correspond à « @_library.SearchQuery ».</p>
+    }
+    else
+    {
+        @foreach (CurriculumModuleView module in _library.Modules)
+        {
+            <section class="reader-module" aria-labelledby="module-@module.Id">
+                <h2 id="module-@module.Id">@module.Title</h2>
+                <ul class="lesson-list">
+                    @foreach (LessonSummaryView lesson in module.Lessons)
+                    {
+                        <li>
+                            <a href="learn/@lesson.Id">@lesson.Title</a>
+                            <p>@lesson.Summary</p>
+                            <p class="lesson-meta">@lesson.EstimatedMinutes min · @string.Join(" · ", lesson.Skills)</p>
+                        </li>
+                    }
+                </ul>
+            </section>
+        }
+    }
+}
+
+@code {
+    [SupplyParameterFromQuery(Name = "q")]
+    public string? Query { get; set; }
+
+    private LessonLibraryView? _library;
+    private string _searchQuery = string.Empty;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        _searchQuery = Query?.Trim() ?? string.Empty;
+        _library = await BrowseLessons.GetLibraryAsync(_searchQuery);
+    }
+}

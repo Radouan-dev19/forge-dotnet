@@ -1,0 +1,27 @@
+{
+    "schemaVersion":  1,
+    "id":  "algorithm-debug-v1",
+    "version":  1,
+    "title":  "Examen 3 — algorithmique et débogage S5–S7",
+    "durationMinutes":  120,
+    "drawCount":  8,
+    "passingScore":  80,
+    "eligibleExerciseIds":  [
+                                "algo-linear-search-001",
+                                "algo-binary-search-001",
+                                "algo-bubble-sort-001",
+                                "algo-selection-sort-001",
+                                "algo-insertion-sort-001",
+                                "algo-merge-sorted-001",
+                                "algo-rotate-left-001",
+                                "algo-prefix-sums-001",
+                                "algo-pair-sum-001",
+                                "algo-gcd-001",
+                                "structures-balanced-parentheses-001",
+                                "structures-window-sums-001",
+                                "structures-factorial-001",
+                                "structures-tree-height-001",
+                                "debug-median-001",
+                                "debug-state-machine-001"
+                            ]
+}

@@ -1,0 +1,263 @@
+@page "/learn/{LessonId}"
+@implements IAsyncDisposable
+@inject BrowseLessons BrowseLessons
+@inject GetLessonReaderState GetReaderState
+@inject SaveLessonNote SaveNote
+@inject SetLessonBookmark SetBookmark
+@inject RecordLessonSectionRead RecordSectionRead
+@inject SubmitLessonQuiz SubmitQuiz
+
+<PageTitle>@(_lesson is null ? "Leçon" : _lesson.Title) — Forge.NET</PageTitle>
+
+@if (_isLoading)
+{
+    <h1>Leçon</h1>
+    <p role="status">Chargement de la leçon…</p>
+}
+else if (_lesson is null)
+{
+    <h1>Leçon introuvable</h1>
+    <p>Cette leçon n’existe pas dans le catalogue publié.</p>
+    <a href="learn">Retour au parcours</a>
+}
+else
+{
+    <article class="lesson-reader">
+        <header class="lesson-header">
+            <p class="eyebrow">Semaine @_lesson.Week · @_lesson.EstimatedMinutes minutes</p>
+            <h1>@_lesson.Title</h1>
+            <p>@string.Join(" · ", _lesson.Skills)</p>
+            <button class="btn btn-outline-secondary" type="button" @onclick="ToggleBookmarkAsync">
+                @(_state!.IsBookmarked ? "Retirer le signet" : "Ajouter un signet")
+            </button>
+        </header>
+
+        <section class="reading-progress" aria-labelledby="progress-title">
+            <h2 id="progress-title">Progression de lecture</h2>
+            <progress value="@_state!.ProgressPercentage" max="100">@_state.ProgressPercentage %</progress>
+            <span aria-live="polite">@_state.ProgressPercentage % — seules les sections confirmées et le quiz réussi sont comptés.</span>
+        </section>
+
+        <div class="lesson-grid">
+            <aside class="lesson-toc" aria-labelledby="toc-title">
+                <h2 id="toc-title">Sommaire</h2>
+                <ol>
+                    @foreach (LessonSectionView section in _lesson.Sections)
+                    {
+                        <li><a href="/learn/@LessonId#@section.Id">@section.Title</a></li>
+                    }
+                </ol>
+            </aside>
+
+            <div class="lesson-content">
+                @foreach (LessonSectionView section in _lesson.Sections)
+                {
+                    <section id="@section.Id" class="lesson-section" tabindex="-1" aria-labelledby="title-@section.Id">
+                        <h2 id="title-@section.Id">@section.Title</h2>
+                        @foreach (LessonBlockView block in section.Blocks)
+                        {
+                            <LessonBlock Block="block" />
+                        }
+
+                        @if (_state.CompletedActivityIds.Contains($"section:{section.Id}", StringComparer.Ordinal))
+                        {
+                            <p class="completion-label">Section confirmée</p>
+                        }
+                        else
+                        {
+                            <button class="btn btn-outline-secondary" type="button" @onclick="() => ConfirmSectionAsync(section.Id)">
+                                Marquer cette section comme lue
+                            </button>
+                        }
+                    </section>
+                }
+
+                <section class="quiz-panel" aria-labelledby="quiz-title">
+                    <h2 id="quiz-title">Quiz de compréhension</h2>
+                    <fieldset>
+                        <legend>@_lesson.Quiz.Prompt</legend>
+                        @foreach (LessonQuizOptionView option in _lesson.Quiz.Options)
+                        {
+                            <label class="quiz-option">
+                                <input type="radio"
+                                       name="lesson-quiz"
+                                       value="@option.Id"
+                                       checked="@(_selectedOptionId == option.Id)"
+                                       @onchange="() => _selectedOptionId = option.Id" />
+                                @option.Text
+                            </label>
+                        }
+                    </fieldset>
+                    <button class="btn btn-primary" type="button" disabled="@(_selectedOptionId is null)" @onclick="SubmitQuizAsync">
+                        Vérifier ma réponse
+                    </button>
+                    @if (!string.IsNullOrWhiteSpace(_quizFeedback))
+                    {
+                        <p class="@(_quizWasCorrect ? "success-message" : "notice")" role="status">@_quizFeedback</p>
+                    }
+                </section>
+
+                <section class="note-panel" aria-labelledby="note-title">
+                    <h2 id="note-title">Ma note</h2>
+                    <label for="lesson-note">Note personnelle, enregistrée automatiquement sur cet appareil</label>
+                    <textarea id="lesson-note"
+                              maxlength="@SaveLessonNote.MaximumNoteLength"
+                              rows="7"
+                              value="@_noteText"
+                              @oninput="QueueNoteSave"
+                              @onblur="FlushNoteAsync"></textarea>
+                    <p class="field-help" aria-live="polite">@_noteStatus</p>
+                </section>
+            </div>
+        </div>
+
+        <nav class="lesson-navigation" aria-label="Navigation entre les leçons">
+            @if (_lesson.PreviousLesson is not null)
+            {
+                <a href="learn/@_lesson.PreviousLesson.Id">← @_lesson.PreviousLesson.Title</a>
+            }
+            else
+            {
+                <span>Début du parcours</span>
+            }
+            <a href="learn">Toutes les leçons</a>
+            @if (_lesson.NextLesson is not null)
+            {
+                <a href="learn/@_lesson.NextLesson.Id">@_lesson.NextLesson.Title →</a>
+            }
+            else
+            {
+                <span>Fin du parcours</span>
+            }
+        </nav>
+    </article>
+}
+
+@if (!string.IsNullOrWhiteSpace(_errorMessage))
+{
+    <p class="error-message" role="alert">@_errorMessage</p>
+}
+
+@code {
+    [Parameter]
+    public string LessonId { get; set; } = string.Empty;
+
+    private LessonView? _lesson;
+    private LessonReaderState? _state;
+    private bool _isLoading = true;
+    private int? _selectedOptionId;
+    private string? _quizFeedback;
+    private bool _quizWasCorrect;
+    private string _noteText = string.Empty;
+    private string _noteStatus = "Aucune modification en attente.";
+    private string? _errorMessage;
+    private CancellationTokenSource? _noteSaveCancellation;
+    private Task _pendingNoteSave = Task.CompletedTask;
+    private bool _noteDirty;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        _isLoading = true;
+        _lesson = await BrowseLessons.GetLessonAsync(LessonId);
+        if (_lesson is not null)
+        {
+            _state = await GetReaderState.ExecuteAsync(LessonId);
+            _noteText = _state.Note;
+        }
+
+        _isLoading = false;
+    }
+
+    private async Task ToggleBookmarkAsync()
+    {
+        bool nextValue = !_state!.IsBookmarked;
+        await SetBookmark.ExecuteAsync(LessonId, nextValue);
+        _state = _state with { IsBookmarked = nextValue };
+    }
+
+    private async Task ConfirmSectionAsync(string sectionId)
+    {
+        _state = await RecordSectionRead.ExecuteAsync(LessonId, sectionId);
+    }
+
+    private async Task SubmitQuizAsync()
+    {
+        if (_selectedOptionId is null)
+        {
+            return;
+        }
+
+        LessonQuizResult result = await SubmitQuiz.ExecuteAsync(LessonId, _selectedOptionId.Value);
+        _quizWasCorrect = result.IsCorrect;
+        _quizFeedback = result.Feedback;
+        _state = result.State;
+    }
+
+    private void QueueNoteSave(ChangeEventArgs args)
+    {
+        _noteText = Convert.ToString(args.Value, System.Globalization.CultureInfo.CurrentCulture) ?? string.Empty;
+        _noteDirty = true;
+        _noteStatus = "Sauvegarde en attente…";
+        _noteSaveCancellation?.Cancel();
+        _noteSaveCancellation?.Dispose();
+        _noteSaveCancellation = new CancellationTokenSource();
+        _pendingNoteSave = SaveAfterDelayAsync(_noteSaveCancellation.Token);
+    }
+
+    private async Task SaveAfterDelayAsync(CancellationToken cancellationToken)
+    {
+        try
+        {
+            await Task.Delay(TimeSpan.FromMilliseconds(500), cancellationToken);
+            await PersistNoteAsync(cancellationToken);
+        }
+        catch (OperationCanceledException) when (cancellationToken.IsCancellationRequested)
+        {
+        }
+        catch (Exception exception)
+        {
+            await InvokeAsync(() =>
+            {
+                _errorMessage = $"La note n’a pas pu être enregistrée : {exception.Message}";
+                _noteStatus = "Échec de la sauvegarde automatique.";
+                StateHasChanged();
+            });
+        }
+    }
+
+    private async Task FlushNoteAsync()
+    {
+        _noteSaveCancellation?.Cancel();
+        if (_noteDirty)
+        {
+            await PersistNoteAsync(CancellationToken.None);
+        }
+    }
+
+    private async Task PersistNoteAsync(CancellationToken cancellationToken)
+    {
+        string value = _noteText;
+        await SaveNote.ExecuteAsync(LessonId, value, cancellationToken);
+        _noteDirty = !string.Equals(value, _noteText, StringComparison.Ordinal);
+        _noteStatus = _noteDirty ? "Nouvelle modification en attente…" : "Note enregistrée.";
+        await InvokeAsync(StateHasChanged);
+    }
+
+    public async ValueTask DisposeAsync()
+    {
+        _noteSaveCancellation?.Cancel();
+        _noteSaveCancellation?.Dispose();
+        if (_noteDirty && _lesson is not null)
+        {
+            await SaveNote.ExecuteAsync(LessonId, _noteText);
+        }
+
+        try
+        {
+            await _pendingNoteSave;
+        }
+        catch (OperationCanceledException)
+        {
+        }
+    }
+}

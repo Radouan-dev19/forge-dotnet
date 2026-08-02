@@ -1,0 +1,25 @@
+{
+    "schemaVersion":  1,
+    "cases":  [
+                  {
+                      "name":  "Hidden_Case1",
+                      "message":  "Normaliser une extension locale — cas 1 hidden incorrect.",
+                      "arguments":  [
+                                        "archive.tar.gz"
+                                    ],
+                      "expected":  ".gz",
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_Case2",
+                      "message":  "Normaliser une extension locale — cas 2 hidden incorrect.",
+                      "arguments":  [
+                                        " "
+                                    ],
+                      "expected":  "",
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  }
+              ]
+}

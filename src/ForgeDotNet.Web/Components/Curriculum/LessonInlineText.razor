@@ -1,0 +1,23 @@
+@foreach (LessonInlineView inline in Runs)
+{
+    @switch (inline.Kind)
+    {
+        case LessonInlineKind.Strong:
+            <strong>@inline.Text</strong>
+            break;
+        case LessonInlineKind.Code:
+            <code>@inline.Text</code>
+            break;
+        case LessonInlineKind.Link:
+            <a href="@inline.Href" rel="noopener noreferrer">@inline.Text</a>
+            break;
+        default:
+            @inline.Text
+            break;
+    }
+}
+
+@code {
+    [Parameter, EditorRequired]
+    public IReadOnlyList<LessonInlineView> Runs { get; set; } = [];
+}

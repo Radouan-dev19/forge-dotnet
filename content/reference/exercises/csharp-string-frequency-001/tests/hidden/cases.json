@@ -1,0 +1,9 @@
+{
+  "schemaVersion": 1,
+  "cases": [
+    { "name": "Hidden_NullRejected", "message": "Une chaîne null doit être refusée.", "arguments": [null], "expectedException": "ArgumentNullException" },
+    { "name": "Hidden_Accented", "message": "Les lettres accentuées doivent rester des lettres.", "arguments": ["Été été"], "expected": {"été": 2} },
+    { "name": "Hidden_Digits", "message": "Les chiffres consécutifs appartiennent aux mots.", "arguments": ["A1 a1 2026"], "expected": {"a1": 2, "2026": 1} },
+    { "name": "Hidden_Varied", "message": "La solution semble dépendre des exemples publics.", "arguments": ["rouge;bleu-rouge/vert"], "expected": {"rouge": 2, "bleu": 1, "vert": 1} }
+  ]
+}

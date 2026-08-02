@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "id": "sql-orders-pagination-001",
+  "version": 1,
+  "title": "Paginer avec une clé stable",
+  "difficulty": 3,
+  "skills": ["sql.pagination", "sql.ordering", "sql.keyset"],
+  "prerequisites": ["sql-orders-index-plan-001"],
+  "estimatedMinutes": 40,
+  "image": "mcr.microsoft.com/mssql/server@sha256:b1395aa51b4ec39981883560f1379ea9eba2a1c0719bf8e6477902769316bb79",
+  "datasetPath": "dataset.sql",
+  "visibleSchemaPath": "schema.sql",
+  "permissions": ["select"],
+  "resetScriptPath": "reset.sql",
+  "statementPath": "statement.md",
+  "expectedResult": {
+    "ordered": true,
+    "columns": ["OrderId", "CreatedAtUtc", "Total"],
+    "numericTolerance": 0.01
+  },
+  "timeoutSeconds": 5,
+  "maxRows": 3,
+  "effectAssertions": [
+    "La page contient exactement les trois éléments suivant le curseur sans doublon"
+  ],
+  "solutionPath": "solution.md",
+  "license": "CC-BY-4.0"
+}

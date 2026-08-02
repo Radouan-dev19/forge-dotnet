@@ -1,0 +1,81 @@
+{
+    "schemaVersion":  1,
+    "id":  "csharp-age-group-001",
+    "version":  1,
+    "title":  "Classer un âge valide",
+    "kind":  "csharp",
+    "difficulty":  1,
+    "skills":  [
+                   "csharp.control"
+               ],
+    "prerequisites":  [
+                          "oop-encapsulation-001"
+                      ],
+    "estimatedMinutes":  30,
+    "statement":  "statement.md",
+    "constraints":  [
+                        "Conserver exactement la signature publique",
+                        "Tester chaque frontière et conserver un état invalide distinct.",
+                        "Ne pas modifier les entrées reçues sauf mention explicite"
+                    ],
+    "examples":  [
+                     {
+                         "input":  "[{\"value\":[17],\"Count\":1},\"minor\"]",
+                         "output":  "[{\"value\":[18],\"Count\":1},\"adult\"]"
+                     }
+                 ],
+    "reflectionFields":  [
+                             "reformulation",
+                             "inputs",
+                             "expectedOutput",
+                             "edgeCases",
+                             "hypothesis",
+                             "plan"
+                         ],
+    "starterPath":  "starter/",
+    "visibleTestsPath":  "tests/visible/",
+    "hiddenTestsPath":  "tests/hidden/",
+    "hints":  [
+                  {
+                      "level":  1,
+                      "kind":  "socratic",
+                      "content":  "Quel invariant de « Classer un âge valide » doit rester vrai pour les cas limites ?"
+                  },
+                  {
+                      "level":  2,
+                      "kind":  "location",
+                      "content":  "Concentrez la décision dans la méthode AgeGroup, sans état global."
+                  },
+                  {
+                      "level":  3,
+                      "kind":  "strategy",
+                      "content":  "Tester chaque frontière et conserver un état invalide distinct."
+                  },
+                  {
+                      "level":  4,
+                      "kind":  "partial-pseudocode",
+                      "content":  "valider les bornes ; parcourir ou décider ; retourner un nouveau résultat déterministe"
+                  }
+              ],
+    "solution":  {
+                     "path":  "solution/",
+                     "unlock":  {
+                                    "seriousAttempts":  2,
+                                    "minimumDelayMinutes":  10
+                                }
+                 },
+    "explanation":  "explanation.md",
+    "complexity":  "O(1) en temps et O(1) en espace",
+    "commonMistakes":  [
+                           "Coder uniquement les exemples visibles",
+                           "Oublier une borne ou modifier une entrée",
+                           "Annoncer une complexité sans compter les opérations dominantes"
+                       ],
+    "variantId":  "csharp-copy-sanitized-001",
+    "reviewCards":  [
+                        "card-csharp-age-group-001-rule",
+                        "card-csharp-age-group-001-edge"
+                    ],
+    "interviewQuestionId":  "interview-csharp-age-group-001",
+    "license":  "CC-BY-4.0"
+}

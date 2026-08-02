@@ -1,0 +1,26 @@
+{
+    "schemaVersion":  1,
+    "cases":  [
+                  {
+                      "name":  "Hidden_Case1",
+                      "message":  "Calculer des frais par interface — cas 1 hidden incorrect.",
+                      "arguments":  [
+                                        10.1,
+                                        true
+                                    ],
+                      "expected":  0.15,
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_Case2",
+                      "message":  "Calculer des frais par interface — cas 2 hidden incorrect.",
+                      "arguments":  [
+                                        -1,
+                                        true
+                                    ],
+                      "expectedException":  "ArgumentOutOfRangeException",
+                      "argumentsUnchanged":  false
+                  }
+              ]
+}

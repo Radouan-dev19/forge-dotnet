@@ -1,0 +1,37 @@
+{
+    "schemaVersion":  1,
+    "cases":  [
+                  {
+                      "name":  "Visible_Case1",
+                      "message":  "Trier par bulles — cas 1 visible incorrect.",
+                      "arguments":  [
+                                        [
+                                            3,
+                                            1,
+                                            2
+                                        ]
+                                    ],
+                      "expected":  [
+                                       1,
+                                       2,
+                                       3
+                                   ],
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Visible_Case2",
+                      "message":  "Trier par bulles — cas 2 visible incorrect.",
+                      "arguments":  [
+                                        [
+
+                                        ]
+                                    ],
+                      "expected":  [
+
+                                   ],
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  }
+              ]
+}

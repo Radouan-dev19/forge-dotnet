@@ -1,0 +1,36 @@
+{
+    "schemaVersion":  1,
+    "id":  "structures-stacks-queues-001",
+    "version":  1,
+    "title":  "Piles et files par intention",
+    "week":  6,
+    "skills":  [
+                   {
+                       "id":  "structures.linear",
+                       "weight":  1
+                   }
+               ],
+    "prerequisites":  [
+                          "algo-simple-sorts-001"
+                      ],
+    "estimatedMinutes":  70,
+    "objectives":  [
+                       "Expliquer puis appliquer Piles et files par intention sur un cas métier borné"
+                   ],
+    "sections":  [
+                     "intuition",
+                     "explanation",
+                     "example",
+                     "counterExample",
+                     "check",
+                     "guided",
+                     "independent",
+                     "debugging",
+                     "interview",
+                     "summary",
+                     "reviewCards",
+                     "masteryTest"
+                 ],
+    "markdownPath":  "lesson.md",
+    "license":  "CC-BY-4.0"
+}

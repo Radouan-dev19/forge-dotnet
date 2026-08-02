@@ -1,0 +1,25 @@
+{
+    "schemaVersion":  1,
+    "cases":  [
+                  {
+                      "name":  "Hidden_Case1",
+                      "message":  "Classer un âge valide — cas 1 hidden incorrect.",
+                      "arguments":  [
+                                        -1
+                                    ],
+                      "expected":  "invalid",
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_Case2",
+                      "message":  "Classer un âge valide — cas 2 hidden incorrect.",
+                      "arguments":  [
+                                        65
+                                    ],
+                      "expected":  "senior",
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  }
+              ]
+}

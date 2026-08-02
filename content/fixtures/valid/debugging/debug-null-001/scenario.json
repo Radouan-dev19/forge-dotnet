@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "id": "debug-null-001",
+  "version": 1,
+  "title": "Diagnostiquer une valeur absente",
+  "difficulty": 2,
+  "skills": [
+    "debugging.hypotheses"
+  ],
+  "prerequisites": [
+    "lesson-types-001"
+  ],
+  "estimatedMinutes": 45,
+  "brokenRepositoryPath": "broken/",
+  "ticketPath": "ticket.md",
+  "expectedBehavior": "La commande doit signaler une donnée absente sans interrompre le processus.",
+  "logsPath": "logs.txt",
+  "checklist": [
+    "Reproduire le symptôme",
+    "Observer la pile d'appels",
+    "Tester une hypothèse isolée"
+  ],
+  "observationQuestions": [
+    "À quel endroit la valeur devient-elle absente ?",
+    "Quelle preuve permet de distinguer cause et conséquence ?"
+  ],
+  "correctionPath": "correction/",
+  "regressionTestPath": "regression-test.md",
+  "journalFields": [
+    "symptom",
+    "context",
+    "hypotheses",
+    "evidence",
+    "cause",
+    "fix",
+    "test",
+    "prevention"
+  ],
+  "license": "CC-BY-4.0"
+}

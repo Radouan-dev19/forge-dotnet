@@ -1,0 +1,24 @@
+{
+    "schemaVersion":  1,
+    "id":  "interview-structures-window-sums-001",
+    "version":  1,
+    "title":  "Calculer des fenêtres glissantes",
+    "level":  "intermediate",
+    "durationMinutes":  5,
+    "skills":  [
+                   "structures.queue"
+               ],
+    "question":  "Comment résoudriez-vous « Calculer des fenêtres glissantes » et comment prouveriez-vous les bornes ?",
+    "observableCriteria":  [
+                               "Le contrat et une borne sont explicitement reformulés",
+                               "La complexité et un test de réfutation sont justifiés"
+                           ],
+    "modelAnswer":  "Ajouter l’entrant, retirer le sortant puis publier chaque fenêtre complète. La preuve comprend un cas nominal, une borne et un cas différent des exemples ; O(n) en temps et O(n) en espace résultat.",
+    "commonMistakes":  [
+                           "Réciter le code sans invariant ni méthode de test"
+                       ],
+    "variants":  [
+                     "Changer une borne ou le volume tout en conservant la même règle de calculer des fenêtres glissantes."
+                 ],
+    "license":  "CC-BY-4.0"
+}

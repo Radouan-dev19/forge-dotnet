@@ -1,0 +1,28 @@
+{
+    "schemaVersion":  1,
+    "cases":  [
+                  {
+                      "name":  "Hidden_Case1",
+                      "message":  "Borner une valeur — cas 1 hidden incorrect.",
+                      "arguments":  [
+                                        11,
+                                        1,
+                                        10
+                                    ],
+                      "expected":  10,
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_Case2",
+                      "message":  "Borner une valeur — cas 2 hidden incorrect.",
+                      "arguments":  [
+                                        2,
+                                        4,
+                                        3
+                                    ],
+                      "expectedException":  "ArgumentException",
+                      "argumentsUnchanged":  false
+                  }
+              ]
+}

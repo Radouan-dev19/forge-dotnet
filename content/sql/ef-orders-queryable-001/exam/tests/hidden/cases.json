@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "cases": [
+    {
+      "name": "ReturnsEmptyAboveMaximum",
+      "message": "Le filtre doit produire un ensemble vide au-delà du maximum.",
+      "arguments": [200],
+      "expected": "|true|0",
+      "expectedException": null,
+      "argumentsUnchanged": true
+    }
+  ]
+}

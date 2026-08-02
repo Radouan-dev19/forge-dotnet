@@ -1,0 +1,196 @@
+@page "/exams"
+@rendermode InteractiveServer
+@inject ExamService ExamService
+
+<PageTitle>Examens sans aide — Forge.NET</PageTitle>
+
+<h1>Examens sans aide</h1>
+<p class="notice">
+    L’échéance et la clôture sont contrôlées par le serveur. Le blocage du copier-coller ou le plein écran ne seraient que des frictions :
+    Forge.NET ne prétend pas surveiller votre poste, votre caméra ou vos autres applications.
+</p>
+
+@if (!string.IsNullOrWhiteSpace(_message))
+{
+    <p role="status" class="notice">@_message</p>
+}
+@if (!string.IsNullOrWhiteSpace(_error))
+{
+    <p role="alert" class="validation-message">@_error</p>
+}
+
+@if (_attempt is not null)
+{
+    <section class="info-panel" aria-labelledby="attempt-title">
+        <h2 id="attempt-title">@_attempt.Title — @_attempt.StatusLabel</h2>
+        <p><strong>Temps serveur restant au dernier contrôle :</strong> @_attempt.RemainingSeconds seconde(s)</p>
+        <p><strong>Fin UTC :</strong> @_attempt.DeadlineUtc.ToString("u")</p>
+        <p><strong>Tirage :</strong> @_attempt.DrawAlgorithm ; engagement <code>@_attempt.DrawCommitment</code>.</p>
+        <p>La reprise après actualisation est autorisée uniquement tant que l’état reste « en cours » et que l’échéance serveur n’est pas atteinte.</p>
+    </section>
+
+    @if (_attempt.Status == ExamAttemptStatus.Active)
+    {
+        @foreach (ExamItemView item in _attempt.Items)
+        {
+            <section class="info-panel" aria-labelledby="@($"item-{item.Position}")">
+                <h2 id="@($"item-{item.Position}")">@item.Position. @item.Title</h2>
+                <div class="lesson-markdown">@item.Statement</div>
+                @if (item.Constraints.Count > 0)
+                {
+                    <h3>Contraintes</h3>
+                    <ul>@foreach (string constraint in item.Constraints) { <li>@constraint</li> }</ul>
+                }
+                <label for="@($"source-{item.Position}")">@item.StarterFileName</label>
+                <textarea id="@($"source-{item.Position}")" rows="18" spellcheck="false"
+                          @bind="_sources[item.ItemId]" @bind:event="oninput"></textarea>
+                <button class="btn btn-primary" type="button" disabled="@_busy"
+                        @onclick="() => SubmitAsync(item.ItemId)">Soumettre sans afficher le résultat</button>
+                @if (item.HasSubmission)
+                {
+                    <p>Soumission(s) enregistrée(s) : @item.SubmissionCount. Le résultat reste privé jusqu’à la fin.</p>
+                }
+            </section>
+        }
+
+        <section class="info-panel" aria-labelledby="finish-title">
+            <h2 id="finish-title">Clôturer</h2>
+            <label><input type="checkbox" @bind="_assistanceDeclared" /> Je déclare avoir utilisé une aide extérieure.</label>
+            <p>Une aide déclarée est conservée et retire l’admissibilité à la maîtrise.</p>
+            <button class="btn btn-primary" type="button" disabled="@_busy" @onclick="FinishAsync">Terminer et afficher le rapport</button>
+            <button class="btn btn-secondary" type="button" disabled="@_busy" @onclick="AbandonAsync">Abandonner</button>
+        </section>
+    }
+    else if (_attempt.Report is not null)
+    {
+        <section class="info-panel" aria-labelledby="report-title">
+            <h2 id="report-title">Rapport après clôture</h2>
+            <p><strong>Score :</strong> @_attempt.Report.Score.ToString("0.##") / 100 — @(_attempt.Report.Passed ? "réussi" : "non réussi")</p>
+            <p><strong>Aide déclarée :</strong> @(_attempt.Report.AssistanceDeclared ? "oui — aucune preuve de maîtrise" : "non")</p>
+            <p><strong>Audit du tirage :</strong> seed <code>@_attempt.Report.DrawSeed</code>, engagement <code>@_attempt.Report.DrawCommitment</code>.</p>
+            @foreach (ExamItemReportView item in _attempt.Report.Items)
+            {
+                <article>
+                    <h3>@item.Title — @item.Score.ToString("0.##") / 100</h3>
+                    <p>@item.OutcomeLabel ; @item.PassedTests / @item.TotalTests tests réussis.</p>
+                    <p>Échecs cachés : @item.HiddenFailureCount. Aucun nom, attendu, code ou diagnostic caché n’est exposé.</p>
+                </article>
+            }
+        </section>
+        <button class="btn btn-secondary" type="button" @onclick="BackToHomeAsync">Retour à la liste</button>
+    }
+}
+else if (_home is null)
+{
+    <p role="status">Chargement de la banque compatible…</p>
+}
+else
+{
+    <section class="info-panel" aria-labelledby="bank-title">
+        <h2 id="bank-title">Banque disponible</h2>
+        @foreach (ExamSummaryView exam in _home.Exams)
+        {
+            <article>
+                <h3>@exam.Title</h3>
+                <p>@exam.DrawCount item(s) tiré(s) parmi @exam.CandidateCount ; @exam.DurationMinutes minutes ; seuil @exam.PassingScore.ToString("0.##") / 100.</p>
+                <button class="btn btn-primary" type="button" disabled="@_busy" @onclick="() => StartAsync(exam.Id)">Démarrer l’examen</button>
+            </article>
+        }
+    </section>
+    <section class="info-panel" aria-labelledby="history-title">
+        <h2 id="history-title">Historique</h2>
+        @if (_home.History.Count == 0)
+        {
+            <p>Aucun examen terminé ou abandonné.</p>
+        }
+        else
+        {
+            <ul>
+                @foreach (ExamAttemptSummaryView item in _home.History)
+                {
+                    <li><button type="button" class="btn btn-link" @onclick="() => OpenAsync(item.Id)">@item.Title — @item.StatusLabel — @(item.Score?.ToString("0.##") ?? "score indisponible")</button></li>
+                }
+            </ul>
+        }
+    </section>
+}
+
+@code {
+    private ExamHomeView? _home;
+    private ExamAttemptView? _attempt;
+    private readonly Dictionary<string, string> _sources = new(StringComparer.Ordinal);
+    private bool _assistanceDeclared;
+    private bool _busy;
+    private string? _message;
+    private string? _error;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _home = await ExamService.GetHomeAsync();
+        if (_home.ActiveAttempt is not null)
+        {
+            await OpenAsync(_home.ActiveAttempt.Id);
+        }
+    }
+
+    private async Task StartAsync(string examId) => await ExecuteAsync(async () =>
+    {
+        _attempt = await ExamService.StartAsync(examId);
+        InitializeSources();
+        _message = "Examen démarré. Les aides Forge.NET sont verrouillées jusqu’à la clôture ou l’échéance.";
+    });
+
+    private async Task OpenAsync(Guid attemptId) => await ExecuteAsync(async () =>
+    {
+        _attempt = await ExamService.GetAttemptAsync(attemptId);
+        InitializeSources();
+    });
+
+    private async Task SubmitAsync(string itemId) => await ExecuteAsync(async () =>
+    {
+        if (_attempt is null) return;
+        ExamSubmissionReceiptView receipt = await ExamService.SubmitAsync(
+            _attempt.Id,
+            _attempt.Version,
+            itemId,
+            _sources[itemId]);
+        _message = receipt.Message;
+        _attempt = await ExamService.GetAttemptAsync(_attempt.Id);
+        InitializeSources();
+    });
+
+    private async Task FinishAsync() => await ExecuteAsync(async () =>
+    {
+        if (_attempt is null) return;
+        _attempt = await ExamService.FinishAsync(_attempt.Id, _attempt.Version, _assistanceDeclared);
+        _message = "Examen clôturé atomiquement ; le rapport est maintenant disponible.";
+    });
+
+    private async Task AbandonAsync() => await ExecuteAsync(async () =>
+    {
+        if (_attempt is null) return;
+        _attempt = await ExamService.AbandonAsync(_attempt.Id, _attempt.Version);
+        _message = "Examen abandonné ; aucune réussite n’est attribuée.";
+    });
+
+    private async Task BackToHomeAsync() => await ExecuteAsync(async () =>
+    {
+        _attempt = null;
+        _home = await ExamService.GetHomeAsync();
+    });
+
+    private void InitializeSources()
+    {
+        if (_attempt is null) return;
+        foreach (ExamItemView item in _attempt.Items) _sources[item.ItemId] = item.SourceCode;
+    }
+
+    private async Task ExecuteAsync(Func<Task> action)
+    {
+        _busy = true;
+        _error = null;
+        try { await action(); }
+        catch (Exception exception) { _error = exception.Message; }
+        finally { _busy = false; }
+    }
+}

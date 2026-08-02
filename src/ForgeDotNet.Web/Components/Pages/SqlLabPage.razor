@@ -1,0 +1,251 @@
+@page "/sql-lab"
+@rendermode InteractiveServer
+@inject SqlLabService SqlLab
+@implements IAsyncDisposable
+
+<PageTitle>SqlLab — Forge.NET</PageTitle>
+
+<h1>SqlLab</h1>
+
+@if (_home is null || !_home.Available)
+{
+    <p class="notice" role="status">
+        Sans service SQL Server isolé disponible, SqlLab reste indisponible et n’affirme aucune validation automatique.
+    </p>
+}
+
+@if (_loading)
+{
+    <p role="status">Vérification du laboratoire SQL…</p>
+}
+else if (_home is null)
+{
+    <p class="error-message" role="alert">@_error</p>
+}
+else
+{
+    <section class="practice-panel" aria-labelledby="sql-lab-intro">
+        <h2 id="sql-lab-intro">Base SQL Server jetable</h2>
+        <p>@_home.SecurityNotice</p>
+        <p class="notice" role="status">@_home.StatusMessage</p>
+        <p>
+            Cette tranche fournit le moteur et un dataset technique minimal. Elle ne contient aucun des douze
+            scénarios pédagogiques prévus par l’incrément 06B.
+        </p>
+    </section>
+
+    @if (_error is not null)
+    {
+        <p class="error-message" role="alert">@_error</p>
+    }
+    @if (_status is not null)
+    {
+        <p class="success-message" role="status">@_status</p>
+    }
+
+    @if (!_home.Available)
+    {
+        <p>Le mode manuel n’affirme aucune validation SQL. Démarrez le service local documenté pour créer une session.</p>
+    }
+    else if (_session is null)
+    {
+        <button class="btn btn-primary" type="button" disabled="@_busy" @onclick="CreateSessionAsync">
+            Créer une session jetable
+        </button>
+    }
+    else
+    {
+        <section class="practice-panel" aria-labelledby="sql-session-title">
+            <h2 id="sql-session-title">Session génération @_session.Generation</h2>
+            <p>
+                Délai : @_session.Limits.TimeoutSeconds s · lignes : @_session.Limits.MaximumRows · résultat :
+                @_session.Limits.MaximumResultBytes octets. Chaque exécution est annulée transactionnellement.
+            </p>
+            <h3>Schéma visible</h3>
+            <pre class="practice-content">@_session.VisibleSchema</pre>
+
+            <div class="form-field">
+                <label for="sql-query">Requête SQL</label>
+                <textarea id="sql-query" class="code-editor" rows="12"
+                          maxlength="@_session.Limits.MaximumQueryCharacters"
+                          @bind="_query" @bind:event="oninput"></textarea>
+                <p class="field-help">
+                    Une seule instruction DML est acceptée. Les commandes serveur, accès inter-base et procédures
+                    externes restent refusés par le service et par les permissions SQL.
+                </p>
+            </div>
+
+            <label class="form-check">
+                <input type="checkbox" @bind="_validateReference" />
+                Comparer au résultat de référence (colonnes, valeurs et ordre)
+            </label>
+
+            <div class="practice-actions">
+                <button class="btn btn-primary" type="button" disabled="@_running" @onclick="ExecuteAsync">Exécuter</button>
+                @if (_running)
+                {
+                    <button class="btn btn-outline-secondary" type="button" @onclick="Cancel">Annuler</button>
+                }
+                <button class="btn btn-outline-secondary" type="button" disabled="@(_busy || _running)" @onclick="ResetAsync">Réinitialiser</button>
+                <button class="btn btn-outline-secondary" type="button" disabled="@(_busy || _running)" @onclick="DestroyAsync">Détruire</button>
+            </div>
+        </section>
+    }
+
+    @if (_result is not null)
+    {
+        <section class="practice-panel" aria-labelledby="sql-result-title">
+            <h2 id="sql-result-title">Résultat structuré</h2>
+            <p><strong>@_result.Status</strong> · @_result.ElapsedMilliseconds ms · diagnostic @_result.DiagnosticId</p>
+            <p>@_result.Message</p>
+            @if (_result.Columns.Count > 0)
+            {
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead><tr>@foreach (SqlLabColumn column in _result.Columns) { <th scope="col">@column.Name</th> }</tr></thead>
+                        <tbody>
+                            @foreach (IReadOnlyList<SqlLabCell> row in _result.Rows)
+                            {
+                                <tr>@foreach (SqlLabCell cell in row) { <td>@(cell.IsNull ? "NULL" : cell.Value)</td> }</tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+            @if (_result.Effects.Count > 0)
+            {
+                <h3>Effets observés avant rollback</h3>
+                <ul>@foreach (SqlLabEffectResult effect in _result.Effects) { <li>@effect.Name : @effect.Value</li> }</ul>
+            }
+            @if (_result.Validation is not null)
+            {
+                <h3>Validation serveur</h3>
+                <p>@(_result.Validation.Passed ? "Résultat conforme." : "Résultat non conforme.")</p>
+                <ul>@foreach (string issue in _result.Validation.Issues) { <li>@issue</li> }</ul>
+            }
+        </section>
+    }
+}
+
+@code {
+    private SqlLabHomeView? _home;
+    private SqlLabSessionView? _session;
+    private SqlLabRunView? _result;
+    private CancellationTokenSource? _executionCancellation;
+    private string _query = SqlLabService.DefaultQuery;
+    private string? _status;
+    private string? _error;
+    private bool _validateReference = true;
+    private bool _loading = true;
+    private bool _busy;
+    private bool _running;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            _home = await SqlLab.GetHomeAsync();
+            _query = _home.DefaultQuery;
+        }
+        catch (Exception exception)
+        {
+            _error = exception.Message;
+        }
+        finally
+        {
+            _loading = false;
+        }
+    }
+
+    private async Task CreateSessionAsync()
+    {
+        await RunMutationAsync(async () =>
+        {
+            _session = await SqlLab.CreateSessionAsync();
+            _status = "Session SQL jetable créée.";
+        });
+    }
+
+    private async Task ResetAsync()
+    {
+        if (_session is null) return;
+        await RunMutationAsync(async () =>
+        {
+            _session = await SqlLab.ResetSessionAsync(_session.Id);
+            _result = null;
+            _status = "Base détruite puis recréée depuis le dataset minimal.";
+        });
+    }
+
+    private async Task DestroyAsync()
+    {
+        if (_session is null) return;
+        await RunMutationAsync(async () =>
+        {
+            await SqlLab.DestroySessionAsync(_session.Id);
+            _session = null;
+            _result = null;
+            _status = "Session, login et base jetable détruits.";
+        });
+    }
+
+    private async Task ExecuteAsync()
+    {
+        if (_session is null || _running) return;
+        _executionCancellation?.Dispose();
+        _executionCancellation = new CancellationTokenSource();
+        _running = true;
+        _error = null;
+        _status = null;
+        try
+        {
+            _result = await SqlLab.ExecuteAsync(
+                _session.Id,
+                _query,
+                _validateReference,
+                _executionCancellation.Token);
+        }
+        catch (Exception exception)
+        {
+            _error = exception.Message;
+        }
+        finally
+        {
+            _running = false;
+            _executionCancellation.Dispose();
+            _executionCancellation = null;
+        }
+    }
+
+    private void Cancel() => _executionCancellation?.Cancel();
+
+    private async Task RunMutationAsync(Func<Task> action)
+    {
+        if (_busy) return;
+        _busy = true;
+        _error = null;
+        _status = null;
+        try
+        {
+            await action();
+        }
+        catch (Exception exception)
+        {
+            _error = exception.Message;
+        }
+        finally
+        {
+            _busy = false;
+        }
+    }
+
+    public async ValueTask DisposeAsync()
+    {
+        _executionCancellation?.Cancel();
+        _executionCancellation?.Dispose();
+        if (_session is not null)
+        {
+            await SqlLab.DestroySessionAsync(_session.Id);
+        }
+    }
+}

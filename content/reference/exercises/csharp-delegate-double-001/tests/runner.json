@@ -1,0 +1,12 @@
+{
+    "schemaVersion":  1,
+    "suiteId":  "csharp-delegate-double-001.v1",
+    "exerciseId":  "csharp-delegate-double-001",
+    "exerciseVersion":  1,
+    "typeName":  "Submission",
+    "methodName":  "DoubleAll",
+    "parameterTypes":  [
+                           "int[]"
+                       ],
+    "returnType":  "int[]"
+}

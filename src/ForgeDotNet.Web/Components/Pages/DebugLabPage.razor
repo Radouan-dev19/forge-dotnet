@@ -1,0 +1,298 @@
+@page "/debug-lab/{ScenarioId}"
+@inject DebugLabService DebugLab
+@inject IJSRuntime JavaScript
+@implements IDisposable
+
+<PageTitle>@(_activity?.Title ?? "DebugLab") — Forge.NET</PageTitle>
+
+@if (_loading)
+{
+    <h1>DebugLab</h1>
+    <p role="status">Chargement du scénario…</p>
+}
+else if (_activity is null)
+{
+    <h1>Scénario indisponible</h1>
+    <p class="error-message" role="alert">@_error</p>
+    <a href="debug-lab">Retour aux scénarios</a>
+}
+else
+{
+    <header class="practice-panel">
+        <p class="eyebrow">Scénario v@_activity.ScenarioVersion · difficulté @_activity.Difficulty</p>
+        <h1>@_activity.Title</h1>
+        <p><strong>@_activity.StateLabel</strong> · @_activity.EstimatedMinutes minutes · état v@_activity.Version</p>
+        <p class="notice" role="status">
+            La correction n’est autorisée qu’après une hypothèse et quatre observations de débogueur. Une réussite du
+            runner ne termine pas le scénario tant que la cause racine n’est pas démontrée.
+        </p>
+    </header>
+
+    @if (_status is not null) { <p class="success-message" role="status">@_status</p> }
+    @if (_error is not null) { <p class="error-message" role="alert">@_error</p> }
+
+    <section class="practice-panel" aria-labelledby="ticket-title">
+        <h2 id="ticket-title">1. Reproduire</h2>
+        <h3>Ticket</h3>
+        <pre class="practice-content">@_activity.Ticket</pre>
+        <h3>Comportement attendu</h3>
+        <p>@_activity.ExpectedBehavior</p>
+        <h3>Logs initiaux expurgés</h3>
+        <pre class="runner-output">@_activity.SanitizedLogs</pre>
+        <h3>Checklist</h3>
+        <ul>@foreach (string item in _activity.Checklist) { <li>@item</li> }</ul>
+        <h3>Projet cassé confiné</h3>
+        <textarea class="code-editor" rows="12" readonly aria-label="Code cassé initial">@_activity.BrokenSource</textarea>
+    </section>
+
+    <section class="practice-panel" aria-labelledby="investigation-title">
+        <h2 id="investigation-title">2. Observer et formuler une hypothèse</h2>
+        <ul>@foreach (string question in _activity.ObservationQuestions) { <li>@question</li> }</ul>
+        @if (_activity.CanInvestigate)
+        {
+            <EditForm Model="_investigation" OnSubmit="SaveInvestigationAsync" FormName="debug-investigation">
+                <DebugTextArea Id="debug-symptom" Label="Symptôme reproduit" @bind-Value="_investigation.Symptom" />
+                <DebugTextArea Id="debug-context" Label="Contexte exact" @bind-Value="_investigation.Context" />
+                <DebugTextArea Id="debug-hypotheses" Label="Hypothèses" @bind-Value="_investigation.Hypotheses" />
+                <DebugTextArea Id="debug-evidence" Label="Preuves observées" @bind-Value="_investigation.Evidence" />
+                <DebugTextArea Id="debug-breakpoint" Label="Breakpoint" @bind-Value="_investigation.Breakpoint" />
+                <DebugTextArea Id="debug-watch" Label="Watch" @bind-Value="_investigation.Watch" />
+                <DebugTextArea Id="debug-locals" Label="Locals" @bind-Value="_investigation.Locals" />
+                <DebugTextArea Id="debug-callstack" Label="Call Stack" @bind-Value="_investigation.CallStack" />
+                <button class="btn btn-primary" type="submit" disabled="@_busy">Figer l’investigation</button>
+            </EditForm>
+        }
+        else
+        {
+            <dl class="practice-reflection-summary">
+                <dt>Symptôme</dt><dd>@_activity.Journal.Symptom</dd>
+                <dt>Contexte</dt><dd>@_activity.Journal.Context</dd>
+                <dt>Hypothèses</dt><dd>@_activity.Journal.Hypotheses</dd>
+                <dt>Preuves</dt><dd>@_activity.Journal.Evidence</dd>
+                <dt>Breakpoint</dt><dd>@_activity.Observations?.Breakpoint</dd>
+                <dt>Watch</dt><dd>@_activity.Observations?.Watch</dd>
+                <dt>Locals</dt><dd>@_activity.Observations?.Locals</dd>
+                <dt>Call Stack</dt><dd>@_activity.Observations?.CallStack</dd>
+            </dl>
+        }
+    </section>
+
+    @if (_activity.State == DebugLabState.CorrectionReady)
+    {
+        <section class="practice-panel" aria-labelledby="correction-title">
+            <h2 id="correction-title">3. Corriger et empêcher la régression</h2>
+            <pre class="practice-content">@_activity.RegressionTestInstructions</pre>
+            <EditForm Model="_preparation" OnSubmit="PrepareCorrectionAsync" FormName="debug-preparation">
+                <DebugTextArea Id="debug-fix" Label="Correction proposée et justification" @bind-Value="_preparation.Fix" />
+                <DebugTextArea Id="debug-test" Label="Test de non-régression écrit avant exécution" @bind-Value="_preparation.RegressionTest" />
+                <button class="btn btn-outline-secondary" type="submit" disabled="@_busy">Enregistrer correction et test</button>
+            </EditForm>
+            <div class="form-field">
+                <label for="debug-source">Submission.cs corrigé</label>
+                <textarea id="debug-source" class="code-editor" rows="16" maxlength="65536" @bind="_source" @bind:event="oninput"></textarea>
+            </div>
+            <button class="btn btn-primary" type="button" disabled="@(_runnerBusy || !_activity.CanRunCorrection)" @onclick="RunCorrectionAsync">
+                Exécuter la correction et la non-régression
+            </button>
+            @if (_runnerBusy)
+            {
+                <button class="btn btn-outline-secondary" type="button" @onclick="CancelRunner">Annuler</button>
+            }
+            @if (!_activity.CanRunCorrection)
+            {
+                <p class="field-help">Décrivez d’abord la correction et son test ; une correction sans test est refusée côté serveur.</p>
+            }
+        </section>
+    }
+
+    @if (_runnerResult is not null)
+    {
+        <section class="practice-panel" aria-labelledby="runner-result-title">
+            <h2 id="runner-result-title">Résultat isolé</h2>
+            <RunnerResultPanel Result="_runnerResult" />
+        </section>
+    }
+
+    @if (_activity.Attempts.Count > 0)
+    {
+        <section class="practice-panel" aria-labelledby="attempts-title">
+            <h2 id="attempts-title">Historique sans code source</h2>
+            <ol class="practice-history">
+                @foreach (DebugCorrectionAttemptView attempt in _activity.Attempts)
+                {
+                    <li>@attempt.OutcomeLabel · @attempt.PassedTests/@attempt.TotalTests tests · diagnostic @attempt.DiagnosticReference</li>
+                }
+            </ol>
+        </section>
+    }
+
+    @if (_activity.CanComplete)
+    {
+        <section class="practice-panel" aria-labelledby="root-cause-title">
+            <h2 id="root-cause-title">4. Démontrer la cause racine</h2>
+            <p>La grille privée évalue la cause et son lien avec les preuves ; elle n’attribue aucun score de maîtrise.</p>
+            <EditForm Model="_conclusion" OnSubmit="CompleteAsync" FormName="debug-conclusion">
+                <DebugTextArea Id="debug-cause" Label="Cause racine" @bind-Value="_conclusion.Cause" />
+                <DebugTextArea Id="debug-prevention" Label="Prévention" @bind-Value="_conclusion.Prevention" />
+                <button class="btn btn-primary" type="submit" disabled="@_busy">Évaluer et terminer le cycle</button>
+            </EditForm>
+        </section>
+    }
+
+    @if (_activity.CanViewSolution)
+    {
+        <section class="practice-panel" aria-labelledby="solution-title">
+            <h2 id="solution-title">Solution protégée</h2>
+            <p>La consultation après deux corrections échouées clôt la tentative comme non terminée.</p>
+            <button class="btn btn-outline-secondary" type="button" disabled="@_busy" @onclick="ViewSolutionAsync">Consulter la solution</button>
+        </section>
+    }
+    @if (_activity.ProtectedSolution is not null)
+    {
+        <section class="practice-panel">
+            <h2>Solution consultée — scénario non terminé</h2>
+            <pre class="practice-content">@_activity.ProtectedSolution</pre>
+        </section>
+    }
+
+    @if (_activity.State == DebugLabState.Completed)
+    {
+        <section class="practice-panel" aria-labelledby="evaluation-title">
+            <h2 id="evaluation-title">Cycle terminé</h2>
+            <ul>@foreach (DebugRubricResult result in _activity.EvaluationResults) { <li>@result.Label — validé</li> }</ul>
+        </section>
+    }
+
+    <section class="practice-panel" aria-labelledby="journal-title">
+        <h2 id="journal-title">Journal lisible et exportable</h2>
+        <p>Cause : @_activity.Journal.Cause</p>
+        <p>Correction : @_activity.Journal.Fix</p>
+        <p>Test : @_activity.Journal.Test</p>
+        <p>Prévention : @_activity.Journal.Prevention</p>
+        <button class="btn btn-outline-secondary" type="button" disabled="@_busy" @onclick="ExportJournalAsync">Exporter en Markdown</button>
+        <p class="field-help">Aucun chemin hôte, test caché, code de solution ou code soumis n’est inclus dans l’export.</p>
+        <a href="debug-lab">Retour aux scénarios</a>
+    </section>
+}
+
+@code {
+    [Parameter] public string ScenarioId { get; set; } = string.Empty;
+
+    private readonly InvestigationForm _investigation = new();
+    private readonly PreparationForm _preparation = new();
+    private readonly ConclusionForm _conclusion = new();
+    private DebugLabActivityView? _activity;
+    private CodeRunResult? _runnerResult;
+    private CancellationTokenSource? _runnerCancellation;
+    private string _source = string.Empty;
+    private string? _status;
+    private string? _error;
+    private bool _loading = true;
+    private bool _busy;
+    private bool _runnerBusy;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        _loading = true;
+        try
+        {
+            _activity = await DebugLab.GetOrStartAsync(ScenarioId);
+            if (string.IsNullOrWhiteSpace(_source)) _source = _activity.BrokenSource;
+            CopyJournal();
+            _error = null;
+        }
+        catch (Exception exception) { _activity = null; _error = exception.Message; }
+        finally { _loading = false; }
+    }
+
+    private Task SaveInvestigationAsync() => ExecuteAsync(() => DebugLab.SaveInvestigationAsync(
+        ScenarioId, _activity!.Version,
+        new DebugInvestigationInput(_investigation.Symptom, _investigation.Context, _investigation.Hypotheses,
+            _investigation.Evidence, _investigation.Breakpoint, _investigation.Watch, _investigation.Locals, _investigation.CallStack)).AsTask(),
+        "Investigation figée ; la correction est maintenant autorisée.");
+
+    private Task PrepareCorrectionAsync() => ExecuteAsync(() => DebugLab.PrepareCorrectionAsync(
+        ScenarioId, _activity!.Version,
+        new DebugCorrectionPreparationInput(_preparation.Fix, _preparation.RegressionTest)).AsTask(),
+        "Correction et test de non-régression enregistrés.");
+
+    private async Task RunCorrectionAsync()
+    {
+        if (_activity is null || _runnerBusy) return;
+        _runnerCancellation?.Dispose();
+        _runnerCancellation = new CancellationTokenSource();
+        _runnerBusy = true;
+        try
+        {
+            DebugCorrectionRunResult result = await DebugLab.RunCorrectionAsync(
+                ScenarioId, _activity.Version, _source, _runnerCancellation.Token);
+            _activity = result.Activity;
+            _runnerResult = result.RunnerResult;
+            _status = result.RunnerResult.Status == CodeRunStatus.Succeeded
+                ? "Correction validée ; expliquez maintenant la cause racine."
+                : "La correction n’a pas satisfait la non-régression ; poursuivez l’investigation.";
+            _error = null;
+        }
+        catch (Exception exception) { _status = null; _error = exception.Message; }
+        finally
+        {
+            _runnerBusy = false;
+            _runnerCancellation.Dispose();
+            _runnerCancellation = null;
+        }
+    }
+
+    private Task CompleteAsync() => ExecuteAsync(() => DebugLab.CompleteAsync(
+        ScenarioId, _activity!.Version, _conclusion.Cause, _conclusion.Prevention).AsTask(),
+        "Cause racine validée : le cycle complet est terminé.");
+
+    private Task ViewSolutionAsync() => ExecuteAsync(() => DebugLab.ViewSolutionAsync(
+        ScenarioId, _activity!.Version).AsTask(),
+        "Solution consultée ; le scénario reste explicitement non terminé.");
+
+    private async Task ExportJournalAsync()
+    {
+        try
+        {
+            string markdown = await DebugLab.ExportJournalMarkdownAsync(ScenarioId);
+            using var stream = new MemoryStream(System.Text.Encoding.UTF8.GetBytes(markdown), writable: false);
+            using var reference = new DotNetStreamReference(stream);
+            await JavaScript.InvokeVoidAsync("forgeDownloads.downloadFileFromStream", $"journal-{ScenarioId}.md", reference);
+            _status = "Journal Markdown exporté sans contenu privé.";
+            _error = null;
+        }
+        catch (Exception exception) { _status = null; _error = exception.Message; }
+    }
+
+    private void CancelRunner() => _runnerCancellation?.Cancel();
+
+    private async Task ExecuteAsync(Func<Task<DebugLabActivityView>> operation, string message)
+    {
+        if (_busy) return;
+        _busy = true;
+        try { _activity = await operation(); _status = message; _error = null; CopyJournal(); }
+        catch (Exception exception) { _status = null; _error = exception.Message; }
+        finally { _busy = false; }
+    }
+
+    private void CopyJournal()
+    {
+        if (_activity is null) return;
+        _preparation.Fix = _activity.Journal.Fix;
+        _preparation.RegressionTest = _activity.Journal.Test;
+        _conclusion.Cause = _activity.Journal.Cause;
+        _conclusion.Prevention = _activity.Journal.Prevention;
+    }
+
+    public void Dispose() { _runnerCancellation?.Cancel(); _runnerCancellation?.Dispose(); }
+
+    private sealed class InvestigationForm
+    {
+        public string Symptom { get; set; } = ""; public string Context { get; set; } = "";
+        public string Hypotheses { get; set; } = ""; public string Evidence { get; set; } = "";
+        public string Breakpoint { get; set; } = ""; public string Watch { get; set; } = "";
+        public string Locals { get; set; } = ""; public string CallStack { get; set; } = "";
+    }
+    private sealed class PreparationForm { public string Fix { get; set; } = ""; public string RegressionTest { get; set; } = ""; }
+    private sealed class ConclusionForm { public string Cause { get; set; } = ""; public string Prevention { get; set; } = ""; }
+}

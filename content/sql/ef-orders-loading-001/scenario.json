@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "id": "ef-orders-loading-001",
+  "version": 1,
+  "title": "Détecter puis supprimer un N+1",
+  "difficulty": 3,
+  "skills": ["ef.loading", "ef.n-plus-one"],
+  "prerequisites": ["ef-orders-queryable-001"],
+  "estimatedMinutes": 45,
+  "image": "mcr.microsoft.com/mssql/server@sha256:b1395aa51b4ec39981883560f1379ea9eba2a1c0719bf8e6477902769316bb79",
+  "datasetPath": "dataset.sql",
+  "visibleSchemaPath": "schema.sql",
+  "permissions": ["select"],
+  "resetScriptPath": "reset.sql",
+  "statementPath": "statement.md",
+  "expectedResult": {
+    "ordered": true,
+    "columns": ["CustomerId", "CustomerName", "OrderCount"],
+    "numericTolerance": 0
+  },
+  "timeoutSeconds": 10,
+  "maxRows": 20,
+  "effectAssertions": [
+    "Les trois clients et leurs nombres de commandes sont produits par une seule commande SQL",
+    "Le test négatif détecte au moins une commande supplémentaire par client"
+  ],
+  "solutionPath": "solution.md",
+  "license": "CC-BY-4.0"
+}

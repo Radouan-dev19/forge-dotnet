@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "id": "invalid-type",
+  "version": 1,
+  "title": "Parcours au type invalide",
+  "description": "Cette fixture fournit une chaîne là où un entier est requis.",
+  "weeks": "vingt-quatre",
+  "modules": [],
+  "license": "CC-BY-4.0"
+}

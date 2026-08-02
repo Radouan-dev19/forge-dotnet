@@ -1,0 +1,46 @@
+{
+  "schemaVersion": 1,
+  "id": "csharp-array-differences-001",
+  "version": 1,
+  "title": "Calculer les écarts successifs",
+  "kind": "csharp",
+  "difficulty": 2,
+  "skills": ["csharp.arrays", "csharp.loops", "logic.edge-cases"],
+  "prerequisites": ["csharp-method-multiples-001"],
+  "estimatedMinutes": 35,
+  "statement": "statement.md",
+  "constraints": [
+    "Conserver exactement la signature publique demandée",
+    "Ne pas modifier le tableau reçu",
+    "Retourner un nouveau tableau de longueur values.Length moins un",
+    "Refuser null avec ArgumentNullException"
+  ],
+  "examples": [
+    { "input": "[3, 8, 6, 10]", "output": "[5, -2, 4]" },
+    { "input": "[7]", "output": "[]" },
+    { "input": "[-2, -5]", "output": "[-3]" }
+  ],
+  "reflectionFields": ["reformulation", "inputs", "expectedOutput", "edgeCases", "hypothesis", "plan"],
+  "starterPath": "starter/",
+  "visibleTestsPath": "tests/visible/",
+  "hiddenTestsPath": "tests/hidden/",
+  "hints": [
+    { "level": 1, "kind": "socratic", "content": "Combien d’écarts existe-t-il entre n valeurs, et quels deux index produisent l’écart numéro i ?" },
+    { "level": 2, "kind": "location", "content": "Calcule la taille du résultat avant la boucle, puis relie result[i] à values[i] et values[i + 1]." },
+    { "level": 3, "kind": "strategy", "content": "Traite null, alloue Math.Max(0, longueur - 1), puis soustrais chaque valeur de la suivante." },
+    { "level": 4, "kind": "partial-pseudocode", "content": "si values est null lever erreur ; résultat taille max(0, n-1) ; pour i valide, résultat[i] = values[i+1] - values[i]" }
+  ],
+  "solution": { "path": "solution/", "unlock": { "seriousAttempts": 2, "minimumDelayMinutes": 10 } },
+  "explanation": "explanation.md",
+  "complexity": "O(n) en temps et O(n) pour le tableau résultat",
+  "commonMistakes": [
+    "Allouer un résultat de la même longueur que l’entrée",
+    "Dépasser le dernier index avec i plus un",
+    "Inverser l’ordre de la soustraction",
+    "Réutiliser et modifier le tableau reçu"
+  ],
+  "variantId": "csharp-list-distinct-001",
+  "reviewCards": ["card-array-adjacent-001", "card-array-immutability-001"],
+  "interviewQuestionId": "interview-array-differences-001",
+  "license": "CC-BY-4.0"
+}

@@ -1,0 +1,14 @@
+{
+  "week": 9,
+  "family": "monthly-cte-aggregation",
+  "mode": "sql",
+  "datasetRevision": "s1-s10-orders-v1",
+  "expectedRows": [["2026-01","25"],["2026-02","110"],["2026-03","115"]],
+  "equivalentQuery": "WITH Monthly AS (SELECT CONVERT(char(7), OrderDate, 126) AS MonthKey, SUM(Total) AS Total FROM dbo.Orders GROUP BY CONVERT(char(7), OrderDate, 126)) SELECT MonthKey, Total FROM Monthly ORDER BY MonthKey;",
+  "negativeQuery": "SELECT CustomerId FROM dbo.Customers WHERE 1 = 0;",
+  "dirtySql": "UPDATE dbo.Orders SET Total = 0 WHERE OrderId = 5;",
+  "resetProbeSql": "SELECT Total FROM dbo.Orders WHERE OrderId = 5;",
+  "resetExpected": "100.00",
+  "planIndex": null,
+  "stabilityMutationSql": null
+}

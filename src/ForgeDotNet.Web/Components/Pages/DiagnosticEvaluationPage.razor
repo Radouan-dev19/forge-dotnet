@@ -1,0 +1,160 @@
+@page "/diagnostic/session/{SessionId:guid}/evaluation"
+@inject DiagnosticEvaluationService Evaluations
+
+<PageTitle>Évaluation du diagnostic — Forge.NET</PageTitle>
+
+<h1>Évaluation du diagnostic</h1>
+
+@if (_isLoading)
+{
+    <p role="status">Calcul ou chargement du rapport figé…</p>
+}
+else if (_evaluation is null)
+{
+    <p class="error-message" role="alert">@_error</p>
+    <a href="diagnostic/session/@SessionId">Retour à la session</a>
+}
+else
+{
+    <section class="diagnostic-evaluation-summary" aria-labelledby="evaluation-summary-title">
+        <h2 id="evaluation-summary-title">Synthèse prudente</h2>
+        <p class="diagnostic-score"><strong>@FormatScore(_evaluation.Score) / 100</strong></p>
+        <dl class="summary-list">
+            <dt>Intervalle d'incertitude</dt>
+            <dd>@FormatScore(_evaluation.LowerBound) à @FormatScore(_evaluation.UpperBound)</dd>
+            <dt>Confiance</dt>
+            <dd>@ConfidenceLabel(_evaluation.Confidence)</dd>
+            <dt>Niveau prudent</dt>
+            <dd>@LevelLabel(_evaluation.Level)</dd>
+            <dt>Couverture</dt>
+            <dd>@FormatScore(_evaluation.Reliability.CoveragePercent) %</dd>
+        </dl>
+        <p>
+            Ce résultat décrit uniquement cette collecte de questions. Il ne constitue ni une preuve de maîtrise,
+            ni une certification, ni une appréciation d'employabilité.
+        </p>
+        @if (_evaluation.IsProvisional)
+        {
+            <p class="notice" role="status">
+                Rapport provisoire : la collecte est incomplète ou le mode réduit ne fournit qu'un repère par domaine.
+            </p>
+        }
+    </section>
+
+    <section class="diagnostic-evaluation-details" aria-labelledby="domain-results-title">
+        <h2 id="domain-results-title">Carte des domaines</h2>
+        <p>Chaque domaine reste visible séparément ; une moyenne globale ne masque pas une faiblesse critique.</p>
+        <ul class="diagnostic-domain-results">
+            @foreach (DiagnosticDomainEvaluationView domain in _evaluation.Domains)
+            {
+                <li>
+                    <h3>@domain.DisplayName @(domain.IsCritical ? "— critique" : string.Empty)</h3>
+                    <p><strong>@FormatScore(domain.Score) / 100</strong> · intervalle @FormatScore(domain.LowerBound)–@FormatScore(domain.UpperBound)</p>
+                    <p>@domain.AnsweredQuestionCount/@domain.PlannedQuestionCount réponse(s), @domain.CorrectAnswerCount correcte(s).</p>
+                </li>
+            }
+        </ul>
+    </section>
+
+    <section class="diagnostic-evaluation-gaps" aria-labelledby="critical-gaps-title">
+        <h2 id="critical-gaps-title">Lacunes critiques</h2>
+        @if (_evaluation.CriticalGaps.Count == 0)
+        {
+            <p>Aucune lacune critique n'est identifiée par ce barème. Les intervalles et limites restent applicables.</p>
+        }
+        else
+        {
+            <ul>
+                @foreach (DiagnosticCriticalGapView gap in _evaluation.CriticalGaps)
+                {
+                    <li><strong>@gap.DisplayName</strong> — @GapLabel(gap)</li>
+                }
+            </ul>
+        }
+    </section>
+
+    <section class="diagnostic-evaluation-reliability" aria-labelledby="reliability-title">
+        <h2 id="reliability-title">Fiabilité de la mesure</h2>
+        <ul>
+            <li>Collecte complète : @YesNo(_evaluation.Reliability.CollectionComplete)</li>
+            <li>Tous les domaines observés : @YesNo(_evaluation.Reliability.AllDomainsObserved)</li>
+            <li>Profondeur du diagnostic initial : @YesNo(_evaluation.Reliability.FullInitialDepth)</li>
+        </ul>
+    </section>
+
+    <section class="diagnostic-evaluation-limits" aria-labelledby="limits-title">
+        <h2 id="limits-title">Limites</h2>
+        <ul>
+            <li>Le mode réduit ne contient qu'une question intermédiaire par domaine.</li>
+            <li>Le diagnostic n'observe pas encore la production de code, la rétention ni le travail sans aide.</li>
+            <li>Les réponses attendues et les questions corrigées ne sont pas exposées dans ce rapport.</li>
+            <li>Le plan personnalisé est une proposition distincte, versionnée et explicitement acceptée.</li>
+        </ul>
+        <p class="field-help">
+            Barème @_evaluation.RubricId v@_evaluation.RubricVersion · rapport figé le @_evaluation.CreatedAtUtc.ToLocalTime().ToString("g").
+        </p>
+    </section>
+
+    <div class="actions">
+        <a class="btn btn-outline-secondary" href="diagnostic/session/@SessionId">Retour à la collecte</a>
+        <a class="btn btn-outline-secondary" href="diagnostic">Retour au diagnostic</a>
+        <a class="btn btn-primary" href="plan/@SessionId">Créer ou voir le plan</a>
+    </div>
+}
+
+@code {
+    [Parameter]
+    public Guid SessionId { get; set; }
+
+    private DiagnosticEvaluationView? _evaluation;
+    private bool _isLoading = true;
+    private string? _error;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        _isLoading = true;
+        try
+        {
+            _evaluation = await Evaluations.GetOrCreateAsync(SessionId);
+            _error = null;
+        }
+        catch (Exception exception)
+        {
+            _evaluation = null;
+            _error = exception.Message;
+        }
+        finally
+        {
+            _isLoading = false;
+        }
+    }
+
+    private static string FormatScore(decimal score) => score.ToString("0.0");
+
+    private static string YesNo(bool value) => value ? "oui" : "non";
+
+    private static string ConfidenceLabel(DiagnosticConfidence confidence) => confidence switch
+    {
+        DiagnosticConfidence.Insufficient => "insuffisante",
+        DiagnosticConfidence.Low => "faible",
+        DiagnosticConfidence.Moderate => "modérée",
+        _ => throw new ArgumentOutOfRangeException(nameof(confidence)),
+    };
+
+    private static string LevelLabel(DiagnosticLevel level) => level switch
+    {
+        DiagnosticLevel.EvidenceInsufficient => "preuves insuffisantes",
+        DiagnosticLevel.FoundationsToStrengthen => "fondamentaux à renforcer",
+        DiagnosticLevel.Developing => "repères en développement",
+        DiagnosticLevel.OperationalToConfirm => "repères opérationnels à confirmer",
+        DiagnosticLevel.StrongToConfirm => "repères solides à confirmer",
+        _ => throw new ArgumentOutOfRangeException(nameof(level)),
+    };
+
+    private static string GapLabel(DiagnosticCriticalGapView gap) => gap.Reason switch
+    {
+        DiagnosticCriticalGapReason.MissingEvidence => "aucune réponse exploitable dans ce domaine",
+        DiagnosticCriticalGapReason.ScoreBelowThreshold => $"score {FormatScore(gap.Score)}, sous le seuil critique du barème",
+        _ => throw new ArgumentOutOfRangeException(nameof(gap)),
+    };
+}

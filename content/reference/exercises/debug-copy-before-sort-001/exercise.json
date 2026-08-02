@@ -1,0 +1,81 @@
+{
+    "schemaVersion":  1,
+    "id":  "debug-copy-before-sort-001",
+    "version":  1,
+    "title":  "Préserver les données observées",
+    "kind":  "csharp",
+    "difficulty":  2,
+    "skills":  [
+                   "debugging.breakpoints"
+               ],
+    "prerequisites":  [
+                          "debug-stacktraces-breakpoints-001"
+                      ],
+    "estimatedMinutes":  30,
+    "statement":  "statement.md",
+    "constraints":  [
+                        "Conserver exactement la signature publique",
+                        "Trier uniquement une copie afin que Watch et l’appelant conservent l’état initial.",
+                        "Ne pas modifier les entrées reçues sauf mention explicite"
+                    ],
+    "examples":  [
+                     {
+                         "input":  "[{\"value\":[[3,1]],\"Count\":1},{\"value\":[1,3],\"Count\":2}]",
+                         "output":  "[{\"value\":[[]],\"Count\":1},{\"value\":[],\"Count\":0}]"
+                     }
+                 ],
+    "reflectionFields":  [
+                             "reformulation",
+                             "inputs",
+                             "expectedOutput",
+                             "edgeCases",
+                             "hypothesis",
+                             "plan"
+                         ],
+    "starterPath":  "starter/",
+    "visibleTestsPath":  "tests/visible/",
+    "hiddenTestsPath":  "tests/hidden/",
+    "hints":  [
+                  {
+                      "level":  1,
+                      "kind":  "socratic",
+                      "content":  "Quel invariant de « Préserver les données observées » doit rester vrai pour les cas limites ?"
+                  },
+                  {
+                      "level":  2,
+                      "kind":  "location",
+                      "content":  "Concentrez la décision dans la méthode SortedCopy, sans état global."
+                  },
+                  {
+                      "level":  3,
+                      "kind":  "strategy",
+                      "content":  "Trier uniquement une copie afin que Watch et l’appelant conservent l’état initial."
+                  },
+                  {
+                      "level":  4,
+                      "kind":  "partial-pseudocode",
+                      "content":  "valider les bornes ; parcourir ou décider ; retourner un nouveau résultat déterministe"
+                  }
+              ],
+    "solution":  {
+                     "path":  "solution/",
+                     "unlock":  {
+                                    "seriousAttempts":  2,
+                                    "minimumDelayMinutes":  10
+                                }
+                 },
+    "explanation":  "explanation.md",
+    "complexity":  "O(n log n) en temps et O(n) en espace",
+    "commonMistakes":  [
+                           "Coder uniquement les exemples visibles",
+                           "Oublier une borne ou modifier une entrée",
+                           "Annoncer une complexité sans compter les opérations dominantes"
+                       ],
+    "variantId":  "reference-total-001",
+    "reviewCards":  [
+                        "card-debug-copy-before-sort-001-rule",
+                        "card-debug-copy-before-sort-001-edge"
+                    ],
+    "interviewQuestionId":  "interview-debug-copy-before-sort-001",
+    "license":  "CC-BY-4.0"
+}

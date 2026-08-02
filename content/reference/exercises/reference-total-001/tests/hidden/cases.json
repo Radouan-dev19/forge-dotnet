@@ -1,0 +1,27 @@
+{
+    "schemaVersion":  1,
+    "cases":  [
+                  {
+                      "name":  "Hidden_Case1",
+                      "message":  "Additionner deux montants — cas 1 hidden incorrect.",
+                      "arguments":  [
+                                        0.01,
+                                        0.02
+                                    ],
+                      "expected":  0.03,
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_Case2",
+                      "message":  "Additionner deux montants — cas 2 hidden incorrect.",
+                      "arguments":  [
+                                        999.99,
+                                        0.01
+                                    ],
+                      "expected":  1000,
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  }
+              ]
+}

@@ -1,0 +1,25 @@
+{
+    "schemaVersion":  1,
+    "cases":  [
+                  {
+                      "name":  "Hidden_Case1",
+                      "message":  "Extraire la première frame applicative — cas 1 hidden incorrect.",
+                      "arguments":  [
+                                        "at Forge.A\nat Forge.B"
+                                    ],
+                      "expected":  "at Forge.A",
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_Case2",
+                      "message":  "Extraire la première frame applicative — cas 2 hidden incorrect.",
+                      "arguments":  [
+                                        "at System.X"
+                                    ],
+                      "expected":  "",
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  }
+              ]
+}

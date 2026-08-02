@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "id": "english-ticket-001",
+  "version": 1,
+  "title": "Clarifier un ticket en anglais",
+  "level": "B1",
+  "durationMinutes": 15,
+  "skills": [
+    "english.clarification"
+  ],
+  "situation": "Un critère d'acceptation est ambigu et bloque l'implémentation d'une correction.",
+  "instructions": [
+    "Rédiger une question polie qui précise le comportement attendu"
+  ],
+  "vocabulary": [
+    {
+      "term": "expected behavior",
+      "meaning": "comportement attendu"
+    },
+    {
+      "term": "edge case",
+      "meaning": "cas limite"
+    }
+  ],
+  "expectedElements": [
+    "Une reformulation du problème",
+    "Une question portant sur le cas limite"
+  ],
+  "modelAnswer": "Could you confirm the expected behavior when the order contains no item? I currently understand that the total should be zero.",
+  "commonMistakes": [
+    "Formuler une affirmation sans demander de confirmation"
+  ],
+  "variants": [
+    "Demander si le même comportement s'applique à une commande annulée"
+  ],
+  "license": "CC-BY-4.0"
+}

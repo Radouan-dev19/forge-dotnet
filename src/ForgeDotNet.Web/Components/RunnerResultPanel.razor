@@ -1,0 +1,110 @@
+<article class="runner-result" aria-label="Résultat du runner @Result.RequestId">
+    <header>
+        <h4>@StatusLabel(Result.Status)</h4>
+        <p>@Result.Summary</p>
+        <p class="field-help">
+            Référence de diagnostic : @Result.DiagnosticId.ToString("N")[..12] ·
+            @Result.CompletedAtUtc.ToLocalTime().ToString("g")
+        </p>
+    </header>
+
+    <div class="runner-stage-grid">
+        <section aria-label="Compilation">
+            <h5>Compilation</h5>
+            <p><strong>@StageLabel(Result.Compilation.Status)</strong></p>
+            @if (Result.Compilation.Diagnostics.Count > 0)
+            {
+                <ul>
+                    @foreach (CodeRunnerDiagnostic diagnostic in Result.Compilation.Diagnostics)
+                    {
+                        <li>
+                            @SeverityLabel(diagnostic.Severity) @diagnostic.Code : @diagnostic.Message
+                            @if (diagnostic.FileName is not null)
+                            {
+                                <span> — @diagnostic.FileName@(diagnostic.Line is null ? string.Empty : $":{diagnostic.Line}:{diagnostic.Column}")</span>
+                            }
+                        </li>
+                    }
+                </ul>
+            }
+            @if (Result.Compilation.Output.Text.Length > 0)
+            {
+                <pre class="runner-output">@Result.Compilation.Output.Text</pre>
+                @if (Result.Compilation.Output.IsTruncated)
+                {
+                    <p class="field-help">Sortie tronquée à la limite contractuelle.</p>
+                }
+            }
+        </section>
+
+        <section aria-label="Tests">
+            <h5>Tests</h5>
+            <p><strong>@StageLabel(Result.Tests.Status)</strong></p>
+            @if (Result.Tests.Status is CodeRunStageStatus.Succeeded or CodeRunStageStatus.Failed)
+            {
+                <p>
+                    Total : @Result.Tests.TotalCount · réussis : @Result.Tests.PassedCount ·
+                    échecs : @Result.Tests.FailedCount
+                </p>
+            }
+            @if (Result.Tests.VisibleFailures.Count > 0)
+            {
+                <ul>
+                    @foreach (VisibleTestFailure failure in Result.Tests.VisibleFailures)
+                    {
+                        <li><strong>@failure.Name</strong> — @failure.Message</li>
+                    }
+                </ul>
+            }
+            @if (Result.Tests.HiddenFailuresRedacted)
+            {
+                <p class="notice" role="status">
+                    @Result.Tests.HiddenFailureCount échec(s) caché(s) signalé(s). Noms, code et diagnostics masqués.
+                </p>
+            }
+            @if (Result.Tests.Output.Text.Length > 0)
+            {
+                <pre class="runner-output">@Result.Tests.Output.Text</pre>
+                @if (Result.Tests.Output.IsTruncated)
+                {
+                    <p class="field-help">Sortie tronquée à la limite contractuelle.</p>
+                }
+            }
+        </section>
+    </div>
+</article>
+
+@code {
+    [Parameter, EditorRequired]
+    public CodeRunResult Result { get; set; } = default!;
+
+    private static string StatusLabel(CodeRunStatus status) => status switch
+    {
+        CodeRunStatus.Succeeded => "Exécution isolée réussie — aucune maîtrise attribuée",
+        CodeRunStatus.CompilationFailed => "Erreur de compilation",
+        CodeRunStatus.TestsFailed => "Échec de tests",
+        CodeRunStatus.TimedOut => "Délai dépassé",
+        CodeRunStatus.Cancelled => "Exécution annulée",
+        CodeRunStatus.Unavailable => "Runner indisponible",
+        _ => throw new ArgumentOutOfRangeException(nameof(status)),
+    };
+
+    private static string StageLabel(CodeRunStageStatus status) => status switch
+    {
+        CodeRunStageStatus.NotRun => "Non lancés",
+        CodeRunStageStatus.Succeeded => "Réussite",
+        CodeRunStageStatus.Failed => "Échec",
+        CodeRunStageStatus.TimedOut => "Délai dépassé",
+        CodeRunStageStatus.Cancelled => "Annulée",
+        CodeRunStageStatus.Unavailable => "Indisponible",
+        _ => throw new ArgumentOutOfRangeException(nameof(status)),
+    };
+
+    private static string SeverityLabel(CodeRunnerDiagnosticSeverity severity) => severity switch
+    {
+        CodeRunnerDiagnosticSeverity.Info => "Information",
+        CodeRunnerDiagnosticSeverity.Warning => "Avertissement",
+        CodeRunnerDiagnosticSeverity.Error => "Erreur",
+        _ => throw new ArgumentOutOfRangeException(nameof(severity)),
+    };
+}

@@ -1,0 +1,25 @@
+{
+    "schemaVersion":  1,
+    "cases":  [
+                  {
+                      "name":  "Visible_Case1",
+                      "message":  "Compter des champs CSV bornés — cas 1 visible incorrect.",
+                      "arguments":  [
+                                        "a,b,c"
+                                    ],
+                      "expected":  3,
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Visible_Case2",
+                      "message":  "Compter des champs CSV bornés — cas 2 visible incorrect.",
+                      "arguments":  [
+                                        ""
+                                    ],
+                      "expected":  0,
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  }
+              ]
+}

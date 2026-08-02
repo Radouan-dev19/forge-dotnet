@@ -1,0 +1,1 @@
+Customers(CustomerId PK, Name UNIQUE, City, IsActive); Products(ProductId PK, Name, Category, Price CHECK, Stock CHECK); Orders(OrderId PK, CustomerId FK, OrderDate, Status, Total CHECK, DataVersion); OrderLines(OrderLineId PK, OrderId FK, ProductId FK, Quantity CHECK, UnitPrice CHECK).

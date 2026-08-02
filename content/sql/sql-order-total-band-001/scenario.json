@@ -1,0 +1,37 @@
+{
+    "schemaVersion":  1,
+    "id":  "sql-order-total-band-001",
+    "version":  1,
+    "title":  "Classer les totaux par CASE",
+    "difficulty":  2,
+    "skills":  [
+                   "sql.case"
+               ],
+    "prerequisites":  [
+
+                      ],
+    "estimatedMinutes":  35,
+    "image":  "mcr.microsoft.com/mssql/server@sha256:b1395aa51b4ec39981883560f1379ea9eba2a1c0719bf8e6477902769316bb79",
+    "datasetPath":  "dataset.sql",
+    "visibleSchemaPath":  "schema.sql",
+    "permissions":  [
+                        "select"
+                    ],
+    "resetScriptPath":  "reset.sql",
+    "statementPath":  "statement.md",
+    "expectedResult":  {
+                           "ordered":  true,
+                           "columns":  [
+                                           "OrderId",
+                                           "Band"
+                                       ],
+                           "numericTolerance":  0.01
+                       },
+    "timeoutSeconds":  5,
+    "maxRows":  20,
+    "effectAssertions":  [
+                             "Les quatre clients, cinq commandes et six lignes restent inchangés après rollback"
+                         ],
+    "solutionPath":  "solution.md",
+    "license":  "CC-BY-4.0"
+}

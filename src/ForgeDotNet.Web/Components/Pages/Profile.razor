@@ -1,0 +1,117 @@
+@page "/profile"
+@using System.ComponentModel.DataAnnotations
+@inject GetLocalProfile GetLocalProfile
+@inject UpdateLocalProfile UpdateLocalProfile
+@inject SetLearningContractAcceptance SetContractAcceptance
+
+<PageTitle>Profil — Forge.NET</PageTitle>
+
+<h1>Profil local</h1>
+<p>Ces informations sont conservées localement sur cet appareil.</p>
+
+@if (_isLoading)
+{
+    <p role="status">Chargement du profil…</p>
+}
+else
+{
+    <EditForm Model="_form" OnValidSubmit="SaveAsync" FormName="local-profile">
+        <DataAnnotationsValidator />
+        <ValidationSummary aria-live="polite" />
+
+        <div class="form-field">
+            <label for="display-name">Prénom ou pseudonyme</label>
+            <input id="display-name" @bind="_form.DisplayName" @bind:event="oninput" autocomplete="nickname" />
+            <ValidationMessage For="() => _form.DisplayName" />
+        </div>
+
+        <div class="form-field">
+            <label for="professional-goal">Objectif professionnel</label>
+            <textarea id="professional-goal" @bind="_form.ProfessionalGoal" @bind:event="oninput" rows="4"></textarea>
+            <ValidationMessage For="() => _form.ProfessionalGoal" />
+        </div>
+
+        <div class="form-field">
+            <label for="weekly-hours">Heures disponibles par semaine</label>
+            <input id="weekly-hours" type="number" @bind="_form.WeeklyAvailableHours" @bind:event="oninput" />
+            <ValidationMessage For="() => _form.WeeklyAvailableHours" />
+        </div>
+
+        <div class="form-field">
+            <label for="interface-language">Langue d’interface</label>
+            <InputSelect id="interface-language" @bind-Value="_form.InterfaceLanguage">
+                <option value="@InterfaceLanguage.French">Français</option>
+                <option value="@InterfaceLanguage.English">Anglais (interface complète future)</option>
+            </InputSelect>
+        </div>
+
+        <fieldset>
+            <legend>Contrat d’apprentissage</legend>
+            <ul>
+                @foreach (var commitment in LearningContract.Commitments)
+                {
+                    <li>@commitment</li>
+                }
+            </ul>
+            <label class="checkbox-field" for="learning-contract">
+                <InputCheckbox id="learning-contract" @bind-Value="_form.HasAcceptedLearningContract" />
+                J’accepte ce contrat d’apprentissage.
+            </label>
+            <p class="field-help">Le refus ne bloque pas l’application, mais le parcours restera non activé.</p>
+        </fieldset>
+
+        <button class="btn btn-primary" type="submit">Enregistrer le profil</button>
+    </EditForm>
+}
+
+@if (!string.IsNullOrWhiteSpace(_statusMessage))
+{
+    <p class="success-message" role="status">@_statusMessage</p>
+}
+
+@code {
+    private readonly ProfileForm _form = new();
+    private bool _isLoading = true;
+    private string? _statusMessage;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var profile = await GetLocalProfile.ExecuteAsync();
+        _form.DisplayName = profile.DisplayName;
+        _form.ProfessionalGoal = profile.ProfessionalGoal;
+        _form.WeeklyAvailableHours = profile.WeeklyAvailableHours;
+        _form.InterfaceLanguage = profile.InterfaceLanguage;
+        _form.HasAcceptedLearningContract = profile.HasAcceptedLearningContract;
+        _isLoading = false;
+    }
+
+    private async Task SaveAsync()
+    {
+        await UpdateLocalProfile.ExecuteAsync(new UpdateLocalProfileCommand(
+            _form.DisplayName,
+            _form.ProfessionalGoal,
+            _form.WeeklyAvailableHours,
+            _form.InterfaceLanguage));
+        await SetContractAcceptance.ExecuteAsync(_form.HasAcceptedLearningContract);
+        _statusMessage = "Profil enregistré dans la base locale.";
+    }
+
+    private sealed class ProfileForm
+    {
+        [Required(ErrorMessage = "Le prénom ou pseudonyme est obligatoire.")]
+        [StringLength(80, ErrorMessage = "Le pseudonyme ne peut pas dépasser 80 caractères.")]
+        public string DisplayName { get; set; } = string.Empty;
+
+        [Required(ErrorMessage = "L’objectif professionnel est obligatoire.")]
+        [StringLength(300, ErrorMessage = "L’objectif ne peut pas dépasser 300 caractères.")]
+        public string ProfessionalGoal { get; set; } = string.Empty;
+
+        [Range(UserProfile.MinimumWeeklyHours, UserProfile.MaximumWeeklyHours,
+            ErrorMessage = "Les heures doivent être comprises entre 1 et 40.")]
+        public int WeeklyAvailableHours { get; set; } = UserProfile.DefaultWeeklyHours;
+
+        public InterfaceLanguage InterfaceLanguage { get; set; } = InterfaceLanguage.French;
+
+        public bool HasAcceptedLearningContract { get; set; }
+    }
+}

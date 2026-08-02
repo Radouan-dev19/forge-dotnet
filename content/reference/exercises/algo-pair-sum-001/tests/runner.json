@@ -1,0 +1,13 @@
+{
+    "schemaVersion":  1,
+    "suiteId":  "algo-pair-sum-001.v1",
+    "exerciseId":  "algo-pair-sum-001",
+    "exerciseVersion":  1,
+    "typeName":  "Submission",
+    "methodName":  "HasPairSum",
+    "parameterTypes":  [
+                           "int[]",
+                           "int"
+                       ],
+    "returnType":  "bool"
+}

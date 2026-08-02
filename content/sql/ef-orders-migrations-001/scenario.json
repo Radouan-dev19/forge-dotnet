@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "id": "ef-orders-migrations-001",
+  "version": 1,
+  "title": "Appliquer une migration EF Core minimale",
+  "difficulty": 3,
+  "skills": ["ef.dbcontext", "ef.migrations"],
+  "prerequisites": ["sql-orders-pagination-001"],
+  "estimatedMinutes": 50,
+  "image": "mcr.microsoft.com/mssql/server@sha256:b1395aa51b4ec39981883560f1379ea9eba2a1c0719bf8e6477902769316bb79",
+  "datasetPath": "dataset.sql",
+  "visibleSchemaPath": "schema.sql",
+  "permissions": ["select", "insert", "update", "delete"],
+  "resetScriptPath": "reset.sql",
+  "statementPath": "statement.md",
+  "expectedResult": {
+    "ordered": true,
+    "columns": ["MigrationId", "TablesCreated"],
+    "numericTolerance": 0
+  },
+  "timeoutSeconds": 20,
+  "maxRows": 10,
+  "effectAssertions": [
+    "La migration est inscrite une seule fois dans __EFMigrationsHistory",
+    "Customers et Orders existent avec leur clé étrangère et leurs index"
+  ],
+  "solutionPath": "solution.md",
+  "license": "CC-BY-4.0"
+}

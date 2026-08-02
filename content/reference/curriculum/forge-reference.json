@@ -1,0 +1,269 @@
+{
+    "schemaVersion":  1,
+    "id":  "forge-reference",
+    "version":  2,
+    "title":  "Forge.NET — fondamentaux S1 à S10",
+    "description":  "Parcours local autonome couvrant C#, algorithmique, débogage, SQL et EF Core des semaines 1 à 10.",
+    "weeks":  10,
+    "modules":  [
+                    {
+                        "id":  "week-1",
+                        "title":  "Semaine 1",
+                        "weeks":  [
+                                      1
+                                  ],
+                        "prerequisites":  [
+
+                                          ],
+                        "lessonIds":  [
+                                          "reference-types-001",
+                                          "csharp-control-methods-001",
+                                          "csharp-io-debugger-001"
+                                      ],
+                        "exerciseIds":  [
+                                            "csharp-clamp-value-001",
+                                            "csharp-even-counter-001",
+                                            "csharp-input-normalize-001",
+                                            "csharp-loop-range-sum-001",
+                                            "csharp-method-multiples-001",
+                                            "csharp-price-conversion-001",
+                                            "csharp-shipping-decision-001",
+                                            "csharp-temperature-band-001",
+                                            "reference-total-001",
+                                            "reference-total-002"
+                                        ]
+                    },
+                    {
+                        "id":  "week-2",
+                        "title":  "Semaine 2",
+                        "weeks":  [
+                                      2
+                                  ],
+                        "prerequisites":  [
+                                              "week-1"
+                                          ],
+                        "lessonIds":  [
+                                          "collections-arrays-001",
+                                          "strings-dates-001",
+                                          "edge-cases-001"
+                                      ],
+                        "exerciseIds":  [
+                                            "csharp-array-differences-001",
+                                            "csharp-array-positive-sum-001",
+                                            "csharp-date-business-days-001",
+                                            "csharp-date-expiry-001",
+                                            "csharp-date-span-001",
+                                            "csharp-dictionary-default-001",
+                                            "csharp-dictionary-stock-001",
+                                            "csharp-list-distinct-001",
+                                            "csharp-string-frequency-001",
+                                            "csharp-string-palindrome-001"
+                                        ]
+                    },
+                    {
+                        "id":  "week-3",
+                        "title":  "Semaine 3",
+                        "weeks":  [
+                                      3
+                                  ],
+                        "prerequisites":  [
+                                              "week-2"
+                                          ],
+                        "lessonIds":  [
+                                          "oop-encapsulation-001",
+                                          "oop-interfaces-composition-001",
+                                          "csharp-exceptions-nullable-001"
+                                      ],
+                        "exerciseIds":  [
+                                            "csharp-age-group-001",
+                                            "csharp-copy-sanitized-001",
+                                            "csharp-customer-name-001",
+                                            "csharp-line-total-001",
+                                            "csharp-nullable-fallback-001",
+                                            "csharp-order-status-001",
+                                            "csharp-payment-fee-001",
+                                            "csharp-positive-quantity-001",
+                                            "csharp-stock-reservation-001",
+                                            "csharp-vip-discount-001"
+                                        ]
+                    },
+                    {
+                        "id":  "week-4",
+                        "title":  "Semaine 4",
+                        "weeks":  [
+                                      4
+                                  ],
+                        "prerequisites":  [
+                                              "week-3"
+                                          ],
+                        "lessonIds":  [
+                                          "generics-delegates-001",
+                                          "linq-lambdas-001",
+                                          "files-json-001"
+                                      ],
+                        "exerciseIds":  [
+                                            "csharp-absolute-map-001",
+                                            "csharp-average-001",
+                                            "csharp-csv-field-count-001",
+                                            "csharp-delegate-double-001",
+                                            "csharp-distinct-sorted-001",
+                                            "csharp-file-extension-001",
+                                            "csharp-filter-minimum-001",
+                                            "csharp-generic-maximum-001",
+                                            "csharp-json-number-count-001",
+                                            "csharp-lambda-threshold-001",
+                                            "csharp-linq-even-sum-001",
+                                            "csharp-linq-top-three-001",
+                                            "csharp-sequence-copy-001",
+                                            "csharp-word-histogram-001"
+                                        ]
+                    },
+                    {
+                        "id":  "week-5",
+                        "title":  "Semaine 5",
+                        "weeks":  [
+                                      5
+                                  ],
+                        "prerequisites":  [
+                                              "week-4"
+                                          ],
+                        "lessonIds":  [
+                                          "algo-reformulation-complexity-001",
+                                          "algo-search-001",
+                                          "algo-simple-sorts-001"
+                                      ],
+                        "exerciseIds":  [
+                                            "algo-binary-search-001",
+                                            "algo-bubble-sort-001",
+                                            "algo-gcd-001",
+                                            "algo-halving-steps-001",
+                                            "algo-insertion-sort-001",
+                                            "algo-linear-search-001",
+                                            "algo-maximum-value-001",
+                                            "algo-merge-sorted-001",
+                                            "algo-minimum-index-001",
+                                            "algo-pair-sum-001",
+                                            "algo-prefix-sums-001",
+                                            "algo-rotate-left-001",
+                                            "algo-selection-sort-001",
+                                            "algo-unique-count-001"
+                                        ]
+                    },
+                    {
+                        "id":  "week-6",
+                        "title":  "Semaine 6",
+                        "weeks":  [
+                                      6
+                                  ],
+                        "prerequisites":  [
+                                              "week-5"
+                                          ],
+                        "lessonIds":  [
+                                          "structures-stacks-queues-001",
+                                          "structures-dictionaries-recursion-001",
+                                          "structures-trees-001"
+                                      ],
+                        "exerciseIds":  [
+                                            "structures-ancestor-count-001",
+                                            "structures-balanced-parentheses-001",
+                                            "structures-factorial-001",
+                                            "structures-first-unique-001",
+                                            "structures-frequency-map-001",
+                                            "structures-next-greater-001",
+                                            "structures-parenthesis-depth-001",
+                                            "structures-postfix-001",
+                                            "structures-queue-rotate-001",
+                                            "structures-recursive-sum-001",
+                                            "structures-run-length-001",
+                                            "structures-stack-reverse-001",
+                                            "structures-tree-height-001",
+                                            "structures-tree-node-count-001",
+                                            "structures-window-sums-001"
+                                        ]
+                    },
+                    {
+                        "id":  "week-7",
+                        "title":  "Semaine 7",
+                        "weeks":  [
+                                      7
+                                  ],
+                        "prerequisites":  [
+                                              "week-6"
+                                          ],
+                        "lessonIds":  [
+                                          "debug-stacktraces-breakpoints-001",
+                                          "debug-data-inspection-001",
+                                          "async-fundamentals-001"
+                                      ],
+                        "exerciseIds":  [
+                                            "debug-anomaly-count-001",
+                                            "debug-awaited-total-001",
+                                            "debug-chronological-001",
+                                            "debug-copy-before-sort-001",
+                                            "debug-correlation-count-001",
+                                            "debug-distinct-events-001",
+                                            "debug-log-errors-001",
+                                            "debug-median-001",
+                                            "debug-retry-delay-001",
+                                            "debug-safe-divide-001",
+                                            "debug-stack-origin-001",
+                                            "debug-state-machine-001"
+                                        ]
+                    },
+                    {
+                        "id":  "week-8",
+                        "title":  "Semaine 8",
+                        "weeks":  [
+                                      8
+                                  ],
+                        "prerequisites":  [
+                                              "week-7"
+                                          ],
+                        "lessonIds":  [
+                                          "sql-relational-constraints-001",
+                                          "sql-select-filters-001",
+                                          "sql-joins-001"
+                                      ],
+                        "exerciseIds":  [
+                                            "debug-safe-divide-001"
+                                        ]
+                    },
+                    {
+                        "id":  "week-9",
+                        "title":  "Semaine 9",
+                        "weeks":  [
+                                      9
+                                  ],
+                        "prerequisites":  [
+                                              "week-8"
+                                          ],
+                        "lessonIds":  [
+                                          "sql-aggregations-subqueries-001",
+                                          "sql-cte-transactions-001",
+                                          "sql-isolation-001"
+                                      ],
+                        "exerciseIds":  [
+                                            "debug-safe-divide-001"
+                                        ]
+                    },
+                    {
+                        "id":  "week-10",
+                        "title":  "Semaine 10",
+                        "weeks":  [
+                                      10
+                                  ],
+                        "prerequisites":  [
+                                              "week-9"
+                                          ],
+                        "lessonIds":  [
+                                          "sql-index-plans-001",
+                                          "sql-pagination-001",
+                                          "ef-core-data-access-001"
+                                      ],
+                        "exerciseIds":  [
+                                            "debug-safe-divide-001"
+                                        ]
+                    }
+                ],
+    "license":  "CC-BY-4.0"
+}

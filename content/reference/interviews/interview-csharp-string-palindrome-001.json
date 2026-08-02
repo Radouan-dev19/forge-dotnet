@@ -1,0 +1,24 @@
+{
+    "schemaVersion":  1,
+    "id":  "interview-csharp-string-palindrome-001",
+    "version":  1,
+    "title":  "Détecter un palindrome simple",
+    "level":  "junior",
+    "durationMinutes":  5,
+    "skills":  [
+                   "csharp.strings"
+               ],
+    "question":  "Comment résoudriez-vous « Détecter un palindrome simple » et comment prouveriez-vous les bornes ?",
+    "observableCriteria":  [
+                               "Le contrat et une borne sont explicitement reformulés",
+                               "La complexité et un test de réfutation sont justifiés"
+                           ],
+    "modelAnswer":  "Comparer les caractères symétriques après une normalisation annoncée. La preuve comprend un cas nominal, une borne et un cas différent des exemples ; O(n) en temps et O(n) en espace.",
+    "commonMistakes":  [
+                           "Réciter le code sans invariant ni méthode de test"
+                       ],
+    "variants":  [
+                     "Changer une borne ou le volume tout en conservant la même règle de détecter un palindrome simple."
+                 ],
+    "license":  "CC-BY-4.0"
+}

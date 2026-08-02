@@ -1,0 +1,5 @@
+CREATE TABLE dbo.Orders (OrderId int PRIMARY KEY, CreatedAtUtc datetime2 NOT NULL, Total decimal(10,2) NOT NULL);
+CREATE INDEX IX_Orders_CreatedAtUtc_OrderId ON dbo.Orders(CreatedAtUtc, OrderId) INCLUDE (Total);
+INSERT dbo.Orders VALUES
+  (1,'2026-07-01T09:00:00',10),(2,'2026-07-01T09:00:00',20),(3,'2026-07-02T09:00:00',30),(4,'2026-07-02T09:00:00',40),
+  (5,'2026-07-03T09:00:00',50),(6,'2026-07-04T09:00:00',60),(7,'2026-07-04T09:00:00',70),(8,'2026-07-05T09:00:00',80);

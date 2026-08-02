@@ -1,0 +1,13 @@
+{
+  "week": 10,
+  "family": "pagination",
+  "mode": "sql",
+  "datasetRevision": "orders-pagination-v1",
+  "expectedRows": [["4","2026-07-02T09:00:00.0000000","40"],["5","2026-07-03T09:00:00.0000000","50"],["6","2026-07-04T09:00:00.0000000","60"]],
+  "equivalentQuery": "SELECT TOP (3) OrderId, CreatedAtUtc, Total FROM dbo.Orders WHERE (CreatedAtUtc = '2026-07-02T09:00:00' AND OrderId > 3) OR CreatedAtUtc > '2026-07-02T09:00:00' ORDER BY CreatedAtUtc ASC, OrderId ASC;",
+  "negativeQuery": "SELECT OrderId, CreatedAtUtc, Total FROM dbo.Orders ORDER BY CreatedAtUtc, OrderId OFFSET 2 ROWS FETCH NEXT 3 ROWS ONLY;",
+  "dirtySql": "DELETE FROM dbo.Orders WHERE OrderId = 8;",
+  "resetProbeSql": "SELECT COUNT_BIG(*) FROM dbo.Orders;",
+  "resetExpected": "8",
+  "stabilityMutationSql": "INSERT dbo.Orders VALUES (9,'2026-06-30T09:00:00',5);"
+}

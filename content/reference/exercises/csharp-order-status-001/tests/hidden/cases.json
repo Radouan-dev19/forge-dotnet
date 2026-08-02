@@ -1,0 +1,25 @@
+{
+    "schemaVersion":  1,
+    "cases":  [
+                  {
+                      "name":  "Hidden_Case1",
+                      "message":  "Traduire un état de commande — cas 1 hidden incorrect.",
+                      "arguments":  [
+                                        1
+                                    ],
+                      "expected":  "paid",
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_Case2",
+                      "message":  "Traduire un état de commande — cas 2 hidden incorrect.",
+                      "arguments":  [
+                                        99
+                                    ],
+                      "expected":  "unknown",
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  }
+              ]
+}

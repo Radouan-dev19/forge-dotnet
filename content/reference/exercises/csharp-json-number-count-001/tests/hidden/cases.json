@@ -1,0 +1,25 @@
+{
+    "schemaVersion":  1,
+    "cases":  [
+                  {
+                      "name":  "Hidden_Case1",
+                      "message":  "Compter des nombres JSON simples — cas 1 hidden incorrect.",
+                      "arguments":  [
+                                        "{\"x\":1}"
+                                    ],
+                      "expected":  0,
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_Case2",
+                      "message":  "Compter des nombres JSON simples — cas 2 hidden incorrect.",
+                      "arguments":  [
+                                        "[0,-1,2.5]"
+                                    ],
+                      "expected":  3,
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  }
+              ]
+}

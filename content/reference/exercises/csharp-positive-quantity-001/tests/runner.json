@@ -1,0 +1,12 @@
+{
+    "schemaVersion":  1,
+    "suiteId":  "csharp-positive-quantity-001.v1",
+    "exerciseId":  "csharp-positive-quantity-001",
+    "exerciseVersion":  1,
+    "typeName":  "Submission",
+    "methodName":  "RequireQuantity",
+    "parameterTypes":  [
+                           "int"
+                       ],
+    "returnType":  "int"
+}

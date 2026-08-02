@@ -1,0 +1,59 @@
+@page "/debug-lab"
+@inject DebugLabService DebugLab
+
+<PageTitle>DebugLab — Forge.NET</PageTitle>
+
+<h1>DebugLab</h1>
+
+<section class="practice-panel" aria-labelledby="debug-intro-title">
+    <h2 id="debug-intro-title">Déboguer par la preuve</h2>
+    <p>
+        Chaque scénario impose le cycle reproduire → observer → formuler une hypothèse → corriger → écrire un test
+        de non-régression → expliquer la cause racine. Un quiz ou une correction seule ne termine jamais un scénario.
+    </p>
+    <p class="notice" role="status">
+        Le code est exécuté uniquement par l’adaptateur isolé configuré. Le journal conserve les observations et les
+        résultats, jamais le code soumis.
+    </p>
+</section>
+
+@if (_error is not null)
+{
+    <p class="error-message" role="alert">@_error</p>
+}
+else if (_scenarios is null)
+{
+    <p role="status">Chargement des scénarios…</p>
+}
+else
+{
+    <section class="practice-panel" aria-labelledby="debug-list-title">
+        <h2 id="debug-list-title">Huit scénarios initiaux</h2>
+        <ul class="practice-exercise-list">
+            @foreach (DebugScenarioSummaryView scenario in _scenarios)
+            {
+                <li>
+                    <a href="debug-lab/@scenario.Id">@scenario.Title</a>
+                    <p>Difficulté @scenario.Difficulty · @scenario.EstimatedMinutes minutes · scénario v@(scenario.Version)</p>
+                </li>
+            }
+        </ul>
+    </section>
+}
+
+@code {
+    private IReadOnlyList<DebugScenarioSummaryView>? _scenarios;
+    private string? _error;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            _scenarios = await DebugLab.ListAsync();
+        }
+        catch (Exception exception)
+        {
+            _error = exception.Message;
+        }
+    }
+}

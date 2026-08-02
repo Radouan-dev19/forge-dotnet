@@ -1,0 +1,299 @@
+@page "/diagnostic/session/{SessionId:guid}"
+@implements IAsyncDisposable
+@inject DiagnosticSessionService DiagnosticSessions
+@inject TimeProvider TimeProvider
+
+<PageTitle>Session de diagnostic — Forge.NET</PageTitle>
+
+<h1>Session de diagnostic</h1>
+
+@if (_isLoading)
+{
+    <p role="status">Chargement de la session…</p>
+}
+else if (_session is null)
+{
+    <p class="error-message" role="alert">@_error</p>
+    <a href="diagnostic">Retour au diagnostic</a>
+}
+else
+{
+    <section class="diagnostic-status" aria-labelledby="session-status-title">
+        <h2 id="session-status-title">État de la collecte</h2>
+        <p><strong>@SessionStatusLabel(_session)</strong></p>
+        <p>@_session.AnsweredCount réponse(s) enregistrée(s) sur @_session.QuestionCount.</p>
+        <p>Banque @_session.BankId v@_session.BankVersion · mode @ModeLabel(_session.Mode)</p>
+        <p class="field-help">Cette page n'affiche ni score, ni correction, ni estimation de niveau.</p>
+    </section>
+
+    <ol class="diagnostic-section-list" aria-label="Progression des sections">
+        @foreach (DiagnosticSectionSummaryView section in _session.Sections)
+        {
+            <li class="diagnostic-section-state">
+                <strong>Section @(section.Index + 1) — @section.Title</strong>
+                <span>@SectionStatusLabel(section.Status) · @section.AnsweredCount/@section.QuestionCount réponse(s)</span>
+            </li>
+        }
+    </ol>
+
+    @if (_session.Status == DiagnosticSessionStatus.Active && _session.CurrentSection is not null)
+    {
+        @if (_session.CurrentSection.Status == DiagnosticSectionStatus.Pending)
+        {
+            <section class="diagnostic-action-panel" aria-labelledby="next-section-title">
+                <h2 id="next-section-title">Section @(_session.CurrentSection.Index + 1) prête</h2>
+                <p>La minuterie de cette section ne démarre qu'après cette action explicite.</p>
+                <div class="actions">
+                    <button class="btn btn-primary" type="button" disabled="@_busy" @onclick="StartCurrentSectionAsync">Commencer cette section</button>
+                    <button class="btn btn-outline-secondary" type="button" disabled="@_busy" @onclick="AbandonAsync">Abandonner le diagnostic</button>
+                </div>
+            </section>
+        }
+        else if (_session.CurrentSection.Status == DiagnosticSectionStatus.Active)
+        {
+            <section class="diagnostic-timer @(_session.RemainingSeconds <= 30 ? "diagnostic-timer-warning" : string.Empty)" aria-labelledby="timer-title">
+                <h2 id="timer-title">Section @(_session.CurrentSection.Index + 1) — @_session.CurrentSection.Title</h2>
+                <p role="timer" aria-live="polite">
+                    Temps restant : <strong>@FormatRemaining(_session.RemainingSeconds)</strong>
+                </p>
+                @if (_session.RemainingSeconds <= 30)
+                {
+                    <p><strong>Attention :</strong> la section va expirer. Une réponse enregistrée reste conservée.</p>
+                }
+            </section>
+
+            <div class="diagnostic-question-list">
+                @foreach (DiagnosticQuestionView question in _session.CurrentSection.Questions)
+                {
+                    <fieldset class="diagnostic-question" disabled="@_busy">
+                        <legend>
+                            <span class="diagnostic-question-meta">@question.DomainDisplayName · difficulté @question.Difficulty</span>
+                            @question.Prompt
+                        </legend>
+                        @foreach (DiagnosticOption option in question.Options)
+                        {
+                            <label class="diagnostic-option">
+                                <input type="radio"
+                                       name="question-@question.Id"
+                                       value="@option.Id"
+                                       checked="@(question.SelectedOptionId == option.Id)"
+                                       @onchange="() => SaveResponseAsync(question.Id, option.Id)" />
+                                <span>@option.Text</span>
+                            </label>
+                        }
+                    </fieldset>
+                }
+            </div>
+
+            <div class="actions">
+                <button class="btn btn-primary" type="button" disabled="@_busy" @onclick="CompleteCurrentSectionAsync">Terminer cette section</button>
+                <button class="btn btn-outline-secondary" type="button" disabled="@_busy" @onclick="AbandonAsync">Abandonner le diagnostic</button>
+            </div>
+        }
+    }
+
+    @if (_session.CanFinish)
+    {
+        <section class="diagnostic-action-panel" aria-labelledby="finish-title">
+            <h2 id="finish-title">Clore la collecte</h2>
+            @if (!_session.IsComplete)
+            {
+                <p class="notice" role="status">Des réponses manquent ou une section a expiré. La session sera honnêtement marquée comme incomplète.</p>
+            }
+            <button class="btn btn-primary" type="button" disabled="@_busy" @onclick="FinishAsync">Terminer le diagnostic</button>
+        </section>
+    }
+
+    @if (_session.Status is DiagnosticSessionStatus.Completed or DiagnosticSessionStatus.Abandoned)
+    {
+        <section class="diagnostic-terminal" aria-labelledby="terminal-title">
+            <h2 id="terminal-title">@SessionStatusLabel(_session)</h2>
+            <p>@_session.AnsweredCount réponse(s) sur @_session.QuestionCount ont été conservées localement.</p>
+            <p>L'évaluation reste prudente et signale explicitement les réponses manquantes.</p>
+            <div class="actions">
+                <a class="btn btn-primary" href="diagnostic/session/@SessionId/evaluation">Voir l'évaluation</a>
+                <a class="btn btn-outline-secondary" href="diagnostic">Retour au diagnostic</a>
+            </div>
+        </section>
+    }
+
+    @if (!string.IsNullOrWhiteSpace(_message))
+    {
+        <p class="success-message" role="status">@_message</p>
+    }
+    @if (!string.IsNullOrWhiteSpace(_error))
+    {
+        <p class="error-message" role="alert">@_error</p>
+    }
+}
+
+@code {
+    [Parameter]
+    public Guid SessionId { get; set; }
+
+    private readonly CancellationTokenSource _disposeTokenSource = new();
+    private DiagnosticSessionView? _session;
+    private PeriodicTimer? _timer;
+    private Task? _timerLoop;
+    private bool _isLoading = true;
+    private bool _busy;
+    private string? _error;
+    private string? _message;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        await LoadAsync();
+        if (_timerLoop is null)
+        {
+            _timer = new PeriodicTimer(TimeSpan.FromSeconds(1), TimeProvider);
+            _timerLoop = RunTimerAsync(_disposeTokenSource.Token);
+        }
+    }
+
+    private async Task LoadAsync()
+    {
+        try
+        {
+            _session = await DiagnosticSessions.GetAsync(SessionId, _disposeTokenSource.Token);
+            _error = null;
+        }
+        catch (OperationCanceledException) when (_disposeTokenSource.IsCancellationRequested)
+        {
+        }
+        catch (Exception exception)
+        {
+            _session = null;
+            _error = exception.Message;
+        }
+        finally
+        {
+            _isLoading = false;
+        }
+    }
+
+    private async Task RunTimerAsync(CancellationToken cancellationToken)
+    {
+        try
+        {
+            while (_timer is not null && await _timer.WaitForNextTickAsync(cancellationToken))
+            {
+                if (_session?.CanAnswer != true || _busy)
+                {
+                    continue;
+                }
+
+                await InvokeAsync(async () =>
+                {
+                    await LoadAsync();
+                    StateHasChanged();
+                });
+            }
+        }
+        catch (OperationCanceledException) when (cancellationToken.IsCancellationRequested)
+        {
+        }
+        catch (Exception exception)
+        {
+            await InvokeAsync(() =>
+            {
+                _error = exception.Message;
+                StateHasChanged();
+            });
+        }
+    }
+
+    private async Task SaveResponseAsync(string questionId, string optionId) => await ExecuteAsync(
+        () => DiagnosticSessions.SaveResponseAsync(SessionId, questionId, optionId).AsTask(),
+        "Réponse enregistrée localement.");
+
+    private async Task StartCurrentSectionAsync() => await ExecuteAsync(
+        () => DiagnosticSessions.StartCurrentSectionAsync(SessionId).AsTask(),
+        "Section démarrée.");
+
+    private async Task CompleteCurrentSectionAsync()
+    {
+        if (_session?.CurrentSection is null)
+        {
+            return;
+        }
+
+        int sectionIndex = _session.CurrentSection.Index;
+        await ExecuteAsync(
+            () => DiagnosticSessions.CompleteSectionAsync(SessionId, sectionIndex).AsTask(),
+            "Section terminée.");
+    }
+
+    private async Task FinishAsync() => await ExecuteAsync(
+        () => DiagnosticSessions.FinishAsync(SessionId).AsTask(),
+        "Diagnostic terminé ; le rapport d'évaluation est disponible.");
+
+    private async Task AbandonAsync() => await ExecuteAsync(
+        () => DiagnosticSessions.AbandonAsync(SessionId).AsTask(),
+        "Diagnostic abandonné ; la collecte reste incomplète.");
+
+    private async Task ExecuteAsync(
+        Func<Task<DiagnosticSessionView>> operation,
+        string successMessage)
+    {
+        _busy = true;
+        _error = null;
+        _message = null;
+        try
+        {
+            _session = await operation();
+            _message = successMessage;
+        }
+        catch (Exception exception)
+        {
+            _error = exception.Message;
+            await LoadAsync();
+        }
+        finally
+        {
+            _busy = false;
+        }
+    }
+
+    public async ValueTask DisposeAsync()
+    {
+        await _disposeTokenSource.CancelAsync();
+        _timer?.Dispose();
+        if (_timerLoop is not null)
+        {
+            try
+            {
+                await _timerLoop;
+            }
+            catch (OperationCanceledException)
+            {
+            }
+        }
+
+        _disposeTokenSource.Dispose();
+    }
+
+    private static string FormatRemaining(int seconds) =>
+        $"{Math.Max(0, seconds) / 60:00}:{Math.Max(0, seconds) % 60:00}";
+
+    private static string ModeLabel(DiagnosticMode mode) =>
+        mode == DiagnosticMode.Initial ? "initial" : "réduit";
+
+    private static string SectionStatusLabel(DiagnosticSectionStatus status) => status switch
+    {
+        DiagnosticSectionStatus.Pending => "En attente",
+        DiagnosticSectionStatus.Active => "En cours",
+        DiagnosticSectionStatus.Completed => "Terminée",
+        DiagnosticSectionStatus.Expired => "Expirée",
+        DiagnosticSectionStatus.Interrupted => "Interrompue",
+        _ => throw new ArgumentOutOfRangeException(nameof(status)),
+    };
+
+    private static string SessionStatusLabel(DiagnosticSessionView session) => session.Status switch
+    {
+        DiagnosticSessionStatus.Active => "En cours — collecte incomplète",
+        DiagnosticSessionStatus.Completed when session.IsComplete => "Terminée — collecte complète",
+        DiagnosticSessionStatus.Completed => "Terminée — collecte incomplète",
+        DiagnosticSessionStatus.Abandoned => "Abandonnée — collecte incomplète",
+        _ => throw new ArgumentOutOfRangeException(nameof(session)),
+    };
+}

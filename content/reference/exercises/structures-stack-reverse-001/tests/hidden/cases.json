@@ -1,0 +1,25 @@
+{
+    "schemaVersion":  1,
+    "cases":  [
+                  {
+                      "name":  "Hidden_Case1",
+                      "message":  "Inverser avec une pile — cas 1 hidden incorrect.",
+                      "arguments":  [
+                                        "été"
+                                    ],
+                      "expected":  "été",
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_Case2",
+                      "message":  "Inverser avec une pile — cas 2 hidden incorrect.",
+                      "arguments":  [
+                                        "a b"
+                                    ],
+                      "expected":  "b a",
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  }
+              ]
+}

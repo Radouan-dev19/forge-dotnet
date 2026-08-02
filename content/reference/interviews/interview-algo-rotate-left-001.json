@@ -1,0 +1,24 @@
+{
+    "schemaVersion":  1,
+    "id":  "interview-algo-rotate-left-001",
+    "version":  1,
+    "title":  "Faire tourner un tableau",
+    "level":  "junior",
+    "durationMinutes":  5,
+    "skills":  [
+                   "algorithm.arrays"
+               ],
+    "question":  "Comment résoudriez-vous « Faire tourner un tableau » et comment prouveriez-vous les bornes ?",
+    "observableCriteria":  [
+                               "Le contrat et une borne sont explicitement reformulés",
+                               "La complexité et un test de réfutation sont justifiés"
+                           ],
+    "modelAnswer":  "Normaliser le décalage, y compris négatif, avant l’index modulo. La preuve comprend un cas nominal, une borne et un cas différent des exemples ; O(n) en temps et O(n) en espace.",
+    "commonMistakes":  [
+                           "Réciter le code sans invariant ni méthode de test"
+                       ],
+    "variants":  [
+                     "Changer une borne ou le volume tout en conservant la même règle de faire tourner un tableau."
+                 ],
+    "license":  "CC-BY-4.0"
+}

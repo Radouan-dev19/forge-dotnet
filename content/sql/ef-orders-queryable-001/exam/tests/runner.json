@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "suiteId": "exam-ef-queryable-v1",
+  "exerciseId": "ef-orders-queryable-001",
+  "exerciseVersion": 1,
+  "typeName": "Submission",
+  "methodName": "Run",
+  "parameterTypes": ["decimal"],
+  "returnType": "string"
+}

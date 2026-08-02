@@ -1,0 +1,27 @@
+{
+    "schemaVersion":  1,
+    "id":  "reference-csharp-foundations-v1",
+    "version":  1,
+    "title":  "Examen 1 — fondamentaux C# S1–S2",
+    "durationMinutes":  90,
+    "drawCount":  8,
+    "passingScore":  80,
+    "eligibleExerciseIds":  [
+                                "reference-total-001",
+                                "reference-total-002",
+                                "csharp-price-conversion-001",
+                                "csharp-shipping-decision-001",
+                                "csharp-loop-range-sum-001",
+                                "csharp-method-multiples-001",
+                                "csharp-input-normalize-001",
+                                "csharp-temperature-band-001",
+                                "csharp-even-counter-001",
+                                "csharp-clamp-value-001",
+                                "csharp-array-differences-001",
+                                "csharp-list-distinct-001",
+                                "csharp-array-positive-sum-001",
+                                "csharp-string-palindrome-001",
+                                "csharp-date-span-001",
+                                "csharp-dictionary-default-001"
+                            ]
+}

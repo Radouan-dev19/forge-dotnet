@@ -1,0 +1,8 @@
+{
+  "week": 10,
+  "family": "loading-n-plus-one",
+  "mode": "ef",
+  "datasetRevision": "mini-erp-v1",
+  "expectedProof": "Trois agrégats corrects en une commande SQL",
+  "negativeProof": "Le starter exécute une commande initiale puis une par client"
+}

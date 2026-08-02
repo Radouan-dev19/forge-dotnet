@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "id": "sql-orders-index-plan-001",
+  "version": 1,
+  "title": "Justifier un index par une propriété de plan",
+  "difficulty": 4,
+  "skills": ["sql.index", "sql.execution-plan", "sql.sargability"],
+  "prerequisites": ["sql-orders-transaction-001"],
+  "estimatedMinutes": 50,
+  "image": "mcr.microsoft.com/mssql/server@sha256:b1395aa51b4ec39981883560f1379ea9eba2a1c0719bf8e6477902769316bb79",
+  "datasetPath": "dataset.sql",
+  "visibleSchemaPath": "schema.sql",
+  "permissions": ["select"],
+  "resetScriptPath": "reset.sql",
+  "statementPath": "statement.md",
+  "expectedResult": {
+    "ordered": true,
+    "columns": ["MatchingOrders"],
+    "numericTolerance": 0
+  },
+  "timeoutSeconds": 10,
+  "maxRows": 5,
+  "effectAssertions": [
+    "Le plan référence IX_Orders_CustomerId_CreatedAt sans comparer de coût exact",
+    "Le dataset reste à 20000 lignes après reset"
+  ],
+  "solutionPath": "solution.md",
+  "license": "CC-BY-4.0"
+}

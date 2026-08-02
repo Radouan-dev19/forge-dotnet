@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "cases": [
+    {
+      "name": "TrackedAndReadOnlyOrder1",
+      "message": "La double lecture suivie doit partager l’instance et la lecture d’affichage doit rester détachée.",
+      "arguments": [1],
+      "expected": "true|true|1",
+      "expectedException": null,
+      "argumentsUnchanged": true
+    }
+  ]
+}

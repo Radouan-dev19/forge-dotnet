@@ -1,0 +1,81 @@
+{
+    "schemaVersion":  1,
+    "id":  "debug-state-machine-001",
+    "version":  1,
+    "title":  "Rejouer des transitions bornées",
+    "kind":  "csharp",
+    "difficulty":  3,
+    "skills":  [
+                   "debugging.data"
+               ],
+    "prerequisites":  [
+                          "debug-stacktraces-breakpoints-001"
+                      ],
+    "estimatedMinutes":  30,
+    "statement":  "statement.md",
+    "constraints":  [
+                        "Conserver exactement la signature publique",
+                        "Appliquer seulement les transitions autorisées et ignorer les événements hors état.",
+                        "Ne pas modifier les entrées reçues sauf mention explicite"
+                    ],
+    "examples":  [
+                     {
+                         "input":  "[{\"value\":[[1,2]],\"Count\":1},2]",
+                         "output":  "[{\"value\":[[2]],\"Count\":1},0]"
+                     }
+                 ],
+    "reflectionFields":  [
+                             "reformulation",
+                             "inputs",
+                             "expectedOutput",
+                             "edgeCases",
+                             "hypothesis",
+                             "plan"
+                         ],
+    "starterPath":  "starter/",
+    "visibleTestsPath":  "tests/visible/",
+    "hiddenTestsPath":  "tests/hidden/",
+    "hints":  [
+                  {
+                      "level":  1,
+                      "kind":  "socratic",
+                      "content":  "Quel invariant de « Rejouer des transitions bornées » doit rester vrai pour les cas limites ?"
+                  },
+                  {
+                      "level":  2,
+                      "kind":  "location",
+                      "content":  "Concentrez la décision dans la méthode FinalState, sans état global."
+                  },
+                  {
+                      "level":  3,
+                      "kind":  "strategy",
+                      "content":  "Appliquer seulement les transitions autorisées et ignorer les événements hors état."
+                  },
+                  {
+                      "level":  4,
+                      "kind":  "partial-pseudocode",
+                      "content":  "valider les bornes ; parcourir ou décider ; retourner un nouveau résultat déterministe"
+                  }
+              ],
+    "solution":  {
+                     "path":  "solution/",
+                     "unlock":  {
+                                    "seriousAttempts":  2,
+                                    "minimumDelayMinutes":  10
+                                }
+                 },
+    "explanation":  "explanation.md",
+    "complexity":  "O(n) en temps et O(1) en espace",
+    "commonMistakes":  [
+                           "Coder uniquement les exemples visibles",
+                           "Oublier une borne ou modifier une entrée",
+                           "Annoncer une complexité sans compter les opérations dominantes"
+                       ],
+    "variantId":  "debug-awaited-total-001",
+    "reviewCards":  [
+                        "card-debug-state-machine-001-rule",
+                        "card-debug-state-machine-001-edge"
+                    ],
+    "interviewQuestionId":  "interview-debug-state-machine-001",
+    "license":  "CC-BY-4.0"
+}

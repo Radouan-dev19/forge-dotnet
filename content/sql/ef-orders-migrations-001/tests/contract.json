@@ -1,0 +1,8 @@
+{
+  "week": 10,
+  "family": "dbcontext-migrations",
+  "mode": "ef",
+  "datasetRevision": "mini-erp-migration-v1",
+  "expectedProof": "Une migration historisée et deux tables métier après deux appels",
+  "negativeProof": "EnsureCreated crée le modèle sans ligne dans __EFMigrationsHistory"
+}

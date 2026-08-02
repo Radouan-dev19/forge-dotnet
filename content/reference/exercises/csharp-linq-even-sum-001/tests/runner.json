@@ -1,0 +1,12 @@
+{
+    "schemaVersion":  1,
+    "suiteId":  "csharp-linq-even-sum-001.v1",
+    "exerciseId":  "csharp-linq-even-sum-001",
+    "exerciseVersion":  1,
+    "typeName":  "Submission",
+    "methodName":  "EvenSum",
+    "parameterTypes":  [
+                           "int[]"
+                       ],
+    "returnType":  "int"
+}

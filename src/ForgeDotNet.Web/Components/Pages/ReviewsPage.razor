@@ -1,0 +1,220 @@
+@page "/reviews"
+@inject ReviewService Reviews
+
+<PageTitle>Révisions — Forge.NET</PageTitle>
+
+<h1>Révisions</h1>
+
+<section class="practice-panel" aria-labelledby="review-policy-title">
+    <h2 id="review-policy-title">Calendrier transparent</h2>
+    <p>
+        Une carte générale suit J+1, J+3, J+7, J+14 puis J+30. Après une erreur ou une solution consultée,
+        le rattrapage commence à J+1 puis J+7. Un échec repart à J+1 ; une réussite avance au prochain intervalle.
+    </p>
+    <p class="notice">
+        Un retard ne retire aucun point et ne crée pas une avalanche de cartes : le prochain délai repart du jour
+        où tu réponds réellement. Les autoévaluations organisent le calendrier mais ne modifient pas la maîtrise.
+    </p>
+</section>
+
+@if (_error is not null)
+{
+    <p class="error-message" role="alert">@_error</p>
+}
+
+@if (_result is not null)
+{
+    <section class="practice-panel" aria-live="polite">
+        <h2>@(_result.Outcome == ReviewOutcome.Succeeded ? "Réponse réussie" : "À revoir")</h2>
+        <p>@_result.Explanation</p>
+        @if (!string.IsNullOrWhiteSpace(_result.ExpectedAnswer))
+        {
+            <p><strong>Réponse attendue après soumission :</strong> @_result.ExpectedAnswer</p>
+        }
+        <p>Prochaine échéance : @_result.NextDueOn.ToString("dd/MM/yyyy") (dans @_result.NextIntervalDays jour(s)).</p>
+    </section>
+}
+
+<section class="practice-panel" aria-labelledby="personal-card-title">
+    <h2 id="personal-card-title">Ajouter une carte personnelle</h2>
+    <p>Elle reste sur ce poste et sa réussite n’entre pas dans le score de maîtrise.</p>
+    <label for="personal-domain">Domaine</label>
+    <select id="personal-domain" @bind="_personalDomain">
+        @foreach (MasteryDomain domain in Enum.GetValues<MasteryDomain>())
+        {
+            <option value="@domain">@domain</option>
+        }
+    </select>
+    <label for="personal-question">Question</label>
+    <textarea id="personal-question" maxlength="2000" @bind="_personalQuestion" @bind:event="oninput"></textarea>
+    <label for="personal-answer">Réponse attendue</label>
+    <textarea id="personal-answer" maxlength="2000" @bind="_personalAnswer" @bind:event="oninput"></textarea>
+    <button type="button" @onclick="AddPersonalCardAsync" disabled="@_busy">Planifier à J+1</button>
+</section>
+
+@if (_queue is null)
+{
+    <p role="status">Chargement de la file…</p>
+}
+else
+{
+    <section class="practice-panel" aria-labelledby="today-reviews-title">
+        <h2 id="today-reviews-title">File du @_queue.Today.ToString("dd/MM/yyyy")</h2>
+        <p>
+            Politique @_queue.PolicyId v@_queue.PolicyVersion · fuseau @_queue.TimeZoneId ·
+            @_queue.DueItems.Count carte(s) disponible(s).
+        </p>
+        @if (_queue.DueItems.Count == 0)
+        {
+            <p>Aucune carte due aujourd’hui. Il n’y a ni série à préserver ni pénalité d’absence.</p>
+        }
+        @foreach (ReviewItemView item in _queue.DueItems)
+        {
+            AnswerDraft draft = Draft(item.Id);
+            <article class="practice-panel">
+                <h3>@item.SourceLabel — @item.DomainLabel</h3>
+                <p>@item.Question</p>
+                <p>
+                    Échéance @item.DueOn.ToString("dd/MM/yyyy") · intervalle courant J+@item.CurrentIntervalDays ·
+                    @if (item.DaysAvailable > 0)
+                    {
+                        <span>disponible depuis @item.DaysAvailable jour(s), sans pénalité · </span>
+                    }
+                    @item.AttemptCount réponse(s) antérieure(s)
+                </p>
+                <p><small>@item.EvaluationExplanation</small></p>
+
+                @if (item.EvaluationMode == ReviewEvaluationMode.Choice)
+                {
+                    <label for="@($"choice-{item.Id:N}")">Réponse</label>
+                    <select id="@($"choice-{item.Id:N}")" @bind="draft.Response">
+                        <option value="">Choisir…</option>
+                        @foreach (ReviewChoiceView choice in item.Choices)
+                        {
+                            <option value="@choice.Id">@choice.Text</option>
+                        }
+                    </select>
+                    <button type="button" @onclick="() => AnswerAsync(item, null)" disabled="@_busy">Vérifier</button>
+                }
+                else
+                {
+                    <label for="@($"answer-{item.Id:N}")">Réponse à blanc</label>
+                    <textarea id="@($"answer-{item.Id:N}")" maxlength="4000" @bind="draft.Response" @bind:event="oninput"></textarea>
+                    @if (item.EvaluationMode == ReviewEvaluationMode.SelfAssessment)
+                    {
+                        <button type="button" @onclick="() => AnswerAsync(item, true)" disabled="@_busy">Réussi sans rouvrir l’aide</button>
+                        <button type="button" @onclick="() => AnswerAsync(item, false)" disabled="@_busy">À revoir</button>
+                    }
+                    else
+                    {
+                        <button type="button" @onclick="() => AnswerAsync(item, null)" disabled="@_busy">Comparer</button>
+                    }
+                }
+            </article>
+        }
+    </section>
+
+    <section class="practice-panel" aria-labelledby="upcoming-reviews-title">
+        <h2 id="upcoming-reviews-title">Prochaines cartes</h2>
+        @if (_queue.UpcomingItems.Count == 0)
+        {
+            <p>Aucune carte planifiée.</p>
+        }
+        else
+        {
+            <ul>
+                @foreach (ReviewItemView item in _queue.UpcomingItems)
+                {
+                    <li>@item.DueOn.ToString("dd/MM/yyyy") — @item.SourceLabel — @item.ItemId — J+@item.CurrentIntervalDays</li>
+                }
+            </ul>
+        }
+    </section>
+}
+
+@code {
+    private ReviewQueueView? _queue;
+    private ReviewAnswerResultView? _result;
+    private string? _error;
+    private bool _busy;
+    private MasteryDomain _personalDomain = MasteryDomain.CSharp;
+    private string _personalQuestion = string.Empty;
+    private string _personalAnswer = string.Empty;
+    private readonly Dictionary<Guid, AnswerDraft> _drafts = [];
+
+    protected override async Task OnInitializedAsync() => await ReloadAsync();
+
+    private async Task ReloadAsync()
+    {
+        try
+        {
+            _queue = await Reviews.GetQueueAsync();
+            _error = null;
+        }
+        catch (Exception exception)
+        {
+            _error = exception.Message;
+        }
+    }
+
+    private AnswerDraft Draft(Guid id)
+    {
+        if (!_drafts.TryGetValue(id, out AnswerDraft? draft))
+        {
+            draft = new AnswerDraft();
+            _drafts.Add(id, draft);
+        }
+
+        return draft;
+    }
+
+    private async Task AddPersonalCardAsync()
+    {
+        await RunMutationAsync(async () =>
+        {
+            _ = await Reviews.AddPersonalCardAsync(new PersonalReviewCardInput(
+                _personalDomain,
+                _personalQuestion,
+                _personalAnswer));
+            _personalQuestion = string.Empty;
+            _personalAnswer = string.Empty;
+            _result = null;
+        });
+    }
+
+    private async Task AnswerAsync(ReviewItemView item, bool? selfReportedSuccess)
+    {
+        await RunMutationAsync(async () =>
+        {
+            AnswerDraft draft = Draft(item.Id);
+            _result = await Reviews.AnswerAsync(
+                item.Id,
+                item.Version,
+                new ReviewAnswerInput(draft.Response, selfReportedSuccess));
+            _drafts.Remove(item.Id);
+        });
+    }
+
+    private async Task RunMutationAsync(Func<Task> action)
+    {
+        _busy = true;
+        try
+        {
+            await action();
+            await ReloadAsync();
+        }
+        catch (Exception exception)
+        {
+            _error = exception.Message;
+        }
+        finally
+        {
+            _busy = false;
+        }
+    }
+
+    private sealed class AnswerDraft
+    {
+        public string Response { get; set; } = string.Empty;
+    }
+}

@@ -1,0 +1,8 @@
+{
+  "week": 10,
+  "family": "iqueryable",
+  "mode": "ef",
+  "datasetRevision": "mini-erp-v1",
+  "expectedProof": "Filtre paramétré côté serveur et deux projections ordonnées",
+  "negativeProof": "Le starter ignore le seuil et retourne quatre commandes"
+}

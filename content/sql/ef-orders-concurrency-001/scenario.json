@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "id": "ef-orders-concurrency-001",
+  "version": 1,
+  "title": "Détecter une mise à jour concurrente",
+  "difficulty": 4,
+  "skills": ["ef.concurrency", "ef.rowversion"],
+  "prerequisites": ["ef-orders-loading-001"],
+  "estimatedMinutes": 50,
+  "image": "mcr.microsoft.com/mssql/server@sha256:b1395aa51b4ec39981883560f1379ea9eba2a1c0719bf8e6477902769316bb79",
+  "datasetPath": "dataset.sql",
+  "visibleSchemaPath": "schema.sql",
+  "permissions": ["select", "update"],
+  "resetScriptPath": "reset.sql",
+  "statementPath": "statement.md",
+  "expectedResult": {
+    "ordered": true,
+    "columns": ["ConflictDetected"],
+    "numericTolerance": 0
+  },
+  "timeoutSeconds": 10,
+  "maxRows": 5,
+  "effectAssertions": [
+    "Le second SaveChanges lève DbUpdateConcurrencyException grâce à RowVersion",
+    "Le reset restaure le total initial et une nouvelle valeur RowVersion"
+  ],
+  "solutionPath": "solution.md",
+  "license": "CC-BY-4.0"
+}

@@ -1,0 +1,24 @@
+{
+    "schemaVersion":  1,
+    "id":  "interview-debug-anomaly-count-001",
+    "version":  1,
+    "title":  "Compter des anomalies de seuil",
+    "level":  "junior",
+    "durationMinutes":  5,
+    "skills":  [
+                   "debugging.breakpoints"
+               ],
+    "question":  "Comment résoudriez-vous « Compter des anomalies de seuil » et comment prouveriez-vous les bornes ?",
+    "observableCriteria":  [
+                               "Le contrat et une borne sont explicitement reformulés",
+                               "La complexité et un test de réfutation sont justifiés"
+                           ],
+    "modelAnswer":  "La borne est strictement dépassée et Abs utilise long pour Int32.MinValue. La preuve comprend un cas nominal, une borne et un cas différent des exemples ; O(n) en temps et O(1) en espace.",
+    "commonMistakes":  [
+                           "Réciter le code sans invariant ni méthode de test"
+                       ],
+    "variants":  [
+                     "Changer une borne ou le volume tout en conservant la même règle de compter des anomalies de seuil."
+                 ],
+    "license":  "CC-BY-4.0"
+}

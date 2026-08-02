@@ -1,0 +1,81 @@
+{
+    "schemaVersion":  1,
+    "id":  "csharp-clamp-value-001",
+    "version":  1,
+    "title":  "Borner une valeur",
+    "kind":  "csharp",
+    "difficulty":  2,
+    "skills":  [
+                   "logic.edge-cases"
+               ],
+    "prerequisites":  [
+                          "reference-types-001"
+                      ],
+    "estimatedMinutes":  30,
+    "statement":  "statement.md",
+    "constraints":  [
+                        "Conserver exactement la signature publique",
+                        "Refuser les bornes inversées puis traiter inférieur, supérieur et intervalle.",
+                        "Ne pas modifier les entrées reçues sauf mention explicite"
+                    ],
+    "examples":  [
+                     {
+                         "input":  "[{\"value\":[5,1,10],\"Count\":3},5]",
+                         "output":  "[{\"value\":[0,1,10],\"Count\":3},1]"
+                     }
+                 ],
+    "reflectionFields":  [
+                             "reformulation",
+                             "inputs",
+                             "expectedOutput",
+                             "edgeCases",
+                             "hypothesis",
+                             "plan"
+                         ],
+    "starterPath":  "starter/",
+    "visibleTestsPath":  "tests/visible/",
+    "hiddenTestsPath":  "tests/hidden/",
+    "hints":  [
+                  {
+                      "level":  1,
+                      "kind":  "socratic",
+                      "content":  "Quel invariant de « Borner une valeur » doit rester vrai pour les cas limites ?"
+                  },
+                  {
+                      "level":  2,
+                      "kind":  "location",
+                      "content":  "Concentrez la décision dans la méthode Clamp, sans état global."
+                  },
+                  {
+                      "level":  3,
+                      "kind":  "strategy",
+                      "content":  "Refuser les bornes inversées puis traiter inférieur, supérieur et intervalle."
+                  },
+                  {
+                      "level":  4,
+                      "kind":  "partial-pseudocode",
+                      "content":  "valider les bornes ; parcourir ou décider ; retourner un nouveau résultat déterministe"
+                  }
+              ],
+    "solution":  {
+                     "path":  "solution/",
+                     "unlock":  {
+                                    "seriousAttempts":  2,
+                                    "minimumDelayMinutes":  10
+                                }
+                 },
+    "explanation":  "explanation.md",
+    "complexity":  "O(1) en temps et O(1) en espace",
+    "commonMistakes":  [
+                           "Coder uniquement les exemples visibles",
+                           "Oublier une borne ou modifier une entrée",
+                           "Annoncer une complexité sans compter les opérations dominantes"
+                       ],
+    "variantId":  "csharp-even-counter-001",
+    "reviewCards":  [
+                        "card-csharp-clamp-value-001-rule",
+                        "card-csharp-clamp-value-001-edge"
+                    ],
+    "interviewQuestionId":  "interview-csharp-clamp-value-001",
+    "license":  "CC-BY-4.0"
+}

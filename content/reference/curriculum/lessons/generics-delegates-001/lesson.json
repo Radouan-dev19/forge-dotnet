@@ -1,0 +1,36 @@
+{
+    "schemaVersion":  1,
+    "id":  "generics-delegates-001",
+    "version":  1,
+    "title":  "Génériques et delegates utiles",
+    "week":  4,
+    "skills":  [
+                   {
+                       "id":  "csharp.generics",
+                       "weight":  1
+                   }
+               ],
+    "prerequisites":  [
+                          "csharp-exceptions-nullable-001"
+                      ],
+    "estimatedMinutes":  70,
+    "objectives":  [
+                       "Expliquer puis appliquer Génériques et delegates utiles sur un cas métier borné"
+                   ],
+    "sections":  [
+                     "intuition",
+                     "explanation",
+                     "example",
+                     "counterExample",
+                     "check",
+                     "guided",
+                     "independent",
+                     "debugging",
+                     "interview",
+                     "summary",
+                     "reviewCards",
+                     "masteryTest"
+                 ],
+    "markdownPath":  "lesson.md",
+    "license":  "CC-BY-4.0"
+}

@@ -1,0 +1,30 @@
+{
+    "schemaVersion":  1,
+    "cases":  [
+                  {
+                      "name":  "Hidden_Case1",
+                      "message":  "Trouver un maximum générique illustré — cas 1 hidden incorrect.",
+                      "arguments":  [
+                                        [
+                                            -5,
+                                            -2
+                                        ]
+                                    ],
+                      "expected":  -2,
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_Case2",
+                      "message":  "Trouver un maximum générique illustré — cas 2 hidden incorrect.",
+                      "arguments":  [
+                                        [
+                                            7
+                                        ]
+                                    ],
+                      "expected":  7,
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  }
+              ]
+}

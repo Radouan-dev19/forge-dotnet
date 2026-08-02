@@ -1,0 +1,440 @@
+{
+  "schemaVersion": 1,
+  "id": "forge-diagnostic-initial",
+  "version": 1,
+  "title": "Diagnostic initial Forge.NET",
+  "questions": [
+    {
+      "id": "diag-logic-d1-001",
+      "domain": "logic",
+      "difficulty": 1,
+      "prompt": "Quelle valeur complète la suite 2, 4, 8, 16, … ?",
+      "options": [
+        { "id": "a", "text": "18" },
+        { "id": "b", "text": "24" },
+        { "id": "c", "text": "32" },
+        { "id": "d", "text": "34" }
+      ]
+    },
+    {
+      "id": "diag-logic-d2-001",
+      "domain": "logic",
+      "difficulty": 2,
+      "prompt": "Une commande doit être traitée seulement si elle est active et si son montant est strictement positif. Quelle condition exprime exactement cette règle ?",
+      "options": [
+        { "id": "a", "text": "isActive || amount > 0" },
+        { "id": "b", "text": "isActive && amount > 0" },
+        { "id": "c", "text": "!isActive && amount >= 0" },
+        { "id": "d", "text": "isActive || amount == 0" }
+      ]
+    },
+    {
+      "id": "diag-logic-d2-002",
+      "domain": "logic",
+      "difficulty": 2,
+      "prompt": "Une liste contient 21 éléments et une page peut en contenir 10. Combien de pages faut-il pour ne perdre aucun élément ?",
+      "options": [
+        { "id": "a", "text": "1" },
+        { "id": "b", "text": "2" },
+        { "id": "c", "text": "3" },
+        { "id": "d", "text": "4" }
+      ]
+    },
+    {
+      "id": "diag-logic-d3-001",
+      "domain": "logic",
+      "difficulty": 3,
+      "prompt": "Quel invariant est indispensable à une recherche dichotomique classique ?",
+      "options": [
+        { "id": "a", "text": "La collection doit contenir un nombre pair d'éléments." },
+        { "id": "b", "text": "La zone encore recherchée doit rester triée." },
+        { "id": "c", "text": "Toutes les valeurs doivent être distinctes." },
+        { "id": "d", "text": "La collection doit être une liste chaînée." }
+      ]
+    },
+    {
+      "id": "diag-csharp-d1-001",
+      "domain": "csharp",
+      "difficulty": 1,
+      "prompt": "Quel littéral C# représente directement une valeur de type decimal ?",
+      "options": [
+        { "id": "a", "text": "19.95" },
+        { "id": "b", "text": "19.95m" },
+        { "id": "c", "text": "19.95f" },
+        { "id": "d", "text": "19.95d" }
+      ]
+    },
+    {
+      "id": "diag-csharp-d2-001",
+      "domain": "csharp",
+      "difficulty": 2,
+      "prompt": "Quelle expression retourne la longueur de name, ou zéro lorsque name vaut null ?",
+      "options": [
+        { "id": "a", "text": "name.Length ?? 0" },
+        { "id": "b", "text": "name!.Length" },
+        { "id": "c", "text": "name?.Length ?? 0" },
+        { "id": "d", "text": "name.Length.GetValueOrDefault()" }
+      ]
+    },
+    {
+      "id": "diag-csharp-d2-002",
+      "domain": "csharp",
+      "difficulty": 2,
+      "prompt": "Pourquoi utiliser une instruction using avec un objet IDisposable ?",
+      "options": [
+        { "id": "a", "text": "Pour rendre automatiquement l'objet immuable." },
+        { "id": "b", "text": "Pour garantir l'appel de Dispose même en cas d'exception." },
+        { "id": "c", "text": "Pour exécuter l'objet sur un autre thread." },
+        { "id": "d", "text": "Pour supprimer les vérifications de nullabilité." }
+      ]
+    },
+    {
+      "id": "diag-csharp-d3-001",
+      "domain": "csharp",
+      "difficulty": 3,
+      "prompt": "Une méthode asynchrone effectue une opération I/O et son appelant est lui-même asynchrone. Quelle approche préserve le mieux la propagation des erreurs et de l'annulation ?",
+      "options": [
+        { "id": "a", "text": "Lire systématiquement la propriété Result." },
+        { "id": "b", "text": "Envelopper l'appel dans Task.Run sans jeton." },
+        { "id": "c", "text": "Propager le CancellationToken et utiliser await." },
+        { "id": "d", "text": "Ignorer la tâche retournée." }
+      ]
+    },
+    {
+      "id": "diag-reading-d1-001",
+      "domain": "reading",
+      "difficulty": 1,
+      "prompt": "Après la boucle for (int i = 1; i <= 3; i++) total += i;, quelle est la valeur de total si elle commence à zéro ?",
+      "options": [
+        { "id": "a", "text": "3" },
+        { "id": "b", "text": "5" },
+        { "id": "c", "text": "6" },
+        { "id": "d", "text": "7" }
+      ]
+    },
+    {
+      "id": "diag-reading-d2-001",
+      "domain": "reading",
+      "difficulty": 2,
+      "prompt": "Que retourne une méthode qui commence par if (items.Count == 0) return false; lorsque items est vide ?",
+      "options": [
+        { "id": "a", "text": "true" },
+        { "id": "b", "text": "false" },
+        { "id": "c", "text": "null" },
+        { "id": "d", "text": "Elle lance toujours une exception." }
+      ]
+    },
+    {
+      "id": "diag-reading-d2-002",
+      "domain": "reading",
+      "difficulty": 2,
+      "prompt": "Dans orders.Where(o => o.IsPaid).Select(o => o.Id), à quoi sert Where ?",
+      "options": [
+        { "id": "a", "text": "À transformer chaque commande en identifiant." },
+        { "id": "b", "text": "À trier les commandes par identifiant." },
+        { "id": "c", "text": "À conserver uniquement les commandes payées." },
+        { "id": "d", "text": "À modifier IsPaid dans chaque commande." }
+      ]
+    },
+    {
+      "id": "diag-reading-d3-001",
+      "domain": "reading",
+      "difficulty": 3,
+      "prompt": "Une méthode retourne dans un bloc try, puis modifie une variable locale dans finally. Quel principe faut-il retenir pour lire correctement ce flux ?",
+      "options": [
+        { "id": "a", "text": "Le bloc finally n'est jamais exécuté après return." },
+        { "id": "b", "text": "Le bloc finally s'exécute avant que le contrôle quitte la méthode." },
+        { "id": "c", "text": "Le bloc catch s'exécute toujours avant finally." },
+        { "id": "d", "text": "Le compilateur supprime automatiquement finally." }
+      ]
+    },
+    {
+      "id": "diag-debugging-d1-001",
+      "domain": "debugging",
+      "difficulty": 1,
+      "prompt": "Quelle est la première étape utile face à un bug signalé mais non reproduit ?",
+      "options": [
+        { "id": "a", "text": "Modifier plusieurs lignes au hasard." },
+        { "id": "b", "text": "Obtenir un scénario reproductible et l'attendu précis." },
+        { "id": "c", "text": "Supprimer le message d'erreur." },
+        { "id": "d", "text": "Réécrire entièrement le module." }
+      ]
+    },
+    {
+      "id": "diag-debugging-d2-001",
+      "domain": "debugging",
+      "difficulty": 2,
+      "prompt": "Une NullReferenceException remonte une stack trace. Quel point d'entrée est généralement le plus utile ?",
+      "options": [
+        { "id": "a", "text": "La dernière ligne du système d'exploitation." },
+        { "id": "b", "text": "La première frame appartenant au code de l'application." },
+        { "id": "c", "text": "Le nom du fichier exécutable seulement." },
+        { "id": "d", "text": "La quantité de mémoire libre." }
+      ]
+    },
+    {
+      "id": "diag-debugging-d2-002",
+      "domain": "debugging",
+      "difficulty": 2,
+      "prompt": "Un défaut de date apparaît uniquement sur certaines machines. Quelle observation réduit le mieux l'incertitude ?",
+      "options": [
+        { "id": "a", "text": "Changer immédiatement de bibliothèque de dates." },
+        { "id": "b", "text": "Ajouter un délai arbitraire." },
+        { "id": "c", "text": "Journaliser les valeurs, fuseaux et cultures d'entrée de façon non sensible." },
+        { "id": "d", "text": "Masquer l'erreur à l'utilisateur." }
+      ]
+    },
+    {
+      "id": "diag-debugging-d3-001",
+      "domain": "debugging",
+      "difficulty": 3,
+      "prompt": "Comment tester une hypothèse selon laquelle un cache périmé produit une réponse incorrecte ?",
+      "options": [
+        { "id": "a", "text": "Redémarrer jusqu'à ce que le problème disparaisse." },
+        { "id": "b", "text": "Comparer un cas contrôlé avec cache valide puis invalidé, en observant les mêmes entrées." },
+        { "id": "c", "text": "Désactiver définitivement tous les caches sans mesure." },
+        { "id": "d", "text": "Augmenter la durée de vie du cache." }
+      ]
+    },
+    {
+      "id": "diag-sql-d1-001",
+      "domain": "sql",
+      "difficulty": 1,
+      "prompt": "Quelle expression SQL compte toutes les lignes d'un résultat ?",
+      "options": [
+        { "id": "a", "text": "SUM(*)" },
+        { "id": "b", "text": "COUNT(*)" },
+        { "id": "c", "text": "TOTAL(*)" },
+        { "id": "d", "text": "ROWS(*)" }
+      ]
+    },
+    {
+      "id": "diag-sql-d2-001",
+      "domain": "sql",
+      "difficulty": 2,
+      "prompt": "Pourquoi choisir un LEFT JOIN de Customers vers Orders ?",
+      "options": [
+        { "id": "a", "text": "Pour exclure les clients sans commande." },
+        { "id": "b", "text": "Pour conserver aussi les clients sans commande correspondante." },
+        { "id": "c", "text": "Pour supprimer automatiquement les doublons." },
+        { "id": "d", "text": "Pour modifier les commandes jointes." }
+      ]
+    },
+    {
+      "id": "diag-sql-d2-002",
+      "domain": "sql",
+      "difficulty": 2,
+      "prompt": "Quelle clause filtre un résultat après regroupement, par exemple les clients ayant plus de cinq commandes ?",
+      "options": [
+        { "id": "a", "text": "ORDER BY" },
+        { "id": "b", "text": "WHERE" },
+        { "id": "c", "text": "HAVING" },
+        { "id": "d", "text": "OFFSET" }
+      ]
+    },
+    {
+      "id": "diag-sql-d3-001",
+      "domain": "sql",
+      "difficulty": 3,
+      "prompt": "Deux utilisateurs modifient la même ligne à partir de la même version. Quel mécanisme détecte explicitement une mise à jour concurrente perdue ?",
+      "options": [
+        { "id": "a", "text": "Un ORDER BY sur la clé primaire." },
+        { "id": "b", "text": "Un jeton de concurrence vérifié dans la condition de mise à jour." },
+        { "id": "c", "text": "Un index non cluster uniquement." },
+        { "id": "d", "text": "Un SELECT DISTINCT." }
+      ]
+    },
+    {
+      "id": "diag-http-d1-001",
+      "domain": "http",
+      "difficulty": 1,
+      "prompt": "Quelle méthode HTTP est normalement utilisée pour lire une ressource sans la modifier ?",
+      "options": [
+        { "id": "a", "text": "POST" },
+        { "id": "b", "text": "GET" },
+        { "id": "c", "text": "PATCH" },
+        { "id": "d", "text": "DELETE" }
+      ]
+    },
+    {
+      "id": "diag-http-d2-001",
+      "domain": "http",
+      "difficulty": 2,
+      "prompt": "Quel statut HTTP décrit le mieux une ressource demandée qui n'existe pas ?",
+      "options": [
+        { "id": "a", "text": "200" },
+        { "id": "b", "text": "400" },
+        { "id": "c", "text": "404" },
+        { "id": "d", "text": "500" }
+      ]
+    },
+    {
+      "id": "diag-http-d2-002",
+      "domain": "http",
+      "difficulty": 2,
+      "prompt": "Quelle propriété est attendue d'un PUT idempotent répété avec le même corps ?",
+      "options": [
+        { "id": "a", "text": "Il crée une ressource différente à chaque appel." },
+        { "id": "b", "text": "L'état final visé reste le même après les répétitions." },
+        { "id": "c", "text": "Il ne peut jamais retourner d'erreur." },
+        { "id": "d", "text": "Il doit obligatoirement être mis en cache." }
+      ]
+    },
+    {
+      "id": "diag-http-d3-001",
+      "domain": "http",
+      "difficulty": 3,
+      "prompt": "Un client envoie If-Match avec un ETag devenu obsolète. Quel résultat protège une mise à jour concurrente ?",
+      "options": [
+        { "id": "a", "text": "201 Created" },
+        { "id": "b", "text": "304 Not Modified" },
+        { "id": "c", "text": "412 Precondition Failed" },
+        { "id": "d", "text": "503 Service Unavailable" }
+      ]
+    },
+    {
+      "id": "diag-git-d1-001",
+      "domain": "git",
+      "difficulty": 1,
+      "prompt": "Quelle commande affiche les fichiers modifiés, indexés ou non suivis du dépôt courant ?",
+      "options": [
+        { "id": "a", "text": "git clone" },
+        { "id": "b", "text": "git status" },
+        { "id": "c", "text": "git tag" },
+        { "id": "d", "text": "git remote" }
+      ]
+    },
+    {
+      "id": "diag-git-d2-001",
+      "domain": "git",
+      "difficulty": 2,
+      "prompt": "Quand un rebase local est-il généralement le moins risqué pour les autres contributeurs ?",
+      "options": [
+        { "id": "a", "text": "Après que toute l'équipe a basé son travail sur les commits." },
+        { "id": "b", "text": "Avant publication, lorsque les commits n'appartiennent qu'à votre branche locale." },
+        { "id": "c", "text": "Uniquement sur la branche principale protégée." },
+        { "id": "d", "text": "Après chaque merge déjà partagé." }
+      ]
+    },
+    {
+      "id": "diag-git-d2-002",
+      "domain": "git",
+      "difficulty": 2,
+      "prompt": "Après un conflit de fusion, quelle action vient avant le commit de résolution ?",
+      "options": [
+        { "id": "a", "text": "Supprimer le dépôt et le recloner." },
+        { "id": "b", "text": "Pousser immédiatement les marqueurs de conflit." },
+        { "id": "c", "text": "Résoudre les marqueurs, tester puis indexer les fichiers concernés." },
+        { "id": "d", "text": "Créer un tag sur l'état en conflit." }
+      ]
+    },
+    {
+      "id": "diag-git-d3-001",
+      "domain": "git",
+      "difficulty": 3,
+      "prompt": "Un commit défectueux est déjà partagé sur une branche publique. Quelle stratégie conserve le mieux l'historique commun ?",
+      "options": [
+        { "id": "a", "text": "Forcer un reset de la branche distante." },
+        { "id": "b", "text": "Créer un commit git revert qui inverse le changement." },
+        { "id": "c", "text": "Modifier directement l'objet commit sur le serveur." },
+        { "id": "d", "text": "Supprimer la branche sans prévenir." }
+      ]
+    },
+    {
+      "id": "diag-testing-d1-001",
+      "domain": "testing",
+      "difficulty": 1,
+      "prompt": "Dans le schéma Arrange, Act, Assert, quelle étape exécute le comportement testé ?",
+      "options": [
+        { "id": "a", "text": "Arrange" },
+        { "id": "b", "text": "Act" },
+        { "id": "c", "text": "Assert" },
+        { "id": "d", "text": "Cleanup" }
+      ]
+    },
+    {
+      "id": "diag-testing-d2-001",
+      "domain": "testing",
+      "difficulty": 2,
+      "prompt": "Une règle accepte une quantité de 1 à 100. Quel ensemble cible le mieux les bornes ?",
+      "options": [
+        { "id": "a", "text": "50 uniquement" },
+        { "id": "b", "text": "10, 20 et 30" },
+        { "id": "c", "text": "0, 1, 100 et 101" },
+        { "id": "d", "text": "Toutes les valeurs de 1 à 100" }
+      ]
+    },
+    {
+      "id": "diag-testing-d2-002",
+      "domain": "testing",
+      "difficulty": 2,
+      "prompt": "Pourquoi injecter une horloge dans un composant qui dépend du temps ?",
+      "options": [
+        { "id": "a", "text": "Pour accélérer le processeur pendant les tests." },
+        { "id": "b", "text": "Pour contrôler les instants et rendre les scénarios déterministes." },
+        { "id": "c", "text": "Pour supprimer les assertions temporelles." },
+        { "id": "d", "text": "Pour utiliser le fuseau local du développeur." }
+      ]
+    },
+    {
+      "id": "diag-testing-d3-001",
+      "domain": "testing",
+      "difficulty": 3,
+      "prompt": "Quel défaut un test d'intégration EF Core avec SQLite réel détecte plus probablement qu'un test unitaire pur ?",
+      "options": [
+        { "id": "a", "text": "Une faute d'orthographe dans un commentaire." },
+        { "id": "b", "text": "Une configuration de clé ou de conversion EF incorrecte." },
+        { "id": "c", "text": "Une branche logique déjà isolée sans dépendance." },
+        { "id": "d", "text": "La couleur d'un bouton." }
+      ]
+    },
+    {
+      "id": "diag-english-d1-001",
+      "domain": "english",
+      "difficulty": 1,
+      "prompt": "Which sentence politely asks for missing acceptance criteria?",
+      "options": [
+        { "id": "a", "text": "Your ticket is bad." },
+        { "id": "b", "text": "Could you clarify the expected outcome and acceptance criteria?" },
+        { "id": "c", "text": "I will guess the requirement." },
+        { "id": "d", "text": "This is not my problem." }
+      ]
+    },
+    {
+      "id": "diag-english-d2-001",
+      "domain": "english",
+      "difficulty": 2,
+      "prompt": "Which bug-report structure is the clearest for a teammate?",
+      "options": [
+        { "id": "a", "text": "It fails sometimes. Please fix." },
+        { "id": "b", "text": "A long opinion without reproduction steps." },
+        { "id": "c", "text": "Steps to reproduce, observed result, expected result, and relevant environment." },
+        { "id": "d", "text": "Only a screenshot without context." }
+      ]
+    },
+    {
+      "id": "diag-english-d2-002",
+      "domain": "english",
+      "difficulty": 2,
+      "prompt": "Which pull-request summary explains intent most clearly?",
+      "options": [
+        { "id": "a", "text": "Changes." },
+        { "id": "b", "text": "This change prevents duplicate invoices by enforcing an idempotency key; tests cover retries." },
+        { "id": "c", "text": "Trust me, it works." },
+        { "id": "d", "text": "Several files were edited." }
+      ]
+    },
+    {
+      "id": "diag-english-d3-001",
+      "domain": "english",
+      "difficulty": 3,
+      "prompt": "During an incident, which update communicates uncertainty responsibly?",
+      "options": [
+        { "id": "a", "text": "Everything is fixed, although no check has run." },
+        { "id": "b", "text": "We have mitigated the symptom; the root cause is still under investigation, and the next update is at 14:00 UTC." },
+        { "id": "c", "text": "No comment until we know everything." },
+        { "id": "d", "text": "The database is definitely responsible because it is often slow." }
+      ]
+    }
+  ]
+}

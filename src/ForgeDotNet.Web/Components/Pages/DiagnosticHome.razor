@@ -1,0 +1,125 @@
+@page "/diagnostic"
+@inject DiagnosticSessionService DiagnosticSessions
+@inject NavigationManager Navigation
+
+<PageTitle>Diagnostic — Forge.NET</PageTitle>
+
+<h1>Diagnostic initial</h1>
+
+<section class="diagnostic-intro" aria-labelledby="diagnostic-intro-title">
+    <h2 id="diagnostic-intro-title">Mesurer sans conclure trop tôt</h2>
+    <p>Cette étape collecte vos réponses dans neuf domaines. Après clôture, un rapport prudent affiche scores, incertitude et lacunes sans conclure à une maîtrise ni générer de plan.</p>
+    <ul>
+        <li>Trois sections chronométrées indépendamment.</li>
+        <li>Réponses enregistrées localement dès leur sélection.</li>
+        <li>Minuterie vérifiée par le serveur local, y compris après actualisation.</li>
+        <li>Abandon et réponses manquantes signalés comme incomplets.</li>
+    </ul>
+</section>
+
+@if (_isLoading)
+{
+    <p role="status">Chargement de la banque de diagnostic…</p>
+}
+else if (_overview is null)
+{
+    <p class="error-message" role="alert">@_error</p>
+}
+else
+{
+    @if (_overview.ActiveSessionId is Guid activeSessionId)
+    {
+        <section class="diagnostic-resume" aria-labelledby="resume-title">
+            <h2 id="resume-title">Session en cours</h2>
+            <p>Une session chronométrée existe déjà. La démarrer à nouveau ne modifie ni son tirage ni son échéance.</p>
+            <a class="btn btn-primary" href="diagnostic/session/@activeSessionId">Reprendre la session</a>
+        </section>
+    }
+    else
+    {
+        <section class="diagnostic-start" aria-labelledby="start-title">
+            <h2 id="start-title">Démarrer</h2>
+            <div class="actions">
+                <button class="btn btn-primary" type="button" disabled="@_isStarting" @onclick="() => StartAsync(DiagnosticMode.Initial)">
+                    Démarrer le diagnostic initial — 27 questions
+                </button>
+                <button class="btn btn-outline-secondary" type="button" disabled="@_isStarting" @onclick="() => StartAsync(DiagnosticMode.Reduced)">
+                    Démarrer le diagnostic réduit — 9 questions
+                </button>
+            </div>
+            <p class="field-help">Le mode réduit sert aux validations locales et conserve exactement les mêmes règles de reprise, d'expiration et d'intégrité.</p>
+        </section>
+    }
+
+    @if (!string.IsNullOrWhiteSpace(_error))
+    {
+        <p class="error-message" role="alert">@_error</p>
+    }
+
+    <section class="diagnostic-coverage" aria-labelledby="coverage-title">
+        <h2 id="coverage-title">Couverture de la banque v@_overview.BankVersion</h2>
+        <p>@_overview.BankQuestionCount questions publiques validées dans « @_overview.BankTitle ».</p>
+        <ul>
+            @foreach (DiagnosticDomainCoverageView domain in _overview.Coverage)
+            {
+                <li><strong>@domain.DisplayName</strong> — @domain.QuestionCount questions</li>
+            }
+        </ul>
+    </section>
+
+    @if (_overview.LatestSession is not null && _overview.ActiveSessionId is null)
+    {
+        <section class="diagnostic-history" aria-labelledby="latest-title">
+            <h2 id="latest-title">Dernière collecte</h2>
+            <p>@StatusLabel(_overview.LatestSession) — @_overview.LatestSession.AnsweredCount réponse(s) sur @_overview.LatestSession.QuestionCount.</p>
+            <a href="diagnostic/session/@_overview.LatestSession.Id/evaluation">Consulter l'évaluation prudente</a>
+        </section>
+    }
+}
+
+@code {
+    private DiagnosticOverviewView? _overview;
+    private bool _isLoading = true;
+    private bool _isStarting;
+    private string? _error;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            _overview = await DiagnosticSessions.GetOverviewAsync();
+        }
+        catch (Exception exception)
+        {
+            _error = exception.Message;
+        }
+        finally
+        {
+            _isLoading = false;
+        }
+    }
+
+    private async Task StartAsync(DiagnosticMode mode)
+    {
+        _isStarting = true;
+        _error = null;
+        try
+        {
+            DiagnosticSessionView session = await DiagnosticSessions.StartAsync(mode);
+            Navigation.NavigateTo($"diagnostic/session/{session.Id}");
+        }
+        catch (Exception exception)
+        {
+            _error = exception.Message;
+            _isStarting = false;
+        }
+    }
+
+    private static string StatusLabel(DiagnosticSessionSummaryView session) => session.Status switch
+    {
+        DiagnosticSessionStatus.Completed when session.IsComplete => "Terminée — collecte complète",
+        DiagnosticSessionStatus.Completed => "Terminée — collecte incomplète",
+        DiagnosticSessionStatus.Abandoned => "Abandonnée — collecte incomplète",
+        _ => "En cours — collecte incomplète",
+    };
+}

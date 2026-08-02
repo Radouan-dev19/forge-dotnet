@@ -1,0 +1,81 @@
+{
+    "schemaVersion":  1,
+    "id":  "csharp-sequence-copy-001",
+    "version":  1,
+    "title":  "Matérialiser une séquence une fois",
+    "kind":  "csharp",
+    "difficulty":  1,
+    "skills":  [
+                   "csharp.generics"
+               ],
+    "prerequisites":  [
+                          "generics-delegates-001"
+                      ],
+    "estimatedMinutes":  30,
+    "statement":  "statement.md",
+    "constraints":  [
+                        "Conserver exactement la signature publique",
+                        "Créer une copie indépendante qui conserve ordre et doublons.",
+                        "Ne pas modifier les entrées reçues sauf mention explicite"
+                    ],
+    "examples":  [
+                     {
+                         "input":  "[{\"value\":[[1,2]],\"Count\":1},{\"value\":[1,2],\"Count\":2}]",
+                         "output":  "[{\"value\":[[]],\"Count\":1},{\"value\":[],\"Count\":0}]"
+                     }
+                 ],
+    "reflectionFields":  [
+                             "reformulation",
+                             "inputs",
+                             "expectedOutput",
+                             "edgeCases",
+                             "hypothesis",
+                             "plan"
+                         ],
+    "starterPath":  "starter/",
+    "visibleTestsPath":  "tests/visible/",
+    "hiddenTestsPath":  "tests/hidden/",
+    "hints":  [
+                  {
+                      "level":  1,
+                      "kind":  "socratic",
+                      "content":  "Quel invariant de « Matérialiser une séquence une fois » doit rester vrai pour les cas limites ?"
+                  },
+                  {
+                      "level":  2,
+                      "kind":  "location",
+                      "content":  "Concentrez la décision dans la méthode CopyValues, sans état global."
+                  },
+                  {
+                      "level":  3,
+                      "kind":  "strategy",
+                      "content":  "Créer une copie indépendante qui conserve ordre et doublons."
+                  },
+                  {
+                      "level":  4,
+                      "kind":  "partial-pseudocode",
+                      "content":  "valider les bornes ; parcourir ou décider ; retourner un nouveau résultat déterministe"
+                  }
+              ],
+    "solution":  {
+                     "path":  "solution/",
+                     "unlock":  {
+                                    "seriousAttempts":  2,
+                                    "minimumDelayMinutes":  10
+                                }
+                 },
+    "explanation":  "explanation.md",
+    "complexity":  "O(n) en temps et O(n) en espace",
+    "commonMistakes":  [
+                           "Coder uniquement les exemples visibles",
+                           "Oublier une borne ou modifier une entrée",
+                           "Annoncer une complexité sans compter les opérations dominantes"
+                       ],
+    "variantId":  "csharp-json-number-count-001",
+    "reviewCards":  [
+                        "card-csharp-sequence-copy-001-rule",
+                        "card-csharp-sequence-copy-001-edge"
+                    ],
+    "interviewQuestionId":  "interview-csharp-sequence-copy-001",
+    "license":  "CC-BY-4.0"
+}

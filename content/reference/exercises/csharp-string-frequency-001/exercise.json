@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "id": "csharp-string-frequency-001",
+  "version": 1,
+  "title": "Compter les mots d’un texte",
+  "kind": "csharp",
+  "difficulty": 3,
+  "skills": ["csharp.strings", "csharp.dictionaries", "logic.edge-cases"],
+  "prerequisites": ["csharp-dictionary-stock-001"],
+  "estimatedMinutes": 45,
+  "statement": "statement.md",
+  "constraints": [
+    "Conserver exactement la signature publique demandée",
+    "Un mot contient uniquement des lettres ou des chiffres consécutifs",
+    "Comparer les mots en minuscules invariantes",
+    "Refuser null avec ArgumentNullException"
+  ],
+  "examples": [
+    { "input": "Chat, chat ! chien.", "output": "{chat: 2, chien: 1}" },
+    { "input": "   ", "output": "{}" }
+  ],
+  "reflectionFields": ["reformulation", "inputs", "expectedOutput", "edgeCases", "hypothesis", "plan"],
+  "starterPath": "starter/",
+  "visibleTestsPath": "tests/visible/",
+  "hiddenTestsPath": "tests/hidden/",
+  "hints": [
+    { "level": 1, "kind": "socratic", "content": "Comment reconnaître le début et la fin d’un mot sans dépendre d’une liste limitée de séparateurs ?" },
+    { "level": 2, "kind": "location", "content": "Parcours les caractères, accumule lettres et chiffres, puis finalise le mot lors d’un autre caractère." },
+    { "level": 3, "kind": "strategy", "content": "Utilise char.IsLetterOrDigit, un StringBuilder et une fonction locale qui ajoute le mot courant au dictionnaire." },
+    { "level": 4, "kind": "partial-pseudocode", "content": "pour chaque caractère : si lettre/chiffre ajouter en minuscule ; sinon valider le mot ; après la boucle valider encore le mot" }
+  ],
+  "solution": { "path": "solution/", "unlock": { "seriousAttempts": 2, "minimumDelayMinutes": 10 } },
+  "explanation": "explanation.md",
+  "complexity": "O(n) en temps et O(k) en espace pour les mots distincts",
+  "commonMistakes": [
+    "Découper seulement sur l’espace et conserver la ponctuation",
+    "Oublier le dernier mot lorsque le texte ne finit pas par un séparateur",
+    "Comparer les mots avec la casse d’origine",
+    "Traiter une chaîne blanche comme un mot"
+  ],
+  "variantId": "csharp-dictionary-stock-001",
+  "reviewCards": ["card-string-token-001", "card-string-finalize-001"],
+  "interviewQuestionId": "interview-string-frequency-001",
+  "license": "CC-BY-4.0"
+}

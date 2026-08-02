@@ -1,0 +1,26 @@
+{
+    "schemaVersion":  1,
+    "cases":  [
+                  {
+                      "name":  "Hidden_Case1",
+                      "message":  "Composer un total de ligne — cas 1 hidden incorrect.",
+                      "arguments":  [
+                                        1.005,
+                                        2
+                                    ],
+                      "expected":  2.01,
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_Case2",
+                      "message":  "Composer un total de ligne — cas 2 hidden incorrect.",
+                      "arguments":  [
+                                        2,
+                                        -1
+                                    ],
+                      "expectedException":  "ArgumentOutOfRangeException",
+                      "argumentsUnchanged":  false
+                  }
+              ]
+}

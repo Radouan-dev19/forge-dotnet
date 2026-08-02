@@ -1,0 +1,27 @@
+{
+    "schemaVersion":  1,
+    "cases":  [
+                  {
+                      "name":  "Visible_Case1",
+                      "message":  "Calculer des frais par interface — cas 1 visible incorrect.",
+                      "arguments":  [
+                                        100,
+                                        true
+                                    ],
+                      "expected":  1.5,
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Visible_Case2",
+                      "message":  "Calculer des frais par interface — cas 2 visible incorrect.",
+                      "arguments":  [
+                                        100,
+                                        false
+                                    ],
+                      "expected":  0,
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  }
+              ]
+}

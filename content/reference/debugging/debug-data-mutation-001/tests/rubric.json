@@ -1,0 +1,39 @@
+{
+    "schemaVersion":  1,
+    "scenarioId":  "debug-data-mutation-001",
+    "criteria":  [
+                     {
+                         "id":  "cause",
+                         "label":  "La cause relie la divergence à la règle fautive.",
+                         "journalField":  "cause",
+                         "requiredTerms":  [
+                                               "borne",
+                                               "condition",
+                                               "mutation"
+                                           ],
+                         "minimumMatches":  1
+                     },
+                     {
+                         "id":  "evidence",
+                         "label":  "La preuve cite entrée, attendu et réel.",
+                         "journalField":  "evidence",
+                         "requiredTerms":  [
+                                               "entrée",
+                                               "attendu",
+                                               "réel"
+                                           ],
+                         "minimumMatches":  2
+                     },
+                     {
+                         "id":  "test",
+                         "label":  "Le test de non-régression cible la borne.",
+                         "journalField":  "test",
+                         "requiredTerms":  [
+                                               "borne",
+                                               "échoue",
+                                               "réussit"
+                                           ],
+                         "minimumMatches":  2
+                     }
+                 ]
+}

@@ -1,0 +1,25 @@
+{
+    "schemaVersion":  1,
+    "cases":  [
+                  {
+                      "name":  "Hidden_Case1",
+                      "message":  "Classer une température — cas 1 hidden incorrect.",
+                      "arguments":  [
+                                        0
+                                    ],
+                      "expected":  "frais",
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_Case2",
+                      "message":  "Classer une température — cas 2 hidden incorrect.",
+                      "arguments":  [
+                                        20
+                                    ],
+                      "expected":  "chaud",
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  }
+              ]
+}

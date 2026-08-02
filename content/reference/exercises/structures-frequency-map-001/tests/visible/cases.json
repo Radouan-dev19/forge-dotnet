@@ -1,0 +1,36 @@
+{
+    "schemaVersion":  1,
+    "cases":  [
+                  {
+                      "name":  "Visible_Case1",
+                      "message":  "Indexer des fréquences entières — cas 1 visible incorrect.",
+                      "arguments":  [
+                                        [
+                                            1,
+                                            1,
+                                            2
+                                        ]
+                                    ],
+                      "expected":  {
+                                       "1":  2,
+                                       "2":  1
+                                   },
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Visible_Case2",
+                      "message":  "Indexer des fréquences entières — cas 2 visible incorrect.",
+                      "arguments":  [
+                                        [
+
+                                        ]
+                                    ],
+                      "expected":  {
+
+                                   },
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  }
+              ]
+}

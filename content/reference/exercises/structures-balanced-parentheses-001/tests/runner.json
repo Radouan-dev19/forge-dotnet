@@ -1,0 +1,12 @@
+{
+    "schemaVersion":  1,
+    "suiteId":  "structures-balanced-parentheses-001.v1",
+    "exerciseId":  "structures-balanced-parentheses-001",
+    "exerciseVersion":  1,
+    "typeName":  "Submission",
+    "methodName":  "Balanced",
+    "parameterTypes":  [
+                           "string"
+                       ],
+    "returnType":  "bool"
+}

@@ -1,0 +1,81 @@
+{
+    "schemaVersion":  1,
+    "id":  "csharp-dictionary-default-001",
+    "version":  1,
+    "title":  "Lire un stock absent",
+    "kind":  "csharp",
+    "difficulty":  2,
+    "skills":  [
+                   "csharp.dictionaries"
+               ],
+    "prerequisites":  [
+                          "collections-arrays-001"
+                      ],
+    "estimatedMinutes":  30,
+    "statement":  "statement.md",
+    "constraints":  [
+                        "Conserver exactement la signature publique",
+                        "Distinguer une clé absente d’une exception et ne jamais muter le dictionnaire.",
+                        "Ne pas modifier les entrées reçues sauf mention explicite"
+                    ],
+    "examples":  [
+                     {
+                         "input":  "[{\"value\":[{\"pen\":3},\"pen\"],\"Count\":2},3]",
+                         "output":  "[{\"value\":[{\"pen\":3},\"book\"],\"Count\":2},0]"
+                     }
+                 ],
+    "reflectionFields":  [
+                             "reformulation",
+                             "inputs",
+                             "expectedOutput",
+                             "edgeCases",
+                             "hypothesis",
+                             "plan"
+                         ],
+    "starterPath":  "starter/",
+    "visibleTestsPath":  "tests/visible/",
+    "hiddenTestsPath":  "tests/hidden/",
+    "hints":  [
+                  {
+                      "level":  1,
+                      "kind":  "socratic",
+                      "content":  "Quel invariant de « Lire un stock absent » doit rester vrai pour les cas limites ?"
+                  },
+                  {
+                      "level":  2,
+                      "kind":  "location",
+                      "content":  "Concentrez la décision dans la méthode StockFor, sans état global."
+                  },
+                  {
+                      "level":  3,
+                      "kind":  "strategy",
+                      "content":  "Distinguer une clé absente d’une exception et ne jamais muter le dictionnaire."
+                  },
+                  {
+                      "level":  4,
+                      "kind":  "partial-pseudocode",
+                      "content":  "valider les bornes ; parcourir ou décider ; retourner un nouveau résultat déterministe"
+                  }
+              ],
+    "solution":  {
+                     "path":  "solution/",
+                     "unlock":  {
+                                    "seriousAttempts":  2,
+                                    "minimumDelayMinutes":  10
+                                }
+                 },
+    "explanation":  "explanation.md",
+    "complexity":  "O(1) amorti en temps et O(1) en espace",
+    "commonMistakes":  [
+                           "Coder uniquement les exemples visibles",
+                           "Oublier une borne ou modifier une entrée",
+                           "Annoncer une complexité sans compter les opérations dominantes"
+                       ],
+    "variantId":  "csharp-date-span-001",
+    "reviewCards":  [
+                        "card-csharp-dictionary-default-001-rule",
+                        "card-csharp-dictionary-default-001-edge"
+                    ],
+    "interviewQuestionId":  "interview-csharp-dictionary-default-001",
+    "license":  "CC-BY-4.0"
+}

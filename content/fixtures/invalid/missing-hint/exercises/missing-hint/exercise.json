@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "id": "missing-hint",
+  "version": 1,
+  "hints": [
+    {
+      "level": 1,
+      "kind": "socratic",
+      "content": "Quelle information manque encore pour avancer ?"
+    },
+    {
+      "level": 2,
+      "kind": "location",
+      "content": "Observe la méthode qui transforme les données."
+    },
+    {
+      "level": 3,
+      "kind": "strategy",
+      "content": "Découpe la transformation en étapes vérifiables."
+    }
+  ]
+}

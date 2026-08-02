@@ -1,0 +1,108 @@
+@page "/mastery"
+@inject MasteryService Mastery
+
+<PageTitle>Maîtrise — Forge.NET</PageTitle>
+
+<h1>Maîtrise</h1>
+
+<section class="practice-panel" aria-labelledby="mastery-method-title">
+    <h2 id="mastery-method-title">Projection explicable</h2>
+    <p>
+        Le score est recalculé depuis des preuves conservées. Une composante absente vaut zéro ; un indice plafonne
+        la preuve et une solution consultée annule la pratique autonome de l’activité.
+    </p>
+    <p class="notice" role="status">
+        Cette page ne permet aucune modification de score. Une porte fermée reste fermée tant que chaque preuve
+        obligatoire n’est pas vérifiée.
+    </p>
+</section>
+
+@if (_error is not null)
+{
+    <p class="error-message" role="alert">@_error</p>
+}
+else if (_view is null)
+{
+    <p role="status">Calcul de la projection de maîtrise…</p>
+}
+else
+{
+    <section class="practice-panel" aria-labelledby="mastery-policy-title">
+        <h2 id="mastery-policy-title">Politique versionnée</h2>
+        <p>
+            @_view.PolicyId v@_view.PolicyVersion · calcul @_view.CalculatedAtUtc.ToLocalTime().ToString("g") ·
+            @_view.ObservationCount observation(s) typée(s).
+        </p>
+        <p>Révision de politique : <code>@_view.PolicyRevision</code></p>
+    </section>
+
+    <section class="practice-panel" aria-labelledby="mastery-domain-title">
+        <h2 id="mastery-domain-title">Scores par domaine</h2>
+        @foreach (MasteryDomainView domain in _view.Domains)
+        {
+            <article class="practice-panel">
+                <h3>@domain.Label — @domain.Score.ToString("0.##") / 100</h3>
+                <p>
+                    Seuil : @domain.RequiredScore.ToString("0.##")
+                    @if (domain.IsCritical)
+                    {
+                        <span>· compétence critique</span>
+                    }
+                    · @(domain.IsValidated ? "validée" : "non validée")
+                </p>
+                <table class="table">
+                    <thead>
+                        <tr><th scope="col">Composante</th><th scope="col">Poids</th><th scope="col">Score</th><th scope="col">Preuves</th></tr>
+                    </thead>
+                    <tbody>
+                        @foreach (MasteryComponentView component in domain.Components)
+                        {
+                            <tr>
+                                <td>@component.Label</td>
+                                <td>@component.WeightPercent.ToString("0") %</td>
+                                <td>@(component.HasEvidence ? component.Score.ToString("0.##") : "absente — 0")</td>
+                                <td>@component.EvidenceCount sur @component.DistinctItemCount item(s)</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                @if (domain.Blockers.Count > 0)
+                {
+                    <h4>Blocages</h4>
+                    <ul>@foreach (string blocker in domain.Blockers) { <li>@blocker</li> }</ul>
+                }
+            </article>
+        }
+    </section>
+
+    <section class="practice-panel" aria-labelledby="mastery-gates-title">
+        <h2 id="mastery-gates-title">Portes A–D</h2>
+        @foreach (MasteryGateView gate in _view.Gates)
+        {
+            <article>
+                <h3>@gate.Label — @(gate.IsOpen ? "ouverte" : "fermée")</h3>
+                @if (gate.Blockers.Count > 0)
+                {
+                    <ul>@foreach (string blocker in gate.Blockers) { <li>@blocker</li> }</ul>
+                }
+            </article>
+        }
+    </section>
+}
+
+@code {
+    private MasteryDashboardView? _view;
+    private string? _error;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            _view = await Mastery.GetAsync();
+        }
+        catch (Exception exception)
+        {
+            _error = exception.Message;
+        }
+    }
+}

@@ -1,0 +1,8 @@
+{
+  "week": 10,
+  "family": "tracking",
+  "mode": "ef",
+  "datasetRevision": "mini-erp-v1",
+  "expectedProof": "Même instance suivie, lecture détachée, une entrée suivie",
+  "negativeProof": "Le starter réutilise une entité suivie au lieu d’une lecture AsNoTracking"
+}

@@ -1,0 +1,27 @@
+{
+    "schemaVersion":  1,
+    "cases":  [
+                  {
+                      "name":  "Visible_Case1",
+                      "message":  "Compter des jours inclusifs — cas 1 visible incorrect.",
+                      "arguments":  [
+                                        "2026-07-01",
+                                        "2026-07-01"
+                                    ],
+                      "expected":  1,
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Visible_Case2",
+                      "message":  "Compter des jours inclusifs — cas 2 visible incorrect.",
+                      "arguments":  [
+                                        "2026-07-01",
+                                        "2026-07-03"
+                                    ],
+                      "expected":  3,
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  }
+              ]
+}

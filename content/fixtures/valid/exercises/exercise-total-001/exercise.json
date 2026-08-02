@@ -1,0 +1,77 @@
+{
+  "schemaVersion": 1,
+  "id": "exercise-total-001",
+  "version": 1,
+  "title": "Calculer un total de commande",
+  "kind": "csharp",
+  "difficulty": 2,
+  "skills": [
+    "csharp.collections",
+    "logic.edge-cases"
+  ],
+  "prerequisites": [
+    "lesson-types-001"
+  ],
+  "estimatedMinutes": 35,
+  "statement": "statement.md",
+  "constraints": [
+    "Conserver la signature publique fournie"
+  ],
+  "examples": [
+    {
+      "input": "12.50, 7.50",
+      "output": "20.00"
+    }
+  ],
+  "reflectionFields": [
+    "reformulation",
+    "inputs",
+    "expectedOutput",
+    "edgeCases",
+    "hypothesis",
+    "plan"
+  ],
+  "starterPath": "starter/",
+  "visibleTestsPath": "tests/visible/",
+  "hiddenTestsPath": "tests/hidden/",
+  "hints": [
+    {
+      "level": 1,
+      "kind": "socratic",
+      "content": "Quelle opération combine successivement tous les montants ?"
+    },
+    {
+      "level": 2,
+      "kind": "location",
+      "content": "Concentre-toi sur la boucle qui parcourt la collection."
+    },
+    {
+      "level": 3,
+      "kind": "strategy",
+      "content": "Initialise un accumulateur puis ajoute chaque montant."
+    },
+    {
+      "level": 4,
+      "kind": "partial-pseudocode",
+      "content": "total vaut zéro ; pour chaque montant, ajouter ce montant au total."
+    }
+  ],
+  "solution": {
+    "path": "solution/",
+    "unlock": {
+      "seriousAttempts": 2,
+      "minimumDelayMinutes": 10
+    }
+  },
+  "explanation": "explanation.md",
+  "complexity": "O(n) en temps et O(1) en espace supplémentaire",
+  "commonMistakes": [
+    "Utiliser un entier pour représenter les montants décimaux"
+  ],
+  "variantId": "exercise-total-002",
+  "reviewCards": [
+    "card-orders-total-001"
+  ],
+  "interviewQuestionId": "interview-types-001",
+  "license": "CC-BY-4.0"
+}

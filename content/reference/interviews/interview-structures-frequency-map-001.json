@@ -1,0 +1,24 @@
+{
+    "schemaVersion":  1,
+    "id":  "interview-structures-frequency-map-001",
+    "version":  1,
+    "title":  "Indexer des fréquences entières",
+    "level":  "junior",
+    "durationMinutes":  5,
+    "skills":  [
+                   "structures.dictionary"
+               ],
+    "question":  "Comment résoudriez-vous « Indexer des fréquences entières » et comment prouveriez-vous les bornes ?",
+    "observableCriteria":  [
+                               "Le contrat et une borne sont explicitement reformulés",
+                               "La complexité et un test de réfutation sont justifiés"
+                           ],
+    "modelAnswer":  "Convertir les clés avec la culture invariante et incrémenter une seule entrée. La preuve comprend un cas nominal, une borne et un cas différent des exemples ; O(n) attendu en temps et O(k) en espace.",
+    "commonMistakes":  [
+                           "Réciter le code sans invariant ni méthode de test"
+                       ],
+    "variants":  [
+                     "Changer une borne ou le volume tout en conservant la même règle de indexer des fréquences entières."
+                 ],
+    "license":  "CC-BY-4.0"
+}

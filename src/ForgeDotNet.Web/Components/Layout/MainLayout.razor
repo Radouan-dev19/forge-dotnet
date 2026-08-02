@@ -1,0 +1,30 @@
+@inherits LayoutComponentBase
+
+<header class="site-header">
+    <div class="header-content">
+        <a class="brand" href="/">Forge.NET</a>
+        <nav aria-label="Navigation principale">
+            <NavLink href="/" Match="NavLinkMatch.All">Accueil</NavLink>
+            <NavLink href="dashboard">Tableau de bord</NavLink>
+            <NavLink href="learn">Apprendre</NavLink>
+            <NavLink href="practice">Pratiquer</NavLink>
+            <NavLink href="debug-lab">DebugLab</NavLink>
+            <NavLink href="sql-lab">SqlLab</NavLink>
+            <NavLink href="mastery">Maîtrise</NavLink>
+            <NavLink href="reviews">Révisions</NavLink>
+            <NavLink href="exams">Examens</NavLink>
+            <NavLink href="diagnostic">Diagnostic</NavLink>
+            <NavLink href="profile">Profil</NavLink>
+            <NavLink href="settings">Paramètres</NavLink>
+            <NavLink href="about">À propos</NavLink>
+        </nav>
+    </div>
+</header>
+
+<main id="main-content" class="content-shell">
+    @Body
+</main>
+
+<footer>
+    <span>Forge.NET fonctionne localement, sans compte cloud.</span>
+</footer>

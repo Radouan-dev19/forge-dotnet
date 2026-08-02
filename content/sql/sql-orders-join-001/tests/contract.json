@@ -1,0 +1,12 @@
+{
+  "week": 8,
+  "family": "join-filter-constraints",
+  "mode": "sql",
+  "datasetRevision": "orders-relational-v1",
+  "expectedRows": [["1","Ada","120.5"],["2","Ada","75"],["3","Grace","40.25"]],
+  "equivalentQuery": "SELECT o.OrderId, c.Name AS CustomerName, o.Total FROM dbo.Customers AS c JOIN dbo.Orders AS o ON o.CustomerId = c.CustomerId AND o.Status IN (N'Paid', N'Pending') WHERE c.IsActive = 1 ORDER BY o.OrderId;",
+  "negativeQuery": "SELECT o.OrderId, c.Name AS CustomerName, o.Total FROM dbo.Orders AS o CROSS JOIN dbo.Customers AS c WHERE c.IsActive = 1 ORDER BY o.OrderId;",
+  "dirtySql": "DELETE FROM dbo.Orders WHERE OrderId = 1;",
+  "resetProbeSql": "SELECT COUNT_BIG(*) FROM dbo.Orders;",
+  "resetExpected": "4"
+}

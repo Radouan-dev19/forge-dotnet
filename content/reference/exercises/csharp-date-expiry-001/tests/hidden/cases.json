@@ -1,0 +1,9 @@
+{
+  "schemaVersion": 1,
+  "cases": [
+    { "name": "Hidden_AfterGrace", "message": "Le jour suivant la grâce doit être expiré.", "arguments": ["2026-07-20", "2026-07-23", 2], "expected": true },
+    { "name": "Hidden_BeforeDueDate", "message": "Une date antérieure à l’échéance reste valide.", "arguments": ["2026-07-20", "2026-07-01", 0], "expected": false },
+    { "name": "Hidden_NegativeGrace", "message": "Une grâce négative doit être refusée.", "arguments": ["2026-07-20", "2026-07-20", -1], "expectedException": "ArgumentOutOfRangeException" },
+    { "name": "Hidden_MonthBoundary", "message": "Le délai doit fonctionner au changement de mois.", "arguments": ["2026-07-31", "2026-08-02", 1], "expected": true }
+  ]
+}

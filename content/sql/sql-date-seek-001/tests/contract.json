@@ -1,0 +1,14 @@
+{
+  "week": 10,
+  "family": "date-seek",
+  "mode": "sql",
+  "datasetRevision": "s1-s10-orders-v1",
+  "expectedRows": [["3","2026-02-15T00:00:00.0000000"],["4","2026-03-01T00:00:00.0000000"],["5","2026-03-05T00:00:00.0000000"]],
+  "equivalentQuery": "SELECT OrderId, OrderDate FROM dbo.Orders WHERE OrderDate \u003e \u00272026-02-10\u0027 OR (OrderDate = \u00272026-02-10\u0027 AND OrderId \u003e 2) ORDER BY OrderDate, OrderId;",
+  "negativeQuery": "SELECT CustomerId FROM dbo.Customers WHERE 1 = 0;",
+  "dirtySql": "UPDATE dbo.Orders SET Total = 0 WHERE OrderId = 5;",
+  "resetProbeSql": "SELECT Total FROM dbo.Orders WHERE OrderId = 5;",
+  "resetExpected": "100.00",
+  "planIndex": null,
+  "stabilityMutationSql": null
+}

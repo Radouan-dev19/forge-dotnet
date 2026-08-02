@@ -1,0 +1,33 @@
+{
+    "schemaVersion":  1,
+    "cases":  [
+                  {
+                      "name":  "Hidden_Case1",
+                      "message":  "Compter les entiers pairs — cas 1 hidden incorrect.",
+                      "arguments":  [
+                                        [
+                                            -2,
+                                            -1,
+                                            0
+                                        ]
+                                    ],
+                      "expected":  2,
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_Case2",
+                      "message":  "Compter les entiers pairs — cas 2 hidden incorrect.",
+                      "arguments":  [
+                                        [
+                                            3,
+                                            5,
+                                            7
+                                        ]
+                                    ],
+                      "expected":  0,
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  }
+              ]
+}

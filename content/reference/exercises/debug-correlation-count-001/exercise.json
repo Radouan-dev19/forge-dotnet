@@ -1,0 +1,81 @@
+{
+    "schemaVersion":  1,
+    "id":  "debug-correlation-count-001",
+    "version":  1,
+    "title":  "Suivre un identifiant de corrélation",
+    "kind":  "csharp",
+    "difficulty":  2,
+    "skills":  [
+                   "debugging.data"
+               ],
+    "prerequisites":  [
+                          "debug-stacktraces-breakpoints-001"
+                      ],
+    "estimatedMinutes":  30,
+    "statement":  "statement.md",
+    "constraints":  [
+                        "Conserver exactement la signature publique",
+                        "Compter les occurrences non chevauchantes et respecter la casse du journal.",
+                        "Ne pas modifier les entrées reçues sauf mention explicite"
+                    ],
+    "examples":  [
+                     {
+                         "input":  "[{\"value\":[\"id=abc id=abc\",\"abc\"],\"Count\":2},2]",
+                         "output":  "[{\"value\":[\"id=abc\",\"xyz\"],\"Count\":2},0]"
+                     }
+                 ],
+    "reflectionFields":  [
+                             "reformulation",
+                             "inputs",
+                             "expectedOutput",
+                             "edgeCases",
+                             "hypothesis",
+                             "plan"
+                         ],
+    "starterPath":  "starter/",
+    "visibleTestsPath":  "tests/visible/",
+    "hiddenTestsPath":  "tests/hidden/",
+    "hints":  [
+                  {
+                      "level":  1,
+                      "kind":  "socratic",
+                      "content":  "Quel invariant de « Suivre un identifiant de corrélation » doit rester vrai pour les cas limites ?"
+                  },
+                  {
+                      "level":  2,
+                      "kind":  "location",
+                      "content":  "Concentrez la décision dans la méthode CorrelationCount, sans état global."
+                  },
+                  {
+                      "level":  3,
+                      "kind":  "strategy",
+                      "content":  "Compter les occurrences non chevauchantes et respecter la casse du journal."
+                  },
+                  {
+                      "level":  4,
+                      "kind":  "partial-pseudocode",
+                      "content":  "valider les bornes ; parcourir ou décider ; retourner un nouveau résultat déterministe"
+                  }
+              ],
+    "solution":  {
+                     "path":  "solution/",
+                     "unlock":  {
+                                    "seriousAttempts":  2,
+                                    "minimumDelayMinutes":  10
+                                }
+                 },
+    "explanation":  "explanation.md",
+    "complexity":  "O(n) en temps et O(1) en espace",
+    "commonMistakes":  [
+                           "Coder uniquement les exemples visibles",
+                           "Oublier une borne ou modifier une entrée",
+                           "Annoncer une complexité sans compter les opérations dominantes"
+                       ],
+    "variantId":  "debug-anomaly-count-001",
+    "reviewCards":  [
+                        "card-debug-correlation-count-001-rule",
+                        "card-debug-correlation-count-001-edge"
+                    ],
+    "interviewQuestionId":  "interview-debug-correlation-count-001",
+    "license":  "CC-BY-4.0"
+}

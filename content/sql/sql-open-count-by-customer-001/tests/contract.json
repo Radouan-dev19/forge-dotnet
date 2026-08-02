@@ -1,0 +1,14 @@
+{
+  "week": 9,
+  "family": "conditional-aggregate",
+  "mode": "sql",
+  "datasetRevision": "s1-s10-orders-v1",
+  "expectedRows": [["1","1"],["2","1"],["3","0"],["4","0"]],
+  "equivalentQuery": "SELECT c.CustomerId, SUM(CASE WHEN o.Status = N\u0027Open\u0027 THEN 1 ELSE 0 END) AS OpenCount FROM dbo.Customers c LEFT JOIN dbo.Orders o ON o.CustomerId = c.CustomerId GROUP BY c.CustomerId ORDER BY c.CustomerId;",
+  "negativeQuery": "SELECT CustomerId FROM dbo.Customers WHERE 1 = 0;",
+  "dirtySql": "UPDATE dbo.Orders SET Total = 0 WHERE OrderId = 5;",
+  "resetProbeSql": "SELECT Total FROM dbo.Orders WHERE OrderId = 5;",
+  "resetExpected": "100.00",
+  "planIndex": null,
+  "stabilityMutationSql": null
+}

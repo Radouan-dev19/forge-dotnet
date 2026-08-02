@@ -1,0 +1,27 @@
+{
+    "schemaVersion":  1,
+    "id":  "csharp-modern-v1",
+    "version":  1,
+    "title":  "Examen 2 — C# moderne et mini-projet S3–S4",
+    "durationMinutes":  90,
+    "drawCount":  8,
+    "passingScore":  80,
+    "eligibleExerciseIds":  [
+                                "csharp-order-status-001",
+                                "csharp-customer-name-001",
+                                "csharp-stock-reservation-001",
+                                "csharp-vip-discount-001",
+                                "csharp-nullable-fallback-001",
+                                "csharp-positive-quantity-001",
+                                "csharp-line-total-001",
+                                "csharp-payment-fee-001",
+                                "csharp-age-group-001",
+                                "csharp-copy-sanitized-001",
+                                "csharp-generic-maximum-001",
+                                "csharp-delegate-double-001",
+                                "csharp-lambda-threshold-001",
+                                "csharp-linq-even-sum-001",
+                                "csharp-linq-top-three-001",
+                                "csharp-json-number-count-001"
+                            ]
+}

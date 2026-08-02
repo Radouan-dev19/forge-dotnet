@@ -1,0 +1,81 @@
+{
+    "schemaVersion":  1,
+    "id":  "csharp-input-normalize-001",
+    "version":  1,
+    "title":  "Normaliser une saisie locale",
+    "kind":  "csharp",
+    "difficulty":  1,
+    "skills":  [
+                   "csharp.conversions"
+               ],
+    "prerequisites":  [
+                          "reference-types-001"
+                      ],
+    "estimatedMinutes":  30,
+    "statement":  "statement.md",
+    "constraints":  [
+                        "Conserver exactement la signature publique",
+                        "Retirer seulement les espaces de bord sans modifier le contenu interne.",
+                        "Ne pas modifier les entrées reçues sauf mention explicite"
+                    ],
+    "examples":  [
+                     {
+                         "input":  "[{\"value\":[\"  Ada  \"],\"Count\":1},\"Ada\"]",
+                         "output":  "[{\"value\":[\"commande\"],\"Count\":1},\"commande\"]"
+                     }
+                 ],
+    "reflectionFields":  [
+                             "reformulation",
+                             "inputs",
+                             "expectedOutput",
+                             "edgeCases",
+                             "hypothesis",
+                             "plan"
+                         ],
+    "starterPath":  "starter/",
+    "visibleTestsPath":  "tests/visible/",
+    "hiddenTestsPath":  "tests/hidden/",
+    "hints":  [
+                  {
+                      "level":  1,
+                      "kind":  "socratic",
+                      "content":  "Quel invariant de « Normaliser une saisie locale » doit rester vrai pour les cas limites ?"
+                  },
+                  {
+                      "level":  2,
+                      "kind":  "location",
+                      "content":  "Concentrez la décision dans la méthode NormalizeInput, sans état global."
+                  },
+                  {
+                      "level":  3,
+                      "kind":  "strategy",
+                      "content":  "Retirer seulement les espaces de bord sans modifier le contenu interne."
+                  },
+                  {
+                      "level":  4,
+                      "kind":  "partial-pseudocode",
+                      "content":  "valider les bornes ; parcourir ou décider ; retourner un nouveau résultat déterministe"
+                  }
+              ],
+    "solution":  {
+                     "path":  "solution/",
+                     "unlock":  {
+                                    "seriousAttempts":  2,
+                                    "minimumDelayMinutes":  10
+                                }
+                 },
+    "explanation":  "explanation.md",
+    "complexity":  "O(n) en temps et O(n) pour la chaîne produite",
+    "commonMistakes":  [
+                           "Coder uniquement les exemples visibles",
+                           "Oublier une borne ou modifier une entrée",
+                           "Annoncer une complexité sans compter les opérations dominantes"
+                       ],
+    "variantId":  "csharp-temperature-band-001",
+    "reviewCards":  [
+                        "card-csharp-input-normalize-001-rule",
+                        "card-csharp-input-normalize-001-edge"
+                    ],
+    "interviewQuestionId":  "interview-csharp-input-normalize-001",
+    "license":  "CC-BY-4.0"
+}

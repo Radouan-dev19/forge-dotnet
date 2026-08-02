@@ -1,0 +1,81 @@
+{
+    "schemaVersion":  1,
+    "id":  "reference-total-002",
+    "version":  2,
+    "title":  "Appliquer une remise bornée",
+    "kind":  "csharp",
+    "difficulty":  2,
+    "skills":  [
+                   "csharp.control"
+               ],
+    "prerequisites":  [
+                          "reference-types-001"
+                      ],
+    "estimatedMinutes":  30,
+    "statement":  "statement.md",
+    "constraints":  [
+                        "Conserver exactement la signature publique",
+                        "Valider total et taux puis arrondir une seule fois le net.",
+                        "Ne pas modifier les entrées reçues sauf mention explicite"
+                    ],
+    "examples":  [
+                     {
+                         "input":  "[{\"value\":[20,0.1],\"Count\":2},18]",
+                         "output":  "[{\"value\":[0,0.5],\"Count\":2},0]"
+                     }
+                 ],
+    "reflectionFields":  [
+                             "reformulation",
+                             "inputs",
+                             "expectedOutput",
+                             "edgeCases",
+                             "hypothesis",
+                             "plan"
+                         ],
+    "starterPath":  "starter/",
+    "visibleTestsPath":  "tests/visible/",
+    "hiddenTestsPath":  "tests/hidden/",
+    "hints":  [
+                  {
+                      "level":  1,
+                      "kind":  "socratic",
+                      "content":  "Quel invariant de « Appliquer une remise bornée » doit rester vrai pour les cas limites ?"
+                  },
+                  {
+                      "level":  2,
+                      "kind":  "location",
+                      "content":  "Concentrez la décision dans la méthode ApplyDiscount, sans état global."
+                  },
+                  {
+                      "level":  3,
+                      "kind":  "strategy",
+                      "content":  "Valider total et taux puis arrondir une seule fois le net."
+                  },
+                  {
+                      "level":  4,
+                      "kind":  "partial-pseudocode",
+                      "content":  "valider les bornes ; parcourir ou décider ; retourner un nouveau résultat déterministe"
+                  }
+              ],
+    "solution":  {
+                     "path":  "solution/",
+                     "unlock":  {
+                                    "seriousAttempts":  2,
+                                    "minimumDelayMinutes":  10
+                                }
+                 },
+    "explanation":  "explanation.md",
+    "complexity":  "O(1) en temps et O(1) en espace",
+    "commonMistakes":  [
+                           "Coder uniquement les exemples visibles",
+                           "Oublier une borne ou modifier une entrée",
+                           "Annoncer une complexité sans compter les opérations dominantes"
+                       ],
+    "variantId":  "reference-total-001",
+    "reviewCards":  [
+                        "card-reference-total-002-rule",
+                        "card-reference-total-002-edge"
+                    ],
+    "interviewQuestionId":  "reference-interview-001",
+    "license":  "CC-BY-4.0"
+}

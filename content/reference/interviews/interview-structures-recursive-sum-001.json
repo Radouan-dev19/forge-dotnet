@@ -1,0 +1,24 @@
+{
+    "schemaVersion":  1,
+    "id":  "interview-structures-recursive-sum-001",
+    "version":  1,
+    "title":  "Sommer récursivement un tableau",
+    "level":  "junior",
+    "durationMinutes":  5,
+    "skills":  [
+                   "structures.recursion"
+               ],
+    "question":  "Comment résoudriez-vous « Sommer récursivement un tableau » et comment prouveriez-vous les bornes ?",
+    "observableCriteria":  [
+                               "Le contrat et une borne sont explicitement reformulés",
+                               "La complexité et un test de réfutation sont justifiés"
+                           ],
+    "modelAnswer":  "L’index atteint la longueur et progresse de un à chaque appel. La preuve comprend un cas nominal, une borne et un cas différent des exemples ; O(n) en temps et O(n) en pile.",
+    "commonMistakes":  [
+                           "Réciter le code sans invariant ni méthode de test"
+                       ],
+    "variants":  [
+                     "Changer une borne ou le volume tout en conservant la même règle de sommer récursivement un tableau."
+                 ],
+    "license":  "CC-BY-4.0"
+}

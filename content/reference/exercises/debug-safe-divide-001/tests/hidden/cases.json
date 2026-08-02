@@ -1,0 +1,27 @@
+{
+    "schemaVersion":  1,
+    "cases":  [
+                  {
+                      "name":  "Hidden_Case1",
+                      "message":  "Prévenir une division invalide — cas 1 hidden incorrect.",
+                      "arguments":  [
+                                        -9,
+                                        3
+                                    ],
+                      "expected":  -3,
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_Case2",
+                      "message":  "Prévenir une division invalide — cas 2 hidden incorrect.",
+                      "arguments":  [
+                                        1,
+                                        2
+                                    ],
+                      "expected":  0,
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  }
+              ]
+}

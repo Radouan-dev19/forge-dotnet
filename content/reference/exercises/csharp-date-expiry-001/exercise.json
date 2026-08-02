@@ -1,0 +1,46 @@
+{
+  "schemaVersion": 1,
+  "id": "csharp-date-expiry-001",
+  "version": 1,
+  "title": "Déterminer une expiration avec délai de grâce",
+  "kind": "csharp",
+  "difficulty": 2,
+  "skills": ["csharp.dates", "csharp.conditions", "logic.edge-cases"],
+  "prerequisites": ["csharp-date-business-days-001"],
+  "estimatedMinutes": 30,
+  "statement": "statement.md",
+  "constraints": [
+    "Conserver exactement la signature publique demandée",
+    "Considérer l’échéance augmentée de la grâce comme encore valide",
+    "Retourner true uniquement après cette dernière date valide",
+    "Refuser une grâce négative avec ArgumentOutOfRangeException"
+  ],
+  "examples": [
+    { "input": "2026-07-20, 2026-07-20, 0", "output": "false" },
+    { "input": "2026-07-20, 2026-07-21, 0", "output": "true" },
+    { "input": "2026-07-20, 2026-07-22, 2", "output": "false" }
+  ],
+  "reflectionFields": ["reformulation", "inputs", "expectedOutput", "edgeCases", "hypothesis", "plan"],
+  "starterPath": "starter/",
+  "visibleTestsPath": "tests/visible/",
+  "hiddenTestsPath": "tests/hidden/",
+  "hints": [
+    { "level": 1, "kind": "socratic", "content": "Quelle est la dernière date encore valide lorsque graceDays vaut deux ?" },
+    { "level": 2, "kind": "location", "content": "Valide graceDays, calcule une date limite avec dueDate.AddDays, puis compare today." },
+    { "level": 3, "kind": "strategy", "content": "L’élément est expiré seulement lorsque today est strictement après la date limite incluse." },
+    { "level": 4, "kind": "partial-pseudocode", "content": "si grâce < 0 lever erreur ; dernièreDateValide = échéance + grâce ; retourner aujourd’hui > dernièreDateValide" }
+  ],
+  "solution": { "path": "solution/", "unlock": { "seriousAttempts": 2, "minimumDelayMinutes": 10 } },
+  "explanation": "explanation.md",
+  "complexity": "O(1) en temps et O(1) en espace",
+  "commonMistakes": [
+    "Utiliser supérieur ou égal et expirer le dernier jour valide",
+    "Soustraire la grâce au lieu de l’ajouter",
+    "Accepter une grâce négative",
+    "Comparer des chaînes de date"
+  ],
+  "variantId": "csharp-date-business-days-001",
+  "reviewCards": ["card-expiry-inclusive-001", "card-expiry-boundaries-001"],
+  "interviewQuestionId": "interview-date-expiry-001",
+  "license": "CC-BY-4.0"
+}

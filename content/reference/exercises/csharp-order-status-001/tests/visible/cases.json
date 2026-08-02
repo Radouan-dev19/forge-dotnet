@@ -1,0 +1,25 @@
+{
+    "schemaVersion":  1,
+    "cases":  [
+                  {
+                      "name":  "Visible_Case1",
+                      "message":  "Traduire un état de commande — cas 1 visible incorrect.",
+                      "arguments":  [
+                                        0
+                                    ],
+                      "expected":  "draft",
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Visible_Case2",
+                      "message":  "Traduire un état de commande — cas 2 visible incorrect.",
+                      "arguments":  [
+                                        2
+                                    ],
+                      "expected":  "shipped",
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  }
+              ]
+}

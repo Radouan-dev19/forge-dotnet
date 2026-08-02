@@ -1,0 +1,70 @@
+{
+    "schemaVersion":  1,
+    "id":  "project-log-analyzer-001",
+    "version":  1,
+    "title":  "Analyseur de journaux",
+    "difficulty":  3,
+    "weeks":  [
+                  7
+              ],
+    "skills":  [
+                   "debugging.data"
+               ],
+    "prerequisites":  [
+                          "debug-stacktraces-breakpoints-001"
+                      ],
+    "estimatedHours":  10,
+    "briefPath":  "project-log-analyzer-001.md",
+    "milestones":  [
+                       {
+                           "id":  "contract",
+                           "title":  "Contrat et cas",
+                           "evidence":  "Un document fixe entrées, sorties, erreurs et cas limites.",
+                           "acceptanceCriteria":  [
+                                                      "Trois cas utiles sont prédits avant implémentation"
+                                                  ]
+                       },
+                       {
+                           "id":  "implementation",
+                           "title":  "Implémentation",
+                           "evidence":  "Le dépôt compile et les tests démontrent le comportement.",
+                           "acceptanceCriteria":  [
+                                                      "Le scénario nominal et les bornes sont verts sans réseau"
+                                                  ]
+                       },
+                       {
+                           "id":  "defense",
+                           "title":  "Défense",
+                           "evidence":  "Une présentation explique décisions, complexité et défaut corrigé.",
+                           "acceptanceCriteria":  [
+                                                      "Une limite et une amélioration sont reconnues explicitement"
+                                                  ]
+                       }
+                   ],
+    "rubric":  [
+                   {
+                       "criterion":  "Exactitude observable",
+                       "weight":  0.5,
+                       "observableEvidence":  "Les sorties et erreurs correspondent au contrat pour les cas fournis et nouveaux."
+                   },
+                   {
+                       "criterion":  "Qualité des preuves",
+                       "weight":  0.3,
+                       "observableEvidence":  "Les tests couvrent nominal, borne et non-régression nommée."
+                   },
+                   {
+                       "criterion":  "Explication autonome",
+                       "weight":  0.2,
+                       "observableEvidence":  "La défense relie choix, complexité et compromis sans dépendance externe."
+                   }
+               ],
+    "solutionPolicy":  "no-complete-solution-before-submission",
+    "commonMistakes":  [
+                           "Commencer par le code sans contrat",
+                           "Masquer un rejet ou un test rouge"
+                       ],
+    "variantIds":  [
+                       "project-orders-database-001"
+                   ],
+    "license":  "CC-BY-4.0"
+}

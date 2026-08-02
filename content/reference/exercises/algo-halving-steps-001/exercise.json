@@ -1,0 +1,81 @@
+{
+    "schemaVersion":  1,
+    "id":  "algo-halving-steps-001",
+    "version":  1,
+    "title":  "Compter des réductions logarithmiques",
+    "kind":  "algorithm",
+    "difficulty":  2,
+    "skills":  [
+                   "algorithm.complexity"
+               ],
+    "prerequisites":  [
+                          "algo-reformulation-complexity-001"
+                      ],
+    "estimatedMinutes":  30,
+    "statement":  "statement.md",
+    "constraints":  [
+                        "Conserver exactement la signature publique",
+                        "Diviser par deux jusqu’à la borne et compter les réductions réellement faites.",
+                        "Ne pas modifier les entrées reçues sauf mention explicite"
+                    ],
+    "examples":  [
+                     {
+                         "input":  "[{\"value\":[8],\"Count\":1},3]",
+                         "output":  "[{\"value\":[1],\"Count\":1},0]"
+                     }
+                 ],
+    "reflectionFields":  [
+                             "reformulation",
+                             "inputs",
+                             "expectedOutput",
+                             "edgeCases",
+                             "hypothesis",
+                             "plan"
+                         ],
+    "starterPath":  "starter/",
+    "visibleTestsPath":  "tests/visible/",
+    "hiddenTestsPath":  "tests/hidden/",
+    "hints":  [
+                  {
+                      "level":  1,
+                      "kind":  "socratic",
+                      "content":  "Quel invariant de « Compter des réductions logarithmiques » doit rester vrai pour les cas limites ?"
+                  },
+                  {
+                      "level":  2,
+                      "kind":  "location",
+                      "content":  "Concentrez la décision dans la méthode HalvingSteps, sans état global."
+                  },
+                  {
+                      "level":  3,
+                      "kind":  "strategy",
+                      "content":  "Diviser par deux jusqu’à la borne et compter les réductions réellement faites."
+                  },
+                  {
+                      "level":  4,
+                      "kind":  "partial-pseudocode",
+                      "content":  "valider les bornes ; parcourir ou décider ; retourner un nouveau résultat déterministe"
+                  }
+              ],
+    "solution":  {
+                     "path":  "solution/",
+                     "unlock":  {
+                                    "seriousAttempts":  2,
+                                    "minimumDelayMinutes":  10
+                                }
+                 },
+    "explanation":  "explanation.md",
+    "complexity":  "O(log n) en temps et O(1) en espace",
+    "commonMistakes":  [
+                           "Coder uniquement les exemples visibles",
+                           "Oublier une borne ou modifier une entrée",
+                           "Annoncer une complexité sans compter les opérations dominantes"
+                       ],
+    "variantId":  "algo-gcd-001",
+    "reviewCards":  [
+                        "card-algo-halving-steps-001-rule",
+                        "card-algo-halving-steps-001-edge"
+                    ],
+    "interviewQuestionId":  "interview-algo-halving-steps-001",
+    "license":  "CC-BY-4.0"
+}

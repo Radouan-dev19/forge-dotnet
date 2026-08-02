@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "id": "sql-orders-join-001",
+  "version": 1,
+  "title": "Joindre clients actifs et commandes ouvertes",
+  "difficulty": 2,
+  "skills": ["sql.relational-model", "sql.filter", "sql.join"],
+  "prerequisites": [],
+  "estimatedMinutes": 35,
+  "image": "mcr.microsoft.com/mssql/server@sha256:b1395aa51b4ec39981883560f1379ea9eba2a1c0719bf8e6477902769316bb79",
+  "datasetPath": "dataset.sql",
+  "visibleSchemaPath": "schema.sql",
+  "permissions": ["select"],
+  "resetScriptPath": "reset.sql",
+  "statementPath": "statement.md",
+  "expectedResult": {
+    "ordered": true,
+    "columns": ["OrderId", "CustomerName", "Total"],
+    "numericTolerance": 0.01
+  },
+  "timeoutSeconds": 5,
+  "maxRows": 20,
+  "effectAssertions": [
+    "Les quatre commandes et les trois clients restent inchangés après exécution"
+  ],
+  "solutionPath": "solution.md",
+  "license": "CC-BY-4.0"
+}

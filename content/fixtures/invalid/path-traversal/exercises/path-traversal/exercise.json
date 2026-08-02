@@ -1,0 +1,6 @@
+{
+  "schemaVersion": 1,
+  "id": "path-traversal",
+  "version": 1,
+  "statement": "../../../../../../outside.md"
+}

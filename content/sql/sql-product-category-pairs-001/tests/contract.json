@@ -1,0 +1,14 @@
+{
+  "week": 8,
+  "family": "self-join",
+  "mode": "sql",
+  "datasetRevision": "s1-s10-orders-v1",
+  "expectedRows": [["1","2"],["3","4"]],
+  "equivalentQuery": "SELECT a.ProductId AS LeftId, b.ProductId AS RightId FROM dbo.Products a JOIN dbo.Products b ON b.Category = a.Category AND b.ProductId \u003e a.ProductId ORDER BY a.ProductId, b.ProductId;",
+  "negativeQuery": "SELECT CustomerId FROM dbo.Customers WHERE 1 = 0;",
+  "dirtySql": "UPDATE dbo.Orders SET Total = 0 WHERE OrderId = 5;",
+  "resetProbeSql": "SELECT Total FROM dbo.Orders WHERE OrderId = 5;",
+  "resetExpected": "100.00",
+  "planIndex": null,
+  "stabilityMutationSql": null
+}

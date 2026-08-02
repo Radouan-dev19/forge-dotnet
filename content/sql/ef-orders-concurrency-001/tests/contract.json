@@ -1,0 +1,8 @@
+{
+  "week": 10,
+  "family": "optimistic-concurrency",
+  "mode": "ef",
+  "datasetRevision": "mini-erp-v1",
+  "expectedProof": "Le conflit RowVersion devient un résultat explicite",
+  "negativeProof": "Le starter laisse DbUpdateConcurrencyException remonter"
+}

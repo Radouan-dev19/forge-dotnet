@@ -1,0 +1,81 @@
+{
+    "schemaVersion":  1,
+    "id":  "algo-bubble-sort-001",
+    "version":  1,
+    "title":  "Trier par bulles",
+    "kind":  "algorithm",
+    "difficulty":  2,
+    "skills":  [
+                   "algorithm.sorting"
+               ],
+    "prerequisites":  [
+                          "algo-reformulation-complexity-001"
+                      ],
+    "estimatedMinutes":  30,
+    "statement":  "statement.md",
+    "constraints":  [
+                        "Conserver exactement la signature publique",
+                        "Copier l’entrée puis pousser le maximum vers la fin à chaque passage.",
+                        "Ne pas modifier les entrées reçues sauf mention explicite"
+                    ],
+    "examples":  [
+                     {
+                         "input":  "[{\"value\":[[3,1,2]],\"Count\":1},{\"value\":[1,2,3],\"Count\":3}]",
+                         "output":  "[{\"value\":[[]],\"Count\":1},{\"value\":[],\"Count\":0}]"
+                     }
+                 ],
+    "reflectionFields":  [
+                             "reformulation",
+                             "inputs",
+                             "expectedOutput",
+                             "edgeCases",
+                             "hypothesis",
+                             "plan"
+                         ],
+    "starterPath":  "starter/",
+    "visibleTestsPath":  "tests/visible/",
+    "hiddenTestsPath":  "tests/hidden/",
+    "hints":  [
+                  {
+                      "level":  1,
+                      "kind":  "socratic",
+                      "content":  "Quel invariant de « Trier par bulles » doit rester vrai pour les cas limites ?"
+                  },
+                  {
+                      "level":  2,
+                      "kind":  "location",
+                      "content":  "Concentrez la décision dans la méthode BubbleSort, sans état global."
+                  },
+                  {
+                      "level":  3,
+                      "kind":  "strategy",
+                      "content":  "Copier l’entrée puis pousser le maximum vers la fin à chaque passage."
+                  },
+                  {
+                      "level":  4,
+                      "kind":  "partial-pseudocode",
+                      "content":  "valider les bornes ; parcourir ou décider ; retourner un nouveau résultat déterministe"
+                  }
+              ],
+    "solution":  {
+                     "path":  "solution/",
+                     "unlock":  {
+                                    "seriousAttempts":  2,
+                                    "minimumDelayMinutes":  10
+                                }
+                 },
+    "explanation":  "explanation.md",
+    "complexity":  "O(n²) en temps et O(n) en espace pour la copie",
+    "commonMistakes":  [
+                           "Coder uniquement les exemples visibles",
+                           "Oublier une borne ou modifier une entrée",
+                           "Annoncer une complexité sans compter les opérations dominantes"
+                       ],
+    "variantId":  "algo-selection-sort-001",
+    "reviewCards":  [
+                        "card-algo-bubble-sort-001-rule",
+                        "card-algo-bubble-sort-001-edge"
+                    ],
+    "interviewQuestionId":  "interview-algo-bubble-sort-001",
+    "license":  "CC-BY-4.0"
+}

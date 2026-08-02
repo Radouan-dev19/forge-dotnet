@@ -1,0 +1,25 @@
+{
+    "schemaVersion":  1,
+    "cases":  [
+                  {
+                      "name":  "Hidden_Case1",
+                      "message":  "Détecter un palindrome simple — cas 1 hidden incorrect.",
+                      "arguments":  [
+                                        "Esope reste ici et se repose"
+                                    ],
+                      "expected":  true,
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_Case2",
+                      "message":  "Détecter un palindrome simple — cas 2 hidden incorrect.",
+                      "arguments":  [
+                                        ""
+                                    ],
+                      "expected":  true,
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  }
+              ]
+}

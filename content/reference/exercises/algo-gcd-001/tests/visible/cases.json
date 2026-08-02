@@ -1,0 +1,27 @@
+{
+    "schemaVersion":  1,
+    "cases":  [
+                  {
+                      "name":  "Visible_Case1",
+                      "message":  "Calculer un PGCD itératif — cas 1 visible incorrect.",
+                      "arguments":  [
+                                        18,
+                                        12
+                                    ],
+                      "expected":  6,
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Visible_Case2",
+                      "message":  "Calculer un PGCD itératif — cas 2 visible incorrect.",
+                      "arguments":  [
+                                        7,
+                                        5
+                                    ],
+                      "expected":  1,
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  }
+              ]
+}

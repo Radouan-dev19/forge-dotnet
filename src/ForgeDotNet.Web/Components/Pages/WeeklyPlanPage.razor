@@ -1,0 +1,253 @@
+@page "/plan/{DiagnosticSessionId:guid}"
+@inject WeeklyPlanService Plans
+
+<PageTitle>Plan personnalisé — Forge.NET</PageTitle>
+
+<h1>Plan personnalisé</h1>
+
+@if (_isLoading)
+{
+    <p role="status">Génération ou chargement du plan versionné…</p>
+}
+else if (_plan is null)
+{
+    <p class="error-message" role="alert">@_error</p>
+    <a href="diagnostic/session/@DiagnosticSessionId/evaluation">Retour à l’évaluation</a>
+}
+else
+{
+    <section class="weekly-plan-summary" aria-labelledby="plan-summary-title">
+        <p class="eyebrow">Version @_plan.Version · @_plan.StatusLabel</p>
+        <h2 id="plan-summary-title">Charge et statut</h2>
+        <dl class="summary-list">
+            <dt>Disponibilité prise en compte dans cette version</dt>
+            <dd>@_plan.ProfileAvailableHours h/semaine</dd>
+            @if (_plan.CurrentProfileAvailableHours != _plan.ProfileAvailableHours)
+            {
+                <dt>Disponibilité actuelle du profil</dt>
+                <dd>@_plan.CurrentProfileAvailableHours h/semaine</dd>
+            }
+            <dt>Charge proposée</dt>
+            <dd><strong>@_plan.TargetWeeklyHours h/semaine</strong></dd>
+            <dt>Durée du curriculum</dt>
+            <dd>@_plan.Weeks.Count semaines</dd>
+            <dt>État</dt>
+            <dd>@_plan.StatusLabel</dd>
+        </dl>
+        <p>
+            Le plan ordonne des thèmes et des priorités. Il ne constitue ni une mesure de maîtrise,
+            ni une promesse d’emploi, ni une liste d’activités déjà disponibles.
+        </p>
+        @foreach (string warning in _plan.Warnings)
+        {
+            <p class="notice" role="status">@warning</p>
+        }
+    </section>
+
+    <section class="weekly-plan-recommendations" aria-labelledby="recommendations-title">
+        <h2 id="recommendations-title">Priorités expliquées</h2>
+        <p>Une lacune critique reste prioritaire : elle n’est jamais compensée par un autre domaine.</p>
+        <ol class="weekly-plan-priorities">
+            @foreach (WeeklyPlanRecommendationView recommendation in _plan.Recommendations)
+            {
+                <li>
+                    <h3>@recommendation.Priority. @recommendation.DisplayName @(recommendation.IsCritical ? "— critique" : string.Empty)</h3>
+                    <p><strong>@recommendation.KindLabel</strong> · diagnostic @recommendation.DiagnosticScore.ToString("0.0") / 100</p>
+                    <p>@recommendation.Rationale</p>
+                </li>
+            }
+        </ol>
+    </section>
+
+    @if (_plan.CanAdjust)
+    {
+        <section class="weekly-plan-adjustment" aria-labelledby="adjustment-title">
+            <h2 id="adjustment-title">Ajuster avant acceptation</h2>
+            <p>
+                Choisissez une charge entre 1 et @MaximumFeasibleHours h. Le serveur refuse toute valeur
+                supérieure à vos disponibilités ou au plafond pédagogique de 15 h.
+            </p>
+            <EditForm Model="_adjustment" OnSubmit="AdjustAsync" FormName="weekly-plan-adjustment">
+                <div class="form-field">
+                    <label for="target-hours">Charge hebdomadaire souhaitée</label>
+                    <input id="target-hours"
+                           type="number"
+                           min="1"
+                           max="@MaximumFeasibleHours"
+                           @bind="_adjustment.TargetWeeklyHours"
+                           @bind:event="oninput" />
+                </div>
+                <button class="btn btn-outline-primary" type="submit" disabled="@_isSaving">Créer une nouvelle version</button>
+            </EditForm>
+            <button class="btn btn-primary weekly-plan-accept"
+                    type="button"
+                    disabled="@_isSaving"
+                    @onclick="AcceptAsync">
+                Accepter cette version
+            </button>
+        </section>
+    }
+    else
+    {
+        <section class="weekly-plan-accepted" aria-labelledby="accepted-title">
+            <h2 id="accepted-title">Plan accepté</h2>
+            <p>
+                Version @_plan.Version acceptée le @_plan.AcceptedAtUtc?.ToLocalTime().ToString("g").
+                Cette version est figée et ne peut plus être ajustée.
+            </p>
+        </section>
+    }
+
+    @if (!string.IsNullOrWhiteSpace(_statusMessage))
+    {
+        <p class="success-message" role="status">@_statusMessage</p>
+    }
+    @if (!string.IsNullOrWhiteSpace(_error))
+    {
+        <p class="error-message" role="alert">@_error</p>
+    }
+
+    <section class="weekly-plan-weeks" aria-labelledby="weeks-title">
+        <h2 id="weeks-title">Progression hebdomadaire</h2>
+        <p>
+            Les prérequis restent dans l’ordre du curriculum. « Contrôle conservé » décrit une obligation du plan ;
+            aucun exercice interactif ni résultat automatique n’est fourni dans cet incrément.
+        </p>
+        <ol class="weekly-plan-week-list">
+            @foreach (WeeklyPlanWeekView week in _plan.Weeks)
+            {
+                <li>
+                    <details open="@(week.Number <= 2)">
+                        <summary><strong>Semaine @week.Number — @week.Title</strong> · @week.PlannedHours h</summary>
+                        <p>@week.Explanation</p>
+                        <ul>
+                            @foreach (WeeklyPlanWeekFocusView focus in week.Focuses)
+                            {
+                                <li><strong>@focus.DisplayName</strong> : @focus.DepthLabel</li>
+                            }
+                        </ul>
+                        <dl class="weekly-plan-allocation">
+                            <dt>Étude du thème</dt><dd>@week.CoreLearningHours.ToString("0.0") h</dd>
+                            <dt>Remédiation</dt><dd>@week.RemediationHours.ToString("0.0") h</dd>
+                            <dt>Consolidation</dt><dd>@week.ConsolidationHours.ToString("0.0") h</dd>
+                            <dt>Contrôle conservé</dt><dd>@week.KnowledgeCheckHours.ToString("0.0") h</dd>
+                        </dl>
+                        @if (week.Prerequisites.Count > 0)
+                        {
+                            <p class="field-help">Prérequis : @string.Join(", ", week.Prerequisites)</p>
+                        }
+                    </details>
+                </li>
+            }
+        </ol>
+    </section>
+
+    <section class="weekly-plan-limits" aria-labelledby="plan-limits-title">
+        <h2 id="plan-limits-title">Traçabilité et limites</h2>
+        <ul>
+            <li>Curriculum @_plan.CurriculumId v@_plan.CurriculumVersion, révision @_plan.CurriculumRevision[..12].</li>
+            <li>Le plan est local, versionné et rattaché au diagnostic @DiagnosticSessionId.</li>
+            <li>Aucune solution, exercice interactif, révision automatique ou score de maîtrise n’est ajouté.</li>
+        </ul>
+    </section>
+
+    <div class="actions">
+        <a class="btn btn-outline-secondary" href="diagnostic/session/@DiagnosticSessionId/evaluation">Retour à l’évaluation</a>
+        <a class="btn btn-outline-secondary" href="profile">Modifier les disponibilités du profil</a>
+    </div>
+}
+
+@code {
+    [Parameter]
+    public Guid DiagnosticSessionId { get; set; }
+
+    private readonly AdjustmentForm _adjustment = new();
+    private WeeklyPlanView? _plan;
+    private bool _isLoading = true;
+    private bool _isSaving;
+    private string? _statusMessage;
+    private string? _error;
+
+    private int MaximumFeasibleHours => Math.Min(
+        _plan?.CurrentProfileAvailableHours ?? WeeklyPlanRules.MaximumWeeklyHours,
+        WeeklyPlanRules.MaximumWeeklyHours);
+
+    protected override async Task OnParametersSetAsync()
+    {
+        _isLoading = true;
+        try
+        {
+            _plan = await Plans.GetOrCreateAsync(DiagnosticSessionId);
+            _adjustment.TargetWeeklyHours = _plan.TargetWeeklyHours;
+            _error = null;
+        }
+        catch (Exception exception)
+        {
+            _plan = null;
+            _error = exception.Message;
+        }
+        finally
+        {
+            _isLoading = false;
+        }
+    }
+
+    private async Task AdjustAsync()
+    {
+        if (_plan is null)
+        {
+            return;
+        }
+
+        _isSaving = true;
+        try
+        {
+            _plan = await Plans.AdjustHoursAsync(
+                DiagnosticSessionId,
+                _plan.Version,
+                _adjustment.TargetWeeklyHours);
+            _adjustment.TargetWeeklyHours = _plan.TargetWeeklyHours;
+            _statusMessage = $"Version {_plan.Version} créée avec une charge de {_plan.TargetWeeklyHours} h.";
+            _error = null;
+        }
+        catch (Exception exception)
+        {
+            _error = exception.Message;
+            _statusMessage = null;
+        }
+        finally
+        {
+            _isSaving = false;
+        }
+    }
+
+    private async Task AcceptAsync()
+    {
+        if (_plan is null)
+        {
+            return;
+        }
+
+        _isSaving = true;
+        try
+        {
+            _plan = await Plans.AcceptAsync(DiagnosticSessionId, _plan.Version);
+            _statusMessage = $"Version {_plan.Version} acceptée et figée.";
+            _error = null;
+        }
+        catch (Exception exception)
+        {
+            _error = exception.Message;
+            _statusMessage = null;
+        }
+        finally
+        {
+            _isSaving = false;
+        }
+    }
+
+    private sealed class AdjustmentForm
+    {
+        public int TargetWeeklyHours { get; set; } = WeeklyPlanRules.PreferredMinimumWeeklyHours;
+    }
+}

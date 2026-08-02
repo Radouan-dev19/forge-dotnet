@@ -1,0 +1,12 @@
+DROP TABLE IF EXISTS dbo.OrderLines;
+DROP TABLE IF EXISTS dbo.Orders;
+DROP TABLE IF EXISTS dbo.Products;
+DROP TABLE IF EXISTS dbo.Customers;
+CREATE TABLE dbo.Customers (CustomerId int PRIMARY KEY, Name nvarchar(80) NOT NULL UNIQUE, City nvarchar(80) NOT NULL, IsActive bit NOT NULL);
+CREATE TABLE dbo.Products (ProductId int PRIMARY KEY, Name nvarchar(80) NOT NULL, Category nvarchar(40) NOT NULL, Price decimal(10,2) NOT NULL CHECK (Price >= 0), Stock int NOT NULL CHECK (Stock >= 0));
+CREATE TABLE dbo.Orders (OrderId int PRIMARY KEY, CustomerId int NOT NULL REFERENCES dbo.Customers(CustomerId), OrderDate date NOT NULL, Status nvarchar(20) NOT NULL, Total decimal(10,2) NOT NULL CHECK (Total >= 0), DataVersion int NOT NULL);
+CREATE TABLE dbo.OrderLines (OrderLineId int PRIMARY KEY, OrderId int NOT NULL REFERENCES dbo.Orders(OrderId), ProductId int NOT NULL REFERENCES dbo.Products(ProductId), Quantity int NOT NULL CHECK (Quantity > 0), UnitPrice decimal(10,2) NOT NULL CHECK (UnitPrice >= 0));
+INSERT dbo.Customers VALUES (1,N'Ada',N'Paris',1),(2,N'Lin',N'Lyon',1),(3,N'Sam',N'Paris',0),(4,N'Noa',N'Lille',1);
+INSERT dbo.Products VALUES (1,N'Pen',N'Office',2.50,100),(2,N'Book',N'Office',10,20),(3,N'Mug',N'Home',8,0),(4,N'Lamp',N'Home',30,5);
+INSERT dbo.Orders VALUES (1,1,'2026-01-10',N'Paid',25,1),(2,1,'2026-02-10',N'Open',40,1),(3,2,'2026-02-15',N'Paid',70,2),(4,3,'2026-03-01',N'Cancelled',15,1),(5,2,'2026-03-05',N'Open',100,3);
+INSERT dbo.OrderLines VALUES (1,1,1,2,2.50),(2,1,2,2,10),(3,2,4,1,30),(4,3,2,7,10),(5,4,3,1,8),(6,5,4,3,30);

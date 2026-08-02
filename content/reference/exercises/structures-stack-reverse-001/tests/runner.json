@@ -1,0 +1,12 @@
+{
+    "schemaVersion":  1,
+    "suiteId":  "structures-stack-reverse-001.v1",
+    "exerciseId":  "structures-stack-reverse-001",
+    "exerciseVersion":  1,
+    "typeName":  "Submission",
+    "methodName":  "ReverseText",
+    "parameterTypes":  [
+                           "string"
+                       ],
+    "returnType":  "string"
+}

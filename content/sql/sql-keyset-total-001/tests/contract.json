@@ -1,0 +1,14 @@
+{
+  "week": 10,
+  "family": "keyset",
+  "mode": "sql",
+  "datasetRevision": "s1-s10-orders-v1",
+  "expectedRows": [["5","100"]],
+  "equivalentQuery": "SELECT TOP (2) OrderId, Total FROM dbo.Orders WHERE Total \u003e 70 OR (Total = 70 AND OrderId \u003e 3) ORDER BY Total, OrderId;",
+  "negativeQuery": "SELECT CustomerId FROM dbo.Customers WHERE 1 = 0;",
+  "dirtySql": "UPDATE dbo.Orders SET Total = 0 WHERE OrderId = 5;",
+  "resetProbeSql": "SELECT Total FROM dbo.Orders WHERE OrderId = 5;",
+  "resetExpected": "100.00",
+  "planIndex": null,
+  "stabilityMutationSql": null
+}

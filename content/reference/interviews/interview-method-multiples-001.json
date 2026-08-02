@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "id": "interview-method-multiples-001",
+  "version": 1,
+  "title": "Définir le contrat d’une méthode",
+  "level": "junior",
+  "durationMinutes": 5,
+  "skills": ["csharp.methods", "csharp.loops"],
+  "question": "Quels cas préciserais-tu avant d’implémenter une méthode qui compte les multiples dans une plage ?",
+  "observableCriteria": [
+    "Les bornes inclusives et la plage inversée sont explicitées",
+    "Le diviseur nul, le signe et une méthode de test sont abordés"
+  ],
+  "modelAnswer": "Je définis la plage inclusive, le résultat zéro d’une plage inversée, l’acceptation des signes et le refus explicite du diviseur nul. Je teste zéro, une borne unique, un diviseur négatif et des valeurs absentes des exemples.",
+  "commonMistakes": ["Commencer la boucle avant de décider le comportement du diviseur nul"],
+  "variants": ["Compter les valeurs qui satisfont deux diviseurs simultanément"],
+  "license": "CC-BY-4.0"
+}

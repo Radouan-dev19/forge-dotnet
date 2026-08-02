@@ -1,0 +1,81 @@
+{
+    "schemaVersion":  1,
+    "id":  "algo-rotate-left-001",
+    "version":  1,
+    "title":  "Faire tourner un tableau",
+    "kind":  "algorithm",
+    "difficulty":  2,
+    "skills":  [
+                   "algorithm.arrays"
+               ],
+    "prerequisites":  [
+                          "algo-reformulation-complexity-001"
+                      ],
+    "estimatedMinutes":  30,
+    "statement":  "statement.md",
+    "constraints":  [
+                        "Conserver exactement la signature publique",
+                        "Normaliser le décalage, y compris négatif, avant l’index modulo.",
+                        "Ne pas modifier les entrées reçues sauf mention explicite"
+                    ],
+    "examples":  [
+                     {
+                         "input":  "[{\"value\":[[1,2,3],1],\"Count\":2},{\"value\":[2,3,1],\"Count\":3}]",
+                         "output":  "[{\"value\":[[],4],\"Count\":2},{\"value\":[],\"Count\":0}]"
+                     }
+                 ],
+    "reflectionFields":  [
+                             "reformulation",
+                             "inputs",
+                             "expectedOutput",
+                             "edgeCases",
+                             "hypothesis",
+                             "plan"
+                         ],
+    "starterPath":  "starter/",
+    "visibleTestsPath":  "tests/visible/",
+    "hiddenTestsPath":  "tests/hidden/",
+    "hints":  [
+                  {
+                      "level":  1,
+                      "kind":  "socratic",
+                      "content":  "Quel invariant de « Faire tourner un tableau » doit rester vrai pour les cas limites ?"
+                  },
+                  {
+                      "level":  2,
+                      "kind":  "location",
+                      "content":  "Concentrez la décision dans la méthode RotateLeft, sans état global."
+                  },
+                  {
+                      "level":  3,
+                      "kind":  "strategy",
+                      "content":  "Normaliser le décalage, y compris négatif, avant l’index modulo."
+                  },
+                  {
+                      "level":  4,
+                      "kind":  "partial-pseudocode",
+                      "content":  "valider les bornes ; parcourir ou décider ; retourner un nouveau résultat déterministe"
+                  }
+              ],
+    "solution":  {
+                     "path":  "solution/",
+                     "unlock":  {
+                                    "seriousAttempts":  2,
+                                    "minimumDelayMinutes":  10
+                                }
+                 },
+    "explanation":  "explanation.md",
+    "complexity":  "O(n) en temps et O(n) en espace",
+    "commonMistakes":  [
+                           "Coder uniquement les exemples visibles",
+                           "Oublier une borne ou modifier une entrée",
+                           "Annoncer une complexité sans compter les opérations dominantes"
+                       ],
+    "variantId":  "algo-merge-sorted-001",
+    "reviewCards":  [
+                        "card-algo-rotate-left-001-rule",
+                        "card-algo-rotate-left-001-edge"
+                    ],
+    "interviewQuestionId":  "interview-algo-rotate-left-001",
+    "license":  "CC-BY-4.0"
+}

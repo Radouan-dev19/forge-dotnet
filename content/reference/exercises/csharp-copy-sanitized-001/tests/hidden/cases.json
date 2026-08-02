@@ -1,0 +1,37 @@
+{
+    "schemaVersion":  1,
+    "cases":  [
+                  {
+                      "name":  "Hidden_Case1",
+                      "message":  "Copier sans exposer la mutation — cas 1 hidden incorrect.",
+                      "arguments":  [
+                                        [
+                                            3,
+                                            -4,
+                                            5
+                                        ]
+                                    ],
+                      "expected":  [
+                                       3,
+                                       0,
+                                       5
+                                   ],
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_Case2",
+                      "message":  "Copier sans exposer la mutation — cas 2 hidden incorrect.",
+                      "arguments":  [
+                                        [
+                                            0
+                                        ]
+                                    ],
+                      "expected":  [
+                                       0
+                                   ],
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  }
+              ]
+}

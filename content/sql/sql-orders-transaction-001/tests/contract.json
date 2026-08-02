@@ -1,0 +1,12 @@
+{
+  "week": 9,
+  "family": "transaction-isolation",
+  "mode": "sql",
+  "datasetRevision": "inventory-v1",
+  "expectedRows": [["1","3"]],
+  "equivalentQuery": "UPDATE dbo.Inventory SET Quantity -= 2 OUTPUT inserted.ProductId, inserted.Quantity WHERE ProductId = 1 AND Quantity - 2 >= 0;",
+  "negativeQuery": "UPDATE dbo.Inventory SET Quantity = Quantity - 1 OUTPUT inserted.ProductId, inserted.Quantity WHERE ProductId = 2;",
+  "dirtySql": "UPDATE dbo.Inventory SET Quantity = 0;",
+  "resetProbeSql": "SELECT Quantity FROM dbo.Inventory WHERE ProductId = 1;",
+  "resetExpected": "5"
+}

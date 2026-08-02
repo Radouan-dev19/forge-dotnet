@@ -1,0 +1,27 @@
+@page "/Error"
+@using System.Diagnostics
+
+<PageTitle>Erreur — Forge.NET</PageTitle>
+
+<h1>Une erreur est survenue</h1>
+<p>La demande n’a pas pu être traitée. Vous pouvez revenir à l’accueil et réessayer.</p>
+
+@if (ShowRequestId)
+{
+    <p>
+        <strong>Identifiant de diagnostic :</strong> <code>@RequestId</code>
+    </p>
+}
+
+<p><a href="/">Revenir à l’accueil</a></p>
+
+@code {
+    [CascadingParameter]
+    private HttpContext? HttpContext { get; set; }
+
+    private string? RequestId { get; set; }
+    private bool ShowRequestId => !string.IsNullOrEmpty(RequestId);
+
+    protected override void OnInitialized() =>
+        RequestId = Activity.Current?.Id ?? HttpContext?.TraceIdentifier;
+}

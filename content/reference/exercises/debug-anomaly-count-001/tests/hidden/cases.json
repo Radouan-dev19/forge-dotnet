@@ -1,0 +1,32 @@
+{
+    "schemaVersion":  1,
+    "cases":  [
+                  {
+                      "name":  "Hidden_Case1",
+                      "message":  "Compter des anomalies de seuil — cas 1 hidden incorrect.",
+                      "arguments":  [
+                                        [
+                                            8,
+                                            -8
+                                        ],
+                                        8
+                                    ],
+                      "expected":  0,
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_Case2",
+                      "message":  "Compter des anomalies de seuil — cas 2 hidden incorrect.",
+                      "arguments":  [
+                                        [
+                                            -9
+                                        ],
+                                        8
+                                    ],
+                      "expected":  1,
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  }
+              ]
+}

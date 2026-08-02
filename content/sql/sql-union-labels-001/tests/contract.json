@@ -1,0 +1,14 @@
+{
+  "week": 8,
+  "family": "union",
+  "mode": "sql",
+  "datasetRevision": "s1-s10-orders-v1",
+  "expectedRows": [["Home"],["Lille"],["Lyon"],["Office"],["Paris"]],
+  "equivalentQuery": "SELECT Label FROM (SELECT City AS Label FROM dbo.Customers UNION SELECT Category FROM dbo.Products) s ORDER BY Label;",
+  "negativeQuery": "SELECT CustomerId FROM dbo.Customers WHERE 1 = 0;",
+  "dirtySql": "UPDATE dbo.Orders SET Total = 0 WHERE OrderId = 5;",
+  "resetProbeSql": "SELECT Total FROM dbo.Orders WHERE OrderId = 5;",
+  "resetExpected": "100.00",
+  "planIndex": null,
+  "stabilityMutationSql": null
+}

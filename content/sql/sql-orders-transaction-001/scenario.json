@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "id": "sql-orders-transaction-001",
+  "version": 1,
+  "title": "Réserver un stock sous transaction",
+  "difficulty": 4,
+  "skills": ["sql.transaction", "sql.isolation", "sql.atomic-update"],
+  "prerequisites": ["sql-orders-cte-001"],
+  "estimatedMinutes": 45,
+  "image": "mcr.microsoft.com/mssql/server@sha256:b1395aa51b4ec39981883560f1379ea9eba2a1c0719bf8e6477902769316bb79",
+  "datasetPath": "dataset.sql",
+  "visibleSchemaPath": "schema.sql",
+  "permissions": ["select", "update"],
+  "resetScriptPath": "reset.sql",
+  "statementPath": "statement.md",
+  "expectedResult": {
+    "ordered": true,
+    "columns": ["ProductId", "Quantity"],
+    "numericTolerance": 0
+  },
+  "timeoutSeconds": 5,
+  "maxRows": 5,
+  "effectAssertions": [
+    "La quantité vaut 3 dans la transaction puis revient à 5 après rollback",
+    "Une quantité insuffisante ne peut jamais devenir négative"
+  ],
+  "solutionPath": "solution.md",
+  "license": "CC-BY-4.0"
+}

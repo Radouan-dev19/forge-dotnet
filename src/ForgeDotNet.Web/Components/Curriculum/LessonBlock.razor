@@ -1,0 +1,37 @@
+@if (Block is LessonParagraphView paragraph)
+{
+    <p><LessonInlineText Runs="paragraph.Inlines" /></p>
+}
+else if (Block is LessonListView list)
+{
+    @if (list.Ordered)
+    {
+        <ol>
+            @foreach (IReadOnlyList<LessonInlineView> item in list.Items)
+            {
+                <li><LessonInlineText Runs="item" /></li>
+            }
+        </ol>
+    }
+    else
+    {
+        <ul>
+            @foreach (IReadOnlyList<LessonInlineView> item in list.Items)
+            {
+                <li><LessonInlineText Runs="item" /></li>
+            }
+        </ul>
+    }
+}
+else if (Block is LessonCodeView codeBlock)
+{
+    <pre tabindex="0" aria-label="Exemple de code"><code class="@CodeClass(codeBlock.Language)">@codeBlock.Code</code></pre>
+}
+
+@code {
+    [Parameter, EditorRequired]
+    public LessonBlockView Block { get; set; } = default!;
+
+    private static string CodeClass(string language) =>
+        string.IsNullOrEmpty(language) ? string.Empty : $"language-{language}";
+}

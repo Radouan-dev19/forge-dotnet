@@ -1,0 +1,27 @@
+{
+    "schemaVersion":  1,
+    "cases":  [
+                  {
+                      "name":  "Hidden_Case1",
+                      "message":  "Suivre un identifiant de corrélation — cas 1 hidden incorrect.",
+                      "arguments":  [
+                                        "aaaa",
+                                        "aa"
+                                    ],
+                      "expected":  2,
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_Case2",
+                      "message":  "Suivre un identifiant de corrélation — cas 2 hidden incorrect.",
+                      "arguments":  [
+                                        "",
+                                        "a"
+                                    ],
+                      "expected":  0,
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  }
+              ]
+}

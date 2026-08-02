@@ -1,0 +1,12 @@
+{
+  "week": 9,
+  "family": "cte",
+  "mode": "sql",
+  "datasetRevision": "monthly-orders-v1",
+  "expectedRows": [["2026-07","170.75"]],
+  "equivalentQuery": "SELECT monthly.RevenueMonth, monthly.PaidRevenue FROM (SELECT CONVERT(char(7), CreatedAtUtc, 126) AS RevenueMonth, SUM(Total) AS PaidRevenue FROM dbo.Orders WHERE Status = N'Paid' GROUP BY CONVERT(char(7), CreatedAtUtc, 126)) AS monthly WHERE monthly.PaidRevenue > 100 ORDER BY monthly.RevenueMonth;",
+  "negativeQuery": "WITH MonthlyRevenue AS (SELECT CONVERT(char(7), CreatedAtUtc, 126) AS RevenueMonth, SUM(Total) AS PaidRevenue FROM dbo.Orders GROUP BY CONVERT(char(7), CreatedAtUtc, 126)) SELECT RevenueMonth, PaidRevenue FROM MonthlyRevenue WHERE PaidRevenue > 100 ORDER BY RevenueMonth;",
+  "dirtySql": "DELETE FROM dbo.Orders;",
+  "resetProbeSql": "SELECT COUNT_BIG(*) FROM dbo.Orders;",
+  "resetExpected": "6"
+}

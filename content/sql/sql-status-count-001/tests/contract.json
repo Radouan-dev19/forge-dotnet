@@ -1,0 +1,14 @@
+{
+  "week": 9,
+  "family": "group-count",
+  "mode": "sql",
+  "datasetRevision": "s1-s10-orders-v1",
+  "expectedRows": [["Cancelled","1"],["Open","2"],["Paid","2"]],
+  "equivalentQuery": "SELECT Status, COUNT_BIG(*) AS OrderCount FROM dbo.Orders GROUP BY Status ORDER BY Status;",
+  "negativeQuery": "SELECT CustomerId FROM dbo.Customers WHERE 1 = 0;",
+  "dirtySql": "UPDATE dbo.Orders SET Total = 0 WHERE OrderId = 5;",
+  "resetProbeSql": "SELECT Total FROM dbo.Orders WHERE OrderId = 5;",
+  "resetExpected": "100.00",
+  "planIndex": null,
+  "stabilityMutationSql": null
+}

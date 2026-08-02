@@ -1,0 +1,174 @@
+{
+  "id": "forge-weekly-curriculum",
+  "version": 1,
+  "weeks": [
+    {
+      "id": "week-01",
+      "number": 1,
+      "title": "Types, conversions, contrôle, méthodes et débogueur",
+      "domains": ["csharp", "reading"],
+      "prerequisites": []
+    },
+    {
+      "id": "week-02",
+      "number": 2,
+      "title": "Collections, chaînes, dates et cas limites",
+      "domains": ["logic", "csharp"],
+      "prerequisites": ["week-01"]
+    },
+    {
+      "id": "week-03",
+      "number": 3,
+      "title": "Modélisation objet, interfaces, exceptions et nullable",
+      "domains": ["csharp", "reading"],
+      "prerequisites": ["week-02"]
+    },
+    {
+      "id": "week-04",
+      "number": 4,
+      "title": "Génériques, delegates, LINQ, fichiers et JSON",
+      "domains": ["csharp"],
+      "prerequisites": ["week-03"]
+    },
+    {
+      "id": "week-05",
+      "number": 5,
+      "title": "Reformulation, pseudocode, complexité, recherche et tris",
+      "domains": ["logic"],
+      "prerequisites": ["week-04"]
+    },
+    {
+      "id": "week-06",
+      "number": 6,
+      "title": "Structures de données et récursivité utile",
+      "domains": ["logic"],
+      "prerequisites": ["week-05"]
+    },
+    {
+      "id": "week-07",
+      "number": 7,
+      "title": "Stack traces, débogage méthodique et async simple",
+      "domains": ["debugging", "csharp"],
+      "prerequisites": ["week-06"]
+    },
+    {
+      "id": "week-08",
+      "number": 8,
+      "title": "Modèle relationnel, contraintes, filtres et jointures",
+      "domains": ["sql"],
+      "prerequisites": ["week-07"]
+    },
+    {
+      "id": "week-09",
+      "number": 9,
+      "title": "Agrégations, sous-requêtes, CTE et transactions",
+      "domains": ["sql"],
+      "prerequisites": ["week-08"]
+    },
+    {
+      "id": "week-10",
+      "number": 10,
+      "title": "Index, plans, pagination et EF Core",
+      "domains": ["sql", "csharp"],
+      "prerequisites": ["week-09"]
+    },
+    {
+      "id": "week-11",
+      "number": 11,
+      "title": "HTTP, REST, routing, contrôleurs et DTO",
+      "domains": ["http"],
+      "prerequisites": ["week-10"]
+    },
+    {
+      "id": "week-12",
+      "number": 12,
+      "title": "Validation, injection, configuration et erreurs",
+      "domains": ["http", "csharp"],
+      "prerequisites": ["week-11"]
+    },
+    {
+      "id": "week-13",
+      "number": 13,
+      "title": "Async, annulation, pagination, filtres et OpenAPI",
+      "domains": ["http"],
+      "prerequisites": ["week-12"]
+    },
+    {
+      "id": "week-14",
+      "number": 14,
+      "title": "Authentification, rôles et sécurité Web",
+      "domains": ["http", "testing"],
+      "prerequisites": ["week-13"]
+    },
+    {
+      "id": "week-15",
+      "number": 15,
+      "title": "Tests unitaires, règles métier et cas limites",
+      "domains": ["testing", "csharp"],
+      "prerequisites": ["week-14"]
+    },
+    {
+      "id": "week-16",
+      "number": 16,
+      "title": "Doubles et tests d’intégration",
+      "domains": ["testing"],
+      "prerequisites": ["week-15"]
+    },
+    {
+      "id": "week-17",
+      "number": 17,
+      "title": "Non-régression, analyse statique et revue de code",
+      "domains": ["testing", "git"],
+      "prerequisites": ["week-16"]
+    },
+    {
+      "id": "week-18",
+      "number": 18,
+      "title": "Git, branches, conflits, pull requests et versions",
+      "domains": ["git"],
+      "prerequisites": ["week-17"]
+    },
+    {
+      "id": "week-19",
+      "number": 19,
+      "title": "Docker, images, volumes, réseaux et Compose",
+      "domains": ["git"],
+      "prerequisites": ["week-18"]
+    },
+    {
+      "id": "week-20",
+      "number": 20,
+      "title": "Intégration continue, artefacts et déploiement simple",
+      "domains": ["git", "testing"],
+      "prerequisites": ["week-19"]
+    },
+    {
+      "id": "week-21",
+      "number": 21,
+      "title": "Azure, données, stockage, secrets et identité",
+      "domains": ["http", "sql"],
+      "prerequisites": ["week-20"]
+    },
+    {
+      "id": "week-22",
+      "number": 22,
+      "title": "Logs, métriques, incident, performance et sécurité",
+      "domains": ["debugging", "testing"],
+      "prerequisites": ["week-21"]
+    },
+    {
+      "id": "week-23",
+      "number": 23,
+      "title": "Projet final : architecture et implémentation manuelle",
+      "domains": ["csharp", "http", "sql", "testing"],
+      "prerequisites": ["week-22"]
+    },
+    {
+      "id": "week-24",
+      "number": 24,
+      "title": "Défense, entretien, anglais et plan post-parcours",
+      "domains": ["english", "git"],
+      "prerequisites": ["week-23"]
+    }
+  ]
+}

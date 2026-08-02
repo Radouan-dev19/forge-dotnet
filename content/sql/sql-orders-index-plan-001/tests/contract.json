@@ -1,0 +1,13 @@
+{
+  "week": 10,
+  "family": "index-plan",
+  "mode": "sql",
+  "datasetRevision": "orders-plan-v1",
+  "expectedRows": [["10"]],
+  "equivalentQuery": "SELECT COUNT_BIG(OrderId) AS MatchingOrders FROM dbo.Orders WHERE CreatedAtUtc >= CONVERT(datetime2, '2026-01-14T00:00:00', 126) AND CustomerId = 777;",
+  "negativeQuery": "SELECT COUNT_BIG(*) AS MatchingOrders FROM dbo.Orders WHERE CustomerId = 777 AND CreatedAtUtc >= '2026-02-01';",
+  "dirtySql": "DELETE FROM dbo.Orders WHERE OrderId <= 100;",
+  "resetProbeSql": "SELECT COUNT_BIG(*) FROM dbo.Orders;",
+  "resetExpected": "20000",
+  "planIndex": "IX_Orders_CustomerId_CreatedAt"
+}

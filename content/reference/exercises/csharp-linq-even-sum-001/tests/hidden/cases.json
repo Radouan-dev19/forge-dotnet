@@ -1,0 +1,32 @@
+{
+    "schemaVersion":  1,
+    "cases":  [
+                  {
+                      "name":  "Hidden_Case1",
+                      "message":  "Agréger les pairs avec LINQ — cas 1 hidden incorrect.",
+                      "arguments":  [
+                                        [
+                                            -2,
+                                            -1,
+                                            2
+                                        ]
+                                    ],
+                      "expected":  0,
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_Case2",
+                      "message":  "Agréger les pairs avec LINQ — cas 2 hidden incorrect.",
+                      "arguments":  [
+                                        [
+                                            3,
+                                            5
+                                        ]
+                                    ],
+                      "expected":  0,
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  }
+              ]
+}

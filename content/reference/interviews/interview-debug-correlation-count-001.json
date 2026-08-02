@@ -1,0 +1,24 @@
+{
+    "schemaVersion":  1,
+    "id":  "interview-debug-correlation-count-001",
+    "version":  1,
+    "title":  "Suivre un identifiant de corrélation",
+    "level":  "junior",
+    "durationMinutes":  5,
+    "skills":  [
+                   "debugging.data"
+               ],
+    "question":  "Comment résoudriez-vous « Suivre un identifiant de corrélation » et comment prouveriez-vous les bornes ?",
+    "observableCriteria":  [
+                               "Le contrat et une borne sont explicitement reformulés",
+                               "La complexité et un test de réfutation sont justifiés"
+                           ],
+    "modelAnswer":  "Compter les occurrences non chevauchantes et respecter la casse du journal. La preuve comprend un cas nominal, une borne et un cas différent des exemples ; O(n) en temps et O(1) en espace.",
+    "commonMistakes":  [
+                           "Réciter le code sans invariant ni méthode de test"
+                       ],
+    "variants":  [
+                     "Changer une borne ou le volume tout en conservant la même règle de suivre un identifiant de corrélation."
+                 ],
+    "license":  "CC-BY-4.0"
+}

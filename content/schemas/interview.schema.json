@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://forge-dotnet.local/schemas/v1/interview.schema.json",
+  "title": "Question d'entretien Forge.NET v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion", "id", "version", "title", "level", "durationMinutes", "skills", "question",
+    "observableCriteria", "modelAnswer", "commonMistakes", "variants", "license"
+  ],
+  "properties": {
+    "schemaVersion": { "type": "integer", "const": 1 },
+    "id": { "type": "string", "pattern": "^[a-z0-9]+(?:[.-][a-z0-9]+)*$", "minLength": 3, "maxLength": 128 },
+    "version": { "type": "integer", "minimum": 1 },
+    "title": { "type": "string", "minLength": 3, "maxLength": 200 },
+    "level": { "type": "string", "enum": ["junior", "intermediate", "advanced"] },
+    "durationMinutes": { "type": "integer", "minimum": 1, "maximum": 60 },
+    "skills": { "type": "array", "minItems": 1, "maxItems": 20, "uniqueItems": true, "items": { "type": "string", "pattern": "^[a-z0-9]+(?:[.-][a-z0-9]+)*$" } },
+    "question": { "type": "string", "minLength": 15, "maxLength": 1000 },
+    "observableCriteria": { "type": "array", "minItems": 2, "maxItems": 20, "uniqueItems": true, "items": { "type": "string", "minLength": 10, "maxLength": 500 } },
+    "modelAnswer": { "type": "string", "minLength": 30, "maxLength": 5000 },
+    "commonMistakes": { "type": "array", "minItems": 1, "maxItems": 20, "uniqueItems": true, "items": { "type": "string", "minLength": 5, "maxLength": 300 } },
+    "variants": { "type": "array", "minItems": 1, "maxItems": 10, "uniqueItems": true, "items": { "type": "string", "minLength": 10, "maxLength": 1000 } },
+    "license": { "type": "string", "pattern": "^[A-Za-z0-9.-]+$", "minLength": 3, "maxLength": 80 },
+    "attribution": { "type": "string", "minLength": 3, "maxLength": 300 }
+  }
+}

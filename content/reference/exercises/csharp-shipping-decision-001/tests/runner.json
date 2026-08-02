@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "suiteId": "csharp-shipping-decision-001.v1",
+  "exerciseId": "csharp-shipping-decision-001",
+  "exerciseVersion": 1,
+  "typeName": "Submission",
+  "methodName": "ShippingCost",
+  "parameterTypes": ["decimal", "bool"],
+  "returnType": "decimal"
+}

@@ -1,0 +1,84 @@
+# Maîtrise — politique v1
+
+## Portée
+
+L’incrément 07A a introduit la projection locale, déterministe et explicable à partir d’observations typées. 07B a raccordé la rétention vérifiée et 07C raccorde les examens sans modifier la politique active `forge-mastery`, version `1`, révision `mastery-v1-20260729`.
+
+Les seuils v1 retenus sont : validation ordinaire à 80, validation critique à 85, preuve récente sur 30 jours, expiration des observations de score après 90 jours et au moins trois exercices autonomes distincts. C#, débogage, SQL, API et tests sont critiques. Les seuils propres à la porte A restent ceux de la spécification produit ; ils ne remplacent pas le seuil de validation d’un module.
+
+## Formule
+
+```text
+score = 0,45 × pratique autonome
+      + 0,25 × examen sans aide
+      + 0,15 × rétention espacée
+      + 0,10 × explication
+      + 0,05 × quiz
+```
+
+Chaque composante est bornée à 0–100. Une composante sans preuve vaut zéro et son poids n’est jamais redistribué. Le score final est borné et arrondi à deux décimales, avec arrondi au plus proche et milieu éloigné de zéro.
+
+Les plafonds d’assistance sont H1 90, H2 80, H3 70, H4 60 et solution 0. La consultation d’une solution contamine définitivement la pratique autonome du même exercice dans la politique v1, y compris si une réussite antérieure existe. Une reprise espacée peut produire une preuve distincte uniquement lorsqu’une carte diagnostique est vérifiée côté serveur.
+
+Pour un même exercice, la tentative vérifiée la plus récente a un poids 1, la précédente 0,5 et chaque tentative plus ancienne 0,25. Une observation âgée de 31 à 90 jours reçoit en plus un poids de récence 0,5 ; au-delà de 90 jours, elle ne contribue plus.
+
+## Observations admises
+
+| Source | Observation persistée | Admissibilité au score |
+|---|---|---|
+| Pratique C# | résultat runner, version/révision, compteurs, diagnostic et empreinte SHA-256 | tests automatiques réellement exécutés ; une déclaration manuelle reste visible mais vaut zéro |
+| DebugLab | correction, résultat de tests et contamination par solution | exécution automatique seulement |
+| SqlLab | statut, validation de référence, diagnostic et empreinte SHA-256 | validation de référence réussie seulement |
+| Examen | item soumis d’un rapport terminé, résultat runner, tirage/durée et assistance figés | `ExamEngine` automatique et sans aide uniquement ; un faux examen ou une déclaration manuelle est refusé |
+| Révision | réponse d’une carte diagnostique à choix corrigée côté serveur | `ReviewEngine` uniquement ; autoévaluation et carte personnelle restent sans score |
+| Explication/quiz/livrable | preuve serveur typée attendue | la déclaration manuelle est refusée |
+
+Le code C# et la requête SQL ne sont jamais placés dans les tables d’observation. Les activités de pratique existantes conservent leurs propres données pédagogiques selon leur contrat ; la projection de maîtrise ne copie ni code, ni requête, ni sortie, ni solution.
+
+Une validation de domaine exige simultanément le score requis, trois exercices autonomes distincts non contaminés, une pratique autonome vérifiée sans aide datant d’au plus 30 jours et un examen final vérifié sans aide. Une tentative assistée, abandonnée ou sans validation automatique ne fournit pas cette preuve. Un quiz récent ne satisfait pas la preuve autonome. Une série quotidienne n’est jamais une observation.
+
+## Portes
+
+| Porte | Conditions cumulatives |
+|---|---|
+| A — Junior fiable | C# ≥85, débogage ≥80, SQL ≥75, 10 exercices vérifiés sans aide et non contaminés, mini-projet console vérifié, examen sans aide de 90 minutes |
+| B — Backend .NET | A, API fonctionnelle, EF Core, validation/erreurs, tests unitaires et d’intégration, Git propre, présentation de 10 minutes |
+| C — Équipe moderne | B, Docker, CI, authN/authZ, logs, déploiement, incident simulé, entretien blanc |
+| D — Intermédiaire en construction | C, performance, sécurité, architecture pragmatique, fonctionnalité autonome, revue de code, anglais professionnel, défense finale |
+
+Chaque condition absente produit un motif de blocage. Une porte ne s’ouvre jamais par moyenne ou compensation. Depuis 07C, l’accomplissement d’examen de la porte A exige une tentative réussie sans aide dont la durée configurée est d’au moins 90 minutes. La banque de référence de 30 minutes ne le satisfait pas. Aucun producteur de livrable n’est ajouté : les quatre portes restent donc honnêtement fermées dans l’application courante.
+
+## Persistance et audit
+
+`PracticeLearningAttempts`, `SqlLearningAttempts` et les observations DebugLab existantes sont append-only. Une identité ou un diagnostic rejoué avec un contenu différent est refusé. `MasteryProjections` conserve un snapshot, la politique sérialisée, la révision de politique et la révision quotidienne des preuves. La clé unique profil/politique/preuves rend le recalcul concurrent idempotent.
+
+La date UTC entre dans la révision de calcul afin que récence et expiration soient recalculées sans réécrire les anciennes projections. Un changement de politique reçoit une nouvelle version/révision ; un ancien snapshot reste lié à sa politique figée et n’est jamais réinterprété.
+
+## Matrice anti-contournement
+
+| Tentative de contournement | Réponse v1 |
+|---|---|
+| accumulation de quiz faciles | poids maximal 5 %, aucune preuve autonome |
+| H1 à H4 | score plafonné à 90/80/70/60 |
+| solution consultée | pratique du même exercice à zéro ; exercice exclu des comptes autonomes |
+| déclarations manuelles/aléatoires | conservées comme contexte mais non admissibles |
+| même exercice en boucle | rendement décroissant et variété minimale de trois exercices |
+| preuve ancienne | pondération réduite puis exclusion à 90 jours ; preuve autonome récente exigée |
+| moyenne élevée avec compétence faible | seuil par domaine et conditions de porte exactes |
+| composante absente | zéro, sans redistribution |
+| faux examen ou faux livrable | type de vérification serveur obligatoire |
+| rejeu/modification d’observation | unicité, append-only et refus fermé |
+
+## Vérifications manuelles
+
+Contrôler sur `/mastery` un profil vide, un profil avec déclaration manuelle, un profil avec réussite assistée et un profil avec preuves automatiques partielles. Dans chaque cas, vérifier les composantes absentes à zéro, les motifs de blocage, les portes fermées et l’absence de commande de modification du score.
+
+## Commandes
+
+```powershell
+dotnet build --no-restore
+dotnet test --no-build --filter "Category=MasteryAntiGaming"
+dotnet test --no-build
+dotnet format --verify-no-changes
+powershell -ExecutionPolicy Bypass -File scripts/verify.ps1
+```

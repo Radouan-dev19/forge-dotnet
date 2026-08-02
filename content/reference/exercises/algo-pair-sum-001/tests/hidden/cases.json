@@ -1,0 +1,33 @@
+{
+    "schemaVersion":  1,
+    "cases":  [
+                  {
+                      "name":  "Hidden_Case1",
+                      "message":  "Détecter une paire de somme cible — cas 1 hidden incorrect.",
+                      "arguments":  [
+                                        [
+                                            3,
+                                            3
+                                        ],
+                                        6
+                                    ],
+                      "expected":  true,
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_Case2",
+                      "message":  "Détecter une paire de somme cible — cas 2 hidden incorrect.",
+                      "arguments":  [
+                                        [
+                                            -1,
+                                            4
+                                        ],
+                                        3
+                                    ],
+                      "expected":  true,
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  }
+              ]
+}

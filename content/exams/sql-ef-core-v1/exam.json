@@ -1,0 +1,105 @@
+{
+  "schemaVersion": 1,
+  "id": "sql-ef-core-v1",
+  "version": 1,
+  "title": "Examen 4 — SQL et EF Core S8–S10",
+  "durationMinutes": 120,
+  "drawCount": 8,
+  "passingScore": 80,
+  "eligibleEfScenarioIds": [
+    "ef-orders-tracking-001",
+    "ef-orders-queryable-001"
+  ],
+  "sqlItems": [
+    {
+      "id": "exam-sql-total-filter-001",
+      "version": 1,
+      "title": "Filtrer les commandes significatives",
+      "statement": "Retournez OrderId, CustomerName et Total pour les commandes dont le total est supérieur ou égal à 75, triées par OrderId.",
+      "constraints": ["Une seule instruction SELECT.", "Le tri demandé doit être explicite."],
+      "starterQuery": "SELECT OrderId, CustomerName, Total\nFROM dbo.Orders\nWHERE 1 = 0\nORDER BY OrderId;",
+      "solutionQuery": "SELECT OrderId, CustomerName, Total FROM dbo.Orders WHERE Total >= 75 ORDER BY OrderId;",
+      "expectedResult": {
+        "ordered": true,
+        "columns": ["OrderId", "CustomerName", "Total"],
+        "rows": [["1", "Ada", "120.5"], ["2", "Grace", "75"]],
+        "numericTolerance": 0.01
+      }
+    },
+    {
+      "id": "exam-sql-total-band-001",
+      "version": 1,
+      "title": "Classer les totaux avec CASE",
+      "statement": "Retournez OrderId et Band : High à partir de 100, Medium à partir de 60, Low sinon. Triez par OrderId.",
+      "constraints": ["Utilisez CASE dans la projection.", "N’altérez aucune donnée."],
+      "starterQuery": "SELECT OrderId, N'Unknown' AS Band\nFROM dbo.Orders\nORDER BY OrderId;",
+      "solutionQuery": "SELECT OrderId, CASE WHEN Total >= 100 THEN N'High' WHEN Total >= 60 THEN N'Medium' ELSE N'Low' END AS Band FROM dbo.Orders ORDER BY OrderId;",
+      "expectedResult": {
+        "ordered": true,
+        "columns": ["OrderId", "Band"],
+        "rows": [["1", "High"], ["2", "Medium"], ["3", "Low"]],
+        "numericTolerance": 0
+      }
+    },
+    {
+      "id": "exam-sql-aggregate-001",
+      "version": 1,
+      "title": "Agréger le portefeuille de commandes",
+      "statement": "Retournez une ligne avec OrderCount et TotalAmount pour l’ensemble des commandes.",
+      "constraints": ["Utilisez les agrégats SQL.", "Les alias doivent correspondre exactement à la demande."],
+      "starterQuery": "SELECT 0 AS OrderCount, CAST(0 AS decimal(10,2)) AS TotalAmount;",
+      "solutionQuery": "SELECT COUNT_BIG(*) AS OrderCount, SUM(Total) AS TotalAmount FROM dbo.Orders;",
+      "expectedResult": {
+        "ordered": true,
+        "columns": ["OrderCount", "TotalAmount"],
+        "rows": [["3", "235.75"]],
+        "numericTolerance": 0.01
+      }
+    },
+    {
+      "id": "exam-sql-above-average-001",
+      "version": 1,
+      "title": "Sélectionner au-dessus de la moyenne",
+      "statement": "À l’aide d’une CTE, retournez OrderId et CustomerName pour les commandes strictement au-dessus du total moyen, triées par OrderId.",
+      "constraints": ["La moyenne doit être calculée depuis dbo.Orders.", "Utilisez une CTE lisible."],
+      "starterQuery": "WITH AverageTotal AS (SELECT CAST(0 AS decimal(10,2)) AS Value)\nSELECT OrderId, CustomerName\nFROM dbo.Orders\nORDER BY OrderId;",
+      "solutionQuery": "WITH AverageTotal AS (SELECT AVG(Total) AS Value FROM dbo.Orders) SELECT o.OrderId, o.CustomerName FROM dbo.Orders AS o CROSS JOIN AverageTotal AS a WHERE o.Total > a.Value ORDER BY o.OrderId;",
+      "expectedResult": {
+        "ordered": true,
+        "columns": ["OrderId", "CustomerName"],
+        "rows": [["1", "Ada"]],
+        "numericTolerance": 0
+      }
+    },
+    {
+      "id": "exam-sql-date-range-001",
+      "version": 1,
+      "title": "Borner une période en intervalle semi-ouvert",
+      "statement": "Retournez OrderId et CustomerName pour les commandes créées du 11 janvier 2026 inclus au 13 janvier 2026 exclu, triées par OrderId.",
+      "constraints": ["Employez une borne basse inclusive et une borne haute exclusive.", "N’appliquez pas de fonction à CreatedAtUtc."],
+      "starterQuery": "SELECT OrderId, CustomerName\nFROM dbo.Orders\nWHERE CreatedAtUtc IS NULL\nORDER BY OrderId;",
+      "solutionQuery": "SELECT OrderId, CustomerName FROM dbo.Orders WHERE CreatedAtUtc >= '2026-01-11T00:00:00' AND CreatedAtUtc < '2026-01-13T00:00:00' ORDER BY OrderId;",
+      "expectedResult": {
+        "ordered": true,
+        "columns": ["OrderId", "CustomerName"],
+        "rows": [["2", "Grace"], ["3", "Linus"]],
+        "numericTolerance": 0
+      }
+    },
+    {
+      "id": "exam-sql-page-001",
+      "version": 1,
+      "title": "Paginer de façon déterministe",
+      "statement": "Retournez la deuxième commande de la liste triée par OrderId, avec OrderId et CustomerName.",
+      "constraints": ["Le tri est obligatoire avant OFFSET.", "La page contient exactement une ligne."],
+      "starterQuery": "SELECT OrderId, CustomerName\nFROM dbo.Orders\nORDER BY OrderId;",
+      "solutionQuery": "SELECT OrderId, CustomerName FROM dbo.Orders ORDER BY OrderId OFFSET 1 ROWS FETCH NEXT 1 ROWS ONLY;",
+      "expectedResult": {
+        "ordered": true,
+        "columns": ["OrderId", "CustomerName"],
+        "rows": [["2", "Grace"]],
+        "numericTolerance": 0
+      }
+    }
+  ]
+}
