@@ -1,0 +1,25 @@
+{
+    "schemaVersion":  1,
+    "cases":  [
+                  {
+                      "name":  "Hidden_Case1",
+                      "message":  "Calculer un décalage paginé — cas 1 incorrect.",
+                      "arguments":  [
+                                        0,
+                                        20
+                                    ],
+                      "expectedException":  "ArgumentOutOfRangeException",
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_Case2",
+                      "message":  "Calculer un décalage paginé — cas 2 incorrect.",
+                      "arguments":  [
+                                        2,
+                                        101
+                                    ],
+                      "expectedException":  "ArgumentOutOfRangeException",
+                      "argumentsUnchanged":  false
+                  }
+              ]
+}

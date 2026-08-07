@@ -1,0 +1,24 @@
+{
+    "schemaVersion":  1,
+    "id":  "interview-s21-s24-023",
+    "version":  1,
+    "title":  "Séparer symptôme et cause",
+    "level":  "intermediate",
+    "durationMinutes":  9,
+    "skills":  [
+                   "observability.incident"
+               ],
+    "question":  "Une latence augmente après un déploiement. Pourquoi le déploiement nʼest-il pas encore la cause ?",
+    "observableCriteria":  [
+                               "La réponse prend une décision explicite et cite une preuve observable",
+                               "Une limite de sécurité, de coût, de portée ou de validité est reconnue"
+                           ],
+    "modelAnswer":  "La proximité temporelle est un indice. Je compare révisions, traces et dépendances, puis cherche une observation discriminante avant rollback ou correction.",
+    "commonMistakes":  [
+                           "Employer un slogan sans contrainte, preuve ni limite vérifiable"
+                       ],
+    "variants":  [
+                     "Changez une contrainte du scénario « Séparer symptôme et cause » et expliquez si la décision reste valide."
+                 ],
+    "license":  "CC-BY-4.0"
+}

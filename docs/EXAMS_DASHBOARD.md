@@ -2,7 +2,7 @@
 
 ## Portée
 
-L’incrément 07C livre le moteur d’examen local, son rapport auditable et un dashboard calculé exclusivement depuis les données déjà persistées. L’incrément 08 fournit quatre banques complètes : trois banques C# pour S1–S7 et une banque mixte SQL/EF Core pour S8–S10. Le type de soumission est figé avec chaque item et impose le runner autorisé ; SQL n’est jamais simulé par un exercice C#.
+Lʼincrément 07C livre le moteur dʼexamen local, son rapport auditable et un dashboard calculé exclusivement depuis les données déjà persistées. Les incréments 08 à 10 fournissent huit banques complètes : trois banques C# pour S1–S7, une banque mixte SQL/EF Core pour S8–S10, une banque API/sécurité S11–S14, une banque tests/qualité S15–S17, une banque Azure/observabilité S21–S22 et une synthèse technique S1–S24. Le type de soumission est figé avec chaque item et impose le runner autorisé ; SQL nʼest jamais simulé par un exercice C# et la défense manuelle du projet final nʼest jamais présentée comme automatiquement notée.
 
 ## États, tirage et temps
 
@@ -33,6 +33,12 @@ La banque `sql-ef-core-v1` dure 120 minutes et tire ses huit candidats : six req
 - Les attentes et solutions SQL sont absentes du blueprint public. Les solutions EF et suites visibles/cachées sont confinées sous `content/sql/<id>/exam/`; la révision couvre manifeste, contrat, énoncé, starter, solution et suites.
 - Le rapport conserve le même modèle borné pour les deux runners. `Unavailable` n’est jamais automatiquement vérifié et ne peut ni réussir l’examen ni produire une preuve de maîtrise.
 
+## Examens 5 et 6 — API, sécurité, tests et qualité
+
+L’incrément 09 ajoute deux banques sans modifier le moteur : `api-security-v1` contient 16 candidats S11–S14 et `tests-quality-v1` 15 candidats S15–S17. Chacune tire huit items, dure 120 minutes et exige 80 %. Les candidats sont des exercices C# déterministes exécutés par le runner isolé ; leurs compétences, énoncés et cas couvrent HTTP, validation, secrets, authentification, autorisation, OWASP, xUnit, frontières, doubles, intégration, non-régression, analyse et revue.
+
+Les solutions et tests cachés restent confinés dans `content/reference/exercises/`. Le dashboard publie les titres et starters seulement. Les comportements HTTP réels 400/401/403/404/201 sont vérifiés séparément par le laboratoire ASP.NET Core ; un exercice de décision pur n’est jamais présenté comme la preuve qu’un serveur a traité une requête.
+
 ## Maîtrise et révisions
 
 Seuls les items soumis, vérifiés automatiquement par le runner et issus d’un rapport terminé peuvent créer une observation `ExamEngine`. Une tentative assistée n’en crée aucune. Pour la porte A, l’accomplissement « examen sans aide de 90 minutes » exige en plus une tentative réussie, non assistée et d’une durée configurée d’au moins 90 minutes ; la banque de référence de 30 minutes ne peut donc pas ouvrir cette condition.
@@ -59,7 +65,7 @@ Les événements d’activité proviennent des leçons, diagnostics, tentatives 
 
 ## Vérifications automatiques
 
-La catégorie `ExamIntegrity` couvre tirage et seed, échéance et reprise, rapport différé, redaction des tests cachés, verrouillage des aides, fin concurrente, abandon, timeout, redémarrage, routage SQL sans appel au runner C#, échec vers révision/maîtrise, activité avec inactivité, métriques absentes, réussite avant solution et non-compensation d’une porte critique. `ContentS1S10`, `SqlLabExam` et `ContentS1S10Docker` contrôlent respectivement la banque privée, les six solutions SQL jetables et les deux starters/solutions EF isolés. Le test E2E vérifie aussi que la banque 4 est publiée sans solution.
+La catégorie `ExamIntegrity` couvre tirage et seed, échéance et reprise, rapport différé, redaction des tests cachés, verrouillage des aides, fin concurrente, abandon, timeout, redémarrage, routage SQL sans appel au runner C#, échec vers révision/maîtrise, activité avec inactivité, métriques absentes, réussite avant solution et non-compensation dʼune porte critique. `ContentS1S10`, `SqlLabExam` et `ContentS1S10Docker` contrôlent respectivement les quatre premières banques, les six solutions SQL jetables et les deux starters/solutions EF isolés. `ContentS11S20` vérifie les banques 5–6 et `ContentS21S24` vérifie les banques 7–8, leurs références et lʼabsence de solution publique. Le test E2E publie les huit banques sans solution.
 
 ```powershell
 dotnet build ForgeDotNet.sln --no-restore --disable-build-servers
@@ -83,7 +89,7 @@ Ce parcours a été rejoué le 29 juillet 2026 sur une base temporaire : réussi
 
 ## Limites assumées
 
-- La banque `reference-csharp-foundations-v1` contient 16 candidats S1–S2, en tire huit et dure 90 minutes. Les banques `csharp-modern-v1` et `algorithm-debug-v1` couvrent respectivement S3–S4 et S5–S7 avec 16 candidats chacune. La banque `sql-ef-core-v1` contient six soumissions SQL réelles et deux soumissions EF Core réelles, toutes imposées par son tirage de huit items.
+- La banque `reference-csharp-foundations-v1` contient 16 candidats S1–S2, en tire huit et dure 90 minutes. Les banques `csharp-modern-v1` et `algorithm-debug-v1` couvrent respectivement S3–S4 et S5–S7 avec 16 candidats chacune. La banque `sql-ef-core-v1` contient six soumissions SQL réelles et deux soumissions EF Core réelles, toutes imposées par son tirage de huit items. `api-security-v1` contient 16 candidats et `tests-quality-v1` en contient 15 ; chacune tire huit items, dure 120 minutes et exige 80 %. `azure-observability-v1` contient 15 candidats, tire huit items et dure 120 minutes ; `final-readiness-v1` contient 16 candidats, tire huit items et dure 150 minutes. Leur seuil reste 80 %.
 - Le mode runner configuré détermine si une validation automatique est disponible. Un runner indisponible ne crée ni réussite ni preuve.
 - Un utilisateur maître de sa machine locale peut employer une aide extérieure ; la déclaration, le temps, le tirage, les tests cachés et les réévaluations renforcent la crédibilité sans promettre une inviolabilité.
 - Le temps actif est une estimation transparente fondée sur des événements, pas un suivi continu ni une mesure de productivité.

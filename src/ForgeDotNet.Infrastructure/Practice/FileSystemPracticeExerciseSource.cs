@@ -10,30 +10,83 @@ namespace ForgeDotNet.Infrastructure.Practice;
 
 public sealed class FileSystemPracticeExerciseSource(
     ContentCatalogProvider catalogProvider,
-    PracticeContentOptions options) : IPracticeExerciseSource
+    PracticeContentOptions options) : IPracticeExerciseSource, IDisposable
 {
     private const int MaximumPrivateFileBytes = 131_072;
     private static readonly UTF8Encoding StrictUtf8 = new(false, true);
+    private readonly SemaphoreSlim _reloadGate = new(1, 1);
+    private CacheSnapshot? _cache;
 
     public async ValueTask<IReadOnlyList<PracticeExercise>> ListAsync(
+        CancellationToken cancellationToken = default) =>
+        (await GetSnapshotAsync(cancellationToken)).Exercises;
+
+    public async ValueTask<PracticeExercise?> GetAsync(
+        string exerciseId,
         CancellationToken cancellationToken = default)
+    {
+        if (string.IsNullOrWhiteSpace(exerciseId))
+        {
+            return null;
+        }
+
+        CacheSnapshot snapshot = await GetSnapshotAsync(cancellationToken);
+        return snapshot.ById.GetValueOrDefault(exerciseId);
+    }
+
+    private async ValueTask<CacheSnapshot> GetSnapshotAsync(CancellationToken cancellationToken)
+    {
+        string revision = catalogProvider.Current.Revision;
+        CacheSnapshot? current = Volatile.Read(ref _cache);
+        if (current is not null && string.Equals(current.Revision, revision, StringComparison.Ordinal))
+        {
+            return current;
+        }
+
+        await _reloadGate.WaitAsync(cancellationToken);
+        try
+        {
+            revision = catalogProvider.Current.Revision;
+            current = Volatile.Read(ref _cache);
+            if (current is not null && string.Equals(current.Revision, revision, StringComparison.Ordinal))
+            {
+                return current;
+            }
+
+            CacheSnapshot replacement = await LoadSnapshotAsync(revision, cancellationToken);
+            Volatile.Write(ref _cache, replacement);
+            return replacement;
+        }
+        finally
+        {
+            _reloadGate.Release();
+        }
+    }
+
+    private async Task<CacheSnapshot> LoadSnapshotAsync(
+        string revision,
+        CancellationToken cancellationToken)
     {
         var exercises = new List<PracticeExercise>();
         foreach (ContentCatalogItem item in catalogProvider.Current.GetByType(ContentDocumentType.Exercise))
         {
-            PracticeExercise? exercise = await GetAsync(item.Id, cancellationToken);
+            PracticeExercise? exercise = await LoadAsync(item.Id, cancellationToken);
             if (exercise is not null)
             {
                 exercises.Add(exercise);
             }
         }
 
-        return Array.AsReadOnly(exercises.ToArray());
+        PracticeExercise[] values = exercises.ToArray();
+        return new CacheSnapshot(
+            revision,
+            Array.AsReadOnly(values),
+            values.ToDictionary(exercise => exercise.Id, StringComparer.Ordinal));
     }
 
-    public async ValueTask<PracticeExercise?> GetAsync(
+    private async ValueTask<PracticeExercise?> LoadAsync(
         string exerciseId,
-        CancellationToken cancellationToken = default)
+        CancellationToken cancellationToken)
     {
         ContentCatalogItem? catalogItem = catalogProvider.Current.FindById(exerciseId);
         if (catalogItem is null || catalogItem.Type != ContentDocumentType.Exercise)
@@ -328,6 +381,13 @@ public sealed class FileSystemPracticeExerciseSource(
     private static StringComparison PathComparison => OperatingSystem.IsWindows()
         ? StringComparison.OrdinalIgnoreCase
         : StringComparison.Ordinal;
+
+    public void Dispose() => _reloadGate.Dispose();
+
+    private sealed record CacheSnapshot(
+        string Revision,
+        IReadOnlyList<PracticeExercise> Exercises,
+        IReadOnlyDictionary<string, PracticeExercise> ById);
 
     private sealed record LoadedFile(string RelativePath, string Text, byte[] Bytes);
 }

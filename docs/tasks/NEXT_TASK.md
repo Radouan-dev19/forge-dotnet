@@ -1,7 +1,7 @@
 # Prochaine tâche
 
-- Dernier incrément validé : **08 — Contenu semaines 1 à 10**.
-- Prochain incrément à exécuter : **09 — Contenu semaines 11 à 20**.
-- Prérequis : incrément `08` validé ; catalogue et moteurs stables ; conventions .NET 10 confirmées.
-- Fiche : `docs/tasks/09-CONTENU-S11-S20.md`.
-- Commandes minimales : `dotnet test --no-build`, `docker compose config`, `powershell -ExecutionPolicy Bypass -File scripts/verify.ps1`.
+- Dernier incrément validé : **11 — Finition MVP**.
+- Prochain incrément à exécuter : **12 — Audit pédagogique final, reprise après refus**.
+- Prérequis : incrément `11` validé ; quatre P1 de `docs/PEDAGOGICAL_AUDIT.md` corrigés avec non-régressions ; auditeur différent ou posture explicitement indépendante ; navigateur, Docker et données de test réinitialisables.
+- Fiche : `docs/tasks/12-AUDIT-PEDAGOGIQUE.md`.
+- Commandes minimales : validateur complet de contenu, suite adversariale des sept personas, `powershell -ExecutionPolicy Bypass -File scripts/verify.ps1`, `git diff --check`, `git status --short`.

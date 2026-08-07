@@ -1,0 +1,29 @@
+{
+    "schemaVersion":  1,
+    "cases":  [
+                  {
+                      "name":  "Visible_Case1",
+                      "message":  "Évaluer une garde de coût — cas 1 incorrect.",
+                      "arguments":  [
+                                        2.5,
+                                        5,
+                                        true
+                                    ],
+                      "expected":  "allow",
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Visible_Case2",
+                      "message":  "Évaluer une garde de coût — cas 2 incorrect.",
+                      "arguments":  [
+                                        7,
+                                        5,
+                                        true
+                                    ],
+                      "expected":  "block",
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  }
+              ]
+}

@@ -1,0 +1,27 @@
+{
+    "schemaVersion":  1,
+    "cases":  [
+                  {
+                      "name":  "Hidden_Case1",
+                      "message":  "Vérifier un rôle déclaré — cas 1 incorrect.",
+                      "arguments":  [
+                                        " admin , reader ",
+                                        "ADMIN"
+                                    ],
+                      "expected":  true,
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_Case2",
+                      "message":  "Vérifier un rôle déclaré — cas 2 incorrect.",
+                      "arguments":  [
+                                        "",
+                                        "Reader"
+                                    ],
+                      "expected":  false,
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  }
+              ]
+}

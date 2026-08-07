@@ -1,0 +1,81 @@
+{
+    "schemaVersion":  1,
+    "id":  "api-config-key-001",
+    "version":  1,
+    "title":  "Composer une clé de configuration",
+    "kind":  "csharp",
+    "difficulty":  2,
+    "skills":  [
+                   "api.configuration"
+               ],
+    "prerequisites":  [
+                          "api-validation-problem-details-001"
+                      ],
+    "estimatedMinutes":  35,
+    "statement":  "statement.md",
+    "constraints":  [
+                        "Conserver exactement la signature publique",
+                        "Valider les deux segments et conserver le séparateur hiérarchique standard.",
+                        "Ne jamais dépendre du réseau, d’un secret réel ou d’un état global"
+                    ],
+    "examples":  [
+                     {
+                         "input":  "[{\"value\":[\"Authentication\",\"ApiKey\"],\"Count\":2},\"Authentication:ApiKey\"]",
+                         "output":  "[{\"value\":[\"Logging \",\" Level\"],\"Count\":2},\"Logging:Level\"]"
+                     }
+                 ],
+    "reflectionFields":  [
+                             "reformulation",
+                             "inputs",
+                             "expectedOutput",
+                             "edgeCases",
+                             "hypothesis",
+                             "plan"
+                         ],
+    "starterPath":  "starter/",
+    "visibleTestsPath":  "tests/visible/",
+    "hiddenTestsPath":  "tests/hidden/",
+    "hints":  [
+                  {
+                      "level":  1,
+                      "kind":  "socratic",
+                      "content":  "Quel comportement public de « Composer une clé de configuration » change exactement à la frontière ?"
+                  },
+                  {
+                      "level":  2,
+                      "kind":  "location",
+                      "content":  "Concentrez la validation et la décision dans ConfigKey, sans état global ni journal sensible."
+                  },
+                  {
+                      "level":  3,
+                      "kind":  "strategy",
+                      "content":  "Valider les deux segments et conserver le séparateur hiérarchique standard."
+                  },
+                  {
+                      "level":  4,
+                      "kind":  "partial-pseudocode",
+                      "content":  "valider les entrées ; appliquer la décision bornée ; retourner un résultat déterministe sans effet externe"
+                  }
+              ],
+    "solution":  {
+                     "path":  "solution/",
+                     "unlock":  {
+                                    "seriousAttempts":  2,
+                                    "minimumDelayMinutes":  10
+                                }
+                 },
+    "explanation":  "explanation.md",
+    "complexity":  "O(n) en temps et O(n) en espace",
+    "commonMistakes":  [
+                           "Coder seulement les exemples visibles",
+                           "Masquer une erreur ou accepter une entrée hors contrat",
+                           "Confondre une règle pure avec le transport ou une ressource externe"
+                       ],
+    "variantId":  "api-secret-redaction-001",
+    "reviewCards":  [
+                        "card-api-config-key-001-rule",
+                        "card-api-config-key-001-security"
+                    ],
+    "interviewQuestionId":  "interview-api-config-key-001",
+    "license":  "CC-BY-4.0"
+}

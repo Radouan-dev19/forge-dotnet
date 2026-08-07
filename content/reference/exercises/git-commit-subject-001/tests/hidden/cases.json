@@ -1,0 +1,25 @@
+{
+    "schemaVersion":  1,
+    "cases":  [
+                  {
+                      "name":  "Hidden_Case1",
+                      "message":  "Valider un sujet de commit — cas 1 incorrect.",
+                      "arguments":  [
+                                        ""
+                                    ],
+                      "expected":  false,
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_Case2",
+                      "message":  "Valider un sujet de commit — cas 2 incorrect.",
+                      "arguments":  [
+                                        "Message court"
+                                    ],
+                      "expected":  true,
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  }
+              ]
+}

@@ -1,0 +1,26 @@
+{
+    "schemaVersion":  1,
+    "cases":  [
+                  {
+                      "name":  "Hidden_Case1",
+                      "message":  "Borner un budget d’annulation — cas 1 incorrect.",
+                      "arguments":  [
+                                        0,
+                                        30
+                                    ],
+                      "expectedException":  "ArgumentOutOfRangeException",
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_Case2",
+                      "message":  "Borner un budget d’annulation — cas 2 incorrect.",
+                      "arguments":  [
+                                        10,
+                                        1
+                                    ],
+                      "expected":  1,
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  }
+              ]
+}

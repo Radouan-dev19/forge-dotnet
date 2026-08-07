@@ -1,0 +1,81 @@
+{
+    "schemaVersion":  1,
+    "id":  "api-method-idempotency-001",
+    "version":  1,
+    "title":  "Reconnaître une méthode idempotente",
+    "kind":  "csharp",
+    "difficulty":  2,
+    "skills":  [
+                   "api.http"
+               ],
+    "prerequisites":  [
+                          "api-http-semantics-001"
+                      ],
+    "estimatedMinutes":  35,
+    "statement":  "statement.md",
+    "constraints":  [
+                        "Conserver exactement la signature publique",
+                        "Comparer une méthode normalisée à la liste explicite des méthodes idempotentes.",
+                        "Ne jamais dépendre du réseau, d’un secret réel ou d’un état global"
+                    ],
+    "examples":  [
+                     {
+                         "input":  "[{\"value\":[\"GET\"],\"Count\":1},true]",
+                         "output":  "[{\"value\":[\"POST\"],\"Count\":1},false]"
+                     }
+                 ],
+    "reflectionFields":  [
+                             "reformulation",
+                             "inputs",
+                             "expectedOutput",
+                             "edgeCases",
+                             "hypothesis",
+                             "plan"
+                         ],
+    "starterPath":  "starter/",
+    "visibleTestsPath":  "tests/visible/",
+    "hiddenTestsPath":  "tests/hidden/",
+    "hints":  [
+                  {
+                      "level":  1,
+                      "kind":  "socratic",
+                      "content":  "Quel comportement public de « Reconnaître une méthode idempotente » change exactement à la frontière ?"
+                  },
+                  {
+                      "level":  2,
+                      "kind":  "location",
+                      "content":  "Concentrez la validation et la décision dans IsIdempotent, sans état global ni journal sensible."
+                  },
+                  {
+                      "level":  3,
+                      "kind":  "strategy",
+                      "content":  "Comparer une méthode normalisée à la liste explicite des méthodes idempotentes."
+                  },
+                  {
+                      "level":  4,
+                      "kind":  "partial-pseudocode",
+                      "content":  "valider les entrées ; appliquer la décision bornée ; retourner un résultat déterministe sans effet externe"
+                  }
+              ],
+    "solution":  {
+                     "path":  "solution/",
+                     "unlock":  {
+                                    "seriousAttempts":  2,
+                                    "minimumDelayMinutes":  10
+                                }
+                 },
+    "explanation":  "explanation.md",
+    "complexity":  "O(n) en temps et O(n) en espace",
+    "commonMistakes":  [
+                           "Coder seulement les exemples visibles",
+                           "Masquer une erreur ou accepter une entrée hors contrat",
+                           "Confondre une règle pure avec le transport ou une ressource externe"
+                       ],
+    "variantId":  "api-location-header-001",
+    "reviewCards":  [
+                        "card-api-method-idempotency-001-rule",
+                        "card-api-method-idempotency-001-security"
+                    ],
+    "interviewQuestionId":  "interview-api-method-idempotency-001",
+    "license":  "CC-BY-4.0"
+}

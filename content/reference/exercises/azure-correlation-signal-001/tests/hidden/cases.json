@@ -1,0 +1,26 @@
+{
+    "schemaVersion":  1,
+    "cases":  [
+                  {
+                      "name":  "Hidden_Case1",
+                      "message":  "Classer un signal corrélé — cas 1 incorrect.",
+                      "arguments":  [
+                                        0,
+                                        400
+                                    ],
+                      "expected":  "healthy",
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_Case2",
+                      "message":  "Classer un signal corrélé — cas 2 incorrect.",
+                      "arguments":  [
+                                        -1,
+                                        100
+                                    ],
+                      "expectedException":  "ArgumentOutOfRangeException",
+                      "argumentsUnchanged":  false
+                  }
+              ]
+}

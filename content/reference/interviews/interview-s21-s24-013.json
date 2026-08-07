@@ -1,0 +1,24 @@
+{
+    "schemaVersion":  1,
+    "id":  "interview-s21-s24-013",
+    "version":  1,
+    "title":  "Décrire une ressource supprimable",
+    "level":  "junior",
+    "durationMinutes":  6,
+    "skills":  [
+                   "azure.operations"
+               ],
+    "question":  "Quels éléments rendent une ressource pédagogique réellement supprimable ?",
+    "observableCriteria":  [
+                               "La réponse prend une décision explicite et cite une preuve observable",
+                               "Une limite de sécurité, de coût, de portée ou de validité est reconnue"
+                           ],
+    "modelAnswer":  "Un périmètre dédié, aucune dépendance cachée, une commande de suppression, une vérification après suppression et une responsabilité temporelle explicite rendent le retrait auditable.",
+    "commonMistakes":  [
+                           "Employer un slogan sans contrainte, preuve ni limite vérifiable"
+                       ],
+    "variants":  [
+                     "Changez une contrainte du scénario « Décrire une ressource supprimable » et expliquez si la décision reste valide."
+                 ],
+    "license":  "CC-BY-4.0"
+}

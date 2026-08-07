@@ -1,0 +1,39 @@
+{
+    "schemaVersion":  1,
+    "id":  "english-card-20-spoken",
+    "version":  1,
+    "title":  "Modular monolith — spoken follow-up",
+    "level":  "C1",
+    "durationMinutes":  10,
+    "skills":  [
+                   "english.spoken",
+                   "project.architecture"
+               ],
+    "situation":  "In a technical discussion, an interviewer asks why the project has one deployable unit. You must answer aloud accurately without overstating the evidence.",
+    "instructions":  [
+                         "Deliver a sixty-second answer with decision, evidence, limitation and one clarifying question."
+                     ],
+    "vocabulary":  [
+                       {
+                           "term":  "architecture rationale",
+                           "meaning":  "the precise concept required for modular monolith"
+                       },
+                       {
+                           "term":  "verified evidence",
+                           "meaning":  "an observation supported by a reproducible check"
+                       }
+                   ],
+    "expectedElements":  [
+                             "A clear decision tied to the scenario",
+                             "Verified evidence and one explicit limitation",
+                             "One useful clarifying question"
+                         ],
+    "modelAnswer":  "My decision is that One team owns one transactional boundary, and modules separate rules without adding distributed failure modes. The current evidence is limited to the documented checks, so I would not claim more. Which constraint or observation would make us revisit this decision?",
+    "commonMistakes":  [
+                           "Using confident adjectives without naming evidence or a limitation"
+                       ],
+    "variants":  [
+                     "Answer again after the reviewer changes one cost or security constraint."
+                 ],
+    "license":  "CC-BY-4.0"
+}

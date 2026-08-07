@@ -2,7 +2,7 @@
 
 ## 1. Statut
 
-Non commencé.
+Refusé le 7 août 2026. L'audit contradictoire est consigné dans `docs/PEDAGOGICAL_AUDIT.md` : quatre P1 restent ouverts, les sept personas n'ont pas pu être exécutés intégralement et le persona faible SQL est bloqué par l'absence d'intégration publique des scénarios. L'incrément reste non validé et doit être repris après correction démontrée.
 
 ## 2. Objectif
 

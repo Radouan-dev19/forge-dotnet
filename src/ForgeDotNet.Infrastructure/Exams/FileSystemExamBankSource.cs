@@ -13,11 +13,13 @@ namespace ForgeDotNet.Infrastructure.Exams;
 
 public sealed class FileSystemExamBankSource(
     IPracticeExerciseSource exerciseSource,
-    ExamBankOptions options) : IExamBankSource, IExamSqlItemSource
+    ExamBankOptions options) : IExamBankSource, IExamSqlItemSource, IDisposable
 {
     private const int MaximumManifestBytes = 128 * 1024;
     private const int MaximumContentFileBytes = 256 * 1024;
     private static readonly UTF8Encoding StrictUtf8 = new(false, true);
+    private readonly SemaphoreSlim _loadGate = new(1, 1);
+    private BankSnapshot? _cache;
     private static readonly IReadOnlyList<string> EfExamConstraints = Array.AsReadOnly(new[]
     {
         "Conservez la classe publique Submission et la signature Run.",
@@ -26,22 +28,8 @@ public sealed class FileSystemExamBankSource(
     });
 
     public async ValueTask<IReadOnlyList<ExamBlueprint>> ListAsync(
-        CancellationToken cancellationToken = default)
-    {
-        string[] manifests = ListManifestPaths();
-        var blueprints = new List<ExamBlueprint>(manifests.Length);
-        foreach (string manifest in manifests)
-        {
-            blueprints.Add((await LoadAsync(manifest, cancellationToken)).Blueprint);
-        }
-
-        if (blueprints.Select(item => item.Id).Distinct(StringComparer.Ordinal).Count() != blueprints.Count)
-        {
-            throw new InvalidDataException("La banque d’examens contient un identifiant dupliqué.");
-        }
-
-        return Array.AsReadOnly(blueprints.OrderBy(item => item.Id, StringComparer.Ordinal).ToArray());
-    }
+        CancellationToken cancellationToken = default) =>
+        (await GetSnapshotAsync(cancellationToken)).Blueprints;
 
     public async ValueTask<ExamBlueprint?> GetAsync(
         string examId,
@@ -52,8 +40,8 @@ public sealed class FileSystemExamBankSource(
             return null;
         }
 
-        return (await ListAsync(cancellationToken)).SingleOrDefault(item =>
-            string.Equals(item.Id, examId, StringComparison.Ordinal));
+        BankSnapshot snapshot = await GetSnapshotAsync(cancellationToken);
+        return snapshot.BlueprintsById.GetValueOrDefault(examId);
     }
 
     async ValueTask<SqlExamItemDefinition?> IExamSqlItemSource.GetAsync(
@@ -71,28 +59,66 @@ public sealed class FileSystemExamBankSource(
             return null;
         }
 
-        SqlExamItemDefinition? match = null;
-        foreach (string manifest in ListManifestPaths())
+        BankSnapshot snapshot = await GetSnapshotAsync(cancellationToken);
+        return snapshot.SqlItems.GetValueOrDefault(new SqlItemKey(itemId, itemVersion, contentRevision));
+    }
+
+    private async ValueTask<BankSnapshot> GetSnapshotAsync(CancellationToken cancellationToken)
+    {
+        BankSnapshot? current = Volatile.Read(ref _cache);
+        if (current is not null)
         {
-            LoadedExam loaded = await LoadAsync(manifest, cancellationToken);
-            SqlExamItemDefinition? candidate = loaded.SqlItems.SingleOrDefault(item =>
-                string.Equals(item.ItemId, itemId, StringComparison.Ordinal)
-                && item.ItemVersion == itemVersion
-                && string.Equals(item.ContentRevision, contentRevision, StringComparison.Ordinal));
-            if (candidate is null)
-            {
-                continue;
-            }
-
-            if (match is not null)
-            {
-                throw new InvalidDataException("Un item SQL d’examen est défini plusieurs fois.");
-            }
-
-            match = candidate;
+            return current;
         }
 
-        return match;
+        await _loadGate.WaitAsync(cancellationToken);
+        try
+        {
+            current = Volatile.Read(ref _cache);
+            if (current is not null)
+            {
+                return current;
+            }
+
+            BankSnapshot replacement = await LoadSnapshotAsync(cancellationToken);
+            Volatile.Write(ref _cache, replacement);
+            return replacement;
+        }
+        finally
+        {
+            _loadGate.Release();
+        }
+    }
+
+    private async Task<BankSnapshot> LoadSnapshotAsync(CancellationToken cancellationToken)
+    {
+        string[] manifests = ListManifestPaths();
+        var blueprints = new List<ExamBlueprint>(manifests.Length);
+        var sqlItems = new Dictionary<SqlItemKey, SqlExamItemDefinition>();
+        foreach (string manifest in manifests)
+        {
+            LoadedExam loaded = await LoadAsync(manifest, cancellationToken);
+            blueprints.Add(loaded.Blueprint);
+            foreach (SqlExamItemDefinition item in loaded.SqlItems)
+            {
+                var key = new SqlItemKey(item.ItemId, item.ItemVersion, item.ContentRevision);
+                if (!sqlItems.TryAdd(key, item))
+                {
+                    throw new InvalidDataException("Un item SQL d’examen est défini plusieurs fois.");
+                }
+            }
+        }
+
+        if (blueprints.Select(item => item.Id).Distinct(StringComparer.Ordinal).Count() != blueprints.Count)
+        {
+            throw new InvalidDataException("La banque d’examens contient un identifiant dupliqué.");
+        }
+
+        ExamBlueprint[] ordered = blueprints.OrderBy(item => item.Id, StringComparer.Ordinal).ToArray();
+        return new BankSnapshot(
+            Array.AsReadOnly(ordered),
+            ordered.ToDictionary(item => item.Id, StringComparer.Ordinal),
+            sqlItems);
     }
 
     private async ValueTask<LoadedExam> LoadAsync(
@@ -416,7 +442,16 @@ public sealed class FileSystemExamBankSource(
         }
     }
 
+    public void Dispose() => _loadGate.Dispose();
+
     private sealed record LoadedExam(
         ExamBlueprint Blueprint,
         IReadOnlyList<SqlExamItemDefinition> SqlItems);
+
+    private sealed record BankSnapshot(
+        IReadOnlyList<ExamBlueprint> Blueprints,
+        IReadOnlyDictionary<string, ExamBlueprint> BlueprintsById,
+        IReadOnlyDictionary<SqlItemKey, SqlExamItemDefinition> SqlItems);
+
+    private readonly record struct SqlItemKey(string ItemId, int ItemVersion, string ContentRevision);
 }

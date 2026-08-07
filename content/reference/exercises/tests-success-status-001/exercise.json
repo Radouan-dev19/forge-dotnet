@@ -1,0 +1,81 @@
+{
+    "schemaVersion":  1,
+    "id":  "tests-success-status-001",
+    "version":  1,
+    "title":  "Tester une famille de statuts",
+    "kind":  "csharp",
+    "difficulty":  2,
+    "skills":  [
+                   "tests.api"
+               ],
+    "prerequisites":  [
+                          "tests-doubles-design-001"
+                      ],
+    "estimatedMinutes":  35,
+    "statement":  "statement.md",
+    "constraints":  [
+                        "Conserver exactement la signature publique",
+                        "Tester les frontières de la famille 2xx plutôt qu’un seul statut nominal.",
+                        "Ne jamais dépendre du réseau, d’un secret réel ou d’un état global"
+                    ],
+    "examples":  [
+                     {
+                         "input":  "[{\"value\":[200],\"Count\":1},true]",
+                         "output":  "[{\"value\":[404],\"Count\":1},false]"
+                     }
+                 ],
+    "reflectionFields":  [
+                             "reformulation",
+                             "inputs",
+                             "expectedOutput",
+                             "edgeCases",
+                             "hypothesis",
+                             "plan"
+                         ],
+    "starterPath":  "starter/",
+    "visibleTestsPath":  "tests/visible/",
+    "hiddenTestsPath":  "tests/hidden/",
+    "hints":  [
+                  {
+                      "level":  1,
+                      "kind":  "socratic",
+                      "content":  "Quel comportement public de « Tester une famille de statuts » change exactement à la frontière ?"
+                  },
+                  {
+                      "level":  2,
+                      "kind":  "location",
+                      "content":  "Concentrez la validation et la décision dans IsSuccessStatus, sans état global ni journal sensible."
+                  },
+                  {
+                      "level":  3,
+                      "kind":  "strategy",
+                      "content":  "Tester les frontières de la famille 2xx plutôt qu’un seul statut nominal."
+                  },
+                  {
+                      "level":  4,
+                      "kind":  "partial-pseudocode",
+                      "content":  "valider les entrées ; appliquer la décision bornée ; retourner un résultat déterministe sans effet externe"
+                  }
+              ],
+    "solution":  {
+                     "path":  "solution/",
+                     "unlock":  {
+                                    "seriousAttempts":  2,
+                                    "minimumDelayMinutes":  10
+                                }
+                 },
+    "explanation":  "explanation.md",
+    "complexity":  "O(1) en temps et O(1) en espace",
+    "commonMistakes":  [
+                           "Coder seulement les exemples visibles",
+                           "Masquer une erreur ou accepter une entrée hors contrat",
+                           "Confondre une règle pure avec le transport ou une ressource externe"
+                       ],
+    "variantId":  "tests-reset-state-001",
+    "reviewCards":  [
+                        "card-tests-success-status-001-rule",
+                        "card-tests-success-status-001-security"
+                    ],
+    "interviewQuestionId":  "interview-tests-success-status-001",
+    "license":  "CC-BY-4.0"
+}

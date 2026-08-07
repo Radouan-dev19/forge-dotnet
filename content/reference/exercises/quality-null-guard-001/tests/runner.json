@@ -1,0 +1,12 @@
+{
+    "schemaVersion":  1,
+    "suiteId":  "quality-null-guard-001.v1",
+    "exerciseId":  "quality-null-guard-001",
+    "exerciseVersion":  1,
+    "typeName":  "Submission",
+    "methodName":  "NormalizeOptional",
+    "parameterTypes":  [
+                           "string"
+                       ],
+    "returnType":  "string"
+}

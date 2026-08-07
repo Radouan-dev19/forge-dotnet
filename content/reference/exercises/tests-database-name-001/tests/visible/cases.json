@@ -1,0 +1,25 @@
+{
+    "schemaVersion":  1,
+    "cases":  [
+                  {
+                      "name":  "Visible_Case1",
+                      "message":  "Reconnaître une base de test isolée — cas 1 incorrect.",
+                      "arguments":  [
+                                        "forge-test-123456789"
+                                    ],
+                      "expected":  true,
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Visible_Case2",
+                      "message":  "Reconnaître une base de test isolée — cas 2 incorrect.",
+                      "arguments":  [
+                                        "production"
+                                    ],
+                      "expected":  false,
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  }
+              ]
+}

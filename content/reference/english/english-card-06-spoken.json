@@ -1,0 +1,39 @@
+{
+    "schemaVersion":  1,
+    "id":  "english-card-06-spoken",
+    "version":  1,
+    "title":  "Optional cloud lab — spoken follow-up",
+    "level":  "B1",
+    "durationMinutes":  10,
+    "skills":  [
+                   "english.spoken",
+                   "azure.local"
+               ],
+    "situation":  "In a technical discussion, a learner has no Azure subscription. You must answer aloud accurately without overstating the evidence.",
+    "instructions":  [
+                         "Deliver a sixty-second answer with decision, evidence, limitation and one clarifying question."
+                     ],
+    "vocabulary":  [
+                       {
+                           "term":  "simulation scope",
+                           "meaning":  "the precise concept required for optional cloud lab"
+                       },
+                       {
+                           "term":  "verified evidence",
+                           "meaning":  "an observation supported by a reproducible check"
+                       }
+                   ],
+    "expectedElements":  [
+                             "A clear decision tied to the scenario",
+                             "Verified evidence and one explicit limitation",
+                             "One useful clarifying question"
+                         ],
+    "modelAnswer":  "My decision is that The local simulation validates configuration and guardrails; a real deployment is optional, manual and may create costs. The current evidence is limited to the documented checks, so I would not claim more. Which constraint or observation would make us revisit this decision?",
+    "commonMistakes":  [
+                           "Using confident adjectives without naming evidence or a limitation"
+                       ],
+    "variants":  [
+                     "Answer again after the reviewer changes one cost or security constraint."
+                 ],
+    "license":  "CC-BY-4.0"
+}

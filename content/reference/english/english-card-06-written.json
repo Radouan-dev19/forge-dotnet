@@ -1,0 +1,39 @@
+{
+    "schemaVersion":  1,
+    "id":  "english-card-06-written",
+    "version":  1,
+    "title":  "Optional cloud lab — written update",
+    "level":  "B1",
+    "durationMinutes":  12,
+    "skills":  [
+                   "english.written",
+                   "azure.local"
+               ],
+    "situation":  "In a technical discussion, a learner has no Azure subscription. You must write the decision accurately without overstating the evidence.",
+    "instructions":  [
+                         "Write a four-sentence update with decision, evidence, limitation and next action."
+                     ],
+    "vocabulary":  [
+                       {
+                           "term":  "simulation scope",
+                           "meaning":  "the precise concept required for optional cloud lab"
+                       },
+                       {
+                           "term":  "verified evidence",
+                           "meaning":  "an observation supported by a reproducible check"
+                       }
+                   ],
+    "expectedElements":  [
+                             "A clear decision tied to the scenario",
+                             "Verified evidence and one explicit limitation",
+                             "A named next action"
+                         ],
+    "modelAnswer":  "Decision: The local simulation validates configuration and guardrails; a real deployment is optional, manual and may create costs. Evidence: the documented local checks support this scope. Limitation: this does not prove behavior in an untested production environment. Next action: record the owner and the next bounded verification.",
+    "commonMistakes":  [
+                           "Using confident adjectives without naming evidence or a limitation"
+                       ],
+    "variants":  [
+                     "Rewrite the update for a non-technical stakeholder without removing the limitation."
+                 ],
+    "license":  "CC-BY-4.0"
+}

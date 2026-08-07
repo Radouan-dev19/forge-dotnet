@@ -1,7 +1,9 @@
 [CmdletBinding()]
 param(
     [string]$ImageReference = 'forge-dotnet-runner:test',
-    [string]$DockerContext = 'desktop-linux'
+    [string]$DockerContext = 'desktop-linux',
+    [string]$ScanTimeout = '15m',
+    [double]$ScannerCpuCount = 1
 )
 
 $ErrorActionPreference = 'Stop'
@@ -41,6 +43,16 @@ if ($DockerContext -notmatch '^[A-Za-z0-9][A-Za-z0-9_.-]{0,63}$') {
     throw 'Le contexte Docker est invalide.'
 }
 
+if ($ScanTimeout -notmatch '^[1-9][0-9]?m$') {
+    throw 'Le timeout Trivy doit être exprimé entre 1m et 99m.'
+}
+
+if ($ScannerCpuCount -lt 0.5 -or $ScannerCpuCount -gt 4) {
+    throw 'Le quota CPU du scanner Trivy doit rester compris entre 0,5 et 4.'
+}
+
+$scannerCpuArgument = $ScannerCpuCount.ToString([Globalization.CultureInfo]::InvariantCulture)
+
 try {
     Write-Host 'Vérification du moteur et de l’image runner...'
     Invoke-Docker -Arguments @('version', '--format', '{{.Server.Version}}')
@@ -79,7 +91,7 @@ try {
         '--security-opt', 'seccomp=builtin',
         '--memory', '1073741824',
         '--memory-swap', '1073741824',
-        '--cpus', '1',
+        '--cpus', $scannerCpuArgument,
         '--pids-limit', '128',
         '--mount', "type=volume,src=$cacheVolume,dst=/root/.cache,volume-nocopy",
         '--tmpfs', '/tmp:rw,nosuid,nodev,noexec,size=268435456',
@@ -98,7 +110,7 @@ try {
         '--security-opt', 'seccomp=builtin',
         '--memory', '1073741824',
         '--memory-swap', '1073741824',
-        '--cpus', '1',
+        '--cpus', $scannerCpuArgument,
         '--pids-limit', '128',
         '--mount', 'type=bind,src=/var/run/docker.sock,dst=/var/run/docker.sock',
         '--mount', "type=volume,src=$cacheVolume,dst=/root/.cache,volume-nocopy",
@@ -106,6 +118,7 @@ try {
         '--env', 'DOCKER_HOST=unix:///var/run/docker.sock',
         $scannerId,
         'image',
+        '--timeout', $ScanTimeout,
         '--skip-db-update',
         '--skip-java-db-update',
         '--offline-scan',

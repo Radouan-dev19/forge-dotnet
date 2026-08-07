@@ -8,7 +8,7 @@ using ForgeDotNet.Infrastructure.Practice;
 
 namespace ForgeDotNet.IntegrationTests;
 
-[Collection(DockerCodeRunnerSecurityTestGroup.CollectionName)]
+[Collection(EfDockerCodeRunnerTestGroup.CollectionName)]
 [Trait("Category", "ContentS1S10Docker")]
 public sealed class ExamEfDockerRunnerTests(DockerSecurityFixture dockerFixture)
 {
@@ -60,7 +60,7 @@ public sealed class ExamEfDockerRunnerTests(DockerSecurityFixture dockerFixture)
                 ImageReference = dockerFixture.ImageReference,
                 WorkspaceRootPath = workspace,
                 MaximumConcurrency = 1,
-                TestTimeout = TimeSpan.FromSeconds(15),
+                TestTimeout = TimeSpan.FromSeconds(30),
             },
             specificationSource,
             TimeProvider.System);
@@ -110,4 +110,10 @@ public sealed class ExamEfDockerRunnerTests(DockerSecurityFixture dockerFixture)
 
         throw new DirectoryNotFoundException("Racine content introuvable.");
     }
+}
+
+[CollectionDefinition(CollectionName, DisableParallelization = true)]
+public sealed class EfDockerCodeRunnerTestGroup : ICollectionFixture<DockerSecurityFixture>
+{
+    public const string CollectionName = "EfCodeRunnerSecurityDocker";
 }

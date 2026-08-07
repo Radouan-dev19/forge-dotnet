@@ -1,0 +1,28 @@
+{
+    "schemaVersion":  1,
+    "cases":  [
+                  {
+                      "name":  "Hidden_Case1",
+                      "message":  "Détecter une frontière — cas 1 incorrect.",
+                      "arguments":  [
+                                        100,
+                                        1,
+                                        100
+                                    ],
+                      "expected":  true,
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_Case2",
+                      "message":  "Détecter une frontière — cas 2 incorrect.",
+                      "arguments":  [
+                                        2,
+                                        3,
+                                        1
+                                    ],
+                      "expectedException":  "ArgumentException",
+                      "argumentsUnchanged":  false
+                  }
+              ]
+}

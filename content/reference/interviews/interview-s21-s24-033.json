@@ -1,0 +1,24 @@
+{
+    "schemaVersion":  1,
+    "id":  "interview-s21-s24-033",
+    "version":  1,
+    "title":  "Préparer une démonstration",
+    "level":  "intermediate",
+    "durationMinutes":  9,
+    "skills":  [
+                   "project.demo"
+               ],
+    "question":  "Comment rendez-vous une démonstration reproductible ?",
+    "observableCriteria":  [
+                               "La réponse prend une décision explicite et cite une preuve observable",
+                               "Une limite de sécurité, de coût, de portée ou de validité est reconnue"
+                           ],
+    "modelAnswer":  "Je pars dʼun état connu, annonce le scénario, exécute les commandes documentées, montre succès et refus puis relie chaque observation au critère.",
+    "commonMistakes":  [
+                           "Employer un slogan sans contrainte, preuve ni limite vérifiable"
+                       ],
+    "variants":  [
+                     "Changez une contrainte du scénario « Préparer une démonstration » et expliquez si la décision reste valide."
+                 ],
+    "license":  "CC-BY-4.0"
+}

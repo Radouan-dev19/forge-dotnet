@@ -1,0 +1,81 @@
+{
+    "schemaVersion":  1,
+    "id":  "api-order-validation-001",
+    "version":  1,
+    "title":  "Valider une quantité de commande",
+    "kind":  "csharp",
+    "difficulty":  2,
+    "skills":  [
+                   "api.validation"
+               ],
+    "prerequisites":  [
+                          "api-validation-problem-details-001"
+                      ],
+    "estimatedMinutes":  35,
+    "statement":  "statement.md",
+    "constraints":  [
+                        "Conserver exactement la signature publique",
+                        "Distinguer absence conventionnelle, plage invalide et valeur acceptée.",
+                        "Ne jamais dépendre du réseau, d’un secret réel ou d’un état global"
+                    ],
+    "examples":  [
+                     {
+                         "input":  "[{\"value\":[1],\"Count\":1},\"valid\"]",
+                         "output":  "[{\"value\":[0],\"Count\":1},\"required\"]"
+                     }
+                 ],
+    "reflectionFields":  [
+                             "reformulation",
+                             "inputs",
+                             "expectedOutput",
+                             "edgeCases",
+                             "hypothesis",
+                             "plan"
+                         ],
+    "starterPath":  "starter/",
+    "visibleTestsPath":  "tests/visible/",
+    "hiddenTestsPath":  "tests/hidden/",
+    "hints":  [
+                  {
+                      "level":  1,
+                      "kind":  "socratic",
+                      "content":  "Quel comportement public de « Valider une quantité de commande » change exactement à la frontière ?"
+                  },
+                  {
+                      "level":  2,
+                      "kind":  "location",
+                      "content":  "Concentrez la validation et la décision dans QuantityState, sans état global ni journal sensible."
+                  },
+                  {
+                      "level":  3,
+                      "kind":  "strategy",
+                      "content":  "Distinguer absence conventionnelle, plage invalide et valeur acceptée."
+                  },
+                  {
+                      "level":  4,
+                      "kind":  "partial-pseudocode",
+                      "content":  "valider les entrées ; appliquer la décision bornée ; retourner un résultat déterministe sans effet externe"
+                  }
+              ],
+    "solution":  {
+                     "path":  "solution/",
+                     "unlock":  {
+                                    "seriousAttempts":  2,
+                                    "minimumDelayMinutes":  10
+                                }
+                 },
+    "explanation":  "explanation.md",
+    "complexity":  "O(1) en temps et O(1) en espace",
+    "commonMistakes":  [
+                           "Coder seulement les exemples visibles",
+                           "Masquer une erreur ou accepter une entrée hors contrat",
+                           "Confondre une règle pure avec le transport ou une ressource externe"
+                       ],
+    "variantId":  "api-di-lifetime-choice-001",
+    "reviewCards":  [
+                        "card-api-order-validation-001-rule",
+                        "card-api-order-validation-001-security"
+                    ],
+    "interviewQuestionId":  "interview-api-order-validation-001",
+    "license":  "CC-BY-4.0"
+}

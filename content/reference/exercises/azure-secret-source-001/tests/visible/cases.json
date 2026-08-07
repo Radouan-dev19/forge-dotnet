@@ -1,0 +1,27 @@
+{
+    "schemaVersion":  1,
+    "cases":  [
+                  {
+                      "name":  "Visible_Case1",
+                      "message":  "Choisir une source de valeur sensible — cas 1 incorrect.",
+                      "arguments":  [
+                                        false,
+                                        true
+                                    ],
+                      "expected":  "configuration",
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Visible_Case2",
+                      "message":  "Choisir une source de valeur sensible — cas 2 incorrect.",
+                      "arguments":  [
+                                        true,
+                                        true
+                                    ],
+                      "expected":  "key-vault-managed-identity",
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  }
+              ]
+}

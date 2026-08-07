@@ -1,0 +1,25 @@
+{
+    "schemaVersion":  1,
+    "cases":  [
+                  {
+                      "name":  "Hidden_Case1",
+                      "message":  "Appliquer une liste blanche de tri — cas 1 incorrect.",
+                      "arguments":  [
+                                        " Total "
+                                    ],
+                      "expected":  "total",
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_Case2",
+                      "message":  "Appliquer une liste blanche de tri — cas 2 incorrect.",
+                      "arguments":  [
+                                        ""
+                                    ],
+                      "expected":  "id",
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  }
+              ]
+}

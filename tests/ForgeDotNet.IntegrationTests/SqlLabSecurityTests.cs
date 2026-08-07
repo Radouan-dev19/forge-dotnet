@@ -293,7 +293,7 @@ public sealed class SqlLabSecurityTests
                 Password = password,
                 Encrypt = true,
                 TrustServerCertificate = true,
-                ConnectTimeout = 5,
+                ConnectTimeout = 15,
                 Pooling = false,
                 PersistSecurityInfo = false,
             };

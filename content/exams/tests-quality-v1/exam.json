@@ -1,0 +1,26 @@
+{
+    "schemaVersion":  1,
+    "id":  "tests-quality-v1",
+    "version":  1,
+    "title":  "Examen 6 — tests et qualité S15–S17",
+    "durationMinutes":  120,
+    "drawCount":  8,
+    "passingScore":  80,
+    "eligibleExerciseIds":  [
+                                "tests-boundary-values-001",
+                                "tests-quantity-rule-001",
+                                "tests-shipping-theory-001",
+                                "tests-discount-rule-001",
+                                "tests-expiry-clock-001",
+                                "tests-double-choice-001",
+                                "tests-saved-identity-001",
+                                "tests-database-name-001",
+                                "tests-success-status-001",
+                                "tests-reset-state-001",
+                                "quality-null-guard-001",
+                                "quality-regression-bounds-001",
+                                "quality-review-severity-001",
+                                "quality-complexity-budget-001",
+                                "quality-diff-risk-001"
+                            ]
+}

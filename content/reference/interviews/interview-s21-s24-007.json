@@ -1,0 +1,24 @@
+{
+    "schemaVersion":  1,
+    "id":  "interview-s21-s24-007",
+    "version":  1,
+    "title":  "Préparer la suppression Azure",
+    "level":  "junior",
+    "durationMinutes":  6,
+    "skills":  [
+                   "azure.cost"
+               ],
+    "question":  "Que doit contenir un plan de suppression avant un laboratoire Azure facultatif ?",
+    "observableCriteria":  [
+                               "La réponse prend une décision explicite et cite une preuve observable",
+                               "Une limite de sécurité, de coût, de portée ou de validité est reconnue"
+                           ],
+    "modelAnswer":  "Il nomme le groupe de ressources dédié, le propriétaire de lʼaction, la commande de vérification, lʼheure limite et la preuve finale quʼaucune ressource facturable ne subsiste.",
+    "commonMistakes":  [
+                           "Employer un slogan sans contrainte, preuve ni limite vérifiable"
+                       ],
+    "variants":  [
+                     "Changez une contrainte du scénario « Préparer la suppression Azure » et expliquez si la décision reste valide."
+                 ],
+    "license":  "CC-BY-4.0"
+}

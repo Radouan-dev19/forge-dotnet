@@ -1,0 +1,39 @@
+{
+    "schemaVersion":  1,
+    "id":  "english-card-04-written",
+    "version":  1,
+    "title":  "SQL access — written update",
+    "level":  "B1",
+    "durationMinutes":  12,
+    "skills":  [
+                   "english.written",
+                   "azure.data"
+               ],
+    "situation":  "In a technical discussion, a security reviewer asks how database access is limited. You must write the decision accurately without overstating the evidence.",
+    "instructions":  [
+                         "Write a four-sentence update with decision, evidence, limitation and next action."
+                     ],
+    "vocabulary":  [
+                       {
+                           "term":  "least privilege",
+                           "meaning":  "the precise concept required for sql access"
+                       },
+                       {
+                           "term":  "verified evidence",
+                           "meaning":  "an observation supported by a reproducible check"
+                       }
+                   ],
+    "expectedElements":  [
+                             "A clear decision tied to the scenario",
+                             "Verified evidence and one explicit limitation",
+                             "A named next action"
+                         ],
+    "modelAnswer":  "Decision: The application identity receives only the database permissions required by its use cases, and denied operations are tested. Evidence: the documented local checks support this scope. Limitation: this does not prove behavior in an untested production environment. Next action: record the owner and the next bounded verification.",
+    "commonMistakes":  [
+                           "Using confident adjectives without naming evidence or a limitation"
+                       ],
+    "variants":  [
+                     "Rewrite the update for a non-technical stakeholder without removing the limitation."
+                 ],
+    "license":  "CC-BY-4.0"
+}

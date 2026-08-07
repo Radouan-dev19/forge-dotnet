@@ -1,0 +1,37 @@
+{
+    "schemaVersion":  1,
+    "cases":  [
+                  {
+                      "name":  "Hidden_Case1",
+                      "message":  "Réinitialiser un état de test — cas 1 incorrect.",
+                      "arguments":  [
+                                        [
+                                            -1,
+                                            5,
+                                            9
+                                        ]
+                                    ],
+                      "expected":  [
+                                       0,
+                                       0,
+                                       0
+                                   ],
+                      "expectedException":  null,
+                      "argumentsUnchanged":  true
+                  },
+                  {
+                      "name":  "Hidden_Case2",
+                      "message":  "Réinitialiser un état de test — cas 2 incorrect.",
+                      "arguments":  [
+                                        [
+                                            0
+                                        ]
+                                    ],
+                      "expected":  [
+                                       0
+                                   ],
+                      "expectedException":  null,
+                      "argumentsUnchanged":  true
+                  }
+              ]
+}

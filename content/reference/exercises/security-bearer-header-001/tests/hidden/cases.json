@@ -1,0 +1,25 @@
+{
+    "schemaVersion":  1,
+    "cases":  [
+                  {
+                      "name":  "Hidden_Case1",
+                      "message":  "Valider le schéma Bearer — cas 1 incorrect.",
+                      "arguments":  [
+                                        "Bearer "
+                                    ],
+                      "expected":  false,
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_Case2",
+                      "message":  "Valider le schéma Bearer — cas 2 incorrect.",
+                      "arguments":  [
+                                        "bearer local-test"
+                                    ],
+                      "expected":  true,
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  }
+              ]
+}

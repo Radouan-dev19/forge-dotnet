@@ -17,8 +17,9 @@ public sealed class LessonContentReaderTests
         LessonContentDocument lesson = Assert.IsType<LessonContentDocument>(
             await source.GetLessonAsync("reference-types-001"));
 
-        Assert.Equal(10, library.Modules.Count);
-        Assert.All(library.Modules, module => Assert.Equal(3, module.Lessons.Count));
+        Assert.Equal(24, library.Modules.Count);
+        Assert.All(library.Modules.Take(22), module => Assert.Equal(3, module.Lessons.Count));
+        Assert.All(library.Modules.Skip(22), module => Assert.Equal(2, module.Lessons.Count));
         Assert.Contains(
             library.Modules.SelectMany(module => module.Lessons),
             summary => summary.Id == "reference-types-001");

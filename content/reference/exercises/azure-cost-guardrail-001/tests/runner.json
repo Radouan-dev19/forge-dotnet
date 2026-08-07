@@ -1,0 +1,14 @@
+{
+    "schemaVersion":  1,
+    "suiteId":  "azure-cost-guardrail-001.v1",
+    "exerciseId":  "azure-cost-guardrail-001",
+    "exerciseVersion":  1,
+    "typeName":  "Submission",
+    "methodName":  "CostGuardrail",
+    "parameterTypes":  [
+                           "decimal",
+                           "decimal",
+                           "bool"
+                       ],
+    "returnType":  "string"
+}

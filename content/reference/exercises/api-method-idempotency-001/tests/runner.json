@@ -1,0 +1,12 @@
+{
+    "schemaVersion":  1,
+    "suiteId":  "api-method-idempotency-001.v1",
+    "exerciseId":  "api-method-idempotency-001",
+    "exerciseVersion":  1,
+    "typeName":  "Submission",
+    "methodName":  "IsIdempotent",
+    "parameterTypes":  [
+                           "string"
+                       ],
+    "returnType":  "bool"
+}

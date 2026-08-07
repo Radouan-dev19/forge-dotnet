@@ -1,0 +1,81 @@
+{
+    "schemaVersion":  1,
+    "id":  "api-secret-redaction-001",
+    "version":  1,
+    "title":  "Masquer une valeur sensible",
+    "kind":  "csharp",
+    "difficulty":  2,
+    "skills":  [
+                   "security.secrets"
+               ],
+    "prerequisites":  [
+                          "api-validation-problem-details-001"
+                      ],
+    "estimatedMinutes":  35,
+    "statement":  "statement.md",
+    "constraints":  [
+                        "Conserver exactement la signature publique",
+                        "Ne conserver aucun caractère du secret et produire au moins quatre marqueurs.",
+                        "Ne jamais dépendre du réseau, d’un secret réel ou d’un état global"
+                    ],
+    "examples":  [
+                     {
+                         "input":  "[{\"value\":[\"fake-key\"],\"Count\":1},\"********\"]",
+                         "output":  "[{\"value\":[\"abc\"],\"Count\":1},\"****\"]"
+                     }
+                 ],
+    "reflectionFields":  [
+                             "reformulation",
+                             "inputs",
+                             "expectedOutput",
+                             "edgeCases",
+                             "hypothesis",
+                             "plan"
+                         ],
+    "starterPath":  "starter/",
+    "visibleTestsPath":  "tests/visible/",
+    "hiddenTestsPath":  "tests/hidden/",
+    "hints":  [
+                  {
+                      "level":  1,
+                      "kind":  "socratic",
+                      "content":  "Quel comportement public de « Masquer une valeur sensible » change exactement à la frontière ?"
+                  },
+                  {
+                      "level":  2,
+                      "kind":  "location",
+                      "content":  "Concentrez la validation et la décision dans Redact, sans état global ni journal sensible."
+                  },
+                  {
+                      "level":  3,
+                      "kind":  "strategy",
+                      "content":  "Ne conserver aucun caractère du secret et produire au moins quatre marqueurs."
+                  },
+                  {
+                      "level":  4,
+                      "kind":  "partial-pseudocode",
+                      "content":  "valider les entrées ; appliquer la décision bornée ; retourner un résultat déterministe sans effet externe"
+                  }
+              ],
+    "solution":  {
+                     "path":  "solution/",
+                     "unlock":  {
+                                    "seriousAttempts":  2,
+                                    "minimumDelayMinutes":  10
+                                }
+                 },
+    "explanation":  "explanation.md",
+    "complexity":  "O(n) en temps et O(n) en espace",
+    "commonMistakes":  [
+                           "Coder seulement les exemples visibles",
+                           "Masquer une erreur ou accepter une entrée hors contrat",
+                           "Confondre une règle pure avec le transport ou une ressource externe"
+                       ],
+    "variantId":  "api-error-status-001",
+    "reviewCards":  [
+                        "card-api-secret-redaction-001-rule",
+                        "card-api-secret-redaction-001-security"
+                    ],
+    "interviewQuestionId":  "interview-api-secret-redaction-001",
+    "license":  "CC-BY-4.0"
+}

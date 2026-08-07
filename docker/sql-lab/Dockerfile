@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/mssql/server@sha256:b1395aa51b4ec39981883560f1379ea9eba2a1c0719bf8e6477902769316bb79
+FROM mcr.microsoft.com/mssql/server@sha256:ba4c8329f48fb8f02e1416be6a930ebfd71268caee78aa985f3af4315e457c89
 
 USER root
 RUN setcap -r /opt/mssql/bin/sqlservr

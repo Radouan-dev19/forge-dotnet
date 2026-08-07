@@ -1,0 +1,48 @@
+name: forge-s11-s20-ci
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  build-test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-dotnet@v4
+        with:
+          global-json-file: global.json
+      - name: Restore API lab
+        run: dotnet restore content/labs/api-mini-erp/tests/ForgeApiLab.Tests/ForgeApiLab.Tests.csproj
+      - name: Build API lab
+        run: dotnet build content/labs/api-mini-erp/tests/ForgeApiLab.Tests/ForgeApiLab.Tests.csproj --no-restore --configuration Release
+      - name: Test API lab
+        run: dotnet test content/labs/api-mini-erp/tests/ForgeApiLab.Tests/ForgeApiLab.Tests.csproj --no-build --configuration Release --logger trx --results-directory artifacts/test-results
+      - name: Test strategy lab
+        run: dotnet test content/labs/testing-strategy/ForgeTestingLab.Tests/ForgeTestingLab.Tests.csproj --configuration Release
+      - name: Build hardened image
+        run: docker build --file content/labs/container-delivery/Dockerfile --tag forge-api-lab:${{ github.run_id }} .
+      - name: Upload bounded test evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: api-test-results-${{ github.run_id }}
+          path: artifacts/test-results
+          if-no-files-found: error
+          retention-days: 7
+
+  delivery-rehearsal:
+    needs: build-test
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    environment: protected-local-rehearsal
+    steps:
+      - name: Record immutable delivery decision
+        run: echo "Delivery gate accepted for tested run $GITHUB_RUN_ID"

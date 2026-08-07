@@ -1,6 +1,6 @@
 # Forge.NET
 
-Forge.NET est une application locale d'apprentissage actif de C# et .NET. Les incréments **03A–03C — Diagnostic, évaluation et plan** fournissent une banque couvrant neuf domaines, un rapport prudent puis une proposition de 24 semaines explicable, ajustable et acceptée explicitement. Les incréments **04A–04D — Pratique, runners et contenu C# initial** ajoutent réflexion, tentatives, indices, solution protégée, runner Docker isolé et dix exercices exécutables couvrant S1–S2. Le profil, le lecteur, les sessions, leurs rapports, les plans et l'historique de pratique sont conservés dans SQLite. Aucun score de maîtrise, DebugLab ou serveur SQL n'est encore disponible.
+Forge.NET est une application locale d'apprentissage actif de C# et .NET. Le MVP couvre un diagnostic prudent, un plan personnalisé de 24 semaines, leçons, pratique C#, DebugLab, SqlLab, maîtrise anti-contournement, révisions espacées, examens et dashboard factuel. Le contenu S1–S24 est versionné sous `content/` et la progression reste dans SQLite. Le CodeRunner et SqlLab sont des adaptations Docker optionnelles et isolées ; le mode manuel ne prétend jamais avoir validé du code automatiquement.
 
 ## Prérequis
 
@@ -32,6 +32,11 @@ Routes disponibles :
 - `/plan/{sessionId}` : proposition hebdomadaire, ajustement de charge et acceptation versionnée ;
 - `/practice` : exercices de pratique manuelle publiés ;
 - `/practice/{exerciseId}` : réflexion, indices, tentatives, solution protégée et historique ;
+- `/debug-lab` et `/debug-lab/{scenarioId}` : méthode d'investigation, journal et scénarios de débogage ;
+- `/sql-lab` : sessions SQL Server jetables, exécution bornée, validation et reset ;
+- `/mastery` : preuves, scores versionnés et portes de maîtrise explicables ;
+- `/reviews` : file de révisions dues et cartes personnelles ;
+- `/exams` et `/exams/{attemptId}` : examens sans aide gouvernés par l'échéance serveur ;
 - `/health` : santé HTTP, intégrité SQLite et état des migrations.
 
 ## Lancement avec Docker Compose
@@ -158,9 +163,9 @@ Les analyseurs .NET utilisent le niveau `latest-recommended`. Les avertissements
 
 ## Limites actuelles
 
-- Le sandbox Docker exécute les dix suites pédagogiques S1–S2 uniquement en mode `Docker` configuré ; le mode manuel reste le comportement utilisateur normal et ne constitue pas une preuve automatique.
-- Aucun résultat de runner ne produit encore de maîtrise, de score ou de planification de révision.
-- Une seule leçon de référence complète est publiée à cet incrément.
+- Le CodeRunner automatique exige Docker et une image explicitement configurée par digest ; Compose conserve volontairement le mode `Manual`, qui ne constitue jamais une preuve automatique.
+- SqlLab est désactivé par défaut et exige le profil Docker dédié. SQL Server n'est jamais exposé directement sur le réseau hôte.
+- Forge.NET reste un produit local mono-utilisateur avec SQLite ; il n'est pas conçu pour une exposition Internet ou un usage collaboratif.
 - La préférence de langue est enregistrée dans le profil de session, mais seule l'interface française est complète.
 
 ## Documentation
@@ -179,3 +184,4 @@ Les analyseurs .NET utilisent le niveau `latest-recommended`. Les avertissements
 - [`docs/SECURITY.md`](docs/SECURITY.md)
 - [`docs/ROADMAP.md`](docs/ROADMAP.md)
 - [`docs/RUNBOOK.md`](docs/RUNBOOK.md)
+- [`docs/MVP_ACCEPTANCE.md`](docs/MVP_ACCEPTANCE.md)

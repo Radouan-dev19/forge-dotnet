@@ -1,0 +1,81 @@
+{
+    "schemaVersion":  1,
+    "id":  "security-owner-policy-001",
+    "version":  1,
+    "title":  "Autoriser propriétaire ou administrateur",
+    "kind":  "csharp",
+    "difficulty":  3,
+    "skills":  [
+                   "security.authorization"
+               ],
+    "prerequisites":  [
+                          "security-authentication-001"
+                      ],
+    "estimatedMinutes":  35,
+    "statement":  "statement.md",
+    "constraints":  [
+                        "Conserver exactement la signature publique",
+                        "Évaluer le privilège explicite puis l’identité exacte de la ressource.",
+                        "Ne jamais dépendre du réseau, d’un secret réel ou d’un état global"
+                    ],
+    "examples":  [
+                     {
+                         "input":  "[{\"value\":[\"u1\",\"u1\",false],\"Count\":3},true]",
+                         "output":  "[{\"value\":[\"u1\",\"u2\",false],\"Count\":3},false]"
+                     }
+                 ],
+    "reflectionFields":  [
+                             "reformulation",
+                             "inputs",
+                             "expectedOutput",
+                             "edgeCases",
+                             "hypothesis",
+                             "plan"
+                         ],
+    "starterPath":  "starter/",
+    "visibleTestsPath":  "tests/visible/",
+    "hiddenTestsPath":  "tests/hidden/",
+    "hints":  [
+                  {
+                      "level":  1,
+                      "kind":  "socratic",
+                      "content":  "Quel comportement public de « Autoriser propriétaire ou administrateur » change exactement à la frontière ?"
+                  },
+                  {
+                      "level":  2,
+                      "kind":  "location",
+                      "content":  "Concentrez la validation et la décision dans CanEdit, sans état global ni journal sensible."
+                  },
+                  {
+                      "level":  3,
+                      "kind":  "strategy",
+                      "content":  "Évaluer le privilège explicite puis l’identité exacte de la ressource."
+                  },
+                  {
+                      "level":  4,
+                      "kind":  "partial-pseudocode",
+                      "content":  "valider les entrées ; appliquer la décision bornée ; retourner un résultat déterministe sans effet externe"
+                  }
+              ],
+    "solution":  {
+                     "path":  "solution/",
+                     "unlock":  {
+                                    "seriousAttempts":  2,
+                                    "minimumDelayMinutes":  10
+                                }
+                 },
+    "explanation":  "explanation.md",
+    "complexity":  "O(n) en temps et O(1) en espace",
+    "commonMistakes":  [
+                           "Coder seulement les exemples visibles",
+                           "Masquer une erreur ou accepter une entrée hors contrat",
+                           "Confondre une règle pure avec le transport ou une ressource externe"
+                       ],
+    "variantId":  "security-local-redirect-001",
+    "reviewCards":  [
+                        "card-security-owner-policy-001-rule",
+                        "card-security-owner-policy-001-security"
+                    ],
+    "interviewQuestionId":  "interview-security-owner-policy-001",
+    "license":  "CC-BY-4.0"
+}

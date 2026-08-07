@@ -1,0 +1,24 @@
+{
+    "schemaVersion":  1,
+    "id":  "interview-s21-s24-040",
+    "version":  1,
+    "title":  "Présenter une limite",
+    "level":  "advanced",
+    "durationMinutes":  12,
+    "skills":  [
+                   "project.communication"
+               ],
+    "question":  "Quelle formule utilisez-vous lorsquʼune preuve reste manuelle ?",
+    "observableCriteria":  [
+                               "La réponse prend une décision explicite et cite une preuve observable",
+                               "Une limite de sécurité, de coût, de portée ou de validité est reconnue"
+                           ],
+    "modelAnswer":  "Je dis exactement ce qui a été exécuté, par qui et dans quel environnement, puis ce qui reste non vérifié. Je ne transforme pas une inspection en test automatique.",
+    "commonMistakes":  [
+                           "Employer un slogan sans contrainte, preuve ni limite vérifiable"
+                       ],
+    "variants":  [
+                     "Changez une contrainte du scénario « Présenter une limite » et expliquez si la décision reste valide."
+                 ],
+    "license":  "CC-BY-4.0"
+}

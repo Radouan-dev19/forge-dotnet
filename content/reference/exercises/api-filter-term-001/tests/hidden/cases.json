@@ -1,0 +1,27 @@
+{
+    "schemaVersion":  1,
+    "cases":  [
+                  {
+                      "name":  "Hidden_Case1",
+                      "message":  "Filtrer sans dépendre de la culture — cas 1 incorrect.",
+                      "arguments":  [
+                                        "",
+                                        "x"
+                                    ],
+                      "expected":  false,
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_Case2",
+                      "message":  "Filtrer sans dépendre de la culture — cas 2 incorrect.",
+                      "arguments":  [
+                                        "Open Order",
+                                        " ORDER "
+                                    ],
+                      "expected":  true,
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  }
+              ]
+}

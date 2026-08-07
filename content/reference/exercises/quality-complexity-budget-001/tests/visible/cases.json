@@ -1,0 +1,25 @@
+{
+    "schemaVersion":  1,
+    "cases":  [
+                  {
+                      "name":  "Visible_Case1",
+                      "message":  "Borner la complexité structurelle — cas 1 incorrect.",
+                      "arguments":  [
+                                        0
+                                    ],
+                      "expected":  true,
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Visible_Case2",
+                      "message":  "Borner la complexité structurelle — cas 2 incorrect.",
+                      "arguments":  [
+                                        3
+                                    ],
+                      "expected":  true,
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  }
+              ]
+}

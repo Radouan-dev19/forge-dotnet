@@ -43,7 +43,7 @@ public sealed partial record DockerCodeRunnerOptions
 
     public int MaximumConcurrency { get; init; } = 2;
 
-    public double CpuCount { get; init; } = 0.5;
+    public double CpuCount { get; init; } = 1.0;
 
     public long MemoryBytes { get; init; } = 512 * Mebibyte;
 
@@ -53,7 +53,7 @@ public sealed partial record DockerCodeRunnerOptions
 
     public TimeSpan CompilationTimeout { get; init; } = TimeSpan.FromSeconds(25);
 
-    public TimeSpan TestTimeout { get; init; } = TimeSpan.FromSeconds(15);
+    public TimeSpan TestTimeout { get; init; } = TimeSpan.FromSeconds(30);
 
     public TimeSpan DockerControlTimeout { get; init; } = TimeSpan.FromSeconds(15);
 
@@ -107,7 +107,7 @@ public sealed partial record DockerCodeRunnerOptions
             || CompilationTimeout < TimeSpan.FromSeconds(2)
             || CompilationTimeout > TimeSpan.FromSeconds(30)
             || TestTimeout < TimeSpan.FromSeconds(1)
-            || TestTimeout > TimeSpan.FromSeconds(15)
+            || TestTimeout > TimeSpan.FromSeconds(30)
             || DockerControlTimeout < TimeSpan.FromSeconds(2)
             || DockerControlTimeout > TimeSpan.FromSeconds(30))
         {

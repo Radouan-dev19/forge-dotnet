@@ -2,7 +2,7 @@
 
 ## 1. Statut
 
-Non commencé.
+Validé le 5 août 2026.
 
 ## 2. Objectif
 

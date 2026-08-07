@@ -1,0 +1,81 @@
+{
+    "schemaVersion":  1,
+    "id":  "ci-job-result-001",
+    "version":  1,
+    "title":  "Calculer le résultat d’un job CI",
+    "kind":  "csharp",
+    "difficulty":  2,
+    "skills":  [
+                   "ci.pipeline"
+               ],
+    "prerequisites":  [
+                          "ci-pipeline-build-test-001"
+                      ],
+    "estimatedMinutes":  35,
+    "statement":  "statement.md",
+    "constraints":  [
+                        "Conserver exactement la signature publique",
+                        "Le job réussit seulement si construction et tests réussissent tous les deux.",
+                        "Ne jamais dépendre du réseau, d’un secret réel ou d’un état global"
+                    ],
+    "examples":  [
+                     {
+                         "input":  "[{\"value\":[true,true],\"Count\":2},\"success\"]",
+                         "output":  "[{\"value\":[true,false],\"Count\":2},\"failed\"]"
+                     }
+                 ],
+    "reflectionFields":  [
+                             "reformulation",
+                             "inputs",
+                             "expectedOutput",
+                             "edgeCases",
+                             "hypothesis",
+                             "plan"
+                         ],
+    "starterPath":  "starter/",
+    "visibleTestsPath":  "tests/visible/",
+    "hiddenTestsPath":  "tests/hidden/",
+    "hints":  [
+                  {
+                      "level":  1,
+                      "kind":  "socratic",
+                      "content":  "Quel comportement public de « Calculer le résultat d’un job CI » change exactement à la frontière ?"
+                  },
+                  {
+                      "level":  2,
+                      "kind":  "location",
+                      "content":  "Concentrez la validation et la décision dans JobResult, sans état global ni journal sensible."
+                  },
+                  {
+                      "level":  3,
+                      "kind":  "strategy",
+                      "content":  "Le job réussit seulement si construction et tests réussissent tous les deux."
+                  },
+                  {
+                      "level":  4,
+                      "kind":  "partial-pseudocode",
+                      "content":  "valider les entrées ; appliquer la décision bornée ; retourner un résultat déterministe sans effet externe"
+                  }
+              ],
+    "solution":  {
+                     "path":  "solution/",
+                     "unlock":  {
+                                    "seriousAttempts":  2,
+                                    "minimumDelayMinutes":  10
+                                }
+                 },
+    "explanation":  "explanation.md",
+    "complexity":  "O(1) en temps et O(1) en espace",
+    "commonMistakes":  [
+                           "Coder seulement les exemples visibles",
+                           "Masquer une erreur ou accepter une entrée hors contrat",
+                           "Confondre une règle pure avec le transport ou une ressource externe"
+                       ],
+    "variantId":  "ci-artifact-name-001",
+    "reviewCards":  [
+                        "card-ci-job-result-001-rule",
+                        "card-ci-job-result-001-security"
+                    ],
+    "interviewQuestionId":  "interview-ci-job-result-001",
+    "license":  "CC-BY-4.0"
+}

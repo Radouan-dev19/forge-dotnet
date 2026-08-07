@@ -1,0 +1,39 @@
+services:
+  api-lab:
+    image: forge-api-lab:s11-s20
+    build:
+      context: ../../..
+      dockerfile: content/labs/container-delivery/Dockerfile
+    init: true
+    environment:
+      Authentication__OperatorApiKeyFile: /run/secrets/operator_api_key
+      Authentication__ReaderApiKeyFile: /run/secrets/reader_api_key
+      DOTNET_EnableDiagnostics: "0"
+    secrets:
+      - operator_api_key
+      - reader_api_key
+    ports:
+      - "127.0.0.1:${FORGE_API_LAB_PORT:-5099}:8080"
+    read_only: true
+    tmpfs:
+      - /tmp:size=32m,mode=1777
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    pids_limit: 64
+    mem_limit: 256m
+    cpus: 0.5
+    restart: "no"
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://127.0.0.1:8080/health"]
+      interval: 3s
+      timeout: 2s
+      retries: 10
+      start_period: 5s
+
+secrets:
+  operator_api_key:
+    file: ${FORGE_OPERATOR_KEY_FILE:-./secrets/operator-key.txt}
+  reader_api_key:
+    file: ${FORGE_READER_KEY_FILE:-./secrets/reader-key.txt}

@@ -97,6 +97,22 @@ main {
         top: 0.5rem;
     }
 
+.skip-link {
+    background: #fff;
+    border: 3px solid #102a43;
+    color: #102a43;
+    left: 1rem;
+    padding: .65rem 1rem;
+    position: fixed;
+    top: 1rem;
+    transform: translateY(-200%);
+    z-index: 1100;
+}
+
+.skip-link:focus-visible {
+    transform: translateY(0);
+}
+
 .site-header {
     background: #102a43;
     color: #fff;

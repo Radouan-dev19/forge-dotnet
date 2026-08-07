@@ -1,0 +1,24 @@
+{
+    "schemaVersion":  1,
+    "id":  "interview-s21-s24-020",
+    "version":  1,
+    "title":  "Borner la rétention",
+    "level":  "intermediate",
+    "durationMinutes":  9,
+    "skills":  [
+                   "observability.cost"
+               ],
+    "question":  "Comment reliez-vous rétention de télémétrie, confidentialité et coût ?",
+    "observableCriteria":  [
+                               "La réponse prend une décision explicite et cite une preuve observable",
+                               "Une limite de sécurité, de coût, de portée ou de validité est reconnue"
+                           ],
+    "modelAnswer":  "Je garde seulement la durée nécessaire au diagnostic annoncé, limite cardinalité et volume, puis vérifie la suppression. Une durée plus longue demande un besoin et un propriétaire.",
+    "commonMistakes":  [
+                           "Employer un slogan sans contrainte, preuve ni limite vérifiable"
+                       ],
+    "variants":  [
+                     "Changez une contrainte du scénario « Borner la rétention » et expliquez si la décision reste valide."
+                 ],
+    "license":  "CC-BY-4.0"
+}

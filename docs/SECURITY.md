@@ -43,7 +43,7 @@ Les scénarios revus sont l'exécution de commandes arbitraires, l'évasion de c
 - L'image officielle `mcr.microsoft.com/dotnet/sdk:10.0-alpine` est figée par digest dans les deux étapes du Dockerfile. L'adaptateur refuse un tag et lance uniquement un ID local `sha256` complet dont il inspecte l'utilisateur, le point d'entrée, les labels, l'OS, l'architecture, les ports, volumes et la taille.
 - Le conteneur est non privilégié, sans capability ni device, avec `no-new-privileges` et `seccomp=builtin` explicitement imposés même si le démon est configuré `unconfined`. Un filtre seccomp additionnel est appliqué dans le processus de tests. Le réseau vaut `none`, aucun port n'est publié et le socket Docker n'est jamais monté.
 - La racine est en lecture seule. `/input` est le seul bind hôte, strictement en lecture seule, non récursif et limité au workspace aléatoire préparé. `/workspace` (64 Mio) et `/tmp` (16 Mio) sont des `tmpfs` `noexec,nosuid,nodev`.
-- Les limites mesurées sont 0,5 CPU, 512 Mio de mémoire et de swap, 64 PID/threads, `nofile=256:256`, 25 s de compilation, 15 s globales par suite de tests, 5 s de marge de contrôle, 64 Kio de sortie publique et deux conteneurs simultanés par défaut. La plage de configuration est validée et bornée.
+- Les limites mesurées sont 1 CPU, 512 Mio de mémoire et de swap, 64 PID/threads, `nofile=256:256`, 25 s de compilation, 30 s globales par suite de tests, 5 s de marge de contrôle, 64 Kio de sortie publique et deux conteneurs simultanés par défaut. La plage de configuration est validée et bornée. Lors de la finition MVP, le passage de 0,5 à 1 CPU puis de 15 à 30 s globales de tests a corrigé les timeouts intermittents de démarrage à froid .NET/EF : chaque cas reste dans un sous-processus isolé, une boucle infinie est encore tuée sous 60 s et les limites de mémoire, PID, réseau, montage et sortie restent inchangées.
 - La taille disque est imposée par le `tmpfs`. Le test de 80 Mio doit provoquer une erreur d'écriture avant de retourner la valeur attendue. `fsize=64 Kio` a été rejeté après mesure car il empêchait CoreCLR de démarrer ; l'omettre ne rend pas le disque illimité.
 - Le runner appelle directement `docker` et `dotnet` avec `ProcessStartInfo.ArgumentList`, sans shell. Roslyn, ses références, la suite et les arguments sont choisis par l'image ou le serveur. La proposition ne fournit jamais de commande, argument, chemin de test ou variable d'environnement.
 - En 04D, les suites pédagogiques restent confinées côté serveur et liées à la révision exacte du contenu. Elles sont montées chiffrées par AES-GCM ; la clé aléatoire de 256 bits est transmise uniquement par stdin et effacée. Le parent non dumpable conserve les valeurs attendues ; chaque enfant seccomp reçoit seulement la signature et les arguments du cas courant. Un code soumis ne peut donc pas lire les autres cas ou les réponses attendues depuis son processus.
@@ -73,7 +73,7 @@ Les échecs cachés sont réduits à un compteur expurgé ; aucun nom, code, che
 
 ### Revue renforcée 06A
 
-- L'image SQL Server 2022 CU21 est épinglée par digest. Le service est non-root (`10001:10001`), sans capability, avec `no-new-privileges`, profil seccomp versionné, CPU/mémoire/PID bornés et sans socket ou device.
+- L'image SQL Server 2022 CU26 est épinglée par digest. Le service est non-root (`10001:10001`), sans capability, avec `no-new-privileges`, profil seccomp versionné, CPU/mémoire/PID bornés et sans socket ou device.
 - SQL Server n'a aucun port hôte et n'appartient qu'au réseau `forge-dotnet-sql-lab-internal` marqué `internal`. Le pont de test distinct n'a aucun secret, publie seulement la boucle locale Windows et est le seul membre de son réseau sortant dédié.
 - Aucun volume ou bind de données n'est monté : la couche du conteneur est jetable. Le seul bind SQL est le secret administrateur en lecture seule. SQLite de progression n'est pas visible dans le conteneur.
 - Chaque session obtient une base et un login aléatoires. Le login n'est membre d'aucun rôle serveur ou `db_owner`; il reçoit seulement le DML sur `dbo`, avec DDL, exécution, appropriation et définition niés.
@@ -144,6 +144,31 @@ La catégorie `ExamIntegrity` attaque seed/tirage, échéance et reprise, fuite 
 
 Le 30 juillet 2026, l’image `sha256:64289bc26b73a208f5a5f3029c5fdf5698a24d89dee20a402b31a963df48dc7f` a repassé les 18 tests `CodeRunnerSecurity`. Trivy 0.70.0, avec base téléchargée séparément puis analyse hors réseau, a détecté `0` vulnérabilité critique sur Alpine 3.23.5, 37 paquets OS et 34 manifestes .NET. Les six starters/solutions SQL ont été exécutés sur des sessions jetables et les deux paires EF dans le runner isolé.
 
+## Revue sécurité du contenu S11–S20 — 09
+
+- Les exemples API séparent DTO, contrôleur et règle ; la validation produit Problem Details sans stack trace. Les tests couvrent 400, 401, 403, 404 et 201, afin qu’un refus d’authentification ne puisse pas être confondu avec un refus de rôle.
+- Les preuves d’authentification versionnées sont exclusivement factices et nommées comme telles. En conteneur, l’application lit des fichiers montés hors Git, bornés à 4 Kio ; elle compare les octets à temps constant et ne journalise jamais la valeur. Le rôle est fixé par la preuve reconnue et ne vient pas d’un en-tête libre.
+- Les exercices de sécurité enseignent liste blanche de tri, redirection locale, message de connexion uniforme, propriétaire ou administrateur et redaction complète. Aucun exemple vulnérable n’est présenté comme correct et aucune procédure offensive n’est requise.
+- Le Dockerfile du laboratoire utilise deux images .NET 10 épinglées par digest, un build multi-stage et `USER $APP_UID`. Compose publie seulement sur `127.0.0.1`, monte les secrets en lecture seule, active racine en lecture seule, tmpfs, capacités supprimées, `no-new-privileges`, limites CPU/mémoire/PID, `restart: "no"` et health check.
+- La pipeline limite le jeton à `contents: read`, désactive la persistance des credentials de checkout, ne consomme aucun secret, s’arrête sur chaque code non nul, borne la rétention de l’artefact et conditionne la répétition de livraison aux preuves vertes et à un environnement protégé.
+- Les solutions, cas cachés et réponses d’entretien restent privés selon les contrats existants. Les deux nouvelles banques d’examen n’ajoutent aucune clé ou solution à la projection publique.
+- Les laboratoires restent locaux, sans Azure ni service distant obligatoire. Le bac à sable Git opère dans un dossier temporaire distinct et le supprime ; aucun conflit n’est provoqué dans le dépôt de travail.
+
+La validation effective a contrôlé l’utilisateur non-root, la racine en lecture seule, 64 PID, 256 Mio, les capacités supprimées et la santé HTTP avant suppression du conteneur, du réseau et des clés factices temporaires. Le détail reproductible et les limites figurent dans `CONTENT_S11_S20.md`.
+
+## Revue sécurité du contenu S21–S24 — 10
+
+- Azure demeure un support facultatif. Forge.NET ne possède aucun abonnement, identifiant, rôle ou ressource cloud et ne lance aucune création. Le starter et lʼincident de référence fonctionnent hors ligne.
+- Le plan Bicep ne contient aucune valeur dʼidentité ou donnée personnelle. Les paramètres nécessaires à une répétition réelle restent sans valeur commitée ; les services applicatifs utilisent une identité système et des rôles à définir au périmètre minimal.
+- Storage refuse lʼaccès Blob public et les clés partagées. Azure SQL refuse le réseau public, exige TLS 1.2 et prévoit une administration Entra. Key Vault utilise RBAC et la protection contre la purge. Aucun exemple ne recopie une valeur sensible dans la configuration ou les logs.
+- Une répétition réelle exige un groupe de ressources dédié, un avertissement de facturation, un budget/une alerte, un propriétaire, une heure limite, une suppression explicite et une vérification finale. Une alerte de budget nʼest jamais assimilée à un arrêt des dépenses.
+- Les logs pédagogiques utilisent uniquement des identifiants `forge-fake-*`, des opérations normalisées, statuts et durées. Aucun corps, en-tête dʼauthentification, paramètre SQL, donnée de CV ou identité réelle nʼest nécessaire.
+- Le kit carrière minimise les données, avertit sur le caractère personnel dʼun export et refuse les formes courantes de courriel ou téléphone. Son exemple est fictif ; lʼutilisateur doit encore inspecter contenu, métadonnées et historique avant publication.
+- Questions dʼentretien, réponses modèles, solutions, tests cachés et banques dʼexamen conservent les frontières privées existantes. La défense orale et le déploiement réel restent manuels et ne créent aucune preuve automatique.
+- Le projet final nʼest pas fourni. La grille exige autorisation positive/négative, configuration sûre, logs sobres et revue contradictoire, sans proposer dʼarchitecture distribuée avancée ou de parcours post-embauche implémenté.
+
+Les tests `ContentS21S24` contrôlent volumes, niveaux, références, garde-fous IaC, signatures caractéristiques de credentials, coûts, confidentialité carrière et absence de remise finale. `Verify-LocalMode.ps1` construit le starter, inspecte les ressources attendues et résout lʼincident sans réseau ni ressource Azure. La matrice et les limites reproductibles figurent dans `CONTENT_S21_S24.md`.
+
 ## Application et contenu
 
 - Blazor applique encodage de sortie et politique CSP ; Markdown passe par un rendu avec HTML brut désactivé ou assaini.
@@ -208,3 +233,27 @@ La désactivation du copier-coller et le plein écran sont dissuasifs, pas invio
 - Tests d'abus CodeRunner/SqlLab verts sur Windows cible.
 - Vérification que solutions/tests cachés n'apparaissent pas dans réseau, logs ou artefacts client.
 - Exercice de sauvegarde/restauration et simulation de corruption.
+
+## Revue finale de sécurité — incrément 11
+
+La qualification du 6 août 2026 a rejoué les frontières CodeRunner, SqlLab, sauvegarde et exposition Web sur le poste Windows cible.
+
+### Dépendances et images
+
+- `dotnet list package --vulnerable --include-transitive` ne remonte aucun paquet vulnérable dans les huit projets.
+- L'audit des paquets dépréciés ne remonte rien pour les projets applicatifs et le runtime. `xunit` 2.9.3 est classé legacy par NuGet sans vulnérabilité connue ; une migration vers xUnit v3 doit être isolée et suivie d'une requalification complète du harnais.
+- Trivy 0.70.0, avec base CVE fraîche puis analyse hors réseau, trouve zéro vulnérabilité critique dans l'image Web finale `sha256:fd7c47b1ad6090aa72a4ae9b7c020f4de9c39511f1d4f2042e4e0688b47b3d1c` : Alpine 3.23.5, 21 paquets OS et trois manifestes .NET inspectés.
+- Le même protocole trouve zéro vulnérabilité dans l'image CodeRunner finale `sha256:43e075c820a78f5cb0f61e3c6923b9c5bd3833f3a20bd9e168a0028665ed181a` : Alpine 3.23.5, 37 paquets OS et 34 manifestes .NET. Le scanner Trivy utilisé est épinglé par `sha256:be1190afcb28352bfddc4ddeb71470835d16462af68d310f9f4bca710961a41e`.
+- SQL Server est passé de CU21 à CU26, digest `sha256:ba4c8329f48fb8f02e1416be6a930ebfd71268caee78aa985f3af4315e457c89`. Le scan de l'image de base CU26 trouve zéro vulnérabilité critique sur Ubuntu 22.04, 184 paquets OS et trois binaires Go.
+
+Le scan direct de l'image SqlLab dérivée a été interrompu par un `SIGBUS` du moteur Docker et n'est donc pas déclaré réussi. La preuve compensatoire montre que l'inventaire des paquets de la base et de l'image finale a le même SHA-256 (`35b78b7ade817c0b0ee6f024a12f195814b14b235c49bc508395474877b0982b`), que les trois binaires Go ont des empreintes identiques et que l'historique dérivé ajoute uniquement retrait de capability, entrypoint, pont TCP, utilisateur et configuration. Il s'agit d'une inférence forte, pas d'un remplacement permanent du scan direct : celui-ci doit être rejoué lorsque le stockage Docker est stabilisé.
+
+### Contrôles effectifs et données
+
+- L'image Web s'exécute sous l'utilisateur `1654`, racine en lecture seule, capacités supprimées, `no-new-privileges`, volume de données dédié et port publié uniquement sur `127.0.0.1`.
+- Le conteneur SqlLab inspecté utilise `10001:10001`, réseau interne, seccomp, capacités supprimées, `no-new-privileges`, 2 Gio de mémoire, 2 CPU et 512 PID. Les tests dédiés couvrent timeout, quota, annulation, redaction, rollback, reset et destruction de session.
+- Les six tests de restauration refusent archive invalide, traversal, checksum faux, corruption même avec checksum recalculé et version de manifeste non supportée, en plus de l'aller-retour nominal.
+- Les recherches de secrets n'ont détecté aucun secret littéral commité. Les marqueurs `NotImplementedException` restants sont confinés aux starters pédagogiques ; les tests prouvent que ces starters compilent sans réussir et que les solutions approuvées passent dans le runner isolé.
+- L'installation vierge n'a émis aucun log final de niveau `Error` ou `Critical` et aucun secret SQL, jeton Bearer ou code soumis. Les tests Web contrôlent CSP, `nosniff`, politique de référent, absence de tests cachés et absence de solution avant transition autorisée.
+
+Aucune de ces mesures ne rend Forge.NET publiable sur Internet. Les clés Data Protection persistées dans le volume Linux restent dépendantes des droits et du chiffrement disque du poste ; l'avertissement ASP.NET correspondant est conservé au lieu d'être masqué par un secret dans Compose.

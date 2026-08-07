@@ -1,0 +1,24 @@
+{
+    "schemaVersion":  1,
+    "id":  "interview-s21-s24-028",
+    "version":  1,
+    "title":  "Comparer avant et après",
+    "level":  "intermediate",
+    "durationMinutes":  9,
+    "skills":  [
+                   "performance.evidence"
+               ],
+    "question":  "Quelles preuves empêchent une optimisation seulement déclarative ?",
+    "observableCriteria":  [
+                               "La réponse prend une décision explicite et cite une preuve observable",
+                               "Une limite de sécurité, de coût, de portée ou de validité est reconnue"
+                           ],
+    "modelAnswer":  "Je conserve le même scénario, les mêmes volumes et la même méthode de mesure, publie avant et après avec variabilité, et maintiens tous les tests fonctionnels et de sécurité.",
+    "commonMistakes":  [
+                           "Employer un slogan sans contrainte, preuve ni limite vérifiable"
+                       ],
+    "variants":  [
+                     "Changez une contrainte du scénario « Comparer avant et après » et expliquez si la décision reste valide."
+                 ],
+    "license":  "CC-BY-4.0"
+}

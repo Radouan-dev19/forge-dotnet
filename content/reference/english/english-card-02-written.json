@@ -1,0 +1,39 @@
+{
+    "schemaVersion":  1,
+    "id":  "english-card-02-written",
+    "version":  1,
+    "title":  "Managed identity — written update",
+    "level":  "B1",
+    "durationMinutes":  12,
+    "skills":  [
+                   "english.written",
+                   "azure.identity"
+               ],
+    "situation":  "In a technical discussion, a reviewer asks where the application credential is stored. You must write the decision accurately without overstating the evidence.",
+    "instructions":  [
+                         "Write a four-sentence update with decision, evidence, limitation and next action."
+                     ],
+    "vocabulary":  [
+                       {
+                           "term":  "credentialless access",
+                           "meaning":  "the precise concept required for managed identity"
+                       },
+                       {
+                           "term":  "verified evidence",
+                           "meaning":  "an observation supported by a reproducible check"
+                       }
+                   ],
+    "expectedElements":  [
+                             "A clear decision tied to the scenario",
+                             "Verified evidence and one explicit limitation",
+                             "A named next action"
+                         ],
+    "modelAnswer":  "Decision: The service uses its Azure identity and a scoped role, so no long-lived application credential is copied into the repository. Evidence: the documented local checks support this scope. Limitation: this does not prove behavior in an untested production environment. Next action: record the owner and the next bounded verification.",
+    "commonMistakes":  [
+                           "Using confident adjectives without naming evidence or a limitation"
+                       ],
+    "variants":  [
+                     "Rewrite the update for a non-technical stakeholder without removing the limitation."
+                 ],
+    "license":  "CC-BY-4.0"
+}

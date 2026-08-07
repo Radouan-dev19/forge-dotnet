@@ -1,0 +1,26 @@
+{
+    "schemaVersion":  1,
+    "cases":  [
+                  {
+                      "name":  "Hidden_Case1",
+                      "message":  "Nommer un artefact de façon stable — cas 1 incorrect.",
+                      "arguments":  [
+                                        "",
+                                        1
+                                    ],
+                      "expectedException":  "ArgumentException",
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_Case2",
+                      "message":  "Nommer un artefact de façon stable — cas 2 incorrect.",
+                      "arguments":  [
+                                        "Release ",
+                                        3
+                                    ],
+                      "expected":  "tests-release-3",
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  }
+              ]
+}

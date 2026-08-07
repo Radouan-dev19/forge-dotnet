@@ -1,0 +1,24 @@
+{
+    "schemaVersion":  1,
+    "id":  "interview-s21-s24-037",
+    "version":  1,
+    "title":  "Sécuriser la configuration finale",
+    "level":  "advanced",
+    "durationMinutes":  12,
+    "skills":  [
+                   "project.security"
+               ],
+    "question":  "Quels éléments inspectez-vous avant une démonstration ?",
+    "observableCriteria":  [
+                               "La réponse prend une décision explicite et cite une preuve observable",
+                               "Une limite de sécurité, de coût, de portée ou de validité est reconnue"
+                           ],
+    "modelAnswer":  "Diff Git, historique récent, configuration, logs, exports et captures. Je retire toute donnée personnelle, vérifie les valeurs factices et révoque une valeur exposée.",
+    "commonMistakes":  [
+                           "Employer un slogan sans contrainte, preuve ni limite vérifiable"
+                       ],
+    "variants":  [
+                     "Changez une contrainte du scénario « Sécuriser la configuration finale » et expliquez si la décision reste valide."
+                 ],
+    "license":  "CC-BY-4.0"
+}

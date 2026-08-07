@@ -1,0 +1,24 @@
+{
+    "schemaVersion":  1,
+    "id":  "interview-s21-s24-039",
+    "version":  1,
+    "title":  "Évaluer une preuve",
+    "level":  "advanced",
+    "durationMinutes":  12,
+    "skills":  [
+                   "project.rubric"
+               ],
+    "question":  "Comment évitez-vous quʼune grille récompense seulement une belle présentation ?",
+    "observableCriteria":  [
+                               "La réponse prend une décision explicite et cite une preuve observable",
+                               "Une limite de sécurité, de coût, de portée ou de validité est reconnue"
+                           ],
+    "modelAnswer":  "Chaque critère cite un comportement ou artefact observable et un poids. Les portes critiques de sécurité et dʼintégrité ne sont pas compensées par le style.",
+    "commonMistakes":  [
+                           "Employer un slogan sans contrainte, preuve ni limite vérifiable"
+                       ],
+    "variants":  [
+                     "Changez une contrainte du scénario « Évaluer une preuve » et expliquez si la décision reste valide."
+                 ],
+    "license":  "CC-BY-4.0"
+}

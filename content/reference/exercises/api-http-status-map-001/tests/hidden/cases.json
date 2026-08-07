@@ -1,0 +1,27 @@
+{
+    "schemaVersion":  1,
+    "cases":  [
+                  {
+                      "name":  "Hidden_Case1",
+                      "message":  "Choisir un statut HTTP — cas 1 incorrect.",
+                      "arguments":  [
+                                        false,
+                                        false
+                                    ],
+                      "expected":  404,
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_Case2",
+                      "message":  "Choisir un statut HTTP — cas 2 incorrect.",
+                      "arguments":  [
+                                        false,
+                                        true
+                                    ],
+                      "expected":  201,
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  }
+              ]
+}

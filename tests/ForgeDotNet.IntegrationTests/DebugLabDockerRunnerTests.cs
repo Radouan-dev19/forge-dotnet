@@ -29,7 +29,7 @@ public sealed class DebugLabDockerRunnerTests(DockerSecurityFixture dockerFixtur
                 ImageReference = dockerFixture.ImageReference,
                 WorkspaceRootPath = workspace,
                 MaximumConcurrency = 1,
-                TestTimeout = TimeSpan.FromSeconds(15),
+                TestTimeout = TimeSpan.FromSeconds(30),
             },
             specificationSource,
             TimeProvider.System);

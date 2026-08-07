@@ -1,0 +1,24 @@
+{
+    "schemaVersion":  1,
+    "id":  "interview-s21-s24-034",
+    "version":  1,
+    "title":  "Refuser une solution prématurée",
+    "level":  "intermediate",
+    "durationMinutes":  9,
+    "skills":  [
+                   "project.mastery"
+               ],
+    "question":  "Pourquoi la solution complète du projet final reste-t-elle absente ?",
+    "observableCriteria":  [
+                               "La réponse prend une décision explicite et cite une preuve observable",
+                               "Une limite de sécurité, de coût, de portée ou de validité est reconnue"
+                           ],
+    "modelAnswer":  "La construction et les arbitrages sont les preuves recherchées. Une remise générée mesure la consultation ; le cadre fournit jalons, critères, indices et revue, pas le produit.",
+    "commonMistakes":  [
+                           "Employer un slogan sans contrainte, preuve ni limite vérifiable"
+                       ],
+    "variants":  [
+                     "Changez une contrainte du scénario « Refuser une solution prématurée » et expliquez si la décision reste valide."
+                 ],
+    "license":  "CC-BY-4.0"
+}

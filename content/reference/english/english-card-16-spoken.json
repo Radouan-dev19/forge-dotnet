@@ -1,0 +1,39 @@
+{
+    "schemaVersion":  1,
+    "id":  "english-card-16-spoken",
+    "version":  1,
+    "title":  "Root cause caution — spoken follow-up",
+    "level":  "B2",
+    "durationMinutes":  10,
+    "skills":  [
+                   "english.spoken",
+                   "observability.incident"
+               ],
+    "situation":  "In a technical discussion, latency rose after a release. You must answer aloud accurately without overstating the evidence.",
+    "instructions":  [
+                         "Deliver a sixty-second answer with decision, evidence, limitation and one clarifying question."
+                     ],
+    "vocabulary":  [
+                       {
+                           "term":  "causal language",
+                           "meaning":  "the precise concept required for root cause caution"
+                       },
+                       {
+                           "term":  "verified evidence",
+                           "meaning":  "an observation supported by a reproducible check"
+                       }
+                   ],
+    "expectedElements":  [
+                             "A clear decision tied to the scenario",
+                             "Verified evidence and one explicit limitation",
+                             "One useful clarifying question"
+                         ],
+    "modelAnswer":  "My decision is that The timing is evidence for an investigation, not proof of causation; we compare revisions and dependencies before concluding. The current evidence is limited to the documented checks, so I would not claim more. Which constraint or observation would make us revisit this decision?",
+    "commonMistakes":  [
+                           "Using confident adjectives without naming evidence or a limitation"
+                       ],
+    "variants":  [
+                     "Answer again after the reviewer changes one cost or security constraint."
+                 ],
+    "license":  "CC-BY-4.0"
+}

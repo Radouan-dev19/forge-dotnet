@@ -77,7 +77,7 @@ public sealed class DockerCodeRunnerSecurityTests(DockerSecurityFixture fixture)
         Assert.Equal(CodeRunStatus.TimedOut, result.Status);
         Assert.Equal(CodeRunStageStatus.Succeeded, result.Compilation.Status);
         Assert.Equal(CodeRunStageStatus.TimedOut, result.Tests.Status);
-        Assert.InRange(stopwatch.Elapsed, TimeSpan.Zero, TimeSpan.FromSeconds(45));
+        Assert.InRange(stopwatch.Elapsed, TimeSpan.Zero, TimeSpan.FromSeconds(60));
         await fixture.AssertNoArtifactsAsync();
     }
 
@@ -188,7 +188,7 @@ public sealed class DockerCodeRunnerSecurityTests(DockerSecurityFixture fixture)
         Assert.Equal("none", host.GetProperty("IpcMode").GetString());
         Assert.Equal(512L * DockerCodeRunnerOptions.Mebibyte, host.GetProperty("Memory").GetInt64());
         Assert.Equal(512L * DockerCodeRunnerOptions.Mebibyte, host.GetProperty("MemorySwap").GetInt64());
-        Assert.Equal(500_000_000, host.GetProperty("NanoCpus").GetInt64());
+        Assert.Equal(1_000_000_000, host.GetProperty("NanoCpus").GetInt64());
         Assert.Equal(64, host.GetProperty("PidsLimit").GetInt64());
         JsonElement noFileLimit = Assert.Single(
             host.GetProperty("Ulimits").EnumerateArray(),

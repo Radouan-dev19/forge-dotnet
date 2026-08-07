@@ -95,6 +95,9 @@ Chaque lot reste révisable : 3–6 leçons ou 5–10 exercices, avec schéma, c
 - [x] Incrément 07B — cartes issues des difficultés, planification J+1/J+3/J+7/J+14/J+30, file du jour, cartes personnelles et preuves de rétention vérifiées
 - [x] Incrément 07C — examen sans aide, tirage et échéance serveur, rapport auditable, verrouillage des aides et dashboard factuel
 - [x] Incrément 08 — contenu S1–S10 complet, examens 1–4, soumissions SQL déléguées au SqlLab et exercices EF Core exécutés dans le runner isolé
-- [ ] Incréments 09 et suivants — non commencés
+- [x] Incrément 09 — contenu S11–S20 complet, projets progressifs, examens 5–6 et laboratoires API/tests/Git/Docker/CI validés
+- [x] Incrément 10 — contenu S21–S24 complet, Azure localement simulé, projet final guidé sans remise fournie, examens 7–8, 190 questions, 50 cartes dʼanglais et outils carrière validés
+- [x] Incrément 11 — finition MVP, matrice des 16 critères conforme, installation vierge, sécurité, accessibilité, performance, sauvegarde et qualification complète
+- [ ] Incrément 12 — audit pédagogique indépendant et contradictoire
 
-La prochaine action est uniquement l'incrément 09 « Contenu semaines 11 à 20 ». Aucun contenu S21+ ni modification opportuniste des moteurs ne doit être anticipé.
+L'audit du 7 août 2026 est refusé et documenté dans `PEDAGOGICAL_AUDIT.md`. L'incrément 12 reste ouvert : corriger et démontrer la clôture de ses P1, puis réexécuter les sept personas dans un environnement navigateur/Docker réinitialisable. Aucun incrément suivant n'est créé implicitement.

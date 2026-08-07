@@ -1,0 +1,25 @@
+{
+    "schemaVersion":  1,
+    "cases":  [
+                  {
+                      "name":  "Visible_Case1",
+                      "message":  "Construire une localisation de ressource — cas 1 incorrect.",
+                      "arguments":  [
+                                        42
+                                    ],
+                      "expected":  "/orders/42",
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Visible_Case2",
+                      "message":  "Construire une localisation de ressource — cas 2 incorrect.",
+                      "arguments":  [
+                                        1
+                                    ],
+                      "expected":  "/orders/1",
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  }
+              ]
+}

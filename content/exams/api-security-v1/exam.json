@@ -1,0 +1,27 @@
+{
+    "schemaVersion":  1,
+    "id":  "api-security-v1",
+    "version":  1,
+    "title":  "Examen 5 — API et sécurité S11–S14",
+    "durationMinutes":  120,
+    "drawCount":  8,
+    "passingScore":  80,
+    "eligibleExerciseIds":  [
+                                "api-http-status-map-001",
+                                "api-route-normalize-001",
+                                "api-dto-customer-name-001",
+                                "api-method-idempotency-001",
+                                "api-location-header-001",
+                                "api-order-validation-001",
+                                "api-di-lifetime-choice-001",
+                                "api-config-key-001",
+                                "api-secret-redaction-001",
+                                "api-error-status-001",
+                                "api-page-size-001",
+                                "api-sort-whitelist-001",
+                                "security-bearer-header-001",
+                                "security-role-check-001",
+                                "security-owner-policy-001",
+                                "security-local-redirect-001"
+                            ]
+}

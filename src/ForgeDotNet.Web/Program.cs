@@ -113,7 +113,7 @@ var sqlLabOptions = new SqlLabOptions
     AdministratorPasswordFile = sqlLabSecretFile,
     Encrypt = builder.Configuration.GetValue("SqlLab:Encrypt", true),
     TrustServerCertificate = builder.Configuration.GetValue("SqlLab:TrustServerCertificate", true),
-    ConnectTimeoutSeconds = builder.Configuration.GetValue("SqlLab:ConnectTimeoutSeconds", 5),
+    ConnectTimeoutSeconds = builder.Configuration.GetValue("SqlLab:ConnectTimeoutSeconds", 15),
     QueryTimeoutSeconds = builder.Configuration.GetValue("SqlLab:QueryTimeoutSeconds", 3),
     MaximumRows = builder.Configuration.GetValue("SqlLab:MaximumRows", 100),
     MaximumResultBytes = builder.Configuration.GetValue("SqlLab:MaximumResultBytes", 65_536),
@@ -183,7 +183,7 @@ switch (codeRunnerMode)
                     "ForgeDotNet",
                     "runner-workspaces"),
             MaximumConcurrency = builder.Configuration.GetValue("CodeRunner:Docker:MaximumConcurrency", 2),
-            CpuCount = builder.Configuration.GetValue("CodeRunner:Docker:CpuCount", 0.5),
+            CpuCount = builder.Configuration.GetValue("CodeRunner:Docker:CpuCount", 1.0),
             MemoryBytes = builder.Configuration.GetValue(
                 "CodeRunner:Docker:MemoryBytes",
                 512L * DockerCodeRunnerOptions.Mebibyte),
@@ -194,7 +194,7 @@ switch (codeRunnerMode)
             CompilationTimeout = TimeSpan.FromSeconds(
                 builder.Configuration.GetValue("CodeRunner:Docker:CompilationTimeoutSeconds", 25)),
             TestTimeout = TimeSpan.FromSeconds(
-                builder.Configuration.GetValue("CodeRunner:Docker:TestTimeoutSeconds", 15)),
+                builder.Configuration.GetValue("CodeRunner:Docker:TestTimeoutSeconds", 30)),
             DockerControlTimeout = TimeSpan.FromSeconds(
                 builder.Configuration.GetValue("CodeRunner:Docker:ControlTimeoutSeconds", 15)),
         };

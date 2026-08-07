@@ -1,0 +1,25 @@
+{
+    "schemaVersion":  1,
+    "cases":  [
+                  {
+                      "name":  "Hidden_Case1",
+                      "message":  "Borner une taille de page — cas 1 incorrect.",
+                      "arguments":  [
+                                        -5
+                                    ],
+                      "expected":  20,
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_Case2",
+                      "message":  "Borner une taille de page — cas 2 incorrect.",
+                      "arguments":  [
+                                        500
+                                    ],
+                      "expected":  100,
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  }
+              ]
+}

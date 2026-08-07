@@ -1,0 +1,24 @@
+{
+    "schemaVersion":  1,
+    "cases":  [
+                  {
+                      "name":  "Hidden_Case1",
+                      "message":  "Incrémenter une version patch — cas 1 incorrect.",
+                      "arguments":  [
+                                        "1.2"
+                                    ],
+                      "expectedException":  "ArgumentException",
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_Case2",
+                      "message":  "Incrémenter une version patch — cas 2 incorrect.",
+                      "arguments":  [
+                                        "2.10.99"
+                                    ],
+                      "expected":  "2.10.100",
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  }
+              ]
+}

@@ -1,0 +1,24 @@
+{
+    "schemaVersion":  1,
+    "id":  "interview-s21-s24-035",
+    "version":  1,
+    "title":  "Auditer une migration",
+    "level":  "intermediate",
+    "durationMinutes":  9,
+    "skills":  [
+                   "project.persistence"
+               ],
+    "question":  "Quelles preuves demandez-vous pour une migration finale ?",
+    "observableCriteria":  [
+                               "La réponse prend une décision explicite et cite une preuve observable",
+                               "Une limite de sécurité, de coût, de portée ou de validité est reconnue"
+                           ],
+    "modelAnswer":  "Création depuis zéro, montée depuis la version précédente, données de démonstration reproductibles, échec visible et absence dʼaccès à une base personnelle hors périmètre.",
+    "commonMistakes":  [
+                           "Employer un slogan sans contrainte, preuve ni limite vérifiable"
+                       ],
+    "variants":  [
+                     "Changez une contrainte du scénario « Auditer une migration » et expliquez si la décision reste valide."
+                 ],
+    "license":  "CC-BY-4.0"
+}

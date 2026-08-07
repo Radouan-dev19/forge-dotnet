@@ -1,0 +1,24 @@
+{
+    "schemaVersion":  1,
+    "id":  "interview-azure-cost-guardrail-001",
+    "version":  1,
+    "title":  "Évaluer une garde de coût",
+    "level":  "intermediate",
+    "durationMinutes":  7,
+    "skills":  [
+                   "azure.cost"
+               ],
+    "question":  "Comment implémenteriez-vous « Évaluer une garde de coût » et quelles preuves empêchent un contournement ?",
+    "observableCriteria":  [
+                               "Le contrat, une frontière et un refus sont explicités",
+                               "La limite du mode local et le coût ou risque associé sont justifiés"
+                           ],
+    "modelAnswer":  "Autoriser seulement un coût estimé dans le budget avec un plan de suppression vérifié. Je sépare validation et décision, je teste nominal et frontières, puis je vérifie quʼaucun appel cloud ni donnée sensible nʼentre dans la preuve. O(1) en temps et O(1) en espace.",
+    "commonMistakes":  [
+                           "Réciter le code sans expliquer le contrat, le coût ou la preuve"
+                       ],
+    "variants":  [
+                     "Changer une contrainte tout en conservant la règle de évaluer une garde de coût."
+                 ],
+    "license":  "CC-BY-4.0"
+}

@@ -1,0 +1,24 @@
+{
+    "schemaVersion":  1,
+    "id":  "interview-azure-correlation-signal-001",
+    "version":  1,
+    "title":  "Classer un signal corrélé",
+    "level":  "intermediate",
+    "durationMinutes":  7,
+    "skills":  [
+                   "observability.signals"
+               ],
+    "question":  "Comment implémenteriez-vous « Classer un signal corrélé » et quelles preuves empêchent un contournement ?",
+    "observableCriteria":  [
+                               "Le contrat, une frontière et un refus sont explicités",
+                               "La limite du mode local et le coût ou risque associé sont justifiés"
+                           ],
+    "modelAnswer":  "Valider les mesures, traiter les erreurs en priorité, puis comparer la latence p95 au budget de 750 ms. Je sépare validation et décision, je teste nominal et frontières, puis je vérifie quʼaucun appel cloud ni donnée sensible nʼentre dans la preuve. O(1) en temps et O(1) en espace.",
+    "commonMistakes":  [
+                           "Réciter le code sans expliquer le contrat, le coût ou la preuve"
+                       ],
+    "variants":  [
+                     "Changer une contrainte tout en conservant la règle de classer un signal corrélé."
+                 ],
+    "license":  "CC-BY-4.0"
+}

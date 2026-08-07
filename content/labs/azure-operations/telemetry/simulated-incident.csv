@@ -1,0 +1,5 @@
+timestamp,correlationId,operation,status,durationMs
+2026-08-05T08:00:00Z,forge-fake-corr-001,GET-orders,200,210
+2026-08-05T08:00:02Z,forge-fake-corr-002,GET-orders,500,920
+2026-08-05T08:00:04Z,forge-fake-corr-003,GET-orders,500,1100
+2026-08-05T08:00:06Z,forge-fake-corr-004,GET-orders,200,810

@@ -1,0 +1,24 @@
+{
+    "schemaVersion":  1,
+    "id":  "interview-s21-s24-014",
+    "version":  1,
+    "title":  "Valider un déploiement simulé",
+    "level":  "junior",
+    "durationMinutes":  6,
+    "skills":  [
+                   "azure.validation"
+               ],
+    "question":  "Que prouve un déploiement simulé et que ne prouve-t-il pas ?",
+    "observableCriteria":  [
+                               "La réponse prend une décision explicite et cite une preuve observable",
+                               "Une limite de sécurité, de coût, de portée ou de validité est reconnue"
+                           ],
+    "modelAnswer":  "Il prouve la cohérence locale des choix, fichiers et garde-fous testés. Il ne prouve ni acceptation par Azure, ni disponibilité, ni performance réelle du service.",
+    "commonMistakes":  [
+                           "Employer un slogan sans contrainte, preuve ni limite vérifiable"
+                       ],
+    "variants":  [
+                     "Changez une contrainte du scénario « Valider un déploiement simulé » et expliquez si la décision reste valide."
+                 ],
+    "license":  "CC-BY-4.0"
+}

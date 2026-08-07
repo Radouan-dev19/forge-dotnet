@@ -1,0 +1,24 @@
+{
+    "schemaVersion":  1,
+    "id":  "interview-s21-s24-053",
+    "version":  1,
+    "title":  "Challenge a risky proposal",
+    "level":  "advanced",
+    "durationMinutes":  12,
+    "skills":  [
+                   "english.review"
+               ],
+    "question":  "How do you challenge a proposal to log every request body?",
+    "observableCriteria":  [
+                               "La réponse prend une décision explicite et cite une preuve observable",
+                               "Une limite de sécurité, de coût, de portée ou de validité est reconnue"
+                           ],
+    "modelAnswer":  "I explain the privacy, security and cost risks, ask which diagnostic question needs the data, and propose structured bounded fields plus correlation instead.",
+    "commonMistakes":  [
+                           "Employer un slogan sans contrainte, preuve ni limite vérifiable"
+                       ],
+    "variants":  [
+                     "Changez une contrainte du scénario « Challenge a risky proposal » et expliquez si la décision reste valide."
+                 ],
+    "license":  "CC-BY-4.0"
+}

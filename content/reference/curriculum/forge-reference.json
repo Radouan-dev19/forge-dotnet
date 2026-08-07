@@ -1,10 +1,10 @@
 {
     "schemaVersion":  1,
     "id":  "forge-reference",
-    "version":  2,
-    "title":  "Forge.NET — fondamentaux S1 à S10",
-    "description":  "Parcours local autonome couvrant C#, algorithmique, débogage, SQL et EF Core des semaines 1 à 10.",
-    "weeks":  10,
+    "version":  4,
+    "title":  "Forge.NET — parcours professionnel S1 à S24",
+    "description":  "Parcours local autonome couvrant C#, données, API, sécurité, tests, livraison, Azure optionnel, observabilité, projet final guidé, anglais et preuves de carrière.",
+    "weeks":  24,
     "modules":  [
                     {
                         "id":  "week-1",
@@ -262,6 +262,292 @@
                                       ],
                         "exerciseIds":  [
                                             "debug-safe-divide-001"
+                                        ]
+                    },
+                    {
+                        "id":  "week-11",
+                        "title":  "Semaine 11",
+                        "weeks":  [
+                                      11
+                                  ],
+                        "prerequisites":  [
+                                              "week-10"
+                                          ],
+                        "lessonIds":  [
+                                          "api-http-semantics-001",
+                                          "api-routing-rest-001",
+                                          "api-controllers-dtos-001"
+                                      ],
+                        "exerciseIds":  [
+                                            "api-http-status-map-001",
+                                            "api-route-normalize-001",
+                                            "api-dto-customer-name-001",
+                                            "api-method-idempotency-001",
+                                            "api-location-header-001"
+                                        ]
+                    },
+                    {
+                        "id":  "week-12",
+                        "title":  "Semaine 12",
+                        "weeks":  [
+                                      12
+                                  ],
+                        "prerequisites":  [
+                                              "week-11"
+                                          ],
+                        "lessonIds":  [
+                                          "api-validation-problem-details-001",
+                                          "api-di-lifetimes-001",
+                                          "api-configuration-secrets-errors-001"
+                                      ],
+                        "exerciseIds":  [
+                                            "api-order-validation-001",
+                                            "api-di-lifetime-choice-001",
+                                            "api-config-key-001",
+                                            "api-secret-redaction-001",
+                                            "api-error-status-001"
+                                        ]
+                    },
+                    {
+                        "id":  "week-13",
+                        "title":  "Semaine 13",
+                        "weeks":  [
+                                      13
+                                  ],
+                        "prerequisites":  [
+                                              "week-12"
+                                          ],
+                        "lessonIds":  [
+                                          "api-async-cancellation-001",
+                                          "api-pagination-filtering-sorting-001",
+                                          "api-openapi-contracts-001"
+                                      ],
+                        "exerciseIds":  [
+                                            "api-page-size-001",
+                                            "api-skip-count-001",
+                                            "api-sort-whitelist-001",
+                                            "api-filter-term-001",
+                                            "api-cancellation-budget-001"
+                                        ]
+                    },
+                    {
+                        "id":  "week-14",
+                        "title":  "Semaine 14",
+                        "weeks":  [
+                                      14
+                                  ],
+                        "prerequisites":  [
+                                              "week-13"
+                                          ],
+                        "lessonIds":  [
+                                          "security-authentication-001",
+                                          "security-authorization-roles-policies-001",
+                                          "security-owasp-api-001"
+                                      ],
+                        "exerciseIds":  [
+                                            "security-bearer-header-001",
+                                            "security-role-check-001",
+                                            "security-owner-policy-001",
+                                            "security-local-redirect-001",
+                                            "security-login-message-001"
+                                        ]
+                    },
+                    {
+                        "id":  "week-15",
+                        "title":  "Semaine 15",
+                        "weeks":  [
+                                      15
+                                  ],
+                        "prerequisites":  [
+                                              "week-14"
+                                          ],
+                        "lessonIds":  [
+                                          "tests-xunit-aaa-001",
+                                          "tests-domain-rules-001",
+                                          "tests-boundaries-theories-001"
+                                      ],
+                        "exerciseIds":  [
+                                            "tests-boundary-values-001",
+                                            "tests-quantity-rule-001",
+                                            "tests-shipping-theory-001",
+                                            "tests-discount-rule-001",
+                                            "tests-expiry-clock-001"
+                                        ]
+                    },
+                    {
+                        "id":  "week-16",
+                        "title":  "Semaine 16",
+                        "weeks":  [
+                                      16
+                                  ],
+                        "prerequisites":  [
+                                              "week-15"
+                                          ],
+                        "lessonIds":  [
+                                          "tests-doubles-design-001",
+                                          "tests-integration-database-001",
+                                          "tests-api-factory-001"
+                                      ],
+                        "exerciseIds":  [
+                                            "tests-double-choice-001",
+                                            "tests-saved-identity-001",
+                                            "tests-database-name-001",
+                                            "tests-success-status-001",
+                                            "tests-reset-state-001"
+                                        ]
+                    },
+                    {
+                        "id":  "week-17",
+                        "title":  "Semaine 17",
+                        "weeks":  [
+                                      17
+                                  ],
+                        "prerequisites":  [
+                                              "week-16"
+                                          ],
+                        "lessonIds":  [
+                                          "quality-regression-refactoring-001",
+                                          "quality-static-analysis-001",
+                                          "quality-review-diffs-001"
+                                      ],
+                        "exerciseIds":  [
+                                            "quality-null-guard-001",
+                                            "quality-regression-bounds-001",
+                                            "quality-review-severity-001",
+                                            "quality-complexity-budget-001",
+                                            "quality-diff-risk-001"
+                                        ]
+                    },
+                    {
+                        "id":  "week-18",
+                        "title":  "Semaine 18",
+                        "weeks":  [
+                                      18
+                                  ],
+                        "prerequisites":  [
+                                              "week-17"
+                                          ],
+                        "lessonIds":  [
+                                          "git-commits-history-001",
+                                          "git-branches-conflicts-001",
+                                          "git-pull-requests-versions-001"
+                                      ],
+                        "exerciseIds":  [
+                                            "git-commit-subject-001",
+                                            "git-version-patch-001",
+                                            "git-conflict-marker-001"
+                                        ]
+                    },
+                    {
+                        "id":  "week-19",
+                        "title":  "Semaine 19",
+                        "weeks":  [
+                                      19
+                                  ],
+                        "prerequisites":  [
+                                              "week-18"
+                                          ],
+                        "lessonIds":  [
+                                          "docker-images-layers-001",
+                                          "docker-runtime-security-001",
+                                          "docker-compose-networks-volumes-001"
+                                      ],
+                        "exerciseIds":  [
+                                            "docker-memory-limit-001",
+                                            "docker-health-window-001",
+                                            "docker-hardening-policy-001"
+                                        ]
+                    },
+                    {
+                        "id":  "week-20",
+                        "title":  "Semaine 20",
+                        "weeks":  [
+                                      20
+                                  ],
+                        "prerequisites":  [
+                                              "week-19"
+                                          ],
+                        "lessonIds":  [
+                                          "ci-pipeline-build-test-001",
+                                          "ci-artifacts-variables-secrets-001",
+                                          "ci-deployment-gates-001"
+                                      ],
+                        "exerciseIds":  [
+                                            "ci-job-result-001",
+                                            "ci-artifact-name-001",
+                                            "ci-deploy-gate-001"
+                                        ]
+                    },
+                    {
+                        "id":  "week-21",
+                        "title":  "Semaine 21",
+                        "weeks":  [
+                                      21
+                                  ],
+                        "prerequisites":  [
+                                              "week-20"
+                                          ],
+                        "lessonIds":  [
+                                          "azure-hosting-choice-001",
+                                          "azure-data-services-001",
+                                          "azure-managed-identity-key-vault-001"
+                                      ],
+                        "exerciseIds":  [
+                                            "azure-hosting-decision-001",
+                                            "azure-secret-source-001"
+                                        ]
+                    },
+                    {
+                        "id":  "week-22",
+                        "title":  "Semaine 22",
+                        "weeks":  [
+                                      22
+                                  ],
+                        "prerequisites":  [
+                                              "week-21"
+                                          ],
+                        "lessonIds":  [
+                                          "observability-correlation-001",
+                                          "observability-alerts-costs-001",
+                                          "performance-security-incident-001"
+                                      ],
+                        "exerciseIds":  [
+                                            "azure-correlation-signal-001",
+                                            "azure-cost-guardrail-001"
+                                        ]
+                    },
+                    {
+                        "id":  "week-23",
+                        "title":  "Semaine 23",
+                        "weeks":  [
+                                      23
+                                  ],
+                        "prerequisites":  [
+                                              "week-22"
+                                          ],
+                        "lessonIds":  [
+                                          "final-project-architecture-001",
+                                          "final-project-evidence-001"
+                                      ],
+                        "exerciseIds":  [
+                                            "azure-release-evidence-001"
+                                        ]
+                    },
+                    {
+                        "id":  "week-24",
+                        "title":  "Semaine 24",
+                        "weeks":  [
+                                      24
+                                  ],
+                        "prerequisites":  [
+                                              "week-23"
+                                          ],
+                        "lessonIds":  [
+                                          "final-defense-english-001",
+                                          "career-evidence-plan-001"
+                                      ],
+                        "exerciseIds":  [
+                                            "azure-incident-brief-001"
                                         ]
                     }
                 ],

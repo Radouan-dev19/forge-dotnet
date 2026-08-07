@@ -1,0 +1,29 @@
+{
+    "schemaVersion":  1,
+    "cases":  [
+                  {
+                      "name":  "Hidden_Case1",
+                      "message":  "Structurer un bref dʼincident en anglais — cas 1 incorrect.",
+                      "arguments":  [
+                                        false,
+                                        true,
+                                        true
+                                    ],
+                      "expected":  "incomplete",
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_Case2",
+                      "message":  "Structurer un bref dʼincident en anglais — cas 2 incorrect.",
+                      "arguments":  [
+                                        true,
+                                        true,
+                                        false
+                                    ],
+                      "expected":  "incomplete",
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  }
+              ]
+}

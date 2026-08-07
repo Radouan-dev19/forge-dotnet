@@ -4,7 +4,7 @@
 
 Le catalogue 02B charge un lot déjà conforme aux schémas v1, résout ses références, refuse les cycles puis publie un snapshot immuable en mémoire. Il ne rend pas le Markdown, ne persiste rien dans SQLite et n'ajoute aucune page Web.
 
-Le catalogue reproductible se trouve sous `content/reference/`. À la validation de l’incrément 08, il contient 231 documents : un parcours S1–S10, 30 leçons, 85 exercices C#/algo, 25 DebugLabs, 84 questions d’entretien liées, cinq mini-projets et une activité d’anglais historique. Chaque exercice possède starter, solution et suites visibles/cachées ; chaque DebugLab possède version cassée, correction et non-régression. Ces fichiers privés ne rejoignent jamais la projection publique du catalogue.
+Le catalogue reproductible se trouve sous `content/reference/`. À la validation de lʼincrément 10, il contient 481 documents : un parcours S1–S24, 70 leçons, 135 exercices C#/algo — dont 35 activités API/tests/sécurité et 15 activités Git/Docker/CI/Azure —, 25 DebugLabs, 190 questions dʼentretien, huit mini-projets, un projet final guidé, 50 cartes dʼanglais et une activité dʼanglais historique. Chaque exercice possède starter, solution et suites visibles/cachées ; chaque DebugLab possède version cassée, correction et non-régression. Ces fichiers privés ne rejoignent jamais la projection publique du catalogue.
 
 ## Contrats et index
 
@@ -66,8 +66,8 @@ La CLI `--load-catalog` retourne `0` après chargement, `1` après refus de cont
 
 ## Base de validation locale
 
-Le lot 08 validé contient 231 documents et 1 262 fichiers sous `content/reference/`. Les 40 scénarios SQL/EF et les quatre banques d’examen restent dans leurs sources spécialisées. Ces nombres sont contrôlés par la matrice `CONTENT_S1_S10.md`, sans devenir un SLA implicite.
+Le catalogue final validé contient 481 documents et 2 014 fichiers sous `content/reference/`. Les 40 scénarios SQL/EF et les huit banques dʼexamen restent dans leurs sources spécialisées. Les matrices `CONTENT_S1_S10.md`, `CONTENT_S11_S20.md` et `CONTENT_S21_S24.md` distinguent les lots historiques du total final sans en faire un SLA implicite.
 
 ## Limites explicites
 
-Le catalogue public ne sert aucune solution ni suite de tests ; seules les sources serveur de Practice et du runner lisent ces fichiers privés après contrôle de confinement et de révision. SQL/EF reste chargé par sa source spécialisée sous `content/sql/`, et les examens par `content/exams/`. La banque 4 expose seulement ses énoncés et starters : attentes SQL, requêtes solutions, solutions EF et cas cachés restent dans les sources serveur confinées.
+Le catalogue public ne sert aucune solution ni suite de tests ; seules les sources serveur de Practice et du runner lisent ces fichiers privés après contrôle de confinement et de révision. SQL/EF reste chargé par sa source spécialisée sous `content/sql/`, et les examens par `content/exams/`. Les banques 4 à 6 exposent seulement leurs énoncés et starters : attentes SQL, requêtes solutions, solutions EF, solutions C# et cas cachés restent dans les sources serveur confinées.

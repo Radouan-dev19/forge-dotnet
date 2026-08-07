@@ -1,0 +1,24 @@
+{
+    "schemaVersion":  1,
+    "id":  "interview-s21-s24-017",
+    "version":  1,
+    "title":  "Distinguer logs et métriques",
+    "level":  "intermediate",
+    "durationMinutes":  9,
+    "skills":  [
+                   "observability.signals"
+               ],
+    "question":  "Quand choisissez-vous une métrique plutôt quʼun log ?",
+    "observableCriteria":  [
+                               "La réponse prend une décision explicite et cite une preuve observable",
+                               "Une limite de sécurité, de coût, de portée ou de validité est reconnue"
+                           ],
+    "modelAnswer":  "Une métrique mesure une tendance agrégée bornée, par exemple taux dʼerreur ou latence. Un log explique un événement particulier ; les deux se relient sans copier la charge utile.",
+    "commonMistakes":  [
+                           "Employer un slogan sans contrainte, preuve ni limite vérifiable"
+                       ],
+    "variants":  [
+                     "Changez une contrainte du scénario « Distinguer logs et métriques » et expliquez si la décision reste valide."
+                 ],
+    "license":  "CC-BY-4.0"
+}

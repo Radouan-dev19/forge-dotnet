@@ -216,3 +216,35 @@ Ne jamais utiliser cette commande pour un simple arrêt.
 - **Health rouge** : consulter `docker compose logs forge-dotnet`, vérifier le volume et ne pas supprimer la base pour masquer l'erreur.
 - **Erreur de permission du volume** : contrôler l'utilisateur effectif avec `docker inspect`; le conteneur doit rester non-root.
 - **Migration en échec** : arrêter le service et conserver le volume pour diagnostic ou restauration. Ne pas lancer la migration suivante.
+
+## Qualification finale du MVP — 6 août 2026
+
+La procédure d'installation vierge a été rejouée depuis une copie source isolée, avec un nom de projet Compose, un port loopback et un volume neufs. Elle a révélé deux dépendances d'exécution absentes de l'ancienne image : `content/exams`, `content/sql` et la base de fuseaux horaires requise par `Europe/Paris`. Le Dockerfile les embarque désormais et `WebCompositionTests.ContainerImagePackagesEveryContentDirectoryLoadedAtStartup` empêche leur régression.
+
+Après reconstruction sur volume vierge :
+
+- le conteneur était `healthy`, non-root (`1654`), avec racine en lecture seule, capacités supprimées et `no-new-privileges` ;
+- seul `127.0.0.1` publiait le port HTTP ;
+- `/health` et les douze routes principales répondaient 200 avec CSP, `nosniff` et politique de référent restrictive ;
+- aucun niveau `Error` ou `Critical`, secret SQL, en-tête Bearer ou code soumis n'apparaissait dans les logs finaux ;
+- après échauffement, les réponses allaient de 41 ms à 720 ms, p95 720 ms ; le premier démarrage à froid a atteint 24,5 s sur le poste de qualification.
+
+Pour rejouer sans toucher au volume habituel, choisir des valeurs dédiées :
+
+```powershell
+$env:COMPOSE_PROJECT_NAME = 'forge-dotnet-mvp-check'
+$env:FORGE_HTTP_PORT = '5099'
+$env:FORGE_DATA_VOLUME = 'forge-dotnet-mvp-check-data'
+docker compose config
+docker compose up -d --build
+docker compose ps
+Invoke-WebRequest -UseBasicParsing http://127.0.0.1:5099/health
+docker compose logs --no-color forge-dotnet
+docker compose down --remove-orphans
+```
+
+Supprimer le volume de qualification uniquement après avoir vérifié son nom exact et confirmé qu'il ne contient aucune progression utile. Ne jamais employer une purge Docker globale pour libérer de l'espace pendant cette procédure.
+
+La revue visuelle responsive et la navigation clavier n'ont pas pu être rejouées avec le navigateur intégré, qui échouait avant lancement avec `failed to write kernel assets: Le chemin d’accès spécifié est introuvable. (os error 3)`. Les contrôles automatisés couvrent structure sémantique, lien d'évitement, focus, viewport et contrastes, mais une vérification humaine reste à refaire dans un navigateur fonctionnel avant diffusion plus large.
+
+La matrice complète, les commandes et les risques résiduels se trouvent dans [`MVP_ACCEPTANCE.md`](MVP_ACCEPTANCE.md).

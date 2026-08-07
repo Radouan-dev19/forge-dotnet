@@ -7,7 +7,7 @@
   "skills": ["sql.transaction", "sql.isolation", "sql.atomic-update"],
   "prerequisites": ["sql-orders-cte-001"],
   "estimatedMinutes": 45,
-  "image": "mcr.microsoft.com/mssql/server@sha256:b1395aa51b4ec39981883560f1379ea9eba2a1c0719bf8e6477902769316bb79",
+  "image": "mcr.microsoft.com/mssql/server@sha256:ba4c8329f48fb8f02e1416be6a930ebfd71268caee78aa985f3af4315e457c89",
   "datasetPath": "dataset.sql",
   "visibleSchemaPath": "schema.sql",
   "permissions": ["select", "update"],

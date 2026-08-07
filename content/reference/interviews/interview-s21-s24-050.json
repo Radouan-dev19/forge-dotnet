@@ -1,0 +1,24 @@
+{
+    "schemaVersion":  1,
+    "id":  "interview-s21-s24-050",
+    "version":  1,
+    "title":  "Open an architecture defense",
+    "level":  "advanced",
+    "durationMinutes":  12,
+    "skills":  [
+                   "english.defense"
+               ],
+    "question":  "How do you open a two-minute architecture defense in English?",
+    "observableCriteria":  [
+                               "La réponse prend une décision explicite et cite une preuve observable",
+                               "Une limite de sécurité, de coût, de portée ou de validité est reconnue"
+                           ],
+    "modelAnswer":  "I state the user problem, the main constraint and the decision in plain language. Then I announce the evidence and one limitation before technical detail.",
+    "commonMistakes":  [
+                           "Employer un slogan sans contrainte, preuve ni limite vérifiable"
+                       ],
+    "variants":  [
+                     "Changez une contrainte du scénario « Open an architecture defense » et expliquez si la décision reste valide."
+                 ],
+    "license":  "CC-BY-4.0"
+}

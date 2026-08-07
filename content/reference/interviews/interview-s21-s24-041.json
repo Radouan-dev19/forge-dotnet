@@ -1,0 +1,24 @@
+{
+    "schemaVersion":  1,
+    "id":  "interview-s21-s24-041",
+    "version":  1,
+    "title":  "Réviser après revue",
+    "level":  "advanced",
+    "durationMinutes":  12,
+    "skills":  [
+                   "project.review"
+               ],
+    "question":  "Comment traitez-vous un commentaire contradictoire sur le projet final ?",
+    "observableCriteria":  [
+                               "La réponse prend une décision explicite et cite une preuve observable",
+                               "Une limite de sécurité, de coût, de portée ou de validité est reconnue"
+                           ],
+    "modelAnswer":  "Je reproduis le risque, classe son impact, réponds par une décision ou un test, borne le diff et conserve la trace de la conclusion sans masquer le désaccord.",
+    "commonMistakes":  [
+                           "Employer un slogan sans contrainte, preuve ni limite vérifiable"
+                       ],
+    "variants":  [
+                     "Changez une contrainte du scénario « Réviser après revue » et expliquez si la décision reste valide."
+                 ],
+    "license":  "CC-BY-4.0"
+}

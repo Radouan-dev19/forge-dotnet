@@ -655,7 +655,7 @@ public sealed class SqlEfContentTests
                 Password = password,
                 Encrypt = true,
                 TrustServerCertificate = true,
-                ConnectTimeout = 5,
+                ConnectTimeout = 15,
                 Pooling = false,
                 PersistSecurityInfo = false,
                 ApplicationName = "Forge.NET SqlEfContentTests",

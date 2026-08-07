@@ -1,0 +1,27 @@
+{
+    "schemaVersion":  1,
+    "id":  "final-readiness-v1",
+    "version":  1,
+    "title":  "Examen 8 — synthèse et défense S1–S24",
+    "durationMinutes":  150,
+    "drawCount":  8,
+    "passingScore":  80,
+    "eligibleExerciseIds":  [
+                                "csharp-price-conversion-001",
+                                "algo-pair-sum-001",
+                                "api-http-status-map-001",
+                                "api-order-validation-001",
+                                "security-owner-policy-001",
+                                "tests-boundary-values-001",
+                                "tests-database-name-001",
+                                "quality-review-severity-001",
+                                "git-conflict-marker-001",
+                                "docker-hardening-policy-001",
+                                "ci-deploy-gate-001",
+                                "azure-hosting-decision-001",
+                                "azure-secret-source-001",
+                                "azure-correlation-signal-001",
+                                "azure-release-evidence-001",
+                                "azure-incident-brief-001"
+                            ]
+}

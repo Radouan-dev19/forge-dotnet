@@ -1,0 +1,81 @@
+{
+    "schemaVersion":  1,
+    "id":  "azure-release-evidence-001",
+    "version":  1,
+    "title":  "Valider les preuves dʼun jalon",
+    "kind":  "csharp",
+    "difficulty":  3,
+    "skills":  [
+                   "project.evidence"
+               ],
+    "prerequisites":  [
+                          "final-project-architecture-001"
+                      ],
+    "estimatedMinutes":  40,
+    "statement":  "statement.md",
+    "constraints":  [
+                        "Conserver exactement la signature publique",
+                        "Un jalon est révisable uniquement si tests, revue de sécurité et retour arrière documenté sont tous présents.",
+                        "Rester déterministe, hors ligne et indépendant de toute ressource Azure réelle"
+                    ],
+    "examples":  [
+                     {
+                         "input":  "[{\"value\":[true,true,true],\"Count\":3},true]",
+                         "output":  "[{\"value\":[false,true,true],\"Count\":3},false]"
+                     }
+                 ],
+    "reflectionFields":  [
+                             "reformulation",
+                             "inputs",
+                             "expectedOutput",
+                             "edgeCases",
+                             "hypothesis",
+                             "plan"
+                         ],
+    "starterPath":  "starter/",
+    "visibleTestsPath":  "tests/visible/",
+    "hiddenTestsPath":  "tests/hidden/",
+    "hints":  [
+                  {
+                      "level":  1,
+                      "kind":  "socratic",
+                      "content":  "Quelle condition publique de « Valider les preuves dʼun jalon » doit faire changer le résultat ?"
+                  },
+                  {
+                      "level":  2,
+                      "kind":  "location",
+                      "content":  "Concentrez la validation et la décision dans MilestoneReady, sans réseau ni état global."
+                  },
+                  {
+                      "level":  3,
+                      "kind":  "strategy",
+                      "content":  "Un jalon est révisable uniquement si tests, revue de sécurité et retour arrière documenté sont tous présents."
+                  },
+                  {
+                      "level":  4,
+                      "kind":  "partial-pseudocode",
+                      "content":  "valider les entrées ; appliquer la garde la plus stricte ; retourner une décision explicite et déterministe"
+                  }
+              ],
+    "solution":  {
+                     "path":  "solution/",
+                     "unlock":  {
+                                    "seriousAttempts":  2,
+                                    "minimumDelayMinutes":  10
+                                }
+                 },
+    "explanation":  "explanation.md",
+    "complexity":  "O(1) en temps et O(1) en espace",
+    "commonMistakes":  [
+                           "Coder seulement les exemples visibles",
+                           "Présenter une étape manuelle ou cloud comme une validation automatique",
+                           "Masquer une valeur invalide ou supprimer une garde de sécurité"
+                       ],
+    "variantId":  "azure-incident-brief-001",
+    "reviewCards":  [
+                        "card-azure-release-evidence-001-rule",
+                        "card-azure-release-evidence-001-proof"
+                    ],
+    "interviewQuestionId":  "interview-azure-release-evidence-001",
+    "license":  "CC-BY-4.0"
+}

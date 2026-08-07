@@ -5,13 +5,13 @@ SqlLab fournit un moteur SQL Server local et jetable, pas les douze scénarios p
 ## Topologie
 
 ```text
-Navigateur --Blazor--> Web --réseau sql-lab-internal--> SQL Server 2022 CU21
+Navigateur --Blazor--> Web --réseau sql-lab-internal--> SQL Server 2022 CU26
                               base + login par session
 
 Tests hôte --127.0.0.1:14333--> pont TCP sans secret --réseau interne--> SQL Server
 ```
 
-SQL Server est construit depuis `mcr.microsoft.com/mssql/server@sha256:b1395aa51b4ec39981883560f1379ea9eba2a1c0719bf8e6477902769316bb79`. Il n'a aucun port hôte, n'est membre que du réseau Docker `internal: true` et ne monte ni progression SQLite, ni chemin utilisateur, ni socket Docker. Ses fichiers sont conservés uniquement dans la couche du conteneur ; `docker compose down` les détruit. Le pont de test optionnel ne possède aucun secret, publie uniquement `127.0.0.1:14333` et utilise un second réseau dédié auquel aucun autre service n'est raccordé.
+SQL Server est construit depuis `mcr.microsoft.com/mssql/server@sha256:ba4c8329f48fb8f02e1416be6a930ebfd71268caee78aa985f3af4315e457c89`. Il n'a aucun port hôte, n'est membre que du réseau Docker `internal: true` et ne monte ni progression SQLite, ni chemin utilisateur, ni socket Docker. Ses fichiers sont conservés uniquement dans la couche du conteneur ; `docker compose down` les détruit. Le pont de test optionnel ne possède aucun secret, publie uniquement `127.0.0.1:14333` et utilise un second réseau dédié auquel aucun autre service n'est raccordé.
 
 Le conteneur s'exécute en `10001:10001`, sans capability, avec `no-new-privileges`, un profil seccomp versionné, 2 CPU, 2 Gio, 512 PID et `/tmp` borné. La capability de fichier `cap_net_bind_service`, inutile sur le port 1433, est retirée de l'image afin de conserver `no-new-privileges`.
 

@@ -1,0 +1,13 @@
+{
+  "openapi": "3.0.3",
+  "info": { "title": "Forge API Lab", "version": "1.0.0" },
+  "paths": {
+    "/health": { "get": { "responses": { "200": { "description": "Service sain" } } } },
+    "/orders": {
+      "get": { "security": [{ "ApiKey": [] }], "responses": { "200": { "description": "Page bornée" }, "400": { "description": "Paramètres invalides" }, "401": { "description": "Non authentifié" } } },
+      "post": { "security": [{ "ApiKey": [] }], "responses": { "201": { "description": "Commande créée" }, "400": { "description": "DTO invalide" }, "401": { "description": "Non authentifié" }, "403": { "description": "Non autorisé" } } }
+    },
+    "/orders/{id}": { "get": { "security": [{ "ApiKey": [] }], "responses": { "200": { "description": "Commande" }, "401": { "description": "Non authentifié" }, "404": { "description": "Absente" } } } }
+  },
+  "components": { "securitySchemes": { "ApiKey": { "type": "apiKey", "in": "header", "name": "X-Api-Key" } } }
+}

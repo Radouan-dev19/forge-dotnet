@@ -1,0 +1,81 @@
+{
+    "schemaVersion":  1,
+    "id":  "azure-secret-source-001",
+    "version":  1,
+    "title":  "Choisir une source de valeur sensible",
+    "kind":  "csharp",
+    "difficulty":  3,
+    "skills":  [
+                   "azure.identity"
+               ],
+    "prerequisites":  [
+                          "azure-hosting-choice-001"
+                      ],
+    "estimatedMinutes":  40,
+    "statement":  "statement.md",
+    "constraints":  [
+                        "Conserver exactement la signature publique",
+                        "Une valeur non sensible reste en configuration ; une valeur sensible utilise lʼidentité gérée ou un magasin local hors Git.",
+                        "Rester déterministe, hors ligne et indépendant de toute ressource Azure réelle"
+                    ],
+    "examples":  [
+                     {
+                         "input":  "[{\"value\":[false,true],\"Count\":2},\"configuration\"]",
+                         "output":  "[{\"value\":[true,true],\"Count\":2},\"key-vault-managed-identity\"]"
+                     }
+                 ],
+    "reflectionFields":  [
+                             "reformulation",
+                             "inputs",
+                             "expectedOutput",
+                             "edgeCases",
+                             "hypothesis",
+                             "plan"
+                         ],
+    "starterPath":  "starter/",
+    "visibleTestsPath":  "tests/visible/",
+    "hiddenTestsPath":  "tests/hidden/",
+    "hints":  [
+                  {
+                      "level":  1,
+                      "kind":  "socratic",
+                      "content":  "Quelle condition publique de « Choisir une source de valeur sensible » doit faire changer le résultat ?"
+                  },
+                  {
+                      "level":  2,
+                      "kind":  "location",
+                      "content":  "Concentrez la validation et la décision dans SensitiveValueSource, sans réseau ni état global."
+                  },
+                  {
+                      "level":  3,
+                      "kind":  "strategy",
+                      "content":  "Une valeur non sensible reste en configuration ; une valeur sensible utilise lʼidentité gérée ou un magasin local hors Git."
+                  },
+                  {
+                      "level":  4,
+                      "kind":  "partial-pseudocode",
+                      "content":  "valider les entrées ; appliquer la garde la plus stricte ; retourner une décision explicite et déterministe"
+                  }
+              ],
+    "solution":  {
+                     "path":  "solution/",
+                     "unlock":  {
+                                    "seriousAttempts":  2,
+                                    "minimumDelayMinutes":  10
+                                }
+                 },
+    "explanation":  "explanation.md",
+    "complexity":  "O(1) en temps et O(1) en espace",
+    "commonMistakes":  [
+                           "Coder seulement les exemples visibles",
+                           "Présenter une étape manuelle ou cloud comme une validation automatique",
+                           "Masquer une valeur invalide ou supprimer une garde de sécurité"
+                       ],
+    "variantId":  "azure-correlation-signal-001",
+    "reviewCards":  [
+                        "card-azure-secret-source-001-rule",
+                        "card-azure-secret-source-001-proof"
+                    ],
+    "interviewQuestionId":  "interview-azure-secret-source-001",
+    "license":  "CC-BY-4.0"
+}

@@ -62,6 +62,7 @@ select:focus-visible,
 textarea:focus-visible {
     outline: 3px solid #f0b429;
     outline-offset: 2px;
+    box-shadow: 0 0 0 5px #102a43;
 }
 
 h1 {

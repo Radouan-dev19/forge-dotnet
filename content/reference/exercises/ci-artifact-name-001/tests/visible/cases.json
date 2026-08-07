@@ -1,0 +1,27 @@
+{
+    "schemaVersion":  1,
+    "cases":  [
+                  {
+                      "name":  "Visible_Case1",
+                      "message":  "Nommer un artefact de façon stable — cas 1 incorrect.",
+                      "arguments":  [
+                                        "main",
+                                        42
+                                    ],
+                      "expected":  "tests-main-42",
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Visible_Case2",
+                      "message":  "Nommer un artefact de façon stable — cas 2 incorrect.",
+                      "arguments":  [
+                                        "feature/api",
+                                        7
+                                    ],
+                      "expected":  "tests-feature-api-7",
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  }
+              ]
+}

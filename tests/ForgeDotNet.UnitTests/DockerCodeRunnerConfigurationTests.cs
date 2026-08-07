@@ -19,6 +19,8 @@ public sealed class DockerCodeRunnerConfigurationTests
         Assert.Throws<InvalidDataException>(() => (valid with { MemoryBytes = 1024 * DockerCodeRunnerOptions.Mebibyte }).Validate());
         Assert.Throws<InvalidDataException>(() => (valid with { PidsLimit = 65 }).Validate());
         Assert.Throws<InvalidDataException>(() => (valid with { MaximumConcurrency = 0 }).Validate());
+        Assert.Equal(TimeSpan.FromSeconds(30), valid.TestTimeout);
+        Assert.Throws<InvalidDataException>(() => (valid with { TestTimeout = TimeSpan.FromSeconds(31) }).Validate());
         string volumeRoot = Path.GetPathRoot(valid.WorkspaceRootPath)!;
         Assert.Throws<InvalidDataException>(() => (valid with { WorkspaceRootPath = volumeRoot }).Validate());
     }

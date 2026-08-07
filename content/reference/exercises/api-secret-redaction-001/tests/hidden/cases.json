@@ -1,0 +1,25 @@
+{
+    "schemaVersion":  1,
+    "cases":  [
+                  {
+                      "name":  "Hidden_Case1",
+                      "message":  "Masquer une valeur sensible — cas 1 incorrect.",
+                      "arguments":  [
+                                        ""
+                                    ],
+                      "expected":  "",
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_Case2",
+                      "message":  "Masquer une valeur sensible — cas 2 incorrect.",
+                      "arguments":  [
+                                        "12345"
+                                    ],
+                      "expected":  "*****",
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  }
+              ]
+}

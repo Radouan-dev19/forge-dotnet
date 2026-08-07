@@ -1,0 +1,27 @@
+{
+    "schemaVersion":  1,
+    "cases":  [
+                  {
+                      "name":  "Visible_Case1",
+                      "message":  "Estimer le risque d’un diff — cas 1 incorrect.",
+                      "arguments":  [
+                                        20,
+                                        false
+                                    ],
+                      "expected":  "low",
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Visible_Case2",
+                      "message":  "Estimer le risque d’un diff — cas 2 incorrect.",
+                      "arguments":  [
+                                        120,
+                                        false
+                                    ],
+                      "expected":  "medium",
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  }
+              ]
+}

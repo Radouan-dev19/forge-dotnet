@@ -1,0 +1,25 @@
+{
+    "schemaVersion":  1,
+    "cases":  [
+                  {
+                      "name":  "Hidden_Case1",
+                      "message":  "Borner une mémoire de conteneur — cas 1 incorrect.",
+                      "arguments":  [
+                                        64
+                                    ],
+                      "expected":  128,
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_Case2",
+                      "message":  "Borner une mémoire de conteneur — cas 2 incorrect.",
+                      "arguments":  [
+                                        4096
+                                    ],
+                      "expected":  1024,
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  }
+              ]
+}

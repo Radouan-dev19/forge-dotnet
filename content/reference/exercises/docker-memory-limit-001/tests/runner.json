@@ -1,0 +1,12 @@
+{
+    "schemaVersion":  1,
+    "suiteId":  "docker-memory-limit-001.v1",
+    "exerciseId":  "docker-memory-limit-001",
+    "exerciseVersion":  1,
+    "typeName":  "Submission",
+    "methodName":  "ClampMemoryMb",
+    "parameterTypes":  [
+                           "int"
+                       ],
+    "returnType":  "int"
+}

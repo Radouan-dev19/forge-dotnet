@@ -1,0 +1,24 @@
+{
+    "schemaVersion":  1,
+    "id":  "interview-api-config-key-001",
+    "version":  1,
+    "title":  "Composer une clé de configuration",
+    "level":  "junior",
+    "durationMinutes":  6,
+    "skills":  [
+                   "api.configuration"
+               ],
+    "question":  "Comment implémenteriez-vous « Composer une clé de configuration » et quelles preuves réfutent les contournements ?",
+    "observableCriteria":  [
+                               "Le contrat, une frontière et un refus sont explicités",
+                               "La complexité et une preuve de sécurité ou de non-régression sont justifiées"
+                           ],
+    "modelAnswer":  "Valider les deux segments et conserver le séparateur hiérarchique standard. Je sépare validation et décision, je teste un cas nominal et les frontières, puis je vérifie qu’aucune donnée sensible ni état externe n’entre dans la preuve. O(n) en temps et O(n) en espace.",
+    "commonMistakes":  [
+                           "Réciter le code sans expliquer le contrat ni la preuve"
+                       ],
+    "variants":  [
+                     "Changer la frontière ou le droit tout en conservant la règle de composer une clé de configuration."
+                 ],
+    "license":  "CC-BY-4.0"
+}

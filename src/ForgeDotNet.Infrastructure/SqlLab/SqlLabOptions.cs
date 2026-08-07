@@ -16,7 +16,7 @@ public sealed class SqlLabOptions
 
     public bool TrustServerCertificate { get; init; } = true;
 
-    public int ConnectTimeoutSeconds { get; init; } = 5;
+    public int ConnectTimeoutSeconds { get; init; } = 15;
 
     public int QueryTimeoutSeconds { get; init; } = 3;
 

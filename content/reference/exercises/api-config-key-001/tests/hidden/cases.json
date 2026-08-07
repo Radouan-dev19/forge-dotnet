@@ -1,0 +1,25 @@
+{
+    "schemaVersion":  1,
+    "cases":  [
+                  {
+                      "name":  "Hidden_Case1",
+                      "message":  "Composer une clé de configuration — cas 1 incorrect.",
+                      "arguments":  [
+                                        "",
+                                        "Key"
+                                    ],
+                      "expectedException":  "ArgumentException",
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_Case2",
+                      "message":  "Composer une clé de configuration — cas 2 incorrect.",
+                      "arguments":  [
+                                        "Section",
+                                        " "
+                                    ],
+                      "expectedException":  "ArgumentException",
+                      "argumentsUnchanged":  false
+                  }
+              ]
+}

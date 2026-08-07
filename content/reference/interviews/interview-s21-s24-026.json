@@ -1,0 +1,24 @@
+{
+    "schemaVersion":  1,
+    "id":  "interview-s21-s24-026",
+    "version":  1,
+    "title":  "Gérer un faux positif",
+    "level":  "intermediate",
+    "durationMinutes":  9,
+    "skills":  [
+                   "observability.alerts"
+               ],
+    "question":  "Une alerte se déclenche sur un trafic de test légitime. Que corrigez-vous ?",
+    "observableCriteria":  [
+                               "La réponse prend une décision explicite et cite une preuve observable",
+                               "Une limite de sécurité, de coût, de portée ou de validité est reconnue"
+                           ],
+    "modelAnswer":  "Je vérifie données et fenêtre, documente le faux positif, ajuste le signal plutôt que de désactiver lʼalerte et ajoute un scénario qui distingue test sain et incident.",
+    "commonMistakes":  [
+                           "Employer un slogan sans contrainte, preuve ni limite vérifiable"
+                       ],
+    "variants":  [
+                     "Changez une contrainte du scénario « Gérer un faux positif » et expliquez si la décision reste valide."
+                 ],
+    "license":  "CC-BY-4.0"
+}

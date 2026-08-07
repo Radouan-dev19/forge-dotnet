@@ -1,0 +1,81 @@
+{
+    "schemaVersion":  1,
+    "id":  "security-local-redirect-001",
+    "version":  1,
+    "title":  "Refuser une redirection externe",
+    "kind":  "csharp",
+    "difficulty":  3,
+    "skills":  [
+                   "security.owasp"
+               ],
+    "prerequisites":  [
+                          "security-authentication-001"
+                      ],
+    "estimatedMinutes":  35,
+    "statement":  "statement.md",
+    "constraints":  [
+                        "Conserver exactement la signature publique",
+                        "Accepter un chemin racine local mais refuser les formes réseau et les URL absolues.",
+                        "Ne jamais dépendre du réseau, d’un secret réel ou d’un état global"
+                    ],
+    "examples":  [
+                     {
+                         "input":  "[{\"value\":[\"/orders/1\"],\"Count\":1},true]",
+                         "output":  "[{\"value\":[\"https://evil.example\"],\"Count\":1},false]"
+                     }
+                 ],
+    "reflectionFields":  [
+                             "reformulation",
+                             "inputs",
+                             "expectedOutput",
+                             "edgeCases",
+                             "hypothesis",
+                             "plan"
+                         ],
+    "starterPath":  "starter/",
+    "visibleTestsPath":  "tests/visible/",
+    "hiddenTestsPath":  "tests/hidden/",
+    "hints":  [
+                  {
+                      "level":  1,
+                      "kind":  "socratic",
+                      "content":  "Quel comportement public de « Refuser une redirection externe » change exactement à la frontière ?"
+                  },
+                  {
+                      "level":  2,
+                      "kind":  "location",
+                      "content":  "Concentrez la validation et la décision dans IsLocalRedirect, sans état global ni journal sensible."
+                  },
+                  {
+                      "level":  3,
+                      "kind":  "strategy",
+                      "content":  "Accepter un chemin racine local mais refuser les formes réseau et les URL absolues."
+                  },
+                  {
+                      "level":  4,
+                      "kind":  "partial-pseudocode",
+                      "content":  "valider les entrées ; appliquer la décision bornée ; retourner un résultat déterministe sans effet externe"
+                  }
+              ],
+    "solution":  {
+                     "path":  "solution/",
+                     "unlock":  {
+                                    "seriousAttempts":  2,
+                                    "minimumDelayMinutes":  10
+                                }
+                 },
+    "explanation":  "explanation.md",
+    "complexity":  "O(n) en temps et O(1) en espace",
+    "commonMistakes":  [
+                           "Coder seulement les exemples visibles",
+                           "Masquer une erreur ou accepter une entrée hors contrat",
+                           "Confondre une règle pure avec le transport ou une ressource externe"
+                       ],
+    "variantId":  "security-login-message-001",
+    "reviewCards":  [
+                        "card-security-local-redirect-001-rule",
+                        "card-security-local-redirect-001-security"
+                    ],
+    "interviewQuestionId":  "interview-security-local-redirect-001",
+    "license":  "CC-BY-4.0"
+}

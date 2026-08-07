@@ -1,0 +1,25 @@
+{
+    "schemaVersion":  1,
+    "cases":  [
+                  {
+                      "name":  "Visible_Case1",
+                      "message":  "Appliquer une liste blanche de tri — cas 1 incorrect.",
+                      "arguments":  [
+                                        "date"
+                                    ],
+                      "expected":  "date",
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Visible_Case2",
+                      "message":  "Appliquer une liste blanche de tri — cas 2 incorrect.",
+                      "arguments":  [
+                                        "DROP TABLE"
+                                    ],
+                      "expected":  "id",
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  }
+              ]
+}

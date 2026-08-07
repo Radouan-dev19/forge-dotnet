@@ -1,4 +1,4 @@
-﻿[CmdletBinding()]
+[CmdletBinding()]
 param()
 
 $ErrorActionPreference = 'Stop'
@@ -591,7 +591,7 @@ foreach ($row in $SqlRows) {
     $directory=Join-Path $ContentRoot "sql/$id"
     Write-JsonFile (Join-Path $directory 'scenario.json') ([ordered]@{
         schemaVersion=1;id=$id;version=1;title=$title;difficulty=$difficulty;skills=$skills;prerequisites=@();estimatedMinutes=35
-        image='mcr.microsoft.com/mssql/server@sha256:b1395aa51b4ec39981883560f1379ea9eba2a1c0719bf8e6477902769316bb79'
+        image='mcr.microsoft.com/mssql/server@sha256:ba4c8329f48fb8f02e1416be6a930ebfd71268caee78aa985f3af4315e457c89'
         datasetPath='dataset.sql';visibleSchemaPath='schema.sql';permissions=@('select');resetScriptPath='reset.sql';statementPath='statement.md'
         expectedResult=[ordered]@{ordered=$ordered;columns=$columns;numericTolerance=0.01};timeoutSeconds=5;maxRows=20
         effectAssertions=@('Les quatre clients, cinq commandes et six lignes restent inchangés après rollback')

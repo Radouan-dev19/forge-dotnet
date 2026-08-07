@@ -1,0 +1,29 @@
+{
+    "schemaVersion":  1,
+    "cases":  [
+                  {
+                      "name":  "Visible_Case1",
+                      "message":  "Détecter une frontière — cas 1 incorrect.",
+                      "arguments":  [
+                                        1,
+                                        1,
+                                        100
+                                    ],
+                      "expected":  true,
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Visible_Case2",
+                      "message":  "Détecter une frontière — cas 2 incorrect.",
+                      "arguments":  [
+                                        50,
+                                        1,
+                                        100
+                                    ],
+                      "expected":  false,
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  }
+              ]
+}

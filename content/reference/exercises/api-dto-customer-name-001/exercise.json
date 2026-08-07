@@ -1,0 +1,81 @@
+{
+    "schemaVersion":  1,
+    "id":  "api-dto-customer-name-001",
+    "version":  1,
+    "title":  "Projeter un nom de DTO",
+    "kind":  "csharp",
+    "difficulty":  2,
+    "skills":  [
+                   "api.dto"
+               ],
+    "prerequisites":  [
+                          "api-http-semantics-001"
+                      ],
+    "estimatedMinutes":  35,
+    "statement":  "statement.md",
+    "constraints":  [
+                        "Conserver exactement la signature publique",
+                        "Le DTO public reçoit un libellé normalisé sans exposer un objet de persistance.",
+                        "Ne jamais dépendre du réseau, d’un secret réel ou d’un état global"
+                    ],
+    "examples":  [
+                     {
+                         "input":  "[{\"value\":[\" Ada \"],\"Count\":1},\"Ada\"]",
+                         "output":  "[{\"value\":[\"\"],\"Count\":1},\"(invalide)\"]"
+                     }
+                 ],
+    "reflectionFields":  [
+                             "reformulation",
+                             "inputs",
+                             "expectedOutput",
+                             "edgeCases",
+                             "hypothesis",
+                             "plan"
+                         ],
+    "starterPath":  "starter/",
+    "visibleTestsPath":  "tests/visible/",
+    "hiddenTestsPath":  "tests/hidden/",
+    "hints":  [
+                  {
+                      "level":  1,
+                      "kind":  "socratic",
+                      "content":  "Quel comportement public de « Projeter un nom de DTO » change exactement à la frontière ?"
+                  },
+                  {
+                      "level":  2,
+                      "kind":  "location",
+                      "content":  "Concentrez la validation et la décision dans CustomerLabel, sans état global ni journal sensible."
+                  },
+                  {
+                      "level":  3,
+                      "kind":  "strategy",
+                      "content":  "Le DTO public reçoit un libellé normalisé sans exposer un objet de persistance."
+                  },
+                  {
+                      "level":  4,
+                      "kind":  "partial-pseudocode",
+                      "content":  "valider les entrées ; appliquer la décision bornée ; retourner un résultat déterministe sans effet externe"
+                  }
+              ],
+    "solution":  {
+                     "path":  "solution/",
+                     "unlock":  {
+                                    "seriousAttempts":  2,
+                                    "minimumDelayMinutes":  10
+                                }
+                 },
+    "explanation":  "explanation.md",
+    "complexity":  "O(n) en temps et O(n) en espace",
+    "commonMistakes":  [
+                           "Coder seulement les exemples visibles",
+                           "Masquer une erreur ou accepter une entrée hors contrat",
+                           "Confondre une règle pure avec le transport ou une ressource externe"
+                       ],
+    "variantId":  "api-method-idempotency-001",
+    "reviewCards":  [
+                        "card-api-dto-customer-name-001-rule",
+                        "card-api-dto-customer-name-001-security"
+                    ],
+    "interviewQuestionId":  "interview-api-dto-customer-name-001",
+    "license":  "CC-BY-4.0"
+}

@@ -1,0 +1,26 @@
+{
+    "schemaVersion":  1,
+    "cases":  [
+                  {
+                      "name":  "Hidden_Case1",
+                      "message":  "Paramétrer une règle de livraison — cas 1 incorrect.",
+                      "arguments":  [
+                                        20,
+                                        true
+                                    ],
+                      "expected":  9.9,
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_Case2",
+                      "message":  "Paramétrer une règle de livraison — cas 2 incorrect.",
+                      "arguments":  [
+                                        -1,
+                                        false
+                                    ],
+                      "expectedException":  "ArgumentOutOfRangeException",
+                      "argumentsUnchanged":  false
+                  }
+              ]
+}

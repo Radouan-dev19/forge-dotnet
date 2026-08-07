@@ -1,0 +1,24 @@
+{
+    "schemaVersion":  1,
+    "id":  "interview-s21-s24-027",
+    "version":  1,
+    "title":  "Rédiger un runbook",
+    "level":  "intermediate",
+    "durationMinutes":  9,
+    "skills":  [
+                   "observability.operations"
+               ],
+    "question":  "Quel contenu minimal placez-vous dans un runbook dʼalerte ?",
+    "observableCriteria":  [
+                               "La réponse prend une décision explicite et cite une preuve observable",
+                               "Une limite de sécurité, de coût, de portée ou de validité est reconnue"
+                           ],
+    "modelAnswer":  "Contexte, impact, contrôles sûrs, données à ne pas consulter, étapes de confinement, rollback, escalade, preuve de résolution et critères de clôture.",
+    "commonMistakes":  [
+                           "Employer un slogan sans contrainte, preuve ni limite vérifiable"
+                       ],
+    "variants":  [
+                     "Changez une contrainte du scénario « Rédiger un runbook » et expliquez si la décision reste valide."
+                 ],
+    "license":  "CC-BY-4.0"
+}

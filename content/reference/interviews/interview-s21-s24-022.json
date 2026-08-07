@@ -1,0 +1,24 @@
+{
+    "schemaVersion":  1,
+    "id":  "interview-s21-s24-022",
+    "version":  1,
+    "title":  "Qualifier un incident",
+    "level":  "intermediate",
+    "durationMinutes":  9,
+    "skills":  [
+                   "observability.incident"
+               ],
+    "question":  "Que dites-vous dans les cinq premières minutes dʼun incident simulé ?",
+    "observableCriteria":  [
+                               "La réponse prend une décision explicite et cite une preuve observable",
+                               "Une limite de sécurité, de coût, de portée ou de validité est reconnue"
+                           ],
+    "modelAnswer":  "Je nomme le symptôme, la période, lʼimpact observé, la portée connue, la première mesure de confinement et la prochaine mise à jour, sans inventer la cause.",
+    "commonMistakes":  [
+                           "Employer un slogan sans contrainte, preuve ni limite vérifiable"
+                       ],
+    "variants":  [
+                     "Changez une contrainte du scénario « Qualifier un incident » et expliquez si la décision reste valide."
+                 ],
+    "license":  "CC-BY-4.0"
+}

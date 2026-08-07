@@ -21,6 +21,14 @@ content/*
 !content/diagnostic/**
 !content/planning/
 !content/planning/**
+!content/exams/
+!content/exams/**
+!content/sql/
+!content/sql/**
+!content/labs/
+!content/labs/**
+content/labs/**/bin
+content/labs/**/obj
 .env
 .env.*
 !.env.example

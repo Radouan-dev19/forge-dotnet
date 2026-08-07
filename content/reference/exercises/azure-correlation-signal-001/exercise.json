@@ -1,0 +1,81 @@
+{
+    "schemaVersion":  1,
+    "id":  "azure-correlation-signal-001",
+    "version":  1,
+    "title":  "Classer un signal corrélé",
+    "kind":  "csharp",
+    "difficulty":  3,
+    "skills":  [
+                   "observability.signals"
+               ],
+    "prerequisites":  [
+                          "observability-correlation-001"
+                      ],
+    "estimatedMinutes":  40,
+    "statement":  "statement.md",
+    "constraints":  [
+                        "Conserver exactement la signature publique",
+                        "Valider les mesures, traiter les erreurs en priorité, puis comparer la latence p95 au budget de 750 ms.",
+                        "Rester déterministe, hors ligne et indépendant de toute ressource Azure réelle"
+                    ],
+    "examples":  [
+                     {
+                         "input":  "[{\"value\":[2,300],\"Count\":2},\"errors\"]",
+                         "output":  "[{\"value\":[0,900],\"Count\":2},\"latency\"]"
+                     }
+                 ],
+    "reflectionFields":  [
+                             "reformulation",
+                             "inputs",
+                             "expectedOutput",
+                             "edgeCases",
+                             "hypothesis",
+                             "plan"
+                         ],
+    "starterPath":  "starter/",
+    "visibleTestsPath":  "tests/visible/",
+    "hiddenTestsPath":  "tests/hidden/",
+    "hints":  [
+                  {
+                      "level":  1,
+                      "kind":  "socratic",
+                      "content":  "Quelle condition publique de « Classer un signal corrélé » doit faire changer le résultat ?"
+                  },
+                  {
+                      "level":  2,
+                      "kind":  "location",
+                      "content":  "Concentrez la validation et la décision dans IncidentSignal, sans réseau ni état global."
+                  },
+                  {
+                      "level":  3,
+                      "kind":  "strategy",
+                      "content":  "Valider les mesures, traiter les erreurs en priorité, puis comparer la latence p95 au budget de 750 ms."
+                  },
+                  {
+                      "level":  4,
+                      "kind":  "partial-pseudocode",
+                      "content":  "valider les entrées ; appliquer la garde la plus stricte ; retourner une décision explicite et déterministe"
+                  }
+              ],
+    "solution":  {
+                     "path":  "solution/",
+                     "unlock":  {
+                                    "seriousAttempts":  2,
+                                    "minimumDelayMinutes":  10
+                                }
+                 },
+    "explanation":  "explanation.md",
+    "complexity":  "O(1) en temps et O(1) en espace",
+    "commonMistakes":  [
+                           "Coder seulement les exemples visibles",
+                           "Présenter une étape manuelle ou cloud comme une validation automatique",
+                           "Masquer une valeur invalide ou supprimer une garde de sécurité"
+                       ],
+    "variantId":  "azure-cost-guardrail-001",
+    "reviewCards":  [
+                        "card-azure-correlation-signal-001-rule",
+                        "card-azure-correlation-signal-001-proof"
+                    ],
+    "interviewQuestionId":  "interview-azure-correlation-signal-001",
+    "license":  "CC-BY-4.0"
+}

@@ -65,8 +65,8 @@ La commande et le point d'entrée ne viennent jamais de la requête. Les chemins
 - seul `/input` est monté depuis l'hôte, en lecture seule et depuis le workspace dédié ;
 - `/workspace` 64 Mio et `/tmp` 16 Mio sont des `tmpfs` jetables avec `noexec,nosuid,nodev` ;
 - utilisateur `1654:1654`, aucune capability, `no-new-privileges`, profil `seccomp=builtin` explicite, aucun device, aucun socket Docker ;
-- 0,5 CPU, 512 Mio de mémoire et de swap, 64 PID/threads, 256 descripteurs ouverts ;
-- 25 s de compilation, 15 s globales pour tous les cas d'une suite et 5 s de marge de contrôle ;
+- 1 CPU, 512 Mio de mémoire et de swap, 64 PID/threads, 256 descripteurs ouverts ;
+- 25 s de compilation, 30 s globales pour tous les cas d'une suite et 5 s de marge de contrôle ;
 - sortie publique 64 Kio, capture interne bornée et pilote de logs Docker `none` ;
 - concurrence configurable de 1 à 4, valeur locale par défaut 2.
 

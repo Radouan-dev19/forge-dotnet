@@ -95,9 +95,9 @@ internal static partial class Program
             maximumSeconds: 30);
         TimeSpan testLimit = ReadBoundedTimeout(
             TestTimeoutVariable,
-            defaultSeconds: 5,
+            defaultSeconds: 30,
             minimumSeconds: 1,
-            maximumSeconds: 15);
+            maximumSeconds: 30);
         ContainerRequest request = await RunStageAsync(
             "requete",
             ReadAndValidateRequestAsync);

@@ -1,0 +1,25 @@
+{
+    "schemaVersion":  1,
+    "cases":  [
+                  {
+                      "name":  "Hidden_Case1",
+                      "message":  "Projeter un nom de DTO — cas 1 incorrect.",
+                      "arguments":  [
+                                        "   "
+                                    ],
+                      "expected":  "(invalide)",
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_Case2",
+                      "message":  "Projeter un nom de DTO — cas 2 incorrect.",
+                      "arguments":  [
+                                        "Lin"
+                                    ],
+                      "expected":  "Lin",
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  }
+              ]
+}

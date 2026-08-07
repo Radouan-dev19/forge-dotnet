@@ -1,0 +1,24 @@
+{
+    "schemaVersion":  1,
+    "id":  "interview-s21-s24-008",
+    "version":  1,
+    "title":  "Comprendre un budget Azure",
+    "level":  "junior",
+    "durationMinutes":  6,
+    "skills":  [
+                   "azure.cost"
+               ],
+    "question":  "Pourquoi une alerte de budget ne suffit-elle pas comme limite automatique de dépense ?",
+    "observableCriteria":  [
+                               "La réponse prend une décision explicite et cite une preuve observable",
+                               "Une limite de sécurité, de coût, de portée ou de validité est reconnue"
+                           ],
+    "modelAnswer":  "Une alerte informe selon une mesure et un délai ; elle ne constitue pas un coupe-circuit universel. Je limite aussi durée, références de taille, périmètre et suppression explicite.",
+    "commonMistakes":  [
+                           "Employer un slogan sans contrainte, preuve ni limite vérifiable"
+                       ],
+    "variants":  [
+                     "Changez une contrainte du scénario « Comprendre un budget Azure » et expliquez si la décision reste valide."
+                 ],
+    "license":  "CC-BY-4.0"
+}

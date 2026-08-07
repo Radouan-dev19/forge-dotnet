@@ -11,7 +11,7 @@ namespace ForgeDotNet.IntegrationTests;
 public sealed class InitialCSharpContentTests(DockerSecurityFixture dockerFixture)
 {
     [Fact]
-    public async Task AllEightyFivePublishedSolutionsPassAndStartersCompileWithoutPassing()
+    public async Task AllOneHundredThirtyFivePublishedSolutionsPassAndStartersCompileWithoutPassing()
     {
         using ContentEnvironment content = await ContentEnvironment.CreateAsync();
         var specificationSource = new FileSystemDockerRunSpecificationSource(
@@ -31,8 +31,8 @@ public sealed class InitialCSharpContentTests(DockerSecurityFixture dockerFixtur
                 DockerContext = dockerFixture.DockerContext,
                 ImageReference = dockerFixture.ImageReference,
                 WorkspaceRootPath = workspace,
-                MaximumConcurrency = 1,
-                TestTimeout = TimeSpan.FromSeconds(15),
+                MaximumConcurrency = 2,
+                TestTimeout = TimeSpan.FromSeconds(30),
             },
             specificationSource,
             TimeProvider.System);
@@ -42,9 +42,9 @@ public sealed class InitialCSharpContentTests(DockerSecurityFixture dockerFixtur
             .Select(Path.GetFileName)
             .Order(StringComparer.Ordinal)
             .ToArray()!;
-        Assert.Equal(85, exerciseIds.Length);
+        Assert.Equal(135, exerciseIds.Length);
 
-        foreach (string exerciseId in exerciseIds)
+        await Task.WhenAll(exerciseIds.Select(async exerciseId =>
         {
             var exercise = await content.ExerciseSource.GetAsync(exerciseId);
             Assert.NotNull(exercise);
@@ -67,9 +67,13 @@ public sealed class InitialCSharpContentTests(DockerSecurityFixture dockerFixtur
             Assert.True(solutionResult.Tests.TotalCount >= 4);
 
             CodeRunResult starterResult = await runner.RunAsync(Request(exercise, exercise.Starter));
-            Assert.Equal(CodeRunStageStatus.Succeeded, starterResult.Compilation.Status);
-            Assert.Equal(CodeRunStatus.TestsFailed, starterResult.Status);
-        }
+            Assert.True(
+                starterResult.Compilation.Status == CodeRunStageStatus.Succeeded,
+                $"{exerciseId}: compilation starter={starterResult.Compilation.Status}; sortie={starterResult.Compilation.Output.Text}");
+            Assert.True(
+                starterResult.Status == CodeRunStatus.TestsFailed,
+                $"{exerciseId}: starter={starterResult.Status}; compilation={starterResult.Compilation.Output.Text}; tests={starterResult.Tests.Output.Text}");
+        }));
 
         Assert.Empty(Directory.Exists(workspace)
             ? Directory.EnumerateFileSystemEntries(workspace)
@@ -101,7 +105,7 @@ public sealed class InitialCSharpContentTests(DockerSecurityFixture dockerFixtur
                 ImageReference = dockerFixture.ImageReference,
                 WorkspaceRootPath = workspace,
                 MaximumConcurrency = 1,
-                TestTimeout = TimeSpan.FromSeconds(15),
+                TestTimeout = TimeSpan.FromSeconds(30),
             },
             specificationSource,
             TimeProvider.System);

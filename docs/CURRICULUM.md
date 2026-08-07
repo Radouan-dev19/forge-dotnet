@@ -38,6 +38,8 @@ Charge cible : 10–15 h/semaine, au moins quatre séances. Chaque semaine combi
 
 Le catalogue final contient au moins 70 leçons, 80 exercices C#/algo, 25 labs debug, 40 exercices SQL/EF, 35 API/tests/sécurité, 15 Git/Docker/CI/Azure, 50 cartes d'anglais, 190 questions d'entretien selon la répartition demandée, 8 mini-projets, 1 projet final et 8 examens. Ces volumes sont livrés par lots décrits dans la roadmap, jamais dans un commit unique.
 
+À la validation de lʼincrément 10, S1–S24 sont matérialisées : 70 leçons, 135 exercices dont 35 activités API/tests/sécurité et 15 activités Git/Docker/CI/Azure, 25 DebugLabs, 40 scénarios SQL/EF, 190 questions dʼentretien (120 junior, 50 intermédiaire, 20 avancé), 50 cartes dʼanglais plus une activité historique, 8 mini-projets, 1 projet final guidé et 8 examens. Les détails, limites du mode Azure simulé et preuves de volume figurent dans `CONTENT_S21_S24.md`.
+
 ## Structure d'une semaine
 
 - Diagnostic court des acquis et révisions dues.

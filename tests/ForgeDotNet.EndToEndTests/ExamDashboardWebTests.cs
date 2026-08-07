@@ -24,6 +24,10 @@ public sealed class ExamDashboardWebTests : IClassFixture<ForgeWebApplicationFac
         string initial = WebUtility.HtmlDecode(await _client.GetStringAsync("/exams"));
         Assert.Contains("Examen 1 — fondamentaux C# S1–S2", initial, StringComparison.Ordinal);
         Assert.Contains("Examen 4 — SQL et EF Core S8–S10", initial, StringComparison.Ordinal);
+        Assert.Contains("Examen 5 — API et sécurité S11–S14", initial, StringComparison.Ordinal);
+        Assert.Contains("Examen 6 — tests et qualité S15–S17", initial, StringComparison.Ordinal);
+        Assert.Contains("Examen 7 — Azure et observabilité S21–S22", initial, StringComparison.Ordinal);
+        Assert.Contains("Examen 8 — synthèse et défense S1–S24", initial, StringComparison.Ordinal);
         Assert.Contains("contrôlées par le serveur", initial, StringComparison.Ordinal);
         Assert.Contains("ne prétend pas surveiller", initial, StringComparison.Ordinal);
         Assert.DoesNotContain("solution/", initial, StringComparison.OrdinalIgnoreCase);

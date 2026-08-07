@@ -1,0 +1,81 @@
+{
+    "schemaVersion":  1,
+    "id":  "api-cancellation-budget-001",
+    "version":  1,
+    "title":  "Borner un budget d’annulation",
+    "kind":  "csharp",
+    "difficulty":  2,
+    "skills":  [
+                   "api.async"
+               ],
+    "prerequisites":  [
+                          "api-async-cancellation-001"
+                      ],
+    "estimatedMinutes":  35,
+    "statement":  "statement.md",
+    "constraints":  [
+                        "Conserver exactement la signature publique",
+                        "Valider les durées puis retenir le budget le plus contraignant.",
+                        "Ne jamais dépendre du réseau, d’un secret réel ou d’un état global"
+                    ],
+    "examples":  [
+                     {
+                         "input":  "[{\"value\":[5,30],\"Count\":2},5]",
+                         "output":  "[{\"value\":[60,30],\"Count\":2},30]"
+                     }
+                 ],
+    "reflectionFields":  [
+                             "reformulation",
+                             "inputs",
+                             "expectedOutput",
+                             "edgeCases",
+                             "hypothesis",
+                             "plan"
+                         ],
+    "starterPath":  "starter/",
+    "visibleTestsPath":  "tests/visible/",
+    "hiddenTestsPath":  "tests/hidden/",
+    "hints":  [
+                  {
+                      "level":  1,
+                      "kind":  "socratic",
+                      "content":  "Quel comportement public de « Borner un budget d’annulation » change exactement à la frontière ?"
+                  },
+                  {
+                      "level":  2,
+                      "kind":  "location",
+                      "content":  "Concentrez la validation et la décision dans EffectiveTimeout, sans état global ni journal sensible."
+                  },
+                  {
+                      "level":  3,
+                      "kind":  "strategy",
+                      "content":  "Valider les durées puis retenir le budget le plus contraignant."
+                  },
+                  {
+                      "level":  4,
+                      "kind":  "partial-pseudocode",
+                      "content":  "valider les entrées ; appliquer la décision bornée ; retourner un résultat déterministe sans effet externe"
+                  }
+              ],
+    "solution":  {
+                     "path":  "solution/",
+                     "unlock":  {
+                                    "seriousAttempts":  2,
+                                    "minimumDelayMinutes":  10
+                                }
+                 },
+    "explanation":  "explanation.md",
+    "complexity":  "O(1) en temps et O(1) en espace",
+    "commonMistakes":  [
+                           "Coder seulement les exemples visibles",
+                           "Masquer une erreur ou accepter une entrée hors contrat",
+                           "Confondre une règle pure avec le transport ou une ressource externe"
+                       ],
+    "variantId":  "security-bearer-header-001",
+    "reviewCards":  [
+                        "card-api-cancellation-budget-001-rule",
+                        "card-api-cancellation-budget-001-security"
+                    ],
+    "interviewQuestionId":  "interview-api-cancellation-budget-001",
+    "license":  "CC-BY-4.0"
+}

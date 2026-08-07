@@ -1,0 +1,24 @@
+{
+    "schemaVersion":  1,
+    "id":  "interview-api-filter-term-001",
+    "version":  1,
+    "title":  "Filtrer sans dépendre de la culture",
+    "level":  "junior",
+    "durationMinutes":  6,
+    "skills":  [
+                   "api.pagination"
+               ],
+    "question":  "Comment implémenteriez-vous « Filtrer sans dépendre de la culture » et quelles preuves réfutent les contournements ?",
+    "observableCriteria":  [
+                               "Le contrat, une frontière et un refus sont explicités",
+                               "La complexité et une preuve de sécurité ou de non-régression sont justifiées"
+                           ],
+    "modelAnswer":  "Refuser les termes vides puis utiliser une comparaison ordinale insensible à la casse. Je sépare validation et décision, je teste un cas nominal et les frontières, puis je vérifie qu’aucune donnée sensible ni état externe n’entre dans la preuve. O(n*m) au pire et O(n) en espace pour la normalisation.",
+    "commonMistakes":  [
+                           "Réciter le code sans expliquer le contrat ni la preuve"
+                       ],
+    "variants":  [
+                     "Changer la frontière ou le droit tout en conservant la règle de filtrer sans dépendre de la culture."
+                 ],
+    "license":  "CC-BY-4.0"
+}

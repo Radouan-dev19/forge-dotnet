@@ -1,0 +1,81 @@
+{
+    "schemaVersion":  1,
+    "id":  "security-role-check-001",
+    "version":  1,
+    "title":  "Vérifier un rôle déclaré",
+    "kind":  "csharp",
+    "difficulty":  3,
+    "skills":  [
+                   "security.authorization"
+               ],
+    "prerequisites":  [
+                          "security-authentication-001"
+                      ],
+    "estimatedMinutes":  35,
+    "statement":  "statement.md",
+    "constraints":  [
+                        "Conserver exactement la signature publique",
+                        "Comparer chaque rôle complet sans recherche partielle ni valeur implicite.",
+                        "Ne jamais dépendre du réseau, d’un secret réel ou d’un état global"
+                    ],
+    "examples":  [
+                     {
+                         "input":  "[{\"value\":[\"Reader,Operator\",\"Operator\"],\"Count\":2},true]",
+                         "output":  "[{\"value\":[\"Reader\",\"Admin\"],\"Count\":2},false]"
+                     }
+                 ],
+    "reflectionFields":  [
+                             "reformulation",
+                             "inputs",
+                             "expectedOutput",
+                             "edgeCases",
+                             "hypothesis",
+                             "plan"
+                         ],
+    "starterPath":  "starter/",
+    "visibleTestsPath":  "tests/visible/",
+    "hiddenTestsPath":  "tests/hidden/",
+    "hints":  [
+                  {
+                      "level":  1,
+                      "kind":  "socratic",
+                      "content":  "Quel comportement public de « Vérifier un rôle déclaré » change exactement à la frontière ?"
+                  },
+                  {
+                      "level":  2,
+                      "kind":  "location",
+                      "content":  "Concentrez la validation et la décision dans HasRole, sans état global ni journal sensible."
+                  },
+                  {
+                      "level":  3,
+                      "kind":  "strategy",
+                      "content":  "Comparer chaque rôle complet sans recherche partielle ni valeur implicite."
+                  },
+                  {
+                      "level":  4,
+                      "kind":  "partial-pseudocode",
+                      "content":  "valider les entrées ; appliquer la décision bornée ; retourner un résultat déterministe sans effet externe"
+                  }
+              ],
+    "solution":  {
+                     "path":  "solution/",
+                     "unlock":  {
+                                    "seriousAttempts":  2,
+                                    "minimumDelayMinutes":  10
+                                }
+                 },
+    "explanation":  "explanation.md",
+    "complexity":  "O(n) en temps et O(n) en espace",
+    "commonMistakes":  [
+                           "Coder seulement les exemples visibles",
+                           "Masquer une erreur ou accepter une entrée hors contrat",
+                           "Confondre une règle pure avec le transport ou une ressource externe"
+                       ],
+    "variantId":  "security-owner-policy-001",
+    "reviewCards":  [
+                        "card-security-role-check-001-rule",
+                        "card-security-role-check-001-security"
+                    ],
+    "interviewQuestionId":  "interview-security-role-check-001",
+    "license":  "CC-BY-4.0"
+}

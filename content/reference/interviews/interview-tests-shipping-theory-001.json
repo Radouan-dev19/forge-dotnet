@@ -1,0 +1,24 @@
+{
+    "schemaVersion":  1,
+    "id":  "interview-tests-shipping-theory-001",
+    "version":  1,
+    "title":  "Paramétrer une règle de livraison",
+    "level":  "junior",
+    "durationMinutes":  6,
+    "skills":  [
+                   "tests.xunit"
+               ],
+    "question":  "Comment implémenteriez-vous « Paramétrer une règle de livraison » et quelles preuves réfutent les contournements ?",
+    "observableCriteria":  [
+                               "Le contrat, une frontière et un refus sont explicités",
+                               "La complexité et une preuve de sécurité ou de non-régression sont justifiées"
+                           ],
+    "modelAnswer":  "Faire varier la frontière de gratuité et le mode express dans une même théorie. Je sépare validation et décision, je teste un cas nominal et les frontières, puis je vérifie qu’aucune donnée sensible ni état externe n’entre dans la preuve. O(1) en temps et O(1) en espace.",
+    "commonMistakes":  [
+                           "Réciter le code sans expliquer le contrat ni la preuve"
+                       ],
+    "variants":  [
+                     "Changer la frontière ou le droit tout en conservant la règle de paramétrer une règle de livraison."
+                 ],
+    "license":  "CC-BY-4.0"
+}

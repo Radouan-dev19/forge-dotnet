@@ -1,0 +1,81 @@
+{
+    "schemaVersion":  1,
+    "id":  "ci-artifact-name-001",
+    "version":  1,
+    "title":  "Nommer un artefact de façon stable",
+    "kind":  "csharp",
+    "difficulty":  2,
+    "skills":  [
+                   "ci.artifacts"
+               ],
+    "prerequisites":  [
+                          "ci-pipeline-build-test-001"
+                      ],
+    "estimatedMinutes":  35,
+    "statement":  "statement.md",
+    "constraints":  [
+                        "Conserver exactement la signature publique",
+                        "Normaliser la branche, remplacer le séparateur et exiger un numéro positif.",
+                        "Ne jamais dépendre du réseau, d’un secret réel ou d’un état global"
+                    ],
+    "examples":  [
+                     {
+                         "input":  "[{\"value\":[\"main\",42],\"Count\":2},\"tests-main-42\"]",
+                         "output":  "[{\"value\":[\"feature/api\",7],\"Count\":2},\"tests-feature-api-7\"]"
+                     }
+                 ],
+    "reflectionFields":  [
+                             "reformulation",
+                             "inputs",
+                             "expectedOutput",
+                             "edgeCases",
+                             "hypothesis",
+                             "plan"
+                         ],
+    "starterPath":  "starter/",
+    "visibleTestsPath":  "tests/visible/",
+    "hiddenTestsPath":  "tests/hidden/",
+    "hints":  [
+                  {
+                      "level":  1,
+                      "kind":  "socratic",
+                      "content":  "Quel comportement public de « Nommer un artefact de façon stable » change exactement à la frontière ?"
+                  },
+                  {
+                      "level":  2,
+                      "kind":  "location",
+                      "content":  "Concentrez la validation et la décision dans ArtifactName, sans état global ni journal sensible."
+                  },
+                  {
+                      "level":  3,
+                      "kind":  "strategy",
+                      "content":  "Normaliser la branche, remplacer le séparateur et exiger un numéro positif."
+                  },
+                  {
+                      "level":  4,
+                      "kind":  "partial-pseudocode",
+                      "content":  "valider les entrées ; appliquer la décision bornée ; retourner un résultat déterministe sans effet externe"
+                  }
+              ],
+    "solution":  {
+                     "path":  "solution/",
+                     "unlock":  {
+                                    "seriousAttempts":  2,
+                                    "minimumDelayMinutes":  10
+                                }
+                 },
+    "explanation":  "explanation.md",
+    "complexity":  "O(n) en temps et O(n) en espace",
+    "commonMistakes":  [
+                           "Coder seulement les exemples visibles",
+                           "Masquer une erreur ou accepter une entrée hors contrat",
+                           "Confondre une règle pure avec le transport ou une ressource externe"
+                       ],
+    "variantId":  "ci-deploy-gate-001",
+    "reviewCards":  [
+                        "card-ci-artifact-name-001-rule",
+                        "card-ci-artifact-name-001-security"
+                    ],
+    "interviewQuestionId":  "interview-ci-artifact-name-001",
+    "license":  "CC-BY-4.0"
+}

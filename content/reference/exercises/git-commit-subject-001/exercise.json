@@ -1,0 +1,81 @@
+{
+    "schemaVersion":  1,
+    "id":  "git-commit-subject-001",
+    "version":  1,
+    "title":  "Valider un sujet de commit",
+    "kind":  "csharp",
+    "difficulty":  2,
+    "skills":  [
+                   "git.commits"
+               ],
+    "prerequisites":  [
+                          "git-commits-history-001"
+                      ],
+    "estimatedMinutes":  35,
+    "statement":  "statement.md",
+    "constraints":  [
+                        "Conserver exactement la signature publique",
+                        "Exiger un sujet non vide, borné à 72 caractères et sans point final.",
+                        "Ne jamais dépendre du réseau, d’un secret réel ou d’un état global"
+                    ],
+    "examples":  [
+                     {
+                         "input":  "[{\"value\":[\"Ajoute les tests API\"],\"Count\":1},true]",
+                         "output":  "[{\"value\":[\"Corrige.\"],\"Count\":1},false]"
+                     }
+                 ],
+    "reflectionFields":  [
+                             "reformulation",
+                             "inputs",
+                             "expectedOutput",
+                             "edgeCases",
+                             "hypothesis",
+                             "plan"
+                         ],
+    "starterPath":  "starter/",
+    "visibleTestsPath":  "tests/visible/",
+    "hiddenTestsPath":  "tests/hidden/",
+    "hints":  [
+                  {
+                      "level":  1,
+                      "kind":  "socratic",
+                      "content":  "Quel comportement public de « Valider un sujet de commit » change exactement à la frontière ?"
+                  },
+                  {
+                      "level":  2,
+                      "kind":  "location",
+                      "content":  "Concentrez la validation et la décision dans IsCommitSubjectValid, sans état global ni journal sensible."
+                  },
+                  {
+                      "level":  3,
+                      "kind":  "strategy",
+                      "content":  "Exiger un sujet non vide, borné à 72 caractères et sans point final."
+                  },
+                  {
+                      "level":  4,
+                      "kind":  "partial-pseudocode",
+                      "content":  "valider les entrées ; appliquer la décision bornée ; retourner un résultat déterministe sans effet externe"
+                  }
+              ],
+    "solution":  {
+                     "path":  "solution/",
+                     "unlock":  {
+                                    "seriousAttempts":  2,
+                                    "minimumDelayMinutes":  10
+                                }
+                 },
+    "explanation":  "explanation.md",
+    "complexity":  "O(n) en temps et O(n) en espace",
+    "commonMistakes":  [
+                           "Coder seulement les exemples visibles",
+                           "Masquer une erreur ou accepter une entrée hors contrat",
+                           "Confondre une règle pure avec le transport ou une ressource externe"
+                       ],
+    "variantId":  "git-version-patch-001",
+    "reviewCards":  [
+                        "card-git-commit-subject-001-rule",
+                        "card-git-commit-subject-001-security"
+                    ],
+    "interviewQuestionId":  "interview-git-commit-subject-001",
+    "license":  "CC-BY-4.0"
+}

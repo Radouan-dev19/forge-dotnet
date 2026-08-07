@@ -1,0 +1,24 @@
+{
+    "schemaVersion":  1,
+    "id":  "interview-tests-reset-state-001",
+    "version":  1,
+    "title":  "Réinitialiser un état de test",
+    "level":  "junior",
+    "durationMinutes":  6,
+    "skills":  [
+                   "tests.integration"
+               ],
+    "question":  "Comment implémenteriez-vous « Réinitialiser un état de test » et quelles preuves réfutent les contournements ?",
+    "observableCriteria":  [
+                               "Le contrat, une frontière et un refus sont explicités",
+                               "La complexité et une preuve de sécurité ou de non-régression sont justifiées"
+                           ],
+    "modelAnswer":  "Retourner un nouvel état de même taille et préserver les données reçues. Je sépare validation et décision, je teste un cas nominal et les frontières, puis je vérifie qu’aucune donnée sensible ni état externe n’entre dans la preuve. O(n) en temps et O(n) en espace.",
+    "commonMistakes":  [
+                           "Réciter le code sans expliquer le contrat ni la preuve"
+                       ],
+    "variants":  [
+                     "Changer la frontière ou le droit tout en conservant la règle de réinitialiser un état de test."
+                 ],
+    "license":  "CC-BY-4.0"
+}

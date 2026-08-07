@@ -1,0 +1,24 @@
+{
+    "schemaVersion":  1,
+    "id":  "interview-tests-boundary-values-001",
+    "version":  1,
+    "title":  "Détecter une frontière",
+    "level":  "junior",
+    "durationMinutes":  6,
+    "skills":  [
+                   "tests.boundaries"
+               ],
+    "question":  "Comment implémenteriez-vous « Détecter une frontière » et quelles preuves réfutent les contournements ?",
+    "observableCriteria":  [
+                               "Le contrat, une frontière et un refus sont explicités",
+                               "La complexité et une preuve de sécurité ou de non-régression sont justifiées"
+                           ],
+    "modelAnswer":  "Refuser des bornes incohérentes puis comparer exactement les deux frontières. Je sépare validation et décision, je teste un cas nominal et les frontières, puis je vérifie qu’aucune donnée sensible ni état externe n’entre dans la preuve. O(1) en temps et O(1) en espace.",
+    "commonMistakes":  [
+                           "Réciter le code sans expliquer le contrat ni la preuve"
+                       ],
+    "variants":  [
+                     "Changer la frontière ou le droit tout en conservant la règle de détecter une frontière."
+                 ],
+    "license":  "CC-BY-4.0"
+}

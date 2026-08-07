@@ -1,0 +1,36 @@
+{
+    "schemaVersion":  1,
+    "id":  "api-async-cancellation-001",
+    "version":  1,
+    "title":  "Async et annulation de bout en bout",
+    "week":  13,
+    "skills":  [
+                   {
+                       "id":  "api.async",
+                       "weight":  1
+                   }
+               ],
+    "prerequisites":  [
+                          "api-configuration-secrets-errors-001"
+                      ],
+    "estimatedMinutes":  75,
+    "objectives":  [
+                       "Appliquer Async et annulation de bout en bout et justifier une preuve observable sur un cas nouveau"
+                   ],
+    "sections":  [
+                     "intuition",
+                     "explanation",
+                     "example",
+                     "counterExample",
+                     "check",
+                     "guided",
+                     "independent",
+                     "debugging",
+                     "interview",
+                     "summary",
+                     "reviewCards",
+                     "masteryTest"
+                 ],
+    "markdownPath":  "lesson.md",
+    "license":  "CC-BY-4.0"
+}

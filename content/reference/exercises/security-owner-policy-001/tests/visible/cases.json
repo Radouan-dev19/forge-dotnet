@@ -1,0 +1,29 @@
+{
+    "schemaVersion":  1,
+    "cases":  [
+                  {
+                      "name":  "Visible_Case1",
+                      "message":  "Autoriser propriétaire ou administrateur — cas 1 incorrect.",
+                      "arguments":  [
+                                        "u1",
+                                        "u1",
+                                        false
+                                    ],
+                      "expected":  true,
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Visible_Case2",
+                      "message":  "Autoriser propriétaire ou administrateur — cas 2 incorrect.",
+                      "arguments":  [
+                                        "u1",
+                                        "u2",
+                                        false
+                                    ],
+                      "expected":  false,
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  }
+              ]
+}

@@ -2,7 +2,11 @@
 
 ## 1. Statut
 
-Non commencé.
+Validé le 6 août 2026.
+
+Le blocage Docker a été corrigé sans étendre les limites 04C : les deux examens EF préparent leur petit dataset SQLite directement en mémoire et le scénario `IQueryable` capture la commande EF réellement exécutée au lieu de traduire deux fois la requête. Le contrôle exhaustif des 135 exercices utilise la concurrence documentée par défaut de deux conteneurs et rapporte désormais lʼidentifiant complet en cas dʼéchec. Deux passes ciblées EF, puis les 270 exécutions solution/starter, sont vertes.
+
+La passe finale de `scripts/verify.ps1` réussit : build sans avertissement, 124/124 tests unitaires, 155/155 tests dʼintégration, 28/28 tests E2E, fixtures valides acceptées, fixtures invalides refusées, 40 scénarios SQL/EF et 481 documents de référence valides, catalogues chargeables et formatage propre. `docker compose config --quiet`, `git diff --check`, le mode Azure simulé, la résolution dʼincident et lʼexport carrière local réussissent également. La recherche de secrets ne contient que des règles, exemples factices, identifiants pédagogiques et chemins hors Git ; aucun secret réel nʼa été détecté. Aucune ressource Azure ni remise de projet final nʼa été créée.
 
 ## 2. Objectif
 

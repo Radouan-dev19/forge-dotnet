@@ -2,7 +2,7 @@
 
 ## 1. Statut
 
-Non commencé.
+Validé le 7 août 2026 — les 16 critères de `docs/MVP_ACCEPTANCE.md` sont conformes. La qualification finale termine avec un code nul : 124 tests unitaires, 42 E2E, 107 intégrations non-SqlLab et 48 SqlLab, aucun test ignoré, validateurs et formatage verts. L'incrément 12 reste non commencé et indépendant.
 
 ## 2. Objectif
 

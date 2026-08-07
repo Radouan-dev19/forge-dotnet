@@ -1,0 +1,24 @@
+{
+    "schemaVersion":  1,
+    "id":  "interview-api-location-header-001",
+    "version":  1,
+    "title":  "Construire une localisation de ressource",
+    "level":  "junior",
+    "durationMinutes":  6,
+    "skills":  [
+                   "api.http"
+               ],
+    "question":  "Comment implémenteriez-vous « Construire une localisation de ressource » et quelles preuves réfutent les contournements ?",
+    "observableCriteria":  [
+                               "Le contrat, une frontière et un refus sont explicités",
+                               "La complexité et une preuve de sécurité ou de non-régression sont justifiées"
+                           ],
+    "modelAnswer":  "Refuser un identifiant non publié puis construire une route relative stable. Je sépare validation et décision, je teste un cas nominal et les frontières, puis je vérifie qu’aucune donnée sensible ni état externe n’entre dans la preuve. O(1) en temps et O(1) en espace.",
+    "commonMistakes":  [
+                           "Réciter le code sans expliquer le contrat ni la preuve"
+                       ],
+    "variants":  [
+                     "Changer la frontière ou le droit tout en conservant la règle de construire une localisation de ressource."
+                 ],
+    "license":  "CC-BY-4.0"
+}

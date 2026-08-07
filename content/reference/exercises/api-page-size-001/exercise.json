@@ -1,0 +1,81 @@
+{
+    "schemaVersion":  1,
+    "id":  "api-page-size-001",
+    "version":  1,
+    "title":  "Borner une taille de page",
+    "kind":  "csharp",
+    "difficulty":  2,
+    "skills":  [
+                   "api.pagination"
+               ],
+    "prerequisites":  [
+                          "api-async-cancellation-001"
+                      ],
+    "estimatedMinutes":  35,
+    "statement":  "statement.md",
+    "constraints":  [
+                        "Conserver exactement la signature publique",
+                        "Appliquer une valeur par défaut positive et un plafond strict de cent.",
+                        "Ne jamais dépendre du réseau, d’un secret réel ou d’un état global"
+                    ],
+    "examples":  [
+                     {
+                         "input":  "[{\"value\":[25],\"Count\":1},25]",
+                         "output":  "[{\"value\":[0],\"Count\":1},20]"
+                     }
+                 ],
+    "reflectionFields":  [
+                             "reformulation",
+                             "inputs",
+                             "expectedOutput",
+                             "edgeCases",
+                             "hypothesis",
+                             "plan"
+                         ],
+    "starterPath":  "starter/",
+    "visibleTestsPath":  "tests/visible/",
+    "hiddenTestsPath":  "tests/hidden/",
+    "hints":  [
+                  {
+                      "level":  1,
+                      "kind":  "socratic",
+                      "content":  "Quel comportement public de « Borner une taille de page » change exactement à la frontière ?"
+                  },
+                  {
+                      "level":  2,
+                      "kind":  "location",
+                      "content":  "Concentrez la validation et la décision dans ClampPageSize, sans état global ni journal sensible."
+                  },
+                  {
+                      "level":  3,
+                      "kind":  "strategy",
+                      "content":  "Appliquer une valeur par défaut positive et un plafond strict de cent."
+                  },
+                  {
+                      "level":  4,
+                      "kind":  "partial-pseudocode",
+                      "content":  "valider les entrées ; appliquer la décision bornée ; retourner un résultat déterministe sans effet externe"
+                  }
+              ],
+    "solution":  {
+                     "path":  "solution/",
+                     "unlock":  {
+                                    "seriousAttempts":  2,
+                                    "minimumDelayMinutes":  10
+                                }
+                 },
+    "explanation":  "explanation.md",
+    "complexity":  "O(1) en temps et O(1) en espace",
+    "commonMistakes":  [
+                           "Coder seulement les exemples visibles",
+                           "Masquer une erreur ou accepter une entrée hors contrat",
+                           "Confondre une règle pure avec le transport ou une ressource externe"
+                       ],
+    "variantId":  "api-skip-count-001",
+    "reviewCards":  [
+                        "card-api-page-size-001-rule",
+                        "card-api-page-size-001-security"
+                    ],
+    "interviewQuestionId":  "interview-api-page-size-001",
+    "license":  "CC-BY-4.0"
+}

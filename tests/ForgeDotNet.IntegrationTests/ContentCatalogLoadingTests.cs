@@ -23,14 +23,14 @@ public sealed class ContentCatalogLoadingTests
         Assert.True(second.Succeeded, FormatIssues(second.Issues));
         ContentCatalog catalog = Assert.IsType<ContentCatalog>(first.Catalog);
         ContentCatalog secondCatalog = Assert.IsType<ContentCatalog>(second.Catalog);
-        Assert.Equal(231, catalog.Items.Count);
-        Assert.Equal(85, catalog.GetByType(ContentDocumentType.Exercise).Count);
-        Assert.Equal(84, catalog.GetByType(ContentDocumentType.InterviewQuestion).Count);
+        Assert.Equal(481, catalog.Items.Count);
+        Assert.Equal(135, catalog.GetByType(ContentDocumentType.Exercise).Count);
+        Assert.Equal(190, catalog.GetByType(ContentDocumentType.InterviewQuestion).Count);
         Assert.Single(catalog.GetByType(ContentDocumentType.Curriculum));
-        Assert.Equal(30, catalog.GetByType(ContentDocumentType.Lesson).Count);
-        Assert.Single(catalog.GetByType(ContentDocumentType.EnglishActivity));
+        Assert.Equal(70, catalog.GetByType(ContentDocumentType.Lesson).Count);
+        Assert.Equal(51, catalog.GetByType(ContentDocumentType.EnglishActivity).Count);
         Assert.Equal(25, catalog.GetByType(ContentDocumentType.DebugScenario).Count);
-        Assert.Equal(5, catalog.GetByType(ContentDocumentType.Project).Count);
+        Assert.Equal(9, catalog.GetByType(ContentDocumentType.Project).Count);
         Assert.Equal(catalog.Revision, secondCatalog.Revision);
         string[] csharpTypeIds = catalog.GetBySkill("csharp.types")
             .Select(item => item.Id)

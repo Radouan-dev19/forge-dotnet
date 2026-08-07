@@ -1,0 +1,25 @@
+{
+    "schemaVersion":  1,
+    "cases":  [
+                  {
+                      "name":  "Visible_Case1",
+                      "message":  "Rendre une garde nullable explicite — cas 1 incorrect.",
+                      "arguments":  [
+                                        " value "
+                                    ],
+                      "expected":  "value",
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Visible_Case2",
+                      "message":  "Rendre une garde nullable explicite — cas 2 incorrect.",
+                      "arguments":  [
+                                        ""
+                                    ],
+                      "expected":  "n/a",
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  }
+              ]
+}

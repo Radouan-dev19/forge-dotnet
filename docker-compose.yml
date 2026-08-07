@@ -41,7 +41,7 @@ services:
 
   sql-lab:
     profiles: ["sql-lab"]
-    image: forge-dotnet-sql-lab:2022-cu21
+    image: forge-dotnet-sql-lab:2022-cu26
     build:
       context: docker/sql-lab
       dockerfile: Dockerfile
@@ -83,7 +83,7 @@ services:
 
   sql-lab-test-bridge:
     profiles: ["sql-lab-test"]
-    image: forge-dotnet-sql-lab:2022-cu21
+    image: forge-dotnet-sql-lab:2022-cu26
     entrypoint: ["/usr/bin/python3", "/usr/local/bin/sql-lab-bridge.py"]
     depends_on:
       sql-lab:

@@ -1,0 +1,36 @@
+{
+    "schemaVersion":  1,
+    "id":  "security-authentication-001",
+    "version":  1,
+    "title":  "Authentification sans fuite d’identité",
+    "week":  14,
+    "skills":  [
+                   {
+                       "id":  "security.authentication",
+                       "weight":  1
+                   }
+               ],
+    "prerequisites":  [
+                          "api-openapi-contracts-001"
+                      ],
+    "estimatedMinutes":  75,
+    "objectives":  [
+                       "Appliquer Authentification sans fuite d’identité et justifier une preuve observable sur un cas nouveau"
+                   ],
+    "sections":  [
+                     "intuition",
+                     "explanation",
+                     "example",
+                     "counterExample",
+                     "check",
+                     "guided",
+                     "independent",
+                     "debugging",
+                     "interview",
+                     "summary",
+                     "reviewCards",
+                     "masteryTest"
+                 ],
+    "markdownPath":  "lesson.md",
+    "license":  "CC-BY-4.0"
+}

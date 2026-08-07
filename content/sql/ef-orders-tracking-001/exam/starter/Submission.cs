@@ -24,12 +24,17 @@ public static class Submission
     {
         var connection = new SqliteConnection("Data Source=:memory:");
         connection.Open();
-        using var context = new ExamContext(CreateOptions(connection));
-        context.Database.EnsureCreated();
-        context.Orders.AddRange(
-            new Order { OrderId = 1, Total = 120.50m },
-            new Order { OrderId = 2, Total = 75m });
-        context.SaveChanges();
+        using SqliteCommand command = connection.CreateCommand();
+        command.CommandText = """
+            CREATE TABLE "Orders" (
+                "OrderId" INTEGER NOT NULL CONSTRAINT "PK_Orders" PRIMARY KEY,
+                "Total" TEXT NOT NULL
+            );
+            INSERT INTO "Orders" ("OrderId", "Total") VALUES
+                (1, '120.50'),
+                (2, '75');
+            """;
+        command.ExecuteNonQuery();
         return connection;
     }
 

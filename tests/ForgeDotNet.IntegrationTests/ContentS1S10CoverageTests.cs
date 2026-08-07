@@ -59,17 +59,40 @@ public sealed class ContentS1S10CoverageTests
     {
         string root = FindContentRoot();
         string catalog = Path.Combine(root, "reference");
+        using JsonDocument curriculum = Read(Path.Combine(catalog, "curriculum", "forge-reference.json"));
+        var s11S20ExerciseIds = curriculum.RootElement.GetProperty("modules").EnumerateArray()
+            .Where(module => module.GetProperty("weeks")[0].GetInt32() >= 11)
+            .SelectMany(module => module.GetProperty("exerciseIds").EnumerateArray())
+            .Select(value => value.GetString()!)
+            .ToHashSet(StringComparer.Ordinal);
 
         string[] lessons = Directory.GetFiles(
-            Path.Combine(catalog, "curriculum", "lessons"), "lesson.json", SearchOption.AllDirectories);
+                Path.Combine(catalog, "curriculum", "lessons"), "lesson.json", SearchOption.AllDirectories)
+            .Where(path => Read(path).RootElement.GetProperty("week").GetInt32() <= 10)
+            .ToArray();
         string[] exercises = Directory.GetFiles(
-            Path.Combine(catalog, "exercises"), "exercise.json", SearchOption.AllDirectories);
+                Path.Combine(catalog, "exercises"), "exercise.json", SearchOption.AllDirectories)
+            .Where(path => !s11S20ExerciseIds.Contains(Path.GetFileName(Path.GetDirectoryName(path)!)))
+            .ToArray();
         string[] debug = Directory.GetFiles(
             Path.Combine(catalog, "debugging"), "scenario.json", SearchOption.AllDirectories);
         string[] sql = Directory.GetFiles(Path.Combine(root, "sql"), "scenario.json", SearchOption.AllDirectories);
-        string[] projects = Directory.GetFiles(Path.Combine(catalog, "projects"), "*.json", SearchOption.TopDirectoryOnly);
-        string[] interviews = Directory.GetFiles(Path.Combine(catalog, "interviews"), "*.json", SearchOption.TopDirectoryOnly);
-        string[] exams = Directory.GetFiles(Path.Combine(root, "exams"), "exam.json", SearchOption.AllDirectories);
+        string[] projects = Directory.GetFiles(Path.Combine(catalog, "projects"), "*.json", SearchOption.TopDirectoryOnly)
+            .Where(path => Read(path).RootElement.GetProperty("weeks").EnumerateArray().Max(value => value.GetInt32()) <= 10)
+            .ToArray();
+        var s11S20InterviewIds = s11S20ExerciseIds.Select(id => $"interview-{id}").ToHashSet(StringComparer.Ordinal);
+        string[] interviews = Directory.GetFiles(Path.Combine(catalog, "interviews"), "*.json", SearchOption.TopDirectoryOnly)
+            .Where(path =>
+            {
+                string id = Read(path).RootElement.GetProperty("id").GetString()!;
+                return !s11S20InterviewIds.Contains(id)
+                    && !id.StartsWith("interview-s21-s24-", StringComparison.Ordinal);
+            })
+            .ToArray();
+        string[] exams = Directory.GetFiles(Path.Combine(root, "exams"), "exam.json", SearchOption.AllDirectories)
+            .Where(path => Read(path).RootElement.GetProperty("id").GetString() is not
+                ("api-security-v1" or "tests-quality-v1" or "azure-observability-v1" or "final-readiness-v1"))
+            .ToArray();
 
         Assert.Equal(30, lessons.Length);
         Assert.Equal(85, exercises.Length);
@@ -158,7 +181,32 @@ public sealed class ContentS1S10CoverageTests
     public void LearnerContentContainsNoPlaceholderOrS11Topic()
     {
         string root = FindContentRoot();
-        string[] inspected = Directory.GetFiles(Path.Combine(root, "reference"), "*", SearchOption.AllDirectories)
+        string catalog = Path.Combine(root, "reference");
+        string[] s1S10LessonFiles = Directory.GetFiles(
+                Path.Combine(catalog, "curriculum", "lessons"), "lesson.json", SearchOption.AllDirectories)
+            .Where(path => Read(path).RootElement.GetProperty("week").GetInt32() <= 10)
+            .SelectMany(path => Directory.GetFiles(Path.GetDirectoryName(path)!))
+            .ToArray();
+        string[] s1S10ExerciseFiles = Directory.GetFiles(Path.Combine(catalog, "exercises"), "exercise.json", SearchOption.AllDirectories)
+            .Where(path => !Read(path).RootElement.GetProperty("skills").EnumerateArray().Any(skill =>
+                (skill.GetString() ?? string.Empty).StartsWith("api.", StringComparison.Ordinal)
+                || (skill.GetString() ?? string.Empty).StartsWith("security.", StringComparison.Ordinal)
+                || (skill.GetString() ?? string.Empty).StartsWith("tests.", StringComparison.Ordinal)
+                || (skill.GetString() ?? string.Empty).StartsWith("quality.", StringComparison.Ordinal)
+                || (skill.GetString() ?? string.Empty).StartsWith("git.", StringComparison.Ordinal)
+                || (skill.GetString() ?? string.Empty).StartsWith("docker.", StringComparison.Ordinal)
+                || (skill.GetString() ?? string.Empty).StartsWith("ci.", StringComparison.Ordinal)))
+            .SelectMany(path => Directory.GetFiles(Path.GetDirectoryName(path)!, "*", SearchOption.AllDirectories))
+            .ToArray();
+        string[] s1S10ProjectFiles = Directory.GetFiles(Path.Combine(catalog, "projects"), "*.json", SearchOption.TopDirectoryOnly)
+            .Where(path => Read(path).RootElement.GetProperty("weeks").EnumerateArray().Max(value => value.GetInt32()) <= 10)
+            .SelectMany(path => new[] { path, Path.ChangeExtension(path, ".md") })
+            .ToArray();
+        string[] inspected = s1S10LessonFiles
+            .Concat(s1S10ExerciseFiles)
+            .Concat(s1S10ProjectFiles)
+            .Concat(Directory.GetFiles(Path.Combine(catalog, "debugging"), "*", SearchOption.AllDirectories))
+            .Concat(Directory.GetFiles(Path.Combine(catalog, "english"), "*", SearchOption.AllDirectories))
             .Concat(Directory.GetFiles(Path.Combine(root, "sql"), "*", SearchOption.AllDirectories))
             .Where(path => Path.GetExtension(path) is ".md" or ".json" or ".sql")
             .Where(path => !path.Contains($"{Path.DirectorySeparatorChar}starter{Path.DirectorySeparatorChar}", StringComparison.OrdinalIgnoreCase))

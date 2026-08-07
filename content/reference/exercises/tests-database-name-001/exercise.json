@@ -1,0 +1,81 @@
+{
+    "schemaVersion":  1,
+    "id":  "tests-database-name-001",
+    "version":  1,
+    "title":  "Reconnaître une base de test isolée",
+    "kind":  "csharp",
+    "difficulty":  3,
+    "skills":  [
+                   "tests.integration"
+               ],
+    "prerequisites":  [
+                          "tests-doubles-design-001"
+                      ],
+    "estimatedMinutes":  35,
+    "statement":  "statement.md",
+    "constraints":  [
+                        "Conserver exactement la signature publique",
+                        "Exiger un préfixe réservé et un suffixe suffisamment unique, avec comparaison ordinale.",
+                        "Ne jamais dépendre du réseau, d’un secret réel ou d’un état global"
+                    ],
+    "examples":  [
+                     {
+                         "input":  "[{\"value\":[\"forge-test-123456789\"],\"Count\":1},true]",
+                         "output":  "[{\"value\":[\"production\"],\"Count\":1},false]"
+                     }
+                 ],
+    "reflectionFields":  [
+                             "reformulation",
+                             "inputs",
+                             "expectedOutput",
+                             "edgeCases",
+                             "hypothesis",
+                             "plan"
+                         ],
+    "starterPath":  "starter/",
+    "visibleTestsPath":  "tests/visible/",
+    "hiddenTestsPath":  "tests/hidden/",
+    "hints":  [
+                  {
+                      "level":  1,
+                      "kind":  "socratic",
+                      "content":  "Quel comportement public de « Reconnaître une base de test isolée » change exactement à la frontière ?"
+                  },
+                  {
+                      "level":  2,
+                      "kind":  "location",
+                      "content":  "Concentrez la validation et la décision dans IsIsolatedDatabase, sans état global ni journal sensible."
+                  },
+                  {
+                      "level":  3,
+                      "kind":  "strategy",
+                      "content":  "Exiger un préfixe réservé et un suffixe suffisamment unique, avec comparaison ordinale."
+                  },
+                  {
+                      "level":  4,
+                      "kind":  "partial-pseudocode",
+                      "content":  "valider les entrées ; appliquer la décision bornée ; retourner un résultat déterministe sans effet externe"
+                  }
+              ],
+    "solution":  {
+                     "path":  "solution/",
+                     "unlock":  {
+                                    "seriousAttempts":  2,
+                                    "minimumDelayMinutes":  10
+                                }
+                 },
+    "explanation":  "explanation.md",
+    "complexity":  "O(n) en temps et O(1) en espace",
+    "commonMistakes":  [
+                           "Coder seulement les exemples visibles",
+                           "Masquer une erreur ou accepter une entrée hors contrat",
+                           "Confondre une règle pure avec le transport ou une ressource externe"
+                       ],
+    "variantId":  "tests-success-status-001",
+    "reviewCards":  [
+                        "card-tests-database-name-001-rule",
+                        "card-tests-database-name-001-security"
+                    ],
+    "interviewQuestionId":  "interview-tests-database-name-001",
+    "license":  "CC-BY-4.0"
+}

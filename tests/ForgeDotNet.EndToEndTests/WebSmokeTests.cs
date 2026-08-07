@@ -1,12 +1,18 @@
 using System.Net;
+using System.Text.RegularExpressions;
+using ForgeDotNet.Application.Exams;
+using ForgeDotNet.Application.Practice;
+using Microsoft.Extensions.DependencyInjection;
 namespace ForgeDotNet.EndToEndTests;
 
 public sealed class WebSmokeTests : IClassFixture<ForgeWebApplicationFactory>
 {
+    private readonly ForgeWebApplicationFactory _factory;
     private readonly HttpClient _client;
 
     public WebSmokeTests(ForgeWebApplicationFactory factory)
     {
+        _factory = factory;
         _client = factory.CreateClient(new Microsoft.AspNetCore.Mvc.Testing.WebApplicationFactoryClientOptions
         {
             AllowAutoRedirect = false,
@@ -114,5 +120,54 @@ public sealed class WebSmokeTests : IClassFixture<ForgeWebApplicationFactory>
 
         Assert.Contains("Choisir un type monétaire adapté", content, StringComparison.Ordinal);
         Assert.Contains("csharp.types", content, StringComparison.Ordinal);
+    }
+
+    [Theory]
+    [InlineData("/")]
+    [InlineData("/dashboard")]
+    [InlineData("/learn")]
+    [InlineData("/practice")]
+    [InlineData("/debug-lab")]
+    [InlineData("/sql-lab")]
+    [InlineData("/mastery")]
+    [InlineData("/reviews")]
+    [InlineData("/exams")]
+    [InlineData("/diagnostic")]
+    [InlineData("/profile")]
+    [InlineData("/settings")]
+    public async Task PublicPagesExposeKeyboardAndDocumentAccessibilityLandmarks(string path)
+    {
+        string content = await _client.GetStringAsync(path);
+
+        Assert.Contains("<html lang=\"fr\">", content, StringComparison.Ordinal);
+        Assert.Contains("<meta name=\"viewport\"", content, StringComparison.Ordinal);
+        Assert.Contains("aria-label=\"Navigation principale\"", content, StringComparison.Ordinal);
+        Assert.Contains("class=\"skip-link\"", content, StringComparison.Ordinal);
+        Assert.Contains("href=\"#main-content\"", content, StringComparison.Ordinal);
+        Assert.Equal(1, Regex.Count(content, "<main(?:\\s|>)", RegexOptions.IgnoreCase));
+        Assert.Contains("id=\"main-content\"", content, StringComparison.Ordinal);
+        Assert.Contains("tabindex=\"-1\"", content, StringComparison.Ordinal);
+        Assert.DoesNotMatch("tabindex=\\\"[1-9][0-9]*\\\"", content);
+        Assert.DoesNotContain(" autofocus", content, StringComparison.OrdinalIgnoreCase);
+    }
+
+    [Fact]
+    public async Task ValidatedContentSourcesReuseTheirImmutableSnapshots()
+    {
+        using IServiceScope scope = _factory.Services.CreateScope();
+        IPracticeExerciseSource exercises = scope.ServiceProvider.GetRequiredService<IPracticeExerciseSource>();
+        IExamBankSource exams = scope.ServiceProvider.GetRequiredService<IExamBankSource>();
+
+        IReadOnlyList<ForgeDotNet.Domain.Practice.PracticeExercise> firstExercises =
+            await exercises.ListAsync();
+        IReadOnlyList<ForgeDotNet.Domain.Practice.PracticeExercise> secondExercises =
+            await exercises.ListAsync();
+        IReadOnlyList<ForgeDotNet.Domain.Exams.ExamBlueprint> firstExams = await exams.ListAsync();
+        IReadOnlyList<ForgeDotNet.Domain.Exams.ExamBlueprint> secondExams = await exams.ListAsync();
+
+        Assert.Same(firstExercises, secondExercises);
+        Assert.Same(firstExams, secondExams);
+        Assert.NotEmpty(firstExercises);
+        Assert.NotEmpty(firstExams);
     }
 }

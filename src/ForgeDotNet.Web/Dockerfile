@@ -23,7 +23,7 @@ RUN --mount=type=cache,id=forge-dotnet-nuget,target=/root/.nuget/packages \
 FROM mcr.microsoft.com/dotnet/aspnet:10.0-alpine3.23@sha256:27b6b84beeede74fd16886177d360799c8e4299ceadfbd64eef57bafead7878a AS runtime
 WORKDIR /app
 
-RUN apk add --no-cache icu-libs \
+RUN apk add --no-cache icu-libs tzdata \
     && mkdir -p /var/lib/forge-dotnet \
     && chown -R app:app /var/lib/forge-dotnet
 
@@ -32,6 +32,8 @@ COPY content/schemas/ ./content/schemas/
 COPY content/reference/ ./content/reference/
 COPY content/diagnostic/ ./content/diagnostic/
 COPY content/planning/ ./content/planning/
+COPY content/exams/ ./content/exams/
+COPY content/sql/ ./content/sql/
 COPY src/ForgeDotNet.Web/docker-entrypoint.sh /usr/local/bin/forge-dotnet-entrypoint
 RUN chmod 0555 /usr/local/bin/forge-dotnet-entrypoint
 
