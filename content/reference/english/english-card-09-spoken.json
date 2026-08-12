@@ -1,39 +1,40 @@
 {
-    "schemaVersion":  1,
-    "id":  "english-card-09-spoken",
-    "version":  1,
-    "title":  "Structured logging — spoken follow-up",
-    "level":  "B2",
-    "durationMinutes":  10,
-    "skills":  [
-                   "english.spoken",
-                   "observability.logs"
-               ],
-    "situation":  "In a technical discussion, an incident reviewer asks what a log event contains. You must answer aloud accurately without overstating the evidence.",
-    "instructions":  [
-                         "Deliver a sixty-second answer with decision, evidence, limitation and one clarifying question."
-                     ],
-    "vocabulary":  [
-                       {
-                           "term":  "safe logging",
-                           "meaning":  "the precise concept required for structured logging"
-                       },
-                       {
-                           "term":  "verified evidence",
-                           "meaning":  "an observation supported by a reproducible check"
-                       }
-                   ],
-    "expectedElements":  [
-                             "A clear decision tied to the scenario",
-                             "Verified evidence and one explicit limitation",
-                             "One useful clarifying question"
-                         ],
-    "modelAnswer":  "My decision is that The event contains a stable name, severity, normalized route, duration, result and correlation identifier, but no request body. The current evidence is limited to the documented checks, so I would not claim more. Which constraint or observation would make us revisit this decision?",
-    "commonMistakes":  [
-                           "Using confident adjectives without naming evidence or a limitation"
-                       ],
-    "variants":  [
-                     "Answer again after the reviewer changes one cost or security constraint."
-                 ],
-    "license":  "CC-BY-4.0"
+  "schemaVersion": 1,
+  "id": "english-card-09-spoken",
+  "version": 1,
+  "title": "Structured logging — spoken follow-up",
+  "level": "B2",
+  "durationMinutes": 10,
+  "skills": [
+    "english.spoken",
+    "observability.logs"
+  ],
+  "situation": "In a technical discussion, an incident reviewer asks what a log event contains. You must answer aloud accurately without overstating the evidence.",
+  "instructions": [
+    "Say aloud what one log event contains, and name a field you deliberately left out."
+  ],
+  "vocabulary": [
+    {
+      "term": "safe logging",
+      "meaning": "recording enough to diagnose an incident while carrying nothing that would harm if the log were read by anyone"
+    },
+    {
+      "term": "excluded field",
+      "meaning": "a value deliberately kept out of a log line, named in the design so that it is not reintroduced later"
+    }
+  ],
+  "expectedElements": [
+    "The event fields are enumerated concretely",
+    "One deliberately excluded field is named",
+    "The diagnostic value of the remaining fields is defended"
+  ],
+  "modelAnswer": "A log event carries the timestamp, the correlation identifier, the operation name, the outcome, the duration, and the identifier of the affected record. What it deliberately does not carry is the request body, and I want to name that explicitly so nobody adds it back later thinking it was an oversight. The reason is that the body contains customer data, and a log is read by more people than the database is. The remaining fields are still enough as diagnostic evidence: with the correlation identifier and the record identifier I can reconstruct what happened without seeing the payload. Is there a diagnosis you have needed the body for?",
+  "commonMistakes": [
+    "Describing logging as safe without naming a single excluded field",
+    "Excluding fields so aggressively that no incident can be reconstructed"
+  ],
+  "variants": [
+    "Answer again to a reviewer who asks for the payload during an incident."
+  ],
+  "license": "CC-BY-4.0"
 }

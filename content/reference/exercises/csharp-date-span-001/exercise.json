@@ -20,8 +20,8 @@
                     ],
     "examples":  [
                      {
-                         "input":  "[{\"value\":[\"2026-07-01\",\"2026-07-01\"],\"Count\":2},1]",
-                         "output":  "[{\"value\":[\"2026-07-01\",\"2026-07-03\"],\"Count\":2},3]"
+                         "input":  "[\"2026-07-01\",\"2026-07-01\"]",
+                         "output":  "1"
                      }
                  ],
     "reflectionFields":  [
@@ -54,7 +54,7 @@
                   {
                       "level":  4,
                       "kind":  "partial-pseudocode",
-                      "content":  "valider les bornes ; parcourir ou décider ; retourner un nouveau résultat déterministe"
+                      "content":  "si end précède start retourner zéro ; sinon soustraire les numéros de jour, puis ajouter un pour inclure les deux bornes"
                   }
               ],
     "solution":  {
@@ -67,9 +67,10 @@
     "explanation":  "explanation.md",
     "complexity":  "O(1) en temps et O(1) en espace",
     "commonMistakes":  [
-                           "Coder uniquement les exemples visibles",
-                           "Oublier une borne ou modifier une entrée",
-                           "Annoncer une complexité sans compter les opérations dominantes"
+                           "Oublier le plus un et perdre un jour sur chaque intervalle",
+                           "Retourner une valeur négative pour un intervalle inversé",
+                           "Retourner zéro quand les deux dates sont identiques alors que ce jour compte",
+                           "Passer par une différence de durée et subir le fuseau ou le changement d'heure"
                        ],
     "variantId":  "csharp-dictionary-default-001",
     "reviewCards":  [

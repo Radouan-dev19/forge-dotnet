@@ -2,6 +2,6 @@
 
 Implémentez Submission.ShippingCost avec la signature fournie. Faire varier la frontière de gratuité et le mode express dans une même théorie.
 
-Le résultat reste déterministe et hors ligne. Écrivez avant le code un cas nominal, une frontière, un refus et la menace ou régression que ces preuves préviennent. N’utilisez aucun secret réel.
+Le calcul reste déterministe et hors ligne, sans consulter aucun transporteur. Écrivez avant le code : le seuil exact en mode normal, la valeur juste en dessous, le seuil exact en mode express, et un total négatif. Nommez les combinaisons qui interagissent réellement et celles qui n'apprennent rien.
 
-Exemple : entrée $(Convert-JsonCompact System.Object[] System.Object[][0]), sortie $(Convert-JsonCompact System.Object[] System.Object[][1]).
+Exemple : entrée `[49.99,false]`, sortie `4.9`.

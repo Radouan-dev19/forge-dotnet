@@ -20,8 +20,8 @@
                     ],
     "examples":  [
                      {
-                         "input":  "[{\"value\":[\"[1,2,\\\"x\\\"]\"],\"Count\":1},2]",
-                         "output":  "[{\"value\":[\"[]\"],\"Count\":1},0]"
+                         "input":  "[\"[1,2,\\u0022x\\u0022]\"]",
+                         "output":  "2"
                      }
                  ],
     "reflectionFields":  [
@@ -54,7 +54,7 @@
                   {
                       "level":  4,
                       "kind":  "partial-pseudocode",
-                      "content":  "valider les bornes ; parcourir ou décider ; retourner un nouveau résultat déterministe"
+                      "content":  "si json est absent ou composé de blancs retourner zéro ; analyser le document et libérer ce qui doit l'être ; si la racine n'est pas un tableau retourner zéro ; sinon compter les éléments dont le type est numérique"
                   }
               ],
     "solution":  {
@@ -67,9 +67,10 @@
     "explanation":  "explanation.md",
     "complexity":  "O(n) en temps et O(n) en espace",
     "commonMistakes":  [
-                           "Coder uniquement les exemples visibles",
-                           "Oublier une borne ou modifier une entrée",
-                           "Annoncer une complexité sans compter les opérations dominantes"
+                           "Compter les chiffres présents dans le texte au lieu d'analyser le document",
+                           "Compter un nombre écrit entre guillemets, qui est une chaîne",
+                           "Lever quand la racine est un objet au lieu de retourner zéro",
+                           "Oublier de libérer le document analysé"
                        ],
     "variantId":  "csharp-sequence-copy-001",
     "reviewCards":  [

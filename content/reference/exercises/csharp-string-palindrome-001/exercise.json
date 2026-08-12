@@ -20,8 +20,8 @@
                     ],
     "examples":  [
                      {
-                         "input":  "[{\"value\":[\"radar\"],\"Count\":1},true]",
-                         "output":  "[{\"value\":[\"chat\"],\"Count\":1},false]"
+                         "input":  "[\"radar\"]",
+                         "output":  "true"
                      }
                  ],
     "reflectionFields":  [
@@ -54,7 +54,7 @@
                   {
                       "level":  4,
                       "kind":  "partial-pseudocode",
-                      "content":  "valider les bornes ; parcourir ou décider ; retourner un nouveau résultat déterministe"
+                      "content":  "si value est null lever ArgumentNullException ; retirer les espaces et uniformiser la casse avec la culture invariante ; comparer ensuite les caractères depuis les deux extrémités vers le centre, en s'arrêtant au premier écart"
                   }
               ],
     "solution":  {
@@ -67,9 +67,10 @@
     "explanation":  "explanation.md",
     "complexity":  "O(n) en temps et O(n) en espace",
     "commonMistakes":  [
-                           "Coder uniquement les exemples visibles",
-                           "Oublier une borne ou modifier une entrée",
-                           "Annoncer une complexité sans compter les opérations dominantes"
+                           "Comparer sans avoir uniformisé la casse et refuser un palindrome écrit en majuscules",
+                           "Prolonger le parcours au-delà du centre et comparer deux fois chaque paire",
+                           "Retirer aussi la ponctuation, ce que le contrat n'annonce pas",
+                           "Refuser une chaîne vide, qui est un palindrome"
                        ],
     "variantId":  "csharp-array-positive-sum-001",
     "reviewCards":  [

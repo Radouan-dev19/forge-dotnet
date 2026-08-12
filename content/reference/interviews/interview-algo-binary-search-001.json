@@ -1,24 +1,24 @@
 {
-    "schemaVersion":  1,
-    "id":  "interview-algo-binary-search-001",
-    "version":  1,
-    "title":  "Rechercher dans un tableau trié",
-    "level":  "junior",
-    "durationMinutes":  5,
-    "skills":  [
-                   "algorithm.search"
-               ],
-    "question":  "Comment résoudriez-vous « Rechercher dans un tableau trié » et comment prouveriez-vous les bornes ?",
-    "observableCriteria":  [
-                               "Le contrat et une borne sont explicitement reformulés",
-                               "La complexité et un test de réfutation sont justifiés"
-                           ],
-    "modelAnswer":  "Réduire un intervalle fermé et déplacer au-delà du milieu testé. La preuve comprend un cas nominal, une borne et un cas différent des exemples ; O(log n) en temps et O(1) en espace.",
-    "commonMistakes":  [
-                           "Réciter le code sans invariant ni méthode de test"
-                       ],
-    "variants":  [
-                     "Changer une borne ou le volume tout en conservant la même règle de rechercher dans un tableau trié."
-                 ],
-    "license":  "CC-BY-4.0"
+  "schemaVersion": 1,
+  "id": "interview-algo-binary-search-001",
+  "version": 1,
+  "title": "Rechercher dans un tableau trié",
+  "level": "junior",
+  "durationMinutes": 5,
+  "skills": [
+    "algorithm.search"
+  ],
+  "question": "Comment résoudriez-vous « Rechercher dans un tableau trié » et comment prouveriez-vous les bornes ?",
+  "observableCriteria": [
+    "L'invariant de l'intervalle est énoncé, et la condition de poursuite couvre la fenêtre à un seul élément",
+    "Le calcul du milieu évite la somme des bornes, avec la raison"
+  ],
+  "modelAnswer": "Réduire un intervalle fermé et déplacer au-delà du milieu testé. Je prouve par une valeur absente, par les deux extrémités et par un tableau à un élément ; O(log n) en temps et O(1) en espace.",
+  "commonMistakes": [
+    "Réciter la boucle sans dire ce que l'intervalle garantit à chaque tour"
+  ],
+  "variants": [
+    "Changer une borne ou le volume tout en conservant la même règle de rechercher dans un tableau trié."
+  ],
+  "license": "CC-BY-4.0"
 }

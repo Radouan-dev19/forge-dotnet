@@ -1,39 +1,40 @@
 {
-    "schemaVersion":  1,
-    "id":  "english-card-07-written",
-    "version":  1,
-    "title":  "Cost warning — written update",
-    "level":  "B1",
-    "durationMinutes":  12,
-    "skills":  [
-                   "english.written",
-                   "azure.cost"
-               ],
-    "situation":  "In a technical discussion, a manager asks whether a budget guarantees zero overspend. You must write the decision accurately without overstating the evidence.",
-    "instructions":  [
-                         "Write a four-sentence update with decision, evidence, limitation and next action."
-                     ],
-    "vocabulary":  [
-                       {
-                           "term":  "cost boundary",
-                           "meaning":  "the precise concept required for cost warning"
-                       },
-                       {
-                           "term":  "verified evidence",
-                           "meaning":  "an observation supported by a reproducible check"
-                       }
-                   ],
-    "expectedElements":  [
-                             "A clear decision tied to the scenario",
-                             "Verified evidence and one explicit limitation",
-                             "A named next action"
-                         ],
-    "modelAnswer":  "Decision: A budget produces notifications but is not a universal spending stop, so duration, size and deletion are also controlled. Evidence: the documented local checks support this scope. Limitation: this does not prove behavior in an untested production environment. Next action: record the owner and the next bounded verification.",
-    "commonMistakes":  [
-                           "Using confident adjectives without naming evidence or a limitation"
-                       ],
-    "variants":  [
-                     "Rewrite the update for a non-technical stakeholder without removing the limitation."
-                 ],
-    "license":  "CC-BY-4.0"
+  "schemaVersion": 1,
+  "id": "english-card-07-written",
+  "version": 1,
+  "title": "Cost warning — written update",
+  "level": "B1",
+  "durationMinutes": 12,
+  "skills": [
+    "english.written",
+    "azure.cost"
+  ],
+  "situation": "In a technical discussion, a manager asks whether a budget guarantees zero overspend. You must write the decision accurately without overstating the evidence.",
+  "instructions": [
+    "Write four sentences on what a budget alert actually does, its delay, and the control that would genuinely cap spending."
+  ],
+  "vocabulary": [
+    {
+      "term": "cost boundary",
+      "meaning": "a limit that is enforced rather than observed, as opposed to an alert that only reports after the fact"
+    },
+    {
+      "term": "notification delay",
+      "meaning": "the time between a spend occurring and the alert firing, during which spending continues unchecked"
+    }
+  ],
+  "expectedElements": [
+    "The difference between alerting and enforcing is made",
+    "The notification delay is acknowledged",
+    "A genuine capping control is proposed"
+  ],
+  "modelAnswer": "A budget does not prevent overspend; it reports it. It observes accumulated cost and notifies when a threshold is crossed, and the notification arrives with a delay of several hours during which spending continues. A real cap has to be enforced on the resource, or automated so that crossing the threshold shuts the resource down. The evidence is the alert history alongside the invoice for the same period, which makes the gap visible.",
+  "commonMistakes": [
+    "Confirming the assumption instead of correcting it",
+    "Correcting it without proposing a control that actually caps spending"
+  ],
+  "variants": [
+    "Rewrite the update to propose the automation and its failure mode."
+  ],
+  "license": "CC-BY-4.0"
 }

@@ -25,6 +25,13 @@
                                    },
                       "expectedException":  null,
                       "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Visible_TwoDistinctWords",
+                      "message":  "Deux mots distincts : une entrée chacun.",
+                      "arguments":  ["un deux"],
+                      "expected":  {"un":1,"deux":1},
+                      "argumentsUnchanged":  true
                   }
               ]
 }

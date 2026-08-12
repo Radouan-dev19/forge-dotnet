@@ -15,13 +15,13 @@
     "statement":  "statement.md",
     "constraints":  [
                         "Conserver exactement la signature publique",
-                        "Autoriser les égalités et détecter la première inversion sans trier l’entrée.",
-                        "Ne pas modifier les entrées reçues sauf mention explicite"
+                        "Autoriser les égalités et détecter la première inversion sans trier l'entrée.",
+                        "Ne trier ni modifier l'entrée : seul l'ordre observé est vérifié"
                     ],
     "examples":  [
                      {
-                         "input":  "[{\"value\":[[1,2,2]],\"Count\":1},true]",
-                         "output":  "[{\"value\":[[2,1]],\"Count\":1},false]"
+                         "input":  "[[1,2,2]]",
+                         "output":  "true"
                      }
                  ],
     "reflectionFields":  [
@@ -54,7 +54,7 @@
                   {
                       "level":  4,
                       "kind":  "partial-pseudocode",
-                      "content":  "valider les bornes ; parcourir ou décider ; retourner un nouveau résultat déterministe"
+                      "content":  "parcourir à partir du deuxième élément et comparer chaque valeur à celle qui la précède ; conclure au premier recul strict ; ne rien trier et accepter les égalités"
                   }
               ],
     "solution":  {
@@ -67,9 +67,10 @@
     "explanation":  "explanation.md",
     "complexity":  "O(n) en temps et O(1) en espace",
     "commonMistakes":  [
-                           "Coder uniquement les exemples visibles",
-                           "Oublier une borne ou modifier une entrée",
-                           "Annoncer une complexité sans compter les opérations dominantes"
+                           "Trier une copie et conclure que l'ordre était correct",
+                           "Refuser deux horodatages égaux, qui sont chronologiquement acceptables",
+                           "Comparer avec le premier élément au lieu du précédent",
+                           "Poursuivre après la première inversion au lieu de conclure"
                        ],
     "variantId":  "debug-distinct-events-001",
     "reviewCards":  [

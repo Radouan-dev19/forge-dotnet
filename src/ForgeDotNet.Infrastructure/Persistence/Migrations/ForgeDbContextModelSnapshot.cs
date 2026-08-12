@@ -866,6 +866,64 @@ namespace ForgeDotNet.Infrastructure.Persistence.Migrations
                     b.ToTable("PracticeReflections", (string)null);
                 });
 
+            modelBuilder.Entity("ForgeDotNet.Infrastructure.Persistence.ProjectSubmissionRecord", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("TEXT");
+
+                    b.Property<bool>("AutomaticallyVerified")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("ContentRevision")
+                        .IsRequired()
+                        .HasMaxLength(80)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("ObservedAtUtc")
+                        .IsRequired()
+                        .HasMaxLength(48)
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("PassedSuites")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("PassedTests")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<Guid>("ProfileId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("ProjectId")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("ProjectVersion")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasMaxLength(32)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("SubmissionFingerprint")
+                        .IsRequired()
+                        .HasMaxLength(80)
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("TotalSuites")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("TotalTests")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProfileId", "ObservedAtUtc");
+
+                    b.ToTable("ProjectSubmissions", (string)null);
+                });
+
             modelBuilder.Entity("ForgeDotNet.Infrastructure.Persistence.ReviewAttemptRecord", b =>
                 {
                     b.Property<Guid>("Id")

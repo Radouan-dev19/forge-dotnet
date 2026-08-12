@@ -1,24 +1,24 @@
 {
-    "schemaVersion":  1,
-    "id":  "interview-s21-s24-055",
-    "version":  1,
-    "title":  "Explain a failed test",
-    "level":  "advanced",
-    "durationMinutes":  12,
-    "skills":  [
-                   "english.testing"
-               ],
-    "question":  "How do you explain a failed hidden test without revealing it?",
-    "observableCriteria":  [
-                               "La réponse prend une décision explicite et cite une preuve observable",
-                               "Une limite de sécurité, de coût, de portée ou de validité est reconnue"
-                           ],
-    "modelAnswer":  "I describe the public contract, the boundary category and my incorrect assumption. I do not claim knowledge of private inputs and I add my own regression case.",
-    "commonMistakes":  [
-                           "Employer un slogan sans contrainte, preuve ni limite vérifiable"
-                       ],
-    "variants":  [
-                     "Changez une contrainte du scénario « Explain a failed test » et expliquez si la décision reste valide."
-                 ],
-    "license":  "CC-BY-4.0"
+  "schemaVersion": 1,
+  "id": "interview-s21-s24-055",
+  "version": 1,
+  "title": "Explain a failed test",
+  "level": "advanced",
+  "durationMinutes": 12,
+  "skills": [
+    "english.testing"
+  ],
+  "question": "How do you explain a failed hidden test without revealing it?",
+  "observableCriteria": [
+    "The public contract and the boundary category are described without claiming to know the private inputs",
+    "The candidate's own incorrect assumption is named, and a regression test is added"
+  ],
+  "modelAnswer": "I describe the public contract, the boundary category and my incorrect assumption. I do not claim knowledge of private inputs and I add my own regression case.",
+  "commonMistakes": [
+    "Guessing at the hidden inputs instead of describing the boundary that was missed"
+  ],
+  "variants": [
+    "Changez une contrainte du scénario « Explain a failed test » et expliquez si la décision reste valide."
+  ],
+  "license": "CC-BY-4.0"
 }

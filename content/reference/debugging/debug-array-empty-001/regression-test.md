@@ -1,3 +1,3 @@
 # Non-régression
 
-Exécuter les quatre cas du runner, dont la borne cachée. Le test doit échouer sur roken/Submission.cs, réussir sur correction/Submission.cs et vérifier l’absence de mutation pour les tableaux.
+Couvrir un historique de deux commandes, un historique d'une seule commande et un historique vide. Le jeu doit échouer sur `broken/Submission.cs` pour l'historique vide, réussir sur `correction/Submission.cs`, et vérifier que le tableau reçu n'est pas modifié.

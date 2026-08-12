@@ -20,8 +20,8 @@
                     ],
     "examples":  [
                      {
-                         "input":  "[{\"value\":[[1,2,4]],\"Count\":1},2]",
-                         "output":  "[{\"value\":[[]],\"Count\":1},0]"
+                         "input":  "[[1,2,4]]",
+                         "output":  "2"
                      }
                  ],
     "reflectionFields":  [
@@ -54,7 +54,7 @@
                   {
                       "level":  4,
                       "kind":  "partial-pseudocode",
-                      "content":  "valider les bornes ; parcourir ou décider ; retourner un nouveau résultat déterministe"
+                      "content":  "si values est null lever ArgumentNullException ; compteur à zéro ; incrémenter pour chaque valeur dont le reste de la division par deux est nul ; retourner le compteur"
                   }
               ],
     "solution":  {
@@ -67,9 +67,10 @@
     "explanation":  "explanation.md",
     "complexity":  "O(n) en temps et O(1) en espace",
     "commonMistakes":  [
-                           "Coder uniquement les exemples visibles",
-                           "Oublier une borne ou modifier une entrée",
-                           "Annoncer une complexité sans compter les opérations dominantes"
+                           "Tester l'égalité du reste à un, ce qui échoue sur les valeurs négatives impaires",
+                           "Exclure zéro alors qu'il est pair",
+                           "Compter les indices au lieu des valeurs",
+                           "Traiter un tableau vide comme une entrée invalide"
                        ],
     "variantId":  "csharp-clamp-value-001",
     "reviewCards":  [

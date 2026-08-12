@@ -2,6 +2,6 @@
 
 Implémentez Submission.NextPatch avec la signature fournie. Valider trois entiers non négatifs et incrémenter seulement le composant patch.
 
-Le résultat reste déterministe et hors ligne. Écrivez avant le code un cas nominal, une frontière, un refus et la menace ou régression que ces preuves préviennent. N’utilisez aucun secret réel.
+Le calcul reste déterministe et hors ligne : aucun dépôt n'est interrogé. Écrivez avant le code : une version ordinaire, une version dont le composant de correction passe de neuf à dix, une version à deux composants, et un composant non numérique. Nommez ce qui distingue une correction d'un ajout et d'une rupture.
 
-Exemple : entrée $(Convert-JsonCompact System.Object[] System.Object[][0]), sortie $(Convert-JsonCompact System.Object[] System.Object[][1]).
+Exemple : entrée `["1.2.3"]`, sortie `"1.2.4"`.

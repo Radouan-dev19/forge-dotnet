@@ -20,8 +20,8 @@
                     ],
     "examples":  [
                      {
-                         "input":  "[{\"value\":[3],\"Count\":1},3]",
-                         "output":  "[{\"value\":[0],\"Count\":1},0]"
+                         "input":  "[3]",
+                         "output":  "3"
                      }
                  ],
     "reflectionFields":  [
@@ -54,7 +54,7 @@
                   {
                       "level":  4,
                       "kind":  "partial-pseudocode",
-                      "content":  "valider les bornes ; parcourir ou décider ; retourner un nouveau résultat déterministe"
+                      "content":  "si value est strictement négative lever une erreur d'argument hors plage en nommant le paramètre ; sinon retourner la valeur inchangée"
                   }
               ],
     "solution":  {
@@ -67,9 +67,10 @@
     "explanation":  "explanation.md",
     "complexity":  "O(1) en temps et O(1) en espace",
     "commonMistakes":  [
-                           "Coder uniquement les exemples visibles",
-                           "Oublier une borne ou modifier une entrée",
-                           "Annoncer une complexité sans compter les opérations dominantes"
+                           "Refuser zéro alors que seule une valeur négative viole le contrat",
+                           "Retourner zéro au lieu de lever et masquer l'entrée fautive",
+                           "Lever une exception générique qui ne nomme pas le paramètre en cause",
+                           "Corriger la valeur en prenant sa valeur absolue"
                        ],
     "variantId":  "csharp-nullable-fallback-001",
     "reviewCards":  [

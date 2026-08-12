@@ -2,73 +2,184 @@
 
 ## Objectif observable
 
-À la fin de la leçon, vous pourrez expliquer le compromis principal, appliquer la règle sur une entrée nouvelle et écrire un test qui distingue le comportement correct d’une erreur plausible.
+À la fin de cette leçon, vous saurez convertir une entrée externe sans faire planter le programme sur
+une saisie invalide, et vous saurez placer un point d'arrêt conditionnel qui s'arrête exactement sur
+la valeur qui reproduit un ticket.
 
 ## Prérequis
 
-Relire la leçon précédente $previousLessonId et savoir exécuter un exemple local sans réseau.
+- Avoir lu `csharp-control-methods-001` et savoir écrire une clause de garde.
+- Disposer d'un IDE capable de poser un point d'arrêt et d'inspecter une variable locale.
 
 ## Intuition
 
-Une entrée externe est du texte non fiable. Il faut la convertir explicitement et observer les valeurs au breakpoint avant d’accuser la ligne qui échoue.
+Tout ce qui vient de l'extérieur du programme est du texte non fiable : une saisie clavier, une ligne
+de fichier, un paramètre de requête. Le programme ne contrôle ni son format, ni sa présence.
+
+Le débogueur, lui, sert à observer, pas à deviner. La faute la plus coûteuse en débogage n'est pas de
+lire le mauvais code : c'est de modifier du code avant d'avoir regardé une seule valeur réelle.
 
 ## Explication
 
-Une entrée externe est du texte non fiable. Il faut la convertir explicitement et observer les valeurs au breakpoint avant d’accuser la ligne qui échoue. La règle doit rester visible dans le nom des opérations, les bornes et les erreurs. Avant de coder, notez l’entrée, la sortie, les invariants et ce qui doit être refusé.
+**Convertir sans faire confiance.** `int.Parse("abc")` lève une `FormatException`. Sur une entrée
+utilisateur, ce n'est pas un bug de l'utilisateur : c'est un cas prévu que le code n'a pas traité. Le
+couple `TryParse` sépare proprement les deux questions — *la conversion a-t-elle réussi ?* et *quelle
+est la valeur ?* :
+
+```csharp
+if (!int.TryParse(text, out int quantity)) { /* entrée invalide */ }
+```
+
+La règle pratique : `Parse` pour une constante que vous écrivez vous-même, `TryParse` pour tout ce
+qui traverse une frontière.
+
+**Nommer la culture quand elle compte.** `decimal.Parse("1.5")` réussit ou échoue selon la culture de
+la machine : en français, le séparateur décimal est la virgule. Un même programme donne alors deux
+résultats sur deux postes. Pour une donnée technique — un fichier, une API, un identifiant — utilisez
+`CultureInfo.InvariantCulture`. Pour une saisie humaine, utilisez explicitement la culture de
+l'utilisateur. Ce qui est interdit, c'est de ne pas choisir.
+
+**Le débogueur répond à une question précise.** Un point d'arrêt posé au hasard fait perdre du temps.
+La méthode utile tient en quatre étapes : reproduire le symptôme avec des valeurs connues, formuler
+une hypothèse falsifiable, poser le point d'arrêt à l'endroit où l'hypothèse serait réfutée, puis
+observer sans rien modifier.
+
+Sur un traitement de mille lignes, s'arrêter à chaque tour est inutilisable. Un **point d'arrêt
+conditionnel** ne suspend l'exécution que si une condition est vraie — par exemple `line == 842` ou
+`quantity < 0`. C'est la différence entre parcourir un fichier et ouvrir la bonne page.
+
+Deux réflexes complètent l'outil. La fenêtre des variables locales affiche l'état réel : lisez-la
+avant de formuler une deuxième hypothèse. Et le pas à pas *au-dessus* (`step over`) suffit tant que
+la divergence n'est pas localisée ; entrer dans chaque appel dès le début fait perdre le fil.
+
+**Observer ne veut pas dire modifier.** Changer la valeur d'une variable dans le débogueur pour
+« voir » fabrique un état qui n'existe dans aucune exécution réelle. Le symptôme peut disparaître
+sans que la cause soit comprise. Notez ce que vous voyez, sortez, puis écrivez un test qui échoue.
 
 ## Exemple commenté
 
-TryParse sépare la validation du calcul ; un breakpoint conditionnel permet d’arrêter seulement sur la valeur qui reproduit le ticket. L’exemple est volontairement petit : changez une borne et une valeur absente pour vérifier que le raisonnement, et non la donnée mémorisée, produit le résultat.
+Lecture d'une quantité saisie, avec conversion sûre et message actionnable :
+
+```csharp
+public static string DescribeQuantity(string? input)
+{
+    // L'absence de saisie est un cas prévu, pas une exception.
+    if (string.IsNullOrWhiteSpace(input))
+    {
+        return "Quantité absente : saisissez un nombre entier positif.";
+    }
+
+    // TryParse répond d'abord « est-ce convertible ? », puis fournit la valeur.
+    if (!int.TryParse(input.Trim(), NumberStyles.Integer, CultureInfo.InvariantCulture, out int quantity))
+    {
+        return $"Quantité illisible : « {input} » n'est pas un entier.";
+    }
+
+    // La règle métier n'est atteinte qu'avec une valeur déjà convertie.
+    return quantity <= 0
+        ? "Quantité invalide : la valeur doit être strictement positive."
+        : $"Quantité retenue : {quantity}.";
+}
+```
+
+Trois messages distincts pour trois causes distinctes. Un utilisateur qui lit « illisible » sait
+qu'il a fait une faute de frappe ; un utilisateur qui lit « invalide » sait que son nombre est refusé
+par la règle.
 
 ## Contre-exemple et erreur fréquente
 
-Utiliser Parse sans message d’erreur transforme une donnée attendue invalide en crash opaque. Le contre-exemple doit être reproduit par un test qui échoue avant correction et réussit après.
+```csharp
+public static int ReadQuantity()
+{
+    Console.Write("Quantité : ");
+    return int.Parse(Console.ReadLine()!);   // Deux façons de planter sur la même ligne.
+}
+```
+
+Deux défaillances cohabitent. Le `!` affirme au compilateur que `ReadLine()` ne retournera jamais
+`null`, ce qui est faux dès que l'entrée est redirigée depuis un fichier vide : on obtient une
+`NullReferenceException`. Et `Parse` lève une `FormatException` sur `"douze"` ou sur une chaîne vide.
+
+Dans les deux cas, l'utilisateur voit une trace d'exception au lieu d'un message, et le journal
+n'indique pas quelle valeur a échoué. Le réflexe d'entourer l'appel d'un `try/catch (Exception)` qui
+retourne `0` aggrave la situation : la saisie fautive devient une quantité nulle silencieuse, et le
+problème réapparaît trois étapes plus loin, sans lien visible avec sa cause.
 
 ## Vérification de compréhension
 
-Expliquez en deux phrases la précondition, l’invariant et le cas limite principal. Si l’un des trois manque, revenez à l’explication avant de poursuivre.
+Nommez la différence entre une entrée absente, une entrée illisible et une entrée refusée par la
+règle métier. Donnez un message distinct pour chacune.
 
 :::quiz
 id=csharp-io-debugger-001-check
-question=Quelle preuve montre que la règle de cette leçon est comprise ?
-option=Répéter uniquement l’exemple mot pour mot
-option=Prédire puis tester un cas nominal, une borne et une erreur plausible
-option=Lire la solution sans écrire de test
+question=Quand faut-il préférer TryParse à Parse ?
+option=Toujours, car Parse est déprécié depuis .NET 6
+option=Dès que la valeur traverse une frontière du programme : saisie, fichier, réseau, configuration
+option=Uniquement pour les nombres décimaux, les entiers étant sans risque
 correct=1
-success=Correct : la variation des données et la borne distinguent une règle comprise d’un exemple mémorisé.
-retry=Revenez au contrat, à l’invariant et au contre-exemple, puis choisissez la preuve qui pourrait réellement échouer.
+success=Correct : le programme ne contrôle pas le format d'une donnée externe, donc l'échec de conversion est un cas prévu à traiter, pas une exception à laisser remonter.
+retry=Relisez le passage sur les frontières : la question n'est pas le type converti, mais l'origine de la donnée.
 :::
 
 ## Exercice guidé
 
-1. Écrivez trois cas : nominal, borne et entrée invalide ou absente.
-2. Prédisez chaque résultat sans exécuter.
-3. Implémentez la règle minimale.
-4. Comparez les résultats et nommez toute hypothèse incorrecte.
+Ouvrez `csharp-input-normalize-001` dans `/practice`, puis procédez ainsi.
+
+1. Écrivez les trois cas d'entrée fautive avant tout code : absente, illisible, hors règle.
+2. Implémentez la conversion avec `TryParse` et une culture explicite.
+3. Posez un point d'arrêt sur la ligne de conversion, exécutez avec une entrée fautive et lisez la
+   valeur du booléen retourné dans la fenêtre des locales.
+4. Notez ce que vous avez observé avant de modifier quoi que ce soit.
 
 ## Exercice autonome
 
-Transposez la règle à un petit domaine de commandes. Conservez une signature testable, refusez les états impossibles et justifiez la complexité en fonction du volume d’entrée.
+Un fichier CSV contient une date par ligne, au format `2026-03-14`. Écrivez une méthode qui retourne
+le nombre de dates valides et la première ligne fautive.
+
+Décidez avant de coder : que faire d'une ligne vide, d'une date au format `14/03/2026`, et d'une date
+valide mais située dans le futur. Justifiez le choix de la culture utilisée pour la conversion.
 
 ## Débogage
 
-Reproduisez d’abord le contre-exemple. Placez un breakpoint à la première divergence, inspectez les données sans les modifier, puis consignez symptôme, hypothèse, preuve, cause, correction et test de non-régression.
+Un ticket indique : « L'import échoue sur un fichier de 3 000 lignes, sans dire laquelle. »
+
+1. **Symptôme** : l'exception ne nomme ni la ligne ni la valeur.
+2. **Hypothèse** : une seule ligne porte une valeur non convertible.
+3. **Preuve** : posez un point d'arrêt conditionnel sur le corps de boucle, avec la condition
+   `!int.TryParse(cell, out _)`. L'exécution s'arrête sur la ligne fautive et sur elle seule.
+4. **Prévention** : enrichissez le message d'erreur avec le numéro de ligne et la valeur refusée,
+   puis ajoutez un test portant sur un fichier contenant une ligne fautive.
 
 ## Entretien
 
-Présentez le compromis à voix haute en cinq minutes : définition, exemple, erreur fréquente, méthode de test et situation où vous choisiriez une autre approche.
+Question posée à voix haute : *décrivez la dernière fois où vous avez utilisé un débogueur plutôt
+qu'un affichage de trace. Qu'est-ce que cela vous a permis de voir ?*
+
+Une réponse solide donne une hypothèse, l'endroit choisi pour le point d'arrêt et **pourquoi cet
+endroit** réfutait l'hypothèse. Une réponse faible décrit l'outil sans jamais nommer la question à
+laquelle il répondait.
 
 ## Résumé
 
-- Le contrat et les bornes précèdent l’implémentation.
-- Une règle utile est observable par un test qui pourrait échouer.
-- Une erreur n’est corrigée qu’après reproduction et preuve.
+- Toute donnée franchissant une frontière est du texte non fiable, y compris un nombre.
+- `TryParse` transforme un échec de conversion en cas traité, pas en exception subie.
+- La culture est un choix explicite ; ne pas choisir revient à dépendre de la machine.
+- Un point d'arrêt conditionnel remplace mille arrêts inutiles.
+- On observe d'abord, on modifie ensuite.
 
 ## Cartes de révision
 
-- Question : quel invariant protège cette technique ? Réponse attendue : le candidat doit citer l’invariant décrit dans l’explication.
-- Question : quel test réfute l’erreur fréquente ? Réponse attendue : un cas limite qui échoue avant la correction.
+Question : que masque un `catch (Exception)` qui retourne une valeur par défaut ? Réponse attendue :
+la cause réelle, remplacée par une donnée valide en apparence qui échouera plus loin.
+
+Question : quelle condition rend un point d'arrêt utile sur une boucle longue ? Réponse attendue :
+une condition qui décrit exactement l'état fautif recherché.
 
 ## Test de maîtrise
 
-Sans relire, résolvez une variante avec une borne différente, écrivez un test nominal et deux cas limites, puis expliquez la complexité et la preuve de non-régression. Cette auto-évaluation ne crée aucune maîtrise automatique.
+Sans relire, écrivez une méthode qui lit un montant depuis une chaîne et retourne soit le montant,
+soit un message d'erreur distinguant absence, format et règle métier. Posez ensuite un point d'arrêt
+conditionnel qui ne s'arrête que sur un montant négatif, et expliquez ce que vous iriez lire dans la
+fenêtre des variables locales.
+
+Cette auto-évaluation ne crée aucune preuve de maîtrise.

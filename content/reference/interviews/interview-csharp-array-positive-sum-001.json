@@ -1,24 +1,24 @@
 {
-    "schemaVersion":  1,
-    "id":  "interview-csharp-array-positive-sum-001",
-    "version":  1,
-    "title":  "Sommer les valeurs positives",
-    "level":  "junior",
-    "durationMinutes":  5,
-    "skills":  [
-                   "csharp.arrays"
-               ],
-    "question":  "Comment résoudriez-vous « Sommer les valeurs positives » et comment prouveriez-vous les bornes ?",
-    "observableCriteria":  [
-                               "Le contrat et une borne sont explicitement reformulés",
-                               "La complexité et un test de réfutation sont justifiés"
-                           ],
-    "modelAnswer":  "Ignorer zéro et les négatifs sans modifier le tableau reçu. La preuve comprend un cas nominal, une borne et un cas différent des exemples ; O(n) en temps et O(1) en espace.",
-    "commonMistakes":  [
-                           "Réciter le code sans invariant ni méthode de test"
-                       ],
-    "variants":  [
-                     "Changer une borne ou le volume tout en conservant la même règle de sommer les valeurs positives."
-                 ],
-    "license":  "CC-BY-4.0"
+  "schemaVersion": 1,
+  "id": "interview-csharp-array-positive-sum-001",
+  "version": 1,
+  "title": "Sommer les valeurs positives",
+  "level": "junior",
+  "durationMinutes": 5,
+  "skills": [
+    "csharp.arrays"
+  ],
+  "question": "Comment résoudriez-vous « Sommer les valeurs positives » et comment prouveriez-vous les bornes ?",
+  "observableCriteria": [
+    "Le zéro est explicitement exclu, comme les négatifs",
+    "L'absence de mutation du tableau reçu est affirmée"
+  ],
+  "modelAnswer": "Ignorer zéro et les négatifs sans modifier le tableau reçu. Je prouve par un tableau tout négatif, un tableau contenant zéro et un tableau vide ; O(n) en temps et O(1) en espace.",
+  "commonMistakes": [
+    "Inclure zéro dans les positifs, ce qui ne change pas la somme et fausse le contrat"
+  ],
+  "variants": [
+    "Changer une borne ou le volume tout en conservant la même règle de sommer les valeurs positives."
+  ],
+  "license": "CC-BY-4.0"
 }

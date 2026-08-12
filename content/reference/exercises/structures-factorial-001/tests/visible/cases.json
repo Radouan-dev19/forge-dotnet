@@ -20,6 +20,13 @@
                       "expected":  120,
                       "expectedException":  null,
                       "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Visible_UpperBound",
+                      "message":  "Borne haute acceptée : douze reste calculable sans dépassement.",
+                      "arguments":  [12],
+                      "expected":  479001600,
+                      "argumentsUnchanged":  true
                   }
               ]
 }

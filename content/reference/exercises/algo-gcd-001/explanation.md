@@ -1,3 +1,7 @@
 # Explication
 
-Réduire strictement le couple par le reste et normaliser les signes. La solution de référence sépare la validation de l’opération principale et ne dépend d’aucun état externe. Sa complexité est **O(log min(a,b)) en temps et O(1) en espace**. Les cas cachés changent valeurs, bornes et tailles afin qu’une constante mémorisée ne puisse pas réussir.
+Réduire strictement le couple par le reste et normaliser les signes.
+
+La terminaison vient du reste : il est strictement inférieur au diviseur, donc la seconde valeur décroît à chaque tour et atteint zéro. C'est ce qui rend l'algorithme logarithmique là où une suite de soustractions serait linéaire dans la valeur.
+
+Les signes se normalisent d'entrée : un plus grand commun diviseur est positif par définition, et le reste en C# prend le signe du dividende, ce qui propagerait un négatif jusqu'au résultat. Le cas où l'une des valeurs est nulle se traite sans branche particulière, puisque la boucle ne s'exécute alors pas. L'espace se limite à trois variables.

@@ -29,9 +29,49 @@ else
         <p>@_home.SecurityNotice</p>
         <p class="notice" role="status">@_home.StatusMessage</p>
         <p>
-            Cette tranche fournit le moteur et un dataset technique minimal. Elle ne contient aucun des douze
-            scénarios pédagogiques prévus par l’incrément 06B.
+            @_home.Scenarios.Count scénario(s) publié(s) sont exécutables ici. Chacun provisionne son propre
+            jeu de données dans une base jetable dédiée ; la progression locale n’est jamais atteinte.
         </p>
+    </section>
+
+    <section class="practice-panel" aria-labelledby="sql-scenario-title">
+        <h2 id="sql-scenario-title">Scénario</h2>
+        <div class="form-field">
+            <label for="sql-scenario">Scénario pédagogique</label>
+            <select id="sql-scenario" disabled="@(_busy || _running || _session is not null)"
+                    value="@(_scenarioId ?? string.Empty)"
+                    @onchange="OnScenarioChangedAsync">
+                <option value="">Bac à sable technique — aucune preuve enregistrée</option>
+                @foreach (SqlScenarioSummaryView summary in _home.Scenarios)
+                {
+                    <option value="@summary.Id">
+                        @summary.Title — difficulté @summary.Difficulty · @summary.EstimatedMinutes min
+                    </option>
+                }
+            </select>
+            @if (_session is not null)
+            {
+                <p class="field-help">Détruisez la session en cours pour changer de scénario.</p>
+            }
+        </div>
+
+        @if (_scenario is not null)
+        {
+            <h3>Énoncé</h3>
+            <pre class="practice-content">@_scenario.Statement</pre>
+            <p>
+                Colonnes attendues, dans cet ordre : @string.Join(", ", _scenario.ExpectedColumns).
+            </p>
+            @if (_scenario.EffectAssertions.Count > 0)
+            {
+                <h3>Effets attendus après annulation</h3>
+                <ul>@foreach (string assertion in _scenario.EffectAssertions) { <li>@assertion</li> }</ul>
+            }
+            <p class="notice" role="status">
+                Le résultat de référence et la solution restent côté serveur. La validation compare votre
+                résultat sans jamais vous le montrer.
+            </p>
+        }
     </section>
 
     @if (_error is not null)
@@ -129,6 +169,8 @@ else
 
 @code {
     private SqlLabHomeView? _home;
+    private SqlScenarioView? _scenario;
+    private string? _scenarioId;
     private SqlLabSessionView? _session;
     private SqlLabRunView? _result;
     private CancellationTokenSource? _executionCancellation;
@@ -157,12 +199,33 @@ else
         }
     }
 
+    private async Task OnScenarioChangedAsync(ChangeEventArgs args)
+    {
+        string selected = args.Value?.ToString() ?? string.Empty;
+        _scenarioId = string.IsNullOrWhiteSpace(selected) ? null : selected;
+        _result = null;
+        _error = null;
+        _status = null;
+        try
+        {
+            _scenario = _scenarioId is null ? null : await SqlLab.GetScenarioAsync(_scenarioId);
+            _query = _scenario is null ? SqlLabService.DefaultQuery : string.Empty;
+        }
+        catch (Exception exception)
+        {
+            _scenario = null;
+            _error = exception.Message;
+        }
+    }
+
     private async Task CreateSessionAsync()
     {
         await RunMutationAsync(async () =>
         {
-            _session = await SqlLab.CreateSessionAsync();
-            _status = "Session SQL jetable créée.";
+            _session = await SqlLab.CreateSessionAsync(_scenarioId);
+            _status = _scenarioId is null
+                ? "Session SQL jetable créée sur le jeu de données de démonstration."
+                : $"Session SQL jetable créée sur le jeu de données du scénario {_scenarioId}.";
         });
     }
 
@@ -171,9 +234,9 @@ else
         if (_session is null) return;
         await RunMutationAsync(async () =>
         {
-            _session = await SqlLab.ResetSessionAsync(_session.Id);
+            _session = await SqlLab.ResetSessionAsync(_session.Id, _scenarioId);
             _result = null;
-            _status = "Base détruite puis recréée depuis le dataset minimal.";
+            _status = "Base et login détruits, puis reprovisionnés depuis le même jeu de données.";
         });
     }
 
@@ -203,6 +266,7 @@ else
                 _session.Id,
                 _query,
                 _validateReference,
+                _scenarioId,
                 _executionCancellation.Token);
         }
         catch (Exception exception)

@@ -20,8 +20,8 @@
                     ],
     "examples":  [
                      {
-                         "input":  "[{\"value\":[[1,3],[2,4]],\"Count\":2},{\"value\":[1,2,3,4],\"Count\":4}]",
-                         "output":  "[{\"value\":[[],[1]],\"Count\":2},{\"value\":[1],\"Count\":1}]"
+                         "input":  "[[1,3],[2,4]]",
+                         "output":  "[1,2,3,4]"
                      }
                  ],
     "reflectionFields":  [
@@ -54,7 +54,7 @@
                   {
                       "level":  4,
                       "kind":  "partial-pseudocode",
-                      "content":  "valider les bornes ; parcourir ou décider ; retourner un nouveau résultat déterministe"
+                      "content":  "allouer un résultat de la longueur totale ; avancer un index dans chaque entrée ; à chaque tour, écrire la plus petite des deux valeurs disponibles et n'avancer que l'index de celle qui a été consommée ; poursuivre tant que l'une des deux entrées n'est pas épuisée"
                   }
               ],
     "solution":  {
@@ -67,9 +67,10 @@
     "explanation":  "explanation.md",
     "complexity":  "O(n+m) en temps et O(n+m) en espace",
     "commonMistakes":  [
-                           "Coder uniquement les exemples visibles",
-                           "Oublier une borne ou modifier une entrée",
-                           "Annoncer une complexité sans compter les opérations dominantes"
+                           "Avancer les deux index après avoir écrit une seule valeur",
+                           "Retirer les doublons alors que la fusion les conserve",
+                           "Oublier de vider l'entrée restante quand l'autre est épuisée",
+                           "Concaténer puis trier, ce qui ignore l'ordre déjà présent et coûte davantage"
                        ],
     "variantId":  "algo-rotate-left-001",
     "reviewCards":  [

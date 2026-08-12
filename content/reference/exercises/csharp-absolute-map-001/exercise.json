@@ -20,8 +20,8 @@
                     ],
     "examples":  [
                      {
-                         "input":  "[{\"value\":[[-2,0,3]],\"Count\":1},{\"value\":[2,0,3],\"Count\":3}]",
-                         "output":  "[{\"value\":[[]],\"Count\":1},{\"value\":[],\"Count\":0}]"
+                         "input":  "[[-2,0,3]]",
+                         "output":  "[2,0,3]"
                      }
                  ],
     "reflectionFields":  [
@@ -54,7 +54,7 @@
                   {
                       "level":  4,
                       "kind":  "partial-pseudocode",
-                      "content":  "valider les bornes ; parcourir ou décider ; retourner un nouveau résultat déterministe"
+                      "content":  "si values est null lever ArgumentNullException ; allouer un tableau de la même longueur ; pour chaque index, y écrire la valeur absolue de l'élément lu ; retourner le nouveau tableau sans avoir touché l'entrée"
                   }
               ],
     "solution":  {
@@ -67,9 +67,10 @@
     "explanation":  "explanation.md",
     "complexity":  "O(n) en temps et O(n) en espace",
     "commonMistakes":  [
-                           "Coder uniquement les exemples visibles",
-                           "Oublier une borne ou modifier une entrée",
-                           "Annoncer une complexité sans compter les opérations dominantes"
+                           "Écrire les valeurs absolues dans le tableau reçu au lieu d'en allouer un nouveau",
+                           "Retourner la référence d'entrée quand aucune valeur n'est négative",
+                           "Oublier que l'opposé de la plus petite valeur entière signée n'est pas représentable",
+                           "Traiter un tableau vide comme une entrée invalide"
                        ],
     "variantId":  "csharp-word-histogram-001",
     "reviewCards":  [

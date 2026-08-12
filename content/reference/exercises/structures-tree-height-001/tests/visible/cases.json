@@ -26,6 +26,13 @@
                       "expected":  0,
                       "expectedException":  null,
                       "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Visible_RootOnly",
+                      "message":  "Racine seule : hauteur de un dans la convention en nœuds.",
+                      "arguments":  [[-1]],
+                      "expected":  1,
+                      "argumentsUnchanged":  true
                   }
               ]
 }

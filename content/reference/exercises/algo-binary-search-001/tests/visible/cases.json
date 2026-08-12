@@ -29,6 +29,13 @@
                       "expected":  -1,
                       "expectedException":  null,
                       "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Visible_TwoElements",
+                      "message":  "Deux éléments, cible la plus grande : distingue une implémentation correcte d'une boucle infinie.",
+                      "arguments":  [[1,2],2],
+                      "expected":  1,
+                      "argumentsUnchanged":  true
                   }
               ]
 }

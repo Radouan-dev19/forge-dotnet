@@ -15,13 +15,13 @@
     "statement":  "statement.md",
     "constraints":  [
                         "Conserver exactement la signature publique",
-                        "Trier uniquement une copie afin que Watch et l’appelant conservent l’état initial.",
-                        "Ne pas modifier les entrées reçues sauf mention explicite"
+                        "Trier uniquement une copie afin que l'observation et l'appelant conservent l'état initial.",
+                        "Ne modifier aucune entrée reçue : seule la copie est ordonnée"
                     ],
     "examples":  [
                      {
-                         "input":  "[{\"value\":[[3,1]],\"Count\":1},{\"value\":[1,3],\"Count\":2}]",
-                         "output":  "[{\"value\":[[]],\"Count\":1},{\"value\":[],\"Count\":0}]"
+                         "input":  "[[3,1]]",
+                         "output":  "[1,3]"
                      }
                  ],
     "reflectionFields":  [
@@ -54,7 +54,7 @@
                   {
                       "level":  4,
                       "kind":  "partial-pseudocode",
-                      "content":  "valider les bornes ; parcourir ou décider ; retourner un nouveau résultat déterministe"
+                      "content":  "refuser une entrée absente ; cloner le tableau reçu ; trier uniquement la copie ; retourner cette copie sans avoir touché l'original"
                   }
               ],
     "solution":  {
@@ -67,9 +67,10 @@
     "explanation":  "explanation.md",
     "complexity":  "O(n log n) en temps et O(n) en espace",
     "commonMistakes":  [
-                           "Coder uniquement les exemples visibles",
-                           "Oublier une borne ou modifier une entrée",
-                           "Annoncer une complexité sans compter les opérations dominantes"
+                           "Trier le tableau reçu et détruire l'ordre que l'observation devait montrer",
+                           "Retourner la référence reçue lorsqu'elle est déjà triée",
+                           "Cloner après le tri, ce qui ne protège plus rien",
+                           "Traiter un tableau vide comme une entrée invalide"
                        ],
     "variantId":  "reference-total-001",
     "reviewCards":  [

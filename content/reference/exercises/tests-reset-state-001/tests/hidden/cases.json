@@ -32,6 +32,20 @@
                                    ],
                       "expectedException":  null,
                       "argumentsUnchanged":  true
+                  },
+                  {
+                      "name":  "Hidden_NullInput",
+                      "message":  "Référence absente : refus explicite.",
+                      "arguments":  [null],
+                      "expectedException":  "ArgumentNullException",
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_LongerSequence",
+                      "message":  "Séquence plus longue : la taille est conservée et l'entrée reste intacte.",
+                      "arguments":  [[1,2,3,4]],
+                      "expected":  [0,0,0,0],
+                      "argumentsUnchanged":  true
                   }
               ]
 }

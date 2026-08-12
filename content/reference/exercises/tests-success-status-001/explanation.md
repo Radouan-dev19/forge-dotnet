@@ -1,3 +1,7 @@
 # Explication
 
-Tester les frontières de la famille 2xx plutôt qu’un seul statut nominal. La solution sépare validation et décision, sans état externe. Complexité : **O(1) en temps et O(1) en espace**. Les cas cachés varient les frontières et réfutent une constante mémorisée. Après lecture, la tentative n’est pas maîtrisée : expliquez la règle avec vos mots et planifiez une reprise à blanc.
+Tester les frontières de la famille plutôt qu'un seul statut nominal.
+
+Une famille de statuts est un intervalle, et un intervalle a deux frontières. Tester le seul statut nominal valide une implémentation qui se tromperait sur les deux bornes — et l'erreur la plus fréquente porte précisément sur la borne haute, où la famille suivante commence immédiatement.
+
+Quatre valeurs suffisent : les deux bornes, et les deux valeurs qui les encadrent à l'extérieur. C'est le triplet de frontière appliqué deux fois, et c'est le jeu minimal qui prouve que l'intervalle est le bon. La décision est en temps constant.

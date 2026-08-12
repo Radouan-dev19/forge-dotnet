@@ -1,24 +1,24 @@
 {
-    "schemaVersion":  1,
-    "id":  "interview-s21-s24-054",
-    "version":  1,
-    "title":  "Describe a trade-off",
-    "level":  "advanced",
-    "durationMinutes":  12,
-    "skills":  [
-                   "english.architecture"
-               ],
-    "question":  "How do you explain the App Service versus Container Apps trade-off?",
-    "observableCriteria":  [
-                               "La réponse prend une décision explicite et cite une preuve observable",
-                               "Une limite de sécurité, de coût, de portée ou de validité est reconnue"
-                           ],
-    "modelAnswer":  "App Service reduces operational choices for a web application. Container Apps fits an existing container and revision needs, but adds configuration and cost to verify.",
-    "commonMistakes":  [
-                           "Employer un slogan sans contrainte, preuve ni limite vérifiable"
-                       ],
-    "variants":  [
-                     "Changez une contrainte du scénario « Describe a trade-off » et expliquez si la décision reste valide."
-                 ],
-    "license":  "CC-BY-4.0"
+  "schemaVersion": 1,
+  "id": "interview-s21-s24-054",
+  "version": 1,
+  "title": "Describe a trade-off",
+  "level": "advanced",
+  "durationMinutes": 12,
+  "skills": [
+    "english.architecture"
+  ],
+  "question": "How do you explain the App Service versus Container Apps trade-off?",
+  "observableCriteria": [
+    "Each option is tied to the situation that makes it the better one, not to a general ranking",
+    "The configuration and cost that the second option adds are named as verifiable"
+  ],
+  "modelAnswer": "App Service reduces operational choices for a web application. Container Apps fits an existing container and revision needs, but adds configuration and cost to verify.",
+  "commonMistakes": [
+    "Presenting one option as generally better without naming the situation it fits"
+  ],
+  "variants": [
+    "Changez une contrainte du scénario « Describe a trade-off » et expliquez si la décision reste valide."
+  ],
+  "license": "CC-BY-4.0"
 }

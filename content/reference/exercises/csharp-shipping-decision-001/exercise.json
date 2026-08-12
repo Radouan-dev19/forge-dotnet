@@ -16,7 +16,7 @@
     "Refuser un total négatif avec ArgumentOutOfRangeException"
   ],
   "examples": [
-    { "input": "50m, false", "output": "4.90m" },
+    { "input": "[50,false]", "output": "4.90" },
     { "input": "80m, false", "output": "0m" },
     { "input": "100m, true", "output": "9.90m" }
   ],

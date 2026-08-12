@@ -1,24 +1,24 @@
 {
-    "schemaVersion":  1,
-    "id":  "interview-s21-s24-012",
-    "version":  1,
-    "title":  "Séparer Forge et le laboratoire",
-    "level":  "junior",
-    "durationMinutes":  6,
-    "skills":  [
-                   "azure.boundary"
-               ],
-    "question":  "Pourquoi la progression SQLite de Forge.NET ne doit-elle jamais devenir la base du laboratoire cloud ?",
-    "observableCriteria":  [
-                               "La réponse prend une décision explicite et cite une preuve observable",
-                               "Une limite de sécurité, de coût, de portée ou de validité est reconnue"
-                           ],
-    "modelAnswer":  "La progression est une donnée personnelle locale. Le laboratoire utilise ses propres ressources jetables et aucune configuration ne lui donne un chemin vers SQLite.",
-    "commonMistakes":  [
-                           "Employer un slogan sans contrainte, preuve ni limite vérifiable"
-                       ],
-    "variants":  [
-                     "Changez une contrainte du scénario « Séparer Forge et le laboratoire » et expliquez si la décision reste valide."
-                 ],
-    "license":  "CC-BY-4.0"
+  "schemaVersion": 1,
+  "id": "interview-s21-s24-012",
+  "version": 1,
+  "title": "Séparer Forge et le laboratoire",
+  "level": "junior",
+  "durationMinutes": 6,
+  "skills": [
+    "azure.boundary"
+  ],
+  "question": "Pourquoi la progression SQLite de Forge.NET ne doit-elle jamais devenir la base du laboratoire cloud ?",
+  "observableCriteria": [
+    "La progression locale est qualifiée de donnée personnelle, ce qui justifie la séparation",
+    "L'absence de tout chemin de configuration entre le laboratoire et la base locale est affirmée"
+  ],
+  "modelAnswer": "La progression est une donnée personnelle locale. Le laboratoire utilise ses propres ressources jetables et aucune configuration ne lui donne un chemin vers SQLite.",
+  "commonMistakes": [
+    "Justifier la séparation par la commodité technique et non par la nature de la donnée"
+  ],
+  "variants": [
+    "Changez une contrainte du scénario « Séparer Forge et le laboratoire » et expliquez si la décision reste valide."
+  ],
+  "license": "CC-BY-4.0"
 }

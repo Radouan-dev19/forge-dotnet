@@ -15,13 +15,13 @@
     "statement":  "statement.md",
     "constraints":  [
                         "Conserver exactement la signature publique",
-                        "Détecter chacun des marqueurs Git avant compilation ou fusion.",
-                        "Ne jamais dépendre du réseau, d’un secret réel ou d’un état global"
+                        "Détecter chacun des trois marqueurs de conflit avant compilation ou fusion.",
+                        "N'interroger aucun dépôt : le contenu du fichier est fourni"
                     ],
     "examples":  [
                      {
-                         "input":  "[{\"value\":[\"\\u003c\\u003c\\u003c\\u003c\\u003c\\u003c\\u003c HEAD\\nvalue\"],\"Count\":1},true]",
-                         "output":  "[{\"value\":[\"clean\"],\"Count\":1},false]"
+                         "input":  "[\"\\u003C\\u003C\\u003C\\u003C\\u003C\\u003C\\u003C HEAD\\nvalue\"]",
+                         "output":  "true"
                      }
                  ],
     "reflectionFields":  [
@@ -54,7 +54,7 @@
                   {
                       "level":  4,
                       "kind":  "partial-pseudocode",
-                      "content":  "valider les entrées ; appliquer la décision bornée ; retourner un résultat déterministe sans effet externe"
+                      "content":  "retourner faux pour un texte vide ; sinon chercher, de façon ordinale, chacun des trois marqueurs de conflit — l'ouverture, le séparateur et la fermeture — et conclure dès qu'un seul est présent"
                   }
               ],
     "solution":  {
@@ -67,9 +67,10 @@
     "explanation":  "explanation.md",
     "complexity":  "O(n) en temps et O(1) en espace",
     "commonMistakes":  [
-                           "Coder seulement les exemples visibles",
-                           "Masquer une erreur ou accepter une entrée hors contrat",
-                           "Confondre une règle pure avec le transport ou une ressource externe"
+                           "Ne chercher que le marqueur d'ouverture et manquer une résolution partielle",
+                           "Chercher les marqueurs sans distinction de casse, ce qui n'a pas de sens ici",
+                           "Traiter un texte vide comme une entrée invalide",
+                           "Supposer que le compilateur signalera de toute façon les marqueurs restants"
                        ],
     "variantId":  "docker-memory-limit-001",
     "reviewCards":  [

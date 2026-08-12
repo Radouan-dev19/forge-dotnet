@@ -1,0 +1,62 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://forge-dotnet.local/schemas/v1/review.schema.json",
+  "title": "Banque de cartes de révision Forge.NET v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "id", "version", "title", "cards", "license"],
+  "properties": {
+    "schemaVersion": { "type": "integer", "const": 1 },
+    "id": { "type": "string", "pattern": "^[a-z0-9]+(?:[.-][a-z0-9]+)*$", "minLength": 3, "maxLength": 128 },
+    "version": { "type": "integer", "minimum": 1 },
+    "title": { "type": "string", "minLength": 3, "maxLength": 200 },
+    "cards": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 400,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "exerciseId", "domain", "question", "correctOptionId", "options"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^[a-z0-9]+(?:[.-][a-z0-9]+)*$", "minLength": 3, "maxLength": 160 },
+          "exerciseId": { "type": "string", "pattern": "^[a-z0-9]+(?:[.-][a-z0-9]+)*$", "minLength": 3, "maxLength": 128 },
+          "itemKind": { "type": "string", "enum": ["exercise", "sql-scenario"] },
+          "domain": {
+            "type": "string",
+            "enum": [
+              "csharp",
+              "debugging",
+              "sql",
+              "api",
+              "tests",
+              "docker",
+              "continuous-integration",
+              "security",
+              "architecture",
+              "performance",
+              "english"
+            ]
+          },
+          "question": { "type": "string", "minLength": 20, "maxLength": 500 },
+          "correctOptionId": { "type": "string", "pattern": "^[a-d]$" },
+          "options": {
+            "type": "array",
+            "minItems": 3,
+            "maxItems": 4,
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["id", "text"],
+              "properties": {
+                "id": { "type": "string", "pattern": "^[a-d]$" },
+                "text": { "type": "string", "minLength": 5, "maxLength": 300 }
+              }
+            }
+          }
+        }
+      }
+    },
+    "license": { "type": "string", "pattern": "^[A-Za-z0-9.-]+$", "minLength": 3, "maxLength": 80 }
+  }
+}

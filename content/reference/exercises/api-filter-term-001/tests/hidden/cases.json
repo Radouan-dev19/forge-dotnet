@@ -22,6 +22,20 @@
                       "expected":  true,
                       "expectedException":  null,
                       "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_BlankTerm",
+                      "message":  "Terme réduit à un blanc : aucune correspondance, plutôt que tout accepter.",
+                      "arguments":  ["Commande","   "],
+                      "expected":  false,
+                      "argumentsUnchanged":  true
+                  },
+                  {
+                      "name":  "Hidden_NullValue",
+                      "message":  "Valeur absente : aucune correspondance, sans exception.",
+                      "arguments":  [null,"ada"],
+                      "expected":  false,
+                      "argumentsUnchanged":  false
                   }
               ]
 }

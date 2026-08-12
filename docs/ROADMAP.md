@@ -101,3 +101,99 @@ Chaque lot reste révisable : 3–6 leçons ou 5–10 exercices, avec schéma, c
 - [ ] Incrément 12 — audit pédagogique indépendant et contradictoire
 
 L'audit du 7 août 2026 est refusé et documenté dans `PEDAGOGICAL_AUDIT.md`. L'incrément 12 reste ouvert : corriger et démontrer la clôture de ses P1, puis réexécuter les sept personas dans un environnement navigateur/Docker réinitialisable. Aucun incrément suivant n'est créé implicitement.
+
+Reprise du 10 août 2026, détaillée dans la section « Reprise » du rapport d'audit :
+
+| Défaut | État |
+|---|---|
+| P1-02 — exemples d'exercice et d'énoncé SQL | clos |
+| P1-03 — parcours SQL/EF intégré au produit | clos |
+| P1-04 — message Practice après solution | clos |
+| P2-01 — page d'accueil Practice | clos |
+| P1-01 — leçons non finalisées | clos sur le contenu : les 70 leçons S1–S24 sont rédigées et sorties du registre de dette |
+| Boucle d'aide générique | clos : les 135 indices de niveau 4, jeux d'erreurs fréquentes et explications sont propres à leur exercice, figés par `ExerciseHintQualityTests` |
+| Matériel de diagnostic générique | clos : les 17 DebugLabs dont le ticket nommait la cause sont repris — ticket de symptôme, journal mesuré, grille spécifique — figés par `DebugScenarioQualityTests` |
+| Porte de maîtrise infranchissable | clos sur les domaines à exercices : la rétention espacée accepte les cartes d'exercice, à garanties et seuils inchangés. Banque à 230 cartes sur 115 exercices — C#, Débogage, Api, Tests intégralement couverts, figés par `ReviewCardQualityTests`. SQL reste hors de portée : sa pratique passe par des scénarios, pas par des exercices |
+| Verdict de maîtrise jamais prononcé | clos pour la porte A : sur vingt-trois clés d'accomplissement, une seule avait un producteur, si bien qu'aucune porte ne pouvait s'ouvrir. Les quatre projets console portent un starter et des suites d'acceptation exécutées dans le bac à sable ; une réussite complète produit `project.console`. Les vingt et une clés restantes sont inventoriées par `ProjectAchievementTests` et ce nombre ne peut que descendre |
+| Domaines de maîtrise inatteignables | clos : deux composantes sans producteur et une attribution de domaine codée en dur plaçaient six domaines sous leur propre seuil — débogage 60 pour 80, Api et Tests 15 pour 85, cinq domaines à 0. La porte A était donc mathématiquement impossible. Attribution par la compétence, quiz de leçon projeté, banque portée à 350 cartes sur 175 éléments : tous les domaines plafonnent à 90. `MasteryReachabilityTests` calcule ce plafond et refuse qu'il repasse au niveau du seuil |
+
+Les neuf projets portent désormais un dossier — `projects/<id>/project.json`, `brief.md`, et pour les
+quatre projets console un `starter/`, un corrigé de référence et une suite d'acceptation par jalon.
+La reprise de leurs briefs et de leurs jalons a par ailleurs sorti cinq documents du registre de
+dette, qui descend de 164 à **159**.
+
+Descente de la dette éditoriale, vague par vague : 376 → 346 (S1–S10) → 337 (S11–S13) → 328
+(S14–S16) → 319 (S17–S19) → 310 (S20–S22) → 306 (S23–S24), puis 274 → 245 → 225 → 196 → 181 par
+la reprise des cent trente-cinq échelles d'indices, 172 → 164 par celle des dix-sept DebugLabs
+générés, 164 → 159 par les briefs de projet, puis 159 → 131 → 106 → **0** par les trois derniers
+lots décrits ci-dessous.
+
+Reste ouvert, sans constituer un P1 : la densité de pratique en S11–S24.
+
+## Extinction de la dette éditoriale
+
+Les trois derniers lots ferment le registre. Chacun a été mesuré avant et après, et le registre
+régénéré par `--emit-content-debt` à chaque étape.
+
+| Lot | Documents traités | Ce qui était recopié | Dette |
+|---|---:|---|---:|
+| Scénarios SQL | 28 | l'assertion d'effet, la note de solution et cinq énoncés identiques | 159 → 131 |
+| Cartes d'anglais | 50 | la consigne, les attendus, le vocabulaire, la réponse modèle, l'erreur et la variante | 131 → 106 |
+| Fiches d'entretien | 191 | les critères observables, les erreurs fréquentes et une phrase de méthode dans la réponse | 106 → **0** |
+
+Deux constats méritent d'être conservés, parce qu'ils portent sur la mesure autant que sur le contenu.
+
+**Le comptage par document sous-estimait la duplication.** Les règles d'authenticité travaillent sur
+des paragraphes entiers : une phrase gabarit insérée au milieu d'un paragraphe par ailleurs propre
+échappe à la détection. Cinquante réponses modèles d'entretien portaient ainsi la même phrase de
+méthode et soixante-treize la même phrase de preuve, sans qu'aucune n'apparaisse au registre. La
+reprise a donc visé les phrases, pas seulement les documents signalés.
+
+**Certaines réponses modèles étaient grammaticalement cassées.** Vingt-cinq cartes d'anglais
+commençaient par un collage du générateur — « My decision is that On the stated window… ». Aucune
+règle ne pouvait le voir : le texte était unique, donc conforme. Il est réécrit.
+
+État après reprise : les 197 fiches d'entretien portent **401 critères observables distincts sur 401**
+et **204 erreurs fréquentes distinctes sur 204**, contre 50 et 29 auparavant. Les 51 cartes d'anglais
+portent 51 consignes, 51 réponses modèles et 51 variantes distinctes, contre 3, 26 et 3. Les 28
+scénarios SQL portent chacun leur propre assertion d'effet et leur propre note de solution.
+
+Le plafond de `ContentAuthenticityTests` est descendu à **zéro**, ce qui change la nature du cliquet :
+il n'encadre plus une dette héritée, il interdit toute réapparition. Le premier paragraphe d'au moins
+douze mots partagé par plus de trois documents d'un même lot fait désormais échouer le build.
+
+Le verdict reste **REFUSÉ**. Les garde-fous d'authenticité, le registre de dette à cliquet et les
+échafaudeurs non destructeurs empêchent la dette de croître, et les défauts de contenu qui motivaient
+le refus sont clos. Mais les sept personas n'ont pas été rejoués — navigateur et démon Docker
+indisponibles — et aucun panel humain n'a été réuni. Ce sont les deux seules conditions de levée.
+
+## Reprise de la densité de pratique S11–S17
+
+La densité était de 3,6 exercices par semaine en S11–S24 contre 8,8 en S1–S10 — l'écart portait
+précisément sur les semaines qui décident d'une embauche backend. La reprise avance par lots, semaine
+par semaine, et la matrice figée de `ContentS11S20CoverageTests` la rend visible à chaque étape.
+
+| Lot | Semaines portées | Exercices ajoutés | Densité S11–S17 |
+|---|---|---:|---:|
+| Lot 0 | S11 | 1 — `api-content-negotiation-001` | 5,1 → 5,3 |
+| Lot 1 | S12 à S17 | 6 | 5,3 → **6,0** |
+
+Le lot 1 ajoute `api-validation-aggregate-001` (S12), `api-sort-expression-001` (S13),
+`security-scope-grant-001` (S14), `tests-boundary-probe-001` (S15),
+`tests-shared-state-leak-001` (S16) et `quality-unreachable-branch-001` (S17). Chacun porte ses
+quatre indices propres, ses trois cas visibles et au moins quatre cas cachés, ses deux cartes de
+révision, sa fiche d'entretien, et rejoint la banque de l'examen correspondant — sans quoi il ne
+pourrait jamais être tiré. `ExerciseCorrectnessTests` prouve hors Docker que chaque solution passe
+tous ses cas et que chaque starter en échoue au moins un.
+
+Le choix de conception du lot est explicite : domaines d'entrée ouverts et sémantique réelle, à
+l'image du lot 0. Un exercice dont le domaine d'entrée se compte sur les doigts — deux booléens, par
+exemple — se résout par une table de correspondance apprise par cœur, ce qui mesure la mémoire et non
+la compétence annoncée. C'est le défaut structurel des activités `azure-*`, `docker-*` et `ci-*`
+existantes, et il ne se corrige pas en ajoutant des exercices de la même forme.
+
+**Cible restante : huit exercices par semaine sur S11–S17**, soit quatorze exercices de plus. Les
+sujets qu'un runner à méthode statique ne peut pas héberger réellement — écrire un vrai fichier de
+conteneur, une vraie définition de pipeline, un vrai déploiement — relèvent des laboratoires de
+`content/labs/`, pas des exercices : les décliner sur le modèle de `labs/api-mini-erp/` est un lot
+distinct de celui-ci.

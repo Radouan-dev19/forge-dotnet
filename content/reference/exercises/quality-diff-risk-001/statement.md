@@ -2,6 +2,6 @@
 
 Implémentez Submission.DiffRisk avec la signature fournie. Un changement d’autorisation est toujours haut risque ; le volume affine les autres cas.
 
-Le résultat reste déterministe et hors ligne. Écrivez avant le code un cas nominal, une frontière, un refus et la menace ou régression que ces preuves préviennent. N’utilisez aucun secret réel.
+Le classement reste déterministe et hors ligne, sans lire aucun dépôt. Écrivez avant le code : un petit diff touchant l'autorisation, un gros diff qui ne la touche pas, les deux seuils exacts, et un volume négatif. Nommez ce qu'un classement par volume seul laisserait passer en revue.
 
-Exemple : entrée $(Convert-JsonCompact System.Object[] System.Object[][0]), sortie $(Convert-JsonCompact System.Object[] System.Object[][1]).
+Exemple : entrée `[20,false]`, sortie `"low"`.

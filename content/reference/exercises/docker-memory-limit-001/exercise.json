@@ -15,13 +15,13 @@
     "statement":  "statement.md",
     "constraints":  [
                         "Conserver exactement la signature publique",
-                        "Choisir 256 par défaut puis borner toute valeur explicite entre 128 et 1024 Mo.",
-                        "Ne jamais dépendre du réseau, d’un secret réel ou d’un état global"
+                        "Choisir la valeur par défaut puis borner toute demande explicite dans l'intervalle admissible.",
+                        "N'exécuter aucun conteneur : seule la mémoire demandée est fournie"
                     ],
     "examples":  [
                      {
-                         "input":  "[{\"value\":[512],\"Count\":1},512]",
-                         "output":  "[{\"value\":[0],\"Count\":1},256]"
+                         "input":  "[512]",
+                         "output":  "512"
                      }
                  ],
     "reflectionFields":  [
@@ -54,7 +54,7 @@
                   {
                       "level":  4,
                       "kind":  "partial-pseudocode",
-                      "content":  "valider les entrées ; appliquer la décision bornée ; retourner un résultat déterministe sans effet externe"
+                      "content":  "si la demande est nulle ou négative retourner la valeur par défaut ; sinon ramener la demande dans l'intervalle admissible, en la remontant au plancher ou en la ramenant au plafond selon le cas"
                   }
               ],
     "solution":  {
@@ -67,9 +67,10 @@
     "explanation":  "explanation.md",
     "complexity":  "O(1) en temps et O(1) en espace",
     "commonMistakes":  [
-                           "Coder seulement les exemples visibles",
-                           "Masquer une erreur ou accepter une entrée hors contrat",
-                           "Confondre une règle pure avec le transport ou une ressource externe"
+                           "Retourner la demande telle quelle et laisser un conteneur consommer toute la machine",
+                           "Refuser une demande hors intervalle au lieu de la borner",
+                           "Placer le défaut hors de l'intervalle admissible",
+                           "Ne borner que le plafond et laisser passer une valeur trop basse"
                        ],
     "variantId":  "docker-health-window-001",
     "reviewCards":  [

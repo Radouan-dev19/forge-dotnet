@@ -27,6 +27,20 @@
                       "expected":  9,
                       "expectedException":  null,
                       "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_NullInput",
+                      "message":  "Référence absente : refus explicite.",
+                      "arguments":  [null],
+                      "expectedException":  "ArgumentNullException",
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_SymmetricValues",
+                      "message":  "Valeurs opposées : seule la positive compte, réfute une somme de valeurs absolues.",
+                      "arguments":  [[-5,5]],
+                      "expected":  5,
+                      "argumentsUnchanged":  true
                   }
               ]
 }

@@ -25,5 +25,9 @@
     "Le dataset reste à 20000 lignes après reset"
   ],
   "solutionPath": "solution.md",
+  "reviewCards": [
+      "card-sql-orders-index-plan-001-rule",
+      "card-sql-orders-index-plan-001-edge"
+  ],
   "license": "CC-BY-4.0"
 }

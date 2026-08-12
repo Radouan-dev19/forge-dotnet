@@ -16,7 +16,7 @@
     "Refuser null avec ArgumentNullException"
   ],
   "examples": [
-    { "input": "[3, 8, 6, 10]", "output": "[5, -2, 4]" },
+    { "input": "[[3,8,6,10]]", "output": "[5,-2,4]" },
     { "input": "[7]", "output": "[]" },
     { "input": "[-2, -5]", "output": "[-3]" }
   ],

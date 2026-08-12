@@ -1,24 +1,24 @@
 {
-    "schemaVersion":  1,
-    "id":  "interview-csharp-average-001",
-    "version":  1,
-    "title":  "Calculer une moyenne décimale",
-    "level":  "junior",
-    "durationMinutes":  5,
-    "skills":  [
-                   "csharp.linq"
-               ],
-    "question":  "Comment résoudriez-vous « Calculer une moyenne décimale » et comment prouveriez-vous les bornes ?",
-    "observableCriteria":  [
-                               "Le contrat et une borne sont explicitement reformulés",
-                               "La complexité et un test de réfutation sont justifiés"
-                           ],
-    "modelAnswer":  "Utiliser une somme élargie et définir la collection vide. La preuve comprend un cas nominal, une borne et un cas différent des exemples ; O(n) en temps et O(1) en espace.",
-    "commonMistakes":  [
-                           "Réciter le code sans invariant ni méthode de test"
-                       ],
-    "variants":  [
-                     "Changer une borne ou le volume tout en conservant la même règle de calculer une moyenne décimale."
-                 ],
-    "license":  "CC-BY-4.0"
+  "schemaVersion": 1,
+  "id": "interview-csharp-average-001",
+  "version": 1,
+  "title": "Calculer une moyenne décimale",
+  "level": "junior",
+  "durationMinutes": 5,
+  "skills": [
+    "csharp.linq"
+  ],
+  "question": "Comment résoudriez-vous « Calculer une moyenne décimale » et comment prouveriez-vous les bornes ?",
+  "observableCriteria": [
+    "La somme est accumulée dans un type plus large pour éviter le débordement",
+    "La collection vide reçoit un comportement défini, pas une division par zéro"
+  ],
+  "modelAnswer": "Utiliser une somme élargie et définir la collection vide. Je prouve par une collection vide, un seul élément et des valeurs proches du maximum du type ; O(n) en temps et O(1) en espace.",
+  "commonMistakes": [
+    "Accumuler dans le type des éléments et déborder avant la division"
+  ],
+  "variants": [
+    "Changer une borne ou le volume tout en conservant la même règle de calculer une moyenne décimale."
+  ],
+  "license": "CC-BY-4.0"
 }

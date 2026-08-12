@@ -24,6 +24,13 @@
                       "expected":  1,
                       "expectedException":  null,
                       "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Visible_AtUpperBound",
+                      "message":  "Valeur exactement à la borne haute : elle est conservée.",
+                      "arguments":  [10,1,10],
+                      "expected":  10,
+                      "argumentsUnchanged":  true
                   }
               ]
 }

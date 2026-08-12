@@ -1,24 +1,24 @@
 {
-    "schemaVersion":  1,
-    "id":  "interview-csharp-nullable-fallback-001",
-    "version":  1,
-    "title":  "Choisir une valeur de repli",
-    "level":  "junior",
-    "durationMinutes":  5,
-    "skills":  [
-                   "csharp.nullable"
-               ],
-    "question":  "Comment résoudriez-vous « Choisir une valeur de repli » et comment prouveriez-vous les bornes ?",
-    "observableCriteria":  [
-                               "Le contrat et une borne sont explicitement reformulés",
-                               "La complexité et un test de réfutation sont justifiés"
-                           ],
-    "modelAnswer":  "Une absence attendue reçoit un repli explicite, distinct d’une erreur métier. La preuve comprend un cas nominal, une borne et un cas différent des exemples ; O(n) en temps et O(n) en espace.",
-    "commonMistakes":  [
-                           "Réciter le code sans invariant ni méthode de test"
-                       ],
-    "variants":  [
-                     "Changer une borne ou le volume tout en conservant la même règle de choisir une valeur de repli."
-                 ],
-    "license":  "CC-BY-4.0"
+  "schemaVersion": 1,
+  "id": "interview-csharp-nullable-fallback-001",
+  "version": 1,
+  "title": "Choisir une valeur de repli",
+  "level": "junior",
+  "durationMinutes": 5,
+  "skills": [
+    "csharp.nullable"
+  ],
+  "question": "Comment résoudriez-vous « Choisir une valeur de repli » et comment prouveriez-vous les bornes ?",
+  "observableCriteria": [
+    "L'absence attendue est distinguée d'une erreur métier, avec un traitement différent",
+    "Le repli est explicite et non la valeur par défaut du type"
+  ],
+  "modelAnswer": "Une absence attendue reçoit un repli explicite, distinct d’une erreur métier. Je prouve par une valeur présente, une absence attendue et une absence qui doit rester une erreur ; O(n) en temps et O(n) en espace.",
+  "commonMistakes": [
+    "Traiter toute absence comme une erreur et refuser un cas que le métier autorise"
+  ],
+  "variants": [
+    "Changer une borne ou le volume tout en conservant la même règle de choisir une valeur de repli."
+  ],
+  "license": "CC-BY-4.0"
 }

@@ -1,3 +1,3 @@
 # Non-régression
 
-Exécuter les quatre cas du runner, dont la borne cachée. Le test doit échouer sur roken/Submission.cs, réussir sur correction/Submission.cs et vérifier l’absence de mutation pour les tableaux.
+Couvrir un nom renseigné entouré de blancs, un nom vide, un nom réduit à des blancs et un nom non renseigné. Le jeu doit échouer sur `broken/Submission.cs` dès le nom vide et réussir sur `correction/Submission.cs`.

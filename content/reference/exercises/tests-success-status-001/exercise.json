@@ -15,13 +15,13 @@
     "statement":  "statement.md",
     "constraints":  [
                         "Conserver exactement la signature publique",
-                        "Tester les frontières de la famille 2xx plutôt qu’un seul statut nominal.",
-                        "Ne jamais dépendre du réseau, d’un secret réel ou d’un état global"
+                        "Tester les frontières de la famille plutôt qu'un seul statut nominal.",
+                        "N'émettre aucune requête : seul le code de statut est fourni"
                     ],
     "examples":  [
                      {
-                         "input":  "[{\"value\":[200],\"Count\":1},true]",
-                         "output":  "[{\"value\":[404],\"Count\":1},false]"
+                         "input":  "[200]",
+                         "output":  "true"
                      }
                  ],
     "reflectionFields":  [
@@ -54,7 +54,7 @@
                   {
                       "level":  4,
                       "kind":  "partial-pseudocode",
-                      "content":  "valider les entrées ; appliquer la décision bornée ; retourner un résultat déterministe sans effet externe"
+                      "content":  "conclure au succès lorsque le statut appartient à l'intervalle de la famille, borné des deux côtés, en incluant les deux extrémités"
                   }
               ],
     "solution":  {
@@ -67,9 +67,10 @@
     "explanation":  "explanation.md",
     "complexity":  "O(1) en temps et O(1) en espace",
     "commonMistakes":  [
-                           "Coder seulement les exemples visibles",
-                           "Masquer une erreur ou accepter une entrée hors contrat",
-                           "Confondre une règle pure avec le transport ou une ressource externe"
+                           "Ne tester que le statut nominal et laisser une borne fausse passer",
+                           "Exclure la borne haute de la famille",
+                           "Accepter les statuts de redirection, qui suivent immédiatement la famille",
+                           "Accepter un statut négatif ou nul"
                        ],
     "variantId":  "tests-reset-state-001",
     "reviewCards":  [

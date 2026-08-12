@@ -1,24 +1,24 @@
 {
-    "schemaVersion":  1,
-    "id":  "interview-api-sort-whitelist-001",
-    "version":  1,
-    "title":  "Appliquer une liste blanche de tri",
-    "level":  "junior",
-    "durationMinutes":  6,
-    "skills":  [
-                   "api.pagination"
-               ],
-    "question":  "Comment implémenteriez-vous « Appliquer une liste blanche de tri » et quelles preuves réfutent les contournements ?",
-    "observableCriteria":  [
-                               "Le contrat, une frontière et un refus sont explicités",
-                               "La complexité et une preuve de sécurité ou de non-régression sont justifiées"
-                           ],
-    "modelAnswer":  "Retourner seulement une clé publique autorisée et choisir id par défaut. Je sépare validation et décision, je teste un cas nominal et les frontières, puis je vérifie qu’aucune donnée sensible ni état externe n’entre dans la preuve. O(n) en temps et O(n) en espace.",
-    "commonMistakes":  [
-                           "Réciter le code sans expliquer le contrat ni la preuve"
-                       ],
-    "variants":  [
-                     "Changer la frontière ou le droit tout en conservant la règle de appliquer une liste blanche de tri."
-                 ],
-    "license":  "CC-BY-4.0"
+  "schemaVersion": 1,
+  "id": "interview-api-sort-whitelist-001",
+  "version": 1,
+  "title": "Appliquer une liste blanche de tri",
+  "level": "junior",
+  "durationMinutes": 6,
+  "skills": [
+    "api.pagination"
+  ],
+  "question": "Comment implémenteriez-vous « Appliquer une liste blanche de tri » et quelles preuves réfutent les contournements ?",
+  "observableCriteria": [
+    "Seule une clé autorisée est rendue, et la valeur par défaut est nommée",
+    "Le refus d'une clé inconnue est présenté comme une frontière d'injection, pas une validation d'ergonomie"
+  ],
+  "modelAnswer": "Retourner seulement une clé publique autorisée et choisir id par défaut. Je teste une clé autorisée, une clé inconnue, une clé vide et une clé qui ne diffère que par la casse d'une clé autorisée. O(n) en temps et O(n) en espace.",
+  "commonMistakes": [
+    "Ignorer une clé inconnue en silence et rendre au client des données qu'il croit triées"
+  ],
+  "variants": [
+    "Changer la frontière ou le droit tout en conservant la règle de appliquer une liste blanche de tri."
+  ],
+  "license": "CC-BY-4.0"
 }

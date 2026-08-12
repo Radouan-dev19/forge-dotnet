@@ -1,3 +1,7 @@
 # Explication
 
-Valider page et taille avant un calcul vérifié du décalage. La solution sépare validation et décision, sans état externe. Complexité : **O(1) en temps et O(1) en espace**. Les cas cachés varient les frontières et réfutent une constante mémorisée. Après lecture, la tentative n’est pas maîtrisée : expliquez la règle avec vos mots et planifiez une reprise à blanc.
+Valider page et taille avant un calcul vérifié du décalage.
+
+La numérotation commence à un, donc le décalage se calcule sur le numéro diminué de un. Omettre cette soustraction saute la première page entière : le défaut est invisible sur la page deux, qui affiche bien des résultats, et ne se remarque qu'en comparant des totaux.
+
+Les deux bornes protègent le reste. Un numéro de page invalide produirait un décalage négatif, refusé plus loin par la base avec un message obscur. Une taille non bornée permettrait un décalage arbitrairement grand, et la multiplication vérifiée signale le dépassement plutôt que de produire une valeur négative silencieuse. La décision est en temps constant.

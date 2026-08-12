@@ -1,24 +1,24 @@
 {
-    "schemaVersion":  1,
-    "id":  "interview-quality-diff-risk-001",
-    "version":  1,
-    "title":  "Estimer le risque d’un diff",
-    "level":  "intermediate",
-    "durationMinutes":  6,
-    "skills":  [
-                   "quality.review"
-               ],
-    "question":  "Comment implémenteriez-vous « Estimer le risque d’un diff » et quelles preuves réfutent les contournements ?",
-    "observableCriteria":  [
-                               "Le contrat, une frontière et un refus sont explicités",
-                               "La complexité et une preuve de sécurité ou de non-régression sont justifiées"
-                           ],
-    "modelAnswer":  "Un changement d’autorisation est toujours haut risque ; le volume affine les autres cas. Je sépare validation et décision, je teste un cas nominal et les frontières, puis je vérifie qu’aucune donnée sensible ni état externe n’entre dans la preuve. O(1) en temps et O(1) en espace.",
-    "commonMistakes":  [
-                           "Réciter le code sans expliquer le contrat ni la preuve"
-                       ],
-    "variants":  [
-                     "Changer la frontière ou le droit tout en conservant la règle de estimer le risque d’un diff."
-                 ],
-    "license":  "CC-BY-4.0"
+  "schemaVersion": 1,
+  "id": "interview-quality-diff-risk-001",
+  "version": 1,
+  "title": "Estimer le risque d’un diff",
+  "level": "intermediate",
+  "durationMinutes": 6,
+  "skills": [
+    "quality.review"
+  ],
+  "question": "Comment implémenteriez-vous « Estimer le risque d’un diff » et quelles preuves réfutent les contournements ?",
+  "observableCriteria": [
+    "Le changement d'autorisation est classé au plus haut indépendamment du volume",
+    "Le volume est présenté comme affinant les autres cas, non comme les dominant"
+  ],
+  "modelAnswer": "Un changement d’autorisation est toujours haut risque ; le volume affine les autres cas. Je teste un petit changement d'autorisation, un gros changement sans autorisation, et un cas où les deux se cumulent. O(1) en temps et O(1) en espace.",
+  "commonMistakes": [
+    "Classer par nombre de lignes et laisser passer une modification d'autorisation de trois lignes"
+  ],
+  "variants": [
+    "Changer la frontière ou le droit tout en conservant la règle de estimer le risque d’un diff."
+  ],
+  "license": "CC-BY-4.0"
 }

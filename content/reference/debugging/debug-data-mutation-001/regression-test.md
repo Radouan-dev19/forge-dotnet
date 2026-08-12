@@ -1,3 +1,3 @@
 # Non-régression
 
-Exécuter les quatre cas du runner, dont la borne cachée. Le test doit échouer sur roken/Submission.cs, réussir sur correction/Submission.cs et vérifier l’absence de mutation pour les tableaux.
+Couvrir un lot désordonné, un lot déjà ordonné et un lot vide, en vérifiant après chaque appel que le lot reçu est inchangé. Le jeu doit échouer sur `broken/Submission.cs` dès le lot désordonné et réussir sur `correction/Submission.cs`.

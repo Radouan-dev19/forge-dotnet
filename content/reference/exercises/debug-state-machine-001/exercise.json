@@ -16,12 +16,12 @@
     "constraints":  [
                         "Conserver exactement la signature publique",
                         "Appliquer seulement les transitions autorisées et ignorer les événements hors état.",
-                        "Ne pas modifier les entrées reçues sauf mention explicite"
+                        "Ne conserver aucun état entre deux appels : le rejeu part toujours de l'état initial"
                     ],
     "examples":  [
                      {
-                         "input":  "[{\"value\":[[1,2]],\"Count\":1},2]",
-                         "output":  "[{\"value\":[[2]],\"Count\":1},0]"
+                         "input":  "[[1,2]]",
+                         "output":  "2"
                      }
                  ],
     "reflectionFields":  [
@@ -54,7 +54,7 @@
                   {
                       "level":  4,
                       "kind":  "partial-pseudocode",
-                      "content":  "valider les bornes ; parcourir ou décider ; retourner un nouveau résultat déterministe"
+                      "content":  "partir de l'état initial ; pour chaque événement, n'appliquer la transition que si elle est autorisée depuis l'état courant ; ignorer sans erreur tout événement qui ne correspond à aucune transition ; retourner l'état atteint"
                   }
               ],
     "solution":  {
@@ -67,9 +67,10 @@
     "explanation":  "explanation.md",
     "complexity":  "O(n) en temps et O(1) en espace",
     "commonMistakes":  [
-                           "Coder uniquement les exemples visibles",
-                           "Oublier une borne ou modifier une entrée",
-                           "Annoncer une complexité sans compter les opérations dominantes"
+                           "Appliquer une transition sans vérifier l'état de départ",
+                           "Lever sur un événement inattendu au lieu de l'ignorer",
+                           "Réinitialiser l'état à chaque événement au lieu de l'accumuler",
+                           "Retourner le dernier événement traité plutôt que l'état atteint"
                        ],
     "variantId":  "debug-awaited-total-001",
     "reviewCards":  [

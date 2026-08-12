@@ -20,6 +20,20 @@
                       "expected":  1,
                       "expectedException":  null,
                       "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_RepeatedGroup",
+                      "message":  "Une lettre revient après une autre plage : réfute un comptage de caractères distincts.",
+                      "arguments":  ["aabbaa"],
+                      "expected":  3,
+                      "argumentsUnchanged":  true
+                  },
+                  {
+                      "name":  "Hidden_AlternatingCharacters",
+                      "message":  "Alternance stricte : chaque caractère ouvre sa propre plage.",
+                      "arguments":  ["ababab"],
+                      "expected":  6,
+                      "argumentsUnchanged":  true
                   }
               ]
 }

@@ -21,6 +21,20 @@
                                     ],
                       "expectedException":  "ArgumentOutOfRangeException",
                       "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_RateAboveOne",
+                      "message":  "Taux supérieur à un : refusé, il produirait un total négatif.",
+                      "arguments":  [10,1.1],
+                      "expectedException":  "ArgumentOutOfRangeException",
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_ZeroRate",
+                      "message":  "Taux nul : le total est conservé tel quel.",
+                      "arguments":  [100,0],
+                      "expected":  100,
+                      "argumentsUnchanged":  true
                   }
               ]
 }

@@ -20,6 +20,20 @@
                       "expected":  true,
                       "expectedException":  null,
                       "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_BlankToken",
+                      "message":  "Que des blancs après le préfixe : aucun jeton réel.",
+                      "arguments":  ["Bearer   "],
+                      "expected":  false,
+                      "argumentsUnchanged":  true
+                  },
+                  {
+                      "name":  "Hidden_MissingSeparator",
+                      "message":  "Pas d'espace après le schéma : ce n'est pas un en-tête valide.",
+                      "arguments":  ["BearerToken"],
+                      "expected":  false,
+                      "argumentsUnchanged":  true
                   }
               ]
 }

@@ -24,6 +24,13 @@
                       "expected":  "incomplete",
                       "expectedException":  null,
                       "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Visible_NothingProvided",
+                      "message":  "Aucun des trois éléments : le bref est incomplet.",
+                      "arguments":  [false,false,false],
+                      "expected":  "incomplete",
+                      "argumentsUnchanged":  true
                   }
               ]
 }

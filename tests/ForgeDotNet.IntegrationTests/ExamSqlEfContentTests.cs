@@ -194,12 +194,18 @@ public sealed class ExamSqlEfContentTests
 
         public SqlLabExpectedResult? ReceivedExpectation { get; private set; }
 
+        /// <summary>L'examen doit provisionner son propre jeu de données, jamais un scénario publié.</summary>
+        public SqlLabProvisioning? ReceivedProvisioning { get; private set; }
+
         public Task<SqlLabAvailability> GetAvailabilityAsync(CancellationToken cancellationToken = default) =>
             Task.FromResult(new SqlLabAvailability(true, "Disponible"));
 
-        public Task<SqlLabSessionDescriptor> CreateSessionAsync(CancellationToken cancellationToken = default)
+        public Task<SqlLabSessionDescriptor> CreateSessionAsync(
+            SqlLabProvisioning? provisioning = null,
+            CancellationToken cancellationToken = default)
         {
             CreateCount++;
+            ReceivedProvisioning = provisioning;
             return Task.FromResult(new SqlLabSessionDescriptor(
                 _sessionId,
                 1,

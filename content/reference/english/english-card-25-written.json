@@ -1,39 +1,40 @@
 {
-    "schemaVersion":  1,
-    "id":  "english-card-25-written",
-    "version":  1,
-    "title":  "STAR reflection — written update",
-    "level":  "C1",
-    "durationMinutes":  12,
-    "skills":  [
-                   "english.written",
-                   "career.star"
-               ],
-    "situation":  "In a technical discussion, an interviewer asks about a defect you introduced. You must write the decision accurately without overstating the evidence.",
-    "instructions":  [
-                         "Write a four-sentence update with decision, evidence, limitation and next action."
-                     ],
-    "vocabulary":  [
-                       {
-                           "term":  "accountable reflection",
-                           "meaning":  "the precise concept required for star reflection"
-                       },
-                       {
-                           "term":  "verified evidence",
-                           "meaning":  "an observation supported by a reproducible check"
-                       }
-                   ],
-    "expectedElements":  [
-                             "A clear decision tied to the scenario",
-                             "Verified evidence and one explicit limitation",
-                             "A named next action"
-                         ],
-    "modelAnswer":  "Decision: I explain the context, my responsibility, the diagnostic action, the observed correction and the prevention I added afterward. Evidence: the documented local checks support this scope. Limitation: this does not prove behavior in an untested production environment. Next action: record the owner and the next bounded verification.",
-    "commonMistakes":  [
-                           "Using confident adjectives without naming evidence or a limitation"
-                       ],
-    "variants":  [
-                     "Rewrite the update for a non-technical stakeholder without removing the limitation."
-                 ],
-    "license":  "CC-BY-4.0"
+  "schemaVersion": 1,
+  "id": "english-card-25-written",
+  "version": 1,
+  "title": "STAR reflection — written update",
+  "level": "C1",
+  "durationMinutes": 12,
+  "skills": [
+    "english.written",
+    "career.star"
+  ],
+  "situation": "In a technical discussion, an interviewer asks about a defect you introduced. You must write the decision accurately without overstating the evidence.",
+  "instructions": [
+    "Write four sentences on the defect: the situation, your action, the measured consequence, and the change that prevents recurrence."
+  ],
+  "vocabulary": [
+    {
+      "term": "accountable reflection",
+      "meaning": "an account of your own mistake that names the cost and the correction, without diluting responsibility across the team"
+    },
+    {
+      "term": "preventive change",
+      "meaning": "the durable modification made after a defect, which is what distinguishes a lesson from an apology"
+    }
+  ],
+  "expectedElements": [
+    "Responsibility is taken without deflection",
+    "The consequence is stated in measurable terms",
+    "A durable preventive change is described"
+  ],
+  "modelAnswer": "I introduced the defect. While adding a filter to the order search I placed pagination before the filter, so the second page could skip records. It reached production and went unnoticed for two days, affecting roughly forty searches, and no test in the suite would have caught it. The change I made afterwards is not increased care, which is not a control: I added a test that paginates a filtered set and asserts the total count across pages, which is now the evidence that the defect cannot return.",
+  "commonMistakes": [
+    "Diluting responsibility across the team or the review process",
+    "Offering greater care as the preventive change instead of a control that fails"
+  ],
+  "variants": [
+    "Rewrite the account as the post-incident note for the team."
+  ],
+  "license": "CC-BY-4.0"
 }

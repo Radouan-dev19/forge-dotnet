@@ -1,24 +1,24 @@
 {
-    "schemaVersion":  1,
-    "id":  "interview-algo-minimum-index-001",
-    "version":  1,
-    "title":  "Trouver l’indice minimal",
-    "level":  "junior",
-    "durationMinutes":  5,
-    "skills":  [
-                   "algorithm.search"
-               ],
-    "question":  "Comment résoudriez-vous « Trouver l’indice minimal » et comment prouveriez-vous les bornes ?",
-    "observableCriteria":  [
-                               "Le contrat et une borne sont explicitement reformulés",
-                               "La complexité et un test de réfutation sont justifiés"
-                           ],
-    "modelAnswer":  "Conserver le premier minimum et définir le tableau vide. La preuve comprend un cas nominal, une borne et un cas différent des exemples ; O(n) en temps et O(1) en espace.",
-    "commonMistakes":  [
-                           "Réciter le code sans invariant ni méthode de test"
-                       ],
-    "variants":  [
-                     "Changer une borne ou le volume tout en conservant la même règle de trouver l’indice minimal."
-                 ],
-    "license":  "CC-BY-4.0"
+  "schemaVersion": 1,
+  "id": "interview-algo-minimum-index-001",
+  "version": 1,
+  "title": "Trouver l’indice minimal",
+  "level": "junior",
+  "durationMinutes": 5,
+  "skills": [
+    "algorithm.search"
+  ],
+  "question": "Comment résoudriez-vous « Trouver l’indice minimal » et comment prouveriez-vous les bornes ?",
+  "observableCriteria": [
+    "Le premier minimum est retenu en cas d'égalité, et ce choix est dit",
+    "Le tableau vide reçoit une valeur de retour définie"
+  ],
+  "modelAnswer": "Conserver le premier minimum et définir le tableau vide. Je prouve par deux minimums égaux, un minimum en dernière position et un tableau vide ; O(n) en temps et O(1) en espace.",
+  "commonMistakes": [
+    "Utiliser une comparaison large et retourner le dernier minimum au lieu du premier"
+  ],
+  "variants": [
+    "Changer une borne ou le volume tout en conservant la même règle de trouver l’indice minimal."
+  ],
+  "license": "CC-BY-4.0"
 }

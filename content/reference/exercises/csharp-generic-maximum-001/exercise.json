@@ -20,8 +20,8 @@
                     ],
     "examples":  [
                      {
-                         "input":  "[{\"value\":[[1,5,2]],\"Count\":1},5]",
-                         "output":  "[{\"value\":[[]],\"Count\":1},0]"
+                         "input":  "[[1,5,2]]",
+                         "output":  "5"
                      }
                  ],
     "reflectionFields":  [
@@ -54,7 +54,7 @@
                   {
                       "level":  4,
                       "kind":  "partial-pseudocode",
-                      "content":  "valider les bornes ; parcourir ou décider ; retourner un nouveau résultat déterministe"
+                      "content":  "si values est absent ou vide retourner zéro ; sinon initialiser le maximum avec le premier élément, puis le remplacer dès qu'une valeur lue est strictement plus grande"
                   }
               ],
     "solution":  {
@@ -67,9 +67,10 @@
     "explanation":  "explanation.md",
     "complexity":  "O(n) en temps et O(1) en espace",
     "commonMistakes":  [
-                           "Coder uniquement les exemples visibles",
-                           "Oublier une borne ou modifier une entrée",
-                           "Annoncer une complexité sans compter les opérations dominantes"
+                           "Initialiser le maximum à zéro et se tromper sur un tableau entièrement négatif",
+                           "Initialiser à la plus petite valeur du type et masquer le cas vide",
+                           "Lever sur une collection vide alors que le contrat annonce zéro",
+                           "Remplacer sur une comparaison large et écrire sans changer le résultat"
                        ],
     "variantId":  "csharp-delegate-double-001",
     "reviewCards":  [

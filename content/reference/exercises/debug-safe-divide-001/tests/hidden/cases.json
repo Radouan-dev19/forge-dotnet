@@ -22,6 +22,20 @@
                       "expected":  0,
                       "expectedException":  null,
                       "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_TruncatesTowardZero",
+                      "message":  "Quotient négatif non entier : la division entière tronque vers zéro.",
+                      "arguments":  [7,-2],
+                      "expected":  -3,
+                      "argumentsUnchanged":  true
+                  },
+                  {
+                      "name":  "Hidden_BothNegative",
+                      "message":  "Deux opérandes négatifs : le quotient est positif.",
+                      "arguments":  [-8,-2],
+                      "expected":  4,
+                      "argumentsUnchanged":  true
                   }
               ]
 }

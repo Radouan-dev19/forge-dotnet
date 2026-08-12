@@ -15,13 +15,13 @@
     "statement":  "statement.md",
     "constraints":  [
                         "Conserver exactement la signature publique",
-                        "Exiger un sujet non vide, borné à 72 caractères et sans point final.",
-                        "Ne jamais dépendre du réseau, d’un secret réel ou d’un état global"
+                        "Exiger un sujet non vide, borné en longueur et sans point final.",
+                        "N'interroger aucun dépôt : le sujet proposé est fourni"
                     ],
     "examples":  [
                      {
-                         "input":  "[{\"value\":[\"Ajoute les tests API\"],\"Count\":1},true]",
-                         "output":  "[{\"value\":[\"Corrige.\"],\"Count\":1},false]"
+                         "input":  "[\"Ajoute les tests API\"]",
+                         "output":  "true"
                      }
                  ],
     "reflectionFields":  [
@@ -54,7 +54,7 @@
                   {
                       "level":  4,
                       "kind":  "partial-pseudocode",
-                      "content":  "valider les entrées ; appliquer la décision bornée ; retourner un résultat déterministe sans effet externe"
+                      "content":  "refuser un sujet absent ou composé de blancs ; retirer les blancs de bordure avant toute mesure ; accepter seulement si la longueur ne dépasse pas la limite et si le sujet ne se termine pas par un point"
                   }
               ],
     "solution":  {
@@ -67,9 +67,10 @@
     "explanation":  "explanation.md",
     "complexity":  "O(n) en temps et O(n) en espace",
     "commonMistakes":  [
-                           "Coder seulement les exemples visibles",
-                           "Masquer une erreur ou accepter une entrée hors contrat",
-                           "Confondre une règle pure avec le transport ou une ressource externe"
+                           "Mesurer la longueur avant d'avoir retiré les blancs de bordure",
+                           "Refuser un sujet exactement à la longueur limite",
+                           "Accepter un sujet composé uniquement de blancs",
+                           "Accepter un point final, qui fait du sujet une phrase plutôt qu'un titre"
                        ],
     "variantId":  "git-version-patch-001",
     "reviewCards":  [

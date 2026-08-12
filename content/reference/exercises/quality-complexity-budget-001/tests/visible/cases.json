@@ -20,6 +20,13 @@
                       "expected":  true,
                       "expectedException":  null,
                       "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Visible_MiddleOfBudget",
+                      "message":  "Profondeur au milieu du budget : acceptée.",
+                      "arguments":  [2],
+                      "expected":  true,
+                      "argumentsUnchanged":  true
                   }
               ]
 }

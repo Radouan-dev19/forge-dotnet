@@ -20,8 +20,8 @@
                     ],
     "examples":  [
                      {
-                         "input":  "[{\"value\":[[3,1,2]],\"Count\":1},1]",
-                         "output":  "[{\"value\":[[]],\"Count\":1},-1]"
+                         "input":  "[[3,1,2]]",
+                         "output":  "1"
                      }
                  ],
     "reflectionFields":  [
@@ -54,7 +54,7 @@
                   {
                       "level":  4,
                       "kind":  "partial-pseudocode",
-                      "content":  "valider les bornes ; parcourir ou décider ; retourner un nouveau résultat déterministe"
+                      "content":  "si values est absent ou vide retourner le code d'absence ; sinon retenir l'indice zéro, parcourir à partir du deuxième élément, et remplacer l'indice retenu seulement lorsqu'une valeur est strictement plus petite"
                   }
               ],
     "solution":  {
@@ -67,9 +67,10 @@
     "explanation":  "explanation.md",
     "complexity":  "O(n) en temps et O(1) en espace",
     "commonMistakes":  [
-                           "Coder uniquement les exemples visibles",
-                           "Oublier une borne ou modifier une entrée",
-                           "Annoncer une complexité sans compter les opérations dominantes"
+                           "Remplacer sur une comparaison large et retourner le dernier minimum au lieu du premier",
+                           "Retourner la valeur minimale au lieu de son indice",
+                           "Retourner zéro pour un tableau vide, alors que zéro est un indice valide",
+                           "Initialiser l'indice retenu à une valeur hors du tableau"
                        ],
     "variantId":  "algo-insertion-sort-001",
     "reviewCards":  [

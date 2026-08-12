@@ -25,5 +25,9 @@
     "Le test négatif détecte au moins une commande supplémentaire par client"
   ],
   "solutionPath": "solution.md",
+  "reviewCards": [
+      "card-ef-orders-loading-001-rule",
+      "card-ef-orders-loading-001-edge"
+  ],
   "license": "CC-BY-4.0"
 }

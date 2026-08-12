@@ -25,5 +25,9 @@
     "Seules les colonnes de la projection sont retournées"
   ],
   "solutionPath": "solution.md",
+  "reviewCards": [
+      "card-ef-orders-queryable-001-rule",
+      "card-ef-orders-queryable-001-edge"
+  ],
   "license": "CC-BY-4.0"
 }

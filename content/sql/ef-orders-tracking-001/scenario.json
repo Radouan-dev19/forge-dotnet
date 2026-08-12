@@ -25,5 +25,9 @@
     "La projection en lecture seule reste détachée et ne modifie aucune donnée"
   ],
   "solutionPath": "solution.md",
+  "reviewCards": [
+      "card-ef-orders-tracking-001-rule",
+      "card-ef-orders-tracking-001-edge"
+  ],
   "license": "CC-BY-4.0"
 }

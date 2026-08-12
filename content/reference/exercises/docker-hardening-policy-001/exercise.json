@@ -15,13 +15,13 @@
     "statement":  "statement.md",
     "constraints":  [
                         "Conserver exactement la signature publique",
-                        "Exiger simultanément utilisateur non-root, lecture seule et no-new-privileges.",
-                        "Ne jamais dépendre du réseau, d’un secret réel ou d’un état global"
+                        "Exiger simultanément identité non privilégiée, racine en lecture seule et interdiction d'élévation.",
+                        "N'exécuter aucun conteneur : les trois réglages observés sont fournis"
                     ],
     "examples":  [
                      {
-                         "input":  "[{\"value\":[true,true,true],\"Count\":3},true]",
-                         "output":  "[{\"value\":[false,true,true],\"Count\":3},false]"
+                         "input":  "[true,true,true]",
+                         "output":  "true"
                      }
                  ],
     "reflectionFields":  [
@@ -54,7 +54,7 @@
                   {
                       "level":  4,
                       "kind":  "partial-pseudocode",
-                      "content":  "valider les entrées ; appliquer la décision bornée ; retourner un résultat déterministe sans effet externe"
+                      "content":  "exiger les trois réglages ensemble : l'identité non privilégiée, la racine en lecture seule et l'interdiction d'acquérir de nouveaux privilèges ; l'absence d'un seul laisse un chemin ouvert"
                   }
               ],
     "solution":  {
@@ -67,9 +67,10 @@
     "explanation":  "explanation.md",
     "complexity":  "O(1) en temps et O(1) en espace",
     "commonMistakes":  [
-                           "Coder seulement les exemples visibles",
-                           "Masquer une erreur ou accepter une entrée hors contrat",
-                           "Confondre une règle pure avec le transport ou une ressource externe"
+                           "Considérer l'identité non privilégiée comme suffisante à elle seule",
+                           "Omettre l'interdiction d'élévation, qui rend l'identité contournable pendant l'exécution",
+                           "Traiter les trois réglages comme alternatifs plutôt que cumulatifs",
+                           "Confondre l'isolation d'un conteneur avec celle d'une machine virtuelle"
                        ],
     "variantId":  "ci-job-result-001",
     "reviewCards":  [

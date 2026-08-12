@@ -1,39 +1,40 @@
 {
-    "schemaVersion":  1,
-    "id":  "english-card-17-written",
-    "version":  1,
-    "title":  "Performance evidence — written update",
-    "level":  "B2",
-    "durationMinutes":  12,
-    "skills":  [
-                   "english.written",
-                   "performance.evidence"
-               ],
-    "situation":  "In a technical discussion, an optimization is said to be twice as fast. You must write the decision accurately without overstating the evidence.",
-    "instructions":  [
-                         "Write a four-sentence update with decision, evidence, limitation and next action."
-                     ],
-    "vocabulary":  [
-                       {
-                           "term":  "benchmark evidence",
-                           "meaning":  "the precise concept required for performance evidence"
-                       },
-                       {
-                           "term":  "verified evidence",
-                           "meaning":  "an observation supported by a reproducible check"
-                       }
-                   ],
-    "expectedElements":  [
-                             "A clear decision tied to the scenario",
-                             "Verified evidence and one explicit limitation",
-                             "A named next action"
-                         ],
-    "modelAnswer":  "Decision: The claim needs the same scenario, workload, environment and measurement method before and after, plus unchanged functional tests. Evidence: the documented local checks support this scope. Limitation: this does not prove behavior in an untested production environment. Next action: record the owner and the next bounded verification.",
-    "commonMistakes":  [
-                           "Using confident adjectives without naming evidence or a limitation"
-                       ],
-    "variants":  [
-                     "Rewrite the update for a non-technical stakeholder without removing the limitation."
-                 ],
-    "license":  "CC-BY-4.0"
+  "schemaVersion": 1,
+  "id": "english-card-17-written",
+  "version": 1,
+  "title": "Performance evidence — written update",
+  "level": "B2",
+  "durationMinutes": 12,
+  "skills": [
+    "english.written",
+    "performance.evidence"
+  ],
+  "situation": "In a technical discussion, an optimization is said to be twice as fast. You must write the decision accurately without overstating the evidence.",
+  "instructions": [
+    "Write four sentences on the conditions a performance claim needs: what was measured, on what input, and how many times."
+  ],
+  "vocabulary": [
+    {
+      "term": "benchmark evidence",
+      "meaning": "a measurement stated with its input, its environment, and its repetition count, without which a speed claim cannot be checked"
+    },
+    {
+      "term": "measurement variance",
+      "meaning": "the spread between repeated runs, which decides whether an observed difference means anything at all"
+    }
+  ],
+  "expectedElements": [
+    "The missing conditions of the claim are enumerated",
+    "Variance across runs is raised, not only the mean",
+    "The request is specific enough to be answered"
+  ],
+  "modelAnswer": "The claim of a twofold improvement cannot be evaluated as stated. I need three conditions: what was measured, whether the whole request or one function in isolation; on what input, since an optimisation that helps a large collection may do nothing at realistic sizes; and how many runs were made, with the spread between them. A single pair of runs can differ by more than the claimed factor for reasons unrelated to the change. Please share the raw measurements as evidence rather than the ratio alone.",
+  "commonMistakes": [
+    "Accepting a ratio without the input size it was measured on",
+    "Comparing means without looking at the spread across runs"
+  ],
+  "variants": [
+    "Rewrite the update as the measurement protocol you want followed."
+  ],
+  "license": "CC-BY-4.0"
 }

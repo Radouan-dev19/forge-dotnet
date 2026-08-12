@@ -20,6 +20,20 @@
                       "expected":  false,
                       "expectedException":  null,
                       "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_NullValue",
+                      "message":  "Valeur absente : refusée sans exception.",
+                      "arguments":  [null],
+                      "expected":  false,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_RelativeWithoutSlash",
+                      "message":  "Chemin relatif sans barre initiale : refusé, il pourrait être réinterprété.",
+                      "arguments":  ["orders/1"],
+                      "expected":  false,
+                      "argumentsUnchanged":  true
                   }
               ]
 }

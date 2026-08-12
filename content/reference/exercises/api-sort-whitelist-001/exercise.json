@@ -15,13 +15,13 @@
     "statement":  "statement.md",
     "constraints":  [
                         "Conserver exactement la signature publique",
-                        "Retourner seulement une clé publique autorisée et choisir id par défaut.",
-                        "Ne jamais dépendre du réseau, d’un secret réel ou d’un état global"
+                        "Ne retenir qu'une clé publique autorisée et choisir la valeur par défaut sinon.",
+                        "Ne construire aucune requête : seule la clé normalisée est retournée"
                     ],
     "examples":  [
                      {
-                         "input":  "[{\"value\":[\"date\"],\"Count\":1},\"date\"]",
-                         "output":  "[{\"value\":[\"DROP TABLE\"],\"Count\":1},\"id\"]"
+                         "input":  "[\"date\"]",
+                         "output":  "\"date\""
                      }
                  ],
     "reflectionFields":  [
@@ -54,7 +54,7 @@
                   {
                       "level":  4,
                       "kind":  "partial-pseudocode",
-                      "content":  "valider les entrées ; appliquer la décision bornée ; retourner un résultat déterministe sans effet externe"
+                      "content":  "normaliser la valeur reçue en retirant les blancs et en uniformisant la casse, l'absence donnant une chaîne vide ; ne la retenir que si elle figure dans la liste fermée des clés autorisées ; sinon retourner la clé de tri par défaut"
                   }
               ],
     "solution":  {
@@ -67,9 +67,10 @@
     "explanation":  "explanation.md",
     "complexity":  "O(n) en temps et O(n) en espace",
     "commonMistakes":  [
-                           "Coder seulement les exemples visibles",
-                           "Masquer une erreur ou accepter une entrée hors contrat",
-                           "Confondre une règle pure avec le transport ou une ressource externe"
+                           "Passer la valeur reçue à la requête sans la confronter à une liste fermée",
+                           "Refuser par une erreur une clé inconnue au lieu de retomber sur le tri par défaut",
+                           "Comparer sans normaliser et rejeter une clé écrite dans une autre casse",
+                           "Croire qu'une requête paramétrée protège aussi le nom de colonne"
                        ],
     "variantId":  "api-filter-term-001",
     "reviewCards":  [

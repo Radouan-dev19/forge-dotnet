@@ -1,0 +1,242 @@
+@page "/projects/{ProjectId}"
+@using ForgeDotNet.Application.CodeRunner
+@using ForgeDotNet.Application.Projects
+@using ForgeDotNet.Domain.Projects
+@inject IProjectSource Projects
+@inject SubmitProject Submissions
+@inject CodeRunnerModeDescriptor RunnerMode
+
+<PageTitle>@(_project?.Title ?? "Projet") — Forge.NET</PageTitle>
+
+@if (_error is not null)
+{
+    <p class="error-message" role="alert">@_error</p>
+}
+else if (_project is null)
+{
+    <p role="status">Chargement du projet…</p>
+}
+else
+{
+    <h1>@_project.Title</h1>
+    <p class="field-help">
+        Semaine @string.Join(", ", _project.Weeks) · @_project.EstimatedHours heures ·
+        difficulté @_project.Difficulty · contenu v@(_project.Version)
+    </p>
+
+    <section class="practice-panel" aria-labelledby="project-brief-title">
+        <h2 id="project-brief-title">Brief</h2>
+        <pre class="runner-output">@_project.Brief</pre>
+    </section>
+
+    <section class="practice-panel" aria-labelledby="project-milestones-title">
+        <h2 id="project-milestones-title">Jalons</h2>
+        <ul>
+            @foreach (ProjectMilestone milestone in _project.Milestones)
+            {
+                <li>
+                    <strong>@milestone.Title</strong>
+                    @if (_project.AcceptanceSuites.Any(suite => suite.MilestoneId == milestone.Id))
+                    {
+                        <span class="notice"> — mesuré par une suite</span>
+                    }
+                    else
+                    {
+                        <span class="field-help"> — observé, non mesuré</span>
+                    }
+                    <p>@milestone.Evidence</p>
+                    <ul>
+                        @foreach (string criterion in milestone.AcceptanceCriteria)
+                        {
+                            <li>@criterion</li>
+                        }
+                    </ul>
+                </li>
+            }
+        </ul>
+    </section>
+
+    <section class="practice-panel" aria-labelledby="project-rubric-title">
+        <h2 id="project-rubric-title">Grille — observée par un humain, jamais par une suite</h2>
+        <ul>
+            @foreach (ProjectRubricCriterion criterion in _project.Rubric)
+            {
+                <li>
+                    <strong>@criterion.Criterion</strong> (@criterion.Weight.ToString("P0"))
+                    <p>@criterion.ObservableEvidence</p>
+                </li>
+            }
+        </ul>
+    </section>
+
+    <section class="practice-panel" aria-labelledby="project-mistakes-title">
+        <h2 id="project-mistakes-title">Erreurs fréquentes</h2>
+        <ul>
+            @foreach (string mistake in _project.CommonMistakes)
+            {
+                <li>@mistake</li>
+            }
+        </ul>
+    </section>
+
+    @if (!_project.IsVerifiable)
+    {
+        <section class="practice-panel" aria-labelledby="project-guided-title">
+            <h2 id="project-guided-title">Projet guidé</h2>
+            <p class="notice" role="status">
+                Ce projet ne porte aucune suite d'acceptation : rien ici ne peut vérifier votre rendu, et
+                aucune preuve de maîtrise n'en sortira. Travaillez-le dans votre propre dépôt.
+            </p>
+        </section>
+    }
+    else
+    {
+        <section class="practice-panel" aria-labelledby="project-submission-title">
+            <h2 id="project-submission-title">Rendu</h2>
+            <p>
+                Jusqu'à @_project.MaximumSourceFiles fichiers. Le type <code>Submission</code> doit exposer
+                les méthodes annoncées par le brief ; les autres fichiers sont libres.
+            </p>
+            @if (RunnerMode.IsManual)
+            {
+                <p class="notice" role="status">
+                    Mode manuel : votre rendu ne sera ni compilé ni testé. La soumission sera enregistrée
+                    comme déclarée et ne produira aucune preuve.
+                </p>
+            }
+
+            @for (int index = 0; index < _files.Count; index++)
+            {
+                int position = index;
+                <div class="practice-field">
+                    <label for="project-file-name-@position">Nom du fichier</label>
+                    <input id="project-file-name-@position" class="form-control" @bind="_files[position].FileName" />
+                    <label for="project-file-@position">Contenu</label>
+                    <textarea id="project-file-@position" class="form-control runner-source"
+                              rows="18" @bind="_files[position].Content"></textarea>
+                </div>
+            }
+
+            <button class="btn btn-secondary" type="button" disabled="@(_busy || _files.Count >= _project.MaximumSourceFiles)"
+                    @onclick="AddFile">
+                Ajouter un fichier
+            </button>
+            <button class="btn btn-primary" type="button" disabled="@_busy" @onclick="SubmitAsync">
+                Soumettre le projet
+            </button>
+        </section>
+    }
+
+    @if (_result is not null)
+    {
+        <section class="practice-panel" aria-labelledby="project-result-title">
+            <h2 id="project-result-title">Résultat</h2>
+            <p role="status">
+                @_result.Submission.PassedSuites / @_result.Submission.TotalSuites jalons verts ·
+                @_result.Submission.PassedTests / @_result.Submission.TotalTests cas passés.
+            </p>
+            @if (_result.Submission.ProducesEvidence)
+            {
+                <p class="notice" role="status">
+                    Projet livré et vérifié. Cette soumission satisfait l'exigence de porte que le brief
+                    annonce ; ouvrez le tableau de progression pour la voir prise en compte.
+                </p>
+            }
+            else
+            {
+                <p class="notice" role="status">
+                    Aucune preuve produite : un projet ne compte que lorsque toutes ses suites passent
+                    ensemble, sur une exécution réelle.
+                </p>
+            }
+
+            @foreach (ProjectSuiteOutcome outcome in _result.Suites)
+            {
+                <h3>@outcome.Title</h3>
+                <RunnerResultPanel Result="outcome.Result" />
+            }
+        </section>
+    }
+}
+
+@code {
+    [Parameter]
+    public string ProjectId { get; set; } = string.Empty;
+
+    private Project? _project;
+    private ProjectSubmissionResult? _result;
+    private string? _error;
+    private bool _busy;
+    private readonly List<EditableFile> _files = [];
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            _project = await Projects.GetAsync(ProjectId);
+            if (_project is null)
+            {
+                _error = "Projet introuvable.";
+                return;
+            }
+
+            foreach (ProjectStarterFile file in _project.StarterFiles)
+            {
+                _files.Add(new EditableFile { FileName = file.FileName, Content = file.Content });
+            }
+
+            if (_files.Count == 0 && _project.IsVerifiable)
+            {
+                _files.Add(new EditableFile { FileName = "Submission.cs", Content = string.Empty });
+            }
+        }
+        catch (Exception exception)
+        {
+            _error = exception.Message;
+        }
+    }
+
+    private void AddFile()
+    {
+        if (_project is not null && _files.Count < _project.MaximumSourceFiles)
+        {
+            _files.Add(new EditableFile { FileName = $"Helper{_files.Count}.cs", Content = string.Empty });
+        }
+    }
+
+    private async Task SubmitAsync()
+    {
+        if (_project is null)
+        {
+            return;
+        }
+
+        _busy = true;
+        _error = null;
+        try
+        {
+            _result = await Submissions.ExecuteAsync(new SubmitProjectCommand(
+                Guid.NewGuid(),
+                _project.Id,
+                _files
+                    .Where(file => !string.IsNullOrWhiteSpace(file.FileName))
+                    .Select(file => new CodeRunSourceFile(file.FileName, file.Content))
+                    .ToArray()));
+        }
+        catch (Exception exception)
+        {
+            _error = exception.Message;
+        }
+        finally
+        {
+            _busy = false;
+        }
+    }
+
+    private sealed class EditableFile
+    {
+        public string FileName { get; set; } = string.Empty;
+
+        public string Content { get; set; } = string.Empty;
+    }
+}

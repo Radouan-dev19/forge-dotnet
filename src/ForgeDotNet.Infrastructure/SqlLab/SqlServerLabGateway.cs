@@ -66,7 +66,9 @@ public sealed class SqlServerLabGateway : ISqlLabGateway, IAsyncDisposable
         }
     }
 
-    public async Task<SqlLabSessionDescriptor> CreateSessionAsync(CancellationToken cancellationToken = default)
+    public async Task<SqlLabSessionDescriptor> CreateSessionAsync(
+        SqlLabProvisioning? provisioning = null,
+        CancellationToken cancellationToken = default)
     {
         EnsureEnabled();
         await _lifecycleGate.WaitAsync(cancellationToken);
@@ -77,7 +79,10 @@ public sealed class SqlServerLabGateway : ISqlLabGateway, IAsyncDisposable
                 throw new InvalidOperationException("Le nombre maximal de sessions SQL jetables est atteint.");
             }
 
-            SessionLease lease = await ProvisionLeaseAsync(generation: 1, cancellationToken);
+            SessionLease lease = await ProvisionLeaseAsync(
+                generation: 1,
+                provisioning ?? SqlLabTemplate.ReferenceProvisioning,
+                cancellationToken);
             if (!_sessions.TryAdd(lease.Id, lease))
             {
                 await CleanupLeaseAsync(lease, CancellationToken.None);
@@ -111,7 +116,12 @@ public sealed class SqlServerLabGateway : ISqlLabGateway, IAsyncDisposable
                 throw new KeyNotFoundException("La session SQL est inconnue ou déjà détruite.");
             }
 
-            SessionLease replacement = await ProvisionLeaseAsync(current.Generation + 1, cancellationToken, sessionId);
+            // La réinitialisation reprovisionne le scénario d'origine : base et login neufs.
+            SessionLease replacement = await ProvisionLeaseAsync(
+                current.Generation + 1,
+                current.Provisioning,
+                cancellationToken,
+                sessionId);
             try
             {
                 await CleanupLeaseAsync(current, cancellationToken);
@@ -305,6 +315,7 @@ public sealed class SqlServerLabGateway : ISqlLabGateway, IAsyncDisposable
 
     private async Task<SessionLease> ProvisionLeaseAsync(
         int generation,
+        SqlLabProvisioning provisioning,
         CancellationToken cancellationToken,
         Guid? existingId = null)
     {
@@ -331,7 +342,10 @@ public sealed class SqlServerLabGateway : ISqlLabGateway, IAsyncDisposable
                 cancellationToken);
 
             await using SqlConnection database = await OpenAdministratorConnectionAsync(databaseName, cancellationToken);
-            await ExecuteAdministratorCommandAsync(database, SqlLabTemplate.SchemaAndDatasetSql, cancellationToken);
+            await ExecuteAdministratorCommandAsync(
+                database,
+                provisioning.SchemaAndDatasetSql,
+                cancellationToken);
             await ExecuteAdministratorCommandAsync(
                 database,
                 $"""
@@ -356,6 +370,7 @@ public sealed class SqlServerLabGateway : ISqlLabGateway, IAsyncDisposable
             databaseName,
             loginName,
             password,
+            provisioning,
             _timeProvider.GetUtcNow());
     }
 
@@ -609,7 +624,7 @@ public sealed class SqlServerLabGateway : ISqlLabGateway, IAsyncDisposable
         lease.Id,
         lease.Generation,
         lease.CreatedAtUtc,
-        SqlLabTemplate.VisibleSchema,
+        lease.Provisioning.VisibleSchema,
         SqlLabTemplate.CreateLimits(_options));
 
     private void EnsureEnabled()
@@ -629,6 +644,7 @@ public sealed class SqlServerLabGateway : ISqlLabGateway, IAsyncDisposable
         string databaseName,
         string loginName,
         string password,
+        SqlLabProvisioning provisioning,
         DateTimeOffset createdAtUtc)
     {
         public Guid Id { get; } = id;
@@ -640,6 +656,9 @@ public sealed class SqlServerLabGateway : ISqlLabGateway, IAsyncDisposable
         public string LoginName { get; } = loginName;
 
         public string Password { get; } = password;
+
+        /// <summary>Scénario provisionné, conservé pour que la réinitialisation le rejoue.</summary>
+        public SqlLabProvisioning Provisioning { get; } = provisioning;
 
         public DateTimeOffset CreatedAtUtc { get; } = createdAtUtc;
 

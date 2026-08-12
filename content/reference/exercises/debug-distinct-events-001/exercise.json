@@ -16,12 +16,12 @@
     "constraints":  [
                         "Conserver exactement la signature publique",
                         "Définir la casse et ignorer les segments vides sans inventer de normalisation.",
-                        "Ne pas modifier les entrées reçues sauf mention explicite"
+                        "N'inventer aucune normalisation au-delà de ce que le contrat annonce"
                     ],
     "examples":  [
                      {
-                         "input":  "[{\"value\":[\"A,B,A\"],\"Count\":1},2]",
-                         "output":  "[{\"value\":[\"\"],\"Count\":1},0]"
+                         "input":  "[\"A,B,A\"]",
+                         "output":  "2"
                      }
                  ],
     "reflectionFields":  [
@@ -54,7 +54,7 @@
                   {
                       "level":  4,
                       "kind":  "partial-pseudocode",
-                      "content":  "valider les bornes ; parcourir ou décider ; retourner un nouveau résultat déterministe"
+                      "content":  "retourner zéro pour une entrée absente ou composée de blancs ; découper sur le séparateur en retirant les segments vides ; compter les valeurs distinctes avec une comparaison ordinale, sans autre normalisation"
                   }
               ],
     "solution":  {
@@ -67,9 +67,10 @@
     "explanation":  "explanation.md",
     "complexity":  "O(n) attendu en temps et O(n) en espace",
     "commonMistakes":  [
-                           "Coder uniquement les exemples visibles",
-                           "Oublier une borne ou modifier une entrée",
-                           "Annoncer une complexité sans compter les opérations dominantes"
+                           "Uniformiser la casse alors que le contrat ne l'annonce pas",
+                           "Conserver les segments vides et compter un événement inexistant",
+                           "Retirer les blancs de bordure des segments sans que le contrat le prévoie",
+                           "Compter les segments au lieu des valeurs distinctes"
                        ],
     "variantId":  "debug-chronological-001",
     "reviewCards":  [

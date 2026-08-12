@@ -20,8 +20,8 @@
                     ],
     "examples":  [
                      {
-                         "input":  "[{\"value\":[\"report.JSON\"],\"Count\":1},\".json\"]",
-                         "output":  "[{\"value\":[\"readme\"],\"Count\":1},\"\"]"
+                         "input":  "[\"report.JSON\"]",
+                         "output":  "\".json\""
                      }
                  ],
     "reflectionFields":  [
@@ -54,7 +54,7 @@
                   {
                       "level":  4,
                       "kind":  "partial-pseudocode",
-                      "content":  "valider les bornes ; parcourir ou décider ; retourner un nouveau résultat déterministe"
+                      "content":  "si path est absent ou composé de blancs retourner une chaîne vide ; sinon extraire l'extension par la fonction de chemin de la plateforme, puis la passer en minuscules avec la culture invariante"
                   }
               ],
     "solution":  {
@@ -67,9 +67,10 @@
     "explanation":  "explanation.md",
     "complexity":  "O(n) en temps et O(n) en espace",
     "commonMistakes":  [
-                           "Coder uniquement les exemples visibles",
-                           "Oublier une borne ou modifier une entrée",
-                           "Annoncer une complexité sans compter les opérations dominantes"
+                           "Découper sur le point et prendre le premier segment au lieu du dernier",
+                           "Retourner l'extension sans normaliser la casse",
+                           "Retirer le point de tête et changer la forme annoncée",
+                           "Traiter un chemin sans extension comme une erreur au lieu de retourner une chaîne vide"
                        ],
     "variantId":  "csharp-distinct-sorted-001",
     "reviewCards":  [

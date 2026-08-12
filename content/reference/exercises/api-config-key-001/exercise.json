@@ -16,12 +16,12 @@
     "constraints":  [
                         "Conserver exactement la signature publique",
                         "Valider les deux segments et conserver le séparateur hiérarchique standard.",
-                        "Ne jamais dépendre du réseau, d’un secret réel ou d’un état global"
+                        "Ne lire aucune source de configuration réelle : la composition est purement textuelle"
                     ],
     "examples":  [
                      {
-                         "input":  "[{\"value\":[\"Authentication\",\"ApiKey\"],\"Count\":2},\"Authentication:ApiKey\"]",
-                         "output":  "[{\"value\":[\"Logging \",\" Level\"],\"Count\":2},\"Logging:Level\"]"
+                         "input":  "[\"Authentication\",\"ApiKey\"]",
+                         "output":  "\"Authentication:ApiKey\""
                      }
                  ],
     "reflectionFields":  [
@@ -54,7 +54,7 @@
                   {
                       "level":  4,
                       "kind":  "partial-pseudocode",
-                      "content":  "valider les entrées ; appliquer la décision bornée ; retourner un résultat déterministe sans effet externe"
+                      "content":  "refuser si la section ou la clé est absente, vide ou composée de blancs ; sinon retirer les blancs de bordure de chacune et les joindre par le séparateur hiérarchique"
                   }
               ],
     "solution":  {
@@ -67,9 +67,10 @@
     "explanation":  "explanation.md",
     "complexity":  "O(n) en temps et O(n) en espace",
     "commonMistakes":  [
-                           "Coder seulement les exemples visibles",
-                           "Masquer une erreur ou accepter une entrée hors contrat",
-                           "Confondre une règle pure avec le transport ou une ressource externe"
+                           "Accepter une section ou une clé composée de blancs et produire une clé mal formée",
+                           "Joindre sans retirer les blancs et créer une clé introuvable",
+                           "Retourner une chaîne vide au lieu de refuser une composition incomplète",
+                           "Employer un séparateur différent de celui que la configuration reconnaît"
                        ],
     "variantId":  "api-secret-redaction-001",
     "reviewCards":  [

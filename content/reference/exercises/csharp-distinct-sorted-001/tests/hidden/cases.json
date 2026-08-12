@@ -33,6 +33,20 @@
                                    ],
                       "expectedException":  null,
                       "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_NullInput",
+                      "message":  "Référence absente : refus explicite.",
+                      "arguments":  [null],
+                      "expectedException":  "ArgumentNullException",
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_UnsortedWithoutDuplicates",
+                      "message":  "Aucun doublon mais un ordre à rétablir : réfute une déduplication sans tri.",
+                      "arguments":  [[3,1,2]],
+                      "expected":  [1,2,3],
+                      "argumentsUnchanged":  true
                   }
               ]
 }

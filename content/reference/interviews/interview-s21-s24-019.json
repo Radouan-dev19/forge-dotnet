@@ -1,24 +1,24 @@
 {
-    "schemaVersion":  1,
-    "id":  "interview-s21-s24-019",
-    "version":  1,
-    "title":  "Écrire une alerte actionnable",
-    "level":  "intermediate",
-    "durationMinutes":  9,
-    "skills":  [
-                   "observability.alerts"
-               ],
-    "question":  "Quels critères rendent une alerte exploitable ?",
-    "observableCriteria":  [
-                               "La réponse prend une décision explicite et cite une preuve observable",
-                               "Une limite de sécurité, de coût, de portée ou de validité est reconnue"
-                           ],
-    "modelAnswer":  "Elle porte un symptôme utilisateur, une fenêtre, un seuil justifié, une gravité, un destinataire et un lien vers une action. Son test contrôle déclenchement et retour à la normale.",
-    "commonMistakes":  [
-                           "Employer un slogan sans contrainte, preuve ni limite vérifiable"
-                       ],
-    "variants":  [
-                     "Changez une contrainte du scénario « Écrire une alerte actionnable » et expliquez si la décision reste valide."
-                 ],
-    "license":  "CC-BY-4.0"
+  "schemaVersion": 1,
+  "id": "interview-s21-s24-019",
+  "version": 1,
+  "title": "Écrire une alerte actionnable",
+  "level": "intermediate",
+  "durationMinutes": 9,
+  "skills": [
+    "observability.alerts"
+  ],
+  "question": "Quels critères rendent une alerte exploitable ?",
+  "observableCriteria": [
+    "Le symptôme énoncé est celui que subit un utilisateur, non une métrique interne",
+    "Un destinataire et un lien vers l'action sont exigés, faute de quoi l'alerte n'est pas exploitable"
+  ],
+  "modelAnswer": "Elle porte un symptôme utilisateur, une fenêtre, un seuil justifié, une gravité, un destinataire et un lien vers une action. Son test contrôle déclenchement et retour à la normale.",
+  "commonMistakes": [
+    "Ajuster le seuil d'une alerte que personne ne possède, au lieu de lui donner un propriétaire"
+  ],
+  "variants": [
+    "Changez une contrainte du scénario « Écrire une alerte actionnable » et expliquez si la décision reste valide."
+  ],
+  "license": "CC-BY-4.0"
 }

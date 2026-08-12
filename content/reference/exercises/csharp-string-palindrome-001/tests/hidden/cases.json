@@ -20,6 +20,20 @@
                       "expected":  true,
                       "expectedException":  null,
                       "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_NullInput",
+                      "message":  "Référence absente : refus explicite, distinct d'une chaîne vide.",
+                      "arguments":  [null],
+                      "expectedException":  "ArgumentNullException",
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_MixedCase",
+                      "message":  "Casse mélangée : la comparaison ignore la casse.",
+                      "arguments":  ["Ada"],
+                      "expected":  true,
+                      "argumentsUnchanged":  true
                   }
               ]
 }

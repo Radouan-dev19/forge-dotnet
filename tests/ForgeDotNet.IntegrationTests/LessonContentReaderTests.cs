@@ -33,6 +33,39 @@ public sealed class LessonContentReaderTests
             property => property.Name.Contains("Correct", StringComparison.OrdinalIgnoreCase));
     }
 
+    /// <summary>
+    /// Une leçon peut être structurellement valide et rester illisible : le validateur contrôle les
+    /// manifestes, pas le rendu. Ce test lit réellement les soixante-dix leçons publiées.
+    /// </summary>
+    [Fact]
+    public async Task EveryPublishedLessonIsReadableWithFourteenSectionsAndOneQuiz()
+    {
+        using ContentCatalogProvider provider = await CreateCatalogProviderAsync();
+        var source = new FileSystemLessonContentSource(provider, CreateOptions());
+
+        LessonLibraryView library = await source.GetLibraryAsync();
+        string[] lessonIds = library.Modules
+            .SelectMany(module => module.Lessons)
+            .Select(summary => summary.Id)
+            .ToArray();
+
+        Assert.Equal(70, lessonIds.Length);
+        foreach (string lessonId in lessonIds)
+        {
+            LessonContentDocument? lesson = await source.GetLessonAsync(lessonId);
+            Assert.True(lesson is not null, $"La leçon {lessonId} n'a pas pu être lue.");
+            Assert.Equal(14, lesson.PublicView.Sections.Count);
+            Assert.All(
+                lesson.PublicView.Sections,
+                section => Assert.True(
+                    section.Blocks.Count > 0,
+                    $"La section « {section.Title} » de {lessonId} est vide."));
+            Assert.True(
+                lesson.PublicView.Quiz.Options.Count >= 2,
+                $"Le quiz de {lessonId} doit proposer au moins deux options.");
+        }
+    }
+
     [Fact]
     public void MarkdownParserKeepsHostileHtmlAsTextAndDisablesUnsafeLinks()
     {

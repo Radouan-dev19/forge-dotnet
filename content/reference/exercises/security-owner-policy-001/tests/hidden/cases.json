@@ -24,6 +24,20 @@
                       "expected":  false,
                       "expectedException":  null,
                       "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_NullActor",
+                      "message":  "Acteur absent : refusé sans exception.",
+                      "arguments":  [null,"u1",false],
+                      "expected":  false,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_AdminWithoutIdentities",
+                      "message":  "Administrateur sans identités renseignées : autorisé, le rôle prime.",
+                      "arguments":  ["","",true],
+                      "expected":  true,
+                      "argumentsUnchanged":  true
                   }
               ]
 }

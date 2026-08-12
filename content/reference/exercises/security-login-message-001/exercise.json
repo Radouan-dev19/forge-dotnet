@@ -15,13 +15,13 @@
     "statement":  "statement.md",
     "constraints":  [
                         "Conserver exactement la signature publique",
-                        "Retourner le même message public pour ne révéler ni existence ni nature de l’échec.",
-                        "Ne jamais dépendre du réseau, d’un secret réel ou d’un état global"
+                        "Retourner le même message public pour ne révéler ni existence ni nature de l'échec.",
+                        "Ne faire dépendre ni le message ni la durée de la cause réelle de l'échec"
                     ],
     "examples":  [
                      {
-                         "input":  "[{\"value\":[true,false],\"Count\":2},\"Identifiants invalides.\"]",
-                         "output":  "[{\"value\":[false,false],\"Count\":2},\"Identifiants invalides.\"]"
+                         "input":  "[true,false]",
+                         "output":  "\"Identifiants invalides.\""
                      }
                  ],
     "reflectionFields":  [
@@ -54,7 +54,7 @@
                   {
                       "level":  4,
                       "kind":  "partial-pseudocode",
-                      "content":  "valider les entrées ; appliquer la décision bornée ; retourner un résultat déterministe sans effet externe"
+                      "content":  "ne laisser aucun des deux indicateurs influencer la valeur retournée ; produire le même message public quelle que soit la cause de l'échec, et laisser le détail réel au journal serveur"
                   }
               ],
     "solution":  {
@@ -67,9 +67,10 @@
     "explanation":  "explanation.md",
     "complexity":  "O(1) en temps et O(1) en espace",
     "commonMistakes":  [
-                           "Coder seulement les exemples visibles",
-                           "Masquer une erreur ou accepter une entrée hors contrat",
-                           "Confondre une règle pure avec le transport ou une ressource externe"
+                           "Distinguer le compte inconnu du mot de passe faux dans le message public",
+                           "Faire varier le statut retourné selon la cause de l'échec",
+                           "Laisser le temps de réponse différer selon la branche empruntée",
+                           "Journaliser le mot de passe tenté avec l'identifiant"
                        ],
     "variantId":  "tests-boundary-values-001",
     "reviewCards":  [

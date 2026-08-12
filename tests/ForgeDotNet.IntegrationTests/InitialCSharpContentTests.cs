@@ -11,7 +11,7 @@ namespace ForgeDotNet.IntegrationTests;
 public sealed class InitialCSharpContentTests(DockerSecurityFixture dockerFixture)
 {
     [Fact]
-    public async Task AllOneHundredThirtyFivePublishedSolutionsPassAndStartersCompileWithoutPassing()
+    public async Task EveryPublishedSolutionPassesAndStartersCompileWithoutPassing()
     {
         using ContentEnvironment content = await ContentEnvironment.CreateAsync();
         var specificationSource = new FileSystemDockerRunSpecificationSource(
@@ -42,7 +42,12 @@ public sealed class InitialCSharpContentTests(DockerSecurityFixture dockerFixtur
             .Select(Path.GetFileName)
             .Order(StringComparer.Ordinal)
             .ToArray()!;
-        Assert.Equal(135, exerciseIds.Length);
+        // Le compte exact est déjà ratcheté par ContentS21S24CoverageTests, qui n'exige pas Docker.
+        // Le redéclarer ici le laissait dériver sans que personne ne le voie, puisque cette classe
+        // ne s'exécute qu'avec un démon disponible : seul un plancher est donc vérifié.
+        Assert.True(
+            exerciseIds.Length >= 142,
+            $"{exerciseIds.Length} exercices publiés : le catalogue a perdu du contenu.");
 
         await Task.WhenAll(exerciseIds.Select(async exerciseId =>
         {

@@ -20,8 +20,8 @@
                     ],
     "examples":  [
                      {
-                         "input":  "[{\"value\":[\"  Ada  \"],\"Count\":1},\"Ada\"]",
-                         "output":  "[{\"value\":[\"commande\"],\"Count\":1},\"commande\"]"
+                         "input":  "[\"  Ada  \"]",
+                         "output":  "\"Ada\""
                      }
                  ],
     "reflectionFields":  [
@@ -54,7 +54,7 @@
                   {
                       "level":  4,
                       "kind":  "partial-pseudocode",
-                      "content":  "valider les bornes ; parcourir ou décider ; retourner un nouveau résultat déterministe"
+                      "content":  "si value est null lever ArgumentNullException ; sinon retirer uniquement les blancs de bordure et retourner la chaîne obtenue"
                   }
               ],
     "solution":  {
@@ -67,9 +67,10 @@
     "explanation":  "explanation.md",
     "complexity":  "O(n) en temps et O(n) pour la chaîne produite",
     "commonMistakes":  [
-                           "Coder uniquement les exemples visibles",
-                           "Oublier une borne ou modifier une entrée",
-                           "Annoncer une complexité sans compter les opérations dominantes"
+                           "Retirer aussi les espaces internes et modifier le contenu",
+                           "Retourner un repli pour une chaîne de blancs alors que le contrat retourne une chaîne vide",
+                           "Absorber l'entrée absente en retournant une chaîne vide au lieu de lever",
+                           "Convertir la casse au passage, ce que le contrat n'annonce pas"
                        ],
     "variantId":  "csharp-temperature-band-001",
     "reviewCards":  [

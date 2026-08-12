@@ -1,24 +1,24 @@
 {
-    "schemaVersion":  1,
-    "id":  "interview-s21-s24-045",
-    "version":  1,
-    "title":  "Suivre une candidature",
-    "level":  "advanced",
-    "durationMinutes":  12,
-    "skills":  [
-                   "career.applications"
-               ],
-    "question":  "Quelles colonnes conservez-vous sans transformer le suivi en collecte excessive ?",
-    "observableCriteria":  [
-                               "La réponse prend une décision explicite et cite une preuve observable",
-                               "Une limite de sécurité, de coût, de portée ou de validité est reconnue"
-                           ],
-    "modelAnswer":  "Organisation, rôle, source publique, date, statut, prochaine action et notes minimales. Je nʼenregistre pas de donnée sensible sur des recruteurs ou contacts.",
-    "commonMistakes":  [
-                           "Employer un slogan sans contrainte, preuve ni limite vérifiable"
-                       ],
-    "variants":  [
-                     "Changez une contrainte du scénario « Suivre une candidature » et expliquez si la décision reste valide."
-                 ],
-    "license":  "CC-BY-4.0"
+  "schemaVersion": 1,
+  "id": "interview-s21-s24-045",
+  "version": 1,
+  "title": "Suivre une candidature",
+  "level": "advanced",
+  "durationMinutes": 12,
+  "skills": [
+    "career.applications"
+  ],
+  "question": "Quelles colonnes conservez-vous sans transformer le suivi en collecte excessive ?",
+  "observableCriteria": [
+    "Les colonnes retenues sont limitées à ce qui sert la prochaine action",
+    "Aucune donnée sensible sur un recruteur ou un contact n'est enregistrée"
+  ],
+  "modelAnswer": "Organisation, rôle, source publique, date, statut, prochaine action et notes minimales. Je nʼenregistre pas de donnée sensible sur des recruteurs ou contacts.",
+  "commonMistakes": [
+    "Enrichir le suivi de notes personnelles sur des tiers sans nécessité"
+  ],
+  "variants": [
+    "Changez une contrainte du scénario « Suivre une candidature » et expliquez si la décision reste valide."
+  ],
+  "license": "CC-BY-4.0"
 }

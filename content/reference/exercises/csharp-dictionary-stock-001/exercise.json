@@ -16,7 +16,7 @@
     "Refuser null et toute quantité négative avec l’exception demandée"
   ],
   "examples": [
-    { "input": "{pen: 2}, {PEN: 3, book: 1}", "output": "{pen: 5, book: 1}" },
+    { "input": "[{\"pen\":2},{\"PEN\":3,\"book\":1}]", "output": "{\"pen\":5,\"book\":1}" },
     { "input": "{}, {box: 4}", "output": "{box: 4}" }
   ],
   "reflectionFields": ["reformulation", "inputs", "expectedOutput", "edgeCases", "hypothesis", "plan"],

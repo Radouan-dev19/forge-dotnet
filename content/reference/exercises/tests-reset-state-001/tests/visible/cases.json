@@ -30,6 +30,13 @@
                                    ],
                       "expectedException":  null,
                       "argumentsUnchanged":  true
+                  },
+                  {
+                      "name":  "Visible_SingleValue",
+                      "message":  "Un seul emplacement : remis à zéro, l'entrée restant intacte.",
+                      "arguments":  [[7]],
+                      "expected":  [0],
+                      "argumentsUnchanged":  true
                   }
               ]
 }

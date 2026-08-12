@@ -1,24 +1,24 @@
 {
-    "schemaVersion":  1,
-    "id":  "interview-api-cancellation-budget-001",
-    "version":  1,
-    "title":  "Borner un budget d’annulation",
-    "level":  "junior",
-    "durationMinutes":  6,
-    "skills":  [
-                   "api.async"
-               ],
-    "question":  "Comment implémenteriez-vous « Borner un budget d’annulation » et quelles preuves réfutent les contournements ?",
-    "observableCriteria":  [
-                               "Le contrat, une frontière et un refus sont explicités",
-                               "La complexité et une preuve de sécurité ou de non-régression sont justifiées"
-                           ],
-    "modelAnswer":  "Valider les durées puis retenir le budget le plus contraignant. Je sépare validation et décision, je teste un cas nominal et les frontières, puis je vérifie qu’aucune donnée sensible ni état externe n’entre dans la preuve. O(1) en temps et O(1) en espace.",
-    "commonMistakes":  [
-                           "Réciter le code sans expliquer le contrat ni la preuve"
-                       ],
-    "variants":  [
-                     "Changer la frontière ou le droit tout en conservant la règle de borner un budget d’annulation."
-                 ],
-    "license":  "CC-BY-4.0"
+  "schemaVersion": 1,
+  "id": "interview-api-cancellation-budget-001",
+  "version": 1,
+  "title": "Borner un budget d’annulation",
+  "level": "junior",
+  "durationMinutes": 6,
+  "skills": [
+    "api.async"
+  ],
+  "question": "Comment implémenteriez-vous « Borner un budget d’annulation » et quelles preuves réfutent les contournements ?",
+  "observableCriteria": [
+    "Le budget retenu est le plus contraignant des deux, et la raison en est donnée",
+    "Le comportement à l'expiration est décrit : une annulation propre, pas une exception avalée"
+  ],
+  "modelAnswer": "Valider les durées puis retenir le budget le plus contraignant. Je teste les deux ordres d'arrivée et le cas où les deux durées sont égales, parce que c'est là qu'une comparaison large et une comparaison stricte divergent. O(1) en temps et O(1) en espace.",
+  "commonMistakes": [
+    "Additionner les budgets au lieu de retenir le plus court"
+  ],
+  "variants": [
+    "Changer la frontière ou le droit tout en conservant la règle de borner un budget d’annulation."
+  ],
+  "license": "CC-BY-4.0"
 }

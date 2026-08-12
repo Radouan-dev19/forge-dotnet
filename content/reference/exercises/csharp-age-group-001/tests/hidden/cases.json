@@ -20,6 +20,20 @@
                       "expected":  "senior",
                       "expectedException":  null,
                       "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_Zero",
+                      "message":  "Âge nul : valide et mineur, ce n'est pas un refus.",
+                      "arguments":  [0],
+                      "expected":  "minor",
+                      "argumentsUnchanged":  true
+                  },
+                  {
+                      "name":  "Hidden_VeryOld",
+                      "message":  "Âge très élevé : réfute une borne haute qui basculerait vers un refus.",
+                      "arguments":  [120],
+                      "expected":  "senior",
+                      "argumentsUnchanged":  true
                   }
               ]
 }

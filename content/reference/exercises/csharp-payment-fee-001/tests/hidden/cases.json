@@ -21,6 +21,20 @@
                                     ],
                       "expectedException":  "ArgumentOutOfRangeException",
                       "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_RoundsAwayFromZero",
+                      "message":  "Frais à mi-chemin entre deux centimes : l'arrondi s'éloigne de zéro.",
+                      "arguments":  [1,true],
+                      "expected":  0.02,
+                      "argumentsUnchanged":  true
+                  },
+                  {
+                      "name":  "Hidden_MinimalAmountNoCard",
+                      "message":  "Montant minimal hors carte : aucun frais.",
+                      "arguments":  [0.01,false],
+                      "expected":  0,
+                      "argumentsUnchanged":  true
                   }
               ]
 }

@@ -20,8 +20,8 @@
                     ],
     "examples":  [
                      {
-                         "input":  "[{\"value\":[[1,2]],\"Count\":1},{\"value\":[2,4],\"Count\":2}]",
-                         "output":  "[{\"value\":[[]],\"Count\":1},{\"value\":[],\"Count\":0}]"
+                         "input":  "[[1,2]]",
+                         "output":  "[2,4]"
                      }
                  ],
     "reflectionFields":  [
@@ -54,7 +54,7 @@
                   {
                       "level":  4,
                       "kind":  "partial-pseudocode",
-                      "content":  "valider les bornes ; parcourir ou décider ; retourner un nouveau résultat déterministe"
+                      "content":  "si values est null lever ArgumentNullException ; projeter chaque élément par la même transformation vers un nouveau tableau ; la multiplication est vérifiée pour signaler un dépassement"
                   }
               ],
     "solution":  {
@@ -67,9 +67,10 @@
     "explanation":  "explanation.md",
     "complexity":  "O(n) en temps et O(n) en espace",
     "commonMistakes":  [
-                           "Coder uniquement les exemples visibles",
-                           "Oublier une borne ou modifier une entrée",
-                           "Annoncer une complexité sans compter les opérations dominantes"
+                           "Doubler en place et rendre la mutation visible par l'appelant",
+                           "Multiplier sans contrôle de dépassement et changer le signe du résultat",
+                           "Écrire une branche par cas au lieu d'appliquer une transformation unique",
+                           "Traiter un tableau vide comme une entrée invalide"
                        ],
     "variantId":  "csharp-generic-maximum-001",
     "reviewCards":  [

@@ -22,6 +22,20 @@
                       "expected":  true,
                       "expectedException":  null,
                       "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_AcrossMonths",
+                      "message":  "Changement de mois : réfute une comparaison limitée au numéro de jour.",
+                      "arguments":  ["2026-02-28","2026-03-01"],
+                      "expected":  true,
+                      "argumentsUnchanged":  true
+                  },
+                  {
+                      "name":  "Hidden_AcrossYearsNotExpired",
+                      "message":  "Échéance l'année suivante : réfute une comparaison limitée au jour de l'année.",
+                      "arguments":  ["2027-01-01","2026-12-31"],
+                      "expected":  false,
+                      "argumentsUnchanged":  true
                   }
               ]
 }

@@ -1,24 +1,24 @@
 {
-    "schemaVersion":  1,
-    "id":  "interview-s21-s24-048",
-    "version":  1,
-    "title":  "Planifier les trente premiers jours",
-    "level":  "advanced",
-    "durationMinutes":  12,
-    "skills":  [
-                   "career.posthire"
-               ],
-    "question":  "Que contient un plan post-embauche sans prétendre livrer un parcours complet ?",
-    "observableCriteria":  [
-                               "La réponse prend une décision explicite et cite une preuve observable",
-                               "Une limite de sécurité, de coût, de portée ou de validité est reconnue"
-                           ],
-    "modelAnswer":  "Questions dʼaccès, architecture, pratiques dʼéquipe, premier correctif borné, feedback et journal dʼapprentissage. Cʼest une trame adaptable, pas une garantie de performance.",
-    "commonMistakes":  [
-                           "Employer un slogan sans contrainte, preuve ni limite vérifiable"
-                       ],
-    "variants":  [
-                     "Changez une contrainte du scénario « Planifier les trente premiers jours » et expliquez si la décision reste valide."
-                 ],
-    "license":  "CC-BY-4.0"
+  "schemaVersion": 1,
+  "id": "interview-s21-s24-048",
+  "version": 1,
+  "title": "Planifier les trente premiers jours",
+  "level": "advanced",
+  "durationMinutes": 12,
+  "skills": [
+    "career.posthire"
+  ],
+  "question": "Que contient un plan post-embauche sans prétendre livrer un parcours complet ?",
+  "observableCriteria": [
+    "Le plan commence par des questions d'accès et de pratiques, pas par des livrables",
+    "Le premier correctif est borné, et le plan est présenté comme une trame adaptable"
+  ],
+  "modelAnswer": "Questions dʼaccès, architecture, pratiques dʼéquipe, premier correctif borné, feedback et journal dʼapprentissage. Cʼest une trame adaptable, pas une garantie de performance.",
+  "commonMistakes": [
+    "Promettre une performance mesurable avant d'avoir vu la base de code"
+  ],
+  "variants": [
+    "Changez une contrainte du scénario « Planifier les trente premiers jours » et expliquez si la décision reste valide."
+  ],
+  "license": "CC-BY-4.0"
 }

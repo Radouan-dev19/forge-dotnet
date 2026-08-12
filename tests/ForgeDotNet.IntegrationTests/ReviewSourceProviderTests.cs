@@ -29,7 +29,8 @@ public sealed class ReviewSourceProviderTests
             environment.GetRequiredService<IDbContextFactory<ForgeDbContext>>(),
             environment.GetRequiredService<LocalDatabaseGate>(),
             new StaticDiagnosticSessionRepository(session),
-            new StaticRubricSource(rubric));
+            new StaticRubricSource(rubric),
+            new EmptyReviewCardSource());
 
         IReadOnlyList<ReviewSourceCandidate> sources = await provider.ListAsync(profileId);
 
@@ -186,5 +187,17 @@ public sealed class ReviewSourceProviderTests
 
         public ValueTask UpsertResponseAsync(Guid profileId, Guid sessionId, DiagnosticResponseData response, CancellationToken cancellationToken = default) =>
             throw new NotSupportedException();
+    }
+
+    /// <summary>
+    /// Banque vide : ce test porte sur les sources issues de l'activité persistée, pas sur les
+    /// cartes d'exercice, qui ont leur propre couverture.
+    /// </summary>
+    private sealed class EmptyReviewCardSource : IReviewCardSource
+    {
+        public ValueTask<IReadOnlyList<ExerciseReviewCard>> GetForExerciseAsync(
+            string exerciseId,
+            CancellationToken cancellationToken = default) =>
+            ValueTask.FromResult<IReadOnlyList<ExerciseReviewCard>>([]);
     }
 }

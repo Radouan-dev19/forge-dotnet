@@ -20,8 +20,8 @@
                     ],
     "examples":  [
                      {
-                         "input":  "[{\"value\":[[2,7,3],9],\"Count\":2},true]",
-                         "output":  "[{\"value\":[[1],2],\"Count\":2},false]"
+                         "input":  "[[2,7,3],9]",
+                         "output":  "true"
                      }
                  ],
     "reflectionFields":  [
@@ -54,7 +54,7 @@
                   {
                       "level":  4,
                       "kind":  "partial-pseudocode",
-                      "content":  "valider les bornes ; parcourir ou décider ; retourner un nouveau résultat déterministe"
+                      "content":  "ensemble des valeurs déjà vues, vide au départ ; pour chaque valeur, chercher d'abord son complément par rapport à la cible dans cet ensemble et conclure si on l'y trouve ; sinon ajouter la valeur courante et poursuivre"
                   }
               ],
     "solution":  {
@@ -67,9 +67,10 @@
     "explanation":  "explanation.md",
     "complexity":  "O(n) attendu en temps et O(n) en espace",
     "commonMistakes":  [
-                           "Coder uniquement les exemples visibles",
-                           "Oublier une borne ou modifier une entrée",
-                           "Annoncer une complexité sans compter les opérations dominantes"
+                           "Ajouter la valeur avant de chercher son complément et l'apparier avec elle-même",
+                           "Comparer chaque paire par deux boucles imbriquées, ce qui devient quadratique",
+                           "Supposer l'entrée triée et employer deux index convergents sans garantie",
+                           "Manquer une paire faite de deux éléments distincts portant la même valeur"
                        ],
     "variantId":  "algo-prefix-sums-001",
     "reviewCards":  [

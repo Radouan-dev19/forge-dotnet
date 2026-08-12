@@ -24,6 +24,20 @@
                       "expected":  "incomplete",
                       "expectedException":  null,
                       "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_ImpactOnly",
+                      "message":  "Impact seul : insuffisant sans preuve ni prochaine action.",
+                      "arguments":  [true,false,false],
+                      "expected":  "incomplete",
+                      "argumentsUnchanged":  true
+                  },
+                  {
+                      "name":  "Hidden_EvidenceOnly",
+                      "message":  "Preuve seule : insuffisante sans impact ni prochaine action.",
+                      "arguments":  [false,true,false],
+                      "expected":  "incomplete",
+                      "argumentsUnchanged":  true
                   }
               ]
 }

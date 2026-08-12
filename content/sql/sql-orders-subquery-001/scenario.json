@@ -24,5 +24,9 @@
     "La recherche anti-jointure ne modifie ni Products ni OrderLines"
   ],
   "solutionPath": "solution.md",
+  "reviewCards": [
+      "card-sql-orders-subquery-001-rule",
+      "card-sql-orders-subquery-001-edge"
+  ],
   "license": "CC-BY-4.0"
 }

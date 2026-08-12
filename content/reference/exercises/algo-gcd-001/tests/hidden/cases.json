@@ -22,6 +22,20 @@
                       "expected":  5,
                       "expectedException":  null,
                       "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_BothZero",
+                      "message":  "Deux zéros : réfute une division par zéro non protégée.",
+                      "arguments":  [0,0],
+                      "expected":  0,
+                      "argumentsUnchanged":  true
+                  },
+                  {
+                      "name":  "Hidden_BothNegative",
+                      "message":  "Deux négatifs : le diviseur commun reste positif.",
+                      "arguments":  [-8,-12],
+                      "expected":  4,
+                      "argumentsUnchanged":  true
                   }
               ]
 }

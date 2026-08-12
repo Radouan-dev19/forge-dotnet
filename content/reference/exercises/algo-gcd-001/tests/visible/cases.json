@@ -22,6 +22,13 @@
                       "expected":  1,
                       "expectedException":  null,
                       "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Visible_SwappedOperands",
+                      "message":  "Opérandes inversés : réfute une implémentation qui suppose le plus grand à gauche.",
+                      "arguments":  [12,18],
+                      "expected":  6,
+                      "argumentsUnchanged":  true
                   }
               ]
 }

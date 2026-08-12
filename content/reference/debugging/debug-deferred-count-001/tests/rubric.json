@@ -1,39 +1,40 @@
 {
-    "schemaVersion":  1,
-    "scenarioId":  "debug-deferred-count-001",
-    "criteria":  [
-                     {
-                         "id":  "cause",
-                         "label":  "La cause relie la divergence à la règle fautive.",
-                         "journalField":  "cause",
-                         "requiredTerms":  [
-                                               "borne",
-                                               "condition",
-                                               "mutation"
-                                           ],
-                         "minimumMatches":  1
-                     },
-                     {
-                         "id":  "evidence",
-                         "label":  "La preuve cite entrée, attendu et réel.",
-                         "journalField":  "evidence",
-                         "requiredTerms":  [
-                                               "entrée",
-                                               "attendu",
-                                               "réel"
-                                           ],
-                         "minimumMatches":  2
-                     },
-                     {
-                         "id":  "test",
-                         "label":  "Le test de non-régression cible la borne.",
-                         "journalField":  "test",
-                         "requiredTerms":  [
-                                               "borne",
-                                               "échoue",
-                                               "réussit"
-                                           ],
-                         "minimumMatches":  2
-                     }
-                 ]
+  "schemaVersion": 1,
+  "scenarioId": "debug-deferred-count-001",
+  "criteria": [
+    {
+      "id": "cause-inclusive",
+      "label": "La cause désigne la comparaison qui inclut zéro.",
+      "journalField": "cause",
+      "requiredTerms": [
+        "zéro",
+        "comparaison",
+        "large",
+        "strict"
+      ],
+      "minimumMatches": 2
+    },
+    {
+      "id": "evidence-off-by-one",
+      "label": "La preuve montre l'écart d'une unité et son origine.",
+      "journalField": "evidence",
+      "requiredTerms": [
+        "1",
+        "2",
+        "nul"
+      ],
+      "minimumMatches": 2
+    },
+    {
+      "id": "test-zero",
+      "label": "Le test isole le mouvement nul.",
+      "journalField": "test",
+      "requiredTerms": [
+        "zéro",
+        "échoue",
+        "réussit"
+      ],
+      "minimumMatches": 2
+    }
+  ]
 }

@@ -1,24 +1,24 @@
 {
-    "schemaVersion":  1,
-    "id":  "interview-security-bearer-header-001",
-    "version":  1,
-    "title":  "Valider le schéma Bearer",
-    "level":  "intermediate",
-    "durationMinutes":  6,
-    "skills":  [
-                   "security.authentication"
-               ],
-    "question":  "Comment implémenteriez-vous « Valider le schéma Bearer » et quelles preuves réfutent les contournements ?",
-    "observableCriteria":  [
-                               "Le contrat, une frontière et un refus sont explicités",
-                               "La complexité et une preuve de sécurité ou de non-régression sont justifiées"
-                           ],
-    "modelAnswer":  "Vérifier le schéma et la présence d’une preuve sans jamais retourner sa valeur. Je sépare validation et décision, je teste un cas nominal et les frontières, puis je vérifie qu’aucune donnée sensible ni état externe n’entre dans la preuve. O(n) en temps et O(1) en espace.",
-    "commonMistakes":  [
-                           "Réciter le code sans expliquer le contrat ni la preuve"
-                       ],
-    "variants":  [
-                     "Changer la frontière ou le droit tout en conservant la règle de valider le schéma bearer."
-                 ],
-    "license":  "CC-BY-4.0"
+  "schemaVersion": 1,
+  "id": "interview-security-bearer-header-001",
+  "version": 1,
+  "title": "Valider le schéma Bearer",
+  "level": "intermediate",
+  "durationMinutes": 6,
+  "skills": [
+    "security.authentication"
+  ],
+  "question": "Comment implémenteriez-vous « Valider le schéma Bearer » et quelles preuves réfutent les contournements ?",
+  "observableCriteria": [
+    "Le schéma est vérifié séparément de la présence d'une valeur",
+    "La valeur du jeton n'est jamais retournée ni journalisée, ce qui est dit explicitement"
+  ],
+  "modelAnswer": "Vérifier le schéma et la présence d’une preuve sans jamais retourner sa valeur. Je teste un en-tête absent, un schéma incorrect, un schéma correct sans valeur, et une casse différente du schéma. O(n) en temps et O(1) en espace.",
+  "commonMistakes": [
+    "Retourner le jeton extrait pour faciliter le diagnostic et l'exposer dans une trace"
+  ],
+  "variants": [
+    "Changer la frontière ou le droit tout en conservant la règle de valider le schéma bearer."
+  ],
+  "license": "CC-BY-4.0"
 }

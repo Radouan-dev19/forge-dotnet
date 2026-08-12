@@ -22,6 +22,13 @@
                       "expected":  0,
                       "expectedException":  null,
                       "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Visible_ZeroQuantity",
+                      "message":  "Quantité nulle : total nul, et non un refus.",
+                      "arguments":  [10,0],
+                      "expected":  0,
+                      "argumentsUnchanged":  true
                   }
               ]
 }

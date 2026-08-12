@@ -16,12 +16,12 @@
     "constraints":  [
                         "Conserver exactement la signature publique",
                         "Compter les occurrences non chevauchantes et respecter la casse du journal.",
-                        "Ne pas modifier les entrées reçues sauf mention explicite"
+                        "Ne lire aucun journal réel : le texte et l'identifiant sont fournis"
                     ],
     "examples":  [
                      {
-                         "input":  "[{\"value\":[\"id=abc id=abc\",\"abc\"],\"Count\":2},2]",
-                         "output":  "[{\"value\":[\"id=abc\",\"xyz\"],\"Count\":2},0]"
+                         "input":  "[\"id=abc id=abc\",\"abc\"]",
+                         "output":  "2"
                      }
                  ],
     "reflectionFields":  [
@@ -54,7 +54,7 @@
                   {
                       "level":  4,
                       "kind":  "partial-pseudocode",
-                      "content":  "valider les bornes ; parcourir ou décider ; retourner un nouveau résultat déterministe"
+                      "content":  "refuser un journal ou un identifiant vide en retournant zéro ; chercher l'occurrence suivante depuis une position courante, de façon ordinale ; après chaque trouvaille, avancer la position de la longueur de l'identifiant pour ne pas compter de recouvrement"
                   }
               ],
     "solution":  {
@@ -67,9 +67,10 @@
     "explanation":  "explanation.md",
     "complexity":  "O(n) en temps et O(1) en espace",
     "commonMistakes":  [
-                           "Coder uniquement les exemples visibles",
-                           "Oublier une borne ou modifier une entrée",
-                           "Annoncer une complexité sans compter les opérations dominantes"
+                           "Avancer d'un seul caractère et compter des occurrences qui se recouvrent",
+                           "Chercher sans distinction de casse et compter un identifiant voisin",
+                           "Découper le journal en lignes et manquer les occurrences multiples d'une même ligne",
+                           "Boucler indéfiniment en oubliant d'avancer la position de recherche"
                        ],
     "variantId":  "debug-anomaly-count-001",
     "reviewCards":  [

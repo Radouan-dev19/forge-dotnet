@@ -24,5 +24,9 @@
     "Seules les commandes Paid contribuent au revenu mensuel et aucune donnée ne change"
   ],
   "solutionPath": "solution.md",
+  "reviewCards": [
+      "card-sql-orders-cte-001-rule",
+      "card-sql-orders-cte-001-edge"
+  ],
   "license": "CC-BY-4.0"
 }

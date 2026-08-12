@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "suiteId": "project-order-import-001.lecture.v2",
+  "exerciseId": "project-order-import-001.lecture",
+  "exerciseVersion": 2,
+  "typeName": "Submission",
+  "methodName": "CountValidRows",
+  "parameterTypes": ["string"],
+  "returnType": "int"
+}

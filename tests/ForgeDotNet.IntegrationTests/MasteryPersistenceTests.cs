@@ -58,7 +58,8 @@ public sealed class MasteryPersistenceTests
 
             ISqlLearningAttemptRepository sqlAttempts = firstRun.GetRequiredService<ISqlLearningAttemptRepository>();
             var gateway = new RecordingSqlGateway();
-            var sqlLab = new SqlLabService(gateway, sqlAttempts, profiles, clock);
+            // Aucun scénario publié n'est fourni : la session reste le bac à sable technique.
+            var sqlLab = new SqlLabService(gateway, null, sqlAttempts, profiles, clock);
             const string query = "SELECT OrderId, CustomerName, Total FROM dbo.Orders ORDER BY OrderId; /* raw-query-must-not-be-stored */";
             SqlLabRunView run = await sqlLab.ExecuteAsync(Guid.NewGuid(), query, validateReference: true);
             Assert.True(run.Validation?.Passed);
@@ -306,8 +307,9 @@ public sealed class MasteryPersistenceTests
         public Task<SqlLabAvailability> GetAvailabilityAsync(CancellationToken cancellationToken = default) =>
             Task.FromResult(new SqlLabAvailability(true, "Disponible"));
 
-        public Task<SqlLabSessionDescriptor> CreateSessionAsync(CancellationToken cancellationToken = default) =>
-            throw new NotSupportedException();
+        public Task<SqlLabSessionDescriptor> CreateSessionAsync(
+            SqlLabProvisioning? provisioning = null,
+            CancellationToken cancellationToken = default) => throw new NotSupportedException();
 
         public Task<SqlLabSessionDescriptor> ResetSessionAsync(
             Guid sessionId,

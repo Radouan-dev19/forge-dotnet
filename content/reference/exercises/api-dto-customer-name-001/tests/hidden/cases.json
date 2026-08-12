@@ -20,6 +20,20 @@
                       "expected":  "Lin",
                       "expectedException":  null,
                       "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_NullUsesFallback",
+                      "message":  "Référence absente : le repli s'applique sans exception.",
+                      "arguments":  [null],
+                      "expected":  "(invalide)",
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_TabAndNewline",
+                      "message":  "Tabulation et saut de ligne : réfute un rognage limité à l'espace.",
+                      "arguments":  ["\tAda\n"],
+                      "expected":  "Ada",
+                      "argumentsUnchanged":  true
                   }
               ]
 }

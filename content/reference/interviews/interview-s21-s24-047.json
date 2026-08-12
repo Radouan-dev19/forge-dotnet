@@ -1,24 +1,24 @@
 {
-    "schemaVersion":  1,
-    "id":  "interview-s21-s24-047",
-    "version":  1,
-    "title":  "Négocier sans promesse",
-    "level":  "advanced",
-    "durationMinutes":  12,
-    "skills":  [
-                   "career.negotiation"
-               ],
-    "question":  "Comment préparer une négociation sans annoncer un salaire garanti ?",
-    "observableCriteria":  [
-                               "La réponse prend une décision explicite et cite une preuve observable",
-                               "Une limite de sécurité, de coût, de portée ou de validité est reconnue"
-                           ],
-    "modelAnswer":  "Je distingue préférences, données de marché datées et contraintes personnelles, prépare des questions sur le rôle et évalue lʼensemble sans promettre un résultat.",
-    "commonMistakes":  [
-                           "Employer un slogan sans contrainte, preuve ni limite vérifiable"
-                       ],
-    "variants":  [
-                     "Changez une contrainte du scénario « Négocier sans promesse » et expliquez si la décision reste valide."
-                 ],
-    "license":  "CC-BY-4.0"
+  "schemaVersion": 1,
+  "id": "interview-s21-s24-047",
+  "version": 1,
+  "title": "Négocier sans promesse",
+  "level": "advanced",
+  "durationMinutes": 12,
+  "skills": [
+    "career.negotiation"
+  ],
+  "question": "Comment préparer une négociation sans annoncer un salaire garanti ?",
+  "observableCriteria": [
+    "Préférences, données de marché datées et contraintes personnelles sont tenues séparées",
+    "L'évaluation porte sur l'ensemble du poste, sans promettre un résultat chiffré"
+  ],
+  "modelAnswer": "Je distingue préférences, données de marché datées et contraintes personnelles, prépare des questions sur le rôle et évalue lʼensemble sans promettre un résultat.",
+  "commonMistakes": [
+    "Annoncer un chiffre comme acquis à partir d'une donnée de marché non datée"
+  ],
+  "variants": [
+    "Changez une contrainte du scénario « Négocier sans promesse » et expliquez si la décision reste valide."
+  ],
+  "license": "CC-BY-4.0"
 }

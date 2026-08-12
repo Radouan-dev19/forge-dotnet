@@ -20,8 +20,8 @@
                     ],
     "examples":  [
                      {
-                         "input":  "[{\"value\":[[-1,0,1],2],\"Count\":2},2]",
-                         "output":  "[{\"value\":[[-1],0],\"Count\":2},0]"
+                         "input":  "[[-1,0,1],2]",
+                         "output":  "2"
                      }
                  ],
     "reflectionFields":  [
@@ -54,7 +54,7 @@
                   {
                       "level":  4,
                       "kind":  "partial-pseudocode",
-                      "content":  "valider les bornes ; parcourir ou décider ; retourner un nouveau résultat déterministe"
+                      "content":  "si node sort de l'intervalle des indices retourner le code d'erreur ; sinon remonter de parent en parent jusqu'à la racine en comptant chaque saut ; refuser dès qu'un parent lu sort de l'intervalle ou que le nombre de sauts dépasse le nombre de nœuds"
                   }
               ],
     "solution":  {
@@ -67,9 +67,10 @@
     "explanation":  "explanation.md",
     "complexity":  "O(h) en temps et O(1) en espace",
     "commonMistakes":  [
-                           "Coder uniquement les exemples visibles",
-                           "Oublier une borne ou modifier une entrée",
-                           "Annoncer une complexité sans compter les opérations dominantes"
+                           "Boucler indéfiniment sur un tableau qui contient un cycle",
+                           "Compter le nœud lui-même parmi ses ancêtres",
+                           "Retourner zéro pour un nœud hors intervalle au lieu du code d'erreur",
+                           "Faire confiance à un indice de parent lu sans le vérifier"
                        ],
     "variantId":  "structures-postfix-001",
     "reviewCards":  [

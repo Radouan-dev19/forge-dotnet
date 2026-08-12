@@ -20,8 +20,8 @@
                     ],
     "examples":  [
                      {
-                         "input":  "[{\"value\":[[3,1,2]],\"Count\":1},{\"value\":[1,2,3],\"Count\":3}]",
-                         "output":  "[{\"value\":[[]],\"Count\":1},{\"value\":[],\"Count\":0}]"
+                         "input":  "[[3,1,2]]",
+                         "output":  "[1,2,3]"
                      }
                  ],
     "reflectionFields":  [
@@ -54,7 +54,7 @@
                   {
                       "level":  4,
                       "kind":  "partial-pseudocode",
-                      "content":  "valider les bornes ; parcourir ou décider ; retourner un nouveau résultat déterministe"
+                      "content":  "cloner l'entrée ; à partir du deuxième élément, retenir la valeur courante ; décaler vers la droite tous les éléments du préfixe qui lui sont supérieurs ; déposer la valeur retenue dans le trou ainsi ouvert"
                   }
               ],
     "solution":  {
@@ -67,9 +67,10 @@
     "explanation":  "explanation.md",
     "complexity":  "O(n²) au pire et O(n) en espace pour la copie",
     "commonMistakes":  [
-                           "Coder uniquement les exemples visibles",
-                           "Oublier une borne ou modifier une entrée",
-                           "Annoncer une complexité sans compter les opérations dominantes"
+                           "Trier le tableau reçu et rendre la mutation visible par l'appelant",
+                           "Écraser la valeur courante avant de l'avoir retenue",
+                           "Décaler sur une comparaison large et perdre la stabilité du tri",
+                           "Descendre en dessous de l'indice zéro pendant le décalage"
                        ],
     "variantId":  "algo-minimum-index-001",
     "reviewCards":  [

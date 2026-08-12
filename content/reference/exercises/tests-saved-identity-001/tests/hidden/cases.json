@@ -20,6 +20,20 @@
                       "expected":  true,
                       "expectedException":  null,
                       "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_LargeNegative",
+                      "message":  "Identifiant très négatif : refusé au même titre que moins un.",
+                      "arguments":  [-999],
+                      "expected":  false,
+                      "argumentsUnchanged":  true
+                  },
+                  {
+                      "name":  "Hidden_MaximumInteger",
+                      "message":  "Identifiant entier maximal : accepté, réfute une borne haute inventée.",
+                      "arguments":  [2147483647],
+                      "expected":  true,
+                      "argumentsUnchanged":  true
                   }
               ]
 }

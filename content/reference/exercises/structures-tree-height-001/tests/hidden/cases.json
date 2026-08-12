@@ -27,6 +27,20 @@
                       "expected":  -1,
                       "expectedException":  null,
                       "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_UnbalancedBranches",
+                      "message":  "Branches de longueurs différentes : c'est la plus longue qui décide.",
+                      "arguments":  [[-1,0,0,1]],
+                      "expected":  3,
+                      "argumentsUnchanged":  true
+                  },
+                  {
+                      "name":  "Hidden_LinearChain",
+                      "message":  "Arbre dégénéré en chaîne : la hauteur vaut le nombre de nœuds.",
+                      "arguments":  [[-1,0,1,2]],
+                      "expected":  4,
+                      "argumentsUnchanged":  true
                   }
               ]
 }

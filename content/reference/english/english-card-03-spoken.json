@@ -1,39 +1,40 @@
 {
-    "schemaVersion":  1,
-    "id":  "english-card-03-spoken",
-    "version":  1,
-    "title":  "Storage boundary — spoken follow-up",
-    "level":  "B1",
-    "durationMinutes":  10,
-    "skills":  [
-                   "english.spoken",
-                   "azure.data"
-               ],
-    "situation":  "In a technical discussion, an architect asks why files are outside the relational database. You must answer aloud accurately without overstating the evidence.",
-    "instructions":  [
-                         "Deliver a sixty-second answer with decision, evidence, limitation and one clarifying question."
-                     ],
-    "vocabulary":  [
-                       {
-                           "term":  "data responsibility",
-                           "meaning":  "the precise concept required for storage boundary"
-                       },
-                       {
-                           "term":  "verified evidence",
-                           "meaning":  "an observation supported by a reproducible check"
-                       }
-                   ],
-    "expectedElements":  [
-                             "A clear decision tied to the scenario",
-                             "Verified evidence and one explicit limitation",
-                             "One useful clarifying question"
-                         ],
-    "modelAnswer":  "My decision is that The database keeps transactional metadata and the object store keeps file content; an opaque reference connects them. The current evidence is limited to the documented checks, so I would not claim more. Which constraint or observation would make us revisit this decision?",
-    "commonMistakes":  [
-                           "Using confident adjectives without naming evidence or a limitation"
-                       ],
-    "variants":  [
-                     "Answer again after the reviewer changes one cost or security constraint."
-                 ],
-    "license":  "CC-BY-4.0"
+  "schemaVersion": 1,
+  "id": "english-card-03-spoken",
+  "version": 1,
+  "title": "Storage boundary — spoken follow-up",
+  "level": "B1",
+  "durationMinutes": 10,
+  "skills": [
+    "english.spoken",
+    "azure.data"
+  ],
+  "situation": "In a technical discussion, an architect asks why files are outside the relational database. You must answer aloud accurately without overstating the evidence.",
+  "instructions": [
+    "Say aloud why the files sit outside the relational database, and name what the database still owns about them."
+  ],
+  "vocabulary": [
+    {
+      "term": "data responsibility",
+      "meaning": "the rule that says which store owns a piece of data, so that two stores never both claim to be authoritative"
+    },
+    {
+      "term": "referential pointer",
+      "meaning": "the identifier a database keeps to a file it does not hold, and which becomes stale if the file is removed elsewhere"
+    }
+  ],
+  "expectedElements": [
+    "The boundary between the two stores is drawn explicitly",
+    "What the database still owns is named",
+    "One consequence of a stale pointer is stated"
+  ],
+  "modelAnswer": "The files sit in object storage, not in the relational database. The database still owns the metadata: who uploaded the file, when, and the pointer to it. That split exists because the two stores are good at different things, and because a large binary in a relational table makes every backup and every restore slower. The evidence is the backup size measured before and after the split. The limitation is that the pointer can go stale: delete the object and the row still claims it exists. We handle that with a cleanup job, and I would not claim the two stores are transactionally consistent. Should I document the reconciliation window?",
+  "commonMistakes": [
+    "Describing the split without saying what the database still owns",
+    "Implying that the two stores stay consistent within one transaction"
+  ],
+  "variants": [
+    "Answer again for an architect who proposes moving the metadata into the object store too."
+  ],
+  "license": "CC-BY-4.0"
 }

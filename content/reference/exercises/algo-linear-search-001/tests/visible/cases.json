@@ -28,6 +28,13 @@
                       "expected":  -1,
                       "expectedException":  null,
                       "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Visible_LastPosition",
+                      "message":  "La cible occupe la dernière position : réfute une boucle qui s'arrête trop tôt.",
+                      "arguments":  [[4,2,7],7],
+                      "expected":  2,
+                      "argumentsUnchanged":  true
                   }
               ]
 }

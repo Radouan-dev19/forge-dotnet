@@ -20,8 +20,8 @@
                     ],
     "examples":  [
                      {
-                         "input":  "[{\"value\":[[1,2,3]],\"Count\":1},2]",
-                         "output":  "[{\"value\":[[]],\"Count\":1},0]"
+                         "input":  "[[1,2,3]]",
+                         "output":  "2"
                      }
                  ],
     "reflectionFields":  [
@@ -54,7 +54,7 @@
                   {
                       "level":  4,
                       "kind":  "partial-pseudocode",
-                      "content":  "valider les bornes ; parcourir ou décider ; retourner un nouveau résultat déterministe"
+                      "content":  "si values est absent ou vide retourner zéro ; accumuler la somme dans un entier large ; convertir cette somme en décimal avant de la diviser par le nombre d'éléments"
                   }
               ],
     "solution":  {
@@ -67,9 +67,10 @@
     "explanation":  "explanation.md",
     "complexity":  "O(n) en temps et O(1) en espace",
     "commonMistakes":  [
-                           "Coder uniquement les exemples visibles",
-                           "Oublier une borne ou modifier une entrée",
-                           "Annoncer une complexité sans compter les opérations dominantes"
+                           "Diviser deux entiers et perdre la partie fractionnaire",
+                           "Accumuler dans un entier de trente-deux bits et déborder sur de grandes valeurs",
+                           "Lever sur une collection vide alors que le contrat annonce zéro",
+                           "Convertir le quotient après la division au lieu de convertir la somme avant"
                        ],
     "variantId":  "csharp-filter-minimum-001",
     "reviewCards":  [

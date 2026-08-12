@@ -16,12 +16,12 @@
     "constraints":  [
                         "Conserver exactement la signature publique",
                         "Retourner un nouvel état de même taille et préserver les données reçues.",
-                        "Ne jamais dépendre du réseau, d’un secret réel ou d’un état global"
+                        "N'écrire dans aucun état partagé : seul un nouvel état est produit"
                     ],
     "examples":  [
                      {
-                         "input":  "[{\"value\":[[1,2]],\"Count\":1},{\"value\":[0,0],\"Count\":2}]",
-                         "output":  "[{\"value\":[[]],\"Count\":1},{\"value\":[],\"Count\":0}]"
+                         "input":  "[[1,2]]",
+                         "output":  "[0,0]"
                      }
                  ],
     "reflectionFields":  [
@@ -54,7 +54,7 @@
                   {
                       "level":  4,
                       "kind":  "partial-pseudocode",
-                      "content":  "valider les entrées ; appliquer la décision bornée ; retourner un résultat déterministe sans effet externe"
+                      "content":  "refuser une entrée absente ; sinon produire un nouvel état de la même longueur, initialisé aux valeurs par défaut, sans écrire dans celui qui a été reçu"
                   }
               ],
     "solution":  {
@@ -67,9 +67,10 @@
     "explanation":  "explanation.md",
     "complexity":  "O(n) en temps et O(n) en espace",
     "commonMistakes":  [
-                           "Coder seulement les exemples visibles",
-                           "Masquer une erreur ou accepter une entrée hors contrat",
-                           "Confondre une règle pure avec le transport ou une ressource externe"
+                           "Remettre à zéro l'état reçu et détruire les données de l'appelant",
+                           "Retourner un état de longueur différente de celle reçue",
+                           "Retourner la référence reçue lorsqu'elle est déjà vide",
+                           "Traiter un état vide comme une entrée invalide"
                        ],
     "variantId":  "quality-null-guard-001",
     "reviewCards":  [

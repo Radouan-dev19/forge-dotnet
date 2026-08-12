@@ -277,6 +277,67 @@ public sealed class MasteryRulesTests
         Assert.Contains(Gate(snapshot, MasteryGate.B).Blockers, item => item.Contains("Porte A", StringComparison.Ordinal));
     }
 
+    /// <summary>
+    /// La porte A ne tenait plus qu'à un chaînon : le projet console, qu'aucun producteur n'émettait.
+    /// </summary>
+    /// <remarks>
+    /// Ce cas isole ce blocage. Un profil complet sur tout le reste, examen de quatre-vingt-dix
+    /// minutes compris, reste bloqué au seul motif « Mini-projet console vérifié ». La même
+    /// projection avec l'accomplissement produit par une soumission vérifiée ouvre la porte — et une
+    /// déclaration manuelle, elle, ne l'ouvre pas.
+    /// </remarks>
+    [Fact]
+    public void GateAHangsOnTheConsoleProjectAndOpensOnlyOnAVerifiedOne()
+    {
+        Guid profileId = Guid.NewGuid();
+        var observations = new List<MasteryObservation>();
+        observations.AddRange(CompleteDomain(profileId, MasteryDomain.CSharp, 100m));
+        observations.AddRange(CompleteDomain(profileId, MasteryDomain.Debugging, 100m));
+        observations.AddRange(CompleteDomain(profileId, MasteryDomain.Sql, 100m));
+        observations.AddRange(ExtraUnassistedPractice(profileId, 10));
+        MasteryAchievement[] examOnly =
+        [
+            Achievement(profileId, MasteryPolicyCatalog.NinetyMinuteExam, 90, MasteryVerificationKind.ExamEngine),
+        ];
+
+        MasteryGateResult blocked = Gate(Calculate(profileId, observations, examOnly), MasteryGate.A);
+
+        Assert.False(blocked.IsOpen);
+        Assert.Equal("Mini-projet console vérifié", Assert.Single(blocked.Blockers));
+
+        MasteryGateResult declared = Gate(
+            Calculate(
+                profileId,
+                observations,
+                [
+                    .. examOnly,
+                    Achievement(
+                        profileId,
+                        MasteryPolicyCatalog.ConsoleProject,
+                        verification: MasteryVerificationKind.ManualDeclaration),
+                ]),
+            MasteryGate.A);
+
+        Assert.False(declared.IsOpen);
+        Assert.Equal("Mini-projet console vérifié", Assert.Single(declared.Blockers));
+
+        MasteryGateResult verified = Gate(
+            Calculate(
+                profileId,
+                observations,
+                [
+                    .. examOnly,
+                    Achievement(
+                        profileId,
+                        MasteryPolicyCatalog.ConsoleProject,
+                        verification: MasteryVerificationKind.AutomaticTests),
+                ]),
+            MasteryGate.A);
+
+        Assert.True(verified.IsOpen);
+        Assert.Empty(verified.Blockers);
+    }
+
     [Fact]
     public void ExactDeliverablesCanOpenAllFourGatesInOrder()
     {
@@ -320,6 +381,109 @@ public sealed class MasteryRulesTests
         MasteryObservation invalid = observation with { Id = Guid.NewGuid(), Score = 100.01m };
         Assert.Throws<InvalidOperationException>(() => Calculate(profileId, [invalid]));
         Assert.Throws<InvalidOperationException>(() => Calculate(profileId, [observation, observation]));
+    }
+
+    /// <summary>
+    /// Documente le défaut : sans preuve de rétention, un travail excellent reste sous le seuil.
+    /// </summary>
+    /// <remarks>
+    /// Le poids de la composante absente n'est jamais redistribué. Un domaine critique exige 85 ;
+    /// le maximum atteignable sans rétention est exactement 85, ce qui suppose 100 partout ailleurs.
+    /// Un profil réaliste — pratique 95, examen 90, explication 90, quiz 100 — plafonne à 79,25.
+    /// </remarks>
+    [Fact]
+    public void WithoutSpacedRetentionEvidenceAStrongDomainStaysBelowTheCriticalThreshold()
+    {
+        Guid profileId = Guid.NewGuid();
+
+        MasteryDomainScore score = Domain(
+            Calculate(profileId, RealisticDomain(profileId, MasteryDomain.Api, withRetention: false)),
+            MasteryDomain.Api);
+
+        Assert.Equal(0m, Component(score, MasteryComponent.SpacedRetention).Score);
+        Assert.Equal(79.25m, score.Score);
+        Assert.False(score.IsValidated);
+    }
+
+    /// <summary>
+    /// Prouve la correction : une preuve de rétention vérifiée débloque le même profil, sans qu'aucun
+    /// seuil n'ait été abaissé.
+    /// </summary>
+    [Fact]
+    public void SpacedRetentionEvidenceLetsTheSameProfileReachTheCriticalThreshold()
+    {
+        Guid profileId = Guid.NewGuid();
+
+        MasteryDomainScore score = Domain(
+            Calculate(profileId, RealisticDomain(profileId, MasteryDomain.Api, withRetention: true)),
+            MasteryDomain.Api);
+
+        Assert.Equal(100m, Component(score, MasteryComponent.SpacedRetention).Score);
+        Assert.Equal(94.25m, score.Score);
+        Assert.True(score.IsValidated);
+    }
+
+    /// <summary>
+    /// Borne l'élargissement : une réponse auto-évaluée n'alimente toujours pas la rétention.
+    /// </summary>
+    [Fact]
+    public void SelfAssessedReviewAnswersRemainIneligibleForSpacedRetention()
+    {
+        Guid profileId = Guid.NewGuid();
+        MasteryObservation[] observations =
+        [
+            .. RealisticDomain(profileId, MasteryDomain.Api, withRetention: false),
+            Observation(
+                profileId,
+                MasteryDomain.Api,
+                MasteryComponent.SpacedRetention,
+                "api-self-review",
+                100m,
+                source: MasteryEvidenceSource.Review,
+                verification: MasteryVerificationKind.ManualDeclaration),
+        ];
+
+        MasteryDomainScore score = Domain(Calculate(profileId, observations), MasteryDomain.Api);
+
+        Assert.Equal(0m, Component(score, MasteryComponent.SpacedRetention).Score);
+        Assert.Equal(79.25m, score.Score);
+    }
+
+    /// <summary>
+    /// Profil de travail sérieux mais imparfait, sur un domaine critique : trois pratiques sans aide
+    /// à 95, un examen à 90, une explication à 90 et un quiz à 100.
+    /// </summary>
+    private static MasteryObservation[] RealisticDomain(
+        Guid profileId,
+        MasteryDomain domain,
+        bool withRetention)
+    {
+        var observations = new List<MasteryObservation>
+        {
+            Observation(profileId, domain, MasteryComponent.AutonomousPractice, $"{domain}-practice-1", 95m),
+            Observation(profileId, domain, MasteryComponent.AutonomousPractice, $"{domain}-practice-2", 95m),
+            Observation(profileId, domain, MasteryComponent.AutonomousPractice, $"{domain}-practice-3", 95m),
+            Observation(profileId, domain, MasteryComponent.UnassistedExam, $"{domain}-exam", 90m,
+                source: MasteryEvidenceSource.Exam, verification: MasteryVerificationKind.ExamEngine),
+            Observation(profileId, domain, MasteryComponent.Explanation, $"{domain}-explanation", 90m,
+                source: MasteryEvidenceSource.Explanation, verification: MasteryVerificationKind.ServerRubric),
+            Observation(profileId, domain, MasteryComponent.Quiz, $"{domain}-quiz", 100m,
+                source: MasteryEvidenceSource.Quiz, verification: MasteryVerificationKind.QuizEngine),
+        };
+
+        if (withRetention)
+        {
+            observations.Add(Observation(
+                profileId,
+                domain,
+                MasteryComponent.SpacedRetention,
+                $"{domain}-review-card",
+                100m,
+                source: MasteryEvidenceSource.Review,
+                verification: MasteryVerificationKind.ReviewEngine));
+        }
+
+        return observations.ToArray();
     }
 
     private static MasterySnapshot Calculate(

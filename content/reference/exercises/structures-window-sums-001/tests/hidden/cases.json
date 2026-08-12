@@ -32,6 +32,20 @@
                                    ],
                       "expectedException":  null,
                       "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_WindowOfOne",
+                      "message":  "Fenêtre unitaire : le résultat reproduit l'entrée.",
+                      "arguments":  [[1,2,3,4],1],
+                      "expected":  [1,2,3,4],
+                      "argumentsUnchanged":  true
+                  },
+                  {
+                      "name":  "Hidden_CancellingValues",
+                      "message":  "Valeurs qui s'annulent : réfute un cumul qui oublie de retirer l'élément sortant.",
+                      "arguments":  [[-1,1,-1,1],2],
+                      "expected":  [0,0,0],
+                      "argumentsUnchanged":  true
                   }
               ]
 }

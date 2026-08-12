@@ -28,6 +28,13 @@
                       "expected":  0,
                       "expectedException":  null,
                       "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Visible_NoneQualify",
+                      "message":  "Aucune valeur n'atteint le seuil : le compte est nul.",
+                      "arguments":  [[1,2],5],
+                      "expected":  0,
+                      "argumentsUnchanged":  true
                   }
               ]
 }

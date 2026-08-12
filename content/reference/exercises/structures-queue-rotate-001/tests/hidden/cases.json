@@ -36,6 +36,20 @@
                                    ],
                       "expectedException":  null,
                       "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_FullTurn",
+                      "message":  "Rotation égale à la longueur : un tour complet ramène à l'ordre initial.",
+                      "arguments":  [[1,2,3],3],
+                      "expected":  [1,2,3],
+                      "argumentsUnchanged":  true
+                  },
+                  {
+                      "name":  "Hidden_MoreThanOneTurn",
+                      "message":  "Rotation supérieure à la longueur : réfute une boucle sans réduction modulo.",
+                      "arguments":  [[1,2,3],5],
+                      "expected":  [3,1,2],
+                      "argumentsUnchanged":  true
                   }
               ]
 }

@@ -1,24 +1,24 @@
 {
-    "schemaVersion":  1,
-    "id":  "interview-api-error-status-001",
-    "version":  1,
-    "title":  "Mapper une erreur publique",
-    "level":  "junior",
-    "durationMinutes":  6,
-    "skills":  [
-                   "api.errors"
-               ],
-    "question":  "Comment implémenteriez-vous « Mapper une erreur publique » et quelles preuves réfutent les contournements ?",
-    "observableCriteria":  [
-                               "Le contrat, une frontière et un refus sont explicités",
-                               "La complexité et une preuve de sécurité ou de non-régression sont justifiées"
-                           ],
-    "modelAnswer":  "Mettre les erreurs connues sur liste blanche et rabattre les détails internes vers 500. Je sépare validation et décision, je teste un cas nominal et les frontières, puis je vérifie qu’aucune donnée sensible ni état externe n’entre dans la preuve. O(n) en temps et O(n) en espace.",
-    "commonMistakes":  [
-                           "Réciter le code sans expliquer le contrat ni la preuve"
-                       ],
-    "variants":  [
-                     "Changer la frontière ou le droit tout en conservant la règle de mapper une erreur publique."
-                 ],
-    "license":  "CC-BY-4.0"
+  "schemaVersion": 1,
+  "id": "interview-api-error-status-001",
+  "version": 1,
+  "title": "Mapper une erreur publique",
+  "level": "junior",
+  "durationMinutes": 6,
+  "skills": [
+    "api.errors"
+  ],
+  "question": "Comment implémenteriez-vous « Mapper une erreur publique » et quelles preuves réfutent les contournements ?",
+  "observableCriteria": [
+    "La liste blanche est présentée comme la règle, et le rabattement vers une erreur générique comme le défaut",
+    "L'absence de détail interne dans la réponse publique est vérifiée explicitement"
+  ],
+  "modelAnswer": "Mettre les erreurs connues sur liste blanche et rabattre les détails internes vers 500. Je teste une erreur connue, une erreur inconnue et une erreur dont le message contient un chemin de fichier, qui ne doit jamais sortir. O(n) en temps et O(n) en espace.",
+  "commonMistakes": [
+    "Faire remonter le message d'exception au client pour faciliter le support"
+  ],
+  "variants": [
+    "Changer la frontière ou le droit tout en conservant la règle de mapper une erreur publique."
+  ],
+  "license": "CC-BY-4.0"
 }

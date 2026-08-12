@@ -27,6 +27,20 @@
                       "expected":  3,
                       "expectedException":  null,
                       "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_NullReturnsZero",
+                      "message":  "Référence absente : le contrat retourne zéro et ne lève pas.",
+                      "arguments":  [null],
+                      "expected":  0,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_EvenCountAverages",
+                      "message":  "Nombre pair de mesures : la médiane est la moyenne des deux valeurs centrales, réfute une division entière.",
+                      "arguments":  [[1,2]],
+                      "expected":  1.5,
+                      "argumentsUnchanged":  true
                   }
               ]
 }

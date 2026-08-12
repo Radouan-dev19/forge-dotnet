@@ -1,5 +1,21 @@
+<#
+.SYNOPSIS
+    Échafaude les documents S1-S10 : manifestes, sources, jeux de tests et squelettes de leçon.
+
+.DESCRIPTION
+    Ce script ne rédige pas la pédagogie. Il produit la structure et les données dérivables —
+    signatures, cas de test, exemples calculés — et laisse des marqueurs « TODO: » partout où une
+    rédaction humaine est nécessaire. Ces marqueurs sont refusés par la règle d'authenticité
+    unsubstituted-placeholder : un lot échafaudé mais non rédigé ne peut donc pas être publié.
+
+    Un fichier déjà présent est conservé, jamais réécrit, sauf avec -Force.
+
+.PARAMETER Force
+    Régénère les fichiers existants. Détruit toute reprise éditoriale : à n'employer qu'en
+    connaissance de cause.
+#>
 [CmdletBinding()]
-param()
+param([switch]$Force)
 
 $ErrorActionPreference = 'Stop'
 Set-StrictMode -Version Latest
@@ -8,24 +24,8 @@ $EffectiveScriptRoot = if ([string]::IsNullOrWhiteSpace($PSScriptRoot)) { Join-P
 $RepositoryRoot = Split-Path -Parent $EffectiveScriptRoot
 $ContentRoot = Join-Path $RepositoryRoot 'content'
 $CatalogRoot = Join-Path $ContentRoot 'reference'
-$Utf8NoBom = New-Object System.Text.UTF8Encoding($false)
-
-function Write-TextFile {
-    param([Parameter(Mandatory)][string]$Path, [Parameter(Mandatory)][string]$Content)
-    # U+02BC est utilisé dans les littéraux du script, car Windows PowerShell 5.1
-    # interprète les apostrophes typographiques U+2019 comme des délimiteurs.
-    $Content = $Content.Replace([char]0x02BC, [char]0x2019)
-    $parent = Split-Path -Parent $Path
-    if (-not [string]::IsNullOrWhiteSpace($parent)) {
-        [System.IO.Directory]::CreateDirectory($parent) | Out-Null
-    }
-    [System.IO.File]::WriteAllText($Path, ($Content.Trim() + [Environment]::NewLine), $Utf8NoBom)
-}
-
-function Write-JsonFile {
-    param([Parameter(Mandatory)][string]$Path, [Parameter(Mandatory)]$Value)
-    Write-TextFile -Path $Path -Content ($Value | ConvertTo-Json -Depth 32)
-}
+$script:ForceOverwrite = $Force.IsPresent
+. (Join-Path $EffectiveScriptRoot 'ContentScaffolding.ps1')
 
 function Convert-TypeName {
     param([Parameter(Mandatory)][string]$RunnerType)
@@ -40,11 +40,6 @@ function Convert-TypeName {
         'string' { 'string' }
         default { throw "Type runner inconnu : $RunnerType" }
     }
-}
-
-function Convert-JsonCompact {
-    param($Value)
-    return ($Value | ConvertTo-Json -Depth 16 -Compress)
 }
 
 $LessonRows = @(
@@ -102,82 +97,8 @@ foreach ($row in $LessonRows) {
         markdownPath = 'lesson.md'; license = 'CC-BY-4.0'
     }
     Write-JsonFile (Join-Path $directory 'lesson.json') $manifest
-    $markdown = @"
-# $title
-
-## Objectif observable
-
-À la fin de la leçon, vous pourrez expliquer le compromis principal, appliquer la règle sur une entrée nouvelle et écrire un test qui distingue le comportement correct dʼune erreur plausible.
-
-## Prérequis
-
-Relire la leçon précédente `$previousLessonId` et savoir exécuter un exemple local sans réseau.
-
-## Intuition
-
-$concept
-
-## Explication
-
-$concept La règle doit rester visible dans le nom des opérations, les bornes et les erreurs. Avant de coder, notez lʼentrée, la sortie, les invariants et ce qui doit être refusé.
-
-## Exemple commenté
-
-$example Lʼexemple est volontairement petit : changez une borne et une valeur absente pour vérifier que le raisonnement, et non la donnée mémorisée, produit le résultat.
-
-## Contre-exemple et erreur fréquente
-
-$mistake Le contre-exemple doit être reproduit par un test qui échoue avant correction et réussit après.
-
-## Vérification de compréhension
-
-Expliquez en deux phrases la précondition, lʼinvariant et le cas limite principal. Si lʼun des trois manque, revenez à lʼexplication avant de poursuivre.
-
-:::quiz
-id=$id-check
-question=Quelle preuve montre que la règle de cette leçon est comprise ?
-option=Répéter uniquement lʼexemple mot pour mot
-option=Prédire puis tester un cas nominal, une borne et une erreur plausible
-option=Lire la solution sans écrire de test
-correct=1
-success=Correct : la variation des données et la borne distinguent une règle comprise dʼun exemple mémorisé.
-retry=Revenez au contrat, à lʼinvariant et au contre-exemple, puis choisissez la preuve qui pourrait réellement échouer.
-:::
-
-## Exercice guidé
-
-1. Écrivez trois cas : nominal, borne et entrée invalide ou absente.
-2. Prédisez chaque résultat sans exécuter.
-3. Implémentez la règle minimale.
-4. Comparez les résultats et nommez toute hypothèse incorrecte.
-
-## Exercice autonome
-
-Transposez la règle à un petit domaine de commandes. Conservez une signature testable, refusez les états impossibles et justifiez la complexité en fonction du volume dʼentrée.
-
-## Débogage
-
-Reproduisez dʼabord le contre-exemple. Placez un breakpoint à la première divergence, inspectez les données sans les modifier, puis consignez symptôme, hypothèse, preuve, cause, correction et test de non-régression.
-
-## Entretien
-
-Présentez le compromis à voix haute en cinq minutes : définition, exemple, erreur fréquente, méthode de test et situation où vous choisiriez une autre approche.
-
-## Résumé
-
-- Le contrat et les bornes précèdent lʼimplémentation.
-- Une règle utile est observable par un test qui pourrait échouer.
-- Une erreur nʼest corrigée quʼaprès reproduction et preuve.
-
-## Cartes de révision
-
-- Question : quel invariant protège cette technique ? Réponse attendue : le candidat doit citer lʼinvariant décrit dans lʼexplication.
-- Question : quel test réfute lʼerreur fréquente ? Réponse attendue : un cas limite qui échoue avant la correction.
-
-## Test de maîtrise
-
-Sans relire, résolvez une variante avec une borne différente, écrivez un test nominal et deux cas limites, puis expliquez la complexité et la preuve de non-régression. Cette auto-évaluation ne crée aucune maîtrise automatique.
-"@
+    $markdown = New-LessonScaffold -Id $id -Title $title -PreviousLessonId $previousLessonId `
+        -Concept $concept -Example $example -Mistake $mistake
     Write-TextFile (Join-Path $directory 'lesson.md') $markdown
     $previousLessonId = $id
 }
@@ -329,7 +250,7 @@ Implémentez `Submission.$($spec.Method)` avec la signature fournie dans `starte
 
 $($spec.Rule) Le résultat doit être déterministe, hors ligne et ne doit pas modifier les entrées. Avant de coder, écrivez le cas nominal, une borne et un cas qui réfute une réponse codée en dur.
 
-Exemple : entrée `$(Convert-JsonCompact $firstVisible[0])`, sortie `$(Convert-JsonCompact $firstVisible[1])`.
+Exemple : entrée ``$(Convert-JsonCompact $firstVisible[0])``, sortie ``$(Convert-JsonCompact $firstVisible[1])``.
 "@
     Write-TextFile (Join-Path $directory 'explanation.md') @"
 # Explication
@@ -600,7 +521,7 @@ foreach ($row in $SqlRows) {
     Write-TextFile (Join-Path $directory 'schema.sql') 'Customers(CustomerId PK, Name UNIQUE, City, IsActive); Products(ProductId PK, Name, Category, Price CHECK, Stock CHECK); Orders(OrderId PK, CustomerId FK, OrderDate, Status, Total CHECK, DataVersion); OrderLines(OrderLineId PK, OrderId FK, ProductId FK, Quantity CHECK, UnitPrice CHECK).'
     Write-TextFile (Join-Path $directory 'dataset.sql') $SqlDataset
     Write-TextFile (Join-Path $directory 'reset.sql') $SqlReset
-    Write-TextFile (Join-Path $directory 'statement.md') "# $title`n`nÉcrivez une requête bornée qui retourne exactement les colonnes `$(($columns -join ', '))`. Lʼordre annoncé est significatif. Nʼutilisez ni objet serveur, ni référence inter-base, ni donnée externe."
+    Write-TextFile (Join-Path $directory 'statement.md') "# $title`n`nÉcrivez une requête bornée qui retourne exactement les colonnes $($columns -join ', '). Lʼordre annoncé est significatif. Nʼutilisez ni objet serveur, ni référence inter-base, ni donnée externe."
     Write-TextFile (Join-Path $directory 'solution.md') "# Solution expliquée`n`n``````sql`n$query`n```````n`nLa requête fixe le grain avant projection, borne le résultat et utilise uniquement le schéma visible. Sa preuve compare colonnes, lignes et ordre, jamais un coût ou une durée exacte."
     $queryJson = $query | ConvertTo-Json -Compress
     $contractJson = @"
@@ -642,3 +563,5 @@ foreach ($exam in $ExamDefinitions) {
         drawCount=$exam.Draw;passingScore=80;eligibleExerciseIds=$exam.Candidates
     })
 }
+
+Write-ScaffoldSummary -ScriptName (Split-Path -Leaf $PSCommandPath)

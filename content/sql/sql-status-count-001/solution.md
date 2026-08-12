@@ -4,4 +4,4 @@
 SELECT Status, COUNT_BIG(*) AS OrderCount FROM dbo.Orders GROUP BY Status ORDER BY Status;
 ```
 
-La requête fixe le grain avant projection, borne le résultat et utilise uniquement le schéma visible. Sa preuve compare colonnes, lignes et ordre, jamais un coût ou une durée exacte.
+Un statut qu'aucune commande ne porte est absent du résultat, et non présent à zéro : le regroupement ne peut produire que des groupes existants. Afficher les statuts vides demanderait une table de référence et une jointure externe, ce qui est une autre question.

@@ -23,6 +23,20 @@
                                     ],
                       "expectedException":  "ArgumentException",
                       "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_EqualBounds",
+                      "message":  "Bornes confondues : la valeur est à la fois borne basse et borne haute.",
+                      "arguments":  [5,5,5],
+                      "expected":  true,
+                      "argumentsUnchanged":  true
+                  },
+                  {
+                      "name":  "Hidden_JustAboveUpperBound",
+                      "message":  "Une unité au-dessus de la borne haute : ce n'est plus une frontière.",
+                      "arguments":  [101,1,100],
+                      "expected":  false,
+                      "argumentsUnchanged":  true
                   }
               ]
 }

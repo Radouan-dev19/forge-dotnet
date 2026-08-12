@@ -32,6 +32,20 @@
                                    ],
                       "expectedException":  null,
                       "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_NullInput",
+                      "message":  "Référence absente : refus explicite.",
+                      "arguments":  [null],
+                      "expectedException":  "ArgumentNullException",
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_NothingToSanitize",
+                      "message":  "Aucune valeur à corriger : le résultat est identique et l'entrée reste intacte, ce qui prouve la copie.",
+                      "arguments":  [[1,2,3]],
+                      "expected":  [1,2,3],
+                      "argumentsUnchanged":  true
                   }
               ]
 }

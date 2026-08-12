@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "id": "interview-api-content-negotiation-001",
+  "version": 1,
+  "title": "Négocier le type de représentation",
+  "level": "junior",
+  "durationMinutes": 7,
+  "skills": ["api.contracts"],
+  "question": "Un client accepte plusieurs formats avec des facteurs de qualité et votre serveur en produit deux. Qui décide du format envoyé, et que faites-vous d'un format explicitement refusé ?",
+  "observableCriteria": [
+    "La préférence du client est présentée comme le critère de classement, celle du serveur comme départage",
+    "La qualité nulle est identifiée comme un refus et non comme une absence de préférence",
+    "L'absence de correspondance est rendue à l'appelant plutôt que transformée en réponse HTTP"
+  ],
+  "modelAnswer": "Je classe par le facteur de qualité annoncé par le client, parce que lui seul sait ce qu'il peut lire. L'ordre du serveur ne sert qu'à départager deux formats de même qualité, sans quoi la réponse changerait selon l'ordre d'écriture de l'en-tête. Une qualité nulle est un refus : je cherche donc toujours une entrée exacte avant de retomber sur le passe-partout, sinon j'enverrais exactement ce que le client a écarté. Quand rien ne correspond, je rends une absence et je laisse la couche HTTP en tirer un refus, ce qui garde la règle testable hors de tout transport.",
+  "commonMistakes": [
+    "Prendre le premier format de la liste du client sans vérifier que le serveur sait le produire",
+    "Confondre une qualité nulle avec une absence de contrainte"
+  ],
+  "variants": [
+    "Ajouter un troisième format produit par le serveur et demander lequel part à qualités égales.",
+    "Retirer le facteur de qualité de l'en-tête et demander ce qui décide alors."
+  ],
+  "license": "CC-BY-4.0"
+}

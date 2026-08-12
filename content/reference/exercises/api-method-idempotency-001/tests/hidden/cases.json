@@ -20,6 +20,20 @@
                       "expected":  false,
                       "expectedException":  null,
                       "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_Options",
+                      "message":  "Les options de découverte sont idempotentes.",
+                      "arguments":  ["options"],
+                      "expected":  true,
+                      "argumentsUnchanged":  true
+                  },
+                  {
+                      "name":  "Hidden_NullMethod",
+                      "message":  "Méthode absente : réponse négative, sans exception.",
+                      "arguments":  [null],
+                      "expected":  false,
+                      "argumentsUnchanged":  false
                   }
               ]
 }

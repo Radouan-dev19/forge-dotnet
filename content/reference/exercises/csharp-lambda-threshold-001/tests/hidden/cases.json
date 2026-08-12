@@ -29,6 +29,20 @@
                       "expected":  2,
                       "expectedException":  null,
                       "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_NullInput",
+                      "message":  "Référence absente : refus explicite.",
+                      "arguments":  [null,0],
+                      "expectedException":  "ArgumentNullException",
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_NegativeThreshold",
+                      "message":  "Seuil négatif : seule la valeur au-dessus est comptée.",
+                      "arguments":  [[-2,-1],-1],
+                      "expected":  1,
+                      "argumentsUnchanged":  true
                   }
               ]
 }

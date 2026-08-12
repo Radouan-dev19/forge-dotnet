@@ -16,12 +16,12 @@
     "constraints":  [
                         "Conserver exactement la signature publique",
                         "Normaliser la branche, remplacer le séparateur et exiger un numéro positif.",
-                        "Ne jamais dépendre du réseau, d’un secret réel ou d’un état global"
+                        "N'interroger aucun système de construction : la branche et le numéro sont fournis"
                     ],
     "examples":  [
                      {
-                         "input":  "[{\"value\":[\"main\",42],\"Count\":2},\"tests-main-42\"]",
-                         "output":  "[{\"value\":[\"feature/api\",7],\"Count\":2},\"tests-feature-api-7\"]"
+                         "input":  "[\"main\",42]",
+                         "output":  "\"tests-main-42\""
                      }
                  ],
     "reflectionFields":  [
@@ -54,7 +54,7 @@
                   {
                       "level":  4,
                       "kind":  "partial-pseudocode",
-                      "content":  "valider les entrées ; appliquer la décision bornée ; retourner un résultat déterministe sans effet externe"
+                      "content":  "refuser une branche absente ou composée de blancs, ainsi qu'un numéro d'exécution nul ou négatif ; sinon retirer les blancs de bordure, uniformiser la casse, remplacer le séparateur de chemin, et composer le nom avec le préfixe et le numéro"
                   }
               ],
     "solution":  {
@@ -67,9 +67,10 @@
     "explanation":  "explanation.md",
     "complexity":  "O(n) en temps et O(n) en espace",
     "commonMistakes":  [
-                           "Coder seulement les exemples visibles",
-                           "Masquer une erreur ou accepter une entrée hors contrat",
-                           "Confondre une règle pure avec le transport ou une ressource externe"
+                           "Laisser le séparateur de chemin dans le nom et casser le stockage de l'artefact",
+                           "Accepter un numéro d'exécution nul ou négatif",
+                           "Composer le nom sans uniformiser la casse et produire deux artefacts pour une même branche",
+                           "Reconstruire l'artefact au lieu de promouvoir celui déjà nommé"
                        ],
     "variantId":  "ci-deploy-gate-001",
     "reviewCards":  [

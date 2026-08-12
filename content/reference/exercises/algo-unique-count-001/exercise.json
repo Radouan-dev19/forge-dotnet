@@ -20,8 +20,8 @@
                     ],
     "examples":  [
                      {
-                         "input":  "[{\"value\":[[1,1,2]],\"Count\":1},2]",
-                         "output":  "[{\"value\":[[]],\"Count\":1},0]"
+                         "input":  "[[1,1,2]]",
+                         "output":  "2"
                      }
                  ],
     "reflectionFields":  [
@@ -54,7 +54,7 @@
                   {
                       "level":  4,
                       "kind":  "partial-pseudocode",
-                      "content":  "valider les bornes ; parcourir ou décider ; retourner un nouveau résultat déterministe"
+                      "content":  "si values est null lever ArgumentNullException ; construire un ensemble à partir des valeurs, ce qui absorbe les doublons ; retourner la taille de cet ensemble"
                   }
               ],
     "solution":  {
@@ -67,9 +67,10 @@
     "explanation":  "explanation.md",
     "complexity":  "O(n) attendu en temps et O(n) en espace",
     "commonMistakes":  [
-                           "Coder uniquement les exemples visibles",
-                           "Oublier une borne ou modifier une entrée",
-                           "Annoncer une complexité sans compter les opérations dominantes"
+                           "Compter la longueur du tableau au lieu du nombre de valeurs distinctes",
+                           "Comparer chaque valeur à toutes les autres, ce qui devient quadratique",
+                           "Trier puis compter les changements, ce qui coûte davantage sans rien apporter ici",
+                           "Traiter un tableau vide comme une entrée invalide"
                        ],
     "variantId":  "algo-maximum-value-001",
     "reviewCards":  [

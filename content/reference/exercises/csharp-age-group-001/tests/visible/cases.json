@@ -20,6 +20,13 @@
                       "expected":  "adult",
                       "expectedException":  null,
                       "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Visible_UpperAdultBound",
+                      "message":  "Dernier âge adulte : réfute une borne haute incluse à tort.",
+                      "arguments":  [64],
+                      "expected":  "adult",
+                      "argumentsUnchanged":  true
                   }
               ]
 }

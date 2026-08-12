@@ -1,24 +1,24 @@
 {
-    "schemaVersion":  1,
-    "id":  "interview-tests-expiry-clock-001",
-    "version":  1,
-    "title":  "Fixer le temps dans un test",
-    "level":  "junior",
-    "durationMinutes":  6,
-    "skills":  [
-                   "tests.doubles"
-               ],
-    "question":  "Comment implémenteriez-vous « Fixer le temps dans un test » et quelles preuves réfutent les contournements ?",
-    "observableCriteria":  [
-                               "Le contrat, une frontière et un refus sont explicités",
-                               "La complexité et une preuve de sécurité ou de non-régression sont justifiées"
-                           ],
-    "modelAnswer":  "Recevoir la date observée au lieu de lire l’horloge système dans la règle. Je sépare validation et décision, je teste un cas nominal et les frontières, puis je vérifie qu’aucune donnée sensible ni état externe n’entre dans la preuve. O(1) en temps et O(1) en espace.",
-    "commonMistakes":  [
-                           "Réciter le code sans expliquer le contrat ni la preuve"
-                       ],
-    "variants":  [
-                     "Changer la frontière ou le droit tout en conservant la règle de fixer le temps dans un test."
-                 ],
-    "license":  "CC-BY-4.0"
+  "schemaVersion": 1,
+  "id": "interview-tests-expiry-clock-001",
+  "version": 1,
+  "title": "Fixer le temps dans un test",
+  "level": "junior",
+  "durationMinutes": 6,
+  "skills": [
+    "tests.doubles"
+  ],
+  "question": "Comment implémenteriez-vous « Fixer le temps dans un test » et quelles preuves réfutent les contournements ?",
+  "observableCriteria": [
+    "La date est reçue en paramètre plutôt que lue dans la règle",
+    "La conséquence est nommée : le test devient reproductible et cesse de dépendre du jour d'exécution"
+  ],
+  "modelAnswer": "Recevoir la date observée au lieu de lire l’horloge système dans la règle. Je teste la date exacte d'expiration, la veille et le lendemain, trois cas qu'une horloge système rendrait intestables. O(1) en temps et O(1) en espace.",
+  "commonMistakes": [
+    "Lire l'horloge dans la règle et écrire un test qui échoue un jour donné de l'année"
+  ],
+  "variants": [
+    "Changer la frontière ou le droit tout en conservant la règle de fixer le temps dans un test."
+  ],
+  "license": "CC-BY-4.0"
 }

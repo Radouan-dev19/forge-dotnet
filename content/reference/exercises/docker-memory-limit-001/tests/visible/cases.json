@@ -20,6 +20,13 @@
                       "expected":  256,
                       "expectedException":  null,
                       "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Visible_AtLowerBound",
+                      "message":  "Demande exactement à la borne basse : conservée.",
+                      "arguments":  [128],
+                      "expected":  128,
+                      "argumentsUnchanged":  true
                   }
               ]
 }

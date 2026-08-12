@@ -2,6 +2,6 @@
 
 Implémentez Submission.OrderLocation avec la signature fournie. Refuser un identifiant non publié puis construire une route relative stable.
 
-Le résultat reste déterministe et hors ligne. Écrivez avant le code un cas nominal, une frontière, un refus et la menace ou régression que ces preuves préviennent. N’utilisez aucun secret réel.
+La composition reste déterministe et hors ligne, sans lire d'hôte dans l'environnement. Écrivez avant le code : un identifiant ordinaire, la plus petite valeur acceptée, et le refus d'un identifiant nul. Nommez ce qu'une adresse absolue casserait au premier changement d'environnement.
 
-Exemple : entrée $(Convert-JsonCompact System.Object[] System.Object[][0]), sortie $(Convert-JsonCompact System.Object[] System.Object[][1]).
+Exemple : entrée `[42]`, sortie `"/orders/42"`.

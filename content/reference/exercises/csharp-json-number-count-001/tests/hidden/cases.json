@@ -20,6 +20,20 @@
                       "expected":  3,
                       "expectedException":  null,
                       "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_BooleansOnly",
+                      "message":  "Que des booléens : ce ne sont pas des nombres.",
+                      "arguments":  ["[true,false]"],
+                      "expected":  0,
+                      "argumentsUnchanged":  true
+                  },
+                  {
+                      "name":  "Hidden_QuotedNumber",
+                      "message":  "Un nombre entre guillemets reste une chaîne : réfute un comptage sur le texte brut.",
+                      "arguments":  ["[1,\u00222\u0022,3]"],
+                      "expected":  2,
+                      "argumentsUnchanged":  true
                   }
               ]
 }

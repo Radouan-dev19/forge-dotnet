@@ -2,6 +2,6 @@
 
 Implémentez Submission.IsCommitSubjectValid avec la signature fournie. Exiger un sujet non vide, borné à 72 caractères et sans point final.
 
-Le résultat reste déterministe et hors ligne. Écrivez avant le code un cas nominal, une frontière, un refus et la menace ou régression que ces preuves préviennent. N’utilisez aucun secret réel.
+La validation reste déterministe et hors ligne : aucun dépôt n'est interrogé. Écrivez avant le code : un sujet ordinaire, un sujet exactement à la limite, un sujet dépassant d'un caractère, un sujet terminé par un point, et une chaîne de blancs. Nommez ce qu'un sujet trop long devient dans une liste de commits.
 
-Exemple : entrée $(Convert-JsonCompact System.Object[] System.Object[][0]), sortie $(Convert-JsonCompact System.Object[] System.Object[][1]).
+Exemple : entrée `["Ajoute les tests API"]`, sortie `true`.

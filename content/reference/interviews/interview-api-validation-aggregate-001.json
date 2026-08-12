@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "id": "interview-api-validation-aggregate-001",
+  "version": 1,
+  "title": "Rapporter toutes les violations d'un seul appel",
+  "level": "junior",
+  "durationMinutes": 7,
+  "skills": ["api.validation"],
+  "question": "Votre validation renvoie la première erreur rencontrée. Un intégrateur se plaint de devoir corriger sa demande cinq fois de suite. Que changez-vous, et comment garantissez-vous que deux appels équivalents produisent le même rapport ?",
+  "observableCriteria": [
+    "Le coût est nommé en allers-retours imposés au client, pas en confort de lecture",
+    "L'ordre du rapport est rattaché à la déclaration des champs et non à l'ordre de réception",
+    "Le champ répété est traité comme un défaut de forme plutôt que résolu silencieusement"
+  ],
+  "modelAnswer": "Je collecte toutes les violations avant de répondre, parce que le serveur les connaît déjà toutes au premier appel : les taire transforme une réponse en une série d'allers-retours proportionnelle au nombre de champs fautifs. Je fixe ensuite l'ordre du rapport sur la déclaration des champs, pas sur l'ordre du corps reçu, sinon deux demandes équivalentes rangées différemment donnent deux rapports différents et aucun test ne peut plus vérifier qu'un champ manque au rapport. Un champ envoyé deux fois est signalé comme défaut de forme et sa valeur n'est pas contrôlée : retenir la dernière reviendrait à décider à la place du client laquelle fait foi. Les noms inconnus viennent en fin de rapport, dans l'ordre reçu, puisqu'ils n'ont pas d'ordre de déclaration.",
+  "commonMistakes": [
+    "Confondre l'économie d'un contrôle et l'économie d'un appel réseau",
+    "Trier le rapport dans le test au lieu de rendre l'ordre déterministe côté serveur"
+  ],
+  "variants": [
+    "Ajouter un champ facultatif et demander ce qui change dans le rapport quand il est absent.",
+    "Demander comment la règle évolue si deux champs deviennent dépendants l'un de l'autre."
+  ],
+  "license": "CC-BY-4.0"
+}

@@ -20,6 +20,20 @@
                       "expected":  1,
                       "expectedException":  null,
                       "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_AdjacentMarkers",
+                      "message":  "Deux marqueurs collés : réfute une avancée d'un seul caractère qui les compterait mal.",
+                      "arguments":  ["ERRORERROR"],
+                      "expected":  2,
+                      "argumentsUnchanged":  true
+                  },
+                  {
+                      "name":  "Hidden_NoMarker",
+                      "message":  "Journal sans marqueur : compte nul.",
+                      "arguments":  ["INFO"],
+                      "expected":  0,
+                      "argumentsUnchanged":  true
                   }
               ]
 }

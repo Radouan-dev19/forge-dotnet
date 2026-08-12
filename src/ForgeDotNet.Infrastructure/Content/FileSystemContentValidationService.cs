@@ -13,6 +13,8 @@ public sealed partial class FileSystemContentValidationService : IContentValidat
     private readonly int _maximumFiles;
     private readonly long _maximumFileSizeBytes;
     private readonly string _schemaRootPath;
+    private readonly string? _legacyDebtPath;
+    private readonly ContentAuthenticityAnalyzer _authenticityAnalyzer;
 
     public FileSystemContentValidationService(ContentValidationOptions options)
     {
@@ -20,12 +22,16 @@ public sealed partial class FileSystemContentValidationService : IContentValidat
         ArgumentException.ThrowIfNullOrWhiteSpace(options.ContentRootPath);
         ArgumentOutOfRangeException.ThrowIfNegativeOrZero(options.MaximumFileSizeBytes);
         ArgumentOutOfRangeException.ThrowIfNegativeOrZero(options.MaximumFiles);
+        ArgumentOutOfRangeException.ThrowIfNegativeOrZero(options.MaximumCloneOccurrences);
+        ArgumentOutOfRangeException.ThrowIfNegativeOrZero(options.MinimumCloneParagraphWords);
 
         _contentRootPath = NormalizeDirectory(options.ContentRootPath);
         _schemaRootPath = NormalizeDirectory(
             options.SchemaRootPath ?? Path.Combine(_contentRootPath, "schemas"));
         _maximumFileSizeBytes = options.MaximumFileSizeBytes;
         _maximumFiles = options.MaximumFiles;
+        _legacyDebtPath = options.LegacyDebtPath;
+        _authenticityAnalyzer = new ContentAuthenticityAnalyzer(options, _contentRootPath);
 
         if (!IsWithin(_contentRootPath, _schemaRootPath))
         {
@@ -69,6 +75,7 @@ public sealed partial class FileSystemContentValidationService : IContentValidat
 
         Dictionary<ContentDocumentType, JsonDocument> schemas = LoadSchemas(issues);
         var identifiers = new Dictionary<string, string>(StringComparer.Ordinal);
+        var manifests = new List<ContentManifestReference>();
         int documentsExamined = 0;
 
         try
@@ -91,6 +98,7 @@ public sealed partial class FileSystemContentValidationService : IContentValidat
                 }
 
                 documentsExamined++;
+                manifests.Add(new ContentManifestReference(relativePath, file, documentType.Value));
                 if (!schemas.TryGetValue(documentType.Value, out JsonDocument? schema))
                 {
                     continue;
@@ -129,8 +137,39 @@ public sealed partial class FileSystemContentValidationService : IContentValidat
             AddIssue(issues, "no-documents", Relative(targetPath), "$", "Aucun manifeste de contenu v1 trouvé.");
         }
 
+        ApplyAuthenticityRules(manifests, Relative(targetPath), issues);
         return Task.FromResult(new ContentValidationReport(files.Count, documentsExamined, issues));
     }
+
+    /// <summary>
+    /// Applique les règles d'authenticité au lot complet, puis retire les défauts explicitement
+    /// déclarés dans le registre de dette. Une déclaration sans défaut correspondant refuse le lot.
+    /// </summary>
+    private void ApplyAuthenticityRules(
+        List<ContentManifestReference> manifests,
+        string scopeRelativePath,
+        List<ContentValidationIssue> issues)
+    {
+        if (manifests.Count == 0)
+        {
+            return;
+        }
+
+        var authenticityIssues = new List<ContentValidationIssue>();
+        _authenticityAnalyzer.Analyze(manifests, authenticityIssues);
+
+        ContentAuthenticityDebt debt = ContentAuthenticityDebt.Load(_legacyDebtPath, _contentRootPath, issues);
+        string prefix = scopeRelativePath is "." or "" ? string.Empty : scopeRelativePath + "/";
+        issues.AddRange(authenticityIssues.Where(issue => !debt.Absorb(
+            StripPrefix(issue.FilePath, prefix),
+            issue.Code)));
+        issues.AddRange(debt.GetStaleDeclarations(scopeRelativePath));
+    }
+
+    private static string StripPrefix(string path, string prefix) =>
+        prefix.Length > 0 && path.StartsWith(prefix, StringComparison.Ordinal)
+            ? path[prefix.Length..]
+            : path;
 
     private Dictionary<ContentDocumentType, JsonDocument> LoadSchemas(List<ContentValidationIssue> issues)
     {
@@ -235,10 +274,13 @@ public sealed partial class FileSystemContentValidationService : IContentValidat
             identifiers.Add(identifier, relativePath);
         }
 
+        // Un projet porte désormais un dossier, comme une leçon ou un exercice : il lui faut un
+        // starter et des suites d'acceptation à côté de son manifeste.
         string expectedLocationName = documentType is ContentDocumentType.Lesson
             or ContentDocumentType.Exercise
             or ContentDocumentType.DebugScenario
             or ContentDocumentType.SqlScenario
+            or ContentDocumentType.Project
             ? Directory.GetParent(fullPath)?.Name ?? string.Empty
             : Path.GetFileNameWithoutExtension(fullPath);
 
@@ -390,7 +432,9 @@ public sealed partial class FileSystemContentValidationService : IContentValidat
         try
         {
             string markdown = StrictUtf8.GetString(File.ReadAllBytes(markdownPath));
-            if (RawHtmlTagRegex().IsMatch(markdown))
+            // Le contrôle porte sur la prose : un type générique cité en `List<T>` n'est pas une
+            // balise, et le code montré est rendu comme texte échappé, jamais comme du balisage.
+            if (RawHtmlTagRegex().IsMatch(MarkdownProse.Extract(markdown)))
             {
                 AddIssue(issues, "raw-html", manifestRelativePath, propertyPath, "HTML brut interdit dans le Markdown.");
             }

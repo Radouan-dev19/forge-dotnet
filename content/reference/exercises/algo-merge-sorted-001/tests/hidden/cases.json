@@ -42,6 +42,20 @@
                                    ],
                       "expectedException":  null,
                       "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_BothEmpty",
+                      "message":  "Les deux séquences sont vides : le résultat est vide, sans exception.",
+                      "arguments":  [[],[]],
+                      "expected":  [],
+                      "argumentsUnchanged":  true
+                  },
+                  {
+                      "name":  "Hidden_RightEntirelyBefore",
+                      "message":  "Toute la séquence droite précède la gauche : réfute une concaténation naïve.",
+                      "arguments":  [[5],[1]],
+                      "expected":  [1,5],
+                      "argumentsUnchanged":  true
                   }
               ]
 }

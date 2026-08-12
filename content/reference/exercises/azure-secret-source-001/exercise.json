@@ -15,13 +15,13 @@
     "statement":  "statement.md",
     "constraints":  [
                         "Conserver exactement la signature publique",
-                        "Une valeur non sensible reste en configuration ; une valeur sensible utilise lʼidentité gérée ou un magasin local hors Git.",
-                        "Rester déterministe, hors ligne et indépendant de toute ressource Azure réelle"
+                        "Une valeur non sensible reste en configuration ; une valeur sensible passe par l'identité gérée ou un magasin local hors dépôt.",
+                        "N'employer aucune valeur ressemblant à un secret réel : seuls deux indicateurs sont fournis"
                     ],
     "examples":  [
                      {
-                         "input":  "[{\"value\":[false,true],\"Count\":2},\"configuration\"]",
-                         "output":  "[{\"value\":[true,true],\"Count\":2},\"key-vault-managed-identity\"]"
+                         "input":  "[false,true]",
+                         "output":  "\"configuration\""
                      }
                  ],
     "reflectionFields":  [
@@ -54,7 +54,7 @@
                   {
                       "level":  4,
                       "kind":  "partial-pseudocode",
-                      "content":  "valider les entrées ; appliquer la garde la plus stricte ; retourner une décision explicite et déterministe"
+                      "content":  "trancher d'abord sur la sensibilité : une valeur banale reste en configuration versionnée ; sinon, choisir selon le contexte d'exécution — l'identité attestée par la plateforme lorsqu'elle est disponible, le magasin local hors dépôt sinon"
                   }
               ],
     "solution":  {
@@ -67,9 +67,10 @@
     "explanation":  "explanation.md",
     "complexity":  "O(1) en temps et O(1) en espace",
     "commonMistakes":  [
-                           "Coder seulement les exemples visibles",
-                           "Présenter une étape manuelle ou cloud comme une validation automatique",
-                           "Masquer une valeur invalide ou supprimer une garde de sécurité"
+                           "Placer une valeur non sensible dans un magasin de secrets, ce qui coûte sans rien protéger",
+                           "Évaluer le contexte d'exécution avant la sensibilité",
+                           "Retenir la configuration versionnée pour une valeur sensible faute d'identité disponible",
+                           "Considérer un magasin local comme une solution de déploiement"
                        ],
     "variantId":  "azure-correlation-signal-001",
     "reviewCards":  [

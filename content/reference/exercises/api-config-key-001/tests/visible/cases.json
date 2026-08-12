@@ -22,6 +22,13 @@
                       "expected":  "Logging:Level",
                       "expectedException":  null,
                       "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Visible_BothPadded",
+                      "message":  "Section et clé toutes deux entourées d'espaces : les deux sont rognées.",
+                      "arguments":  ["  Db  ","  Timeout  "],
+                      "expected":  "Db:Timeout",
+                      "argumentsUnchanged":  true
                   }
               ]
 }

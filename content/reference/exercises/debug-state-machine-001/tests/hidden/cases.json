@@ -27,6 +27,20 @@
                       "expected":  2,
                       "expectedException":  null,
                       "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_ResetAfterCompletion",
+                      "message":  "Réinitialisation après la fin : l'état revient au départ.",
+                      "arguments":  [[1,2,3]],
+                      "expected":  0,
+                      "argumentsUnchanged":  true
+                  },
+                  {
+                      "name":  "Hidden_IgnoredTransition",
+                      "message":  "Événement sans transition valide depuis l'état courant : il est ignoré.",
+                      "arguments":  [[1,2,1]],
+                      "expected":  2,
+                      "argumentsUnchanged":  true
                   }
               ]
 }

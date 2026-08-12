@@ -1,24 +1,24 @@
 {
-    "schemaVersion":  1,
-    "id":  "interview-algo-selection-sort-001",
-    "version":  1,
-    "title":  "Trier par sélection",
-    "level":  "junior",
-    "durationMinutes":  5,
-    "skills":  [
-                   "algorithm.sorting"
-               ],
-    "question":  "Comment résoudriez-vous « Trier par sélection » et comment prouveriez-vous les bornes ?",
-    "observableCriteria":  [
-                               "Le contrat et une borne sont explicitement reformulés",
-                               "La complexité et un test de réfutation sont justifiés"
-                           ],
-    "modelAnswer":  "Maintenir un préfixe trié contenant les plus petites valeurs. La preuve comprend un cas nominal, une borne et un cas différent des exemples ; O(n²) en temps et O(n) en espace pour la copie.",
-    "commonMistakes":  [
-                           "Réciter le code sans invariant ni méthode de test"
-                       ],
-    "variants":  [
-                     "Changer une borne ou le volume tout en conservant la même règle de trier par sélection."
-                 ],
-    "license":  "CC-BY-4.0"
+  "schemaVersion": 1,
+  "id": "interview-algo-selection-sort-001",
+  "version": 1,
+  "title": "Trier par sélection",
+  "level": "junior",
+  "durationMinutes": 5,
+  "skills": [
+    "algorithm.sorting"
+  ],
+  "question": "Comment résoudriez-vous « Trier par sélection » et comment prouveriez-vous les bornes ?",
+  "observableCriteria": [
+    "L'invariant est énoncé : le préfixe contient les plus petites valeurs à leur place définitive",
+    "Le nombre d'échanges est distingué du nombre de comparaisons"
+  ],
+  "modelAnswer": "Maintenir un préfixe trié contenant les plus petites valeurs. Je prouve par un tableau inversé, un tableau à doublons et un tableau à un élément ; O(n²) en temps et O(n) en espace pour la copie.",
+  "commonMistakes": [
+    "Décrire le tri comme un parcours sans dire ce que le préfixe garantit"
+  ],
+  "variants": [
+    "Changer une borne ou le volume tout en conservant la même règle de trier par sélection."
+  ],
+  "license": "CC-BY-4.0"
 }

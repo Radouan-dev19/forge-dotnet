@@ -1,39 +1,40 @@
 {
-    "schemaVersion":  1,
-    "scenarioId":  "debug-sort-swap-001",
-    "criteria":  [
-                     {
-                         "id":  "cause",
-                         "label":  "La cause relie la divergence à la règle fautive.",
-                         "journalField":  "cause",
-                         "requiredTerms":  [
-                                               "borne",
-                                               "condition",
-                                               "mutation"
-                                           ],
-                         "minimumMatches":  1
-                     },
-                     {
-                         "id":  "evidence",
-                         "label":  "La preuve cite entrée, attendu et réel.",
-                         "journalField":  "evidence",
-                         "requiredTerms":  [
-                                               "entrée",
-                                               "attendu",
-                                               "réel"
-                                           ],
-                         "minimumMatches":  2
-                     },
-                     {
-                         "id":  "test",
-                         "label":  "Le test de non-régression cible la borne.",
-                         "journalField":  "test",
-                         "requiredTerms":  [
-                                               "borne",
-                                               "échoue",
-                                               "réussit"
-                                           ],
-                         "minimumMatches":  2
-                     }
-                 ]
+  "schemaVersion": 1,
+  "scenarioId": "debug-sort-swap-001",
+  "criteria": [
+    {
+      "id": "cause-extra-step",
+      "label": "La cause identifie l'opération de trop après le classement.",
+      "journalField": "cause",
+      "requiredTerms": [
+        "après",
+        "inversion",
+        "étape",
+        "classement"
+      ],
+      "minimumMatches": 2
+    },
+    {
+      "id": "evidence-order",
+      "label": "La preuve compare l'ordre attendu et l'ordre obtenu.",
+      "journalField": "evidence",
+      "requiredTerms": [
+        "croissant",
+        "décroissant",
+        "attendu"
+      ],
+      "minimumMatches": 2
+    },
+    {
+      "id": "test-order",
+      "label": "Le test fixe l'ordre attendu et l'intégrité de l'entrée.",
+      "journalField": "test",
+      "requiredTerms": [
+        "ordre",
+        "entrée",
+        "échoue"
+      ],
+      "minimumMatches": 2
+    }
+  ]
 }

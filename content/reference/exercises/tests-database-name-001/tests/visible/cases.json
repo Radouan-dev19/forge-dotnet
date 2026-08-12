@@ -20,6 +20,13 @@
                       "expected":  false,
                       "expectedException":  null,
                       "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Visible_LongerThanMinimum",
+                      "message":  "Nom plus long que la longueur minimale : accepté.",
+                      "arguments":  ["forge-test-1234567890"],
+                      "expected":  true,
+                      "argumentsUnchanged":  true
                   }
               ]
 }

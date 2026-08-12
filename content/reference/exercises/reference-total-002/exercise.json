@@ -16,12 +16,12 @@
     "constraints":  [
                         "Conserver exactement la signature publique",
                         "Valider total et taux puis arrondir une seule fois le net.",
-                        "Ne pas modifier les entrées reçues sauf mention explicite"
+                        "N'employer aucun type à virgule flottante binaire pour un montant"
                     ],
     "examples":  [
                      {
-                         "input":  "[{\"value\":[20,0.1],\"Count\":2},18]",
-                         "output":  "[{\"value\":[0,0.5],\"Count\":2},0]"
+                         "input":  "[20,0.1]",
+                         "output":  "18"
                      }
                  ],
     "reflectionFields":  [
@@ -54,7 +54,7 @@
                   {
                       "level":  4,
                       "kind":  "partial-pseudocode",
-                      "content":  "valider les bornes ; parcourir ou décider ; retourner un nouveau résultat déterministe"
+                      "content":  "refuser un total négatif ainsi qu'un taux hors de l'intervalle de zéro à un ; sinon multiplier le total par le complément du taux, puis arrondir une seule fois à deux décimales en s'éloignant de zéro"
                   }
               ],
     "solution":  {
@@ -67,9 +67,10 @@
     "explanation":  "explanation.md",
     "complexity":  "O(1) en temps et O(1) en espace",
     "commonMistakes":  [
-                           "Coder uniquement les exemples visibles",
-                           "Oublier une borne ou modifier une entrée",
-                           "Annoncer une complexité sans compter les opérations dominantes"
+                           "Arrondir la remise puis l'ôter du total, ce qui introduit un second arrondi",
+                           "Accepter un taux supérieur à un et produire un net négatif",
+                           "Laisser le mode d'arrondi implicite au lieu de le déclarer",
+                           "Appliquer le taux au lieu de son complément et retourner la remise"
                        ],
     "variantId":  "reference-total-001",
     "reviewCards":  [

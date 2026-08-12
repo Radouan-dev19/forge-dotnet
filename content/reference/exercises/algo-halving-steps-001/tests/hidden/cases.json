@@ -19,6 +19,20 @@
                                     ],
                       "expectedException":  "ArgumentOutOfRangeException",
                       "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_Zero",
+                      "message":  "Zéro est accepté et ne coûte aucune étape : réfute une garde trop large.",
+                      "arguments":  [0],
+                      "expected":  0,
+                      "argumentsUnchanged":  true
+                  },
+                  {
+                      "name":  "Hidden_PowerOfTwo",
+                      "message":  "Grande puissance de deux : réfute un comptage approximatif.",
+                      "arguments":  [1024],
+                      "expected":  10,
+                      "argumentsUnchanged":  true
                   }
               ]
 }

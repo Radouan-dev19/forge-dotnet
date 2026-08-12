@@ -47,8 +47,12 @@ Ne pas déclarer une phase terminée si une commande applicable échoue. Rapport
 
 ## Contenu
 
-- Respecter `docs/CONTENT_GUIDE.md` et ses schémas versionnés.
-- Aucun placeholder, aucune dépendance obligatoire à une ressource externe.
+- Respecter `docs/CONTENT_GUIDE.md`, `docs/CONTENT_AUTHORING_STANDARD.md` et les schémas versionnés.
+- Aucun placeholder, aucune dépendance obligatoire à une ressource externe. Trois règles du
+  validateur le font respecter : `unsubstituted-placeholder`, `cloned-content`, `hollow-lesson`.
+- La dette héritée est déclarée dans `content/authoring/content-debt.json` et ne peut que décroître.
+  Ne jamais y ajouter de ligne pour faire passer un contenu neuf : la règle vaut pour l'existant.
+- Les échafaudeurs `scripts/New-S*Content.ps1` ne réécrivent aucun fichier existant sans `-Force`.
 - Chaque activité automatisable possède tests visibles et cachés, indices progressifs, solution, explication, erreurs fréquentes et variante.
 - Après affichage d'une solution : tentative non maîtrisée, explication personnelle et révision à blanc planifiée.
 - Les identifiants de contenu sont stables ; une modification incompatible exige une montée de version du schéma.

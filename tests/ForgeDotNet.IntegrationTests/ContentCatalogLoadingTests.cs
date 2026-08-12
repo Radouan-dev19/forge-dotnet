@@ -23,9 +23,11 @@ public sealed class ContentCatalogLoadingTests
         Assert.True(second.Succeeded, FormatIssues(second.Issues));
         ContentCatalog catalog = Assert.IsType<ContentCatalog>(first.Catalog);
         ContentCatalog secondCatalog = Assert.IsType<ContentCatalog>(second.Catalog);
-        Assert.Equal(481, catalog.Items.Count);
-        Assert.Equal(135, catalog.GetByType(ContentDocumentType.Exercise).Count);
-        Assert.Equal(190, catalog.GetByType(ContentDocumentType.InterviewQuestion).Count);
+        // 493 documents pédagogiques, plus la banque de cartes de révision.
+        Assert.Equal(496, catalog.Items.Count);
+        Assert.Single(catalog.GetByType(ContentDocumentType.ReviewCardBank));
+        Assert.Equal(142, catalog.GetByType(ContentDocumentType.Exercise).Count);
+        Assert.Equal(197, catalog.GetByType(ContentDocumentType.InterviewQuestion).Count);
         Assert.Single(catalog.GetByType(ContentDocumentType.Curriculum));
         Assert.Equal(70, catalog.GetByType(ContentDocumentType.Lesson).Count);
         Assert.Equal(51, catalog.GetByType(ContentDocumentType.EnglishActivity).Count);

@@ -26,6 +26,13 @@
                       "expected":  0,
                       "expectedException":  null,
                       "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Visible_ZeroOnly",
+                      "message":  "Un seul résultat nul : le total est nul.",
+                      "arguments":  [[0]],
+                      "expected":  0,
+                      "argumentsUnchanged":  true
                   }
               ]
 }

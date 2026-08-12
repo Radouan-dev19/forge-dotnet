@@ -22,6 +22,13 @@
                       "expected":  "medium",
                       "expectedException":  null,
                       "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Visible_AtLowThreshold",
+                      "message":  "Exactement au seuil bas : la comparaison est stricte, le risque reste faible.",
+                      "arguments":  [80,false],
+                      "expected":  "low",
+                      "argumentsUnchanged":  true
                   }
               ]
 }

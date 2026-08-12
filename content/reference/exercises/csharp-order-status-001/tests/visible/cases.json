@@ -20,6 +20,13 @@
                       "expected":  "shipped",
                       "expectedException":  null,
                       "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Visible_JustAboveRange",
+                      "message":  "Juste au-dessus du dernier statut connu : réfute une borne haute trop large.",
+                      "arguments":  [3],
+                      "expected":  "unknown",
+                      "argumentsUnchanged":  true
                   }
               ]
 }

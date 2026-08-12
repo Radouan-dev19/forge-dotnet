@@ -19,6 +19,20 @@
                       "expected":  "/orders/999",
                       "expectedException":  null,
                       "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_NegativeIdentifier",
+                      "message":  "Identifiant négatif : refusé au même titre que zéro.",
+                      "arguments":  [-1],
+                      "expectedException":  "ArgumentOutOfRangeException",
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_MaximumIdentifier",
+                      "message":  "Identifiant entier maximal : réfute une conversion sur un type trop étroit.",
+                      "arguments":  [2147483647],
+                      "expected":  "/orders/2147483647",
+                      "argumentsUnchanged":  true
                   }
               ]
 }

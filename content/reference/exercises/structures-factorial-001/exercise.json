@@ -20,8 +20,8 @@
                     ],
     "examples":  [
                      {
-                         "input":  "[{\"value\":[0],\"Count\":1},1]",
-                         "output":  "[{\"value\":[5],\"Count\":1},120]"
+                         "input":  "[0]",
+                         "output":  "1"
                      }
                  ],
     "reflectionFields":  [
@@ -54,7 +54,7 @@
                   {
                       "level":  4,
                       "kind":  "partial-pseudocode",
-                      "content":  "valider les bornes ; parcourir ou décider ; retourner un nouveau résultat déterministe"
+                      "content":  "refuser les valeurs négatives et celles au-delà de douze, qui déborderaient ; le cas de base couvre zéro et un et vaut un ; sinon multiplier la valeur par le résultat de l'appel sur la valeur diminuée de un, la multiplication étant vérifiée"
                   }
               ],
     "solution":  {
@@ -67,9 +67,10 @@
     "explanation":  "explanation.md",
     "complexity":  "O(n) en temps et O(n) en pile",
     "commonMistakes":  [
-                           "Coder uniquement les exemples visibles",
-                           "Oublier une borne ou modifier une entrée",
-                           "Annoncer une complexité sans compter les opérations dominantes"
+                           "Ne traiter que un comme cas de base et descendre indéfiniment sur zéro",
+                           "Omettre la borne supérieure et déborder silencieusement au-delà de douze",
+                           "Retourner zéro pour la factorielle de zéro",
+                           "Écrire un appel récursif qui ne réduit pas strictement la valeur"
                        ],
     "variantId":  "structures-recursive-sum-001",
     "reviewCards":  [

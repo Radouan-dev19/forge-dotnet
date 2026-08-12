@@ -24,6 +24,13 @@
                       "expected":  "block",
                       "expectedException":  null,
                       "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Visible_ExactlyOnBudget",
+                      "message":  "Coût exactement égal au budget : autorisé, la comparaison n'est pas stricte.",
+                      "arguments":  [5,5,true],
+                      "expected":  "allow",
+                      "argumentsUnchanged":  true
                   }
               ]
 }

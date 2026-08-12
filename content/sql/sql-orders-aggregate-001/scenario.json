@@ -24,5 +24,9 @@
     "L’agrégation ne modifie aucune commande et exclut les statuts Cancelled"
   ],
   "solutionPath": "solution.md",
+  "reviewCards": [
+      "card-sql-orders-aggregate-001-rule",
+      "card-sql-orders-aggregate-001-edge"
+  ],
   "license": "CC-BY-4.0"
 }

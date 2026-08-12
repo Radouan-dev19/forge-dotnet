@@ -24,6 +24,13 @@
                       "expected":  false,
                       "expectedException":  null,
                       "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Visible_CaseDiffersRefused",
+                      "message":  "Identités de casse différente : la comparaison est ordinale, donc refusée.",
+                      "arguments":  ["U1","u1",false],
+                      "expected":  false,
+                      "argumentsUnchanged":  true
                   }
               ]
 }

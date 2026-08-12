@@ -1,24 +1,24 @@
 {
-    "schemaVersion":  1,
-    "id":  "interview-structures-balanced-parentheses-001",
-    "version":  1,
-    "title":  "Valider des parenthèses",
-    "level":  "junior",
-    "durationMinutes":  5,
-    "skills":  [
-                   "structures.stack"
-               ],
-    "question":  "Comment résoudriez-vous « Valider des parenthèses » et comment prouveriez-vous les bornes ?",
-    "observableCriteria":  [
-                               "Le contrat et une borne sont explicitement reformulés",
-                               "La complexité et un test de réfutation sont justifiés"
-                           ],
-    "modelAnswer":  "Refuser une fermeture sans ouverture et exiger une profondeur finale nulle. La preuve comprend un cas nominal, une borne et un cas différent des exemples ; O(n) en temps et O(1) en espace.",
-    "commonMistakes":  [
-                           "Réciter le code sans invariant ni méthode de test"
-                       ],
-    "variants":  [
-                     "Changer une borne ou le volume tout en conservant la même règle de valider des parenthèses."
-                 ],
-    "license":  "CC-BY-4.0"
+  "schemaVersion": 1,
+  "id": "interview-structures-balanced-parentheses-001",
+  "version": 1,
+  "title": "Valider des parenthèses",
+  "level": "junior",
+  "durationMinutes": 5,
+  "skills": [
+    "structures.stack"
+  ],
+  "question": "Comment résoudriez-vous « Valider des parenthèses » et comment prouveriez-vous les bornes ?",
+  "observableCriteria": [
+    "Une fermeture sans ouverture est refusée dès sa rencontre, sans attendre la fin",
+    "La profondeur finale nulle est exigée en plus, les deux conditions étant nécessaires"
+  ],
+  "modelAnswer": "Refuser une fermeture sans ouverture et exiger une profondeur finale nulle. Je prouve par une chaîne équilibrée, une fermeture en tête, une ouverture non fermée et une chaîne vide ; O(n) en temps et O(1) en espace.",
+  "commonMistakes": [
+    "Ne vérifier que le compte final et accepter une fermeture précédant son ouverture"
+  ],
+  "variants": [
+    "Changer une borne ou le volume tout en conservant la même règle de valider des parenthèses."
+  ],
+  "license": "CC-BY-4.0"
 }

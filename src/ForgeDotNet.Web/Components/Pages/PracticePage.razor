@@ -288,7 +288,19 @@ else
         <ul>
             <li>Révision privée du contenu : @_activity.ContentRevision[..12].</li>
             <li>Aucun test caché, chemin de solution ou résultat automatique n’est exposé.</li>
-            <li>Aucun score de maîtrise ni révision planifiée n’est calculé.</li>
+            <li>Une déclaration manuelle ne crée aucun score de maîtrise.</li>
+            @if (_activity.State is PracticeActivityState.SolutionViewed
+                or PracticeActivityState.PostSolutionCompleted)
+            {
+                <li>
+                    La solution ayant été consultée, cette activité reste non maîtrisée et une carte de
+                    récupération est planifiée : retrouvez-la dans <a href="reviews">vos révisions</a>.
+                </li>
+            }
+            else
+            {
+                <li>Tant que la solution n’est pas consultée, aucune carte de récupération n’est planifiée.</li>
+            }
         </ul>
         <a href="practice">Retour aux exercices</a>
     </section>

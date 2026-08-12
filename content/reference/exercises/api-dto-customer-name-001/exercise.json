@@ -15,13 +15,13 @@
     "statement":  "statement.md",
     "constraints":  [
                         "Conserver exactement la signature publique",
-                        "Le DTO public reçoit un libellé normalisé sans exposer un objet de persistance.",
-                        "Ne jamais dépendre du réseau, d’un secret réel ou d’un état global"
+                        "Le contrat de sortie reçoit un libellé normalisé sans exposer l'objet de persistance.",
+                        "Ne consulter aucun stockage : le libellé se déduit du seul nom reçu"
                     ],
     "examples":  [
                      {
-                         "input":  "[{\"value\":[\" Ada \"],\"Count\":1},\"Ada\"]",
-                         "output":  "[{\"value\":[\"\"],\"Count\":1},\"(invalide)\"]"
+                         "input":  "[\" Ada \"]",
+                         "output":  "\"Ada\""
                      }
                  ],
     "reflectionFields":  [
@@ -54,7 +54,7 @@
                   {
                       "level":  4,
                       "kind":  "partial-pseudocode",
-                      "content":  "valider les entrées ; appliquer la décision bornée ; retourner un résultat déterministe sans effet externe"
+                      "content":  "si name est absent, vide ou composé de blancs retourner le libellé de repli ; sinon retirer les blancs de bordure et retourner la valeur ainsi normalisée"
                   }
               ],
     "solution":  {
@@ -67,9 +67,10 @@
     "explanation":  "explanation.md",
     "complexity":  "O(n) en temps et O(n) en espace",
     "commonMistakes":  [
-                           "Coder seulement les exemples visibles",
-                           "Masquer une erreur ou accepter une entrée hors contrat",
-                           "Confondre une règle pure avec le transport ou une ressource externe"
+                           "Déréférencer le nom avant d'avoir traité son absence",
+                           "Retourner une chaîne vide pour un nom composé de blancs",
+                           "Choisir un repli qui divulgue un état interne ou un identifiant technique",
+                           "Laisser passer les blancs de bordure jusqu'à la réponse publique"
                        ],
     "variantId":  "api-method-idempotency-001",
     "reviewCards":  [

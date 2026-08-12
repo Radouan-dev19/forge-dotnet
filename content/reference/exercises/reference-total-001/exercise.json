@@ -15,13 +15,13 @@
     "statement":  "statement.md",
     "constraints":  [
                         "Conserver exactement la signature publique",
-                        "Additionner les deux valeurs decimal sans conversion binaire.",
-                        "Ne pas modifier les entrées reçues sauf mention explicite"
+                        "Additionner les deux valeurs décimales sans conversion binaire.",
+                        "N'introduire ni arrondi ni conversion que le contrat n'annonce pas"
                     ],
     "examples":  [
                      {
-                         "input":  "[{\"value\":[10,5.5],\"Count\":2},15.5]",
-                         "output":  "[{\"value\":[0,2.25],\"Count\":2},2.25]"
+                         "input":  "[10,5.5]",
+                         "output":  "15.5"
                      }
                  ],
     "reflectionFields":  [
@@ -54,7 +54,7 @@
                   {
                       "level":  4,
                       "kind":  "partial-pseudocode",
-                      "content":  "valider les bornes ; parcourir ou décider ; retourner un nouveau résultat déterministe"
+                      "content":  "additionner directement les deux montants dans le type décimal, sans passer par un type à virgule flottante binaire et sans arrondi intermédiaire"
                   }
               ],
     "solution":  {
@@ -67,9 +67,10 @@
     "explanation":  "explanation.md",
     "complexity":  "O(1) en temps et O(1) en espace",
     "commonMistakes":  [
-                           "Coder uniquement les exemples visibles",
-                           "Oublier une borne ou modifier une entrée",
-                           "Annoncer une complexité sans compter les opérations dominantes"
+                           "Convertir en virgule flottante binaire et perdre l'exactitude décimale",
+                           "Arrondir le résultat alors que le contrat n'annonce aucun arrondi",
+                           "Refuser un montant négatif que le contrat n'interdit pas",
+                           "Retourner un type différent de celui annoncé par la signature"
                        ],
     "variantId":  "reference-total-002",
     "reviewCards":  [

@@ -27,6 +27,20 @@
                       "expected":  1,
                       "expectedException":  null,
                       "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_MostNegativeInteger",
+                      "message":  "Entier le plus négatif : réfute une valeur absolue calculée sur un entier 32 bits, qui déborderait.",
+                      "arguments":  [[-2147483648],0],
+                      "expected":  1,
+                      "argumentsUnchanged":  true
+                  },
+                  {
+                      "name":  "Hidden_ZeroThreshold",
+                      "message":  "Seuil nul et valeur nulle : la comparaison est stricte, donc aucune anomalie.",
+                      "arguments":  [[0],0],
+                      "expected":  0,
+                      "argumentsUnchanged":  true
                   }
               ]
 }

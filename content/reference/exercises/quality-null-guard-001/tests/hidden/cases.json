@@ -20,6 +20,20 @@
                       "expected":  "0",
                       "expectedException":  null,
                       "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_TabOnly",
+                      "message":  "Tabulation seule : traitée comme un blanc.",
+                      "arguments":  ["\t"],
+                      "expected":  "n/a",
+                      "argumentsUnchanged":  true
+                  },
+                  {
+                      "name":  "Hidden_SingleCharacter",
+                      "message":  "Un seul caractère significatif : conservé.",
+                      "arguments":  ["a"],
+                      "expected":  "a",
+                      "argumentsUnchanged":  true
                   }
               ]
 }

@@ -20,8 +20,8 @@
                     ],
     "examples":  [
                      {
-                         "input":  "[{\"value\":[\"abc\"],\"Count\":1},\"cba\"]",
-                         "output":  "[{\"value\":[\"\"],\"Count\":1},\"\"]"
+                         "input":  "[\"abc\"]",
+                         "output":  "\"cba\""
                      }
                  ],
     "reflectionFields":  [
@@ -54,7 +54,7 @@
                   {
                       "level":  4,
                       "kind":  "partial-pseudocode",
-                      "content":  "valider les bornes ; parcourir ou décider ; retourner un nouveau résultat déterministe"
+                      "content":  "si text est null lever ArgumentNullException ; empiler les caractères dans l'ordre de lecture ; les restituer ensuite du sommet vers la base pour obtenir l'ordre inverse ; reconstruire une chaîne à partir de cette suite"
                   }
               ],
     "solution":  {
@@ -67,9 +67,10 @@
     "explanation":  "explanation.md",
     "complexity":  "O(n) en temps et O(n) en espace",
     "commonMistakes":  [
-                           "Coder uniquement les exemples visibles",
-                           "Oublier une borne ou modifier une entrée",
-                           "Annoncer une complexité sans compter les opérations dominantes"
+                           "Retirer ou normaliser les espaces au passage, ce que le contrat n'annonce pas",
+                           "Parcourir la pile sans la vider et obtenir l'ordre d'origine",
+                           "Traiter une chaîne vide comme une entrée invalide",
+                           "Supposer qu'un caractère correspond toujours à un symbole affiché"
                        ],
     "variantId":  "structures-balanced-parentheses-001",
     "reviewCards":  [

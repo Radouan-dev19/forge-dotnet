@@ -16,12 +16,12 @@
     "constraints":  [
                         "Conserver exactement la signature publique",
                         "Couvrir chaque partition et les frontières exactes cent et deux cents.",
-                        "Ne jamais dépendre du réseau, d’un secret réel ou d’un état global"
+                        "Ne consulter aucun catalogue : seul le montant total décide"
                     ],
     "examples":  [
                      {
-                         "input":  "[{\"value\":[99.99],\"Count\":1},0]",
-                         "output":  "[{\"value\":[100],\"Count\":1},0.05]"
+                         "input":  "[99.99]",
+                         "output":  "0"
                      }
                  ],
     "reflectionFields":  [
@@ -54,7 +54,7 @@
                   {
                       "level":  4,
                       "kind":  "partial-pseudocode",
-                      "content":  "valider les entrées ; appliquer la décision bornée ; retourner un résultat déterministe sans effet externe"
+                      "content":  "refuser un montant négatif ; évaluer les paliers du plus élevé au plus bas, avec des comparaisons larges ; le montant qui n'atteint aucun palier ne reçoit aucune remise"
                   }
               ],
     "solution":  {
@@ -67,9 +67,10 @@
     "explanation":  "explanation.md",
     "complexity":  "O(1) en temps et O(1) en espace",
     "commonMistakes":  [
-                           "Coder seulement les exemples visibles",
-                           "Masquer une erreur ou accepter une entrée hors contrat",
-                           "Confondre une règle pure avec le transport ou une ressource externe"
+                           "Évaluer les paliers du plus bas au plus haut et rendre le palier supérieur inatteignable",
+                           "Employer des comparaisons strictes et exclure les montants exactement égaux aux paliers",
+                           "Accepter un montant négatif et produire une remise sur une valeur qui n'existe pas",
+                           "Tester un montant par partition sans jamais toucher les valeurs de palier"
                        ],
     "variantId":  "tests-expiry-clock-001",
     "reviewCards":  [

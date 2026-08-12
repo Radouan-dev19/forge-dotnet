@@ -1,24 +1,24 @@
 {
-    "schemaVersion":  1,
-    "id":  "interview-structures-run-length-001",
-    "version":  1,
-    "title":  "Compter les groupes consécutifs",
-    "level":  "junior",
-    "durationMinutes":  5,
-    "skills":  [
-                   "structures.linear"
-               ],
-    "question":  "Comment résoudriez-vous « Compter les groupes consécutifs » et comment prouveriez-vous les bornes ?",
-    "observableCriteria":  [
-                               "Le contrat et une borne sont explicitement reformulés",
-                               "La complexité et un test de réfutation sont justifiés"
-                           ],
-    "modelAnswer":  "Incrémenter seulement lors d’un changement par rapport au caractère précédent. La preuve comprend un cas nominal, une borne et un cas différent des exemples ; O(n) en temps et O(1) en espace.",
-    "commonMistakes":  [
-                           "Réciter le code sans invariant ni méthode de test"
-                       ],
-    "variants":  [
-                     "Changer une borne ou le volume tout en conservant la même règle de compter les groupes consécutifs."
-                 ],
-    "license":  "CC-BY-4.0"
+  "schemaVersion": 1,
+  "id": "interview-structures-run-length-001",
+  "version": 1,
+  "title": "Compter les groupes consécutifs",
+  "level": "junior",
+  "durationMinutes": 5,
+  "skills": [
+    "structures.linear"
+  ],
+  "question": "Comment résoudriez-vous « Compter les groupes consécutifs » et comment prouveriez-vous les bornes ?",
+  "observableCriteria": [
+    "L'incrément a lieu au changement, pas à chaque caractère",
+    "Le premier caractère est traité comme ouvrant un groupe, ce qui est explicite"
+  ],
+  "modelAnswer": "Incrémenter seulement lors d’un changement par rapport au caractère précédent. Je prouve par une chaîne sans répétition, une chaîne d'un seul caractère répété et une chaîne vide ; O(n) en temps et O(1) en espace.",
+  "commonMistakes": [
+    "Compter les caractères au lieu des changements et rendre la longueur de la chaîne"
+  ],
+  "variants": [
+    "Changer une borne ou le volume tout en conservant la même règle de compter les groupes consécutifs."
+  ],
+  "license": "CC-BY-4.0"
 }

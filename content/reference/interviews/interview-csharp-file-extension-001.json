@@ -1,24 +1,24 @@
 {
-    "schemaVersion":  1,
-    "id":  "interview-csharp-file-extension-001",
-    "version":  1,
-    "title":  "Normaliser une extension locale",
-    "level":  "junior",
-    "durationMinutes":  5,
-    "skills":  [
-                   "csharp.files"
-               ],
-    "question":  "Comment résoudriez-vous « Normaliser une extension locale » et comment prouveriez-vous les bornes ?",
-    "observableCriteria":  [
-                               "Le contrat et une borne sont explicitement reformulés",
-                               "La complexité et un test de réfutation sont justifiés"
-                           ],
-    "modelAnswer":  "Utiliser Path et retourner uniquement la dernière extension normalisée. La preuve comprend un cas nominal, une borne et un cas différent des exemples ; O(n) en temps et O(n) en espace.",
-    "commonMistakes":  [
-                           "Réciter le code sans invariant ni méthode de test"
-                       ],
-    "variants":  [
-                     "Changer une borne ou le volume tout en conservant la même règle de normaliser une extension locale."
-                 ],
-    "license":  "CC-BY-4.0"
+  "schemaVersion": 1,
+  "id": "interview-csharp-file-extension-001",
+  "version": 1,
+  "title": "Normaliser une extension locale",
+  "level": "junior",
+  "durationMinutes": 5,
+  "skills": [
+    "csharp.files"
+  ],
+  "question": "Comment résoudriez-vous « Normaliser une extension locale » et comment prouveriez-vous les bornes ?",
+  "observableCriteria": [
+    "L'usage de l'API de chemin est préféré à un découpage manuel, avec la raison",
+    "Seule la dernière extension est rendue, et la normalisation appliquée est nommée"
+  ],
+  "modelAnswer": "Utiliser Path et retourner uniquement la dernière extension normalisée. Je prouve par un nom sans extension, un nom à double extension et un nom commençant par un point ; O(n) en temps et O(n) en espace.",
+  "commonMistakes": [
+    "Découper sur le premier point et rendre une extension composée fausse"
+  ],
+  "variants": [
+    "Changer une borne ou le volume tout en conservant la même règle de normaliser une extension locale."
+  ],
+  "license": "CC-BY-4.0"
 }

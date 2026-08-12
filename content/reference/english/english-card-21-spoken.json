@@ -1,39 +1,40 @@
 {
-    "schemaVersion":  1,
-    "id":  "english-card-21-spoken",
-    "version":  1,
-    "title":  "Architecture record — spoken follow-up",
-    "level":  "C1",
-    "durationMinutes":  10,
-    "skills":  [
-                   "english.spoken",
-                   "project.architecture"
-               ],
-    "situation":  "In a technical discussion, a decision is based only on personal preference. You must answer aloud accurately without overstating the evidence.",
-    "instructions":  [
-                         "Deliver a sixty-second answer with decision, evidence, limitation and one clarifying question."
-                     ],
-    "vocabulary":  [
-                       {
-                           "term":  "decision record",
-                           "meaning":  "the precise concept required for architecture record"
-                       },
-                       {
-                           "term":  "verified evidence",
-                           "meaning":  "an observation supported by a reproducible check"
-                       }
-                   ],
-    "expectedElements":  [
-                             "A clear decision tied to the scenario",
-                             "Verified evidence and one explicit limitation",
-                             "One useful clarifying question"
-                         ],
-    "modelAnswer":  "My decision is that The record must state context, options, forces, consequences and the evidence or signal that would trigger a review. The current evidence is limited to the documented checks, so I would not claim more. Which constraint or observation would make us revisit this decision?",
-    "commonMistakes":  [
-                           "Using confident adjectives without naming evidence or a limitation"
-                       ],
-    "variants":  [
-                     "Answer again after the reviewer changes one cost or security constraint."
-                 ],
-    "license":  "CC-BY-4.0"
+  "schemaVersion": 1,
+  "id": "english-card-21-spoken",
+  "version": 1,
+  "title": "Architecture record — spoken follow-up",
+  "level": "C1",
+  "durationMinutes": 10,
+  "skills": [
+    "english.spoken",
+    "project.architecture"
+  ],
+  "situation": "In a technical discussion, a decision is based only on personal preference. You must answer aloud accurately without overstating the evidence.",
+  "instructions": [
+    "Say aloud how you turn a preference-based decision into one a future reader can evaluate."
+  ],
+  "vocabulary": [
+    {
+      "term": "decision record",
+      "meaning": "a short written trace of a choice and its context, so that a future reader can judge whether the reasoning still holds"
+    },
+    {
+      "term": "rejected option",
+      "meaning": "an alternative that was considered and set aside, whose absence from a record is what makes the record unconvincing"
+    }
+  ],
+  "expectedElements": [
+    "The context that constrained the choice is stated",
+    "At least one rejected option is recorded",
+    "A known consequence of the choice is accepted"
+  ],
+  "modelAnswer": "A decision that rests on preference cannot be evaluated later, so I would write it down in a form that can. That means four things: the context that constrained us, the options we weighed, the one we chose, and the consequence we accepted. The part people skip is the rejected options, and that is exactly the part that makes the record convincing, because a reader can see we knew about their preferred approach and can see why it lost. It also means that when the context changes, we can reopen the decision on evidence rather than on memory. Shall I draft it and send it round for correction?",
+  "commonMistakes": [
+    "Recording the choice without the alternatives that were set aside",
+    "Writing the record as a justification rather than as a reopenable decision"
+  ],
+  "variants": [
+    "Answer again when a colleague says the record is bureaucratic overhead."
+  ],
+  "license": "CC-BY-4.0"
 }

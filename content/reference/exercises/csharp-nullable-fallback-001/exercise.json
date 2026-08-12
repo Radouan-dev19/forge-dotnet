@@ -20,8 +20,8 @@
                     ],
     "examples":  [
                      {
-                         "input":  "[{\"value\":[\" ok \"],\"Count\":1},\"ok\"]",
-                         "output":  "[{\"value\":[\"\"],\"Count\":1},\"n/a\"]"
+                         "input":  "[\" ok \"]",
+                         "output":  "\"ok\""
                      }
                  ],
     "reflectionFields":  [
@@ -54,7 +54,7 @@
                   {
                       "level":  4,
                       "kind":  "partial-pseudocode",
-                      "content":  "valider les bornes ; parcourir ou décider ; retourner un nouveau résultat déterministe"
+                      "content":  "si value est absente, vide ou composée de blancs retourner le repli annoncé ; sinon retirer les blancs de bordure et retourner la chaîne obtenue"
                   }
               ],
     "solution":  {
@@ -67,9 +67,10 @@
     "explanation":  "explanation.md",
     "complexity":  "O(n) en temps et O(n) en espace",
     "commonMistakes":  [
-                           "Coder uniquement les exemples visibles",
-                           "Oublier une borne ou modifier une entrée",
-                           "Annoncer une complexité sans compter les opérations dominantes"
+                           "Lever sur une valeur absente alors que le contrat prévoit un repli",
+                           "Traiter une chaîne de blancs comme une valeur présente et retourner une chaîne vide",
+                           "Retourner la valeur sans avoir retiré les blancs sur le chemin nominal",
+                           "Choisir un repli qui pourrait être confondu avec une donnée réelle"
                        ],
     "variantId":  "csharp-positive-quantity-001",
     "reviewCards":  [

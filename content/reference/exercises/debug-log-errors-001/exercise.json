@@ -16,12 +16,12 @@
     "constraints":  [
                         "Conserver exactement la signature publique",
                         "Chercher le marqueur exact et avancer après chaque occurrence.",
-                        "Ne pas modifier les entrées reçues sauf mention explicite"
+                        "Ne lire aucun journal réel : le texte est fourni"
                     ],
     "examples":  [
                      {
-                         "input":  "[{\"value\":[\"INFO ERROR ERROR\"],\"Count\":1},2]",
-                         "output":  "[{\"value\":[\"\"],\"Count\":1},0]"
+                         "input":  "[\"INFO ERROR ERROR\"]",
+                         "output":  "2"
                      }
                  ],
     "reflectionFields":  [
@@ -54,7 +54,7 @@
                   {
                       "level":  4,
                       "kind":  "partial-pseudocode",
-                      "content":  "valider les bornes ; parcourir ou décider ; retourner un nouveau résultat déterministe"
+                      "content":  "retourner zéro pour un journal vide ; chercher le marqueur exact depuis une position courante, de façon ordinale ; après chaque trouvaille, avancer la position de la longueur du marqueur"
                   }
               ],
     "solution":  {
@@ -67,9 +67,10 @@
     "explanation":  "explanation.md",
     "complexity":  "O(n) en temps et O(1) en espace",
     "commonMistakes":  [
-                           "Coder uniquement les exemples visibles",
-                           "Oublier une borne ou modifier une entrée",
-                           "Annoncer une complexité sans compter les opérations dominantes"
+                           "Avancer d'un seul caractère et compter des occurrences qui se recouvrent",
+                           "Chercher sans distinction de casse et compter un mot voisin du marqueur",
+                           "Compter les lignes contenant le marqueur au lieu de ses occurrences",
+                           "Boucler indéfiniment en oubliant d'avancer la position de recherche"
                        ],
     "variantId":  "debug-stack-origin-001",
     "reviewCards":  [

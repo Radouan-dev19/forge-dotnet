@@ -1,0 +1,83 @@
+{
+  "schemaVersion": 1,
+  "id": "tests-shared-state-leak-001",
+  "version": 1,
+  "title": "Trouver le premier test qui dépend de ce qu'un autre a laissé",
+  "kind": "csharp",
+  "difficulty": 4,
+  "skills": ["tests.integration"],
+  "prerequisites": ["tests-integration-database-001"],
+  "estimatedMinutes": 50,
+  "statement": "statement.md",
+  "constraints": [
+    "Conserver exactement la signature publique",
+    "L'état de la base partagée survit d'un test au suivant",
+    "Une lecture sur une clé absente n'est jamais rapportée comme fuite",
+    "Le test fuyant est nommé une seule fois, quel que soit le nombre de clés concernées"
+  ],
+  "examples": [
+    {
+      "input": "[\"createsOrder:+order1,?order1|readsOrder:?order1\"]",
+      "output": "readsOrder"
+    },
+    {
+      "input": "[\"createsOrder:+order1,-order1|readsOrder:?order1\"]",
+      "output": "(chaîne vide)"
+    }
+  ],
+  "reflectionFields": [
+    "reformulation",
+    "inputs",
+    "expectedOutput",
+    "edgeCases",
+    "hypothesis",
+    "plan"
+  ],
+  "starterPath": "starter/",
+  "visibleTestsPath": "tests/visible/",
+  "hiddenTestsPath": "tests/hidden/",
+  "hints": [
+    {
+      "level": 1,
+      "kind": "socratic",
+      "content": "Un test est vert dans la suite et rouge quand on le lance seul. Qu'est-ce que la suite lui fournit que son exécution isolée ne lui fournit pas ?"
+    },
+    {
+      "level": 2,
+      "kind": "location",
+      "content": "Deux états cohabitent et ne vivent pas aussi longtemps : celui de la base, qui traverse toute la suite, et celui du test courant, qui ne dure que son passage. Les distinguer est tout l'exercice."
+    },
+    {
+      "level": 3,
+      "kind": "strategy",
+      "content": "Une lecture est légitime quand la clé vient du test lui-même, et suspecte quand elle est là sans qu'il l'ait mise. La deuxième condition ne s'exprime qu'en comparant les deux états au moment de la lecture."
+    },
+    {
+      "level": 4,
+      "kind": "partial-pseudocode",
+      "content": "tenir un ensemble pour la base, qui n'est jamais réinitialisé, et un second, remis à zéro au début de chaque test, pour ce que ce test a inséré ; une insertion alimente les deux ; une suppression retire des deux ; une lecture n'accuse que si la clé est dans le premier et absente du second ; rendre le nom dès qu'un test a accusé"
+    }
+  ],
+  "solution": {
+    "path": "solution/",
+    "unlock": {
+      "seriousAttempts": 2,
+      "minimumDelayMinutes": 10
+    }
+  },
+  "explanation": "explanation.md",
+  "complexity": "O(n) en temps pour n opérations, O(k) en espace pour k clés distinctes",
+  "commonMistakes": [
+    "Ne tenir qu'un seul ensemble, ce qui rend indiscernable la clé insérée par le test et celle laissée par un autre",
+    "Rapporter une lecture sur clé absente, alors qu'elle échoue de façon visible et ne cache rien",
+    "Oublier de remettre à zéro l'ensemble des insertions du test au début de chaque test",
+    "Poursuivre le parcours après la première fuite et rapporter des conséquences plutôt que la cause"
+  ],
+  "variantId": "tests-reset-state-001",
+  "reviewCards": [
+    "card-tests-shared-state-leak-001-rule",
+    "card-tests-shared-state-leak-001-edge"
+  ],
+  "interviewQuestionId": "interview-tests-shared-state-leak-001",
+  "license": "CC-BY-4.0"
+}

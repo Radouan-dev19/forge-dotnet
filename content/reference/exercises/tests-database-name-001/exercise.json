@@ -16,12 +16,12 @@
     "constraints":  [
                         "Conserver exactement la signature publique",
                         "Exiger un préfixe réservé et un suffixe suffisamment unique, avec comparaison ordinale.",
-                        "Ne jamais dépendre du réseau, d’un secret réel ou d’un état global"
+                        "N'ouvrir aucune connexion : seul le nom proposé est examiné"
                     ],
     "examples":  [
                      {
-                         "input":  "[{\"value\":[\"forge-test-123456789\"],\"Count\":1},true]",
-                         "output":  "[{\"value\":[\"production\"],\"Count\":1},false]"
+                         "input":  "[\"forge-test-123456789\"]",
+                         "output":  "true"
                      }
                  ],
     "reflectionFields":  [
@@ -54,7 +54,7 @@
                   {
                       "level":  4,
                       "kind":  "partial-pseudocode",
-                      "content":  "valider les entrées ; appliquer la décision bornée ; retourner un résultat déterministe sans effet externe"
+                      "content":  "refuser un nom absent ou composé de blancs ; exiger le préfixe réservé en tête, comparé de façon ordinale ; exiger enfin une longueur totale suffisante pour que le suffixe reste unique"
                   }
               ],
     "solution":  {
@@ -67,9 +67,10 @@
     "explanation":  "explanation.md",
     "complexity":  "O(n) en temps et O(1) en espace",
     "commonMistakes":  [
-                           "Coder seulement les exemples visibles",
-                           "Masquer une erreur ou accepter une entrée hors contrat",
-                           "Confondre une règle pure avec le transport ou une ressource externe"
+                           "Comparer le préfixe sans distinction de casse et accepter un nom voisin",
+                           "Chercher le préfixe n'importe où dans le nom au lieu de l'exiger en tête",
+                           "Accepter un suffixe trop court pour distinguer deux exécutions parallèles",
+                           "Croire qu'un nom conforme suffit à garantir que la base sera supprimée"
                        ],
     "variantId":  "tests-success-status-001",
     "reviewCards":  [

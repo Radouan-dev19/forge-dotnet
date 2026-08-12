@@ -2,7 +2,7 @@
     "schemaVersion":  1,
     "id":  "debug-async-last-result-001",
     "version":  1,
-    "title":  "Dernière tâche ignorée",
+    "title":  "Total de lot systématiquement inférieur au réel",
     "difficulty":  3,
     "skills":  [
                    "debugging.async"
@@ -13,17 +13,18 @@
     "estimatedMinutes":  40,
     "brokenRepositoryPath":  "broken/",
     "ticketPath":  "ticket.md",
-    "expectedBehavior":  "Le résultat doit respecter tous les cas du contrat sans mutation cachée. La borne de boucle omet systématiquement le dernier résultat attendu.",
+    "expectedBehavior":  "Le total consolidé est la somme de tous les éléments du lot, sans exception. Un lot vide donne zéro et le lot reçu n'est jamais modifié.",
     "logsPath":  "logs.txt",
     "checklist":  [
-                      "Reproduire avec le cas de borne",
-                      "Placer un breakpoint avant la divergence",
-                      "Comparer entrée et valeur intermédiaire",
-                      "Ajouter le cas de non-régression"
+                      "Reproduire avec un lot de trois éléments aux valeurs distinctes",
+                      "Comparer l'écart observé à la valeur du dernier élément",
+                      "Compter les éléments effectivement additionnés",
+                      "Ajouter au jeu de non-régression un lot d'un seul élément"
                   ],
     "observationQuestions":  [
-                                 "Quelle est la première valeur qui diverge du résultat prédit ?",
-                                 "Quelle condition ou mutation explique causalement ce symptôme ?"
+                                 "Combien d'éléments le parcours visite-t-il par rapport à la taille du lot ?",
+                                 "L'écart correspond-il toujours à la même position dans le lot ?",
+                                 "Que donne un lot d'un seul élément ?"
                              ],
     "correctionPath":  "correction/",
     "regressionTestPath":  "regression-test.md",

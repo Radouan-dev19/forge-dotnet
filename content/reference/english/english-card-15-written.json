@@ -1,39 +1,40 @@
 {
-    "schemaVersion":  1,
-    "id":  "english-card-15-written",
-    "version":  1,
-    "title":  "Incident opening — written update",
-    "level":  "B2",
-    "durationMinutes":  12,
-    "skills":  [
-                   "english.written",
-                   "observability.incident"
-               ],
-    "situation":  "In a technical discussion, the team has just observed an error spike. You must write the decision accurately without overstating the evidence.",
-    "instructions":  [
-                         "Write a four-sentence update with decision, evidence, limitation and next action."
-                     ],
-    "vocabulary":  [
-                       {
-                           "term":  "incident status",
-                           "meaning":  "the precise concept required for incident opening"
-                       },
-                       {
-                           "term":  "verified evidence",
-                           "meaning":  "an observation supported by a reproducible check"
-                       }
-                   ],
-    "expectedElements":  [
-                             "A clear decision tied to the scenario",
-                             "Verified evidence and one explicit limitation",
-                             "A named next action"
-                         ],
-    "modelAnswer":  "Decision: We know the time window and affected operation; mitigation is in progress, the cause is not confirmed and the next update has an owner. Evidence: the documented local checks support this scope. Limitation: this does not prove behavior in an untested production environment. Next action: record the owner and the next bounded verification.",
-    "commonMistakes":  [
-                           "Using confident adjectives without naming evidence or a limitation"
-                       ],
-    "variants":  [
-                     "Rewrite the update for a non-technical stakeholder without removing the limitation."
-                 ],
-    "license":  "CC-BY-4.0"
+  "schemaVersion": 1,
+  "id": "english-card-15-written",
+  "version": 1,
+  "title": "Incident opening — written update",
+  "level": "B2",
+  "durationMinutes": 12,
+  "skills": [
+    "english.written",
+    "observability.incident"
+  ],
+  "situation": "In a technical discussion, the team has just observed an error spike. You must write the decision accurately without overstating the evidence.",
+  "instructions": [
+    "Write four sentences opening an incident with the observation, the current impact, the unknown, and the next update time."
+  ],
+  "vocabulary": [
+    {
+      "term": "incident status",
+      "meaning": "a statement of what is currently observed and what is not yet known, published before the cause is understood"
+    },
+    {
+      "term": "next update time",
+      "meaning": "the commitment that ends an incident message, which prevents the audience from asking and lets the responders work"
+    }
+  ],
+  "expectedElements": [
+    "The observation is separated from the interpretation",
+    "The current impact is stated in user terms",
+    "A next update time is committed to"
+  ],
+  "modelAnswer": "Since 14:10 the checkout error rate has risen from under one percent to approximately twelve percent. Users see a failure when confirming an order, while existing orders are unaffected. The cause is not yet known and I am deliberately not naming one until the evidence separates our two candidate explanations, which would lead to different actions. Three engineers are investigating and the next update will be sent at 14:40 regardless of progress.",
+  "commonMistakes": [
+    "Naming a cause in the opening message before it is established",
+    "Ending the message without committing to a next update time"
+  ],
+  "variants": [
+    "Rewrite the update for customers rather than for the internal channel."
+  ],
+  "license": "CC-BY-4.0"
 }

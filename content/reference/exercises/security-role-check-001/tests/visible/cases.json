@@ -22,6 +22,13 @@
                       "expected":  false,
                       "expectedException":  null,
                       "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Visible_SpacesBothSides",
+                      "message":  "Espaces autour des rôles et du rôle requis : les deux sont rognés.",
+                      "arguments":  ["Reader , Operator "," operator "],
+                      "expected":  true,
+                      "argumentsUnchanged":  true
                   }
               ]
 }

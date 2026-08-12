@@ -1,0 +1,61 @@
+{
+  "schemaVersion": 1,
+  "cases": [
+    {
+      "name": "Hidden_MissingExpressionIsRejected",
+      "message": "Une expression absente est un appel fautif, pas une expression vide.",
+      "arguments": [null, "total"],
+      "expectedException": "ArgumentNullException",
+      "argumentsUnchanged": false
+    },
+    {
+      "name": "Hidden_MissingWhitelistIsRejected",
+      "message": "Sans liste blanche, rien ne distingue un champ triable d'un champ arbitraire.",
+      "arguments": ["total", null],
+      "expectedException": "ArgumentNullException",
+      "argumentsUnchanged": false
+    },
+    {
+      "name": "Hidden_FieldOutsideTheWhitelistIsRefused",
+      "message": "Un champ non triable est refusé, jamais retiré en silence du tri.",
+      "arguments": ["secret desc", "total,createdAt"],
+      "expectedException": "ArgumentException",
+      "argumentsUnchanged": false
+    },
+    {
+      "name": "Hidden_UnknownDirectionIsRefused",
+      "message": "Un sens de tri inconnu est refusé plutôt que rabattu sur le croissant.",
+      "arguments": ["total bogus", "total"],
+      "expectedException": "ArgumentException",
+      "argumentsUnchanged": false
+    },
+    {
+      "name": "Hidden_DashPrefixAndCaseAreBothHandled",
+      "message": "Les deux écritures se mélangent, et le résultat garde l'orthographe de la liste blanche.",
+      "arguments": ["-createdAt , TOTAL", "total,createdAt,name"],
+      "expected": "createdAt:desc,total:asc,id:asc",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_RepeatedFieldKeepsItsFirstOccurrence",
+      "message": "Trier deux fois par le même champ ne change pas l'ordre : la répétition disparaît.",
+      "arguments": ["total desc, total asc", "total,createdAt"],
+      "expected": "total:desc,id:asc",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_ExplicitTieBreakerKeepsItsPlace",
+      "message": "Le client qui trie déjà par le départage garde sa place et son sens, sans ajout.",
+      "arguments": ["id desc, total", "total,createdAt"],
+      "expected": "id:desc,total:asc",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_BlanksExpressNoPreference",
+      "message": "Une expression faite de blancs vaut absence de demande, pas terme vide.",
+      "arguments": ["   ", "createdAt,total"],
+      "expected": "createdAt:asc,id:asc",
+      "argumentsUnchanged": true
+    }
+  ]
+}

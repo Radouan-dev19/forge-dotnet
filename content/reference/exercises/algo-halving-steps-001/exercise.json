@@ -20,8 +20,8 @@
                     ],
     "examples":  [
                      {
-                         "input":  "[{\"value\":[8],\"Count\":1},3]",
-                         "output":  "[{\"value\":[1],\"Count\":1},0]"
+                         "input":  "[8]",
+                         "output":  "3"
                      }
                  ],
     "reflectionFields":  [
@@ -54,7 +54,7 @@
                   {
                       "level":  4,
                       "kind":  "partial-pseudocode",
-                      "content":  "valider les bornes ; parcourir ou décider ; retourner un nouveau résultat déterministe"
+                      "content":  "refuser une valeur négative ; compteur à zéro ; tant que la valeur dépasse un, la diviser entièrement par deux et incrémenter le compteur ; retourner le compteur"
                   }
               ],
     "solution":  {
@@ -67,9 +67,10 @@
     "explanation":  "explanation.md",
     "complexity":  "O(log n) en temps et O(1) en espace",
     "commonMistakes":  [
-                           "Coder uniquement les exemples visibles",
-                           "Oublier une borne ou modifier une entrée",
-                           "Annoncer une complexité sans compter les opérations dominantes"
+                           "Compter une réduction pour la valeur un, qui ne se divise plus utilement",
+                           "Boucler tant que la valeur est non nulle et faire un tour de trop",
+                           "Retourner une valeur pour une entrée négative au lieu de lever",
+                           "Diviser en virgule flottante et ne jamais atteindre exactement la borne"
                        ],
     "variantId":  "algo-gcd-001",
     "reviewCards":  [

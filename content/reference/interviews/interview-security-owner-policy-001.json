@@ -1,24 +1,24 @@
 {
-    "schemaVersion":  1,
-    "id":  "interview-security-owner-policy-001",
-    "version":  1,
-    "title":  "Autoriser propriétaire ou administrateur",
-    "level":  "intermediate",
-    "durationMinutes":  6,
-    "skills":  [
-                   "security.authorization"
-               ],
-    "question":  "Comment implémenteriez-vous « Autoriser propriétaire ou administrateur » et quelles preuves réfutent les contournements ?",
-    "observableCriteria":  [
-                               "Le contrat, une frontière et un refus sont explicités",
-                               "La complexité et une preuve de sécurité ou de non-régression sont justifiées"
-                           ],
-    "modelAnswer":  "Évaluer le privilège explicite puis l’identité exacte de la ressource. Je sépare validation et décision, je teste un cas nominal et les frontières, puis je vérifie qu’aucune donnée sensible ni état externe n’entre dans la preuve. O(n) en temps et O(1) en espace.",
-    "commonMistakes":  [
-                           "Réciter le code sans expliquer le contrat ni la preuve"
-                       ],
-    "variants":  [
-                     "Changer la frontière ou le droit tout en conservant la règle de autoriser propriétaire ou administrateur."
-                 ],
-    "license":  "CC-BY-4.0"
+  "schemaVersion": 1,
+  "id": "interview-security-owner-policy-001",
+  "version": 1,
+  "title": "Autoriser propriétaire ou administrateur",
+  "level": "intermediate",
+  "durationMinutes": 6,
+  "skills": [
+    "security.authorization"
+  ],
+  "question": "Comment implémenteriez-vous « Autoriser propriétaire ou administrateur » et quelles preuves réfutent les contournements ?",
+  "observableCriteria": [
+    "Le privilège explicite est évalué avant la propriété, et cet ordre est justifié",
+    "La comparaison d'identité est exacte, sans correspondance partielle"
+  ],
+  "modelAnswer": "Évaluer le privilège explicite puis l’identité exacte de la ressource. Je teste un administrateur non propriétaire, un propriétaire sans privilège, ni l'un ni l'autre, et un identifiant qui contient celui du propriétaire. O(n) en temps et O(1) en espace.",
+  "commonMistakes": [
+    "Comparer les identités par inclusion de chaîne et autoriser un identifiant qui en contient un autre"
+  ],
+  "variants": [
+    "Changer la frontière ou le droit tout en conservant la règle de autoriser propriétaire ou administrateur."
+  ],
+  "license": "CC-BY-4.0"
 }

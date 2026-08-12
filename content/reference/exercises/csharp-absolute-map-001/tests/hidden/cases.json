@@ -30,6 +30,20 @@
                                    ],
                       "expectedException":  null,
                       "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_NullInput",
+                      "message":  "Référence absente : le refus est explicite, pas une trace opaque.",
+                      "arguments":  [null],
+                      "expectedException":  "ArgumentNullException",
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_SymmetricValues",
+                      "message":  "Valeurs opposées : les deux donnent le même résultat et l'entrée reste intacte.",
+                      "arguments":  [[-7,7]],
+                      "expected":  [7,7],
+                      "argumentsUnchanged":  true
                   }
               ]
 }

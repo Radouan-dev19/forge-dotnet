@@ -15,13 +15,13 @@
     "statement":  "statement.md",
     "constraints":  [
                         "Conserver exactement la signature publique",
-                        "L’état de requête impose scoped ; un service partagé doit être explicitement sans état.",
-                        "Ne jamais dépendre du réseau, d’un secret réel ou d’un état global"
+                        "L'état de requête impose la durée courte ; un service partagé doit être explicitement sans état.",
+                        "Ne dépendre d'aucun conteneur d'injection : la décision se déduit des seuls indicateurs"
                     ],
     "examples":  [
                      {
-                         "input":  "[{\"value\":[true,false],\"Count\":2},\"scoped\"]",
-                         "output":  "[{\"value\":[false,true],\"Count\":2},\"singleton\"]"
+                         "input":  "[true,false]",
+                         "output":  "\"scoped\""
                      }
                  ],
     "reflectionFields":  [
@@ -54,7 +54,7 @@
                   {
                       "level":  4,
                       "kind":  "partial-pseudocode",
-                      "content":  "valider les entrées ; appliquer la décision bornée ; retourner un résultat déterministe sans effet externe"
+                      "content":  "poser d'abord la question de l'état de requête : s'il est porté, la durée est celle de la requête ; sinon, un service à la fois sans état et partageable prend une instance unique, et tout le reste prend une instance par résolution"
                   }
               ],
     "solution":  {
@@ -67,9 +67,10 @@
     "explanation":  "explanation.md",
     "complexity":  "O(1) en temps et O(1) en espace",
     "commonMistakes":  [
-                           "Coder seulement les exemples visibles",
-                           "Masquer une erreur ou accepter une entrée hors contrat",
-                           "Confondre une règle pure avec le transport ou une ressource externe"
+                           "Évaluer le partage avant l'état de requête et produire une dépendance captive",
+                           "Choisir l'instance unique pour un service qui porte un état mutable",
+                           "Traiter les deux indicateurs comme indépendants alors que le premier prime",
+                           "Retenir l'instance par résolution comme choix universel et perdre le bénéfice du partage"
                        ],
     "variantId":  "api-config-key-001",
     "reviewCards":  [

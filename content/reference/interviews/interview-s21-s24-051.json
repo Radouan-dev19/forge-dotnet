@@ -1,24 +1,24 @@
 {
-    "schemaVersion":  1,
-    "id":  "interview-s21-s24-051",
-    "version":  1,
-    "title":  "Clarify an ambiguous requirement",
-    "level":  "advanced",
-    "durationMinutes":  12,
-    "skills":  [
-                   "english.clarification"
-               ],
-    "question":  "A requirement says the service must be fast. What do you ask?",
-    "observableCriteria":  [
-                               "La réponse prend une décision explicite et cite une preuve observable",
-                               "Une limite de sécurité, de coût, de portée ou de validité est reconnue"
-                           ],
-    "modelAnswer":  "I ask which user action, workload, percentile, environment and time budget define fast, and what consequence follows when the budget is exceeded.",
-    "commonMistakes":  [
-                           "Employer un slogan sans contrainte, preuve ni limite vérifiable"
-                       ],
-    "variants":  [
-                     "Changez une contrainte du scénario « Clarify an ambiguous requirement » et expliquez si la décision reste valide."
-                 ],
-    "license":  "CC-BY-4.0"
+  "schemaVersion": 1,
+  "id": "interview-s21-s24-051",
+  "version": 1,
+  "title": "Clarify an ambiguous requirement",
+  "level": "advanced",
+  "durationMinutes": 12,
+  "skills": [
+    "english.clarification"
+  ],
+  "question": "A requirement says the service must be fast. What do you ask?",
+  "observableCriteria": [
+    "The question names a user action, a workload and a percentile rather than asking for a number",
+    "The consequence of exceeding the budget is asked for, not only the budget itself"
+  ],
+  "modelAnswer": "I ask which user action, workload, percentile, environment and time budget define fast, and what consequence follows when the budget is exceeded.",
+  "commonMistakes": [
+    "Asking how fast without asking what happens when the budget is missed"
+  ],
+  "variants": [
+    "Changez une contrainte du scénario « Clarify an ambiguous requirement » et expliquez si la décision reste valide."
+  ],
+  "license": "CC-BY-4.0"
 }

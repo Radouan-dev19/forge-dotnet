@@ -1,39 +1,40 @@
 {
-    "schemaVersion":  1,
-    "id":  "english-card-22-spoken",
-    "version":  1,
-    "title":  "Milestone evidence — spoken follow-up",
-    "level":  "C1",
-    "durationMinutes":  10,
-    "skills":  [
-                   "english.spoken",
-                   "project.milestone"
-               ],
-    "situation":  "In a technical discussion, a milestone contains code but no verification record. You must answer aloud accurately without overstating the evidence.",
-    "instructions":  [
-                         "Deliver a sixty-second answer with decision, evidence, limitation and one clarifying question."
-                     ],
-    "vocabulary":  [
-                       {
-                           "term":  "reviewable increment",
-                           "meaning":  "the precise concept required for milestone evidence"
-                       },
-                       {
-                           "term":  "verified evidence",
-                           "meaning":  "an observation supported by a reproducible check"
-                       }
-                   ],
-    "expectedElements":  [
-                             "A clear decision tied to the scenario",
-                             "Verified evidence and one explicit limitation",
-                             "One useful clarifying question"
-                         ],
-    "modelAnswer":  "My decision is that It is reviewable only when behavior, tests, security review and reproducible commands support the acceptance criteria. The current evidence is limited to the documented checks, so I would not claim more. Which constraint or observation would make us revisit this decision?",
-    "commonMistakes":  [
-                           "Using confident adjectives without naming evidence or a limitation"
-                       ],
-    "variants":  [
-                     "Answer again after the reviewer changes one cost or security constraint."
-                 ],
-    "license":  "CC-BY-4.0"
+  "schemaVersion": 1,
+  "id": "english-card-22-spoken",
+  "version": 1,
+  "title": "Milestone evidence — spoken follow-up",
+  "level": "C1",
+  "durationMinutes": 10,
+  "skills": [
+    "english.spoken",
+    "project.milestone"
+  ],
+  "situation": "In a technical discussion, a milestone contains code but no verification record. You must answer aloud accurately without overstating the evidence.",
+  "instructions": [
+    "Say aloud why code without a verification record does not close a milestone."
+  ],
+  "vocabulary": [
+    {
+      "term": "reviewable increment",
+      "meaning": "a milestone another person can check without asking the author, because its evidence travels with it"
+    },
+    {
+      "term": "verification record",
+      "meaning": "the reproducible trace showing that a claim was checked, as opposed to a statement that it works"
+    }
+  ],
+  "expectedElements": [
+    "The distinction between written and verified is made",
+    "The missing artefact is named precisely",
+    "A reproducible way to produce it is described"
+  ],
+  "modelAnswer": "The code is written, and that is not the same as the milestone being closed. What is missing is the part someone else can check without asking me: the command that runs, its output, and the assertion that would have failed before the change. Right now a reviewer has to take my word for it, which means the milestone is not reviewable, only visible. Producing it is not much work: the tests exist, they just are not recorded anywhere the reviewer can reach. I would attach the run output and the one test that proves the behaviour changed, which is the evidence a reviewer needs. Would that be enough for you to sign it off?",
+  "commonMistakes": [
+    "Treating written code as sufficient evidence that a milestone is complete",
+    "Offering a screenshot in place of a reproducible command and its output"
+  ],
+  "variants": [
+    "Answer again when the reviewer has no environment to run the command in."
+  ],
+  "license": "CC-BY-4.0"
 }

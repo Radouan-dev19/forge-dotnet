@@ -20,6 +20,20 @@
                       "expected":  500,
                       "expectedException":  null,
                       "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_Forbidden",
+                      "message":  "Droits insuffisants : code distinct de l'authentification manquante.",
+                      "arguments":  ["FORBIDDEN"],
+                      "expected":  403,
+                      "argumentsUnchanged":  true
+                  },
+                  {
+                      "name":  "Hidden_NullFallsBackToServerError",
+                      "message":  "Catégorie absente : rabattue sur l'erreur serveur, sans exception ni fuite.",
+                      "arguments":  [null],
+                      "expected":  500,
+                      "argumentsUnchanged":  false
                   }
               ]
 }

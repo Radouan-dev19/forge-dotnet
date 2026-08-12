@@ -225,12 +225,223 @@ Aucune correction produit n'a été appliquée. Le défaut P1-03 réclame une in
 
 Le seul fichier créé par l'audit est ce rapport. Aucun test existant n'a été affaibli, aucun seuil n'a été modifié et aucune sécurité runner/SqlLab n'a été contournée.
 
+## Reprise du 10 août 2026
+
+Cette section est ajoutée après l'audit. **Elle ne modifie pas le verdict**, qui reste REFUSÉ : les
+sept personas n'ont toujours pas été exécutés intégralement, et l'environnement de cette reprise ne
+disposait ni de Docker ni de SQL Server.
+
+### Ce qui est clos
+
+| Défaut | État | Preuve |
+|---|---|---|
+| P1-02 — 125 énoncés d'exercice à faux exemple | **Clos** | `scripts/Repair-ContentExamples.ps1` reconstruit les exemples depuis `tests/visible/cases.json`. 0 marqueur résiduel sur 135 exercices et 40 scénarios SQL. |
+| P1-03 — 40 scénarios SQL/EF hors du parcours | **Clos** | `ISqlScenarioSource`, `FileSystemSqlScenarioSource`, `SqlScenarioCatalog`, sélecteur dans `SqlLabPage`. Les 35 scénarios SQL sont choisissables ; les 5 scénarios EF restent au runner isolé. `SqlLabService` ne porte plus d'identité en dur. |
+| P1-04 — instruction fausse après solution | **Clos** | `PracticePage` distingue l'absence de maîtrise immédiate de la carte de récupération réellement planifiée, avec non-régression E2E. |
+| P2-01 — page d'accueil Practice datée | **Clos** | Le texte décrit le mode `CodeRunner` réellement configuré, lu depuis `CodeRunnerModeDescriptor`. |
+| P1-01 — 69 leçons non finalisées | **Clos sur le contenu** | Les 70 leçons S1–S24 sont réécrites et sortent toutes du registre de dette. Le défaut résiduel `cloned-content` ne concerne plus aucune leçon. |
+
+### La cause racine, et sa fermeture
+
+Le défaut n'était pas éditorial mais mécanique. Trois générateurs échappaient par erreur leurs
+sous-expressions PowerShell dans un here-string (`scripts/New-S1S10Content.ps1:114` et `:332`, et
+leurs équivalents) : `$previousLessonId` et `$(Convert-JsonCompact …)` étaient écrits littéralement.
+`Convert-JsonCompact` passait de plus son argument par le pipeline, ce qui aplatissait les tableaux.
+
+Trois verrous ferment cette porte :
+
+1. **Trois règles d'authenticité** dans le validateur — `unsubstituted-placeholder`,
+   `cloned-content`, `hollow-lesson` — décrites dans `CONTENT_AUTHORING_STANDARD.md`. Elles portent
+   sur le lot entier, ce qui est indispensable pour détecter la recopie.
+2. **Un registre de dette à cliquet** (`content/authoring/content-debt.json`) : un défaut non
+   déclaré refuse le lot, et une déclaration devenue inutile le refuse aussi. La dette ne peut donc
+   que décroître, et `ContentAuthenticityTests` refuse tout dépassement du plafond figé.
+3. **Des échafaudeurs non destructeurs** : ils n'écrasent plus aucun fichier existant sans `-Force`,
+   et émettent des marqueurs `TODO:` que la première règle refuse. Un lot échafaudé mais non rédigé
+   ne peut plus être publié comme terminé.
+
+### Dette mesurée
+
+| Relevé | Documents | Déclarations |
+|---|---:|---:|
+| Avant reprise | 376 | 667 |
+| Après remise en état des exemples | 376 | 514 |
+| Après reprise éditoriale S1–S4 | 364 | 480 |
+| Après reprise éditoriale S5–S10 | 346 | 426 |
+| Après reprise éditoriale S11–S13 | 337 | 399 |
+| Après reprise éditoriale S14–S16 | 328 | 372 |
+| Après reprise éditoriale S17–S19 | 319 | 342 |
+| Après reprise éditoriale S20–S22 | 310 | 318 |
+| Après reprise éditoriale S23–S24 | 306 | 306 |
+| Après reprise des 135 échelles d'indices | 181 | 181 |
+| Après reprise des 17 DebugLabs générés | 164 | 164 |
+| Après reprise des briefs de projet | 159 | 159 |
+| Après reprise des 28 scénarios SQL | 131 | 131 |
+| Après reprise des 50 cartes d'anglais | 106 | 106 |
+| Après reprise des 191 fiches d'entretien | **0** | **0** |
+
+**La dette est éteinte.** Zéro `cloned-content`, zéro `hollow-lesson`, zéro
+`unsubstituted-placeholder` : le registre ne déclare plus aucun document.
+
+Le fait à retenir n'est pas le chiffre mais ce qu'il change. Tant qu'une dette subsistait, le cliquet
+bornait un existant, et un défaut neuf pouvait passer sous le plafond sans être distingué d'un défaut
+hérité. À zéro, le premier paragraphe recopié dans plus de trois documents d'un même lot fait échouer
+le build, et aucune déclaration ne peut l'absorber.
+
+La reprise finale a par ailleurs corrigé un défaut que le validateur ne voyait pas. Les trois règles
+d'authenticité travaillent sur des paragraphes entiers ; une phrase gabarit insérée au milieu d'un
+paragraphe par ailleurs propre y échappe. Or 50 réponses modèles d'entretien portaient la même phrase
+de méthode, 73 autres la même phrase de preuve, et 25 réponses modèles d'anglais commençaient par un
+collage grammaticalement cassé — « My decision is that On the stated window… ». Le comptage par
+document ne mesurait donc pas la duplication réelle. Après reprise, les 197 fiches d'entretien
+portent **401 critères observables distincts sur 401** et **204 erreurs fréquentes distinctes sur
+204**, contre 50 et 29 auparavant ; les 51 cartes d'anglais portent 51 consignes, 51 réponses et 51
+variantes distinctes, contre 3, 26 et 3.
+
+Les vingt-quatre semaines sont désormais suivies sans ressource externe : soixante-dix leçons
+rédigées, chacune avec ses quatorze sections, son quiz, entre trois et six blocs de code et un
+contre-exemple montrant le code fautif puis sa correction. Elles sont adossées à 135 exercices C#
+prouvés corrects hors Docker, 25 DebugLabs, 40 scénarios SQL et 8 examens.
+
+La boucle d'aide a été reprise ensuite. Treize formulations d'indice de niveau 4 couvraient les 135
+exercices — une seule pour soixante-quinze d'entre eux — alors que ce niveau est la dernière marche
+avant un déverrouillage de solution qui met la pratique à zéro. Les 135 indices de niveau 4, les 135
+jeux d'erreurs fréquentes et les 135 explications sont désormais propres à leur exercice, écrits
+après lecture de sa solution et de ses cas cachés. `ExerciseHintQualityTests` fige cet état :
+indices distincts par exercice, aucun texte partagé par plus de trois exercices, aucun indice
+recopiant une ligne de solution.
+
+Le même défaut existait un cran plus haut, sur la compétence la plus transférable du parcours.
+Dix-sept des vingt-cinq DebugLabs nommaient la cause dans le ticket — « La division utilise une
+longueur nulle » —, portaient un journal réduit à une ligne sans mesure, et partageaient une grille
+d'évaluation dont les termes attendus étaient « borne, condition, mutation ». Les leçons de la
+semaine 7 enseignent une méthode en quatre temps ; ce matériel court-circuitait les trois premiers et
+l'évaluation ne pouvait pas voir la différence. Les dix-sept scénarios ont été repris : ticket de
+symptôme, journal portant des mesures réelles, comportement attendu contractuel, gestes et questions
+d'observation propres au défaut, note de non-régression corrigée et grille nommant les concepts
+réellement en jeu. `broken/`, `correction/` et les cas de test sont restés inchangés à l'octet près,
+vérifié par empreinte. `DebugScenarioQualityTests` fige l'état atteint par quatre règles qui
+échouaient toutes sur exactement ces dix-sept scénarios.
+
+### La rétention espacée n'avait qu'une source, et elle expirait
+
+La composante « rétention espacée » pèse 15 % du score et n'était alimentable que par le bilan
+d'entrée : trente-six questions, passées une fois, dont les preuves sont écartées passé la durée de
+validité. Le poids d'une composante sans preuve n'étant jamais redistribué, un domaine critique
+plafonnait alors à exactement 85 — le seuil lui-même, atteignable seulement avec 100 partout
+ailleurs et sans le moindre indice — et un profil sérieux mais imparfait tombait à 79,25. Les portes
+A→D étaient donc infranchissables passé la durée de validité, pour tout le monde.
+
+Les cartes de révision des exercices sont devenues une source admissible, à garanties inchangées :
+correction serveur, mode à choix, carte déclarant pouvoir produire une preuve, et apparition
+conditionnée à une soumission réelle au runner. **Aucun poids, aucun seuil, aucun plafond d'aide n'a
+bougé** ; `MasteryRulesTests` documente le blocage à 79,25 et prouve son ouverture à 94,25 par la
+seule addition d'une preuve.
+
+Restait l'effet, distinct de la mécanique : la banque pilote couvrait 42 exercices sur 135, et le
+domaine C# — celui que la porte A exige à 85 — n'en comptait qu'un sur soixante-quatorze. La banque
+compte désormais **230 cartes sur 115 exercices** : les quatre domaines critiques dont la pratique
+passe par des exercices — C#, débogage, API, tests — sont couverts intégralement. Deux règles de
+`ReviewCardQualityTests` le figent : tout exercice d'un domaine critique porte ses cartes, et le
+domaine déclaré par une carte est celui déduit de la première compétence de son exercice. La
+première échouait sur 109 exercices avant la banque, sur 73 après la banque pilote, sur aucun
+aujourd'hui.
+
+Le domaine SQL, cinquième domaine critique, reste hors de portée : aucun exercice ne porte de
+compétence `sql.*`, sa pratique passant par des scénarios de laboratoire. Le couvrir demande une clé
+de carte généralisée de l'exercice vers l'élément pratiqué. La porte A n'en dépend pas.
+
+### Le verdict de maîtrise ne se prononçait jamais
+
+Le score pouvait monter ; le verdict, lui, ne basculait pas. `MasteryPolicyCatalog` déclare
+**vingt-trois clés d'accomplissement** et une seule avait un producteur — `exam.90-minutes`. La
+porte A exige « mini-projet console vérifié » : rien dans le produit ne pouvait satisfaire cette
+exigence, et les portes B, C et D s'enchaînant derrière elle, **les quatre étaient fermées
+définitivement**. L'apprenant lisait « Porte A — bloquée » le dernier jour comme le premier.
+
+Les neuf projets existaient pourtant en contenu, mais sans starter, sans suite exécutable et **sans
+page** : le produit les validait au chargement et ne les montrait jamais.
+
+Les quatre projets console — S2, S4, S5, S7 — portent maintenant un brief au contrat précis, un
+starter, un corrigé de référence et **une suite d'acceptation par jalon**, exécutée par le même bac
+à sable que les exercices : aucun quota, aucune image, aucune règle d'isolement n'a été touchée. Une
+soumission dont toutes les suites passent produit `project.console` en `AutomaticTests` ; une
+soumission faite en mode manuel est enregistrée comme déclarée et ne prouve rien.
+
+`ProjectCorrectnessTests` vérifie hors Docker que chaque corrigé de référence passe ses trente-six
+cas et que chaque starter en échoue au moins un. `MasteryRulesTests` prouve le passage de « porte A
+bloquée au seul motif du mini-projet » à « porte A ouverte », sans qu'aucun seuil ne bouge.
+`ProjectAchievementTests` tient l'inventaire des **vingt et une** clés encore sans producteur — un
+plafond qui ne peut que descendre.
+
+### Le score ne pouvait pas atteindre sa propre barre
+
+Le producteur d'accomplissement ci-dessus était correct, mais le rapport a un temps affirmé que la
+porte A devenait « franchissable par le travail ». **C'était faux.** Un accomplissement produit ne
+dit rien du plafond d'un score, et c'est là que se trouvait le vrai blocage.
+
+Deux composantes sur cinq n'avaient aucun producteur — explication (10 %) et quiz (5 %) — et la
+pratique comme les examens attribuaient toute observation à un domaine codé en dur : un exercice
+`api-*` alimentait le score C#, jamais le score Api. Le poids d'une composante sans preuve n'étant
+jamais redistribué, les plafonds mesurés étaient : débogage **60** pour un seuil de 80, SQL **70**
+pour 75, Api et Tests **15** pour 85, cinq domaines à **0** pour 80. La porte A exigeant
+débogage ≥ 80 et SQL ≥ 75, **elle était mathématiquement impossible**.
+
+Trois corrections, aucun poids ni seuil touché : `MasterySkillDomains` devient la source unique du
+couple compétence → domaine et sert la pratique comme les examens ; le quiz de leçon, déjà corrigé
+côté serveur, produit enfin une observation ; la banque de cartes passe à **350 cartes sur 175
+éléments** — les 135 exercices et les 40 scénarios SQL, dont la clé de carte a été généralisée à
+l'élément pratiqué. Tous les domaines plafonnent désormais à **90**.
+
+`MasteryReachabilityTests` calcule ce plafond à partir d'un inventaire des producteurs et refuse
+qu'un domaine plafonne **à** son seuil ou en dessous : un plafond égal au seuil n'est franchi qu'avec
+cent sur chaque composante, ce qui est un blocage déguisé en objectif. Écrit avant les corrections,
+il échouait sur six domaines ; il est vert.
+
+### Ce qui reste ouvert
+
+- **L'explication**, 10 % du score : aucune preuve serveur honnête n'existe pour cette composante.
+  Son poids est perdu, ce qui fixe le plafond général à 90 — au-dessus des seuils, mais dit.
+- **Les portes B, C et D** : leurs vingt et une exigences n'ont aucun producteur. Elles sont
+  désormais visibles et comptées, elles ne sont pas satisfaites.
+- Les domaines non critiques encore découverts, dont le seuil de 80 reste franchissable sans
+  rétention : intégration continue, architecture, Docker et anglais, soit 20 exercices.
+- Volume de pratique en S11–S24 : **4,1** exercices par semaine contre 8,8 en S1–S10, après le lot 1
+  de la reprise décrite dans `ROADMAP.md`. Les semaines S11 à S17 sont passées de 5,1 à **6,0** ; la
+  cible de huit par semaine demande quatorze exercices de plus. La reprise des échelles d'indices,
+  elle, améliorait la qualité de la boucle et non son volume.
+- Forme des activités S19–S22 : les exercices `docker-*`, `ci-*` et `azure-*` sont des fonctions
+  pures sur un domaine d'entrée de quelques valeurs. Ils entraînent la décision et non le geste, et un
+  domaine aussi étroit se résout par une table de correspondance mémorisée. La pratique réelle de ces
+  sujets passe par les six laboratoires de `content/labs/`, dont aucun n'est encore rattaché au
+  parcours public.
+- ~~Dédoublonnage des 190 fiches d'entretien — 190 questions distinctes mais 29 critères observables
+  seulement — et des 50 cartes d'anglais.~~ **Clos** : 401 critères et 204 erreurs fréquentes
+  distincts sur les 197 fiches, 51 consignes et 51 réponses distinctes sur les cartes d'anglais, et
+  registre de dette à zéro. Ce qui reste ouvert sur ces fiches n'est plus la duplication mais leur
+  nombre de critères — deux ou trois par fiche —, dont l'augmentation demanderait un panel humain
+  pour juger de leur pertinence.
+- **P2-02** : aucun panel humain indépendant n'a été réuni.
+- Les sept personas n'ont pas été rejoués : navigateur et Docker restaient indisponibles.
+- Les tests d'intégration dépendant de Docker n'ont pas pu s'exécuter, comme lors de l'audit
+  initial : 76 échecs, tous dans des classes qui exigent un démon Docker ou le secret SqlLab,
+  lui-même produit par `scripts/start-sql-lab.ps1`, qui exige Docker. Aucune conclusion nouvelle
+  n'est tirée sur leur résultat. Les 415 autres tests d'intégration, 147 tests unitaires et 44 tests
+  de bout en bout sont verts, et `dotnet format --verify-no-changes` ne signale aucun écart.
+- **Le trajet réel d'une soumission de projet n'a pas pu être exécuté** : éditeur → conteneur →
+  suites → accomplissement exige un démon Docker et un navigateur, absents ici. Le producteur est
+  prouvé par test unitaire et les suites par vérification Roslyn hors ligne ; l'exécution isolée de
+  bout en bout reste à démontrer.
+- 43 des 142 exercices ne figurent dans aucune banque d'examen : ils ne peuvent jamais être tirés. Ce
+  nombre n'a pas monté malgré sept exercices neufs, tous inscrits dans la banque de leur examen ; il
+  n'a pas baissé non plus, le reliquat portant sur des familles antérieures à la reprise.
+
 ## Réaudit
 
 Aucun réaudit favorable n'est possible tant que les quatre P1 restent ouverts. La reprise devra au minimum :
 
-1. ajouter des tests de contenu qui refusent les marqueurs non substitués et les exemples générés illisibles ;
-2. revoir les 69 leçons et 125 énoncés contre leurs objectifs, signatures et tests ;
+1. ajouter des tests de contenu qui refusent les marqueurs non substitués et les exemples générés illisibles — *fait : trois règles d'authenticité et un registre à cliquet* ;
+2. revoir les 69 leçons et 125 énoncés contre leurs objectifs, signatures et tests — *fait : 70 leçons réécrites, 135 exercices prouvés corrects hors Docker* ;
 3. intégrer les scénarios SQL/EF au parcours utilisateur avec isolation inchangée ;
 4. corriger les messages Practice et leurs tests E2E ;
 5. exécuter les sept scripts sur données séparées, avec navigateur et Docker disponibles ;
@@ -243,6 +454,23 @@ Aucun réaudit favorable n'est possible tant que les quatre P1 restent ouverts. 
 Le refus repose sur quatre P1 ouverts, dont deux défauts de contenu systémiques, un parcours SQL non intégré et un signal contradictoire après solution. Les sept personas n'ont pas été exécutés intégralement et le persona faible SQL est bloqué par le produit. Les validateurs et 82 tests ciblés sont verts, mais ils démontrent précisément un angle mort : ils acceptent la structure et l'exécution sans refuser les placeholders visibles ni la duplication pédagogique massive.
 
 L'incrément 12 doit rester non coché. Aucun incrément suivant n'est créé implicitement.
+
+**Le verdict reste REFUSÉ après la reprise éditoriale.** Les défauts de contenu qui le motivaient
+sont clos et mesurés — 70 leçons rédigées, plus aucune leçon dans le registre de dette, 135 exercices
+prouvés corrects — mais les deux conditions de levée sont inchangées : les sept personas n'ont pas
+été rejoués, et ni navigateur ni démon Docker n'étaient disponibles pour le faire. Un verdict
+favorable ne peut être prononcé que par cette exécution, pas par la lecture des tests qui, eux, ne
+peuvent pas s'exécuter.
+
+**Le verdict reste REFUSÉ après l'extinction de la dette éditoriale.** Le registre est passé de 159 à
+zéro par la reprise des 28 scénarios SQL, des 50 cartes d'anglais et des 191 fiches d'entretien, et le
+plafond de `ContentAuthenticityTests` est descendu à zéro en conséquence. C'est le dernier défaut de
+contenu systémique qui se ferme, et cela ne déplace pas le verdict d'un cran : les deux conditions de
+levée n'ont pas bougé. Il faut noter au contraire ce que cette reprise apprend sur l'audit lui-même —
+la duplication réelle était plus large que ce que le registre comptait, parce que les règles portent
+sur des paragraphes et non sur des phrases. Un chiffre à zéro mesure donc l'absence de défaut
+détectable par ces trois règles, pas l'absence de contenu générique. Seul un panel humain peut
+prononcer la seconde.
 
 ## Backlog P2/P3 et risques résiduels
 

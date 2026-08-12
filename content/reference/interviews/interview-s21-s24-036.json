@@ -1,24 +1,24 @@
 {
-    "schemaVersion":  1,
-    "id":  "interview-s21-s24-036",
-    "version":  1,
-    "title":  "Défendre un compromis",
-    "level":  "intermediate",
-    "durationMinutes":  9,
-    "skills":  [
-                   "project.defense"
-               ],
-    "question":  "Comment répondez-vous à une objection dʼarchitecture légitime ?",
-    "observableCriteria":  [
-                               "La réponse prend une décision explicite et cite une preuve observable",
-                               "Une limite de sécurité, de coût, de portée ou de validité est reconnue"
-                           ],
-    "modelAnswer":  "Je reformule le risque, cite la contrainte initiale et la preuve, reconnais la limite, puis donne le signal concret qui ferait réviser le choix.",
-    "commonMistakes":  [
-                           "Employer un slogan sans contrainte, preuve ni limite vérifiable"
-                       ],
-    "variants":  [
-                     "Changez une contrainte du scénario « Défendre un compromis » et expliquez si la décision reste valide."
-                 ],
-    "license":  "CC-BY-4.0"
+  "schemaVersion": 1,
+  "id": "interview-s21-s24-036",
+  "version": 1,
+  "title": "Défendre un compromis",
+  "level": "intermediate",
+  "durationMinutes": 9,
+  "skills": [
+    "project.defense"
+  ],
+  "question": "Comment répondez-vous à une objection dʼarchitecture légitime ?",
+  "observableCriteria": [
+    "Le risque soulevé est reformulé avant d'être discuté",
+    "La limite est reconnue et le signal concret qui ferait réviser le choix est donné"
+  ],
+  "modelAnswer": "Je reformule le risque, cite la contrainte initiale et la preuve, reconnais la limite, puis donne le signal concret qui ferait réviser le choix.",
+  "commonMistakes": [
+    "Répondre à l'objection en réaffirmant la décision sans reconnaître le risque nommé"
+  ],
+  "variants": [
+    "Changez une contrainte du scénario « Défendre un compromis » et expliquez si la décision reste valide."
+  ],
+  "license": "CC-BY-4.0"
 }

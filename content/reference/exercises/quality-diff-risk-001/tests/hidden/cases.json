@@ -21,6 +21,20 @@
                                     ],
                       "expectedException":  "ArgumentOutOfRangeException",
                       "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_JustAboveLowThreshold",
+                      "message":  "Une ligne au-dessus du seuil bas : le risque devient moyen.",
+                      "arguments":  [81,false],
+                      "expected":  "medium",
+                      "argumentsUnchanged":  true
+                  },
+                  {
+                      "name":  "Hidden_AtHighThreshold",
+                      "message":  "Exactement au seuil haut : encore moyen, la comparaison est stricte.",
+                      "arguments":  [300,false],
+                      "expected":  "medium",
+                      "argumentsUnchanged":  true
                   }
               ]
 }

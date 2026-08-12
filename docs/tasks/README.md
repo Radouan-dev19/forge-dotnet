@@ -6,6 +6,8 @@ Suivre l'ordre numérique et alphabétique : `00`, `01A`, `01B`, `01C`, `01D`, `
 
 La chaîne de livraison est : `00 → 01A → 01B → 01C → 01D → 02A → 02B → 02C → 03A → 03B → 03C → 04A → 04B → 04C → 04D → 05 → 06A → 06B → 07A → 07B → 07C → 08 → 09 → 10 → 11 → 12`. Les prérequis transverses explicités dans les fiches (notamment persistance, schémas et moteurs) s'ajoutent à cette chaîne et ne l'assouplissent pas.
 
+`BACKLOG-POST-AUDIT.md` n'appartient pas à cette chaîne et **ne porte aucun numéro**. C'est une préparation au sens de la section « Préparations éventuellement parallèles » : le triage mesuré des défauts constatés après la reprise éditoriale, et un prompt d'exécution complet pour chacun. Rien n'y est autorisé à démarrer tant que l'incrément 12 reste refusé ; convertir un de ses éléments en incrément demande une décision humaine, l'allocation d'un numéro, une fiche au format des autres et la mise à jour de `NEXT_TASK.md`.
+
 ## Démarrer une tâche
 
 1. Ouvrir uniquement la fiche indiquée par `NEXT_TASK.md`.

@@ -30,6 +30,20 @@
                                    ],
                       "expectedException":  null,
                       "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_NullInput",
+                      "message":  "Référence absente : refus explicite.",
+                      "arguments":  [null],
+                      "expectedException":  "ArgumentNullException",
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_RepeatedValues",
+                      "message":  "Valeurs répétées : la copie ne déduplique pas.",
+                      "arguments":  [[1,1,1]],
+                      "expected":  [1,1,1],
+                      "argumentsUnchanged":  true
                   }
               ]
 }

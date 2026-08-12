@@ -22,6 +22,20 @@
                       "expected":  0,
                       "expectedException":  null,
                       "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_EmptyCorrelationId",
+                      "message":  "Identifiant vide : aucune correspondance, plutôt qu'une boucle infinie.",
+                      "arguments":  ["abc",""],
+                      "expected":  0,
+                      "argumentsUnchanged":  true
+                  },
+                  {
+                      "name":  "Hidden_SurroundedOccurrence",
+                      "message":  "Occurrence entourée d'autres caractères : réfute une comparaison de la ligne entière.",
+                      "arguments":  ["xabcx","abc"],
+                      "expected":  1,
+                      "argumentsUnchanged":  true
                   }
               ]
 }

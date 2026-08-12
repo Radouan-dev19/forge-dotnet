@@ -1,24 +1,24 @@
 {
-    "schemaVersion":  1,
-    "id":  "interview-s21-s24-016",
-    "version":  1,
-    "title":  "Relier une corrélation",
-    "level":  "intermediate",
-    "durationMinutes":  9,
-    "skills":  [
-                   "observability.correlation"
-               ],
-    "question":  "Comment suivez-vous une requête entre HTTP et SQL sans journaliser la commande complète ?",
-    "observableCriteria":  [
-                               "La réponse prend une décision explicite et cite une preuve observable",
-                               "Une limite de sécurité, de coût, de portée ou de validité est reconnue"
-                           ],
-    "modelAnswer":  "Je propage un identifiant de corrélation et journalise le nom stable de lʼopération, la durée et le résultat. Les paramètres et données métier restent absents.",
-    "commonMistakes":  [
-                           "Employer un slogan sans contrainte, preuve ni limite vérifiable"
-                       ],
-    "variants":  [
-                     "Changez une contrainte du scénario « Relier une corrélation » et expliquez si la décision reste valide."
-                 ],
-    "license":  "CC-BY-4.0"
+  "schemaVersion": 1,
+  "id": "interview-s21-s24-016",
+  "version": 1,
+  "title": "Relier une corrélation",
+  "level": "intermediate",
+  "durationMinutes": 9,
+  "skills": [
+    "observability.correlation"
+  ],
+  "question": "Comment suivez-vous une requête entre HTTP et SQL sans journaliser la commande complète ?",
+  "observableCriteria": [
+    "La propagation de l'identifiant à travers au moins deux composants est décrite",
+    "Le nom stable de l'opération est distingué du texte de la commande, qui reste absent"
+  ],
+  "modelAnswer": "Je propage un identifiant de corrélation et journalise le nom stable de lʼopération, la durée et le résultat. Les paramètres et données métier restent absents.",
+  "commonMistakes": [
+    "Journaliser la commande complète pour faciliter le diagnostic, en emportant les paramètres"
+  ],
+  "variants": [
+    "Changez une contrainte du scénario « Relier une corrélation » et expliquez si la décision reste valide."
+  ],
+  "license": "CC-BY-4.0"
 }

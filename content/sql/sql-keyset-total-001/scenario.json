@@ -30,8 +30,12 @@
     "timeoutSeconds":  5,
     "maxRows":  20,
     "effectAssertions":  [
-                             "Les quatre clients, cinq commandes et six lignes restent inchangés après rollback"
+                             "Exactement deux commandes suivant le point de reprise sont retournées, sans doublon ni modification"
                          ],
     "solutionPath":  "solution.md",
+    "reviewCards": [
+        "card-sql-keyset-total-001-rule",
+        "card-sql-keyset-total-001-edge"
+    ],
     "license":  "CC-BY-4.0"
 }

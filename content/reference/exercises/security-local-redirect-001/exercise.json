@@ -15,13 +15,13 @@
     "statement":  "statement.md",
     "constraints":  [
                         "Conserver exactement la signature publique",
-                        "Accepter un chemin racine local mais refuser les formes réseau et les URL absolues.",
-                        "Ne jamais dépendre du réseau, d’un secret réel ou d’un état global"
+                        "Accepter un chemin racine local mais refuser les formes réseau et les adresses absolues.",
+                        "N'accepter aucune destination absolue et ne consulter aucune liste de domaines"
                     ],
     "examples":  [
                      {
-                         "input":  "[{\"value\":[\"/orders/1\"],\"Count\":1},true]",
-                         "output":  "[{\"value\":[\"https://evil.example\"],\"Count\":1},false]"
+                         "input":  "[\"/orders/1\"]",
+                         "output":  "true"
                      }
                  ],
     "reflectionFields":  [
@@ -54,7 +54,7 @@
                   {
                       "level":  4,
                       "kind":  "partial-pseudocode",
-                      "content":  "valider les entrées ; appliquer la décision bornée ; retourner un résultat déterministe sans effet externe"
+                      "content":  "si la valeur est absente ou composée de blancs refuser ; n'accepter qu'un chemin commençant par un séparateur unique ; refuser explicitement la forme à double séparateur et celle où un séparateur inversé suit le premier"
                   }
               ],
     "solution":  {
@@ -67,9 +67,10 @@
     "explanation":  "explanation.md",
     "complexity":  "O(n) en temps et O(1) en espace",
     "commonMistakes":  [
-                           "Coder seulement les exemples visibles",
-                           "Masquer une erreur ou accepter une entrée hors contrat",
-                           "Confondre une règle pure avec le transport ou une ressource externe"
+                           "N'exclure que les adresses absolues et laisser passer la forme à double séparateur",
+                           "Oublier la variante au séparateur inversé, que certains clients interprètent comme un hôte",
+                           "Accepter une destination vide et rediriger vers une page indéterminée",
+                           "Filtrer par une liste de domaines interdits au lieu de n'accepter que le local"
                        ],
     "variantId":  "security-login-message-001",
     "reviewCards":  [

@@ -1,24 +1,24 @@
 {
-    "schemaVersion":  1,
-    "id":  "interview-azure-release-evidence-001",
-    "version":  1,
-    "title":  "Valider les preuves dʼun jalon",
-    "level":  "intermediate",
-    "durationMinutes":  7,
-    "skills":  [
-                   "project.evidence"
-               ],
-    "question":  "Comment implémenteriez-vous « Valider les preuves dʼun jalon » et quelles preuves empêchent un contournement ?",
-    "observableCriteria":  [
-                               "Le contrat, une frontière et un refus sont explicités",
-                               "La limite du mode local et le coût ou risque associé sont justifiés"
-                           ],
-    "modelAnswer":  "Un jalon est révisable uniquement si tests, revue de sécurité et retour arrière documenté sont tous présents. Je sépare validation et décision, je teste nominal et frontières, puis je vérifie quʼaucun appel cloud ni donnée sensible nʼentre dans la preuve. O(1) en temps et O(1) en espace.",
-    "commonMistakes":  [
-                           "Réciter le code sans expliquer le contrat, le coût ou la preuve"
-                       ],
-    "variants":  [
-                     "Changer une contrainte tout en conservant la règle de valider les preuves dʼun jalon."
-                 ],
-    "license":  "CC-BY-4.0"
+  "schemaVersion": 1,
+  "id": "interview-azure-release-evidence-001",
+  "version": 1,
+  "title": "Valider les preuves dʼun jalon",
+  "level": "intermediate",
+  "durationMinutes": 7,
+  "skills": [
+    "project.evidence"
+  ],
+  "question": "Comment implémenteriez-vous « Valider les preuves dʼun jalon » et quelles preuves empêchent un contournement ?",
+  "observableCriteria": [
+    "Les trois preuves sont exigées ensemble, la présence de deux ne suffisant pas",
+    "Le retour arrière documenté est traité comme une preuve, non comme une intention"
+  ],
+  "modelAnswer": "Un jalon est révisable uniquement si tests, revue de sécurité et retour arrière documenté sont tous présents. Je teste la présence des trois preuves puis l'absence de chacune isolément, ce qui est le seul moyen de montrer qu'aucune n'est compensable. O(1) en temps et O(1) en espace.",
+  "commonMistakes": [
+    "Accepter un jalon vert en tests et en revue mais sans plan de retour arrière"
+  ],
+  "variants": [
+    "Changer une contrainte tout en conservant la règle de valider les preuves dʼun jalon."
+  ],
+  "license": "CC-BY-4.0"
 }

@@ -54,6 +54,8 @@ public sealed record PracticeExercise(
     string Title,
     int Difficulty,
     int EstimatedMinutes,
+    // La première compétence décide du domaine de maîtrise alimenté par cet exercice.
+    IReadOnlyList<string> Skills,
     string Statement,
     IReadOnlyList<string> Constraints,
     IReadOnlyList<PracticeExerciseExample> Examples,

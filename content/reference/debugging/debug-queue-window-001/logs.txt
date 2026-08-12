@@ -1,1 +1,2 @@
-Event=UnexpectedResult Level=Warning Scenario=debug-queue-window-001 Week=6 Actual=MISMATCH Expected=CONTRACT CorrelationId=debug-queue-window-001
+Event=WindowTotalMismatch Level=Warning History=[1,2,3] WindowSize=2 Expected=5 Actual=6 CorrelationId=dbg-queue-window-001
+Event=WindowTotal Level=Information History=[1] WindowSize=3 Expected=1 Actual=1 CorrelationId=dbg-queue-window-001

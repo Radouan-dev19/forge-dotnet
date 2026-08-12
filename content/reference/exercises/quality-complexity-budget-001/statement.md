@@ -2,6 +2,6 @@
 
 Implémentez Submission.WithinNestingBudget avec la signature fournie. Accepter zéro à trois niveaux et refuser les mesures incohérentes ou excessives.
 
-Le résultat reste déterministe et hors ligne. Écrivez avant le code un cas nominal, une frontière, un refus et la menace ou régression que ces preuves préviennent. N’utilisez aucun secret réel.
+La décision reste déterministe et hors ligne, sans analyser aucun fichier source. Écrivez avant le code : une profondeur nulle, le budget exact, le budget dépassé d'un niveau, et une mesure négative. Nommez ce qu'une imbrication excessive rend difficile à tester.
 
-Exemple : entrée $(Convert-JsonCompact System.Object[] System.Object[][0]), sortie $(Convert-JsonCompact System.Object[] System.Object[][1]).
+Exemple : entrée `[0]`, sortie `true`.

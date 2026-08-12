@@ -16,12 +16,12 @@
     "constraints":  [
                         "Conserver exactement la signature publique",
                         "Traiter le diviseur nul et conserver la division entière annoncée.",
-                        "Ne pas modifier les entrées reçues sauf mention explicite"
+                        "Ne changer ni le type ni la sémantique de la division annoncée"
                     ],
     "examples":  [
                      {
-                         "input":  "[{\"value\":[8,2],\"Count\":2},4]",
-                         "output":  "[{\"value\":[8,0],\"Count\":2},0]"
+                         "input":  "[8,2]",
+                         "output":  "4"
                      }
                  ],
     "reflectionFields":  [
@@ -54,7 +54,7 @@
                   {
                       "level":  4,
                       "kind":  "partial-pseudocode",
-                      "content":  "valider les bornes ; parcourir ou décider ; retourner un nouveau résultat déterministe"
+                      "content":  "traiter le diviseur nul en premier, en retournant la valeur convenue plutôt qu'en levant ; sinon effectuer la division entière annoncée"
                   }
               ],
     "solution":  {
@@ -67,9 +67,10 @@
     "explanation":  "explanation.md",
     "complexity":  "O(1) en temps et O(1) en espace",
     "commonMistakes":  [
-                           "Coder uniquement les exemples visibles",
-                           "Oublier une borne ou modifier une entrée",
-                           "Annoncer une complexité sans compter les opérations dominantes"
+                           "Diviser avant d'avoir vérifié le diviseur",
+                           "Lever une exception alors que le contrat prévoit une valeur de repli",
+                           "Passer en division flottante et changer le type de résultat annoncé",
+                           "Oublier que diviser la plus petite valeur signée par moins un déborde"
                        ],
     "variantId":  "structures-run-length-001",
     "reviewCards":  [

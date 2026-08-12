@@ -16,7 +16,7 @@
     "Retourner zéro lorsque start est après end"
   ],
   "examples": [
-    { "input": "2026-07-20, 2026-07-24", "output": "5" },
+    { "input": "[\"2026-07-20\",\"2026-07-24\"]", "output": "5" },
     { "input": "2026-07-25, 2026-07-26", "output": "0" }
   ],
   "reflectionFields": ["reformulation", "inputs", "expectedOutput", "edgeCases", "hypothesis", "plan"],

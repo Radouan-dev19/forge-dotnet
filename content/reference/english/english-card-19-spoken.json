@@ -1,39 +1,40 @@
 {
-    "schemaVersion":  1,
-    "id":  "english-card-19-spoken",
-    "version":  1,
-    "title":  "Project scope — spoken follow-up",
-    "level":  "C1",
-    "durationMinutes":  10,
-    "skills":  [
-                   "english.spoken",
-                   "project.scope"
-               ],
-    "situation":  "In a technical discussion, a stakeholder asks for five more features before the first milestone. You must answer aloud accurately without overstating the evidence.",
-    "instructions":  [
-                         "Deliver a sixty-second answer with decision, evidence, limitation and one clarifying question."
-                     ],
-    "vocabulary":  [
-                       {
-                           "term":  "scope control",
-                           "meaning":  "the precise concept required for project scope"
-                       },
-                       {
-                           "term":  "verified evidence",
-                           "meaning":  "an observation supported by a reproducible check"
-                       }
-                   ],
-    "expectedElements":  [
-                             "A clear decision tied to the scenario",
-                             "Verified evidence and one explicit limitation",
-                             "One useful clarifying question"
-                         ],
-    "modelAnswer":  "My decision is that We keep one critical user journey and explicit exclusions until the vertical slice and its tests are reviewable. The current evidence is limited to the documented checks, so I would not claim more. Which constraint or observation would make us revisit this decision?",
-    "commonMistakes":  [
-                           "Using confident adjectives without naming evidence or a limitation"
-                       ],
-    "variants":  [
-                     "Answer again after the reviewer changes one cost or security constraint."
-                 ],
-    "license":  "CC-BY-4.0"
+  "schemaVersion": 1,
+  "id": "english-card-19-spoken",
+  "version": 1,
+  "title": "Project scope — spoken follow-up",
+  "level": "C1",
+  "durationMinutes": 10,
+  "skills": [
+    "english.spoken",
+    "project.scope"
+  ],
+  "situation": "In a technical discussion, a stakeholder asks for five more features before the first milestone. You must answer aloud accurately without overstating the evidence.",
+  "instructions": [
+    "Say aloud how you respond to five extra features before the first milestone, without refusing outright."
+  ],
+  "vocabulary": [
+    {
+      "term": "scope control",
+      "meaning": "keeping the committed content of a milestone fixed by naming what leaves whenever something enters"
+    },
+    {
+      "term": "explicit trade-off",
+      "meaning": "an exchange stated out loud, which turns an unbounded request into a decision someone can take"
+    }
+  ],
+  "expectedElements": [
+    "The request is acknowledged rather than dismissed",
+    "The trade-off is stated in concrete terms",
+    "A decision is handed back to the requester"
+  ],
+  "modelAnswer": "I hear the request, and none of the five is unreasonable on its own. What I cannot do is add them and keep the milestone date, because the milestone is already sized to the time available. So the question I would hand back is which of the five matters most, and what comes out to make room for it. If the answer is that nothing comes out, then the date moves, and I would rather say that now than in three weeks. I can put the current contents and the estimates in front of you this afternoon, so the exchange rests on evidence rather than impressions. Which would you like to decide first?",
+  "commonMistakes": [
+    "Refusing the request outright instead of stating the exchange",
+    "Accepting the additions and letting the date slip silently"
+  ],
+  "variants": [
+    "Answer again when the stakeholder says all five are mandatory."
+  ],
+  "license": "CC-BY-4.0"
 }

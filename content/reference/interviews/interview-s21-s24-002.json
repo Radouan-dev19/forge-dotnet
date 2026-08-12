@@ -1,24 +1,24 @@
 {
-    "schemaVersion":  1,
-    "id":  "interview-s21-s24-002",
-    "version":  1,
-    "title":  "Justifier Container Apps",
-    "level":  "junior",
-    "durationMinutes":  6,
-    "skills":  [
-                   "azure.hosting"
-               ],
-    "question":  "Le livrable possède déjà une image durcie et doit tester deux révisions. Quelle preuve exigez-vous avant Container Apps ?",
-    "observableCriteria":  [
-                               "La réponse prend une décision explicite et cite une preuve observable",
-                               "Une limite de sécurité, de coût, de portée ou de validité est reconnue"
-                           ],
-    "modelAnswer":  "Jʼexige la provenance de lʼimage, un démarrage non-root, une sonde utile et une stratégie de retour vers la révision précédente. Sans ces preuves, le service ne corrige pas le risque.",
-    "commonMistakes":  [
-                           "Employer un slogan sans contrainte, preuve ni limite vérifiable"
-                       ],
-    "variants":  [
-                     "Changez une contrainte du scénario « Justifier Container Apps » et expliquez si la décision reste valide."
-                 ],
-    "license":  "CC-BY-4.0"
+  "schemaVersion": 1,
+  "id": "interview-s21-s24-002",
+  "version": 1,
+  "title": "Justifier Container Apps",
+  "level": "junior",
+  "durationMinutes": 6,
+  "skills": [
+    "azure.hosting"
+  ],
+  "question": "Le livrable possède déjà une image durcie et doit tester deux révisions. Quelle preuve exigez-vous avant Container Apps ?",
+  "observableCriteria": [
+    "Les preuves exigées portent sur la provenance de l'image et son exécution sans privilège, pas sur la plateforme",
+    "Le retour vers la révision précédente est traité comme une exigence, non comme une option"
+  ],
+  "modelAnswer": "Jʼexige la provenance de lʼimage, un démarrage non-root, une sonde utile et une stratégie de retour vers la révision précédente. Sans ces preuves, le service ne corrige pas le risque.",
+  "commonMistakes": [
+    "Accepter le service parce qu'il gère des révisions, sans exiger la preuve que l'image est saine"
+  ],
+  "variants": [
+    "Changez une contrainte du scénario « Justifier Container Apps » et expliquez si la décision reste valide."
+  ],
+  "license": "CC-BY-4.0"
 }

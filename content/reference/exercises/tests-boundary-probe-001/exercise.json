@@ -1,0 +1,83 @@
+{
+  "schemaVersion": 1,
+  "id": "tests-boundary-probe-001",
+  "version": 1,
+  "title": "Produire les sondes qui réfutent un décalage de borne",
+  "kind": "csharp",
+  "difficulty": 3,
+  "skills": ["tests.boundaries"],
+  "prerequisites": ["tests-boundaries-theories-001"],
+  "estimatedMinutes": 35,
+  "statement": "statement.md",
+  "constraints": [
+    "Conserver exactement la signature publique",
+    "Le résultat est trié par ordre croissant et sans doublon",
+    "Aucune sonde ne dépasse les limites du type, même quand une borne s'y appuie",
+    "Un intervalle vide est refusé plutôt que rendu sans sonde"
+  ],
+  "examples": [
+    {
+      "input": "[1, 100]",
+      "output": "[0, 1, 100, 101]"
+    },
+    {
+      "input": "[5, 5]",
+      "output": "[4, 5, 6]"
+    }
+  ],
+  "reflectionFields": [
+    "reformulation",
+    "inputs",
+    "expectedOutput",
+    "edgeCases",
+    "hypothesis",
+    "plan"
+  ],
+  "starterPath": "starter/",
+  "visibleTestsPath": "tests/visible/",
+  "hiddenTestsPath": "tests/hidden/",
+  "hints": [
+    {
+      "level": 1,
+      "kind": "socratic",
+      "content": "Une règle accepte de un à cent, et son auteur a écrit une comparaison stricte au lieu d'une comparaison large. Laquelle de vos valeurs de test le découvre, et laquelle passerait quand même ?"
+    },
+    {
+      "level": 2,
+      "kind": "location",
+      "content": "Chaque sonde correspond à une décision indépendante : la produire ou non. Traitez ces décisions une par une, dans l'ordre croissant, plutôt que de construire une liste puis de la trier."
+    },
+    {
+      "level": 3,
+      "kind": "strategy",
+      "content": "Deux conditions seulement gouvernent l'omission : une borne appuyée sur une limite du type n'a pas d'extérieur, et deux bornes confondues ne décrivent qu'une valeur intérieure."
+    },
+    {
+      "level": 4,
+      "kind": "partial-pseudocode",
+      "content": "refuser d'abord l'intervalle vide ; produire la valeur juste avant la borne basse, sauf si cette borne est déjà la plus petite du type ; produire la borne basse ; produire la borne haute seulement si elle diffère de la basse ; produire la valeur juste après la borne haute, sauf si cette borne est déjà la plus grande du type"
+    }
+  ],
+  "solution": {
+    "path": "solution/",
+    "unlock": {
+      "seriousAttempts": 2,
+      "minimumDelayMinutes": 10
+    }
+  },
+  "explanation": "explanation.md",
+  "complexity": "O(1) en temps et O(1) en espace : le nombre de sondes est borné par quatre",
+  "commonMistakes": [
+    "Calculer la sonde extérieure sans vérifier la limite du type, ce qui la fait basculer à l'autre extrémité",
+    "Produire quatre sondes même quand les deux bornes sont confondues, et tester deux fois la même valeur",
+    "Ne sonder que l'intérieur de l'intervalle, ce qui laisse une comparaison trop large passer inaperçue",
+    "Rendre un tableau vide pour un intervalle impossible au lieu de refuser l'appel"
+  ],
+  "variantId": "tests-boundary-values-001",
+  "reviewCards": [
+    "card-tests-boundary-probe-001-rule",
+    "card-tests-boundary-probe-001-edge"
+  ],
+  "interviewQuestionId": "interview-tests-boundary-probe-001",
+  "license": "CC-BY-4.0"
+}

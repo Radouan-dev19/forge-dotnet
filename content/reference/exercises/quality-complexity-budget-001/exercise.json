@@ -16,12 +16,12 @@
     "constraints":  [
                         "Conserver exactement la signature publique",
                         "Accepter zéro à trois niveaux et refuser les mesures incohérentes ou excessives.",
-                        "Ne jamais dépendre du réseau, d’un secret réel ou d’un état global"
+                        "Ne lire aucun fichier source : la mesure d'imbrication est fournie"
                     ],
     "examples":  [
                      {
-                         "input":  "[{\"value\":[0],\"Count\":1},true]",
-                         "output":  "[{\"value\":[3],\"Count\":1},true]"
+                         "input":  "[0]",
+                         "output":  "true"
                      }
                  ],
     "reflectionFields":  [
@@ -54,7 +54,7 @@
                   {
                       "level":  4,
                       "kind":  "partial-pseudocode",
-                      "content":  "valider les entrées ; appliquer la décision bornée ; retourner un résultat déterministe sans effet externe"
+                      "content":  "refuser toute mesure négative, qui ne décrit aucune imbrication ; accepter les profondeurs de zéro au budget inclus ; refuser tout ce qui le dépasse"
                   }
               ],
     "solution":  {
@@ -67,9 +67,10 @@
     "explanation":  "explanation.md",
     "complexity":  "O(1) en temps et O(1) en espace",
     "commonMistakes":  [
-                           "Coder seulement les exemples visibles",
-                           "Masquer une erreur ou accepter une entrée hors contrat",
-                           "Confondre une règle pure avec le transport ou une ressource externe"
+                           "Accepter une profondeur négative comme si elle valait zéro",
+                           "Refuser la profondeur exactement égale au budget",
+                           "Traiter le budget comme une note plutôt que comme un signal de découpage",
+                           "Écrire deux comparaisons dont l'une rend l'autre inatteignable"
                        ],
     "variantId":  "quality-diff-risk-001",
     "reviewCards":  [

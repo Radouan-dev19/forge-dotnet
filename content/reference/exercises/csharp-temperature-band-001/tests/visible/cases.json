@@ -20,6 +20,13 @@
                       "expected":  "frais",
                       "expectedException":  null,
                       "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Visible_LastCoolDegree",
+                      "message":  "Dernier degré frais : réfute une borne haute incluse à tort.",
+                      "arguments":  [19],
+                      "expected":  "frais",
+                      "argumentsUnchanged":  true
                   }
               ]
 }

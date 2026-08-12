@@ -1,5 +1,20 @@
-﻿[CmdletBinding()]
-param()
+﻿<#
+.SYNOPSIS
+    Échafaude les documents S21-S24 : manifestes, sources, jeux de tests et squelettes de leçon.
+
+.DESCRIPTION
+    Ce script ne rédige pas la pédagogie. Il produit la structure et les données dérivables, et
+    laisse des marqueurs « TODO: » partout où une rédaction humaine est nécessaire. Ces marqueurs
+    sont refusés par la règle d'authenticité unsubstituted-placeholder : un lot échafaudé mais non
+    rédigé ne peut donc pas être publié.
+
+    Un fichier déjà présent est conservé, jamais réécrit, sauf avec -Force.
+
+.PARAMETER Force
+    Régénère les fichiers existants. Détruit toute reprise éditoriale.
+#>
+[CmdletBinding()]
+param([switch]$Force)
 
 $ErrorActionPreference = 'Stop'
 Set-StrictMode -Version Latest
@@ -8,25 +23,8 @@ $EffectiveScriptRoot = if ([string]::IsNullOrWhiteSpace($PSScriptRoot)) { Join-P
 $RepositoryRoot = Split-Path -Parent $EffectiveScriptRoot
 $ContentRoot = Join-Path $RepositoryRoot 'content'
 $CatalogRoot = Join-Path $ContentRoot 'reference'
-$Utf8NoBom = New-Object System.Text.UTF8Encoding($false)
-$Utf8WithBom = New-Object System.Text.UTF8Encoding($true)
-
-function Write-TextFile {
-    param([Parameter(Mandatory)][string]$Path, [Parameter(Mandatory)][string]$Content)
-    [System.IO.Directory]::CreateDirectory((Split-Path -Parent $Path)) | Out-Null
-    [System.IO.File]::WriteAllText($Path, ($Content.Trim() + [Environment]::NewLine), $Utf8NoBom)
-}
-
-function Write-JsonFile {
-    param([Parameter(Mandatory)][string]$Path, [Parameter(Mandatory)]$Value)
-    Write-TextFile -Path $Path -Content ($Value | ConvertTo-Json -Depth 32)
-}
-
-function Write-PowerShellFile {
-    param([Parameter(Mandatory)][string]$Path, [Parameter(Mandatory)][string]$Content)
-    [System.IO.Directory]::CreateDirectory((Split-Path -Parent $Path)) | Out-Null
-    [System.IO.File]::WriteAllText($Path, ($Content.Trim() + [Environment]::NewLine), $Utf8WithBom)
-}
+$script:ForceOverwrite = $Force.IsPresent
+. (Join-Path $EffectiveScriptRoot 'ContentScaffolding.ps1')
 
 function Convert-TypeName {
     param([Parameter(Mandatory)][string]$RunnerType)
@@ -37,11 +35,6 @@ function Convert-TypeName {
         'string' { 'string' }
         default { throw "Type runner inconnu : $RunnerType" }
     }
-}
-
-function Convert-JsonCompact {
-    param($Value)
-    return ($Value | ConvertTo-Json -Depth 16 -Compress)
 }
 
 $LessonRows = @(
@@ -71,81 +64,8 @@ foreach ($row in $LessonRows) {
         sections=@('intuition','explanation','example','counterExample','check','guided','independent','debugging','interview','summary','reviewCards','masteryTest')
         markdownPath='lesson.md';license='CC-BY-4.0'
     })
-    Write-TextFile (Join-Path $directory 'lesson.md') @"
-# $title
-
-## Objectif observable
-
-À la fin de cette leçon, vous pourrez prendre une décision sur un cas nouveau, la relier à une contrainte explicite et produire une preuve qui réfute une option plausible mais incorrecte.
-
-## Prérequis
-
-Relire `$previousLessonId`. Tout exercice principal fonctionne hors ligne ; lorsquʼAzure est évoqué, le mode simulé est la preuve de référence et un compte cloud reste facultatif.
-
-## Intuition
-
-$concept
-
-## Explication
-
-$concept Écrivez dʼabord le contrat, les entrées non fiables, la responsabilité exacte, les coûts possibles et la méthode de suppression. Une étape manuelle reste annoncée comme manuelle.
-
-## Exemple commenté
-
-$example Faites varier une contrainte et expliquez pourquoi le choix pourrait alors changer.
-
-## Contre-exemple et erreur fréquente
-
-$mistake Reproduisez le défaut avec une preuve locale avant de proposer une correction.
-
-## Vérification de compréhension
-
-Nommez le besoin, une option écartée, un risque de sécurité ou de coût, puis une preuve observable qui distingue les deux options.
-
-:::quiz
-id=$id-check
-question=Quelle preuve démontre le mieux la compréhension de cette leçon ?
-option=Copier uniquement lʼexemple nominal
-option=Prédire puis tester succès, frontière et refus sans ressource externe ni donnée sensible
-option=Présenter une inspection manuelle comme une validation automatique
-correct=1
-success=Correct : une preuve variée, locale et bornée réfute les erreurs plausibles.
-retry=Revenez au besoin, aux contraintes, aux limites et au contre-exemple avant de choisir.
-:::
-
-## Exercice guidé
-
-Analysez le cas fourni, remplissez la matrice besoin / option / compromis / preuve et exécutez le contrôle simulé associé. Aucun compte Azure nʼest requis.
-
-## Exercice autonome
-
-Changez une hypothèse fonctionnelle ou opérationnelle. Prenez une nouvelle décision, écrivez sa limite et proposez une commande PowerShell reproductible qui ne crée aucune ressource payante.
-
-## Débogage
-
-Partez du contre-exemple, observez le symptôme sans donnée sensible, localisez la première hypothèse fausse et ajoutez une preuve de non-régression.
-
-## Entretien
-
-Expliquez en trois minutes la décision, son coût, sa frontière de sécurité et la donnée qui vous ferait changer dʼavis. Distinguez observation, hypothèse et fait vérifié.
-
-## Résumé
-
-- Le besoin gouverne le service ou la technique.
-- Les coûts, droits et données sont bornés avant lʼexécution.
-- Une preuve locale reste disponible sans abonnement cloud.
-- Une limite explicitée vaut mieux quʼune promesse non vérifiable.
-
-## Cartes de révision
-
-1. Quelle contrainte justifie le choix ?
-2. Quelle preuve locale réfute lʼoption incorrecte ?
-3. Quelle donnée ne doit jamais entrer dans les logs ou le dépôt ?
-
-## Test de maîtrise
-
-Sans relire la leçon, traitez un scénario différent, produisez la matrice de décision et une preuve locale. Si une solution ou réponse modèle a été consultée, expliquez-la avec vos mots et planifiez une reprise à blanc : cette tentative nʼest pas maîtrisée.
-"@
+    Write-TextFile (Join-Path $directory 'lesson.md') (New-LessonScaffold -Id $id -Title $title `
+        -PreviousLessonId $previousLessonId -Concept $concept -Example $example -Mistake $mistake)
     $previousLessonId = $id
 }
 
@@ -159,10 +79,12 @@ $ExerciseRows = @(
 )
 
 $ExerciseIdsByWeek = @{}
+# Ces suppressions retirent des documents obsolètes d'une génération antérieure. Elles ne
+# s'appliquent qu'avec -Force : sans ce commutateur, l'échafaudeur ne détruit aucun contenu publié.
 $staleExercisePath=Join-Path $CatalogRoot 'exercises/azure-hosting-choice-001'
-if(Test-Path -LiteralPath $staleExercisePath){Remove-Item -LiteralPath $staleExercisePath -Recurse -Force}
+if($script:ForceOverwrite -and (Test-Path -LiteralPath $staleExercisePath)){Remove-Item -LiteralPath $staleExercisePath -Recurse -Force}
 $staleInterviewPath=Join-Path $CatalogRoot 'interviews/interview-azure-hosting-choice-001.json'
-if(Test-Path -LiteralPath $staleInterviewPath){Remove-Item -LiteralPath $staleInterviewPath -Force}
+if($script:ForceOverwrite -and (Test-Path -LiteralPath $staleInterviewPath)){Remove-Item -LiteralPath $staleInterviewPath -Force}
 $exerciseSpecs = New-Object System.Collections.Generic.List[object]
 foreach ($row in $ExerciseRows) {
     $parts = $row -split '§', 13
@@ -219,7 +141,7 @@ Implémentez `Submission.$($spec.Method)` avec la signature fournie. $($spec.Rul
 
 Le résultat reste déterministe et hors ligne : aucun abonnement, appel Azure ou identifiant réel nʼest nécessaire. Avant le code, écrivez un cas nominal, une frontière, un refus et le risque que ces preuves réduisent.
 
-Exemple : entrée `$(Convert-JsonCompact $firstVisible[0])`, sortie `$(Convert-JsonCompact $firstVisible[1])`.
+Exemple : entrée ``$(Convert-JsonCompact $firstVisible[0])``, sortie ``$(Convert-JsonCompact $firstVisible[1])``.
 "@
     Write-TextFile (Join-Path $directory 'explanation.md') "# Explication`n`n$($spec.Rule) La solution sépare validation et décision et nʼeffectue aucun appel externe. Complexité : **$($spec.Complexity)**. Les cas cachés changent les frontières et réfutent une constante mémorisée. Après consultation, expliquez la règle avec vos mots et planifiez une reprise à blanc : cette tentative nʼest pas maîtrisée."
     Write-TextFile (Join-Path $directory 'review-cards.md') "# Cartes de révision`n`n## card-$($spec.Id)-rule`n`n**Question :** Quelle règle gouverne la décision ?  `n**Réponse attendue :** $($spec.Rule)`n`n## card-$($spec.Id)-proof`n`n**Question :** Quelle preuve empêche le contournement ?  `n**Réponse attendue :** Un cas de frontière ou de refus distinct des exemples visibles."
@@ -322,8 +244,12 @@ $InterviewRows = @(
     'Ask for review evidence§english.review§How do you request stronger evidence in a code review?§Could you add a test that fails when an unauthorized user calls this route, and include the command output? The current success case does not prove the policy.'
 )
 
-$generatedInterviewFiles=Get-ChildItem (Join-Path $CatalogRoot 'interviews') -File -Filter 'interview-s21-s24-*.json'
-foreach($generatedInterviewFile in $generatedInterviewFiles){Remove-Item -LiteralPath $generatedInterviewFile.FullName -Force}
+# La renumérotation des fiches exige de repartir d'un lot vide, ce qui écrase toute reprise
+# éditoriale : réservé à -Force, conformément au contrat de l'échafaudeur.
+if($script:ForceOverwrite){
+    $generatedInterviewFiles=Get-ChildItem (Join-Path $CatalogRoot 'interviews') -File -Filter 'interview-s21-s24-*.json'
+    foreach($generatedInterviewFile in $generatedInterviewFiles){Remove-Item -LiteralPath $generatedInterviewFile.FullName -Force}
+}
 for ($index=0; $index -lt $InterviewRows.Count; $index++) {
     $parts=$InterviewRows[$index] -split '§', 4
     $number=$index + 1
@@ -716,8 +642,23 @@ timestamp,correlationId,operation,status,durationMs
 2026-08-05T08:00:06Z,forge-fake-corr-004,GET-orders,200,810
 '@
 Write-PowerShellFile (Join-Path $AzureLabRoot 'Resolve-SimulatedIncident.ps1') @'
+<#
+.SYNOPSIS
+    Échafaude les documents S21-S24 : manifestes, sources, jeux de tests et squelettes de leçon.
+
+.DESCRIPTION
+    Ce script ne rédige pas la pédagogie. Il produit la structure et les données dérivables, et
+    laisse des marqueurs « TODO: » partout où une rédaction humaine est nécessaire. Ces marqueurs
+    sont refusés par la règle d'authenticité unsubstituted-placeholder : un lot échafaudé mais non
+    rédigé ne peut donc pas être publié.
+
+    Un fichier déjà présent est conservé, jamais réécrit, sauf avec -Force.
+
+.PARAMETER Force
+    Régénère les fichiers existants. Détruit toute reprise éditoriale.
+#>
 [CmdletBinding()]
-param()
+param([switch]$Force)
 $ErrorActionPreference='Stop'
 $rows=Import-Csv (Join-Path $PSScriptRoot 'telemetry/simulated-incident.csv')
 if($rows.Count -ne 4){throw 'Le jeu de télémétrie simulé doit contenir exactement quatre observations.'}
@@ -729,8 +670,23 @@ if($errors.Count -ne 2 -or $p95 -ne 1100){throw "Diagnostic inattendu : errors=$
 Write-Output 'INCIDENT SIMULÉ RÉSOLU : 2 erreurs corrélées, p95 borné à 1100 ms, aucune donnée personnelle.'
 '@
 Write-PowerShellFile (Join-Path $AzureLabRoot 'Verify-LocalMode.ps1') @'
+<#
+.SYNOPSIS
+    Échafaude les documents S21-S24 : manifestes, sources, jeux de tests et squelettes de leçon.
+
+.DESCRIPTION
+    Ce script ne rédige pas la pédagogie. Il produit la structure et les données dérivables, et
+    laisse des marqueurs « TODO: » partout où une rédaction humaine est nécessaire. Ces marqueurs
+    sont refusés par la règle d'authenticité unsubstituted-placeholder : un lot échafaudé mais non
+    rédigé ne peut donc pas être publié.
+
+    Un fichier déjà présent est conservé, jamais réécrit, sauf avec -Force.
+
+.PARAMETER Force
+    Régénère les fichiers existants. Détruit toute reprise éditoriale.
+#>
 [CmdletBinding()]
-param()
+param([switch]$Force)
 $ErrorActionPreference='Stop'
 $root=$PSScriptRoot
 $bicep=Get-Content -Raw (Join-Path $root 'infra/main.bicep')
@@ -827,3 +783,5 @@ Write-Output "EXPORT CRÉÉ : $([System.IO.Path]::GetFullPath($OutputPath))"
 '@
 
 Write-Output 'Contenu S21-S24 généré : 10 leçons, 6 exercices Azure, 62 entretiens, 50 cartes dʼanglais, 1 projet final et 2 examens.'
+
+Write-ScaffoldSummary -ScriptName (Split-Path -Leaf $PSCommandPath)

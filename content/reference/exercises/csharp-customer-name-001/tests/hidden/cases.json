@@ -20,6 +20,20 @@
                       "expected":  "ZOË",
                       "expectedException":  null,
                       "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_TabAndNewline",
+                      "message":  "Tabulation et saut de ligne : réfute un rognage limité à l'espace.",
+                      "arguments":  ["\tada\n"],
+                      "expected":  "ADA",
+                      "argumentsUnchanged":  true
+                  },
+                  {
+                      "name":  "Hidden_SingleLetter",
+                      "message":  "Une seule lettre : réfute une longueur minimale supposée.",
+                      "arguments":  ["a"],
+                      "expected":  "A",
+                      "argumentsUnchanged":  true
                   }
               ]
 }

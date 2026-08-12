@@ -20,8 +20,8 @@
                     ],
     "examples":  [
                      {
-                         "input":  "[{\"value\":[[1,3,2],2],\"Count\":2},{\"value\":[3,2],\"Count\":2}]",
-                         "output":  "[{\"value\":[[],0],\"Count\":2},{\"value\":[],\"Count\":0}]"
+                         "input":  "[[1,3,2],2]",
+                         "output":  "[3,2]"
                      }
                  ],
     "reflectionFields":  [
@@ -54,7 +54,7 @@
                   {
                       "level":  4,
                       "kind":  "partial-pseudocode",
-                      "content":  "valider les bornes ; parcourir ou décider ; retourner un nouveau résultat déterministe"
+                      "content":  "si values est null lever ArgumentNullException ; conserver les éléments supérieurs ou égaux à minimum, dans l'ordre de lecture ; matérialiser le résultat en tableau"
                   }
               ],
     "solution":  {
@@ -67,9 +67,10 @@
     "explanation":  "explanation.md",
     "complexity":  "O(n) en temps et O(n) en espace",
     "commonMistakes":  [
-                           "Coder uniquement les exemples visibles",
-                           "Oublier une borne ou modifier une entrée",
-                           "Annoncer une complexité sans compter les opérations dominantes"
+                           "Utiliser une comparaison stricte et exclure la borne annoncée inclusive",
+                           "Trier le résultat alors que le contrat conserve l'ordre d'entrée",
+                           "Retourner la séquence paresseuse sans la matérialiser",
+                           "Retirer les éléments du tableau reçu au lieu d'en produire un nouveau"
                        ],
     "variantId":  "csharp-average-001",
     "reviewCards":  [

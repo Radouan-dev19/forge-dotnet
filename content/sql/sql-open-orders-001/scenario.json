@@ -30,8 +30,12 @@
     "timeoutSeconds":  5,
     "maxRows":  20,
     "effectAssertions":  [
-                             "Les quatre clients, cinq commandes et six lignes restent inchangés après rollback"
+                             "Seules les commandes au statut ouvert sont retournées et aucun statut n'est modifié"
                          ],
     "solutionPath":  "solution.md",
+    "reviewCards": [
+        "card-sql-open-orders-001-rule",
+        "card-sql-open-orders-001-edge"
+    ],
     "license":  "CC-BY-4.0"
 }

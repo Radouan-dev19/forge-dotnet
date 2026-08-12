@@ -1,39 +1,40 @@
 {
-    "schemaVersion":  1,
-    "id":  "english-card-08-spoken",
-    "version":  1,
-    "title":  "Deletion plan — spoken follow-up",
-    "level":  "B1",
-    "durationMinutes":  10,
-    "skills":  [
-                   "english.spoken",
-                   "azure.operations"
-               ],
-    "situation":  "In a technical discussion, a lab owner must close the exercise. You must answer aloud accurately without overstating the evidence.",
-    "instructions":  [
-                         "Deliver a sixty-second answer with decision, evidence, limitation and one clarifying question."
-                     ],
-    "vocabulary":  [
-                       {
-                           "term":  "resource cleanup",
-                           "meaning":  "the precise concept required for deletion plan"
-                       },
-                       {
-                           "term":  "verified evidence",
-                           "meaning":  "an observation supported by a reproducible check"
-                       }
-                   ],
-    "expectedElements":  [
-                             "A clear decision tied to the scenario",
-                             "Verified evidence and one explicit limitation",
-                             "One useful clarifying question"
-                         ],
-    "modelAnswer":  "My decision is that The owner deletes the dedicated resource group, checks that no billable resource remains and records the time of verification. The current evidence is limited to the documented checks, so I would not claim more. Which constraint or observation would make us revisit this decision?",
-    "commonMistakes":  [
-                           "Using confident adjectives without naming evidence or a limitation"
-                       ],
-    "variants":  [
-                     "Answer again after the reviewer changes one cost or security constraint."
-                 ],
-    "license":  "CC-BY-4.0"
+  "schemaVersion": 1,
+  "id": "english-card-08-spoken",
+  "version": 1,
+  "title": "Deletion plan — spoken follow-up",
+  "level": "B1",
+  "durationMinutes": 10,
+  "skills": [
+    "english.spoken",
+    "azure.operations"
+  ],
+  "situation": "In a technical discussion, a lab owner must close the exercise. You must answer aloud accurately without overstating the evidence.",
+  "instructions": [
+    "Say aloud how the lab resources are removed, and name the one resource that survives deletion on purpose."
+  ],
+  "vocabulary": [
+    {
+      "term": "resource cleanup",
+      "meaning": "the ordered removal of everything an exercise created, verified rather than assumed"
+    },
+    {
+      "term": "residual cost",
+      "meaning": "a charge that continues after the obvious resource is deleted, typically from storage or a reserved address"
+    }
+  ],
+  "expectedElements": [
+    "The deletion covers dependencies, not only the visible resource",
+    "What is deliberately kept is named",
+    "The absence of residual cost is verified, not assumed"
+  ],
+  "modelAnswer": "Deletion goes in dependency order: the compute resource first, then the network attachments, then the storage account. Doing it in the other order leaves resources that cannot be removed because something still references them. One thing survives on purpose, and that is the audit log export, because we need it after the exercise closes. My evidence that nothing billable remains is the cost report for the following day, not the resource list, because a deleted resource can still produce a partial charge and a reserved address keeps costing while unattached. Do you want the log export retained for a fixed period?",
+  "commonMistakes": [
+    "Deleting the visible resource and treating the cleanup as finished",
+    "Checking a resource list instead of a cost report to prove nothing remains billable"
+  ],
+  "variants": [
+    "Answer again when the owner has already deleted the storage account first."
+  ],
+  "license": "CC-BY-4.0"
 }

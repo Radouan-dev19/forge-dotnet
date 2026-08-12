@@ -2,7 +2,7 @@
     "schemaVersion":  1,
     "id":  "debug-duplicate-count-001",
     "version":  1,
-    "title":  "Doublons comptés deux fois",
+    "title":  "Nombre de clients distincts anormalement élevé",
     "difficulty":  3,
     "skills":  [
                    "debugging.data"
@@ -13,17 +13,18 @@
     "estimatedMinutes":  40,
     "brokenRepositoryPath":  "broken/",
     "ticketPath":  "ticket.md",
-    "expectedBehavior":  "Le résultat doit respecter tous les cas du contrat sans mutation cachée. La double boucle compte des paires au lieu des valeurs distinctes.",
+    "expectedBehavior":  "Le rapport retourne le nombre de valeurs distinctes de l'extrait, quelle que soit la répétition. Un extrait vide donne zéro. L'extrait reçu n'est jamais modifié.",
     "logsPath":  "logs.txt",
     "checklist":  [
-                      "Reproduire avec le cas de borne",
-                      "Placer un breakpoint avant la divergence",
-                      "Comparer entrée et valeur intermédiaire",
-                      "Ajouter le cas de non-régression"
+                      "Reproduire avec un extrait contenant exactement une répétition",
+                      "Compter à la main le résultat attendu avant de lancer le traitement",
+                      "Observer combien de fois chaque valeur est prise en compte",
+                      "Relever la durée du rapport quand la taille de l'extrait double"
                   ],
     "observationQuestions":  [
-                                 "Quelle est la première valeur qui diverge du résultat prédit ?",
-                                 "Quelle condition ou mutation explique causalement ce symptôme ?"
+                                 "Combien de fois une valeur répétée est-elle comptabilisée ?",
+                                 "Le résultat serait-il correct sur un extrait sans aucune répétition ?",
+                                 "Que devient la durée du traitement quand la taille de l'extrait double ?"
                              ],
     "correctionPath":  "correction/",
     "regressionTestPath":  "regression-test.md",

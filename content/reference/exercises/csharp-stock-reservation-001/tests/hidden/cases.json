@@ -22,6 +22,20 @@
                       "expected":  false,
                       "expectedException":  null,
                       "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_EmptyStock",
+                      "message":  "Stock vide et demande non nulle : refus.",
+                      "arguments":  [0,1],
+                      "expected":  false,
+                      "argumentsUnchanged":  true
+                  },
+                  {
+                      "name":  "Hidden_NegativeRequest",
+                      "message":  "Demande négative : refusée, elle n'a pas de sens métier.",
+                      "arguments":  [5,-1],
+                      "expected":  false,
+                      "argumentsUnchanged":  true
                   }
               ]
 }

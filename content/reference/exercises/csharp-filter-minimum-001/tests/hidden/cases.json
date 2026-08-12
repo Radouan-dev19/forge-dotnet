@@ -35,6 +35,20 @@
                                    ],
                       "expectedException":  null,
                       "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_NullInput",
+                      "message":  "Référence absente : refus explicite.",
+                      "arguments":  [null,0],
+                      "expectedException":  "ArgumentNullException",
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_NegativeThreshold",
+                      "message":  "Seuil négatif : réfute une comparaison qui supposerait des valeurs positives.",
+                      "arguments":  [[-5,-1],-3],
+                      "expected":  [-1],
+                      "argumentsUnchanged":  true
                   }
               ]
 }

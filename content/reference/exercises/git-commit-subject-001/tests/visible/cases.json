@@ -20,6 +20,13 @@
                       "expected":  false,
                       "expectedException":  null,
                       "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Visible_NullSubject",
+                      "message":  "Sujet absent : refusé sans exception.",
+                      "arguments":  [null],
+                      "expected":  false,
+                      "argumentsUnchanged":  false
                   }
               ]
 }

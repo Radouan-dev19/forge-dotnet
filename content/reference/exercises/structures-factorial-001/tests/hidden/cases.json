@@ -19,6 +19,20 @@
                                     ],
                       "expectedException":  "ArgumentOutOfRangeException",
                       "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_AboveUpperBound",
+                      "message":  "Au-delà de la borne : le refus est explicite plutôt qu'un dépassement silencieux.",
+                      "arguments":  [13],
+                      "expectedException":  "ArgumentOutOfRangeException",
+                      "argumentsUnchanged":  true
+                  },
+                  {
+                      "name":  "Hidden_SmallValue",
+                      "message":  "Petite valeur : réfute un cas de base mal placé.",
+                      "arguments":  [3],
+                      "expected":  6,
+                      "argumentsUnchanged":  true
                   }
               ]
 }

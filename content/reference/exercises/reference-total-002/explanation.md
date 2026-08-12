@@ -1,3 +1,7 @@
 # Explication
 
-Valider total et taux puis arrondir une seule fois le net. La solution de référence sépare la validation de l’opération principale et ne dépend d’aucun état externe. Sa complexité est **O(1) en temps et O(1) en espace**. Les cas cachés changent valeurs, bornes et tailles afin qu’une constante mémorisée ne puisse pas réussir.
+Valider total et taux puis arrondir une seule fois le net.
+
+Ce qui est retourné est le net, et la formule le dit directement : le total multiplié par ce qui reste après remise. Passer par une remise intermédiaire oblige à l'arrondir avant de la soustraire, donc à arrondir deux fois le même calcul — un écart d'un centime apparaît alors sur certaines valeurs.
+
+Le taux est borné des deux côtés. Au-delà de un, le complément devient négatif et le net aussi, ce qui n'a aucun sens métier et se propagerait sans erreur visible. Le mode d'arrondi, enfin, se déclare : celui de la plateforme est statistiquement correct et surprenant sur une facture, où l'attente est un arrondi qui s'éloigne de zéro. La décision est en temps constant.

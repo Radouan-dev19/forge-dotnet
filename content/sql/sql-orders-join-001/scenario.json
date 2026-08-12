@@ -24,5 +24,9 @@
     "Les quatre commandes et les trois clients restent inchangés après exécution"
   ],
   "solutionPath": "solution.md",
+  "reviewCards": [
+      "card-sql-orders-join-001-rule",
+      "card-sql-orders-join-001-edge"
+  ],
   "license": "CC-BY-4.0"
 }

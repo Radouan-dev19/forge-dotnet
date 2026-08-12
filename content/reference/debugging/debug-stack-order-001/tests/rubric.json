@@ -1,39 +1,40 @@
 {
-    "schemaVersion":  1,
-    "scenarioId":  "debug-stack-order-001",
-    "criteria":  [
-                     {
-                         "id":  "cause",
-                         "label":  "La cause relie la divergence à la règle fautive.",
-                         "journalField":  "cause",
-                         "requiredTerms":  [
-                                               "borne",
-                                               "condition",
-                                               "mutation"
-                                           ],
-                         "minimumMatches":  1
-                     },
-                     {
-                         "id":  "evidence",
-                         "label":  "La preuve cite entrée, attendu et réel.",
-                         "journalField":  "evidence",
-                         "requiredTerms":  [
-                                               "entrée",
-                                               "attendu",
-                                               "réel"
-                                           ],
-                         "minimumMatches":  2
-                     },
-                     {
-                         "id":  "test",
-                         "label":  "Le test de non-régression cible la borne.",
-                         "journalField":  "test",
-                         "requiredTerms":  [
-                                               "borne",
-                                               "échoue",
-                                               "réussit"
-                                           ],
-                         "minimumMatches":  2
-                     }
-                 ]
+  "schemaVersion": 1,
+  "scenarioId": "debug-stack-order-001",
+  "criteria": [
+    {
+      "id": "cause-double-inversion",
+      "label": "La cause identifie la seconde inversion de trop.",
+      "journalField": "cause",
+      "requiredTerms": [
+        "deux fois",
+        "seconde",
+        "inversion",
+        "annule"
+      ],
+      "minimumMatches": 2
+    },
+    {
+      "id": "evidence-identity",
+      "label": "La preuve montre que le résultat égale l'entrée.",
+      "journalField": "evidence",
+      "requiredTerms": [
+        "abc",
+        "identique",
+        "attendu"
+      ],
+      "minimumMatches": 2
+    },
+    {
+      "id": "test-palindrome-trap",
+      "label": "Le test évite les libellés où le symptôme serait invisible.",
+      "journalField": "test",
+      "requiredTerms": [
+        "deux caractères",
+        "échoue",
+        "réussit"
+      ],
+      "minimumMatches": 2
+    }
+  ]
 }

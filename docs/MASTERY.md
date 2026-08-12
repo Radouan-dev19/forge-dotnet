@@ -18,6 +18,34 @@ score = 0,45 × pratique autonome
 
 Chaque composante est bornée à 0–100. Une composante sans preuve vaut zéro et son poids n’est jamais redistribué. Le score final est borné et arrondi à deux décimales, avec arrondi au plus proche et milieu éloigné de zéro.
 
+### Sources de la rétention espacée
+
+La composante « rétention espacée » n’était alimentée que par une **question ratée du bilan
+d’entrée**. Ce bilan compte trente-six questions, quatre par domaine, passées une seule fois, et
+toute preuve est écartée au-delà de la durée de validité. Le poids d’une composante sans preuve
+n’étant jamais redistribué, un domaine critique plafonnait alors à `0,45 + 0,25 + 0,10 + 0,05`, soit
+exactement 85 — le seuil lui-même, atteignable uniquement avec 100 partout ailleurs et sans le
+moindre indice. Un profil sérieux mais imparfait — pratique 95, examen 90, explication 90, quiz 100 —
+tombait à 79,25, sous le seuil non critique. Passé la durée de validité, la situation valait pour
+tout le monde.
+
+Les **cartes de révision des exercices** rejoignent donc les sources admissibles. Les garanties
+restent identiques pour toutes : correction serveur, mode à choix, et carte déclarant explicitement
+pouvoir produire une preuve — `ReviewRules.ProducesMasteryEvidence` en tient la liste, et un test de
+domaine la borne. Une carte n’apparaît que pour un exercice réellement soumis au runner, ce qui
+empêche d’en récolter sur un exercice jamais ouvert. **Aucun poids ni seuil n’a été modifié** :
+`MasteryRulesTests` documente le blocage et prouve son ouverture par la seule addition d’une preuve.
+
+La banque compte **230 cartes pour 115 exercices**. Les quatre domaines critiques dont la pratique
+passe par des exercices — C#, débogage, API, tests — sont couverts intégralement, et deux règles de
+`ReviewCardQualityTests` le tiennent : tout exercice d’un de ces domaines porte ses cartes, et le
+domaine déclaré par une carte est celui déduit de la première compétence de son exercice. Une carte
+mal classée alimenterait la rétention d’un domaine que l’apprenant n’a pas travaillé.
+
+Le domaine SQL fait exception : sa pratique passe par des scénarios, non par des exercices, aucun
+exercice ne porte de compétence `sql.*`, et aucune carte ne l’alimente à ce jour. Le couvrir demande
+une clé de carte généralisée de l’exercice vers l’élément pratiqué, quel qu’il soit.
+
 Les plafonds d’assistance sont H1 90, H2 80, H3 70, H4 60 et solution 0. La consultation d’une solution contamine définitivement la pratique autonome du même exercice dans la politique v1, y compris si une réussite antérieure existe. Une reprise espacée peut produire une preuve distincte uniquement lorsqu’une carte diagnostique est vérifiée côté serveur.
 
 Pour un même exercice, la tentative vérifiée la plus récente a un poids 1, la précédente 0,5 et chaque tentative plus ancienne 0,25. Une observation âgée de 31 à 90 jours reçoit en plus un poids de récence 0,5 ; au-delà de 90 jours, elle ne contribue plus.
@@ -39,6 +67,21 @@ Une validation de domaine exige simultanément le score requis, trois exercices 
 
 ## Portes
 
+### Producteurs d’accomplissement
+
+La politique déclare **vingt-trois clés d’accomplissement**. Longtemps, une seule avait un
+producteur — `exam.90-minutes` — et les quatre portes étaient donc fermées définitivement, sans que
+rien ne le signale. `project.console` en a désormais un : une soumission de projet dont **toutes**
+les suites d’acceptation passent, réellement exécutées dans le bac à sable, enregistrée en
+`AutomaticTests`. La clé satisfaite est déclarée par le contenu, dans le manifeste du projet, et non
+déduite du code.
+
+Une soumission faite en mode manuel n’est pas une réussite : le domaine refuse une réussite non
+vérifiée automatiquement, et `IsVerifiedAchievement` rejette de toute façon `ManualDeclaration`.
+`ProjectAchievementTests` tient l’inventaire : toute clé exigée par une porte figure soit parmi les
+clés produites, soit parmi les **vingt et une** clés déclarées sans producteur, et ce dernier nombre
+ne peut que descendre.
+
 | Porte | Conditions cumulatives |
 |---|---|
 | A — Junior fiable | C# ≥85, débogage ≥80, SQL ≥75, 10 exercices vérifiés sans aide et non contaminés, mini-projet console vérifié, examen sans aide de 90 minutes |
@@ -46,7 +89,50 @@ Une validation de domaine exige simultanément le score requis, trois exercices 
 | C — Équipe moderne | B, Docker, CI, authN/authZ, logs, déploiement, incident simulé, entretien blanc |
 | D — Intermédiaire en construction | C, performance, sécurité, architecture pragmatique, fonctionnalité autonome, revue de code, anglais professionnel, défense finale |
 
-Chaque condition absente produit un motif de blocage. Une porte ne s’ouvre jamais par moyenne ou compensation. Depuis 07C, l’accomplissement d’examen de la porte A exige une tentative réussie sans aide dont la durée configurée est d’au moins 90 minutes. La banque de référence de 30 minutes ne le satisfait pas. Aucun producteur de livrable n’est ajouté : les quatre portes restent donc honnêtement fermées dans l’application courante.
+Chaque condition absente produit un motif de blocage. Une porte ne s’ouvre jamais par moyenne ou compensation. Depuis 07C, l’accomplissement d’examen de la porte A exige une tentative réussie sans aide dont la durée configurée est d’au moins 90 minutes. La banque de référence de 30 minutes ne le satisfait pas.
+
+### Ce qu’un domaine peut réellement atteindre
+
+Une version antérieure de ce document affirmait que la porte A était « franchissable par le travail »
+dès lors que ses deux accomplissements avaient un producteur. **C’était faux**, et pour une raison
+qui n’avait pas été cherchée : le producteur d’un accomplissement ne dit rien du plafond d’un score.
+
+Deux composantes n’avaient aucun producteur — explication et quiz — et la pratique comme les examens
+attribuaient leurs observations à un domaine codé en dur. Un exercice `api-*` alimentait le score C#
+et jamais le score Api. Le poids d’une composante sans preuve n’étant jamais redistribué, il en
+résultait des plafonds inférieurs aux seuils, donc des conditions de porte hors d’atteinte :
+
+| Domaine | Plafond mesuré au départ | Plafond aujourd’hui | Seuil |
+|---|---:|---:|---:|
+| C# | 85 — atteignable seulement à 100 partout | **90** | 85 |
+| Débogage | **60** | **90** | 80 |
+| Api, Tests | **15** | **90** | 85 |
+| Sécurité | **15** | **90** | 80 |
+| SQL | 70 | **90** | 75 |
+| Docker, CI, Architecture, Performance, Anglais | **0** | **90** | 80 |
+
+Trois corrections, sans qu’aucun poids ni seuil ne bouge : le domaine d’une observation de pratique
+ou d’examen vient désormais de la compétence de l’élément travaillé — `MasterySkillDomains` en est la
+source unique ; le quiz de leçon, déjà corrigé côté serveur, produit une observation ; et la banque
+de cartes couvre les exercices publiés **et** les 40 scénarios SQL — 364 cartes sur 182 éléments à ce
+jour. `ReviewCardQualityTests` en tient le plancher et exige que tout exercice neuf d’un domaine
+critique arrive avec ses cartes : sans elles, il alimenterait la pratique sans jamais alimenter la
+rétention, et le domaine replafonnerait sous son seuil.
+
+`MasteryReachabilityTests` calcule ce plafond à partir d’un inventaire des producteurs et refuse
+qu’un domaine plafonne **à** son seuil ou en dessous — un plafond égal au seuil n’est franchi qu’avec
+cent sur chaque composante produite, ce qui est un blocage déguisé en objectif.
+
+L’**explication reste sans producteur** : aucune preuve serveur honnête n’existe pour elle et une
+déclaration manuelle est refusée par la politique. Son poids de 10 % est donc perdu, ce qui fixe le
+plafond général à 90. C’est la seule composante encore inventoriée comme non produite.
+
+Les portes B, C et D restent fermées : leurs vingt et une exigences d’accomplissement n’ont aucun
+producteur, ce que `ProjectAchievementTests` consigne.
+
+**Limite du quiz, assumée** : seule une réussite est persistée, si bien qu’une réponse juste au
+cinquième essai vaut la première. À 5 % de poids et sous la règle « accumulation de quiz faciles →
+poids maximal 5 % » de la matrice anti-contournement, l’effet reste borné.
 
 ## Persistance et audit
 

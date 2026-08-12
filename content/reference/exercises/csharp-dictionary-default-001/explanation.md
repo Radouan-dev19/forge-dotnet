@@ -1,3 +1,7 @@
 # Explication
 
-Distinguer une clé absente d’une exception et ne jamais muter le dictionnaire. La solution de référence sépare la validation de l’opération principale et ne dépend d’aucun état externe. Sa complexité est **O(1) amorti en temps et O(1) en espace**. Les cas cachés changent valeurs, bornes et tailles afin qu’une constante mémorisée ne puisse pas réussir.
+Distinguer une clé absente d'une exception et ne jamais muter le dictionnaire.
+
+Deux absences ne se valent pas. Un dictionnaire absent est une faute d'appelant et doit lever ; une clé absente est un cas normal et vaut zéro, ce qui évite à chaque appelant de tester la présence avant de lire. Indexer directement confondrait les deux en levant dans le second cas.
+
+La lecture par tentative n'insère rien, et c'est ce qui compte : la variante qui écrit une valeur par défaut pour tester la présence fait grossir le dictionnaire à chaque consultation, défaut qui ne se manifeste qu'en charge. La lecture reste en temps constant amorti.

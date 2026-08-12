@@ -15,13 +15,13 @@
     "statement":  "statement.md",
     "constraints":  [
                         "Conserver exactement la signature publique",
-                        "Ignorer les frames système et conserver la première frame applicative dans l’ordre.",
-                        "Ne pas modifier les entrées reçues sauf mention explicite"
+                        "Ignorer les frames système et conserver la première frame applicative dans l'ordre.",
+                        "Ne lever aucune exception : la trace est fournie sous forme de texte"
                     ],
     "examples":  [
                      {
-                         "input":  "[{\"value\":[\"at System.X\\nat Forge.Order.Run\"],\"Count\":1},\"at Forge.Order.Run\"]",
-                         "output":  "[{\"value\":[\"\"],\"Count\":1},\"\"]"
+                         "input":  "[\"at System.X\\nat Forge.Order.Run\"]",
+                         "output":  "\"at Forge.Order.Run\""
                      }
                  ],
     "reflectionFields":  [
@@ -54,7 +54,7 @@
                   {
                       "level":  4,
                       "kind":  "partial-pseudocode",
-                      "content":  "valider les bornes ; parcourir ou décider ; retourner un nouveau résultat déterministe"
+                      "content":  "retourner une chaîne vide pour une trace absente ou composée de blancs ; parcourir les lignes dans l'ordre ; retourner la première dont la forme, une fois les blancs de bordure retirés, désigne une frame applicative ; retourner une chaîne vide si aucune ne convient"
                   }
               ],
     "solution":  {
@@ -67,9 +67,10 @@
     "explanation":  "explanation.md",
     "complexity":  "O(n) en temps et O(n) en espace",
     "commonMistakes":  [
-                           "Coder uniquement les exemples visibles",
-                           "Oublier une borne ou modifier une entrée",
-                           "Annoncer une complexité sans compter les opérations dominantes"
+                           "Retourner la première ligne de la trace, qui appartient souvent au cadre d'exécution",
+                           "Parcourir les lignes en sens inverse et retourner la frame la plus profonde",
+                           "Oublier de retirer les blancs de bordure avant d'examiner la forme de la ligne",
+                           "Lever quand aucune frame applicative n'est présente"
                        ],
     "variantId":  "debug-log-errors-001",
     "reviewCards":  [

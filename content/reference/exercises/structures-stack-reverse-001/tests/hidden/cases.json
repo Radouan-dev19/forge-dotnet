@@ -20,6 +20,20 @@
                       "expected":  "b a",
                       "expectedException":  null,
                       "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_TwoCharacters",
+                      "message":  "Deux caractères : le plus petit cas où l'ordre change réellement.",
+                      "arguments":  ["ab"],
+                      "expected":  "ba",
+                      "argumentsUnchanged":  true
+                  },
+                  {
+                      "name":  "Hidden_WhitespaceOnly",
+                      "message":  "Espaces uniquement : réfute une implémentation qui rognerait l'entrée.",
+                      "arguments":  ["  "],
+                      "expected":  "  ",
+                      "argumentsUnchanged":  true
                   }
               ]
 }

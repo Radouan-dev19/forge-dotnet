@@ -20,6 +20,13 @@
                       "expected":  "",
                       "expectedException":  null,
                       "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Visible_SingleApplicationFrame",
+                      "message":  "Une seule ligne, applicative : elle est retournée telle quelle.",
+                      "arguments":  ["at Forge.X"],
+                      "expected":  "at Forge.X",
+                      "argumentsUnchanged":  true
                   }
               ]
 }

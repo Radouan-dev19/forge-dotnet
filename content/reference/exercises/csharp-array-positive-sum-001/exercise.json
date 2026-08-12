@@ -20,8 +20,8 @@
                     ],
     "examples":  [
                      {
-                         "input":  "[{\"value\":[[1,-2,3]],\"Count\":1},4]",
-                         "output":  "[{\"value\":[[]],\"Count\":1},0]"
+                         "input":  "[[1,-2,3]]",
+                         "output":  "4"
                      }
                  ],
     "reflectionFields":  [
@@ -54,7 +54,7 @@
                   {
                       "level":  4,
                       "kind":  "partial-pseudocode",
-                      "content":  "valider les bornes ; parcourir ou décider ; retourner un nouveau résultat déterministe"
+                      "content":  "si values est null lever ArgumentNullException ; partir d'un accumulateur à zéro ; n'ajouter une valeur que si elle est strictement supérieure à zéro ; l'addition est vérifiée pour signaler un dépassement au lieu de le laisser passer"
                   }
               ],
     "solution":  {
@@ -67,9 +67,10 @@
     "explanation":  "explanation.md",
     "complexity":  "O(n) en temps et O(1) en espace",
     "commonMistakes":  [
-                           "Coder uniquement les exemples visibles",
-                           "Oublier une borne ou modifier une entrée",
-                           "Annoncer une complexité sans compter les opérations dominantes"
+                           "Inclure zéro en utilisant une comparaison large",
+                           "Additionner sans contrôle de dépassement et retourner un total devenu négatif",
+                           "Retourner zéro pour une entrée absente au lieu de lever",
+                           "Confondre le tableau vide, qui vaut zéro, et le tableau absent, qui est une faute d'appelant"
                        ],
     "variantId":  "csharp-string-palindrome-001",
     "reviewCards":  [

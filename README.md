@@ -33,7 +33,7 @@ Routes disponibles :
 - `/practice` : exercices de pratique manuelle publiés ;
 - `/practice/{exerciseId}` : réflexion, indices, tentatives, solution protégée et historique ;
 - `/debug-lab` et `/debug-lab/{scenarioId}` : méthode d'investigation, journal et scénarios de débogage ;
-- `/sql-lab` : sessions SQL Server jetables, exécution bornée, validation et reset ;
+- `/sql-lab` : choix d'un scénario SQL publié, session jetable provisionnée avec son jeu de données, exécution bornée, validation et reset ;
 - `/mastery` : preuves, scores versionnés et portes de maîtrise explicables ;
 - `/reviews` : file de révisions dues et cartes personnelles ;
 - `/exams` et `/exams/{attemptId}` : examens sans aide gouvernés par l'échéance serveur ;
@@ -62,6 +62,31 @@ powershell -ExecutionPolicy Bypass -File scripts/validate-content.ps1 content/fi
 ```
 
 La commande ne démarre pas le serveur, ne charge pas de catalogue et ne modifie pas SQLite. Les contrats, protections et codes de sortie sont décrits dans [`docs/CONTENT_SCHEMA_V1.md`](docs/CONTENT_SCHEMA_V1.md).
+
+## Authenticité du contenu
+
+Au-delà des schémas, trois règles refusent un contenu structurellement valide mais pédagogiquement creux : marqueurs de génération non substitués, paragraphes recopiés d'un document à l'autre, et leçon dont l'explication répète l'intuition ou qui ne montre aucun code.
+
+Le registre [`content/authoring/content-debt.json`](content/authoring/content-debt.json) liste les documents encore hérités du générateur. C'est un cliquet : un défaut non déclaré refuse le lot, une déclaration devenue inutile le refuse aussi, et `ContentAuthenticityTests` refuse toute dette supérieure au plafond figé. La dette ne peut donc que décroître.
+
+```powershell
+# Régénérer le registre après une reprise éditoriale, puis abaisser le plafond dans le test.
+dotnet run --project src/ForgeDotNet.Web --no-launch-profile -- --emit-content-debt content/reference content/sql
+```
+
+Le standard attendu d'une leçon est décrit dans [`docs/CONTENT_AUTHORING_STANDARD.md`](docs/CONTENT_AUTHORING_STANDARD.md). Les semaines S1 à S10 en sont l'application de référence et se suivent sans ressource externe ; S11 à S24 restent à reprendre.
+
+Les échafaudeurs `scripts/New-S*Content.ps1` ne réécrivent jamais un fichier existant sans `-Force`, et émettent des marqueurs `TODO:` que la validation refuse : un lot généré mais non rédigé ne peut pas être publié comme terminé.
+
+### Correction des exercices, sans Docker
+
+```powershell
+dotnet test tests/ForgeDotNet.IntegrationTests --filter FullyQualifiedName~ExerciseCorrectnessTests
+```
+
+Pour chacun des 142 exercices publiés, la solution est compilée en mémoire et doit passer tous ses cas visibles et cachés, tandis que le starter doit compiler et en échouer au moins un. La sémantique reproduit celle du conteneur. Ce contrôle ne remplace pas le bac à sable Docker pour une soumission d'apprenant : il rend seulement le contenu vérifiable sur un poste sans moteur Docker.
+
+Trois autres invariants sont vérifiés au passage : aucun exercice ne répète deux fois les mêmes arguments, chacun porte au moins 3 cas visibles et 4 cachés — sauf domaine booléen épuisé — et chaque cas déclare soit un résultat attendu, soit une exception attendue, jamais les deux.
 
 ## Charger le catalogue minimal
 
@@ -165,6 +190,9 @@ Les analyseurs .NET utilisent le niveau `latest-recommended`. Les avertissements
 
 - Le CodeRunner automatique exige Docker et une image explicitement configurée par digest ; Compose conserve volontairement le mode `Manual`, qui ne constitue jamais une preuve automatique.
 - SqlLab est désactivé par défaut et exige le profil Docker dédié. SQL Server n'est jamais exposé directement sur le réseau hôte.
+- **La dette éditoriale est éteinte** : `content/authoring/content-debt.json` ne déclare plus aucun document, contre 376 au relevé initial. Les trois règles d'authenticité n'ont donc plus aucune exception, et `ContentAuthenticityTests` refuse désormais toute réapparition au lieu de borner un existant. L'audit pédagogique reste néanmoins **refusé** tant que les sept personas n'ont pas été rejoués avec un navigateur et Docker disponibles. Voir [`docs/PEDAGOGICAL_AUDIT.md`](docs/PEDAGOGICAL_AUDIT.md).
+- La densité de pratique reste inégale : 8,8 exercices par semaine en S1–S10 contre 4,1 en S11–S24. La reprise avance semaine par semaine et son état exact est figé par la matrice de `ContentS11S20CoverageTests` : S11 à S17 sont à six exercices chacune, S18 à S20 à trois, S21 à S24 à un ou deux. La cible reste huit par semaine sur S11–S17.
+- Les exercices des semaines S19 à S22 pratiquent Docker, l'intégration continue et Azure par des fonctions pures : ils entraînent la décision, pas le geste. La pratique réelle de ces sujets passe par les laboratoires de `content/labs/`, au nombre de six.
 - Forge.NET reste un produit local mono-utilisateur avec SQLite ; il n'est pas conçu pour une exposition Internet ou un usage collaboratif.
 - La préférence de langue est enregistrée dans le profil de session, mais seule l'interface française est complète.
 
@@ -174,6 +202,7 @@ Les analyseurs .NET utilisent le niveau `latest-recommended`. Les avertissements
 - [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md)
 - [`docs/CURRICULUM.md`](docs/CURRICULUM.md)
 - [`docs/CONTENT_GUIDE.md`](docs/CONTENT_GUIDE.md)
+- [`docs/CONTENT_AUTHORING_STANDARD.md`](docs/CONTENT_AUTHORING_STANDARD.md)
 - [`docs/CONTENT_SCHEMA_V1.md`](docs/CONTENT_SCHEMA_V1.md)
 - [`docs/CONTENT_CATALOG.md`](docs/CONTENT_CATALOG.md)
 - [`docs/LESSON_READER.md`](docs/LESSON_READER.md)

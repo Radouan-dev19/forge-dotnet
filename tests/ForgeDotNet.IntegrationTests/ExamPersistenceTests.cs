@@ -86,7 +86,8 @@ public sealed class ExamPersistenceTests
                 environment.GetRequiredService<IDbContextFactory<ForgeDbContext>>(),
                 environment.GetRequiredService<LocalDatabaseGate>(),
                 new EmptyDiagnosticRepository(),
-                new UnusedRubricSource());
+                new UnusedRubricSource(),
+                new UnusedReviewCardSource());
             ReviewSourceCandidate review = Assert.Single(
                 await reviewProvider.ListAsync(profileId),
                 candidate => candidate.Source.Kind == ReviewSourceKind.ExamFailure);
@@ -311,5 +312,14 @@ public sealed class ExamPersistenceTests
     private sealed class UnusedRubricSource : ForgeDotNet.Application.Diagnostic.IDiagnosticRubricSource
     {
         public ValueTask<ForgeDotNet.Domain.Diagnostic.DiagnosticScoringRubric> GetRubricAsync(CancellationToken cancellationToken = default) => throw new NotSupportedException();
+    }
+
+    /// <summary>Ce scénario ne pratique aucun exercice : aucune carte n'est attendue.</summary>
+    private sealed class UnusedReviewCardSource : ForgeDotNet.Application.Reviews.IReviewCardSource
+    {
+        public ValueTask<IReadOnlyList<ForgeDotNet.Application.Reviews.ExerciseReviewCard>> GetForExerciseAsync(
+            string exerciseId,
+            CancellationToken cancellationToken = default) =>
+            ValueTask.FromResult<IReadOnlyList<ForgeDotNet.Application.Reviews.ExerciseReviewCard>>([]);
     }
 }

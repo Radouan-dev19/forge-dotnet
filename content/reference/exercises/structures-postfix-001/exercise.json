@@ -20,8 +20,8 @@
                     ],
     "examples":  [
                      {
-                         "input":  "[{\"value\":[\"2 3 +\"],\"Count\":1},5]",
-                         "output":  "[{\"value\":[\"2 3 * 4 +\"],\"Count\":1},10]"
+                         "input":  "[\"2 3 \\u002B\"]",
+                         "output":  "5"
                      }
                  ],
     "reflectionFields":  [
@@ -54,7 +54,7 @@
                   {
                       "level":  4,
                       "kind":  "partial-pseudocode",
-                      "content":  "valider les bornes ; parcourir ou décider ; retourner un nouveau résultat déterministe"
+                      "content":  "découper l'expression sur les espaces en retirant les segments vides ; empiler tout jeton qui est un entier ; pour un opérateur, dépiler d'abord l'opérande de droite puis celui de gauche, appliquer l'opération et empiler le résultat ; retourner le sommet à la fin"
                   }
               ],
     "solution":  {
@@ -67,9 +67,10 @@
     "explanation":  "explanation.md",
     "complexity":  "O(n) en temps et O(n) en espace",
     "commonMistakes":  [
-                           "Coder uniquement les exemples visibles",
-                           "Oublier une borne ou modifier une entrée",
-                           "Annoncer une complexité sans compter les opérations dominantes"
+                           "Dépiler la gauche avant la droite et inverser les opérandes",
+                           "Étendre le contrat à la soustraction ou à la division, hors du périmètre annoncé",
+                           "Supposer que chaque jeton tient en un seul caractère",
+                           "Oublier de retirer les segments vides produits par des espaces répétés"
                        ],
     "variantId":  "structures-ancestor-count-001",
     "reviewCards":  [

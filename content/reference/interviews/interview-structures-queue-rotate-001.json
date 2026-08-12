@@ -1,24 +1,24 @@
 {
-    "schemaVersion":  1,
-    "id":  "interview-structures-queue-rotate-001",
-    "version":  1,
-    "title":  "Faire tourner une file",
-    "level":  "junior",
-    "durationMinutes":  5,
-    "skills":  [
-                   "structures.queue"
-               ],
-    "question":  "Comment résoudriez-vous « Faire tourner une file » et comment prouveriez-vous les bornes ?",
-    "observableCriteria":  [
-                               "Le contrat et une borne sont explicitement reformulés",
-                               "La complexité et un test de réfutation sont justifiés"
-                           ],
-    "modelAnswer":  "Normaliser le nombre de rotations et préserver l’ordre FIFO. La preuve comprend un cas nominal, une borne et un cas différent des exemples ; O(n+k) en temps et O(n) en espace.",
-    "commonMistakes":  [
-                           "Réciter le code sans invariant ni méthode de test"
-                       ],
-    "variants":  [
-                     "Changer une borne ou le volume tout en conservant la même règle de faire tourner une file."
-                 ],
-    "license":  "CC-BY-4.0"
+  "schemaVersion": 1,
+  "id": "interview-structures-queue-rotate-001",
+  "version": 1,
+  "title": "Faire tourner une file",
+  "level": "junior",
+  "durationMinutes": 5,
+  "skills": [
+    "structures.queue"
+  ],
+  "question": "Comment résoudriez-vous « Faire tourner une file » et comment prouveriez-vous les bornes ?",
+  "observableCriteria": [
+    "Le nombre de rotations est normalisé avant tout déplacement",
+    "L'ordre d'arrivée est préservé, ce qui est affirmé comme la propriété de la structure"
+  ],
+  "modelAnswer": "Normaliser le nombre de rotations et préserver l’ordre FIFO. Je prouve par une rotation nulle, une rotation égale à la taille, une rotation supérieure et une file vide ; O(n+k) en temps et O(n) en espace.",
+  "commonMistakes": [
+    "Faire tourner en boucle sans normaliser et payer un coût proportionnel au nombre demandé"
+  ],
+  "variants": [
+    "Changer une borne ou le volume tout en conservant la même règle de faire tourner une file."
+  ],
+  "license": "CC-BY-4.0"
 }

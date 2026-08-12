@@ -1,24 +1,24 @@
 {
-    "schemaVersion":  1,
-    "id":  "interview-csharp-filter-minimum-001",
-    "version":  1,
-    "title":  "Filtrer une collection",
-    "level":  "junior",
-    "durationMinutes":  5,
-    "skills":  [
-                   "csharp.linq"
-               ],
-    "question":  "Comment résoudriez-vous « Filtrer une collection » et comment prouveriez-vous les bornes ?",
-    "observableCriteria":  [
-                               "Le contrat et une borne sont explicitement reformulés",
-                               "La complexité et un test de réfutation sont justifiés"
-                           ],
-    "modelAnswer":  "Préserver l’ordre d’entrée et inclure la borne. La preuve comprend un cas nominal, une borne et un cas différent des exemples ; O(n) en temps et O(n) en espace.",
-    "commonMistakes":  [
-                           "Réciter le code sans invariant ni méthode de test"
-                       ],
-    "variants":  [
-                     "Changer une borne ou le volume tout en conservant la même règle de filtrer une collection."
-                 ],
-    "license":  "CC-BY-4.0"
+  "schemaVersion": 1,
+  "id": "interview-csharp-filter-minimum-001",
+  "version": 1,
+  "title": "Filtrer une collection",
+  "level": "junior",
+  "durationMinutes": 5,
+  "skills": [
+    "csharp.linq"
+  ],
+  "question": "Comment résoudriez-vous « Filtrer une collection » et comment prouveriez-vous les bornes ?",
+  "observableCriteria": [
+    "L'ordre d'entrée est préservé, ce qui est affirmé comme une propriété du contrat",
+    "L'inclusion de la borne est explicite"
+  ],
+  "modelAnswer": "Préserver l’ordre d’entrée et inclure la borne. Je prouve par la borne exacte, une valeur juste en dessous et une collection dont rien ne passe ; O(n) en temps et O(n) en espace.",
+  "commonMistakes": [
+    "Employer une comparaison stricte et exclure la borne annoncée comme incluse"
+  ],
+  "variants": [
+    "Changer une borne ou le volume tout en conservant la même règle de filtrer une collection."
+  ],
+  "license": "CC-BY-4.0"
 }

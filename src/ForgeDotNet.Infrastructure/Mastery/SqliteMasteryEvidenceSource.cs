@@ -2,11 +2,16 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using ForgeDotNet.Application.Content;
 using ForgeDotNet.Application.Mastery;
+using ForgeDotNet.Application.Practice;
+using ForgeDotNet.Application.Projects;
+using ForgeDotNet.Domain.Content;
 using ForgeDotNet.Domain.DebugLab;
 using ForgeDotNet.Domain.Exams;
 using ForgeDotNet.Domain.Mastery;
 using ForgeDotNet.Domain.Practice;
+using ForgeDotNet.Domain.Projects;
 using ForgeDotNet.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 
@@ -14,8 +19,14 @@ namespace ForgeDotNet.Infrastructure.Mastery;
 
 public sealed class SqliteMasteryEvidenceSource(
     IDbContextFactory<ForgeDbContext> contextFactory,
-    LocalDatabaseGate databaseGate) : IMasteryEvidenceSource
+    LocalDatabaseGate databaseGate,
+    IProjectSource? projectSource = null,
+    IPracticeExerciseSource? exerciseSource = null,
+    ContentCatalogProvider? catalogProvider = null) : IMasteryEvidenceSource
 {
+    /// <summary>Préfixe des activités de lecture qui portent une réussite de quiz.</summary>
+    private const string QuizActivityPrefix = "quiz:";
+
     private static readonly JsonSerializerOptions RevisionJsonOptions = CreateSerializerOptions();
 
     public async ValueTask<MasteryEvidenceSet> ReadAsync(
@@ -36,6 +47,8 @@ public sealed class SqliteMasteryEvidenceSource(
         await AddReviewsAsync(context, profileId, observations, cancellationToken);
         var achievements = new List<MasteryAchievement>();
         await AddExamsAsync(context, profileId, observations, achievements, cancellationToken);
+        await AddProjectsAsync(context, profileId, achievements, cancellationToken);
+        await AddQuizAsync(context, profileId, observations, cancellationToken);
         MasteryObservation[] ordered = observations.OrderBy(item => item.Id).ToArray();
         MasteryAchievement[] orderedAchievements = achievements.OrderBy(item => item.Id).ToArray();
         string json = JsonSerializer.Serialize(new { ordered, orderedAchievements }, RevisionJsonOptions);
@@ -46,7 +59,32 @@ public sealed class SqliteMasteryEvidenceSource(
             revision);
     }
 
-    private static async Task AddPracticeAsync(
+    /// <summary>
+    /// Domaine alimenté par un exercice, déduit de sa première compétence.
+    /// </summary>
+    /// <remarks>
+    /// Cette méthode remplace un littéral <c>MasteryDomain.CSharp</c> qui attribuait toute pratique
+    /// au même domaine : les quatorze exercices d'API alimentaient le score C#, et le domaine Api
+    /// plafonnait à quinze pour un seuil de quatre-vingt-cinq. Sans source d'exercices — les doubles
+    /// de test n'en fournissent pas toujours — le comportement d'origine est conservé, ce qui garde
+    /// les observations existantes lisibles.
+    /// </remarks>
+    private async ValueTask<MasteryDomain> PracticeDomainAsync(
+        string exerciseId,
+        CancellationToken cancellationToken)
+    {
+        if (exerciseSource is null)
+        {
+            return MasteryDomain.CSharp;
+        }
+
+        PracticeExercise? exercise = await exerciseSource.GetAsync(exerciseId, cancellationToken);
+        return exercise is null
+            ? MasteryDomain.CSharp
+            : MasterySkillDomains.FromSkills(exercise.Skills);
+    }
+
+    private async Task AddPracticeAsync(
         ForgeDbContext context,
         Guid profileId,
         List<MasteryObservation> observations,
@@ -89,7 +127,7 @@ public sealed class SqliteMasteryEvidenceSource(
             observations.Add(new MasteryObservation(
                 attempt.Id,
                 profileId,
-                MasteryDomain.CSharp,
+                await PracticeDomainAsync(activity.ExerciseId, cancellationToken),
                 MasteryComponent.AutonomousPractice,
                 MasteryEvidenceSource.Practice,
                 MasteryVerificationKind.ManualDeclaration,
@@ -130,7 +168,7 @@ public sealed class SqliteMasteryEvidenceSource(
             observations.Add(new MasteryObservation(
                 attempt.Id,
                 profileId,
-                MasteryDomain.CSharp,
+                await PracticeDomainAsync(attempt.ExerciseId, cancellationToken),
                 MasteryComponent.AutonomousPractice,
                 MasteryEvidenceSource.Practice,
                 testsObserved ? MasteryVerificationKind.AutomaticTests : MasteryVerificationKind.ManualDeclaration,
@@ -330,6 +368,131 @@ public sealed class SqliteMasteryEvidenceSource(
             }
         }
     }
+
+    /// <summary>
+    /// Transforme une soumission de projet réussie en accomplissement de maîtrise.
+    /// </summary>
+    /// <remarks>
+    /// Quatre conditions, toutes nécessaires, aucune contournable depuis l'interface :
+    /// la soumission déclare une réussite, elle a été réellement exécutée dans le bac à sable —
+    /// <c>AutomaticallyVerified</c>, refusé par le domaine pour une déclaration manuelle —, toutes
+    /// ses suites d'acceptation sont passées, et le projet déclare la clé d'exigence qu'il satisfait.
+    ///
+    /// La vérification est enregistrée comme <see cref="MasteryVerificationKind.AutomaticTests"/>,
+    /// que <c>MasteryRules.IsVerifiedAchievement</c> accepte déjà. Aucune règle de maîtrise n'est
+    /// modifiée par ce producteur : c'est le chaînon qui manquait, pas la règle.
+    /// </remarks>
+    private async Task AddProjectsAsync(
+        ForgeDbContext context,
+        Guid profileId,
+        List<MasteryAchievement> achievements,
+        CancellationToken cancellationToken)
+    {
+        if (projectSource is null)
+        {
+            return;
+        }
+
+        ProjectSubmissionRecord[] submissions = await context.ProjectSubmissions.AsNoTracking()
+            .Where(item => item.ProfileId == profileId
+                && item.Status == ProjectSubmissionStatus.Succeeded
+                && item.AutomaticallyVerified
+                && item.TotalSuites > 0
+                && item.PassedSuites == item.TotalSuites
+                && item.TotalTests > 0
+                && item.PassedTests == item.TotalTests)
+            .ToArrayAsync(cancellationToken);
+        if (submissions.Length == 0)
+        {
+            return;
+        }
+
+        foreach (ProjectSubmissionRecord submission in submissions)
+        {
+            Project? project = await projectSource.GetAsync(submission.ProjectId, cancellationToken);
+            if (project is null || !project.ProducesAchievement || project.Version != submission.ProjectVersion)
+            {
+                continue;
+            }
+
+            achievements.Add(new MasteryAchievement(
+                submission.Id,
+                profileId,
+                project.AchievementKey!,
+                MasteryVerificationKind.AutomaticTests,
+                Passed: true,
+                DurationMinutes: 0,
+                submission.ObservedAtUtc,
+                $"project:{submission.Id:N}"));
+        }
+    }
+
+    /// <summary>
+    /// Transforme une réussite de quiz de leçon en observation de maîtrise.
+    /// </summary>
+    /// <remarks>
+    /// La composante quiz pèse cinq pour cent et n'avait aucun producteur : son poids n'étant jamais
+    /// redistribué, il plafonnait chaque domaine cinq points sous ce qu'il aurait dû atteindre. Le
+    /// quiz est pourtant déjà corrigé côté serveur — <c>SubmitLessonQuiz</c> compare à l'option
+    /// attendue et n'écrit l'activité qu'en cas de réussite. Il ne manquait que la projection.
+    ///
+    /// Limite assumée : seule une réussite est persistée, donc une réponse juste au cinquième essai
+    /// vaut la première. À cinq pour cent de poids, et sous la règle « accumulation de quiz faciles →
+    /// poids maximal cinq pour cent » de la matrice anti-contournement, l'effet reste borné. Le dire
+    /// vaut mieux que le masquer.
+    /// </remarks>
+    private async Task AddQuizAsync(
+        ForgeDbContext context,
+        Guid profileId,
+        List<MasteryObservation> observations,
+        CancellationToken cancellationToken)
+    {
+        if (catalogProvider is null)
+        {
+            return;
+        }
+
+        LessonReadingActivityRecord[] activities = await context.LessonReadingActivities.AsNoTracking()
+            .Where(item => item.ProfileId == profileId && item.ActivityId.StartsWith(QuizActivityPrefix))
+            .ToArrayAsync(cancellationToken);
+        if (activities.Length == 0)
+        {
+            return;
+        }
+
+        ContentCatalog catalog = catalogProvider.Current;
+        foreach (LessonReadingActivityRecord activity in activities)
+        {
+            ContentCatalogItem? lesson = catalog.FindById(activity.LessonId);
+            if (lesson is null || lesson.Type != ContentDocumentType.Lesson || lesson.Skills.Count == 0)
+            {
+                continue;
+            }
+
+            observations.Add(new MasteryObservation(
+                // L'activité n'a pas d'identité propre : le couple profil, leçon et activité en
+                // fournit une, stable d'un recalcul à l'autre.
+                DeterministicId(profileId, activity.LessonId, activity.ActivityId),
+                profileId,
+                MasterySkillDomains.FromSkills(lesson.Skills),
+                MasteryComponent.Quiz,
+                MasteryEvidenceSource.Quiz,
+                MasteryVerificationKind.QuizEngine,
+                activity.LessonId,
+                lesson.Version,
+                catalog.Revision,
+                100m,
+                MasteryAssistance.None,
+                activity.CompletedAtUtc,
+                $"quiz:{activity.LessonId}:{activity.ActivityId}"));
+        }
+    }
+
+    /// <summary>
+    /// Identifiant reproductible d'une observation qui n'en porte pas dans la base.
+    /// </summary>
+    private static Guid DeterministicId(Guid profileId, string lessonId, string activityId) =>
+        new(SHA256.HashData(Encoding.UTF8.GetBytes($"{profileId:N}:{lessonId}:{activityId}")).AsSpan(0, 16));
 
     private static MasteryAssistance HintAssistance(int level) => level switch
     {

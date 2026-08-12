@@ -7,6 +7,7 @@ using ForgeDotNet.Application.Exams;
 using ForgeDotNet.Application.IdentityLocal;
 using ForgeDotNet.Application.Mastery;
 using ForgeDotNet.Application.Practice;
+using ForgeDotNet.Application.Projects;
 using ForgeDotNet.Application.Reviews;
 using ForgeDotNet.Application.SqlLab;
 using ForgeDotNet.Application.WeeklyPlanning;
@@ -18,6 +19,7 @@ using ForgeDotNet.Infrastructure.Exams;
 using ForgeDotNet.Infrastructure.IdentityLocal;
 using ForgeDotNet.Infrastructure.Mastery;
 using ForgeDotNet.Infrastructure.Practice;
+using ForgeDotNet.Infrastructure.Projects;
 using ForgeDotNet.Infrastructure.Reviews;
 using ForgeDotNet.Infrastructure.SqlLab;
 using ForgeDotNet.Infrastructure.WeeklyPlanning;
@@ -51,12 +53,17 @@ public static class LocalPersistenceServiceCollectionExtensions
         services.AddSingleton<IWeeklyPlanRepository, SqliteWeeklyPlanRepository>();
         services.AddSingleton<IPracticeActivityRepository, SqlitePracticeActivityRepository>();
         services.AddSingleton<IPracticeLearningAttemptRepository, SqlitePracticeLearningAttemptRepository>();
+        // Les soumissions de projet vivent dans leur propre journal : un projet ne doit jamais
+        // alimenter les observations de pratique C#, dont il gonflerait le score sans l'avoir produit.
+        services.AddSingleton<IProjectSubmissionRepository, SqliteProjectSubmissionRepository>();
         services.AddSingleton<IDebugLabRepository, SqliteDebugLabRepository>();
         services.AddSingleton<ISqlLearningAttemptRepository, SqliteSqlLearningAttemptRepository>();
         services.AddSingleton<IMasteryEvidenceSource, SqliteMasteryEvidenceSource>();
         services.AddSingleton<IMasteryProjectionRepository, SqliteMasteryProjectionRepository>();
         services.AddSingleton<IMasteryPolicySource, VersionedMasteryPolicySource>();
         services.AddSingleton<IReviewRepository, SqliteReviewRepository>();
+        // La banque de cartes est un contenu du catalogue : elle est chargée une fois et partagée.
+        services.AddSingleton<IReviewCardSource, CatalogReviewCardSource>();
         services.AddSingleton<IReviewSourceProvider, SqliteReviewSourceProvider>();
         services.AddSingleton<IReviewPolicySource, VersionedReviewPolicySource>();
         services.AddSingleton<SqliteExamRepository>();

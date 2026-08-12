@@ -26,6 +26,13 @@
                       "expected":  0,
                       "expectedException":  null,
                       "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Visible_SingleElement",
+                      "message":  "Un seul élément : une seule valeur distincte.",
+                      "arguments":  [[5]],
+                      "expected":  1,
+                      "argumentsUnchanged":  true
                   }
               ]
 }

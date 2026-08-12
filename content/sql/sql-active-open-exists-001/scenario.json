@@ -30,8 +30,12 @@
     "timeoutSeconds":  5,
     "maxRows":  20,
     "effectAssertions":  [
-                             "Les quatre clients, cinq commandes et six lignes restent inchangés après rollback"
+                             "Aucune commande ouverte n'est modifiée et chaque client qualifié apparaît une seule fois"
                          ],
     "solutionPath":  "solution.md",
+    "reviewCards": [
+        "card-sql-active-open-exists-001-rule",
+        "card-sql-active-open-exists-001-edge"
+    ],
     "license":  "CC-BY-4.0"
 }

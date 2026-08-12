@@ -23,6 +23,20 @@
                                     ],
                       "expectedException":  "ArgumentOutOfRangeException",
                       "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_ZeroBudget",
+                      "message":  "Budget nul : refusé, un budget doit être strictement positif.",
+                      "arguments":  [1,0,true],
+                      "expectedException":  "ArgumentOutOfRangeException",
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_ZeroCost",
+                      "message":  "Coût nul avec plan de suppression : autorisé.",
+                      "arguments":  [0,5,true],
+                      "expected":  "allow",
+                      "argumentsUnchanged":  true
                   }
               ]
 }

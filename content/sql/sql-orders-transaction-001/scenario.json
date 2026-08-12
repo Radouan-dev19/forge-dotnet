@@ -25,5 +25,9 @@
     "Une quantité insuffisante ne peut jamais devenir négative"
   ],
   "solutionPath": "solution.md",
+  "reviewCards": [
+      "card-sql-orders-transaction-001-rule",
+      "card-sql-orders-transaction-001-edge"
+  ],
   "license": "CC-BY-4.0"
 }

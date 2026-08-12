@@ -2,6 +2,6 @@
 
 Implémentez Submission.SensitiveValueSource avec la signature fournie. Une valeur non sensible reste en configuration ; une valeur sensible utilise lʼidentité gérée ou un magasin local hors Git.
 
-Le résultat reste déterministe et hors ligne : aucun abonnement, appel Azure ou identifiant réel nʼest nécessaire. Avant le code, écrivez un cas nominal, une frontière, un refus et le risque que ces preuves réduisent.
+La décision reste déterministe et hors ligne, et n'emploie aucune valeur ressemblant à un secret réel. Écrivez avant le code : les quatre combinaisons des deux indicateurs, en vérifiant lequel tranche en premier. Nommez ce qu'une identité attestée par la plateforme supprime entièrement.
 
-Exemple : entrée $(Convert-JsonCompact System.Object[] System.Object[][0]), sortie $(Convert-JsonCompact System.Object[] System.Object[][1]).
+Exemple : entrée `[false,true]`, sortie `"configuration"`.

@@ -1,39 +1,40 @@
 {
-    "schemaVersion":  1,
-    "id":  "english-card-08-written",
-    "version":  1,
-    "title":  "Deletion plan — written update",
-    "level":  "B1",
-    "durationMinutes":  12,
-    "skills":  [
-                   "english.written",
-                   "azure.operations"
-               ],
-    "situation":  "In a technical discussion, a lab owner must close the exercise. You must write the decision accurately without overstating the evidence.",
-    "instructions":  [
-                         "Write a four-sentence update with decision, evidence, limitation and next action."
-                     ],
-    "vocabulary":  [
-                       {
-                           "term":  "resource cleanup",
-                           "meaning":  "the precise concept required for deletion plan"
-                       },
-                       {
-                           "term":  "verified evidence",
-                           "meaning":  "an observation supported by a reproducible check"
-                       }
-                   ],
-    "expectedElements":  [
-                             "A clear decision tied to the scenario",
-                             "Verified evidence and one explicit limitation",
-                             "A named next action"
-                         ],
-    "modelAnswer":  "Decision: The owner deletes the dedicated resource group, checks that no billable resource remains and records the time of verification. Evidence: the documented local checks support this scope. Limitation: this does not prove behavior in an untested production environment. Next action: record the owner and the next bounded verification.",
-    "commonMistakes":  [
-                           "Using confident adjectives without naming evidence or a limitation"
-                       ],
-    "variants":  [
-                     "Rewrite the update for a non-technical stakeholder without removing the limitation."
-                 ],
-    "license":  "CC-BY-4.0"
+  "schemaVersion": 1,
+  "id": "english-card-08-written",
+  "version": 1,
+  "title": "Deletion plan — written update",
+  "level": "B1",
+  "durationMinutes": 12,
+  "skills": [
+    "english.written",
+    "azure.operations"
+  ],
+  "situation": "In a technical discussion, a lab owner must close the exercise. You must write the decision accurately without overstating the evidence.",
+  "instructions": [
+    "Write four sentences listing the deletion order, what is deliberately kept, and how you confirm nothing remains billable."
+  ],
+  "vocabulary": [
+    {
+      "term": "resource cleanup",
+      "meaning": "the ordered removal of everything an exercise created, verified rather than assumed"
+    },
+    {
+      "term": "residual cost",
+      "meaning": "a charge that continues after the obvious resource is deleted, typically from storage or a reserved address"
+    }
+  ],
+  "expectedElements": [
+    "The deletion covers dependencies, not only the visible resource",
+    "What is deliberately kept is named",
+    "The absence of residual cost is verified, not assumed"
+  ],
+  "modelAnswer": "Cleanup follows dependency order: compute, then network attachments, then storage. Reversing that order leaves resources that cannot be deleted because something still references them. The audit log export is deliberately retained, because it is needed after the exercise closes. The evidence for the absence of residual cost is the next day's cost report rather than the resource list, since a reserved address keeps charging while unattached.",
+  "commonMistakes": [
+    "Deleting the visible resource and treating the cleanup as finished",
+    "Checking a resource list instead of a cost report to prove nothing remains billable"
+  ],
+  "variants": [
+    "Rewrite the update as a checklist another owner could follow."
+  ],
+  "license": "CC-BY-4.0"
 }

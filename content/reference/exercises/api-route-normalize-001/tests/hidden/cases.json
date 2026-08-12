@@ -20,6 +20,20 @@
                       "expected":  "health",
                       "expectedException":  null,
                       "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_NullValue",
+                      "message":  "Valeur absente : itinéraire vide, sans exception.",
+                      "arguments":  [null],
+                      "expected":  "",
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_InnerSlashPreserved",
+                      "message":  "Les barres internes sont conservées : seules les bordures sont rognées.",
+                      "arguments":  ["/Orders/Lines/"],
+                      "expected":  "orders/lines",
+                      "argumentsUnchanged":  true
                   }
               ]
 }

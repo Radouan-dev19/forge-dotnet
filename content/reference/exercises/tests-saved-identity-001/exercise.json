@@ -16,12 +16,12 @@
     "constraints":  [
                         "Conserver exactement la signature publique",
                         "Une intégration réussie produit un identifiant strictement positif observable.",
-                        "Ne jamais dépendre du réseau, d’un secret réel ou d’un état global"
+                        "N'ouvrir aucune connexion : l'identifiant observé est fourni"
                     ],
     "examples":  [
                      {
-                         "input":  "[{\"value\":[1],\"Count\":1},true]",
-                         "output":  "[{\"value\":[0],\"Count\":1},false]"
+                         "input":  "[1]",
+                         "output":  "true"
                      }
                  ],
     "reflectionFields":  [
@@ -54,7 +54,7 @@
                   {
                       "level":  4,
                       "kind":  "partial-pseudocode",
-                      "content":  "valider les entrées ; appliquer la décision bornée ; retourner un résultat déterministe sans effet externe"
+                      "content":  "conclure qu'une écriture a eu lieu seulement lorsque l'identifiant reçu est strictement positif, la valeur nulle signalant qu'aucune clé n'a été attribuée"
                   }
               ],
     "solution":  {
@@ -67,9 +67,10 @@
     "explanation":  "explanation.md",
     "complexity":  "O(1) en temps et O(1) en espace",
     "commonMistakes":  [
-                           "Coder seulement les exemples visibles",
-                           "Masquer une erreur ou accepter une entrée hors contrat",
-                           "Confondre une règle pure avec le transport ou une ressource externe"
+                           "Accepter un identifiant nul, qui signale au contraire l'absence d'écriture",
+                           "Accepter un identifiant négatif",
+                           "Confondre l'absence d'exception avec la preuve d'une écriture effective",
+                           "Vérifier l'écriture depuis le contexte qui vient d'écrire"
                        ],
     "variantId":  "tests-database-name-001",
     "reviewCards":  [

@@ -15,13 +15,13 @@
     "statement":  "statement.md",
     "constraints":  [
                         "Conserver exactement la signature publique",
-                        "Valider trois entiers non négatifs et incrémenter seulement le composant patch.",
-                        "Ne jamais dépendre du réseau, d’un secret réel ou d’un état global"
+                        "Valider trois entiers non négatifs et incrémenter seulement le composant de correction.",
+                        "N'interroger aucun dépôt : la version courante est fournie"
                     ],
     "examples":  [
                      {
-                         "input":  "[{\"value\":[\"1.2.3\"],\"Count\":1},\"1.2.4\"]",
-                         "output":  "[{\"value\":[\"0.0.0\"],\"Count\":1},\"0.0.1\"]"
+                         "input":  "[\"1.2.3\"]",
+                         "output":  "\"1.2.4\""
                      }
                  ],
     "reflectionFields":  [
@@ -54,7 +54,7 @@
                   {
                       "level":  4,
                       "kind":  "partial-pseudocode",
-                      "content":  "valider les entrées ; appliquer la décision bornée ; retourner un résultat déterministe sans effet externe"
+                      "content":  "refuser toute valeur qui ne se décompose pas en exactement trois composants entiers non négatifs ; sinon recomposer la version en n'augmentant que le troisième composant, l'incrément étant vérifié"
                   }
               ],
     "solution":  {
@@ -67,9 +67,10 @@
     "explanation":  "explanation.md",
     "complexity":  "O(n) en temps et O(n) en espace",
     "commonMistakes":  [
-                           "Coder seulement les exemples visibles",
-                           "Masquer une erreur ou accepter une entrée hors contrat",
-                           "Confondre une règle pure avec le transport ou une ressource externe"
+                           "Incrémenter le composant de gauche ou celui du milieu",
+                           "Accepter une version à deux ou quatre composants",
+                           "Accepter un composant négatif ou non numérique",
+                           "Remettre à zéro les composants de gauche lors d'une simple correction"
                        ],
     "variantId":  "git-conflict-marker-001",
     "reviewCards":  [

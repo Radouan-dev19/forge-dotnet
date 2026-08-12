@@ -15,13 +15,13 @@
     "statement":  "statement.md",
     "constraints":  [
                         "Conserver exactement la signature publique",
-                        "Refuser un identifiant non publié puis construire une route relative stable.",
-                        "Ne jamais dépendre du réseau, d’un secret réel ou d’un état global"
+                        "Refuser un identifiant non publiable puis construire un chemin relatif stable.",
+                        "Ne composer aucune adresse absolue ni lire d'hôte depuis l'environnement"
                     ],
     "examples":  [
                      {
-                         "input":  "[{\"value\":[42],\"Count\":1},\"/orders/42\"]",
-                         "output":  "[{\"value\":[1],\"Count\":1},\"/orders/1\"]"
+                         "input":  "[42]",
+                         "output":  "\"/orders/42\""
                      }
                  ],
     "reflectionFields":  [
@@ -54,7 +54,7 @@
                   {
                       "level":  4,
                       "kind":  "partial-pseudocode",
-                      "content":  "valider les entrées ; appliquer la décision bornée ; retourner un résultat déterministe sans effet externe"
+                      "content":  "refuser un identifiant nul ou négatif, qui ne désigne aucune ressource ; sinon composer le chemin relatif de la collection suivi de l'identifiant"
                   }
               ],
     "solution":  {
@@ -67,9 +67,10 @@
     "explanation":  "explanation.md",
     "complexity":  "O(1) en temps et O(1) en espace",
     "commonMistakes":  [
-                           "Coder seulement les exemples visibles",
-                           "Masquer une erreur ou accepter une entrée hors contrat",
-                           "Confondre une règle pure avec le transport ou une ressource externe"
+                           "Accepter un identifiant nul ou négatif et publier une adresse qui ne mène nulle part",
+                           "Produire une adresse absolue, qui fige l'hôte dans la réponse",
+                           "Omettre la barre de tête et produire un chemin relatif au contexte courant",
+                           "Composer l'adresse à partir d'une valeur non validée reçue de l'appelant"
                        ],
     "variantId":  "api-order-validation-001",
     "reviewCards":  [

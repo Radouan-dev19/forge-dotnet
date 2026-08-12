@@ -30,6 +30,13 @@
                                    ],
                       "expectedException":  null,
                       "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Visible_SingleElement",
+                      "message":  "Un seul élément : la copie lui est égale et l'entrée reste intacte.",
+                      "arguments":  [[5]],
+                      "expected":  [5],
+                      "argumentsUnchanged":  true
                   }
               ]
 }

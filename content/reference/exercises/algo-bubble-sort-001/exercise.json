@@ -20,8 +20,8 @@
                     ],
     "examples":  [
                      {
-                         "input":  "[{\"value\":[[3,1,2]],\"Count\":1},{\"value\":[1,2,3],\"Count\":3}]",
-                         "output":  "[{\"value\":[[]],\"Count\":1},{\"value\":[],\"Count\":0}]"
+                         "input":  "[[3,1,2]]",
+                         "output":  "[1,2,3]"
                      }
                  ],
     "reflectionFields":  [
@@ -54,7 +54,7 @@
                   {
                       "level":  4,
                       "kind":  "partial-pseudocode",
-                      "content":  "valider les bornes ; parcourir ou décider ; retourner un nouveau résultat déterministe"
+                      "content":  "cloner l'entrée pour ne pas la modifier ; faire décroître la limite de passage depuis le dernier indice ; à chaque passage, comparer les voisins et les échanger lorsqu'ils sont dans le désordre"
                   }
               ],
     "solution":  {
@@ -67,9 +67,10 @@
     "explanation":  "explanation.md",
     "complexity":  "O(n²) en temps et O(n) en espace pour la copie",
     "commonMistakes":  [
-                           "Coder uniquement les exemples visibles",
-                           "Oublier une borne ou modifier une entrée",
-                           "Annoncer une complexité sans compter les opérations dominantes"
+                           "Trier le tableau reçu et rendre la mutation visible par l'appelant",
+                           "Ne pas réduire la limite à chaque passage et refaire un travail déjà fait",
+                           "Dépasser le dernier indice en comparant avec l'élément suivant",
+                           "Échanger sur une comparaison large et travailler sans changer le résultat"
                        ],
     "variantId":  "algo-selection-sort-001",
     "reviewCards":  [

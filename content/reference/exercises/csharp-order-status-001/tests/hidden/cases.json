@@ -20,6 +20,20 @@
                       "expected":  "unknown",
                       "expectedException":  null,
                       "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_Negative",
+                      "message":  "Valeur négative : inconnue, et non un refus.",
+                      "arguments":  [-1],
+                      "expected":  "unknown",
+                      "argumentsUnchanged":  true
+                  },
+                  {
+                      "name":  "Hidden_MaximumInteger",
+                      "message":  "Valeur entière maximale : réfute un calcul d'indice sur un tableau.",
+                      "arguments":  [2147483647],
+                      "expected":  "unknown",
+                      "argumentsUnchanged":  true
                   }
               ]
 }

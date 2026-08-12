@@ -7,6 +7,10 @@
     "drawCount":  8,
     "passingScore":  80,
     "eligibleExerciseIds":  [
+                                "api-content-negotiation-001",
+                                "api-validation-aggregate-001",
+                                "api-sort-expression-001",
+                                "security-scope-grant-001",
                                 "api-http-status-map-001",
                                 "api-route-normalize-001",
                                 "api-dto-customer-name-001",

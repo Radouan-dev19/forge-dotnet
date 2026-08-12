@@ -19,6 +19,20 @@
                       "expected":  100,
                       "expectedException":  null,
                       "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_LargeNegative",
+                      "message":  "Négatif éloigné de zéro : refusé au même titre que moins un.",
+                      "arguments":  [-100],
+                      "expectedException":  "ArgumentOutOfRangeException",
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_MaximumInteger",
+                      "message":  "Valeur entière maximale : acceptée, réfute une borne haute inventée.",
+                      "arguments":  [2147483647],
+                      "expected":  2147483647,
+                      "argumentsUnchanged":  true
                   }
               ]
 }

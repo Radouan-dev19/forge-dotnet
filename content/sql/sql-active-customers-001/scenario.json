@@ -31,8 +31,12 @@
     "timeoutSeconds":  5,
     "maxRows":  20,
     "effectAssertions":  [
-                             "Les quatre clients, cinq commandes et six lignes restent inchangés après rollback"
+                             "Aucun client ne change d'état d'activité et aucune commande n'est lue par cette projection"
                          ],
     "solutionPath":  "solution.md",
+    "reviewCards": [
+        "card-sql-active-customers-001-rule",
+        "card-sql-active-customers-001-edge"
+    ],
     "license":  "CC-BY-4.0"
 }

@@ -15,13 +15,13 @@
     "statement":  "statement.md",
     "constraints":  [
                         "Conserver exactement la signature publique",
-                        "Valider les mesures, traiter les erreurs en priorité, puis comparer la latence p95 au budget de 750 ms.",
-                        "Rester déterministe, hors ligne et indépendant de toute ressource Azure réelle"
+                        "Valider les mesures, traiter les erreurs en priorité, puis comparer la latence au budget annoncé.",
+                        "N'interroger aucune ressource distante : les deux mesures sont fournies"
                     ],
     "examples":  [
                      {
-                         "input":  "[{\"value\":[2,300],\"Count\":2},\"errors\"]",
-                         "output":  "[{\"value\":[0,900],\"Count\":2},\"latency\"]"
+                         "input":  "[2,300]",
+                         "output":  "\"errors\""
                      }
                  ],
     "reflectionFields":  [
@@ -54,7 +54,7 @@
                   {
                       "level":  4,
                       "kind":  "partial-pseudocode",
-                      "content":  "valider les entrées ; appliquer la garde la plus stricte ; retourner une décision explicite et déterministe"
+                      "content":  "refuser toute mesure négative, des deux côtés ; traiter les erreurs en premier, car un service non rendu prime sur un service lent ; sinon comparer la latence au budget annoncé, strictement dépassé pour conclure"
                   }
               ],
     "solution":  {
@@ -67,9 +67,10 @@
     "explanation":  "explanation.md",
     "complexity":  "O(1) en temps et O(1) en espace",
     "commonMistakes":  [
-                           "Coder seulement les exemples visibles",
-                           "Présenter une étape manuelle ou cloud comme une validation automatique",
-                           "Masquer une valeur invalide ou supprimer une garde de sécurité"
+                           "Évaluer la latence avant les erreurs et masquer le signal le plus fort",
+                           "Employer une comparaison large et déclarer dégradé un service exactement au budget",
+                           "Retourner l'état sain alors qu'au moins une erreur a été observée",
+                           "Accepter une mesure négative au lieu de refuser"
                        ],
     "variantId":  "azure-cost-guardrail-001",
     "reviewCards":  [

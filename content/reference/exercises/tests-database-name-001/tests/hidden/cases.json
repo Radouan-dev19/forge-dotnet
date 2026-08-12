@@ -20,6 +20,20 @@
                       "expected":  false,
                       "expectedException":  null,
                       "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_NullName",
+                      "message":  "Référence absente : refusée sans exception.",
+                      "arguments":  [null],
+                      "expected":  false,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_LeadingSpaceBreaksPrefix",
+                      "message":  "Espace en tête : le préfixe attendu n'est plus en position initiale.",
+                      "arguments":  [" forge-test-123456789"],
+                      "expected":  false,
+                      "argumentsUnchanged":  true
                   }
               ]
 }

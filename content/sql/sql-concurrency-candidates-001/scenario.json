@@ -30,8 +30,12 @@
     "timeoutSeconds":  5,
     "maxRows":  20,
     "effectAssertions":  [
-                             "Les quatre clients, cinq commandes et six lignes restent inchangés après rollback"
+                             "La lecture des jetons de version ne les incrémente pas : les commandes ouvertes gardent la même valeur après exécution"
                          ],
     "solutionPath":  "solution.md",
+    "reviewCards": [
+        "card-sql-concurrency-candidates-001-rule",
+        "card-sql-concurrency-candidates-001-edge"
+    ],
     "license":  "CC-BY-4.0"
 }

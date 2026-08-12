@@ -32,6 +32,13 @@
                                    ],
                       "expectedException":  null,
                       "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Visible_StrictlyIncreasing",
+                      "message":  "Suite croissante : chaque élément a pour successeur le suivant immédiat.",
+                      "arguments":  [[1,2,3]],
+                      "expected":  [2,3,-1],
+                      "argumentsUnchanged":  true
                   }
               ]
 }

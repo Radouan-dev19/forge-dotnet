@@ -1,24 +1,24 @@
 {
-    "schemaVersion":  1,
-    "id":  "interview-debug-stack-origin-001",
-    "version":  1,
-    "title":  "Extraire la première frame applicative",
-    "level":  "junior",
-    "durationMinutes":  5,
-    "skills":  [
-                   "debugging.stacktrace"
-               ],
-    "question":  "Comment résoudriez-vous « Extraire la première frame applicative » et comment prouveriez-vous les bornes ?",
-    "observableCriteria":  [
-                               "Le contrat et une borne sont explicitement reformulés",
-                               "La complexité et un test de réfutation sont justifiés"
-                           ],
-    "modelAnswer":  "Ignorer les frames système et conserver la première frame applicative dans l’ordre. La preuve comprend un cas nominal, une borne et un cas différent des exemples ; O(n) en temps et O(n) en espace.",
-    "commonMistakes":  [
-                           "Réciter le code sans invariant ni méthode de test"
-                       ],
-    "variants":  [
-                     "Changer une borne ou le volume tout en conservant la même règle de extraire la première frame applicative."
-                 ],
-    "license":  "CC-BY-4.0"
+  "schemaVersion": 1,
+  "id": "interview-debug-stack-origin-001",
+  "version": 1,
+  "title": "Extraire la première frame applicative",
+  "level": "junior",
+  "durationMinutes": 5,
+  "skills": [
+    "debugging.stacktrace"
+  ],
+  "question": "Comment résoudriez-vous « Extraire la première frame applicative » et comment prouveriez-vous les bornes ?",
+  "observableCriteria": [
+    "Le critère qui distingue une frame système d'une frame applicative est nommé",
+    "La première frame applicative dans l'ordre est retenue, pas la dernière"
+  ],
+  "modelAnswer": "Ignorer les frames système et conserver la première frame applicative dans l’ordre. Je prouve par une pile sans frame applicative, une pile en commençant par une frame système et une pile à une seule frame ; O(n) en temps et O(n) en espace.",
+  "commonMistakes": [
+    "Retenir la dernière frame applicative et désigner l'appelant au lieu du fautif"
+  ],
+  "variants": [
+    "Changer une borne ou le volume tout en conservant la même règle de extraire la première frame applicative."
+  ],
+  "license": "CC-BY-4.0"
 }

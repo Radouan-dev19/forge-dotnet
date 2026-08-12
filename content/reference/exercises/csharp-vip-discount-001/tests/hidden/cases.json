@@ -21,6 +21,20 @@
                                     ],
                       "expectedException":  "ArgumentOutOfRangeException",
                       "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_NonVipUnchanged",
+                      "message":  "Client ordinaire : le total est conservé tel quel.",
+                      "arguments":  [50,false],
+                      "expected":  50,
+                      "argumentsUnchanged":  true
+                  },
+                  {
+                      "name":  "Hidden_RoundsAwayFromZero",
+                      "message":  "Résultat à mi-chemin entre deux centimes : l'arrondi s'éloigne de zéro.",
+                      "arguments":  [0.05,true],
+                      "expected":  0.05,
+                      "argumentsUnchanged":  true
                   }
               ]
 }

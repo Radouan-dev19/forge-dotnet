@@ -34,6 +34,8 @@ public sealed class ForgeDbContext(DbContextOptions<ForgeDbContext> options) : D
 
     internal DbSet<PracticeLearningAttemptRecord> PracticeLearningAttempts => Set<PracticeLearningAttemptRecord>();
 
+    internal DbSet<ProjectSubmissionRecord> ProjectSubmissions => Set<ProjectSubmissionRecord>();
+
     internal DbSet<SqlLearningAttemptRecord> SqlLearningAttempts => Set<SqlLearningAttemptRecord>();
 
     internal DbSet<MasteryProjectionRecord> MasteryProjections => Set<MasteryProjectionRecord>();
@@ -243,6 +245,17 @@ public sealed class ForgeDbContext(DbContextOptions<ForgeDbContext> options) : D
         practiceLearningAttempt.Property(item => item.SubmissionFingerprint).HasMaxLength(80).IsRequired();
         practiceLearningAttempt.Property(item => item.Status).HasConversion<string>().HasMaxLength(32).IsRequired();
         practiceLearningAttempt.Property(item => item.ObservedAtUtc).HasConversion<string>().HasMaxLength(48).IsRequired();
+
+        var projectSubmission = modelBuilder.Entity<ProjectSubmissionRecord>();
+        projectSubmission.ToTable("ProjectSubmissions");
+        projectSubmission.HasKey(item => item.Id);
+        projectSubmission.Property(item => item.Id).ValueGeneratedNever();
+        projectSubmission.HasIndex(item => new { item.ProfileId, item.ObservedAtUtc });
+        projectSubmission.Property(item => item.ProjectId).HasMaxLength(100).IsRequired();
+        projectSubmission.Property(item => item.ContentRevision).HasMaxLength(80).IsRequired();
+        projectSubmission.Property(item => item.SubmissionFingerprint).HasMaxLength(80).IsRequired();
+        projectSubmission.Property(item => item.Status).HasConversion<string>().HasMaxLength(32).IsRequired();
+        projectSubmission.Property(item => item.ObservedAtUtc).HasConversion<string>().HasMaxLength(48).IsRequired();
 
         var sqlAttempt = modelBuilder.Entity<SqlLearningAttemptRecord>();
         sqlAttempt.ToTable("SqlLearningAttempts");

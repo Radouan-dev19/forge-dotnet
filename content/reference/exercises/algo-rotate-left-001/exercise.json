@@ -20,8 +20,8 @@
                     ],
     "examples":  [
                      {
-                         "input":  "[{\"value\":[[1,2,3],1],\"Count\":2},{\"value\":[2,3,1],\"Count\":3}]",
-                         "output":  "[{\"value\":[[],4],\"Count\":2},{\"value\":[],\"Count\":0}]"
+                         "input":  "[[1,2,3],1]",
+                         "output":  "[2,3,1]"
                      }
                  ],
     "reflectionFields":  [
@@ -54,7 +54,7 @@
                   {
                       "level":  4,
                       "kind":  "partial-pseudocode",
-                      "content":  "valider les bornes ; parcourir ou décider ; retourner un nouveau résultat déterministe"
+                      "content":  "si le tableau est vide retourner un résultat vide ; ramener le décalage dans l'intervalle de la longueur, en traitant aussi les valeurs négatives ; allouer un résultat de la même longueur et y écrire, pour chaque indice, la valeur lue à l'indice décalé pris modulo la longueur"
                   }
               ],
     "solution":  {
@@ -67,9 +67,10 @@
     "explanation":  "explanation.md",
     "complexity":  "O(n) en temps et O(n) en espace",
     "commonMistakes":  [
-                           "Coder uniquement les exemples visibles",
-                           "Oublier une borne ou modifier une entrée",
-                           "Annoncer une complexité sans compter les opérations dominantes"
+                           "Ne pas ramener le décalage modulo la longueur et parcourir inutilement",
+                           "Obtenir un reste négatif sur un décalage négatif et sortir de l'intervalle",
+                           "Diviser par la longueur avant d'avoir traité le tableau vide",
+                           "Écrire dans le tableau reçu et écraser des valeurs encore nécessaires"
                        ],
     "variantId":  "algo-merge-sorted-001",
     "reviewCards":  [

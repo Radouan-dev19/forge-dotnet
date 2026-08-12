@@ -1,39 +1,40 @@
 {
-    "schemaVersion":  1,
-    "scenarioId":  "debug-binary-boundary-001",
-    "criteria":  [
-                     {
-                         "id":  "cause",
-                         "label":  "La cause relie la divergence à la règle fautive.",
-                         "journalField":  "cause",
-                         "requiredTerms":  [
-                                               "borne",
-                                               "condition",
-                                               "mutation"
-                                           ],
-                         "minimumMatches":  1
-                     },
-                     {
-                         "id":  "evidence",
-                         "label":  "La preuve cite entrée, attendu et réel.",
-                         "journalField":  "evidence",
-                         "requiredTerms":  [
-                                               "entrée",
-                                               "attendu",
-                                               "réel"
-                                           ],
-                         "minimumMatches":  2
-                     },
-                     {
-                         "id":  "test",
-                         "label":  "Le test de non-régression cible la borne.",
-                         "journalField":  "test",
-                         "requiredTerms":  [
-                                               "borne",
-                                               "échoue",
-                                               "réussit"
-                                           ],
-                         "minimumMatches":  2
-                     }
-                 ]
+  "schemaVersion": 1,
+  "scenarioId": "debug-binary-boundary-001",
+  "criteria": [
+    {
+      "id": "cause-interval",
+      "label": "La cause désigne la condition d'arrêt de l'intervalle.",
+      "journalField": "cause",
+      "requiredTerms": [
+        "intervalle",
+        "condition d'arrêt",
+        "égalité",
+        "boucle"
+      ],
+      "minimumMatches": 2
+    },
+    {
+      "id": "evidence-last",
+      "label": "La preuve cite la référence non examinée et le verdict rendu.",
+      "journalField": "evidence",
+      "requiredTerms": [
+        "dernière",
+        "5",
+        "faux"
+      ],
+      "minimumMatches": 2
+    },
+    {
+      "id": "test-extremities",
+      "label": "Le test couvre les deux extrémités du catalogue.",
+      "journalField": "test",
+      "requiredTerms": [
+        "première",
+        "dernière",
+        "absente"
+      ],
+      "minimumMatches": 2
+    }
+  ]
 }

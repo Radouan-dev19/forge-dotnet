@@ -24,6 +24,13 @@
                       "expected":  false,
                       "expectedException":  null,
                       "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Visible_NothingSatisfied",
+                      "message":  "Aucune condition remplie : la porte reste fermée.",
+                      "arguments":  [false,false,false],
+                      "expected":  false,
+                      "argumentsUnchanged":  true
                   }
               ]
 }

@@ -16,12 +16,12 @@
     "constraints":  [
                         "Conserver exactement la signature publique",
                         "Faire varier la frontière de gratuité et le mode express dans une même théorie.",
-                        "Ne jamais dépendre du réseau, d’un secret réel ou d’un état global"
+                        "Ne consulter aucun transporteur : le montant et le mode sont fournis"
                     ],
     "examples":  [
                      {
-                         "input":  "[{\"value\":[49.99,false],\"Count\":2},4.9]",
-                         "output":  "[{\"value\":[50,false],\"Count\":2},0]"
+                         "input":  "[49.99,false]",
+                         "output":  "4.9"
                      }
                  ],
     "reflectionFields":  [
@@ -54,7 +54,7 @@
                   {
                       "level":  4,
                       "kind":  "partial-pseudocode",
-                      "content":  "valider les entrées ; appliquer la décision bornée ; retourner un résultat déterministe sans effet externe"
+                      "content":  "refuser un total négatif ; traiter d'abord le mode express, dont le tarif ne dépend pas du montant ; sinon appliquer la gratuité à partir du seuil, avec une comparaison large, et le tarif normal en dessous"
                   }
               ],
     "solution":  {
@@ -67,9 +67,10 @@
     "explanation":  "explanation.md",
     "complexity":  "O(1) en temps et O(1) en espace",
     "commonMistakes":  [
-                           "Coder seulement les exemples visibles",
-                           "Masquer une erreur ou accepter une entrée hors contrat",
-                           "Confondre une règle pure avec le transport ou une ressource externe"
+                           "Rendre la livraison express gratuite au-delà du seuil de gratuité",
+                           "Employer une comparaison stricte et faire payer le montant exactement égal au seuil",
+                           "Évaluer le seuil avant le mode et rendre la branche express inatteignable",
+                           "Accepter un total négatif et produire des frais sur un montant qui n'existe pas"
                        ],
     "variantId":  "tests-discount-rule-001",
     "reviewCards":  [

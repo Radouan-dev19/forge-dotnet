@@ -20,6 +20,20 @@
                       "expected":  "",
                       "expectedException":  null,
                       "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_EmptyPath",
+                      "message":  "Chemin vide : réponse vide, distincte d'un refus.",
+                      "arguments":  [""],
+                      "expected":  "",
+                      "argumentsUnchanged":  true
+                  },
+                  {
+                      "name":  "Hidden_WithDirectory",
+                      "message":  "Chemin comportant un dossier : seule l'extension du fichier compte.",
+                      "arguments":  ["dir/file.MD"],
+                      "expected":  ".md",
+                      "argumentsUnchanged":  true
                   }
               ]
 }

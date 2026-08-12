@@ -75,3 +75,23 @@ Une commande applicable en échec refuse l’incrément. Une vérification manue
 - Les 129 solutions publiées réussissent dans le runner et chaque starter compile sans passer indûment. La matrice dédiée prouve que 44 de ces exercices appartiennent à S11–S20 et possèdent chacun au moins deux tests visibles, deux tests cachés, quatre indices progressifs et une variante.
 - Un défaut de fiabilité séparé a été corrigé sans retry ni relèvement des limites : les deux examens EF conteneurisés utilisent une collection non parallèle prioritaire et une fixture distincte avant le balayage massif du catalogue.
 - Les revues éditoriale et de sécurité ont vérifié les durées, rubriques, secrets factices, politiques d’autorisation et exclusions. Une performance orale réelle d’apprenant reste une activité humaine ; aucune réussite orale n’est revendiquée automatiquement.
+
+## Reprise de densité, postérieure à l'incrément 09
+
+La matrice ci-dessus est le relevé gelé de l'incrément 09 et n'est pas réécrite. Le volume de pratique
+qu'elle décrit — cinq activités pour chacune des semaines S11 à S17 — s'est révélé être le défaut
+central de cette période : 5,1 activités par semaine contre 8,8 en S1–S10, précisément sur les
+semaines qui décident d'une embauche backend.
+
+La reprise avance par lots et son état courant est figé, semaine par semaine, par la matrice de
+`ContentS11S20CoverageTests`. Après le lot 1, S11 à S17 portent six activités chacune, soit 42 au lieu
+de 36. Le détail des lots, le choix de conception qui les gouverne et la cible restante figurent dans
+`ROADMAP.md`.
+
+Deux limites de cette période restent ouvertes et ne sont pas comblées par du volume :
+
+- les activités S19 et S20 — et leurs équivalents Azure en S21–S22 — sont des fonctions pures sur un
+  domaine d'entrée de quelques valeurs, donc mémorisables ; elles entraînent la décision, pas le
+  geste ;
+- les cinq laboratoires de cette période portent la seule pratique réelle de Docker, de la chaîne de
+  livraison et d'une API complète, et ils ne sont rattachés à aucune page du parcours public.

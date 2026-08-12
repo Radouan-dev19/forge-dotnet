@@ -30,8 +30,12 @@
     "timeoutSeconds":  5,
     "maxRows":  20,
     "effectAssertions":  [
-                             "Les quatre clients, cinq commandes et six lignes restent inchangés après rollback"
+                             "Chaque commande payée apparaît une fois avec le nom de son client, sans modification de statut"
                          ],
     "solutionPath":  "solution.md",
+    "reviewCards": [
+        "card-sql-paid-customer-join-001-rule",
+        "card-sql-paid-customer-join-001-edge"
+    ],
     "license":  "CC-BY-4.0"
 }

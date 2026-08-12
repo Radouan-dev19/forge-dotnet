@@ -1,1 +1,2 @@
-Event=UnexpectedResult Level=Warning Scenario=debug-stack-order-001 Week=6 Actual=MISMATCH Expected=CONTRACT CorrelationId=debug-stack-order-001
+Event=LabelReversed Level=Warning Input="abc" Expected="cba" Actual="abc" CorrelationId=dbg-stack-order-001
+Event=LabelReversed Level=Information Input="" Expected="" Actual="" CorrelationId=dbg-stack-order-001

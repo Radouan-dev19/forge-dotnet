@@ -1,3 +1,3 @@
 # Non-régression
 
-Exécuter les quatre cas du runner, dont la borne cachée. Le test doit échouer sur roken/Submission.cs, réussir sur correction/Submission.cs et vérifier l’absence de mutation pour les tableaux.
+Couvrir trois montants dans le désordre, une collection déjà classée, une collection d'un seul montant et une collection vide. Le jeu doit échouer sur `broken/Submission.cs` dès trois montants et réussir sur `correction/Submission.cs`, en vérifiant que l'entrée n'est pas modifiée.

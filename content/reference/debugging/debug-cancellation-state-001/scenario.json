@@ -2,7 +2,7 @@
     "schemaVersion":  1,
     "id":  "debug-cancellation-state-001",
     "version":  1,
-    "title":  "État annulé présenté comme réussi",
+    "title":  "Traitements abandonnés comptés parmi les réussites",
     "difficulty":  3,
     "skills":  [
                    "debugging.async"
@@ -13,17 +13,18 @@
     "estimatedMinutes":  40,
     "brokenRepositoryPath":  "broken/",
     "ticketPath":  "ticket.md",
-    "expectedBehavior":  "Le résultat doit respecter tous les cas du contrat sans mutation cachée. Le code d’annulation est regroupé à tort avec le succès.",
+    "expectedBehavior":  "Trois issues distinctes sont possibles : mené à terme, interrompu avant la fin, en erreur. Chacune reçoit sa propre étiquette ; aucune n'est fondue dans une autre.",
     "logsPath":  "logs.txt",
     "checklist":  [
-                      "Reproduire avec le cas de borne",
-                      "Placer un breakpoint avant la divergence",
-                      "Comparer entrée et valeur intermédiaire",
-                      "Ajouter le cas de non-régression"
+                      "Reproduire avec le code d'un traitement interrompu",
+                      "Lister les codes possibles et l'étiquette attendue pour chacun",
+                      "Vérifier quelles branches capturent effectivement chaque code",
+                      "Ajouter les trois issues au jeu de non-régression"
                   ],
     "observationQuestions":  [
-                                 "Quelle est la première valeur qui diverge du résultat prédit ?",
-                                 "Quelle condition ou mutation explique causalement ce symptôme ?"
+                                 "Combien d'issues distinctes la classification produit-elle réellement ?",
+                                 "Quel code se retrouve rattaché à une issue qui n'est pas la sienne ?",
+                                 "Un traitement interrompu doit-il être compté avec les réussites ?"
                              ],
     "correctionPath":  "correction/",
     "regressionTestPath":  "regression-test.md",

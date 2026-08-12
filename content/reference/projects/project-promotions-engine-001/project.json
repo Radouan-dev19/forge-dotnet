@@ -1,0 +1,77 @@
+{
+  "schemaVersion": 1,
+  "id": "project-promotions-engine-001",
+  "version": 2,
+  "title": "Moteur de promotions",
+  "difficulty": 3,
+  "weeks": [5],
+  "skills": ["algorithm.complexity"],
+  "prerequisites": ["csharp-shipping-decision-001"],
+  "estimatedHours": 12,
+  "briefPath": "brief.md",
+  "starterPath": "starter/",
+  "achievementKey": "project.console",
+  "maximumSourceFiles": 4,
+  "acceptanceSuites": [
+    { "milestoneId": "eligibilite", "suitePath": "eligibilite/" },
+    { "milestoneId": "remise", "suitePath": "remise/" },
+    { "milestoneId": "explication", "suitePath": "explication/" }
+  ],
+  "milestones": [
+    {
+      "id": "eligibilite",
+      "title": "Savoir si une règle s'applique avant de la choisir",
+      "evidence": "IsEligible répond par oui ou non selon qu'au moins une règle du catalogue s'applique au panier.",
+      "acceptanceCriteria": [
+        "Une borne de règle est atteinte, donc franchie : dix articles suffisent",
+        "Un panier juste sous une borne n'ouvre pas la règle correspondante",
+        "Un montant ou un nombre d'articles négatif est refusé, pas ramené à zéro"
+      ]
+    },
+    {
+      "id": "remise",
+      "title": "Choisir la meilleure, jamais les cumuler",
+      "evidence": "BestDiscount rend le montant de la règle la plus avantageuse, arrondi une seule fois.",
+      "acceptanceCriteria": [
+        "Trois règles applicables donnent le montant de la meilleure, jamais leur somme",
+        "Une remise proportionnelle peut battre une remise fixe, et l'inverse selon le panier",
+        "Un panier à zéro rend une remise nulle sans que la règle cesse de s'appliquer"
+      ]
+    },
+    {
+      "id": "explication",
+      "title": "Nommer la règle retenue et son montant",
+      "evidence": "ExplainDecision rend la règle retenue suivie de son montant, sous une forme que deux exécutions reproduisent.",
+      "acceptanceCriteria": [
+        "Deux règles à montant égal sont départagées par leur ordre de déclaration",
+        "Un panier sans règle applicable est nommé, il ne rend pas une réponse vide",
+        "Le montant affiché est celui qui serait facturé, arrondi comme lui"
+      ]
+    }
+  ],
+  "rubric": [
+    {
+      "criterion": "Le catalogue de règles se lit sans dérouler le code",
+      "weight": 0.4,
+      "observableEvidence": "Ajouter une quatrième règle ne demande de toucher ni la sélection ni l'explication."
+    },
+    {
+      "criterion": "La sélection est indépendante de l'ordre d'évaluation",
+      "weight": 0.35,
+      "observableEvidence": "Permuter deux règles à montants distincts ne change pas la règle retenue."
+    },
+    {
+      "criterion": "Aucune valeur du barème n'est écrite deux fois",
+      "weight": 0.25,
+      "observableEvidence": "Changer un taux se fait à un seul endroit et les trois suites suivent."
+    }
+  ],
+  "solutionPolicy": "no-complete-solution-before-submission",
+  "commonMistakes": [
+    "Cumuler les remises applicables au lieu de retenir la meilleure",
+    "Retenir la première règle applicable plutôt que la plus avantageuse",
+    "Laisser l'ordre d'évaluation trancher une égalité, ce qui rend la décision imprévisible"
+  ],
+  "variantIds": ["project-log-analyzer-001"],
+  "license": "CC-BY-4.0"
+}

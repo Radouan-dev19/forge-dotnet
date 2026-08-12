@@ -20,6 +20,20 @@
                                     ],
                       "expectedException":  "ArgumentException",
                       "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_TabSection",
+                      "message":  "Section réduite à une tabulation : traitée comme vide, donc refusée.",
+                      "arguments":  ["\t","Key"],
+                      "expectedException":  "ArgumentException",
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_CasePreserved",
+                      "message":  "La casse est conservée : réfute une normalisation non demandée.",
+                      "arguments":  ["ApiSettings","BaseUrl"],
+                      "expected":  "ApiSettings:BaseUrl",
+                      "argumentsUnchanged":  true
                   }
               ]
 }

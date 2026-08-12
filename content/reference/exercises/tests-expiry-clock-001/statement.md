@@ -2,6 +2,6 @@
 
 Implémentez Submission.IsExpired avec la signature fournie. Recevoir la date observée au lieu de lire l’horloge système dans la règle.
 
-Le résultat reste déterministe et hors ligne. Écrivez avant le code un cas nominal, une frontière, un refus et la menace ou régression que ces preuves préviennent. N’utilisez aucun secret réel.
+La règle reste déterministe et hors ligne, sans lire aucune horloge. Écrivez avant le code : une échéance passée, une échéance future, et le jour de l'échéance exactement. Nommez ce qu'une horloge lue dans la règle ferait à un test exécuté un autre jour.
 
-Exemple : entrée $(Convert-JsonCompact System.Object[] System.Object[][0]), sortie $(Convert-JsonCompact System.Object[] System.Object[][1]).
+Exemple : entrée `["2026-08-04","2026-08-05"]`, sortie `true`.

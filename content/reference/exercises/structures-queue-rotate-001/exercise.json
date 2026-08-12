@@ -20,8 +20,8 @@
                     ],
     "examples":  [
                      {
-                         "input":  "[{\"value\":[[1,2,3],1],\"Count\":2},{\"value\":[2,3,1],\"Count\":3}]",
-                         "output":  "[{\"value\":[[],2],\"Count\":2},{\"value\":[],\"Count\":0}]"
+                         "input":  "[[1,2,3],1]",
+                         "output":  "[2,3,1]"
                      }
                  ],
     "reflectionFields":  [
@@ -54,7 +54,7 @@
                   {
                       "level":  4,
                       "kind":  "partial-pseudocode",
-                      "content":  "valider les bornes ; parcourir ou décider ; retourner un nouveau résultat déterministe"
+                      "content":  "si la file est vide retourner un résultat vide ; ramener le nombre de rotations dans l'intervalle de la longueur, en traitant aussi les valeurs négatives ; répéter autant de fois : retirer en tête et remettre en queue ; matérialiser la file en tableau"
                   }
               ],
     "solution":  {
@@ -67,9 +67,10 @@
     "explanation":  "explanation.md",
     "complexity":  "O(n+k) en temps et O(n) en espace",
     "commonMistakes":  [
-                           "Coder uniquement les exemples visibles",
-                           "Oublier une borne ou modifier une entrée",
-                           "Annoncer une complexité sans compter les opérations dominantes"
+                           "Répéter la rotation autant de fois que demandé sans la ramener modulo la longueur",
+                           "Obtenir un reste négatif sur un nombre de tours négatif et sortir de l'intervalle",
+                           "Diviser par la longueur sans avoir traité la file vide",
+                           "Retirer en queue et remettre en tête, ce qui tourne dans l'autre sens"
                        ],
     "variantId":  "structures-next-greater-001",
     "reviewCards":  [

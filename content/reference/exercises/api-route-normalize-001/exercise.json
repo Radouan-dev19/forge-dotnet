@@ -15,13 +15,13 @@
     "statement":  "statement.md",
     "constraints":  [
                         "Conserver exactement la signature publique",
-                        "Retirer seulement les séparateurs de bord et normaliser avec une culture invariante.",
-                        "Ne jamais dépendre du réseau, d’un secret réel ou d’un état global"
+                        "Retirer seulement les séparateurs de bordure et normaliser avec une culture invariante.",
+                        "Ne consulter aucune table d'acheminement : la normalisation est purement textuelle"
                     ],
     "examples":  [
                      {
-                         "input":  "[{\"value\":[\" /Orders/ \"],\"Count\":1},\"orders\"]",
-                         "output":  "[{\"value\":[\"customers\"],\"Count\":1},\"customers\"]"
+                         "input":  "[\" /Orders/ \"]",
+                         "output":  "\"orders\""
                      }
                  ],
     "reflectionFields":  [
@@ -54,7 +54,7 @@
                   {
                       "level":  4,
                       "kind":  "partial-pseudocode",
-                      "content":  "valider les entrées ; appliquer la décision bornée ; retourner un résultat déterministe sans effet externe"
+                      "content":  "si la valeur est absente ou composée de blancs retourner une chaîne vide ; sinon retirer les blancs de bordure, puis les séparateurs de bordure uniquement, et uniformiser la casse avec la culture invariante"
                   }
               ],
     "solution":  {
@@ -67,9 +67,10 @@
     "explanation":  "explanation.md",
     "complexity":  "O(n) en temps et O(n) en espace",
     "commonMistakes":  [
-                           "Coder seulement les exemples visibles",
-                           "Masquer une erreur ou accepter une entrée hors contrat",
-                           "Confondre une règle pure avec le transport ou une ressource externe"
+                           "Retirer aussi les séparateurs internes et fusionner deux segments",
+                           "Uniformiser la casse avant de retirer les blancs et laisser des bordures",
+                           "Employer la casse de la culture courante, dont le résultat dépend de la machine",
+                           "Retourner une valeur absente pour une chaîne composée uniquement de séparateurs"
                        ],
     "variantId":  "api-dto-customer-name-001",
     "reviewCards":  [

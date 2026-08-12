@@ -215,6 +215,7 @@ public sealed class PracticeRulesTests
         "Calculer un total",
         1,
         20,
+        Array.AsReadOnly(["csharp.types"]),
         "Calculer un total décimal.",
         Array.AsReadOnly(["Conserver la signature publique"]),
         Array.AsReadOnly([new PracticeExerciseExample("10, 5", "15")]),

@@ -19,6 +19,20 @@
                                     ],
                       "expectedException":  "ArgumentOutOfRangeException",
                       "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_FirstRetry",
+                      "message":  "Première nouvelle tentative : le délai double une seule fois.",
+                      "arguments":  [1],
+                      "expected":  200,
+                      "argumentsUnchanged":  true
+                  },
+                  {
+                      "name":  "Hidden_LargeNegative",
+                      "message":  "Tentative très négative : refusée au même titre que moins un.",
+                      "arguments":  [-100],
+                      "expectedException":  "ArgumentOutOfRangeException",
+                      "argumentsUnchanged":  false
                   }
               ]
 }

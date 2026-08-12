@@ -2,6 +2,6 @@
 
 Implémentez Submission.JobResult avec la signature fournie. Le job réussit seulement si construction et tests réussissent tous les deux.
 
-Le résultat reste déterministe et hors ligne. Écrivez avant le code un cas nominal, une frontière, un refus et la menace ou régression que ces preuves préviennent. N’utilisez aucun secret réel.
+La décision reste déterministe et hors ligne : aucune chaîne d'intégration n'est interrogée. Écrivez avant le code : les quatre combinaisons des deux signaux, en vérifiant que seule leur conjonction produit le succès. Nommez ce qu'un travail annoncé réussi avec des tests rouges fait croire à l'équipe.
 
-Exemple : entrée $(Convert-JsonCompact System.Object[] System.Object[][0]), sortie $(Convert-JsonCompact System.Object[] System.Object[][1]).
+Exemple : entrée `[true,true]`, sortie `"success"`.

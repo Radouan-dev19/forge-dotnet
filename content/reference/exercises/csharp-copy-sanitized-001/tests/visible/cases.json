@@ -30,6 +30,13 @@
                                    ],
                       "expectedException":  null,
                       "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Visible_SingleNegative",
+                      "message":  "Une valeur négative est ramenée à zéro.",
+                      "arguments":  [[-1]],
+                      "expected":  [0],
+                      "argumentsUnchanged":  true
                   }
               ]
 }

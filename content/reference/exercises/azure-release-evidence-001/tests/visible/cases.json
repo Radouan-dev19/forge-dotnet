@@ -24,6 +24,13 @@
                       "expected":  false,
                       "expectedException":  null,
                       "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Visible_NothingProvided",
+                      "message":  "Aucune des trois preuves : la livraison n'est pas défendable.",
+                      "arguments":  [false,false,false],
+                      "expected":  false,
+                      "argumentsUnchanged":  true
                   }
               ]
 }

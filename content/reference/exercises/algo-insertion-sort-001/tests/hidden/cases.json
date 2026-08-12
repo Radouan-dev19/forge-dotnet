@@ -34,6 +34,20 @@
                                    ],
                       "expectedException":  null,
                       "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_Reversed",
+                      "message":  "Ordre strictement inversé : pire cas de décalage.",
+                      "arguments":  [[5,4,3,2,1]],
+                      "expected":  [1,2,3,4,5],
+                      "argumentsUnchanged":  true
+                  },
+                  {
+                      "name":  "Hidden_AllEqual",
+                      "message":  "Valeurs toutes égales : réfute une comparaison large qui déplacerait sans raison.",
+                      "arguments":  [[7,7,7]],
+                      "expected":  [7,7,7],
+                      "argumentsUnchanged":  true
                   }
               ]
 }

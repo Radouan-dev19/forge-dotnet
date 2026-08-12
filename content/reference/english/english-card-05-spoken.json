@@ -1,39 +1,40 @@
 {
-    "schemaVersion":  1,
-    "id":  "english-card-05-spoken",
-    "version":  1,
-    "title":  "Key Vault use — spoken follow-up",
-    "level":  "B1",
-    "durationMinutes":  10,
-    "skills":  [
-                   "english.spoken",
-                   "azure.identity"
-               ],
-    "situation":  "In a technical discussion, a teammate suggests copying a sensitive value into configuration. You must answer aloud accurately without overstating the evidence.",
-    "instructions":  [
-                         "Deliver a sixty-second answer with decision, evidence, limitation and one clarifying question."
-                     ],
-    "vocabulary":  [
-                       {
-                           "term":  "sensitive configuration",
-                           "meaning":  "the precise concept required for key vault use"
-                       },
-                       {
-                           "term":  "verified evidence",
-                           "meaning":  "an observation supported by a reproducible check"
-                       }
-                   ],
-    "expectedElements":  [
-                             "A clear decision tied to the scenario",
-                             "Verified evidence and one explicit limitation",
-                             "One useful clarifying question"
-                         ],
-    "modelAnswer":  "My decision is that The repository stores only the vault location; the runtime identity retrieves the sensitive value and logs never include it. The current evidence is limited to the documented checks, so I would not claim more. Which constraint or observation would make us revisit this decision?",
-    "commonMistakes":  [
-                           "Using confident adjectives without naming evidence or a limitation"
-                       ],
-    "variants":  [
-                     "Answer again after the reviewer changes one cost or security constraint."
-                 ],
-    "license":  "CC-BY-4.0"
+  "schemaVersion": 1,
+  "id": "english-card-05-spoken",
+  "version": 1,
+  "title": "Key Vault use — spoken follow-up",
+  "level": "B1",
+  "durationMinutes": 10,
+  "skills": [
+    "english.spoken",
+    "azure.identity"
+  ],
+  "situation": "In a technical discussion, a teammate suggests copying a sensitive value into configuration. You must answer aloud accurately without overstating the evidence.",
+  "instructions": [
+    "Say aloud why the sensitive value is not copied into configuration, and name what a reviewer would see if it were."
+  ],
+  "vocabulary": [
+    {
+      "term": "sensitive configuration",
+      "meaning": "a setting whose value must never appear in source control, logs, or a support export"
+    },
+    {
+      "term": "exposure surface",
+      "meaning": "the full set of places a value reaches once it is stored somewhere, usually wider than the place it was written to"
+    }
+  ],
+  "expectedElements": [
+    "The storage location is named precisely",
+    "The exposure surface of the wrong choice is described",
+    "What a reviewer can still see is stated honestly"
+  ],
+  "modelAnswer": "I would not copy that value into configuration. Configuration reaches further than people expect: it lands in source control, in build logs, in a support export, and in any error page that dumps settings. The value belongs in a secret store, and the application reads it at startup through an identity rather than holding a copy. The evidence is the diff in which the setting holds a reference and not a value. The limitation is that once the application has read it, the value is in process memory, so a memory dump is still an exposure. That is a smaller surface, not no surface. Do we have a policy on dump collection?",
+  "commonMistakes": [
+    "Refusing the shortcut without naming where configuration actually travels",
+    "Presenting a secret store as removing every exposure rather than narrowing it"
+  ],
+  "variants": [
+    "Answer again when the teammate replies that the repository is private."
+  ],
+  "license": "CC-BY-4.0"
 }

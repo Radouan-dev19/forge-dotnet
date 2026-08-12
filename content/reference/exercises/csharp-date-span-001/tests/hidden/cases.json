@@ -22,6 +22,20 @@
                       "expected":  0,
                       "expectedException":  null,
                       "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_FullYear",
+                      "message":  "Année complète : réfute un calcul par différence de mois.",
+                      "arguments":  ["2026-01-01","2026-12-31"],
+                      "expected":  365,
+                      "argumentsUnchanged":  true
+                  },
+                  {
+                      "name":  "Hidden_ReversedByOneDay",
+                      "message":  "Fin antérieure d'un seul jour : le résultat est zéro, pas un négatif.",
+                      "arguments":  ["2026-07-02","2026-07-01"],
+                      "expected":  0,
+                      "argumentsUnchanged":  true
                   }
               ]
 }

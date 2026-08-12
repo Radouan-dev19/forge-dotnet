@@ -20,8 +20,8 @@
                     ],
     "examples":  [
                      {
-                         "input":  "[{\"value\":[2.5,3],\"Count\":2},7.5]",
-                         "output":  "[{\"value\":[0,4],\"Count\":2},0]"
+                         "input":  "[2.5,3]",
+                         "output":  "7.5"
                      }
                  ],
     "reflectionFields":  [
@@ -54,7 +54,7 @@
                   {
                       "level":  4,
                       "kind":  "partial-pseudocode",
-                      "content":  "valider les bornes ; parcourir ou décider ; retourner un nouveau résultat déterministe"
+                      "content":  "si unitPrice ou quantity est négatif lever une erreur d'argument ; sinon multiplier d'abord, puis arrondir une seule fois à deux décimales en s'éloignant de zéro"
                   }
               ],
     "solution":  {
@@ -67,9 +67,10 @@
     "explanation":  "explanation.md",
     "complexity":  "O(1) en temps et O(1) en espace",
     "commonMistakes":  [
-                           "Coder uniquement les exemples visibles",
-                           "Oublier une borne ou modifier une entrée",
-                           "Annoncer une complexité sans compter les opérations dominantes"
+                           "Arrondir le prix unitaire avant la multiplication et accumuler l'écart",
+                           "Employer le mode d'arrondi par défaut, qui tranche au pair le plus proche",
+                           "Calculer en virgule flottante binaire et perdre l'exactitude décimale",
+                           "Accepter une quantité négative et produire un total négatif"
                        ],
     "variantId":  "csharp-payment-fee-001",
     "reviewCards":  [

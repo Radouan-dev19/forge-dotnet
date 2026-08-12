@@ -22,6 +22,20 @@
                       "expected":  1000,
                       "expectedException":  null,
                       "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_BothZero",
+                      "message":  "Deux montants nuls : la somme est nulle.",
+                      "arguments":  [0,0],
+                      "expected":  0,
+                      "argumentsUnchanged":  true
+                  },
+                  {
+                      "name":  "Hidden_DecimalPrecision",
+                      "message":  "Deux dixièmes : réfute une arithmétique binaire qui produirait un écart.",
+                      "arguments":  [0.1,0.2],
+                      "expected":  0.3,
+                      "argumentsUnchanged":  true
                   }
               ]
 }

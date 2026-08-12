@@ -20,8 +20,8 @@
                     ],
     "examples":  [
                      {
-                         "input":  "[{\"value\":[[-1,0,0]],\"Count\":1},2]",
-                         "output":  "[{\"value\":[[]],\"Count\":1},0]"
+                         "input":  "[[-1,0,0]]",
+                         "output":  "2"
                      }
                  ],
     "reflectionFields":  [
@@ -54,7 +54,7 @@
                   {
                       "level":  4,
                       "kind":  "partial-pseudocode",
-                      "content":  "valider les bornes ; parcourir ou décider ; retourner un nouveau résultat déterministe"
+                      "content":  "pour chaque nœud, remonter les parents jusqu'à la racine en comptant les niveaux traversés ; refuser par le code d'erreur si le nombre de sauts dépasse le nombre de nœuds ; conserver la plus grande profondeur rencontrée"
                   }
               ],
     "solution":  {
@@ -67,9 +67,10 @@
     "explanation":  "explanation.md",
     "complexity":  "O(n²) au pire et O(1) en espace",
     "commonMistakes":  [
-                           "Coder uniquement les exemples visibles",
-                           "Oublier une borne ou modifier une entrée",
-                           "Annoncer une complexité sans compter les opérations dominantes"
+                           "Boucler indéfiniment sur un tableau qui contient un cycle",
+                           "Compter les arêtes au lieu des niveaux et retourner une hauteur inférieure de un",
+                           "Ne remonter que depuis le premier nœud au lieu de tous",
+                           "Retourner zéro pour un arbre réduit à sa racine"
                        ],
     "variantId":  "structures-tree-node-count-001",
     "reviewCards":  [

@@ -4,4 +4,4 @@
 SELECT OrderId, OrderDate FROM dbo.Orders WHERE OrderDate >= '2026-02-01' AND OrderDate < '2026-03-01' ORDER BY OrderId;
 ```
 
-La requête fixe le grain avant projection, borne le résultat et utilise uniquement le schéma visible. Sa preuve compare colonnes, lignes et ordre, jamais un coût ou une durée exacte.
+La plage s'exprime bornée à gauche et ouverte à droite plutôt que par deux inégalités larges : une date portant une heure au dernier jour du mois serait sinon exclue. Cette forme reste également juste si la colonne gagne un jour une composante horaire.

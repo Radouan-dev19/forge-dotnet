@@ -16,7 +16,7 @@
     "Refuser une grâce négative avec ArgumentOutOfRangeException"
   ],
   "examples": [
-    { "input": "2026-07-20, 2026-07-20, 0", "output": "false" },
+    { "input": "[\"2026-07-20\",\"2026-07-20\",0]", "output": "false" },
     { "input": "2026-07-20, 2026-07-21, 0", "output": "true" },
     { "input": "2026-07-20, 2026-07-22, 2", "output": "false" }
   ],

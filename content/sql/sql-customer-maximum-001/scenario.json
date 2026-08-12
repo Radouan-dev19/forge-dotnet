@@ -30,8 +30,12 @@
     "timeoutSeconds":  5,
     "maxRows":  20,
     "effectAssertions":  [
-                             "Les quatre clients, cinq commandes et six lignes restent inchangés après rollback"
+                             "Aucun total de commande n'est modifié et chaque client retenu porte bien son montant maximal"
                          ],
     "solutionPath":  "solution.md",
+    "reviewCards": [
+        "card-sql-customer-maximum-001-rule",
+        "card-sql-customer-maximum-001-edge"
+    ],
     "license":  "CC-BY-4.0"
 }

@@ -1,39 +1,40 @@
 {
-    "schemaVersion":  1,
-    "scenarioId":  "debug-queue-window-001",
-    "criteria":  [
-                     {
-                         "id":  "cause",
-                         "label":  "La cause relie la divergence à la règle fautive.",
-                         "journalField":  "cause",
-                         "requiredTerms":  [
-                                               "borne",
-                                               "condition",
-                                               "mutation"
-                                           ],
-                         "minimumMatches":  1
-                     },
-                     {
-                         "id":  "evidence",
-                         "label":  "La preuve cite entrée, attendu et réel.",
-                         "journalField":  "evidence",
-                         "requiredTerms":  [
-                                               "entrée",
-                                               "attendu",
-                                               "réel"
-                                           ],
-                         "minimumMatches":  2
-                     },
-                     {
-                         "id":  "test",
-                         "label":  "Le test de non-régression cible la borne.",
-                         "journalField":  "test",
-                         "requiredTerms":  [
-                                               "borne",
-                                               "échoue",
-                                               "réussit"
-                                           ],
-                         "minimumMatches":  2
-                     }
-                 ]
+  "schemaVersion": 1,
+  "scenarioId": "debug-queue-window-001",
+  "criteria": [
+    {
+      "id": "cause-window-ignored",
+      "label": "La cause établit que la fenêtre demandée n'est pas prise en compte.",
+      "journalField": "cause",
+      "requiredTerms": [
+        "fenêtre",
+        "ignorée",
+        "départ",
+        "parcours"
+      ],
+      "minimumMatches": 2
+    },
+    {
+      "id": "evidence-totals",
+      "label": "La preuve compare le total attendu et le total obtenu.",
+      "journalField": "evidence",
+      "requiredTerms": [
+        "5",
+        "6",
+        "attendu"
+      ],
+      "minimumMatches": 2
+    },
+    {
+      "id": "test-window-sizes",
+      "label": "Le test fait varier la taille de fenêtre autour de l'historique.",
+      "journalField": "test",
+      "requiredTerms": [
+        "fenêtre",
+        "nulle",
+        "dépasse"
+      ],
+      "minimumMatches": 2
+    }
+  ]
 }

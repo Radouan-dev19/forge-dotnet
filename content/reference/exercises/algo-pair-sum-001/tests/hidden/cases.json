@@ -28,6 +28,20 @@
                       "expected":  true,
                       "expectedException":  null,
                       "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_NoSelfPairing",
+                      "message":  "Un seul élément valant la moitié de la cible : réfute l'appariement d'un élément avec lui-même.",
+                      "arguments":  [[4],8],
+                      "expected":  false,
+                      "argumentsUnchanged":  true
+                  },
+                  {
+                      "name":  "Hidden_ZeroPair",
+                      "message":  "Deux zéros pour une cible nulle : la paire existe bien.",
+                      "arguments":  [[0,0],0],
+                      "expected":  true,
+                      "argumentsUnchanged":  true
                   }
               ]
 }

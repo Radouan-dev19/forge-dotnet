@@ -16,7 +16,7 @@
     "Refuser null avec ArgumentNullException"
   ],
   "examples": [
-    { "input": "[3, 1, 3, 2, 1]", "output": "[3, 1, 2]" },
+    { "input": "[[3,1,3,2,1]]", "output": "[3,1,2]" },
     { "input": "[]", "output": "[]" }
   ],
   "reflectionFields": ["reformulation", "inputs", "expectedOutput", "edgeCases", "hypothesis", "plan"],

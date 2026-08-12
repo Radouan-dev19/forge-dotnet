@@ -16,12 +16,12 @@
     "constraints":  [
                         "Conserver exactement la signature publique",
                         "Appliquer une valeur par défaut positive et un plafond strict de cent.",
-                        "Ne jamais dépendre du réseau, d’un secret réel ou d’un état global"
+                        "Ne lire aucun réglage externe : le défaut et le plafond sont fixés par le contrat"
                     ],
     "examples":  [
                      {
-                         "input":  "[{\"value\":[25],\"Count\":1},25]",
-                         "output":  "[{\"value\":[0],\"Count\":1},20]"
+                         "input":  "[25]",
+                         "output":  "25"
                      }
                  ],
     "reflectionFields":  [
@@ -54,7 +54,7 @@
                   {
                       "level":  4,
                       "kind":  "partial-pseudocode",
-                      "content":  "valider les entrées ; appliquer la décision bornée ; retourner un résultat déterministe sans effet externe"
+                      "content":  "si la taille demandée est nulle ou négative retourner la taille par défaut ; sinon retenir la plus petite entre la taille demandée et le plafond"
                   }
               ],
     "solution":  {
@@ -67,9 +67,10 @@
     "explanation":  "explanation.md",
     "complexity":  "O(1) en temps et O(1) en espace",
     "commonMistakes":  [
-                           "Coder seulement les exemples visibles",
-                           "Masquer une erreur ou accepter une entrée hors contrat",
-                           "Confondre une règle pure avec le transport ou une ressource externe"
+                           "Retourner la taille demandée sans plafond et laisser une seule requête saturer la mémoire",
+                           "Refuser une taille excessive au lieu de la ramener au plafond",
+                           "Traiter une taille nulle comme une demande de collection entière",
+                           "Écrire le plafond en dur alors qu'il relève d'un réglage de configuration"
                        ],
     "variantId":  "api-skip-count-001",
     "reviewCards":  [

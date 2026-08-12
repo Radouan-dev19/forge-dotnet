@@ -24,8 +24,15 @@ public sealed class ContentS11S20CoverageTests
             module.GetProperty("weeks")[0].GetInt32() is >= 11 and <= 20).ToArray();
         Assert.Equal(10, incrementModules.Length);
         Assert.All(incrementModules, module => Assert.Equal(3, module.GetProperty("lessonIds").GetArrayLength()));
-        Assert.All(incrementModules.Where(module => module.GetProperty("weeks")[0].GetInt32() <= 17),
-            module => Assert.Equal(5, module.GetProperty("exerciseIds").GetArrayLength()));
+        // Matrice figée du volume de pratique en S11–S17. Ces semaines partaient toutes de cinq
+        // exercices, contre 8,8 par semaine en S1–S10 : l'écart porte précisément sur les semaines
+        // qui décident d'une embauche backend. Le comptage exact — et non un plancher — garde la
+        // reprise visible semaine par semaine à mesure qu'elle avance.
+        Assert.Equal(
+            [6, 6, 6, 6, 6, 6, 6],
+            incrementModules
+                .Where(module => module.GetProperty("weeks")[0].GetInt32() <= 17)
+                .Select(module => module.GetProperty("exerciseIds").GetArrayLength()));
         Assert.All(incrementModules.Where(module => module.GetProperty("weeks")[0].GetInt32() >= 18),
             module => Assert.Equal(3, module.GetProperty("exerciseIds").GetArrayLength()));
 
@@ -34,8 +41,8 @@ public sealed class ContentS11S20CoverageTests
         string[] exerciseIds = incrementModules.SelectMany(module => module.GetProperty("exerciseIds").EnumerateArray())
             .Select(value => value.GetString()!).ToArray();
         Assert.Equal(30, lessonIds.Length);
-        Assert.Equal(44, exerciseIds.Length);
-        Assert.Equal(35, incrementModules.Where(module => module.GetProperty("weeks")[0].GetInt32() <= 17)
+        Assert.Equal(51, exerciseIds.Length);
+        Assert.Equal(42, incrementModules.Where(module => module.GetProperty("weeks")[0].GetInt32() <= 17)
             .Sum(module => module.GetProperty("exerciseIds").GetArrayLength()));
         Assert.Equal(9, incrementModules.Where(module => module.GetProperty("weeks")[0].GetInt32() >= 18)
             .Sum(module => module.GetProperty("exerciseIds").GetArrayLength()));
@@ -48,11 +55,11 @@ public sealed class ContentS11S20CoverageTests
         }
 
         Assert.Equal(60, modules.Take(20).SelectMany(module => module.GetProperty("lessonIds").EnumerateArray()).Count());
-        Assert.Equal(132, modules.Take(20).SelectMany(module => module.GetProperty("exerciseIds").EnumerateArray()).Count());
+        Assert.Equal(139, modules.Take(20).SelectMany(module => module.GetProperty("exerciseIds").EnumerateArray()).Count());
         HashSet<string> finalExerciseIds = modules.Skip(20)
             .SelectMany(module => module.GetProperty("exerciseIds").EnumerateArray())
             .Select(value => value.GetString()!).ToHashSet(StringComparer.Ordinal);
-        Assert.Equal(129, Directory.GetDirectories(Path.Combine(CatalogRoot, "exercises"))
+        Assert.Equal(136, Directory.GetDirectories(Path.Combine(CatalogRoot, "exercises"))
             .Select(Path.GetFileName).Count(id => id is not null && !finalExerciseIds.Contains(id)));
     }
 
@@ -60,7 +67,7 @@ public sealed class ContentS11S20CoverageTests
     public void EveryNewExerciseHasProgressiveAidPrivateTestsAndARealVariant()
     {
         HashSet<string> ids = S11S20ExerciseIds();
-        Assert.Equal(44, ids.Count);
+        Assert.Equal(51, ids.Count);
         foreach (string id in ids)
         {
             string directory = Path.Combine(CatalogRoot, "exercises", id);
@@ -94,18 +101,18 @@ public sealed class ContentS11S20CoverageTests
         ];
         foreach (string projectId in projectIds)
         {
-            using JsonDocument project = Read(Path.Combine(CatalogRoot, "projects", $"{projectId}.json"));
+            using JsonDocument project = Read(Path.Combine(CatalogRoot, "projects", projectId, "project.json"));
             Assert.Equal("no-complete-solution-before-submission", project.RootElement.GetProperty("solutionPolicy").GetString());
             Assert.Equal(1m, project.RootElement.GetProperty("rubric").EnumerateArray()
                 .Sum(item => item.GetProperty("weight").GetDecimal()));
             Assert.True(project.RootElement.GetProperty("milestones").GetArrayLength() >= 4);
-            Assert.DoesNotContain("solution complète fournie", File.ReadAllText(Path.Combine(CatalogRoot, "projects", $"{projectId}.md")), StringComparison.OrdinalIgnoreCase);
+            Assert.DoesNotContain("solution complète fournie", File.ReadAllText(Path.Combine(CatalogRoot, "projects", projectId, "brief.md")), StringComparison.OrdinalIgnoreCase);
         }
 
         using JsonDocument apiExam = Read(Path.Combine(ContentRoot, "exams", "api-security-v1", "exam.json"));
         using JsonDocument testsExam = Read(Path.Combine(ContentRoot, "exams", "tests-quality-v1", "exam.json"));
-        Assert.Equal(16, apiExam.RootElement.GetProperty("eligibleExerciseIds").GetArrayLength());
-        Assert.Equal(15, testsExam.RootElement.GetProperty("eligibleExerciseIds").GetArrayLength());
+        Assert.Equal(20, apiExam.RootElement.GetProperty("eligibleExerciseIds").GetArrayLength());
+        Assert.Equal(18, testsExam.RootElement.GetProperty("eligibleExerciseIds").GetArrayLength());
         Assert.Equal(8, apiExam.RootElement.GetProperty("drawCount").GetInt32());
         Assert.Equal(8, testsExam.RootElement.GetProperty("drawCount").GetInt32());
         Assert.Equal(80m, apiExam.RootElement.GetProperty("passingScore").GetDecimal());

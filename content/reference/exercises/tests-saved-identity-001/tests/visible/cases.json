@@ -20,6 +20,13 @@
                       "expected":  false,
                       "expectedException":  null,
                       "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Visible_SecondIdentifier",
+                      "message":  "Identifiant supérieur à un : également considéré comme enregistré.",
+                      "arguments":  [2],
+                      "expected":  true,
+                      "argumentsUnchanged":  true
                   }
               ]
 }

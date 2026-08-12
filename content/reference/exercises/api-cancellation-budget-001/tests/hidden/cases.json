@@ -21,6 +21,20 @@
                       "expected":  1,
                       "expectedException":  null,
                       "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_MaximumNotPositive",
+                      "message":  "Plafond nul : refus, au même titre qu'une demande nulle.",
+                      "arguments":  [10,0],
+                      "expectedException":  "ArgumentOutOfRangeException",
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_NegativeRequest",
+                      "message":  "Demande négative : refusée, elle n'a pas de sens comme délai.",
+                      "arguments":  [-1,30],
+                      "expectedException":  "ArgumentOutOfRangeException",
+                      "argumentsUnchanged":  false
                   }
               ]
 }

@@ -20,6 +20,20 @@
                       "expected":  "id",
                       "expectedException":  null,
                       "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_NullValue",
+                      "message":  "Valeur absente : repli sur le tri par défaut, sans exception.",
+                      "arguments":  [null],
+                      "expected":  "id",
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_InjectionAttempt",
+                      "message":  "Fragment SQL soumis comme critère : rabattu sur le tri par défaut.",
+                      "arguments":  ["date; DROP TABLE Orders"],
+                      "expected":  "id",
+                      "argumentsUnchanged":  true
                   }
               ]
 }

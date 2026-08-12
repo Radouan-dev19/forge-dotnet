@@ -20,6 +20,20 @@
                       "expected":  "*****",
                       "expectedException":  null,
                       "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_NullValue",
+                      "message":  "Valeur absente : masque vide, sans exception.",
+                      "arguments":  [null],
+                      "expected":  "",
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_NoCharacterLeaks",
+                      "message":  "Valeur longue : aucun caractère d'origine ne subsiste dans le masque.",
+                      "arguments":  ["abcdefghijkl"],
+                      "expected":  "************",
+                      "argumentsUnchanged":  true
                   }
               ]
 }

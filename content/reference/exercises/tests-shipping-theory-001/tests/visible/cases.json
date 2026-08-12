@@ -22,6 +22,13 @@
                       "expected":  0,
                       "expectedException":  null,
                       "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Visible_ExpressAboveThreshold",
+                      "message":  "Express au-dessus du seuil : le tarif express prime sur la gratuité.",
+                      "arguments":  [100,true],
+                      "expected":  9.9,
+                      "argumentsUnchanged":  true
                   }
               ]
 }

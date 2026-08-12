@@ -20,6 +20,13 @@
                       "expected":  0.05,
                       "expectedException":  null,
                       "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Visible_JustBelowSecondTier",
+                      "message":  "Juste sous le second palier : c'est le premier taux qui s'applique.",
+                      "arguments":  [199.99],
+                      "expected":  0.05,
+                      "argumentsUnchanged":  true
                   }
               ]
 }

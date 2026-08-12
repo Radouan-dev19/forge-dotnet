@@ -1,24 +1,24 @@
 {
-    "schemaVersion":  1,
-    "id":  "interview-algo-insertion-sort-001",
-    "version":  1,
-    "title":  "Trier par insertion",
-    "level":  "junior",
-    "durationMinutes":  5,
-    "skills":  [
-                   "algorithm.sorting"
-               ],
-    "question":  "Comment résoudriez-vous « Trier par insertion » et comment prouveriez-vous les bornes ?",
-    "observableCriteria":  [
-                               "Le contrat et une borne sont explicitement reformulés",
-                               "La complexité et un test de réfutation sont justifiés"
-                           ],
-    "modelAnswer":  "Insérer chaque valeur dans un préfixe déjà trié. La preuve comprend un cas nominal, une borne et un cas différent des exemples ; O(n²) au pire et O(n) en espace pour la copie.",
-    "commonMistakes":  [
-                           "Réciter le code sans invariant ni méthode de test"
-                       ],
-    "variants":  [
-                     "Changer une borne ou le volume tout en conservant la même règle de trier par insertion."
-                 ],
-    "license":  "CC-BY-4.0"
+  "schemaVersion": 1,
+  "id": "interview-algo-insertion-sort-001",
+  "version": 1,
+  "title": "Trier par insertion",
+  "level": "junior",
+  "durationMinutes": 5,
+  "skills": [
+    "algorithm.sorting"
+  ],
+  "question": "Comment résoudriez-vous « Trier par insertion » et comment prouveriez-vous les bornes ?",
+  "observableCriteria": [
+    "L'invariant du préfixe trié est énoncé avant la description de la boucle",
+    "Le coût au pire est distingué du coût sur une entrée presque triée"
+  ],
+  "modelAnswer": "Insérer chaque valeur dans un préfixe déjà trié. Je prouve par un tableau presque trié, un tableau inversé et un tableau vide ; O(n²) au pire et O(n) en espace pour la copie.",
+  "commonMistakes": [
+    "Annoncer le coût quadratique sans mentionner le cas presque trié, qui est l'intérêt de ce tri"
+  ],
+  "variants": [
+    "Changer une borne ou le volume tout en conservant la même règle de trier par insertion."
+  ],
+  "license": "CC-BY-4.0"
 }

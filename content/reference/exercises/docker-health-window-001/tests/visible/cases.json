@@ -24,6 +24,13 @@
                       "expected":  false,
                       "expectedException":  null,
                       "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Visible_MinimalFit",
+                      "message":  "Une seule vérification tenant exactement dans le budget.",
+                      "arguments":  [1,1,1],
+                      "expected":  true,
+                      "argumentsUnchanged":  true
                   }
               ]
 }

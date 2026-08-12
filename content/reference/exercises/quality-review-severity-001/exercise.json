@@ -16,12 +16,12 @@
     "constraints":  [
                         "Conserver exactement la signature publique",
                         "Prioriser un risque de sécurité, puis un défaut de correction, puis la suggestion.",
-                        "Ne jamais dépendre du réseau, d’un secret réel ou d’un état global"
+                        "Ne lire aucun diff réel : les deux indicateurs sont fournis"
                     ],
     "examples":  [
                      {
-                         "input":  "[{\"value\":[true,false],\"Count\":2},\"blocker\"]",
-                         "output":  "[{\"value\":[false,false],\"Count\":2},\"suggestion\"]"
+                         "input":  "[true,false]",
+                         "output":  "\"blocker\""
                      }
                  ],
     "reflectionFields":  [
@@ -54,7 +54,7 @@
                   {
                       "level":  4,
                       "kind":  "partial-pseudocode",
-                      "content":  "valider les entrées ; appliquer la décision bornée ; retourner un résultat déterministe sans effet externe"
+                      "content":  "évaluer d'abord le risque de sécurité, qui donne la gravité la plus haute quelle que soit la suite ; sinon un défaut de correction bloque la fusion ; tout le reste est une suggestion explicitement non bloquante"
                   }
               ],
     "solution":  {
@@ -67,9 +67,10 @@
     "explanation":  "explanation.md",
     "complexity":  "O(1) en temps et O(1) en espace",
     "commonMistakes":  [
-                           "Coder seulement les exemples visibles",
-                           "Masquer une erreur ou accepter une entrée hors contrat",
-                           "Confondre une règle pure avec le transport ou une ressource externe"
+                           "Évaluer la correction avant la sécurité et masquer la gravité la plus haute",
+                           "Ne pas distinguer la suggestion du bloquant et laisser l'auteur trier",
+                           "Traiter les deux indicateurs comme indépendants alors que le premier prime",
+                           "Classer une préférence de style au même niveau qu'un défaut de correction"
                        ],
     "variantId":  "quality-complexity-budget-001",
     "reviewCards":  [

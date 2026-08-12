@@ -1,39 +1,40 @@
 {
-    "schemaVersion":  1,
-    "id":  "english-card-11-spoken",
-    "version":  1,
-    "title":  "Metric choice — spoken follow-up",
-    "level":  "B2",
-    "durationMinutes":  10,
-    "skills":  [
-                   "english.spoken",
-                   "observability.signals"
-               ],
-    "situation":  "In a technical discussion, a teammate wants a log line for every latency sample. You must answer aloud accurately without overstating the evidence.",
-    "instructions":  [
-                         "Deliver a sixty-second answer with decision, evidence, limitation and one clarifying question."
-                     ],
-    "vocabulary":  [
-                       {
-                           "term":  "signal selection",
-                           "meaning":  "the precise concept required for metric choice"
-                       },
-                       {
-                           "term":  "verified evidence",
-                           "meaning":  "an observation supported by a reproducible check"
-                       }
-                   ],
-    "expectedElements":  [
-                             "A clear decision tied to the scenario",
-                             "Verified evidence and one explicit limitation",
-                             "One useful clarifying question"
-                         ],
-    "modelAnswer":  "My decision is that A latency histogram answers the trend question more efficiently, while a bounded event explains a specific failure. The current evidence is limited to the documented checks, so I would not claim more. Which constraint or observation would make us revisit this decision?",
-    "commonMistakes":  [
-                           "Using confident adjectives without naming evidence or a limitation"
-                       ],
-    "variants":  [
-                     "Answer again after the reviewer changes one cost or security constraint."
-                 ],
-    "license":  "CC-BY-4.0"
+  "schemaVersion": 1,
+  "id": "english-card-11-spoken",
+  "version": 1,
+  "title": "Metric choice — spoken follow-up",
+  "level": "B2",
+  "durationMinutes": 10,
+  "skills": [
+    "english.spoken",
+    "observability.signals"
+  ],
+  "situation": "In a technical discussion, a teammate wants a log line for every latency sample. You must answer aloud accurately without overstating the evidence.",
+  "instructions": [
+    "Say aloud why a log line per latency sample is the wrong instrument, and propose what to record instead."
+  ],
+  "vocabulary": [
+    {
+      "term": "signal selection",
+      "meaning": "choosing between a log, a metric, and a trace according to the question to be answered, not according to habit"
+    },
+    {
+      "term": "sampling cost",
+      "meaning": "the storage and processing a signal consumes per event, which decides whether it can be recorded for every request"
+    }
+  ],
+  "expectedElements": [
+    "The question each signal answers is distinguished",
+    "The per-event cost is used as the deciding argument",
+    "A concrete alternative instrument is proposed"
+  ],
+  "modelAnswer": "A log line per latency sample is the wrong instrument, and the reason is cost per event rather than taste. A log line is a stored, searchable record; at one per request that is millions of records a day whose only use is to be aggregated. A metric answers the same question at a fraction of the storage, because it aggregates at write time. The trade is that a metric cannot tell you which request was slow, only that some share was. So I would record latency as a metric, and keep logs for the requests that exceed a threshold. That gives both the distribution and the individual examples as evidence. What threshold would be useful to you?",
+  "commonMistakes": [
+    "Choosing the instrument by habit rather than by cost per event",
+    "Replacing logs with metrics without keeping any way to find a slow request"
+  ],
+  "variants": [
+    "Answer again when the teammate says storage is cheap."
+  ],
+  "license": "CC-BY-4.0"
 }

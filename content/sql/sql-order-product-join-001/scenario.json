@@ -31,8 +31,12 @@
     "timeoutSeconds":  5,
     "maxRows":  20,
     "effectAssertions":  [
-                             "Les quatre clients, cinq commandes et six lignes restent inchangés après rollback"
+                             "Les lignes de la commande ciblée sont lues avec leur produit, sans modifier ni les produits ni les quantités"
                          ],
     "solutionPath":  "solution.md",
+    "reviewCards": [
+        "card-sql-order-product-join-001-rule",
+        "card-sql-order-product-join-001-edge"
+    ],
     "license":  "CC-BY-4.0"
 }

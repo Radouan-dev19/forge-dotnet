@@ -30,8 +30,12 @@
     "timeoutSeconds":  5,
     "maxRows":  20,
     "effectAssertions":  [
-                             "Les quatre clients, cinq commandes et six lignes restent inchangés après rollback"
+                             "La somme des revenus par client couvre toutes les commandes existantes et n'en modifie aucune"
                          ],
     "solutionPath":  "solution.md",
+    "reviewCards": [
+        "card-sql-customer-revenue-001-rule",
+        "card-sql-customer-revenue-001-edge"
+    ],
     "license":  "CC-BY-4.0"
 }

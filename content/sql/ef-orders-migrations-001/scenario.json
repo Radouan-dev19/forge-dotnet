@@ -25,5 +25,9 @@
     "Customers et Orders existent avec leur clé étrangère et leurs index"
   ],
   "solutionPath": "solution.md",
+  "reviewCards": [
+      "card-ef-orders-migrations-001-rule",
+      "card-ef-orders-migrations-001-edge"
+  ],
   "license": "CC-BY-4.0"
 }

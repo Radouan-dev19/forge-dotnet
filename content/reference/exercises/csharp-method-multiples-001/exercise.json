@@ -16,7 +16,7 @@
     "Refuser le diviseur zéro avec ArgumentOutOfRangeException"
   ],
   "examples": [
-    { "input": "1, 10, 3", "output": "3" },
+    { "input": "[1,10,3]", "output": "3" },
     { "input": "-4, 4, 2", "output": "5" },
     { "input": "8, 3, 2", "output": "0" }
   ],

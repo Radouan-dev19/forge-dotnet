@@ -18,7 +18,8 @@ public sealed class SqliteReviewSourceProvider(
     IDbContextFactory<ForgeDbContext> contextFactory,
     LocalDatabaseGate databaseGate,
     IDiagnosticSessionRepository diagnosticSessions,
-    IDiagnosticRubricSource diagnosticRubrics) : IReviewSourceProvider
+    IDiagnosticRubricSource diagnosticRubrics,
+    IReviewCardSource reviewCards) : IReviewSourceProvider
 {
     private static readonly JsonSerializerOptions SerializerOptions = CreateSerializerOptions();
 
@@ -30,11 +31,98 @@ public sealed class SqliteReviewSourceProvider(
         var candidates = new List<ReviewSourceCandidate>();
         await AddPersistedActivitySourcesAsync(profileId, candidates, cancellationToken);
         await AddMissedDiagnosticQuestionsAsync(profileId, candidates, cancellationToken);
+        await AddExerciseReviewCardsAsync(profileId, candidates, cancellationToken);
         return Array.AsReadOnly(candidates
             .OrderBy(item => item.Source.OccurredAtUtc)
             .ThenBy(item => item.Source.Key, StringComparer.Ordinal)
             .ToArray());
     }
+
+    /// <summary>
+    /// Ajoute les cartes de révision des exercices déjà soumis au runner.
+    /// </summary>
+    /// <remarks>
+    /// Ces cartes sont la seule source de rétention espacée qui vive à l'échelle du parcours : le
+    /// bilan d'entrée n'est passé qu'une fois et ses preuves expirent au terme fixé par la politique
+    /// de maîtrise, laissant la composante sans alimentation possible au-delà de ce délai.
+    ///
+    /// La condition de soumission préalable est ce qui empêche de récolter des preuves sur des
+    /// exercices jamais ouverts : une carte n'apparaît que si l'apprenant a réellement soumis du code
+    /// pour l'exercice qui la porte.
+    /// </remarks>
+    private async Task AddExerciseReviewCardsAsync(
+        Guid profileId,
+        List<ReviewSourceCandidate> candidates,
+        CancellationToken cancellationToken)
+    {
+        PracticeAttemptedExercise[] attempted;
+        await using (var lease = await databaseGate.AcquireAsync(cancellationToken))
+        await using (var context = await contextFactory.CreateDbContextAsync(cancellationToken))
+        {
+            PracticeAttemptedExercise[] fromPractice = await context.PracticeLearningAttempts.AsNoTracking()
+                .Where(item => item.ProfileId == profileId)
+                .GroupBy(item => new { item.ExerciseId, item.ExerciseVersion, item.ContentRevision })
+                .Select(group => new PracticeAttemptedExercise(
+                    group.Key.ExerciseId,
+                    group.Key.ExerciseVersion,
+                    group.Key.ContentRevision,
+                    group.Min(item => item.ObservedAtUtc)))
+                .ToArrayAsync(cancellationToken);
+
+            // Le domaine SQL ne pratique pas des exercices mais des scénarios : sans cette seconde
+            // source, sa composante de rétention restait vide en permanence et son score plafonnait
+            // sous le seuil exigé par la porte A, quel que soit le travail fourni.
+            PracticeAttemptedExercise[] fromSqlLab = await context.SqlLearningAttempts.AsNoTracking()
+                .Where(item => item.ProfileId == profileId)
+                .GroupBy(item => new { item.ScenarioId, item.ScenarioVersion, item.ContentRevision })
+                .Select(group => new PracticeAttemptedExercise(
+                    group.Key.ScenarioId,
+                    group.Key.ScenarioVersion,
+                    group.Key.ContentRevision,
+                    group.Min(item => item.ObservedAtUtc)))
+                .ToArrayAsync(cancellationToken);
+
+            attempted = [.. fromPractice, .. fromSqlLab];
+        }
+
+        foreach (PracticeAttemptedExercise exercise in attempted
+            .GroupBy(item => item.ExerciseId, StringComparer.Ordinal)
+            .Select(group => group.OrderByDescending(item => item.ExerciseVersion).First()))
+        {
+            IReadOnlyList<ExerciseReviewCard> cards =
+                await reviewCards.GetForExerciseAsync(exercise.ExerciseId, cancellationToken);
+
+            foreach (ExerciseReviewCard card in cards)
+            {
+                var source = new ReviewSource(
+                    $"exercise-card:{card.Id}:v{exercise.ExerciseVersion}:{exercise.ContentRevision}",
+                    ReviewSourceKind.ExerciseReviewCard,
+                    card.Id,
+                    exercise.ExerciseVersion,
+                    exercise.ContentRevision,
+                    exercise.FirstObservedAtUtc);
+                var reviewCard = new ReviewCard(
+                    card.Question,
+                    card.CorrectOptionId,
+                    Array.AsReadOnly(card.Options
+                        .Select(option => new ReviewChoice(option.Id, option.Text))
+                        .ToArray()),
+                    ReviewEvaluationMode.Choice,
+                    CanProduceMasteryEvidence: true);
+                candidates.Add(new ReviewSourceCandidate(
+                    source,
+                    card.Domain,
+                    ReviewScheduleKind.General,
+                    reviewCard));
+            }
+        }
+    }
+
+    private sealed record PracticeAttemptedExercise(
+        string ExerciseId,
+        int ExerciseVersion,
+        string ContentRevision,
+        DateTimeOffset FirstObservedAtUtc);
 
     private async Task AddPersistedActivitySourcesAsync(
         Guid profileId,

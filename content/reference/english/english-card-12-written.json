@@ -1,39 +1,40 @@
 {
-    "schemaVersion":  1,
-    "id":  "english-card-12-written",
-    "version":  1,
-    "title":  "Latency percentile — written update",
-    "level":  "B2",
-    "durationMinutes":  12,
-    "skills":  [
-                   "english.written",
-                   "performance.metrics"
-               ],
-    "situation":  "In a technical discussion, a reviewer asks what p95 means. You must write the decision accurately without overstating the evidence.",
-    "instructions":  [
-                         "Write a four-sentence update with decision, evidence, limitation and next action."
-                     ],
-    "vocabulary":  [
-                       {
-                           "term":  "percentile interpretation",
-                           "meaning":  "the precise concept required for latency percentile"
-                       },
-                       {
-                           "term":  "verified evidence",
-                           "meaning":  "an observation supported by a reproducible check"
-                       }
-                   ],
-    "expectedElements":  [
-                             "A clear decision tied to the scenario",
-                             "Verified evidence and one explicit limitation",
-                             "A named next action"
-                         ],
-    "modelAnswer":  "Decision: On the stated window and workload, about ninety-five percent of observations are at or below the value; it is not the maximum. Evidence: the documented local checks support this scope. Limitation: this does not prove behavior in an untested production environment. Next action: record the owner and the next bounded verification.",
-    "commonMistakes":  [
-                           "Using confident adjectives without naming evidence or a limitation"
-                       ],
-    "variants":  [
-                     "Rewrite the update for a non-technical stakeholder without removing the limitation."
-                 ],
-    "license":  "CC-BY-4.0"
+  "schemaVersion": 1,
+  "id": "english-card-12-written",
+  "version": 1,
+  "title": "Latency percentile — written update",
+  "level": "B2",
+  "durationMinutes": 12,
+  "skills": [
+    "english.written",
+    "performance.metrics"
+  ],
+  "situation": "In a technical discussion, a reviewer asks what p95 means. You must write the decision accurately without overstating the evidence.",
+  "instructions": [
+    "Write four sentences defining the percentile, contrasting it with the average, and naming who experiences the tail."
+  ],
+  "vocabulary": [
+    {
+      "term": "percentile interpretation",
+      "meaning": "reading a latency figure as the value below which a stated share of requests fall, rather than as a typical value"
+    },
+    {
+      "term": "tail latency",
+      "meaning": "the slowest share of requests, which a mean hides and which is experienced by real users rather than by nobody"
+    }
+  ],
+  "expectedElements": [
+    "The percentile is defined in terms of a share of requests",
+    "The contrast with the average is explicit",
+    "The affected users are described, not abstracted away"
+  ],
+  "modelAnswer": "The ninety-fifth percentile is the value below which ninety-five percent of requests fall over the stated window; it is neither the maximum nor a typical value. We track it instead of the average because a small share of very slow requests barely moves a mean, so the mean can look healthy while some users wait seconds. The evidence that this share matters is our own volume: five percent of our traffic is a few thousand requests a day. Those users experience the tail and retry.",
+  "commonMistakes": [
+    "Explaining the percentile as an average or as a maximum",
+    "Describing the tail as a statistical artefact rather than as affected users"
+  ],
+  "variants": [
+    "Rewrite the update to justify adding a higher percentile to the dashboard."
+  ],
+  "license": "CC-BY-4.0"
 }

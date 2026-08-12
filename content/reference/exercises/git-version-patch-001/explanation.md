@@ -1,3 +1,7 @@
 # Explication
 
-Valider trois entiers non négatifs et incrémenter seulement le composant patch. La solution sépare validation et décision, sans état externe. Complexité : **O(n) en temps et O(n) en espace**. Les cas cachés varient les frontières et réfutent une constante mémorisée. Après lecture, la tentative n’est pas maîtrisée : expliquez la règle avec vos mots et planifiez une reprise à blanc.
+Valider trois entiers non négatifs et incrémenter seulement le composant de correction.
+
+Une correction n'ajoute rien et ne casse rien : seul le troisième composant bouge, et les deux autres restent inchangés. Les remettre à zéro serait le comportement d'une incrémentation de rang supérieur, où les composants de droite repartent effectivement de zéro.
+
+La validation préalable évite de produire un numéro qui ne désigne rien. Le critère qui gouverne le choix du composant est le même partout : un appelant écrit avant ce changement continue-t-il de fonctionner sans être modifié ? Oui sans rien de plus, c'est une correction. Le coût est linéaire dans la longueur de la version.

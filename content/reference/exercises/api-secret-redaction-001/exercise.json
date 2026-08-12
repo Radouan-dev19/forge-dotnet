@@ -16,12 +16,12 @@
     "constraints":  [
                         "Conserver exactement la signature publique",
                         "Ne conserver aucun caractère du secret et produire au moins quatre marqueurs.",
-                        "Ne jamais dépendre du réseau, d’un secret réel ou d’un état global"
+                        "N'écrire nulle part la valeur reçue et n'en conserver aucun caractère"
                     ],
     "examples":  [
                      {
-                         "input":  "[{\"value\":[\"fake-key\"],\"Count\":1},\"********\"]",
-                         "output":  "[{\"value\":[\"abc\"],\"Count\":1},\"****\"]"
+                         "input":  "[\"fake-key\"]",
+                         "output":  "\"********\""
                      }
                  ],
     "reflectionFields":  [
@@ -54,7 +54,7 @@
                   {
                       "level":  4,
                       "kind":  "partial-pseudocode",
-                      "content":  "valider les entrées ; appliquer la décision bornée ; retourner un résultat déterministe sans effet externe"
+                      "content":  "si la valeur est absente ou vide retourner une chaîne vide ; sinon produire une suite de marqueurs, sans reprendre aucun caractère d'origine, dont la longueur ne descend jamais sous le minimum annoncé"
                   }
               ],
     "solution":  {
@@ -67,9 +67,10 @@
     "explanation":  "explanation.md",
     "complexity":  "O(n) en temps et O(n) en espace",
     "commonMistakes":  [
-                           "Coder seulement les exemples visibles",
-                           "Masquer une erreur ou accepter une entrée hors contrat",
-                           "Confondre une règle pure avec le transport ou une ressource externe"
+                           "Conserver les premiers ou les derniers caractères du secret",
+                           "Produire un masque plus court que le minimum et révéler la brièveté du secret",
+                           "Retourner la valeur d'origine lorsqu'elle est déjà courte",
+                           "Journaliser la valeur avant de la masquer"
                        ],
     "variantId":  "api-error-status-001",
     "reviewCards":  [

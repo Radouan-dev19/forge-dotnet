@@ -1,24 +1,24 @@
 {
-    "schemaVersion":  1,
-    "id":  "interview-security-role-check-001",
-    "version":  1,
-    "title":  "Vérifier un rôle déclaré",
-    "level":  "intermediate",
-    "durationMinutes":  6,
-    "skills":  [
-                   "security.authorization"
-               ],
-    "question":  "Comment implémenteriez-vous « Vérifier un rôle déclaré » et quelles preuves réfutent les contournements ?",
-    "observableCriteria":  [
-                               "Le contrat, une frontière et un refus sont explicités",
-                               "La complexité et une preuve de sécurité ou de non-régression sont justifiées"
-                           ],
-    "modelAnswer":  "Comparer chaque rôle complet sans recherche partielle ni valeur implicite. Je sépare validation et décision, je teste un cas nominal et les frontières, puis je vérifie qu’aucune donnée sensible ni état externe n’entre dans la preuve. O(n) en temps et O(n) en espace.",
-    "commonMistakes":  [
-                           "Réciter le code sans expliquer le contrat ni la preuve"
-                       ],
-    "variants":  [
-                     "Changer la frontière ou le droit tout en conservant la règle de vérifier un rôle déclaré."
-                 ],
-    "license":  "CC-BY-4.0"
+  "schemaVersion": 1,
+  "id": "interview-security-role-check-001",
+  "version": 1,
+  "title": "Vérifier un rôle déclaré",
+  "level": "intermediate",
+  "durationMinutes": 6,
+  "skills": [
+    "security.authorization"
+  ],
+  "question": "Comment implémenteriez-vous « Vérifier un rôle déclaré » et quelles preuves réfutent les contournements ?",
+  "observableCriteria": [
+    "Chaque rôle est comparé en entier, sans recherche partielle",
+    "L'absence de rôle implicite est affirmée : rien n'est accordé par défaut"
+  ],
+  "modelAnswer": "Comparer chaque rôle complet sans recherche partielle ni valeur implicite. Je teste un rôle présent, un rôle absent, une liste vide et un rôle dont le nom contient celui attendu, qui doit être refusé. O(n) en temps et O(n) en espace.",
+  "commonMistakes": [
+    "Chercher le rôle par inclusion et accorder un droit à un rôle dont le nom le contient"
+  ],
+  "variants": [
+    "Changer la frontière ou le droit tout en conservant la règle de vérifier un rôle déclaré."
+  ],
+  "license": "CC-BY-4.0"
 }

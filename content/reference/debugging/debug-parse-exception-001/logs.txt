@@ -1,1 +1,2 @@
-Event=UnexpectedResult Level=Warning Scenario=debug-parse-exception-001 Week=3 Actual=MISMATCH Expected=CONTRACT CorrelationId=debug-parse-exception-001
+Event=ImportRowParsed Level=Information Row=41 Raw="42" Result=42 CorrelationId=dbg-parse-exception-001
+Event=ImportAborted Level=Error Row=42 Raw="invalid" Expected=0 Actual=none RemainingRows=317 CorrelationId=dbg-parse-exception-001

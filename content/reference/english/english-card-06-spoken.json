@@ -1,39 +1,40 @@
 {
-    "schemaVersion":  1,
-    "id":  "english-card-06-spoken",
-    "version":  1,
-    "title":  "Optional cloud lab — spoken follow-up",
-    "level":  "B1",
-    "durationMinutes":  10,
-    "skills":  [
-                   "english.spoken",
-                   "azure.local"
-               ],
-    "situation":  "In a technical discussion, a learner has no Azure subscription. You must answer aloud accurately without overstating the evidence.",
-    "instructions":  [
-                         "Deliver a sixty-second answer with decision, evidence, limitation and one clarifying question."
-                     ],
-    "vocabulary":  [
-                       {
-                           "term":  "simulation scope",
-                           "meaning":  "the precise concept required for optional cloud lab"
-                       },
-                       {
-                           "term":  "verified evidence",
-                           "meaning":  "an observation supported by a reproducible check"
-                       }
-                   ],
-    "expectedElements":  [
-                             "A clear decision tied to the scenario",
-                             "Verified evidence and one explicit limitation",
-                             "One useful clarifying question"
-                         ],
-    "modelAnswer":  "My decision is that The local simulation validates configuration and guardrails; a real deployment is optional, manual and may create costs. The current evidence is limited to the documented checks, so I would not claim more. Which constraint or observation would make us revisit this decision?",
-    "commonMistakes":  [
-                           "Using confident adjectives without naming evidence or a limitation"
-                       ],
-    "variants":  [
-                     "Answer again after the reviewer changes one cost or security constraint."
-                 ],
-    "license":  "CC-BY-4.0"
+  "schemaVersion": 1,
+  "id": "english-card-06-spoken",
+  "version": 1,
+  "title": "Optional cloud lab — spoken follow-up",
+  "level": "B1",
+  "durationMinutes": 10,
+  "skills": [
+    "english.spoken",
+    "azure.local"
+  ],
+  "situation": "In a technical discussion, a learner has no Azure subscription. You must answer aloud accurately without overstating the evidence.",
+  "instructions": [
+    "Say aloud what the simulated lab does prove and what it does not, without letting the listener assume a real deployment."
+  ],
+  "vocabulary": [
+    {
+      "term": "simulation scope",
+      "meaning": "the exact set of behaviours a local stand-in reproduces, outside of which its results say nothing"
+    },
+    {
+      "term": "unproven step",
+      "meaning": "a part of a procedure that was never executed, and which an honest report names instead of implying"
+    }
+  ],
+  "expectedElements": [
+    "What the simulation proves is bounded explicitly",
+    "At least one unproven step is named",
+    "What would close the gap is stated concretely"
+  ],
+  "modelAnswer": "The lab runs against a local simulation, and I want to be precise about what that proves. The evidence it produces is a syntactically valid deployment definition and scripts that run end to end. It does not prove that the cloud provider accepts the definition, that the quotas allow it, or that the network rules behave as written. Those three are unproven, and I would not report them as working. Closing the gap needs one real subscription and one real run, and it would take about a day. Should I request a temporary subscription for that?",
+  "commonMistakes": [
+    "Letting the audience assume a simulated run is a deployment",
+    "Naming the gap without saying what would close it"
+  ],
+  "variants": [
+    "Answer again to a learner who asks whether the certificate still counts."
+  ],
+  "license": "CC-BY-4.0"
 }

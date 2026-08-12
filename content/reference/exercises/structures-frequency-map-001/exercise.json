@@ -20,8 +20,8 @@
                     ],
     "examples":  [
                      {
-                         "input":  "[{\"value\":[[1,1,2]],\"Count\":1},{\"1\":2,\"2\":1}]",
-                         "output":  "[{\"value\":[[]],\"Count\":1},{}]"
+                         "input":  "[[1,1,2]]",
+                         "output":  "{\"1\":2,\"2\":1}"
                      }
                  ],
     "reflectionFields":  [
@@ -54,7 +54,7 @@
                   {
                       "level":  4,
                       "kind":  "partial-pseudocode",
-                      "content":  "valider les bornes ; parcourir ou décider ; retourner un nouveau résultat déterministe"
+                      "content":  "créer le dictionnaire avec un comparateur ordinal ; pour chaque valeur, produire sa clé textuelle avec la culture invariante ; incrémenter le compte existant ou l'initialiser à un"
                   }
               ],
     "solution":  {
@@ -67,9 +67,10 @@
     "explanation":  "explanation.md",
     "complexity":  "O(n) attendu en temps et O(k) en espace",
     "commonMistakes":  [
-                           "Coder uniquement les exemples visibles",
-                           "Oublier une borne ou modifier une entrée",
-                           "Annoncer une complexité sans compter les opérations dominantes"
+                           "Convertir la valeur en texte avec la culture courante et produire des clés dépendantes de la machine",
+                           "Indexer directement le dictionnaire pour lire un compte encore absent",
+                           "Créer une entrée par occurrence au lieu d'incrémenter celle qui existe",
+                           "Employer un comparateur insensible à la casse là où les clés sont numériques"
                        ],
     "variantId":  "structures-window-sums-001",
     "reviewCards":  [

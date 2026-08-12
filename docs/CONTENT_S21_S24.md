@@ -67,6 +67,10 @@ Le kit ne promet ni emploi, ni entretien, ni salaire. Il demande de nommer un la
 
 ## Vérifications reproductibles
 
+L'échafaudeur ci-dessous ne réécrit aucun fichier existant : il rapporte les documents conservés et
+n'écrit que les manquants. Il ne régénère un lot déjà publié qu'avec `-Force`, ce qui détruit toute
+reprise éditoriale.
+
 ```powershell
 powershell -ExecutionPolicy Bypass -File scripts/New-S21S24Content.ps1
 dotnet build --no-restore

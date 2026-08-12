@@ -30,8 +30,12 @@
     "timeoutSeconds":  5,
     "maxRows":  20,
     "effectAssertions":  [
-                             "Les quatre clients, cinq commandes et six lignes restent inchangés après rollback"
+                             "Chaque mois représenté par au moins une commande apparaît une fois et aucune date n'est réécrite"
                          ],
     "solutionPath":  "solution.md",
+    "reviewCards": [
+        "card-sql-monthly-cte-001-rule",
+        "card-sql-monthly-cte-001-edge"
+    ],
     "license":  "CC-BY-4.0"
 }

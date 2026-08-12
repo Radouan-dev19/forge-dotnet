@@ -15,13 +15,13 @@
     "statement":  "statement.md",
     "constraints":  [
                         "Conserver exactement la signature publique",
-                        "Vérifier le schéma et la présence d’une preuve sans jamais retourner sa valeur.",
-                        "Ne jamais dépendre du réseau, d’un secret réel ou d’un état global"
+                        "Vérifier le schéma et la présence d'une preuve sans jamais retourner sa valeur.",
+                        "Ne retourner ni journaliser la valeur de la preuve, seulement un verdict"
                     ],
     "examples":  [
                      {
-                         "input":  "[{\"value\":[\"Bearer fake-token\"],\"Count\":1},true]",
-                         "output":  "[{\"value\":[\"Basic value\"],\"Count\":1},false]"
+                         "input":  "[\"Bearer fake-token\"]",
+                         "output":  "true"
                      }
                  ],
     "reflectionFields":  [
@@ -54,7 +54,7 @@
                   {
                       "level":  4,
                       "kind":  "partial-pseudocode",
-                      "content":  "valider les entrées ; appliquer la décision bornée ; retourner un résultat déterministe sans effet externe"
+                      "content":  "si l'en-tête est absent ou composé de blancs retourner faux ; vérifier ensuite que le schéma attendu est en tête, sans distinction de casse ; conclure en vérifiant que ce qui suit le schéma n'est ni vide ni composé de blancs"
                   }
               ],
     "solution":  {
@@ -67,9 +67,10 @@
     "explanation":  "explanation.md",
     "complexity":  "O(n) en temps et O(1) en espace",
     "commonMistakes":  [
-                           "Coder seulement les exemples visibles",
-                           "Masquer une erreur ou accepter une entrée hors contrat",
-                           "Confondre une règle pure avec le transport ou une ressource externe"
+                           "Retourner ou journaliser la valeur de la preuve au lieu d'un simple verdict",
+                           "Accepter le schéma seul, sans preuve à sa suite",
+                           "Comparer le schéma avec distinction de casse et refuser un en-tête valide",
+                           "Considérer la présence du schéma comme une preuve d'identité valide"
                        ],
     "variantId":  "security-role-check-001",
     "reviewCards":  [

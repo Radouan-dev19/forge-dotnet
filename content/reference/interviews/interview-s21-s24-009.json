@@ -1,24 +1,24 @@
 {
-    "schemaVersion":  1,
-    "id":  "interview-s21-s24-009",
-    "version":  1,
-    "title":  "Choisir une région",
-    "level":  "junior",
-    "durationMinutes":  6,
-    "skills":  [
-                   "azure.architecture"
-               ],
-    "question":  "Comment justifier une région sans prétendre garantir disponibilité ou conformité ?",
-    "observableCriteria":  [
-                               "La réponse prend une décision explicite et cite une preuve observable",
-                               "Une limite de sécurité, de coût, de portée ou de validité est reconnue"
-                           ],
-    "modelAnswer":  "Je cite latence attendue, disponibilité des services, politique de données et coût observé. Je marque les hypothèses et je ne transforme pas une région en garantie juridique.",
-    "commonMistakes":  [
-                           "Employer un slogan sans contrainte, preuve ni limite vérifiable"
-                       ],
-    "variants":  [
-                     "Changez une contrainte du scénario « Choisir une région » et expliquez si la décision reste valide."
-                 ],
-    "license":  "CC-BY-4.0"
+  "schemaVersion": 1,
+  "id": "interview-s21-s24-009",
+  "version": 1,
+  "title": "Choisir une région",
+  "level": "junior",
+  "durationMinutes": 6,
+  "skills": [
+    "azure.architecture"
+  ],
+  "question": "Comment justifier une région sans prétendre garantir disponibilité ou conformité ?",
+  "observableCriteria": [
+    "Les critères cités sont mesurables : latence attendue, disponibilité des services, coût observé",
+    "Les hypothèses sont marquées comme telles, et la région n'est pas présentée comme une garantie juridique"
+  ],
+  "modelAnswer": "Je cite latence attendue, disponibilité des services, politique de données et coût observé. Je marque les hypothèses et je ne transforme pas une région en garantie juridique.",
+  "commonMistakes": [
+    "Transformer un choix de région en promesse de conformité ou de disponibilité"
+  ],
+  "variants": [
+    "Changez une contrainte du scénario « Choisir une région » et expliquez si la décision reste valide."
+  ],
+  "license": "CC-BY-4.0"
 }

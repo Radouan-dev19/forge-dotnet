@@ -25,5 +25,9 @@
     "Le reset restaure le total initial et une nouvelle valeur RowVersion"
   ],
   "solutionPath": "solution.md",
+  "reviewCards": [
+      "card-ef-orders-concurrency-001-rule",
+      "card-ef-orders-concurrency-001-edge"
+  ],
   "license": "CC-BY-4.0"
 }

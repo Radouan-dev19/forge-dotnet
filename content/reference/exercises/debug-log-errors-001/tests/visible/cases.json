@@ -20,6 +20,13 @@
                       "expected":  0,
                       "expectedException":  null,
                       "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Visible_SingleMarker",
+                      "message":  "Un seul marqueur, sans texte autour.",
+                      "arguments":  ["ERROR"],
+                      "expected":  1,
+                      "argumentsUnchanged":  true
                   }
               ]
 }

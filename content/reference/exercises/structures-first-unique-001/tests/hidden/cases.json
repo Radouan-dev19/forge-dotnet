@@ -20,6 +20,20 @@
                       "expected":  "",
                       "expectedException":  null,
                       "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_NoUnique",
+                      "message":  "Tous les caractères se répètent : la réponse est vide, pas le premier caractère.",
+                      "arguments":  ["abcabc"],
+                      "expected":  "",
+                      "argumentsUnchanged":  true
+                  },
+                  {
+                      "name":  "Hidden_UniqueAfterPair",
+                      "message":  "Une paire suivie d'un caractère seul.",
+                      "arguments":  ["aab"],
+                      "expected":  "b",
+                      "argumentsUnchanged":  true
                   }
               ]
 }

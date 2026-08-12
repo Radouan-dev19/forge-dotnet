@@ -2,6 +2,6 @@
 
 Implémentez Submission.NormalizeOptional avec la signature fournie. Traiter absence et blanc avant toute déréférence, sans opérateur de suppression.
 
-Le résultat reste déterministe et hors ligne. Écrivez avant le code un cas nominal, une frontière, un refus et la menace ou régression que ces preuves préviennent. N’utilisez aucun secret réel.
+La normalisation reste déterministe et hors ligne. Écrivez avant le code : une valeur ordinaire, une valeur entourée de blancs, une chaîne uniquement composée de blancs, et une valeur absente. Nommez ce qu'un opérateur d'affirmation déplace de la compilation vers l'exécution.
 
-Exemple : entrée $(Convert-JsonCompact System.Object[] System.Object[][0]), sortie $(Convert-JsonCompact System.Object[] System.Object[][1]).
+Exemple : entrée `[" value "]`, sortie `"value"`.

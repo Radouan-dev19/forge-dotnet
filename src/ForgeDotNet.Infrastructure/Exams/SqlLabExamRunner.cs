@@ -40,7 +40,8 @@ public sealed class SqlLabExamRunner(
         ExamRunResult? examResult = null;
         try
         {
-            session = await gateway.CreateSessionAsync(cancellationToken);
+            // L'examen porte son propre jeu de données : il n'emprunte aucun scénario publié.
+            session = await gateway.CreateSessionAsync(cancellationToken: cancellationToken);
             SqlLabExecutionResult result = await gateway.ExecuteAsync(
                 session.Id,
                 query,

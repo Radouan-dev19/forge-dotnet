@@ -1,3 +1,3 @@
 # Non-régression
 
-Exécuter les quatre cas du runner, dont la borne cachée. Le test doit échouer sur roken/Submission.cs, réussir sur correction/Submission.cs et vérifier l’absence de mutation pour les tableaux.
+Couvrir un extrait sans répétition, un extrait avec une répétition, un extrait entièrement composé d'une même valeur et un extrait vide. Le jeu doit échouer sur `broken/Submission.cs` dès la première répétition et réussir sur `correction/Submission.cs`.

@@ -2,6 +2,6 @@
 
 Implémentez Submission.MilestoneReady avec la signature fournie. Un jalon est révisable uniquement si tests, revue de sécurité et retour arrière documenté sont tous présents.
 
-Le résultat reste déterministe et hors ligne : aucun abonnement, appel Azure ou identifiant réel nʼest nécessaire. Avant le code, écrivez un cas nominal, une frontière, un refus et le risque que ces preuves réduisent.
+La décision reste déterministe et hors ligne : aucun système de livraison n'est interrogé. Écrivez avant le code : le jalon complet, puis les trois cas où une seule condition manque. Nommez ce que des tests verts sans revue de sécurité laissent passer.
 
-Exemple : entrée $(Convert-JsonCompact System.Object[] System.Object[][0]), sortie $(Convert-JsonCompact System.Object[] System.Object[][1]).
+Exemple : entrée `[true,true,true]`, sortie `true`.

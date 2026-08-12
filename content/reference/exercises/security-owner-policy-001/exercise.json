@@ -15,13 +15,13 @@
     "statement":  "statement.md",
     "constraints":  [
                         "Conserver exactement la signature publique",
-                        "Évaluer le privilège explicite puis l’identité exacte de la ressource.",
-                        "Ne jamais dépendre du réseau, d’un secret réel ou d’un état global"
+                        "Évaluer le privilège explicite puis l'identité exacte de la ressource.",
+                        "Ne consulter aucun annuaire : les deux identités et le privilège sont fournis"
                     ],
     "examples":  [
                      {
-                         "input":  "[{\"value\":[\"u1\",\"u1\",false],\"Count\":3},true]",
-                         "output":  "[{\"value\":[\"u1\",\"u2\",false],\"Count\":3},false]"
+                         "input":  "[\"u1\",\"u1\",false]",
+                         "output":  "true"
                      }
                  ],
     "reflectionFields":  [
@@ -54,7 +54,7 @@
                   {
                       "level":  4,
                       "kind":  "partial-pseudocode",
-                      "content":  "valider les entrées ; appliquer la décision bornée ; retourner un résultat déterministe sans effet externe"
+                      "content":  "accorder immédiatement si le privilège d'administration est détenu ; sinon refuser toute identité absente ou composée de blancs, des deux côtés ; enfin, accorder seulement si les deux identités sont exactement égales, comparées de façon ordinale"
                   }
               ],
     "solution":  {
@@ -67,9 +67,10 @@
     "explanation":  "explanation.md",
     "complexity":  "O(n) en temps et O(1) en espace",
     "commonMistakes":  [
-                           "Coder seulement les exemples visibles",
-                           "Masquer une erreur ou accepter une entrée hors contrat",
-                           "Confondre une règle pure avec le transport ou une ressource externe"
+                           "Accorder l'accès à toute identité authentifiée sans vérifier la propriété de la ressource",
+                           "Comparer les identités sans distinction de casse et confondre deux comptes distincts",
+                           "Accorder l'accès lorsque les deux identités sont absentes",
+                           "Vérifier la propriété avant le privilège et refuser un administrateur légitime"
                        ],
     "variantId":  "security-local-redirect-001",
     "reviewCards":  [

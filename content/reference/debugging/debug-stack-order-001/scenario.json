@@ -2,7 +2,7 @@
     "schemaVersion":  1,
     "id":  "debug-stack-order-001",
     "version":  1,
-    "title":  "Pile lue dans le mauvais ordre",
+    "title":  "Libellé inversé qui ressort identique à l'original",
     "difficulty":  3,
     "skills":  [
                    "debugging.data"
@@ -13,17 +13,18 @@
     "estimatedMinutes":  40,
     "brokenRepositoryPath":  "broken/",
     "ticketPath":  "ticket.md",
-    "expectedBehavior":  "Le résultat doit respecter tous les cas du contrat sans mutation cachée. Une seconde inversion annule l’ordre LIFO observé.",
+    "expectedBehavior":  "Le libellé est retourné caractère par caractère dans l'ordre inverse, espaces compris. Un libellé vide donne une chaîne vide.",
     "logsPath":  "logs.txt",
     "checklist":  [
-                      "Reproduire avec le cas de borne",
-                      "Placer un breakpoint avant la divergence",
-                      "Comparer entrée et valeur intermédiaire",
-                      "Ajouter le cas de non-régression"
+                      "Reproduire avec un libellé de trois caractères",
+                      "Observer le contenu intermédiaire juste après le remplissage de la structure",
+                      "Comparer cet état intermédiaire au résultat retourné",
+                      "Vérifier le résultat sur un libellé de deux caractères, où l'écart reste visible"
                   ],
     "observationQuestions":  [
-                                 "Quelle est la première valeur qui diverge du résultat prédit ?",
-                                 "Quelle condition ou mutation explique causalement ce symptôme ?"
+                                 "Dans quel ordre la structure restitue-t-elle ses éléments par construction ?",
+                                 "Combien de fois l'ordre est-il changé entre l'entrée et le retour ?",
+                                 "Pour quels libellés le symptôme serait-il invisible ?"
                              ],
     "correctionPath":  "correction/",
     "regressionTestPath":  "regression-test.md",

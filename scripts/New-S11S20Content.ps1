@@ -1,5 +1,20 @@
-﻿[CmdletBinding()]
-param()
+﻿<#
+.SYNOPSIS
+    Échafaude les documents S11-S20 : manifestes, sources, jeux de tests et squelettes de leçon.
+
+.DESCRIPTION
+    Ce script ne rédige pas la pédagogie. Il produit la structure et les données dérivables, et
+    laisse des marqueurs « TODO: » partout où une rédaction humaine est nécessaire. Ces marqueurs
+    sont refusés par la règle d'authenticité unsubstituted-placeholder : un lot échafaudé mais non
+    rédigé ne peut donc pas être publié.
+
+    Un fichier déjà présent est conservé, jamais réécrit, sauf avec -Force.
+
+.PARAMETER Force
+    Régénère les fichiers existants. Détruit toute reprise éditoriale.
+#>
+[CmdletBinding()]
+param([switch]$Force)
 
 $ErrorActionPreference = 'Stop'
 Set-StrictMode -Version Latest
@@ -8,19 +23,8 @@ $EffectiveScriptRoot = if ([string]::IsNullOrWhiteSpace($PSScriptRoot)) { Join-P
 $RepositoryRoot = Split-Path -Parent $EffectiveScriptRoot
 $ContentRoot = Join-Path $RepositoryRoot 'content'
 $CatalogRoot = Join-Path $ContentRoot 'reference'
-$Utf8NoBom = New-Object System.Text.UTF8Encoding($false)
-
-function Write-TextFile {
-    param([Parameter(Mandatory)][string]$Path, [Parameter(Mandatory)][string]$Content)
-    $Content = $Content.Replace([char]0x02BC, [char]0x2019)
-    [System.IO.Directory]::CreateDirectory((Split-Path -Parent $Path)) | Out-Null
-    [System.IO.File]::WriteAllText($Path, ($Content.Trim() + [Environment]::NewLine), $Utf8NoBom)
-}
-
-function Write-JsonFile {
-    param([Parameter(Mandatory)][string]$Path, [Parameter(Mandatory)]$Value)
-    Write-TextFile -Path $Path -Content ($Value | ConvertTo-Json -Depth 32)
-}
+$script:ForceOverwrite = $Force.IsPresent
+. (Join-Path $EffectiveScriptRoot 'ContentScaffolding.ps1')
 
 function Convert-TypeName {
     param([Parameter(Mandatory)][string]$RunnerType)
@@ -33,11 +37,6 @@ function Convert-TypeName {
         'string' { 'string' }
         default { throw "Type runner inconnu : $RunnerType" }
     }
-}
-
-function Convert-JsonCompact {
-    param($Value)
-    return ($Value | ConvertTo-Json -Depth 16 -Compress)
 }
 
 $LessonRows = @(
@@ -87,82 +86,8 @@ foreach ($row in $LessonRows) {
         sections=@('intuition','explanation','example','counterExample','check','guided','independent','debugging','interview','summary','reviewCards','masteryTest')
         markdownPath='lesson.md';license='CC-BY-4.0'
     })
-    Write-TextFile (Join-Path $directory 'lesson.md') @"
-# $title
-
-## Objectif observable
-
-À la fin de cette leçon, vous pourrez appliquer la règle à un cas nouveau, expliquer son compromis principal et écrire une preuve qui échoue avec une implémentation plausible mais incorrecte.
-
-## Prérequis
-
-Relire `$previousLessonId`, disposer du dépôt local et exécuter les exemples sans ressource réseau obligatoire.
-
-## Intuition
-
-$concept
-
-## Explication
-
-$concept Commencez par écrire le contrat, les entrées non fiables, la sortie observable et les limites de responsabilité. Une décision dʼarchitecture nʼest retenue que si elle réduit un risque ou rend une preuve plus directe.
-
-## Exemple commenté
-
-$example Modifiez ensuite une borne et un droit pour vérifier que le raisonnement, et non une valeur mémorisée, détermine le résultat.
-
-## Contre-exemple et erreur fréquente
-
-$mistake Reproduisez cette erreur dans un test avant de la corriger ; ne masquez ni exception ni code de sortie.
-
-## Vérification de compréhension
-
-Nommez le contrat public, une entrée hostile ou invalide, le statut ou résultat attendu et la preuve qui distingue autorisation, validation et erreur interne.
-
-:::quiz
-id=$id-check
-question=Quelle preuve démontre le mieux la compréhension de cette leçon ?
-option=Copier uniquement lʼexemple nominal
-option=Prédire puis tester succès, frontière et échec pertinent sans exposer de secret
-option=Désactiver la règle qui fait échouer la vérification
-correct=1
-success=Correct : une preuve variée et sûre réfute les erreurs plausibles.
-retry=Revenez au contrat, aux frontières et au contre-exemple avant de choisir.
-:::
-
-## Exercice guidé
-
-1. Écrivez un scénario nominal, une frontière et un refus.
-2. Prédisez statut, corps et effet avant exécution.
-3. Implémentez la règle dans le composant responsable.
-4. Exécutez la preuve et consignez tout écart sans le masquer.
-
-## Exercice autonome
-
-Transposez la technique au mini-ERP local. Gardez les règles métier hors du transport, bornez les entrées, utilisez seulement des secrets factices et fournissez les commandes de reproduction.
-
-## Débogage
-
-Reproduisez le symptôme, formulez une hypothèse, observez la première divergence sans modifier les données, corrigez la cause puis ajoutez un test de non-régression. Les logs ne contiennent ni corps sensible ni preuve dʼauthentification.
-
-## Entretien
-
-Présentez en cinq minutes le contrat, le compromis, une erreur fréquente, une menace pertinente et la stratégie de tests. Distinguez clairement ce qui est démontré de ce qui reste manuel.
-
-## Résumé
-
-- Le contrat et les frontières précèdent lʼimplémentation.
-- La sécurité est vérifiée par des refus observables et des journaux sobres.
-- Une livraison nʼest verte que si toutes les commandes applicables réussissent.
-
-## Cartes de révision
-
-- Question : quelle frontière doit être automatisée ? Réponse : celle qui sépare deux comportements publics différents.
-- Question : quelle donnée ne doit jamais entrer dans Git ou les logs ? Réponse : toute preuve dʼauthentification réelle.
-
-## Test de maîtrise
-
-Sans relire, réalisez une variante avec une donnée et un droit différents. Écrivez un test nominal, deux refus et une preuve de non-régression, puis défendez le compromis. Cette auto-évaluation ne valide aucune maîtrise automatiquement.
-"@
+    Write-TextFile (Join-Path $directory 'lesson.md') (New-LessonScaffold -Id $id -Title $title `
+        -PreviousLessonId $previousLessonId -Concept $concept -Example $example -Mistake $mistake)
     $previousLessonId = $id
 }
 
@@ -270,7 +195,7 @@ Implémentez `Submission.$($spec.Method)` avec la signature fournie. $($spec.Rul
 
 Le résultat reste déterministe et hors ligne. Écrivez avant le code un cas nominal, une frontière, un refus et la menace ou régression que ces preuves préviennent. Nʼutilisez aucun secret réel.
 
-Exemple : entrée `$(Convert-JsonCompact $firstVisible[0])`, sortie `$(Convert-JsonCompact $firstVisible[1])`.
+Exemple : entrée ``$(Convert-JsonCompact $firstVisible[0])``, sortie ``$(Convert-JsonCompact $firstVisible[1])``.
 "@
     Write-TextFile (Join-Path $directory 'explanation.md') "# Explication`n`n$($spec.Rule) La solution sépare validation et décision, sans état externe. Complexité : **$($spec.Complexity)**. Les cas cachés varient les frontières et réfutent une constante mémorisée. Après lecture, la tentative nʼest pas maîtrisée : expliquez la règle avec vos mots et planifiez une reprise à blanc."
     Write-TextFile (Join-Path $directory 'review-cards.md') "# Cartes de révision`n`n## card-$($spec.Id)-rule`n`n**Question :** Quelle règle gouverne cet exercice ?  `n**Réponse attendue :** $($spec.Rule)`n`n## card-$($spec.Id)-security`n`n**Question :** Quelle preuve empêche un contournement ?  `n**Réponse attendue :** Un cas de frontière ou de refus différent des exemples visibles."
@@ -803,8 +728,23 @@ Write-TextFile (Join-Path $GitRoot 'README.md') @'
 La revue manuelle examine ensuite le diff avec cette grille : contrat, correction, sécurité, tests, migrations, portée et commandes reproduites. Toute remarque est classée blocage, risque sécurité, question ou suggestion.
 '@
 Write-TextFile (Join-Path $GitRoot 'verify-conflict.ps1') @'
+<#
+.SYNOPSIS
+    Échafaude les documents S11-S20 : manifestes, sources, jeux de tests et squelettes de leçon.
+
+.DESCRIPTION
+    Ce script ne rédige pas la pédagogie. Il produit la structure et les données dérivables, et
+    laisse des marqueurs « TODO: » partout où une rédaction humaine est nécessaire. Ces marqueurs
+    sont refusés par la règle d'authenticité unsubstituted-placeholder : un lot échafaudé mais non
+    rédigé ne peut donc pas être publié.
+
+    Un fichier déjà présent est conservé, jamais réécrit, sauf avec -Force.
+
+.PARAMETER Force
+    Régénère les fichiers existants. Détruit toute reprise éditoriale.
+#>
 [CmdletBinding()]
-param()
+param([switch]$Force)
 $ErrorActionPreference = 'Stop'
 $sandbox = Join-Path ([System.IO.Path]::GetTempPath()) ("ForgeDotNet-GitLab-" + [Guid]::NewGuid().ToString('N'))
 [System.IO.Directory]::CreateDirectory($sandbox) | Out-Null
@@ -996,3 +936,5 @@ try {
 }
 finally { Pop-Location }
 '@
+
+Write-ScaffoldSummary -ScriptName (Split-Path -Leaf $PSCommandPath)

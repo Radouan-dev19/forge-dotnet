@@ -20,6 +20,20 @@
                       "expected":  1,
                       "expectedException":  null,
                       "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_LeadingSeparator",
+                      "message":  "Séparateur en tête : le champ vide initial compte.",
+                      "arguments":  [",a"],
+                      "expected":  2,
+                      "argumentsUnchanged":  true
+                  },
+                  {
+                      "name":  "Hidden_FourFields",
+                      "message":  "Quatre champs : réfute un comptage des séparateurs sans ajout de un.",
+                      "arguments":  ["a,b,c,d"],
+                      "expected":  4,
+                      "argumentsUnchanged":  true
                   }
               ]
 }

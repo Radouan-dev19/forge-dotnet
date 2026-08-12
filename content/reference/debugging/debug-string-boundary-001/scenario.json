@@ -2,7 +2,7 @@
     "schemaVersion":  1,
     "id":  "debug-string-boundary-001",
     "version":  1,
-    "title":  "Dernier caractère hors limite",
+    "title":  "Dernière lettre d'une référence : le traitement s'arrête",
     "difficulty":  2,
     "skills":  [
                    "debugging.breakpoints"
@@ -13,17 +13,18 @@
     "estimatedMinutes":  40,
     "brokenRepositoryPath":  "broken/",
     "ticketPath":  "ticket.md",
-    "expectedBehavior":  "Le résultat doit respecter tous les cas du contrat sans mutation cachée. L’index égal à Length sort de la chaîne.",
+    "expectedBehavior":  "La dernière lettre d'une référence non vide est retournée sous forme de chaîne d'un caractère. Une référence absente ou vide donne une chaîne vide, sans interruption.",
     "logsPath":  "logs.txt",
     "checklist":  [
-                      "Reproduire avec le cas de borne",
-                      "Placer un breakpoint avant la divergence",
-                      "Comparer entrée et valeur intermédiaire",
-                      "Ajouter le cas de non-régression"
+                      "Reproduire avec une référence de trois lettres",
+                      "Comparer la position lue et le nombre de lettres disponibles",
+                      "Vérifier le comportement attendu pour une référence vide",
+                      "Ajouter la référence vide au jeu de non-régression"
                   ],
     "observationQuestions":  [
-                                 "Quelle est la première valeur qui diverge du résultat prédit ?",
-                                 "Quelle condition ou mutation explique causalement ce symptôme ?"
+                                 "Quelle est la plus grande position lisible dans une référence de trois lettres ?",
+                                 "Quelle position le traitement tente-t-il de lire, et d'où vient-elle ?",
+                                 "Le contrat prévoit-il une interruption pour une référence vide ?"
                              ],
     "correctionPath":  "correction/",
     "regressionTestPath":  "regression-test.md",

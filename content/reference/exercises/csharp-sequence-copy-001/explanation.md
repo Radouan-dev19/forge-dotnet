@@ -1,3 +1,7 @@
 # Explication
 
-Créer une copie indépendante qui conserve ordre et doublons. La solution de référence sépare la validation de l’opération principale et ne dépend d’aucun état externe. Sa complexité est **O(n) en temps et O(n) en espace**. Les cas cachés changent valeurs, bornes et tailles afin qu’une constante mémorisée ne puisse pas réussir.
+Créer une copie indépendante qui conserve ordre et doublons.
+
+Une copie ne transforme rien : même ordre, mêmes doublons, même longueur. Toute opération ajoutée au passage — tri, déduplication — sort du contrat, et l'appelant qui comptait sur la fidélité découvrira l'écart bien plus tard.
+
+L'indépendance obtenue est celle de la liste, pas celle de ses éléments. Ici les éléments sont des entiers, donc la distinction ne se voit pas ; avec des objets, modifier un élément de la copie modifierait aussi celui de l'original. Savoir que la copie est de surface évite de lui prêter une garantie qu'elle n'a pas. Le coût est linéaire et l'espace correspond à la copie.

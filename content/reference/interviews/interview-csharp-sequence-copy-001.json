@@ -1,24 +1,24 @@
 {
-    "schemaVersion":  1,
-    "id":  "interview-csharp-sequence-copy-001",
-    "version":  1,
-    "title":  "Matérialiser une séquence une fois",
-    "level":  "junior",
-    "durationMinutes":  5,
-    "skills":  [
-                   "csharp.generics"
-               ],
-    "question":  "Comment résoudriez-vous « Matérialiser une séquence une fois » et comment prouveriez-vous les bornes ?",
-    "observableCriteria":  [
-                               "Le contrat et une borne sont explicitement reformulés",
-                               "La complexité et un test de réfutation sont justifiés"
-                           ],
-    "modelAnswer":  "Créer une copie indépendante qui conserve ordre et doublons. La preuve comprend un cas nominal, une borne et un cas différent des exemples ; O(n) en temps et O(n) en espace.",
-    "commonMistakes":  [
-                           "Réciter le code sans invariant ni méthode de test"
-                       ],
-    "variants":  [
-                     "Changer une borne ou le volume tout en conservant la même règle de matérialiser une séquence une fois."
-                 ],
-    "license":  "CC-BY-4.0"
+  "schemaVersion": 1,
+  "id": "interview-csharp-sequence-copy-001",
+  "version": 1,
+  "title": "Matérialiser une séquence une fois",
+  "level": "junior",
+  "durationMinutes": 5,
+  "skills": [
+    "csharp.generics"
+  ],
+  "question": "Comment résoudriez-vous « Matérialiser une séquence une fois » et comment prouveriez-vous les bornes ?",
+  "observableCriteria": [
+    "La copie est indépendante, ce qui est vérifié en modifiant l'une des deux après appel",
+    "L'ordre et les doublons sont conservés, ce qui est affirmé comme partie du contrat"
+  ],
+  "modelAnswer": "Créer une copie indépendante qui conserve ordre et doublons. Je prouve par une séquence à doublons, une séquence vide, puis en modifiant la copie après appel ; O(n) en temps et O(n) en espace.",
+  "commonMistakes": [
+    "Rendre la séquence différée elle-même et laisser l'appelant la réénumérer"
+  ],
+  "variants": [
+    "Changer une borne ou le volume tout en conservant la même règle de matérialiser une séquence une fois."
+  ],
+  "license": "CC-BY-4.0"
 }

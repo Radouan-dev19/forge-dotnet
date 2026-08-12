@@ -192,6 +192,7 @@ public sealed class FileSystemPracticeExerciseSource(
             ReadString(root, "title"),
             root.GetProperty("difficulty").GetInt32(),
             root.GetProperty("estimatedMinutes").GetInt32(),
+            Array.AsReadOnly(root.GetProperty("skills").EnumerateArray().Select(item => item.GetString()!).ToArray()),
             statement.Text,
             Array.AsReadOnly(root.GetProperty("constraints").EnumerateArray().Select(item => item.GetString()!).ToArray()),
             Array.AsReadOnly(examples),

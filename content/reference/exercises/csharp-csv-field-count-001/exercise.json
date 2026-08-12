@@ -20,8 +20,8 @@
                     ],
     "examples":  [
                      {
-                         "input":  "[{\"value\":[\"a,b,c\"],\"Count\":1},3]",
-                         "output":  "[{\"value\":[\"\"],\"Count\":1},0]"
+                         "input":  "[\"a,b,c\"]",
+                         "output":  "3"
                      }
                  ],
     "reflectionFields":  [
@@ -54,7 +54,7 @@
                   {
                       "level":  4,
                       "kind":  "partial-pseudocode",
-                      "content":  "valider les bornes ; parcourir ou décider ; retourner un nouveau résultat déterministe"
+                      "content":  "si line est absente ou vide retourner zéro ; sinon découper sur la virgule sans retirer les segments vides ; retourner le nombre de segments obtenus"
                   }
               ],
     "solution":  {
@@ -67,9 +67,10 @@
     "explanation":  "explanation.md",
     "complexity":  "O(n) en temps et O(n) en espace",
     "commonMistakes":  [
-                           "Coder uniquement les exemples visibles",
-                           "Oublier une borne ou modifier une entrée",
-                           "Annoncer une complexité sans compter les opérations dominantes"
+                           "Retirer les segments vides et sous-compter une ligne à champs manquants",
+                           "Retourner zéro pour une ligne sans virgule alors qu'elle porte bien un champ",
+                           "Compter les virgules au lieu des segments, ce qui donne toujours un de moins",
+                           "Étendre le contrat aux guillemets et aux virgules échappées, hors du périmètre annoncé"
                        ],
     "variantId":  "csharp-linq-top-three-001",
     "reviewCards":  [

@@ -6,7 +6,9 @@ using System.Text.RegularExpressions;
 using ForgeDotNet.Application.CodeRunner;
 using ForgeDotNet.Application.DebugLab;
 using ForgeDotNet.Application.Practice;
+using ForgeDotNet.Application.Projects;
 using ForgeDotNet.Domain.DebugLab;
+using ForgeDotNet.Domain.Projects;
 
 namespace ForgeDotNet.CodeRunner;
 
@@ -22,7 +24,8 @@ public sealed class DockerRunContentOptions
 public sealed partial class FileSystemDockerRunSpecificationSource(
     IPracticeExerciseSource exerciseSource,
     DockerRunContentOptions options,
-    IDebugScenarioSource? debugScenarioSource = null) : IDockerRunSpecificationSource
+    IDebugScenarioSource? debugScenarioSource = null,
+    IProjectSource? projectSource = null) : IDockerRunSpecificationSource
 {
     private const int MaximumFileBytes = 128 * 1024;
     private static readonly UTF8Encoding StrictUtf8 = new(false, true);
@@ -66,7 +69,10 @@ public sealed partial class FileSystemDockerRunSpecificationSource(
         }
         else
         {
-            suiteRoot = await ResolveEfExamSuiteRootAsync(request, contentRoot, cancellationToken)
+            // Une suite de projet se résout comme un exercice, à ceci près que son dossier est un
+            // jalon situé sous le projet : le contrat de suite, lui, est identique.
+            suiteRoot = await ResolveProjectSuiteRootAsync(request, catalogRoot, contentRoot, cancellationToken)
+                ?? await ResolveEfExamSuiteRootAsync(request, contentRoot, cancellationToken)
                 ?? string.Empty;
             if (suiteRoot.Length == 0)
             {
@@ -94,6 +100,38 @@ public sealed partial class FileSystemDockerRunSpecificationSource(
             metadata.ReturnType,
             Array.AsReadOnly(cases));
         return new DockerRunSpecification(metadata.SuiteId, JsonSerializer.Serialize(suite, JsonOptions));
+    }
+
+    private async ValueTask<string?> ResolveProjectSuiteRootAsync(
+        CodeRunRequest request,
+        string catalogRoot,
+        string contentRoot,
+        CancellationToken cancellationToken)
+    {
+        if (projectSource is null)
+        {
+            return null;
+        }
+
+        var found = await projectSource.FindSuiteAsync(request.ExerciseId, cancellationToken);
+        if (found is null)
+        {
+            return null;
+        }
+
+        (Project project, ProjectAcceptanceSuite suite) = found.Value;
+        if (project.Version != request.ExerciseVersion
+            || !string.Equals(project.Revision, request.ContentRevision, StringComparison.Ordinal))
+        {
+            return null;
+        }
+
+        string projectRoot = Path.GetFullPath(Path.Combine(catalogRoot, "projects", project.Id));
+        EnsureDescendant(catalogRoot, projectRoot);
+        string suiteRoot = Path.GetFullPath(Path.Combine(projectRoot, suite.SuitePath));
+        EnsureDescendant(projectRoot, suiteRoot);
+        EnsureNoReparsePoints(contentRoot, suiteRoot);
+        return Directory.Exists(suiteRoot) ? suiteRoot : null;
     }
 
     private async ValueTask<string?> ResolveEfExamSuiteRootAsync(

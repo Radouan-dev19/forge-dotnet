@@ -20,8 +20,8 @@
                     ],
     "examples":  [
                      {
-                         "input":  "[{\"value\":[\"(a(b))\"],\"Count\":1},true]",
-                         "output":  "[{\"value\":[\"(()\"],\"Count\":1},false]"
+                         "input":  "[\"(a(b))\"]",
+                         "output":  "true"
                      }
                  ],
     "reflectionFields":  [
@@ -54,7 +54,7 @@
                   {
                       "level":  4,
                       "kind":  "partial-pseudocode",
-                      "content":  "valider les bornes ; parcourir ou décider ; retourner un nouveau résultat déterministe"
+                      "content":  "profondeur à zéro ; l'incrémenter à chaque ouverture ; à chaque fermeture la décrémenter et refuser immédiatement si elle passe sous zéro ; accepter seulement si la profondeur finale est nulle"
                   }
               ],
     "solution":  {
@@ -67,9 +67,10 @@
     "explanation":  "explanation.md",
     "complexity":  "O(n) en temps et O(1) en espace",
     "commonMistakes":  [
-                           "Coder uniquement les exemples visibles",
-                           "Oublier une borne ou modifier une entrée",
-                           "Annoncer une complexité sans compter les opérations dominantes"
+                           "Comparer seulement le nombre total d'ouvertures et de fermetures, sans regarder l'ordre",
+                           "Attendre la fin du parcours pour refuser une fermeture qui précède son ouverture",
+                           "Accepter une profondeur finale non nulle",
+                           "Refuser une chaîne vide, qui est équilibrée"
                        ],
     "variantId":  "structures-stack-reverse-001",
     "reviewCards":  [

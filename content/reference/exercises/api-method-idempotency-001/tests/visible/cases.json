@@ -20,6 +20,13 @@
                       "expected":  false,
                       "expectedException":  null,
                       "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Visible_Delete",
+                      "message":  "La suppression est idempotente : réfute une liste réduite à la lecture.",
+                      "arguments":  ["DELETE"],
+                      "expected":  true,
+                      "argumentsUnchanged":  true
                   }
               ]
 }

@@ -27,6 +27,20 @@
                       "expected":  -1,
                       "expectedException":  null,
                       "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_FirstPosition",
+                      "message":  "La cible occupe la première position : réfute un parcours qui démarre à l'indice un.",
+                      "arguments":  [[4,2,7],4],
+                      "expected":  0,
+                      "argumentsUnchanged":  true
+                  },
+                  {
+                      "name":  "Hidden_AllDuplicates",
+                      "message":  "Toutes les valeurs sont égales à la cible : c'est la première occurrence qui est attendue.",
+                      "arguments":  [[2,2,2],2],
+                      "expected":  0,
+                      "argumentsUnchanged":  true
                   }
               ]
 }

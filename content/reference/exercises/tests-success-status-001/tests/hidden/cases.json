@@ -20,6 +20,20 @@
                       "expected":  false,
                       "expectedException":  null,
                       "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_JustBelowRange",
+                      "message":  "Une unité sous la borne basse : ce n'est pas un succès.",
+                      "arguments":  [199],
+                      "expected":  false,
+                      "argumentsUnchanged":  true
+                  },
+                  {
+                      "name":  "Hidden_Zero",
+                      "message":  "Code nul : réfute une implémentation qui n'exclurait que les codes d'erreur connus.",
+                      "arguments":  [0],
+                      "expected":  false,
+                      "argumentsUnchanged":  true
                   }
               ]
 }

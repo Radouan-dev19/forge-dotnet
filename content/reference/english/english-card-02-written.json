@@ -1,39 +1,40 @@
 {
-    "schemaVersion":  1,
-    "id":  "english-card-02-written",
-    "version":  1,
-    "title":  "Managed identity — written update",
-    "level":  "B1",
-    "durationMinutes":  12,
-    "skills":  [
-                   "english.written",
-                   "azure.identity"
-               ],
-    "situation":  "In a technical discussion, a reviewer asks where the application credential is stored. You must write the decision accurately without overstating the evidence.",
-    "instructions":  [
-                         "Write a four-sentence update with decision, evidence, limitation and next action."
-                     ],
-    "vocabulary":  [
-                       {
-                           "term":  "credentialless access",
-                           "meaning":  "the precise concept required for managed identity"
-                       },
-                       {
-                           "term":  "verified evidence",
-                           "meaning":  "an observation supported by a reproducible check"
-                       }
-                   ],
-    "expectedElements":  [
-                             "A clear decision tied to the scenario",
-                             "Verified evidence and one explicit limitation",
-                             "A named next action"
-                         ],
-    "modelAnswer":  "Decision: The service uses its Azure identity and a scoped role, so no long-lived application credential is copied into the repository. Evidence: the documented local checks support this scope. Limitation: this does not prove behavior in an untested production environment. Next action: record the owner and the next bounded verification.",
-    "commonMistakes":  [
-                           "Using confident adjectives without naming evidence or a limitation"
-                       ],
-    "variants":  [
-                     "Rewrite the update for a non-technical stakeholder without removing the limitation."
-                 ],
-    "license":  "CC-BY-4.0"
+  "schemaVersion": 1,
+  "id": "english-card-02-written",
+  "version": 1,
+  "title": "Managed identity — written update",
+  "level": "B1",
+  "durationMinutes": 12,
+  "skills": [
+    "english.written",
+    "azure.identity"
+  ],
+  "situation": "In a technical discussion, a reviewer asks where the application credential is stored. You must write the decision accurately without overstating the evidence.",
+  "instructions": [
+    "Write four sentences on where the credential lives, who can read it, and what rotation would cost today."
+  ],
+  "vocabulary": [
+    {
+      "term": "credentialless access",
+      "meaning": "an identity granted by the platform to a running workload, so that no secret has to be stored or rotated"
+    },
+    {
+      "term": "rotation cost",
+      "meaning": "the work required to replace a secret everywhere it is used, which measures how expensive storing it really was"
+    }
+  ],
+  "expectedElements": [
+    "The storage location of the credential is explicit",
+    "The reader of the credential is identified",
+    "Rotation cost is stated rather than assumed to be zero"
+  ],
+  "modelAnswer": "The application does not store a database credential; it uses an identity issued by the platform at runtime. This means there is no secret in configuration or source control, and the evidence is that a search of the configuration returns no secret to rotate. The limitation is local development, where a developer still authenticates with a personal login that does have a rotation cost. I will document the local path separately so the difference is not assumed away.",
+  "commonMistakes": [
+    "Answering that the credential is safe without saying where it is",
+    "Claiming a credentialless setup while local development still relies on a stored login"
+  ],
+  "variants": [
+    "Rewrite the update for an auditor who wants the list of identities with database access."
+  ],
+  "license": "CC-BY-4.0"
 }

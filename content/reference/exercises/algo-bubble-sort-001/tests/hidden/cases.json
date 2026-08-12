@@ -32,6 +32,20 @@
                                    ],
                       "expectedException":  null,
                       "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_Reversed",
+                      "message":  "Ordre strictement inversé : pire cas, réfute un unique passage de comparaison.",
+                      "arguments":  [[5,4,3,2,1]],
+                      "expected":  [1,2,3,4,5],
+                      "argumentsUnchanged":  true
+                  },
+                  {
+                      "name":  "Hidden_AlreadySorted",
+                      "message":  "Entrée déjà triée : le résultat doit être identique et l'entrée intacte.",
+                      "arguments":  [[1,2,3]],
+                      "expected":  [1,2,3],
+                      "argumentsUnchanged":  true
                   }
               ]
 }

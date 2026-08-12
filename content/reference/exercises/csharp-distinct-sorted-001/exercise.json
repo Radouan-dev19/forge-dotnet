@@ -20,8 +20,8 @@
                     ],
     "examples":  [
                      {
-                         "input":  "[{\"value\":[[3,1,3]],\"Count\":1},{\"value\":[1,3],\"Count\":2}]",
-                         "output":  "[{\"value\":[[]],\"Count\":1},{\"value\":[],\"Count\":0}]"
+                         "input":  "[[3,1,3]]",
+                         "output":  "[1,3]"
                      }
                  ],
     "reflectionFields":  [
@@ -54,7 +54,7 @@
                   {
                       "level":  4,
                       "kind":  "partial-pseudocode",
-                      "content":  "valider les bornes ; parcourir ou décider ; retourner un nouveau résultat déterministe"
+                      "content":  "si values est null lever ArgumentNullException ; retirer les doublons, puis ordonner de façon croissante ; matérialiser une seule fois en tableau avant de retourner"
                   }
               ],
     "solution":  {
@@ -67,9 +67,10 @@
     "explanation":  "explanation.md",
     "complexity":  "O(n log n) en temps et O(n) en espace",
     "commonMistakes":  [
-                           "Coder uniquement les exemples visibles",
-                           "Oublier une borne ou modifier une entrée",
-                           "Annoncer une complexité sans compter les opérations dominantes"
+                           "Trier avant de dédupliquer et payer le tri sur les doublons",
+                           "Retourner la séquence paresseuse sans la matérialiser, ce qui la réévalue à chaque parcours",
+                           "Déduire l'unicité du seul tri et laisser passer des valeurs répétées",
+                           "Traiter un tableau vide comme une entrée invalide"
                        ],
     "variantId":  "csharp-file-extension-001",
     "reviewCards":  [

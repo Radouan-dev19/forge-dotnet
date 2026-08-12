@@ -24,6 +24,20 @@
                                    },
                       "expectedException":  null,
                       "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_WhitespaceOnly",
+                      "message":  "Que des blancs : aucune entrée, et non une entrée vide.",
+                      "arguments":  ["  "],
+                      "expected":  {},
+                      "argumentsUnchanged":  true
+                  },
+                  {
+                      "name":  "Hidden_CaseInsensitiveGrouping",
+                      "message":  "Même mot en trois casses : une seule entrée, sous la première forme rencontrée.",
+                      "arguments":  ["Chat chat CHAT"],
+                      "expected":  {"Chat":3},
+                      "argumentsUnchanged":  true
                   }
               ]
 }

@@ -20,8 +20,8 @@
                     ],
     "examples":  [
                      {
-                         "input":  "[{\"value\":[5,3],\"Count\":2},true]",
-                         "output":  "[{\"value\":[5,6],\"Count\":2},false]"
+                         "input":  "[5,3]",
+                         "output":  "true"
                      }
                  ],
     "reflectionFields":  [
@@ -54,7 +54,7 @@
                   {
                       "level":  4,
                       "kind":  "partial-pseudocode",
-                      "content":  "valider les bornes ; parcourir ou décider ; retourner un nouveau résultat déterministe"
+                      "content":  "si stock ou requested est négatif retourner faux ; sinon accepter tant que la quantité demandée ne dépasse pas le stock, l'égalité stricte étant acceptée"
                   }
               ],
     "solution":  {
@@ -67,9 +67,10 @@
     "explanation":  "explanation.md",
     "complexity":  "O(1) en temps et O(1) en espace",
     "commonMistakes":  [
-                           "Coder uniquement les exemples visibles",
-                           "Oublier une borne ou modifier une entrée",
-                           "Annoncer une complexité sans compter les opérations dominantes"
+                           "Refuser une demande exactement égale au stock disponible",
+                           "Accepter une demande négative, qui reviendrait à augmenter le stock",
+                           "Lever sur une entrée négative alors que le contrat retourne faux",
+                           "Comparer dans le mauvais sens et accepter toute demande supérieure au stock"
                        ],
     "variantId":  "csharp-vip-discount-001",
     "reviewCards":  [

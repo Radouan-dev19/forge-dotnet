@@ -1,0 +1,49 @@
+{
+  "schemaVersion": 1,
+  "id": "project-import-001",
+  "version": 1,
+  "title": "Importer des commandes",
+  "difficulty": 2,
+  "weeks": [
+    4
+  ],
+  "skills": [
+    "csharp.files",
+    "csharp.json"
+  ],
+  "prerequisites": [
+    "lesson-types-001"
+  ],
+  "estimatedHours": 8,
+  "briefPath": "brief.md",
+  "milestones": [
+    {
+      "id": "parse-input",
+      "title": "Analyser les données",
+      "evidence": "Des tests démontrent les cas valides et les lignes rejetées.",
+      "acceptanceCriteria": [
+        "Le rapport distingue les lignes importées des lignes rejetées"
+      ]
+    }
+  ],
+  "rubric": [
+    {
+      "criterion": "Exactitude de l'import",
+      "weight": 0.6,
+      "observableEvidence": "Les totaux et rejets correspondent aux données de référence."
+    },
+    {
+      "criterion": "Qualité des tests",
+      "weight": 0.4,
+      "observableEvidence": "Les cas limites sont nommés et démontrent un comportement utile."
+    }
+  ],
+  "solutionPolicy": "no-complete-solution-before-submission",
+  "commonMistakes": [
+    "Ignorer les lignes invalides sans les signaler"
+  ],
+  "variantIds": [
+    "project-import-002"
+  ],
+  "license": "CC-BY-4.0"
+}

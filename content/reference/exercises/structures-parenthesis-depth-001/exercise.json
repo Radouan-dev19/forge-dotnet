@@ -20,8 +20,8 @@
                     ],
     "examples":  [
                      {
-                         "input":  "[{\"value\":[\"(a(b))\"],\"Count\":1},2]",
-                         "output":  "[{\"value\":[\"text\"],\"Count\":1},0]"
+                         "input":  "[\"(a(b))\"]",
+                         "output":  "2"
                      }
                  ],
     "reflectionFields":  [
@@ -54,7 +54,7 @@
                   {
                       "level":  4,
                       "kind":  "partial-pseudocode",
-                      "content":  "valider les bornes ; parcourir ou décider ; retourner un nouveau résultat déterministe"
+                      "content":  "profondeur et maximum à zéro ; à chaque ouverture incrémenter la profondeur puis remonter le maximum si nécessaire ; à chaque fermeture décrémenter et retourner le code d'erreur si la profondeur passe sous zéro ; à la fin, retourner le maximum seulement si la profondeur est revenue à zéro"
                   }
               ],
     "solution":  {
@@ -67,9 +67,10 @@
     "explanation":  "explanation.md",
     "complexity":  "O(n) en temps et O(1) en espace",
     "commonMistakes":  [
-                           "Coder uniquement les exemples visibles",
-                           "Oublier une borne ou modifier une entrée",
-                           "Annoncer une complexité sans compter les opérations dominantes"
+                           "Retourner le maximum sans vérifier que la structure se referme",
+                           "Remonter le maximum après la fermeture au lieu de l'ouverture",
+                           "Confondre une profondeur nulle et une structure déséquilibrée, qui n'ont pas le même code",
+                           "Retourner le code d'erreur pour une chaîne vide, dont la profondeur est nulle"
                        ],
     "variantId":  "structures-first-unique-001",
     "reviewCards":  [

@@ -26,6 +26,13 @@
                       "expected":  0,
                       "expectedException":  null,
                       "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Visible_ZeroIsEven",
+                      "message":  "Zéro est pair : réfute un test qui exclurait la valeur nulle.",
+                      "arguments":  [[0]],
+                      "expected":  1,
+                      "argumentsUnchanged":  true
                   }
               ]
 }

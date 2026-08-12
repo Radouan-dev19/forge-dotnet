@@ -10,4 +10,9 @@ public enum ContentDocumentType
     InterviewQuestion,
     EnglishActivity,
     Project,
+
+    /// <summary>
+    /// Banque des cartes de révision à choix rattachées aux exercices.
+    /// </summary>
+    ReviewCardBank,
 }

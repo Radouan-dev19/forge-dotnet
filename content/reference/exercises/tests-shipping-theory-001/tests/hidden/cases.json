@@ -21,6 +21,20 @@
                                     ],
                       "expectedException":  "ArgumentOutOfRangeException",
                       "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_ZeroTotalStandard",
+                      "message":  "Total nul en standard : le tarif de base s'applique, ce n'est pas la gratuité.",
+                      "arguments":  [0,false],
+                      "expected":  4.9,
+                      "argumentsUnchanged":  true
+                  },
+                  {
+                      "name":  "Hidden_ExpressAtThreshold",
+                      "message":  "Express exactement au seuil de gratuité : le mode l'emporte sur le montant.",
+                      "arguments":  [50,true],
+                      "expected":  9.9,
+                      "argumentsUnchanged":  true
                   }
               ]
 }

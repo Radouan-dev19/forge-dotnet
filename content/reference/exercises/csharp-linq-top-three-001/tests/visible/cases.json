@@ -33,6 +33,13 @@
                                    ],
                       "expectedException":  null,
                       "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Visible_FewerThanThree",
+                      "message":  "Moins de trois éléments : on retourne ce qui existe, trié.",
+                      "arguments":  [[1,2]],
+                      "expected":  [2,1],
+                      "argumentsUnchanged":  true
                   }
               ]
 }

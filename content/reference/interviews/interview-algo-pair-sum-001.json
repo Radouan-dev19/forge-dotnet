@@ -1,24 +1,24 @@
 {
-    "schemaVersion":  1,
-    "id":  "interview-algo-pair-sum-001",
-    "version":  1,
-    "title":  "Détecter une paire de somme cible",
-    "level":  "intermediate",
-    "durationMinutes":  5,
-    "skills":  [
-                   "algorithm.search"
-               ],
-    "question":  "Comment résoudriez-vous « Détecter une paire de somme cible » et comment prouveriez-vous les bornes ?",
-    "observableCriteria":  [
-                               "Le contrat et une borne sont explicitement reformulés",
-                               "La complexité et un test de réfutation sont justifiés"
-                           ],
-    "modelAnswer":  "Chercher le complément avant d’ajouter la valeur courante pour exiger deux positions. La preuve comprend un cas nominal, une borne et un cas différent des exemples ; O(n) attendu en temps et O(n) en espace.",
-    "commonMistakes":  [
-                           "Réciter le code sans invariant ni méthode de test"
-                       ],
-    "variants":  [
-                     "Changer une borne ou le volume tout en conservant la même règle de détecter une paire de somme cible."
-                 ],
-    "license":  "CC-BY-4.0"
+  "schemaVersion": 1,
+  "id": "interview-algo-pair-sum-001",
+  "version": 1,
+  "title": "Détecter une paire de somme cible",
+  "level": "intermediate",
+  "durationMinutes": 5,
+  "skills": [
+    "algorithm.search"
+  ],
+  "question": "Comment résoudriez-vous « Détecter une paire de somme cible » et comment prouveriez-vous les bornes ?",
+  "observableCriteria": [
+    "La recherche du complément précède l'ajout de la valeur courante, ce qui interdit d'utiliser deux fois la même position",
+    "Le cas d'une cible valant le double d'une valeur est traité"
+  ],
+  "modelAnswer": "Chercher le complément avant d’ajouter la valeur courante pour exiger deux positions. Je prouve par une cible atteinte, une cible impossible et une cible égale au double d'un élément ; O(n) attendu en temps et O(n) en espace.",
+  "commonMistakes": [
+    "Ajouter avant de chercher et accepter une paire formée d'un seul élément"
+  ],
+  "variants": [
+    "Changer une borne ou le volume tout en conservant la même règle de détecter une paire de somme cible."
+  ],
+  "license": "CC-BY-4.0"
 }

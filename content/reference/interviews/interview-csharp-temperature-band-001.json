@@ -1,24 +1,24 @@
 {
-    "schemaVersion":  1,
-    "id":  "interview-csharp-temperature-band-001",
-    "version":  1,
-    "title":  "Classer une température",
-    "level":  "junior",
-    "durationMinutes":  5,
-    "skills":  [
-                   "csharp.control"
-               ],
-    "question":  "Comment résoudriez-vous « Classer une température » et comment prouveriez-vous les bornes ?",
-    "observableCriteria":  [
-                               "Le contrat et une borne sont explicitement reformulés",
-                               "La complexité et un test de réfutation sont justifiés"
-                           ],
-    "modelAnswer":  "Traiter les bornes zéro et vingt comme des décisions explicites. La preuve comprend un cas nominal, une borne et un cas différent des exemples ; O(1) en temps et O(1) en espace.",
-    "commonMistakes":  [
-                           "Réciter le code sans invariant ni méthode de test"
-                       ],
-    "variants":  [
-                     "Changer une borne ou le volume tout en conservant la même règle de classer une température."
-                 ],
-    "license":  "CC-BY-4.0"
+  "schemaVersion": 1,
+  "id": "interview-csharp-temperature-band-001",
+  "version": 1,
+  "title": "Classer une température",
+  "level": "junior",
+  "durationMinutes": 5,
+  "skills": [
+    "csharp.control"
+  ],
+  "question": "Comment résoudriez-vous « Classer une température » et comment prouveriez-vous les bornes ?",
+  "observableCriteria": [
+    "Les deux frontières sont traitées comme des décisions explicites, pas comme des effets de comparaison",
+    "L'appartenance de chaque frontière à l'une des deux tranches est dite"
+  ],
+  "modelAnswer": "Traiter les bornes zéro et vingt comme des décisions explicites. Je prouve par les deux frontières exactes, une valeur dans chaque tranche et une valeur négative ; O(1) en temps et O(1) en espace.",
+  "commonMistakes": [
+    "Laisser une frontière appartenir à deux tranches selon l'ordre des conditions"
+  ],
+  "variants": [
+    "Changer une borne ou le volume tout en conservant la même règle de classer une température."
+  ],
+  "license": "CC-BY-4.0"
 }

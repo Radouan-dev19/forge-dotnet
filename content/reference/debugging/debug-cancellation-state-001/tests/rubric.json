@@ -1,39 +1,40 @@
 {
-    "schemaVersion":  1,
-    "scenarioId":  "debug-cancellation-state-001",
-    "criteria":  [
-                     {
-                         "id":  "cause",
-                         "label":  "La cause relie la divergence à la règle fautive.",
-                         "journalField":  "cause",
-                         "requiredTerms":  [
-                                               "borne",
-                                               "condition",
-                                               "mutation"
-                                           ],
-                         "minimumMatches":  1
-                     },
-                     {
-                         "id":  "evidence",
-                         "label":  "La preuve cite entrée, attendu et réel.",
-                         "journalField":  "evidence",
-                         "requiredTerms":  [
-                                               "entrée",
-                                               "attendu",
-                                               "réel"
-                                           ],
-                         "minimumMatches":  2
-                     },
-                     {
-                         "id":  "test",
-                         "label":  "Le test de non-régression cible la borne.",
-                         "journalField":  "test",
-                         "requiredTerms":  [
-                                               "borne",
-                                               "échoue",
-                                               "réussit"
-                                           ],
-                         "minimumMatches":  2
-                     }
-                 ]
+  "schemaVersion": 1,
+  "scenarioId": "debug-cancellation-state-001",
+  "criteria": [
+    {
+      "id": "cause-merged-states",
+      "label": "La cause établit que deux issues sont fondues en une.",
+      "journalField": "cause",
+      "requiredTerms": [
+        "fondue",
+        "regroup",
+        "issue",
+        "branche"
+      ],
+      "minimumMatches": 2
+    },
+    {
+      "id": "evidence-code",
+      "label": "La preuve cite le code mal classé et l'étiquette obtenue.",
+      "journalField": "evidence",
+      "requiredTerms": [
+        "code",
+        "interrompu",
+        "réussi"
+      ],
+      "minimumMatches": 2
+    },
+    {
+      "id": "prevention-three-outcomes",
+      "label": "La prévention fixe les trois issues attendues.",
+      "journalField": "prevention",
+      "requiredTerms": [
+        "trois",
+        "issue",
+        "distinct"
+      ],
+      "minimumMatches": 2
+    }
+  ]
 }

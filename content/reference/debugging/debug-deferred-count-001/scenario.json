@@ -2,7 +2,7 @@
     "schemaVersion":  1,
     "id":  "debug-deferred-count-001",
     "version":  1,
-    "title":  "Filtre LINQ à mauvaise borne",
+    "title":  "Un client sans mouvement compté comme actif",
     "difficulty":  2,
     "skills":  [
                    "debugging.data"
@@ -13,17 +13,18 @@
     "estimatedMinutes":  40,
     "brokenRepositoryPath":  "broken/",
     "ticketPath":  "ticket.md",
-    "expectedBehavior":  "Le résultat doit respecter tous les cas du contrat sans mutation cachée. Le prédicat inclut zéro alors que le contrat exige strictement positif.",
+    "expectedBehavior":  "Le rapport compte les mouvements strictement supérieurs à zéro. Un mouvement nul n'est pas positif. Un extrait vide donne zéro et l'extrait reçu n'est jamais modifié.",
     "logsPath":  "logs.txt",
     "checklist":  [
-                      "Reproduire avec le cas de borne",
-                      "Placer un breakpoint avant la divergence",
-                      "Comparer entrée et valeur intermédiaire",
-                      "Ajouter le cas de non-régression"
+                      "Reproduire avec un extrait contenant un mouvement nul",
+                      "Comparer le résultat sur un extrait sans mouvement nul",
+                      "Écrire la définition retenue de « positif » avant de lire le code",
+                      "Ajouter le mouvement nul au jeu de non-régression"
                   ],
     "observationQuestions":  [
-                                 "Quelle est la première valeur qui diverge du résultat prédit ?",
-                                 "Quelle condition ou mutation explique causalement ce symptôme ?"
+                                 "Zéro appartient-il aux valeurs positives selon le contrat annoncé ?",
+                                 "L'écart observé dépend-il du nombre de mouvements nuls dans l'extrait ?",
+                                 "Le symptôme apparaît-il sur un extrait sans aucun mouvement nul ?"
                              ],
     "correctionPath":  "correction/",
     "regressionTestPath":  "regression-test.md",

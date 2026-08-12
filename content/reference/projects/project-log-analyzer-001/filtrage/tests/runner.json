@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "suiteId": "project-log-analyzer-001.filtrage.v2",
+  "exerciseId": "project-log-analyzer-001.filtrage",
+  "exerciseVersion": 2,
+  "typeName": "Submission",
+  "methodName": "CountBySeverity",
+  "parameterTypes": ["string", "string"],
+  "returnType": "int"
+}

@@ -20,8 +20,8 @@
                     ],
     "examples":  [
                      {
-                         "input":  "[{\"value\":[\"swiss\"],\"Count\":1},\"w\"]",
-                         "output":  "[{\"value\":[\"aabb\"],\"Count\":1},\"\"]"
+                         "input":  "[\"swiss\"]",
+                         "output":  "\"w\""
                      }
                  ],
     "reflectionFields":  [
@@ -54,7 +54,7 @@
                   {
                       "level":  4,
                       "kind":  "partial-pseudocode",
-                      "content":  "valider les bornes ; parcourir ou décider ; retourner un nouveau résultat déterministe"
+                      "content":  "premier parcours : compter les occurrences de chaque caractère ; second parcours, dans l'ordre du texte : retourner le premier caractère dont le compte vaut un ; si aucun ne convient retourner une chaîne vide"
                   }
               ],
     "solution":  {
@@ -67,9 +67,10 @@
     "explanation":  "explanation.md",
     "complexity":  "O(n) attendu en temps et O(k) en espace",
     "commonMistakes":  [
-                           "Coder uniquement les exemples visibles",
-                           "Oublier une borne ou modifier une entrée",
-                           "Annoncer une complexité sans compter les opérations dominantes"
+                           "Chercher la réponse dans le dictionnaire, dont l'ordre n'est pas celui du texte",
+                           "Comparer chaque caractère à tous les autres, ce qui devient quadratique",
+                           "Retourner une valeur absente au lieu d'une chaîne vide quand aucun caractère n'est unique",
+                           "Conclure en un seul parcours, avant d'avoir vu la fin du texte"
                        ],
     "variantId":  "structures-parenthesis-depth-001",
     "reviewCards":  [

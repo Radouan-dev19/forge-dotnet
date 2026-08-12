@@ -1,0 +1,96 @@
+@page "/projects"
+@using ForgeDotNet.Application.Projects
+@using ForgeDotNet.Domain.Projects
+@inject IProjectSource Projects
+@inject CodeRunnerModeDescriptor RunnerMode
+
+<PageTitle>Projets — Forge.NET</PageTitle>
+
+<h1>Projets</h1>
+
+<section class="practice-panel" aria-labelledby="projects-intro-title">
+    <h2 id="projects-intro-title">Ce qu'un projet prouve</h2>
+    <p>
+        Un projet se rend en un seul geste : toutes ses suites d'acceptation sont exécutées sur la même
+        soumission, et il n'est livré que lorsqu'elles passent toutes ensemble.
+    </p>
+    @if (RunnerMode.IsManual)
+    {
+        <p class="notice" role="status">
+            Cette installation est configurée en mode manuel : elle n'exécute, ne compile et ne teste
+            aucun code. Une soumission y sera enregistrée comme déclarée et ne produira aucune preuve.
+        </p>
+    }
+    else
+    {
+        <p class="notice" role="status">
+            Les suites d'acceptation sont exécutées dans un conteneur éphémère, sans réseau et sans
+            privilège. Les cas cachés restent côté serveur : vous ne verrez que les échecs visibles.
+        </p>
+    }
+</section>
+
+@if (_error is not null)
+{
+    <p class="error-message" role="alert">@_error</p>
+}
+else if (_projects is null)
+{
+    <p role="status">Chargement des projets publiés…</p>
+}
+else
+{
+    <section class="practice-panel" aria-labelledby="verifiable-projects-title">
+        <h2 id="verifiable-projects-title">Projets vérifiés automatiquement</h2>
+        <p>
+            Ces projets portent un squelette et des suites d'acceptation. Une réussite complète est une
+            preuve : elle satisfait l'exigence de porte que le brief annonce.
+        </p>
+        <ul class="practice-exercise-list">
+            @foreach (Project project in _projects.Where(item => item.IsVerifiable))
+            {
+                <li>
+                    <a href="projects/@project.Id">@project.Title</a>
+                    <p>
+                        Semaine @string.Join(", ", project.Weeks) · @project.EstimatedHours heures ·
+                        @project.AcceptanceSuites.Count jalons mesurés · contenu v@(project.Version)
+                    </p>
+                </li>
+            }
+        </ul>
+    </section>
+
+    <section class="practice-panel" aria-labelledby="guided-projects-title">
+        <h2 id="guided-projects-title">Projets guidés, sans vérification automatique</h2>
+        <p>
+            Ces projets n'ont pas de suite d'acceptation : leur grille s'observe, elle ne s'exécute pas.
+            Ils ne produisent aucune preuve de maîtrise, et le tableau de progression ne les comptera pas.
+        </p>
+        <ul class="practice-exercise-list">
+            @foreach (Project project in _projects.Where(item => !item.IsVerifiable))
+            {
+                <li>
+                    <a href="projects/@project.Id">@project.Title</a>
+                    <p>Semaine @string.Join(", ", project.Weeks) · @project.EstimatedHours heures</p>
+                </li>
+            }
+        </ul>
+    </section>
+}
+
+@code {
+    private IReadOnlyList<Project>? _projects;
+    private string? _error;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            _projects = await Projects.ListAsync();
+        }
+        catch (Exception exception)
+        {
+            _error = exception.Message;
+        }
+    }
+}

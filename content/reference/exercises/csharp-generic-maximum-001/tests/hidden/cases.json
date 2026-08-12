@@ -25,6 +25,20 @@
                       "expected":  7,
                       "expectedException":  null,
                       "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_NullReturnsZero",
+                      "message":  "Référence absente : le contrat retourne zéro et ne lève pas.",
+                      "arguments":  [null],
+                      "expected":  0,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_AllNegative",
+                      "message":  "Toutes les valeurs sont négatives : réfute une initialisation à zéro.",
+                      "arguments":  [[-1,-1]],
+                      "expected":  -1,
+                      "argumentsUnchanged":  true
                   }
               ]
 }

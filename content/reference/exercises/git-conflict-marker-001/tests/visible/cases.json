@@ -20,6 +20,13 @@
                       "expected":  false,
                       "expectedException":  null,
                       "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Visible_ClosingMarker",
+                      "message":  "Marqueur de fin seul : il suffit à signaler un conflit.",
+                      "arguments":  ["a\u003E\u003E\u003E\u003E\u003E\u003E\u003Eb"],
+                      "expected":  true,
+                      "argumentsUnchanged":  true
                   }
               ]
 }

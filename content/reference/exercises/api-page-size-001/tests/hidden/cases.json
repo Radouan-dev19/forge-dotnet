@@ -20,6 +20,20 @@
                       "expected":  100,
                       "expectedException":  null,
                       "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_JustAboveBound",
+                      "message":  "Une unité au-dessus du plafond : ramenée au plafond.",
+                      "arguments":  [101],
+                      "expected":  100,
+                      "argumentsUnchanged":  true
+                  },
+                  {
+                      "name":  "Hidden_SmallestValid",
+                      "message":  "Plus petite taille valide : conservée, et non remplacée par le défaut.",
+                      "arguments":  [1],
+                      "expected":  1,
+                      "argumentsUnchanged":  true
                   }
               ]
 }

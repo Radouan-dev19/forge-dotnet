@@ -1,39 +1,40 @@
 {
-    "schemaVersion":  1,
-    "id":  "english-card-03-written",
-    "version":  1,
-    "title":  "Storage boundary — written update",
-    "level":  "B1",
-    "durationMinutes":  12,
-    "skills":  [
-                   "english.written",
-                   "azure.data"
-               ],
-    "situation":  "In a technical discussion, an architect asks why files are outside the relational database. You must write the decision accurately without overstating the evidence.",
-    "instructions":  [
-                         "Write a four-sentence update with decision, evidence, limitation and next action."
-                     ],
-    "vocabulary":  [
-                       {
-                           "term":  "data responsibility",
-                           "meaning":  "the precise concept required for storage boundary"
-                       },
-                       {
-                           "term":  "verified evidence",
-                           "meaning":  "an observation supported by a reproducible check"
-                       }
-                   ],
-    "expectedElements":  [
-                             "A clear decision tied to the scenario",
-                             "Verified evidence and one explicit limitation",
-                             "A named next action"
-                         ],
-    "modelAnswer":  "Decision: The database keeps transactional metadata and the object store keeps file content; an opaque reference connects them. Evidence: the documented local checks support this scope. Limitation: this does not prove behavior in an untested production environment. Next action: record the owner and the next bounded verification.",
-    "commonMistakes":  [
-                           "Using confident adjectives without naming evidence or a limitation"
-                       ],
-    "variants":  [
-                     "Rewrite the update for a non-technical stakeholder without removing the limitation."
-                 ],
-    "license":  "CC-BY-4.0"
+  "schemaVersion": 1,
+  "id": "english-card-03-written",
+  "version": 1,
+  "title": "Storage boundary — written update",
+  "level": "B1",
+  "durationMinutes": 12,
+  "skills": [
+    "english.written",
+    "azure.data"
+  ],
+  "situation": "In a technical discussion, an architect asks why files are outside the relational database. You must write the decision accurately without overstating the evidence.",
+  "instructions": [
+    "Write four sentences separating what the database owns from what the file store owns, and name the risk of merging them."
+  ],
+  "vocabulary": [
+    {
+      "term": "data responsibility",
+      "meaning": "the rule that says which store owns a piece of data, so that two stores never both claim to be authoritative"
+    },
+    {
+      "term": "referential pointer",
+      "meaning": "the identifier a database keeps to a file it does not hold, and which becomes stale if the file is removed elsewhere"
+    }
+  ],
+  "expectedElements": [
+    "The boundary between the two stores is drawn explicitly",
+    "What the database still owns is named",
+    "One consequence of a stale pointer is stated"
+  ],
+  "modelAnswer": "Files are stored as objects, while the database keeps only their metadata and a pointer. We separated them because large binaries in a relational table slow every backup and restore, for which the restore timings are our evidence. The limitation is that the pointer and the object are not updated in one transaction, so a pointer can reference a deleted file. A reconciliation job closes that window, and I will document how long the window is.",
+  "commonMistakes": [
+    "Describing the split without saying what the database still owns",
+    "Implying that the two stores stay consistent within one transaction"
+  ],
+  "variants": [
+    "Rewrite the update after a stale pointer has caused a user-visible error."
+  ],
+  "license": "CC-BY-4.0"
 }

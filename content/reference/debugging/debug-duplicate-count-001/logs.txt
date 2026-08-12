@@ -1,1 +1,3 @@
-Event=UnexpectedResult Level=Warning Scenario=debug-duplicate-count-001 Week=5 Actual=MISMATCH Expected=CONTRACT CorrelationId=debug-duplicate-count-001
+Event=DistinctCustomersMismatch Level=Warning Input=[1,1,2] Expected=2 Actual=4 CorrelationId=dbg-duplicate-count-001
+Event=DistinctCustomers Level=Information Input=[] Expected=0 Actual=0 CorrelationId=dbg-duplicate-count-001
+Event=ReportDurationGrowth Level=Warning Rows=1000 DurationMs=940 Rows=2000 DurationMs=3760 CorrelationId=dbg-duplicate-count-001

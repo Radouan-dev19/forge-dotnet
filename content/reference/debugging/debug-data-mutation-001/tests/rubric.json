@@ -1,39 +1,40 @@
 {
-    "schemaVersion":  1,
-    "scenarioId":  "debug-data-mutation-001",
-    "criteria":  [
-                     {
-                         "id":  "cause",
-                         "label":  "La cause relie la divergence à la règle fautive.",
-                         "journalField":  "cause",
-                         "requiredTerms":  [
-                                               "borne",
-                                               "condition",
-                                               "mutation"
-                                           ],
-                         "minimumMatches":  1
-                     },
-                     {
-                         "id":  "evidence",
-                         "label":  "La preuve cite entrée, attendu et réel.",
-                         "journalField":  "evidence",
-                         "requiredTerms":  [
-                                               "entrée",
-                                               "attendu",
-                                               "réel"
-                                           ],
-                         "minimumMatches":  2
-                     },
-                     {
-                         "id":  "test",
-                         "label":  "Le test de non-régression cible la borne.",
-                         "journalField":  "test",
-                         "requiredTerms":  [
-                                               "borne",
-                                               "échoue",
-                                               "réussit"
-                                           ],
-                         "minimumMatches":  2
-                     }
-                 ]
+  "schemaVersion": 1,
+  "scenarioId": "debug-data-mutation-001",
+  "criteria": [
+    {
+      "id": "cause-in-place",
+      "label": "La cause établit que l'opération s'applique au lot reçu.",
+      "journalField": "cause",
+      "requiredTerms": [
+        "place",
+        "reçu",
+        "même",
+        "mutation"
+      ],
+      "minimumMatches": 2
+    },
+    {
+      "id": "evidence-before-after",
+      "label": "La preuve compare l'état du lot avant et après l'appel.",
+      "journalField": "evidence",
+      "requiredTerms": [
+        "avant",
+        "après",
+        "ordre"
+      ],
+      "minimumMatches": 2
+    },
+    {
+      "id": "prevention-observation",
+      "label": "La prévention protège la donnée observée pendant un diagnostic.",
+      "journalField": "prevention",
+      "requiredTerms": [
+        "observation",
+        "préserv",
+        "entrée"
+      ],
+      "minimumMatches": 2
+    }
+  ]
 }

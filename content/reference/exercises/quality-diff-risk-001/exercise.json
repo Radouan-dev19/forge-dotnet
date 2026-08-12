@@ -15,13 +15,13 @@
     "statement":  "statement.md",
     "constraints":  [
                         "Conserver exactement la signature publique",
-                        "Un changement d’autorisation est toujours haut risque ; le volume affine les autres cas.",
-                        "Ne jamais dépendre du réseau, d’un secret réel ou d’un état global"
+                        "Un changement d'autorisation est toujours haut risque ; le volume affine les autres cas.",
+                        "Ne lire aucun dépôt : le volume et la nature du changement sont fournis"
                     ],
     "examples":  [
                      {
-                         "input":  "[{\"value\":[20,false],\"Count\":2},\"low\"]",
-                         "output":  "[{\"value\":[120,false],\"Count\":2},\"medium\"]"
+                         "input":  "[20,false]",
+                         "output":  "\"low\""
                      }
                  ],
     "reflectionFields":  [
@@ -54,7 +54,7 @@
                   {
                       "level":  4,
                       "kind":  "partial-pseudocode",
-                      "content":  "valider les entrées ; appliquer la décision bornée ; retourner un résultat déterministe sans effet externe"
+                      "content":  "refuser un nombre de lignes négatif ; classer en risque élevé dès que l'autorisation est touchée, quel que soit le volume, ou que le volume dépasse le seuil haut ; sinon départager le risque moyen du risque faible par le seuil bas"
                   }
               ],
     "solution":  {
@@ -67,9 +67,10 @@
     "explanation":  "explanation.md",
     "complexity":  "O(1) en temps et O(1) en espace",
     "commonMistakes":  [
-                           "Coder seulement les exemples visibles",
-                           "Masquer une erreur ou accepter une entrée hors contrat",
-                           "Confondre une règle pure avec le transport ou une ressource externe"
+                           "Déduire le risque du seul volume et sous-estimer un diff de trois lignes sur l'autorisation",
+                           "Évaluer le volume avant la nature du changement",
+                           "Accepter un nombre de lignes négatif au lieu de refuser",
+                           "Employer des comparaisons larges et déplacer l'un des deux seuils"
                        ],
     "variantId":  "git-commit-subject-001",
     "reviewCards":  [

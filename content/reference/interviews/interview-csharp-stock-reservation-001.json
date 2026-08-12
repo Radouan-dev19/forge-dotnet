@@ -1,24 +1,24 @@
 {
-    "schemaVersion":  1,
-    "id":  "interview-csharp-stock-reservation-001",
-    "version":  1,
-    "title":  "Vérifier une réservation de stock",
-    "level":  "junior",
-    "durationMinutes":  5,
-    "skills":  [
-                   "csharp.encapsulation"
-               ],
-    "question":  "Comment résoudriez-vous « Vérifier une réservation de stock » et comment prouveriez-vous les bornes ?",
-    "observableCriteria":  [
-                               "Le contrat et une borne sont explicitement reformulés",
-                               "La complexité et un test de réfutation sont justifiés"
-                           ],
-    "modelAnswer":  "Préserver l’invariant stock positif et accepter exactement la quantité disponible. La preuve comprend un cas nominal, une borne et un cas différent des exemples ; O(1) en temps et O(1) en espace.",
-    "commonMistakes":  [
-                           "Réciter le code sans invariant ni méthode de test"
-                       ],
-    "variants":  [
-                     "Changer une borne ou le volume tout en conservant la même règle de vérifier une réservation de stock."
-                 ],
-    "license":  "CC-BY-4.0"
+  "schemaVersion": 1,
+  "id": "interview-csharp-stock-reservation-001",
+  "version": 1,
+  "title": "Vérifier une réservation de stock",
+  "level": "junior",
+  "durationMinutes": 5,
+  "skills": [
+    "csharp.encapsulation"
+  ],
+  "question": "Comment résoudriez-vous « Vérifier une réservation de stock » et comment prouveriez-vous les bornes ?",
+  "observableCriteria": [
+    "L'invariant est énoncé : le stock ne peut jamais devenir négatif",
+    "La quantité exactement disponible est acceptée, et cette frontière est explicite"
+  ],
+  "modelAnswer": "Préserver l’invariant stock positif et accepter exactement la quantité disponible. Je prouve par la quantité exactement disponible, une unité de plus et une quantité nulle ; O(1) en temps et O(1) en espace.",
+  "commonMistakes": [
+    "Employer une comparaison stricte et refuser une réservation de la totalité du stock"
+  ],
+  "variants": [
+    "Changer une borne ou le volume tout en conservant la même règle de vérifier une réservation de stock."
+  ],
+  "license": "CC-BY-4.0"
 }

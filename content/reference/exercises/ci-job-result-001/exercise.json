@@ -15,13 +15,13 @@
     "statement":  "statement.md",
     "constraints":  [
                         "Conserver exactement la signature publique",
-                        "Le job réussit seulement si construction et tests réussissent tous les deux.",
-                        "Ne jamais dépendre du réseau, d’un secret réel ou d’un état global"
+                        "Le travail réussit seulement si construction et tests réussissent tous les deux.",
+                        "N'interroger aucune chaîne d'intégration : les deux signaux sont fournis"
                     ],
     "examples":  [
                      {
-                         "input":  "[{\"value\":[true,true],\"Count\":2},\"success\"]",
-                         "output":  "[{\"value\":[true,false],\"Count\":2},\"failed\"]"
+                         "input":  "[true,true]",
+                         "output":  "\"success\""
                      }
                  ],
     "reflectionFields":  [
@@ -54,7 +54,7 @@
                   {
                       "level":  4,
                       "kind":  "partial-pseudocode",
-                      "content":  "valider les entrées ; appliquer la décision bornée ; retourner un résultat déterministe sans effet externe"
+                      "content":  "n'annoncer le succès que si la construction et les tests réussissent tous les deux ; toute autre combinaison est un échec"
                   }
               ],
     "solution":  {
@@ -67,9 +67,10 @@
     "explanation":  "explanation.md",
     "complexity":  "O(1) en temps et O(1) en espace",
     "commonMistakes":  [
-                           "Coder seulement les exemples visibles",
-                           "Masquer une erreur ou accepter une entrée hors contrat",
-                           "Confondre une règle pure avec le transport ou une ressource externe"
+                           "Annoncer le succès quand la construction passe et que les tests échouent",
+                           "Annoncer le succès quand les tests passent sur une construction échouée",
+                           "Traiter les deux signaux comme alternatifs plutôt que cumulatifs",
+                           "Rendre une étape non bloquante et produire une assurance fausse"
                        ],
     "variantId":  "ci-artifact-name-001",
     "reviewCards":  [

@@ -26,6 +26,29 @@ La grille privée de chaque scénario porte sur les champs `cause`, `evidence`, 
 
 L’export Markdown contient le journal et les quatre observations. Il exclut le code soumis, la correction protégée, les tests cachés et les chemins privés.
 
+## Qualité du matériel de diagnostic
+
+Un scénario n’entraîne au diagnostic que si l’apprenant doit réellement diagnostiquer. Dix-sept des
+vingt-cinq scénarios nommaient la cause dans le ticket — « La division utilise une longueur nulle » —
+et portaient un journal réduit à une ligne ne contenant que l’identifiant du scénario et deux
+constantes. Les mêmes dix-sept partageaient une grille dont les termes attendus étaient
+« borne, condition, mutation », si bien que l’évaluation ne pouvait pas distinguer un journal
+diagnostiqué d’un journal rempli de mots passe-partout.
+
+Quatre règles, vérifiées par `DebugScenarioQualityTests` :
+
+| Règle | Pourquoi |
+|---|---|
+| Le ticket décrit un **symptôme** : ce qui est observé, sur quelle entrée, ce qui était attendu | Nommer la cause supprime les trois premiers temps de la méthode enseignée en S7. |
+| Le ticket ne contient aucun identifiant introduit par `correction/Submission.cs` | Contrôle mécanique du point précédent. Le `expectedBehavior`, lui, est le contrat : il peut énoncer la valeur attendue. |
+| Le journal porte au moins deux mesures — hors `Event`, `Level`, `Scenario`, `CorrelationId` et hors constantes | Un journal sans mesure ne permet aucune hypothèse. |
+| Ticket, journal, comportement attendu et grille ne sont partagés par plus de trois scénarios | Même seuil que la règle `cloned-content`, appliqué au matériel lu avant de diagnostiquer. |
+
+`broken/`, `correction/` et les deux `cases.json` ne sont jamais réécrits par une reprise éditoriale :
+le défaut et sa correction doivent rester identiques, sans quoi `DebugLabDockerRunnerTests` ne prouve
+plus rien. `scripts/Repair-DebugScenarios.ps1` applique une reprise et refuse d’écrire un ticket qui
+nomme la solution.
+
 ## Contenu initial
 
 | Scénario | Défaut réel | Preuve de non-régression |

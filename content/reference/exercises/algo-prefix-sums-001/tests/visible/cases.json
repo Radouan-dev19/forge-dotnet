@@ -32,6 +32,13 @@
                                    ],
                       "expectedException":  null,
                       "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Visible_SingleElement",
+                      "message":  "Un seul élément : la somme préfixe est cet élément.",
+                      "arguments":  [[5]],
+                      "expected":  [5],
+                      "argumentsUnchanged":  true
                   }
               ]
 }

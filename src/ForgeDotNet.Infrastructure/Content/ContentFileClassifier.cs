@@ -8,6 +8,7 @@ internal static class ContentFileClassifier
     {
         string normalized = Normalize(relativePath);
         return normalized.StartsWith("schemas/", StringComparison.OrdinalIgnoreCase)
+            || normalized.StartsWith("authoring/", StringComparison.OrdinalIgnoreCase)
             || normalized.Contains("/starter/", StringComparison.OrdinalIgnoreCase)
             || normalized.Contains("/tests/", StringComparison.OrdinalIgnoreCase)
             || normalized.Contains("/solution/", StringComparison.OrdinalIgnoreCase);
@@ -62,6 +63,11 @@ internal static class ContentFileClassifier
             return ContentDocumentType.Project;
         }
 
+        if (normalized.Contains("/reviews/", StringComparison.OrdinalIgnoreCase))
+        {
+            return ContentDocumentType.ReviewCardBank;
+        }
+
         return null;
     }
 
@@ -75,6 +81,7 @@ internal static class ContentFileClassifier
         ContentDocumentType.InterviewQuestion => "interview.schema.json",
         ContentDocumentType.EnglishActivity => "english.schema.json",
         ContentDocumentType.Project => "project.schema.json",
+        ContentDocumentType.ReviewCardBank => "review.schema.json",
         _ => throw new ArgumentOutOfRangeException(nameof(documentType)),
     };
 

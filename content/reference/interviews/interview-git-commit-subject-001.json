@@ -1,24 +1,24 @@
 {
-    "schemaVersion":  1,
-    "id":  "interview-git-commit-subject-001",
-    "version":  1,
-    "title":  "Valider un sujet de commit",
-    "level":  "junior",
-    "durationMinutes":  6,
-    "skills":  [
-                   "git.commits"
-               ],
-    "question":  "Comment implémenteriez-vous « Valider un sujet de commit » et quelles preuves réfutent les contournements ?",
-    "observableCriteria":  [
-                               "Le contrat, une frontière et un refus sont explicités",
-                               "La complexité et une preuve de sécurité ou de non-régression sont justifiées"
-                           ],
-    "modelAnswer":  "Exiger un sujet non vide, borné à 72 caractères et sans point final. Je sépare validation et décision, je teste un cas nominal et les frontières, puis je vérifie qu’aucune donnée sensible ni état externe n’entre dans la preuve. O(n) en temps et O(n) en espace.",
-    "commonMistakes":  [
-                           "Réciter le code sans expliquer le contrat ni la preuve"
-                       ],
-    "variants":  [
-                     "Changer la frontière ou le droit tout en conservant la règle de valider un sujet de commit."
-                 ],
-    "license":  "CC-BY-4.0"
+  "schemaVersion": 1,
+  "id": "interview-git-commit-subject-001",
+  "version": 1,
+  "title": "Valider un sujet de commit",
+  "level": "junior",
+  "durationMinutes": 6,
+  "skills": [
+    "git.commits"
+  ],
+  "question": "Comment implémenteriez-vous « Valider un sujet de commit » et quelles preuves réfutent les contournements ?",
+  "observableCriteria": [
+    "Les trois contraintes sont énoncées : non vide, bornée, sans ponctuation finale",
+    "La borne de longueur est justifiée par l'affichage dans les outils, pas par convention arbitraire"
+  ],
+  "modelAnswer": "Exiger un sujet non vide, borné à 72 caractères et sans point final. Je teste un sujet à la borne exacte, un sujet d'un caractère de trop, un sujet terminé par un point et un sujet fait de blancs. O(n) en temps et O(n) en espace.",
+  "commonMistakes": [
+    "Valider la longueur et laisser passer un sujet vide fait de blancs"
+  ],
+  "variants": [
+    "Changer la frontière ou le droit tout en conservant la règle de valider un sujet de commit."
+  ],
+  "license": "CC-BY-4.0"
 }

@@ -4,4 +4,4 @@
 SELECT OrderId, DataVersion FROM dbo.Orders WHERE Status = N'Open' ORDER BY OrderId;
 ```
 
-La requête fixe le grain avant projection, borne le résultat et utilise uniquement le schéma visible. Sa preuve compare colonnes, lignes et ordre, jamais un coût ou une durée exacte.
+Lire la version est le premier temps de la concurrence optimiste : la valeur relevée ici devient la condition de la mise à jour qui suivra, et son absence dans la clause de filtrage expliquerait une mise à jour perdue. Une lecture n'incrémente jamais le jeton.

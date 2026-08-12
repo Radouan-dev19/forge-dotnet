@@ -1,3 +1,7 @@
 # Explication
 
-Autoriser seulement un coût estimé dans le budget avec un plan de suppression vérifié. La solution sépare validation et décision et nʼeffectue aucun appel externe. Complexité : **O(1) en temps et O(1) en espace**. Les cas cachés changent les frontières et réfutent une constante mémorisée. Après consultation, expliquez la règle avec vos mots et planifiez une reprise à blanc : cette tentative nʼest pas maîtrisée.
+Autoriser seulement un coût estimé dans le budget avec un plan de suppression vérifié.
+
+Deux conditions, et c'est la seconde qu'on oublie. Une ressource créée pour un essai, sans date ni responsable de suppression, devient permanente : c'est la première cause de dérive des coûts, avant toute question de dimensionnement. Un coût parfaitement acceptable sans plan de suppression reste donc refusé.
+
+L'ordre d'évaluation rend cette condition visible : la tester en premier empêche qu'un coût confortable ne fasse oublier de la poser. L'égalité au budget est acceptée — un budget est un plafond, pas une borne stricte. Un budget nul ne borne rien et se refuse. La décision est en temps constant.

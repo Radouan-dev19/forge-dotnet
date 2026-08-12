@@ -28,6 +28,13 @@
                       "expected":  0,
                       "expectedException":  null,
                       "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Visible_SingleAnomaly",
+                      "message":  "Une seule valeur au-dessus du seuil.",
+                      "arguments":  [[9],8],
+                      "expected":  1,
+                      "argumentsUnchanged":  true
                   }
               ]
 }

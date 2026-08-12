@@ -1,39 +1,40 @@
 {
-    "schemaVersion":  1,
-    "id":  "english-card-24-spoken",
-    "version":  1,
-    "title":  "CV evidence — spoken follow-up",
-    "level":  "C1",
-    "durationMinutes":  10,
-    "skills":  [
-                   "english.spoken",
-                   "career.cv"
-               ],
-    "situation":  "In a technical discussion, a project needs a concise CV line. You must answer aloud accurately without overstating the evidence.",
-    "instructions":  [
-                         "Deliver a sixty-second answer with decision, evidence, limitation and one clarifying question."
-                     ],
-    "vocabulary":  [
-                       {
-                           "term":  "verifiable achievement",
-                           "meaning":  "the precise concept required for cv evidence"
-                       },
-                       {
-                           "term":  "verified evidence",
-                           "meaning":  "an observation supported by a reproducible check"
-                       }
-                   ],
-    "expectedElements":  [
-                             "A clear decision tied to the scenario",
-                             "Verified evidence and one explicit limitation",
-                             "One useful clarifying question"
-                         ],
-    "modelAnswer":  "My decision is that I describe it as a personal project, state my action and cite a reproducible test result without inventing users or business impact. The current evidence is limited to the documented checks, so I would not claim more. Which constraint or observation would make us revisit this decision?",
-    "commonMistakes":  [
-                           "Using confident adjectives without naming evidence or a limitation"
-                       ],
-    "variants":  [
-                     "Answer again after the reviewer changes one cost or security constraint."
-                 ],
-    "license":  "CC-BY-4.0"
+  "schemaVersion": 1,
+  "id": "english-card-24-spoken",
+  "version": 1,
+  "title": "CV evidence — spoken follow-up",
+  "level": "C1",
+  "durationMinutes": 10,
+  "skills": [
+    "english.spoken",
+    "career.cv"
+  ],
+  "situation": "In a technical discussion, a project needs a concise CV line. You must answer aloud accurately without overstating the evidence.",
+  "instructions": [
+    "Say aloud one line about this project that a recruiter could verify, and cut everything they could not."
+  ],
+  "vocabulary": [
+    {
+      "term": "verifiable achievement",
+      "meaning": "a claim tied to an artefact or a number a reader could go and check, rather than to an adjective"
+    },
+    {
+      "term": "attributable contribution",
+      "meaning": "the part of a result you personally caused, distinguished from what the team or the tooling produced"
+    }
+  ],
+  "expectedElements": [
+    "The claim is tied to a checkable artefact or number",
+    "The personal contribution is distinguished from the team's",
+    "No adjective carries the weight of the claim"
+  ],
+  "modelAnswer": "The line I would keep is the one a recruiter could check. So: reduced the order listing from eight seconds to under two hundred milliseconds by removing a query per row, with the regression test that keeps it there. That names the problem, what I did, the measured outcome, and where the evidence lives. What I would cut is anything with an adjective doing the work, and anything the team did that I would be borrowing. If someone else designed the fix and I implemented it, the line says implemented, not designed. Do you want the artefact link in the line itself?",
+  "commonMistakes": [
+    "Letting an adjective carry a claim that no artefact supports",
+    "Attributing a team or tooling outcome to yourself"
+  ],
+  "variants": [
+    "Answer again for a project where no measurement was taken."
+  ],
+  "license": "CC-BY-4.0"
 }

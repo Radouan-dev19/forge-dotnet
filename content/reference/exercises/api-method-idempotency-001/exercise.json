@@ -16,12 +16,12 @@
     "constraints":  [
                         "Conserver exactement la signature publique",
                         "Comparer une méthode normalisée à la liste explicite des méthodes idempotentes.",
-                        "Ne jamais dépendre du réseau, d’un secret réel ou d’un état global"
+                        "N'émettre aucune requête : la classification se fait sur le seul nom de méthode"
                     ],
     "examples":  [
                      {
-                         "input":  "[{\"value\":[\"GET\"],\"Count\":1},true]",
-                         "output":  "[{\"value\":[\"POST\"],\"Count\":1},false]"
+                         "input":  "[\"GET\"]",
+                         "output":  "true"
                      }
                  ],
     "reflectionFields":  [
@@ -54,7 +54,7 @@
                   {
                       "level":  4,
                       "kind":  "partial-pseudocode",
-                      "content":  "valider les entrées ; appliquer la décision bornée ; retourner un résultat déterministe sans effet externe"
+                      "content":  "si la méthode est absente ou composée de blancs retourner faux ; sinon retirer les blancs de bordure, uniformiser la casse avec la culture invariante, et comparer à la liste fermée des méthodes idempotentes"
                   }
               ],
     "solution":  {
@@ -67,9 +67,10 @@
     "explanation":  "explanation.md",
     "complexity":  "O(n) en temps et O(n) en espace",
     "commonMistakes":  [
-                           "Coder seulement les exemples visibles",
-                           "Masquer une erreur ou accepter une entrée hors contrat",
-                           "Confondre une règle pure avec le transport ou une ressource externe"
+                           "Classer la méthode de création parmi les idempotentes",
+                           "Oublier que la suppression est idempotente même si le second appel ne trouve plus rien",
+                           "Comparer sans uniformiser la casse et refuser une méthode écrite en minuscules",
+                           "Confondre idempotent et sûr : une méthode peut modifier l'état et rester idempotente"
                        ],
     "variantId":  "api-location-header-001",
     "reviewCards":  [

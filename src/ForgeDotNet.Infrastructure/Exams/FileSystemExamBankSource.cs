@@ -17,6 +17,23 @@ public sealed class FileSystemExamBankSource(
 {
     private const int MaximumManifestBytes = 128 * 1024;
     private const int MaximumContentFileBytes = 256 * 1024;
+
+    /// <summary>
+    /// Bornes des listes d'éligibilité d'une banque d'examen.
+    /// </summary>
+    /// <remarks>
+    /// Ces deux listes énumèrent le vivier dans lequel un tirage puise ; elles grandissent donc avec
+    /// le catalogue, alors que <c>drawCount</c> reste petit. Une borne commune à seize les figeait à
+    /// la taille du catalogue de l'incrément 09 : passé ce seuil, tout exercice neuf devenait
+    /// intirable, et l'audit relevait déjà quarante-trois exercices dans ce cas. La borne des
+    /// contraintes d'un item, elle, reste serrée : une consigne compte quelques lignes et n'a aucune
+    /// raison de croître.
+    ///
+    /// La borne réelle sur le volume lu reste <see cref="MaximumManifestBytes"/> ; celles-ci
+    /// protègent contre une liste absurde, pas contre un fichier volumineux.
+    /// </remarks>
+    private const int MaximumEligibleItems = 256;
+    private const int MaximumItemConstraints = 16;
     private static readonly UTF8Encoding StrictUtf8 = new(false, true);
     private readonly SemaphoreSlim _loadGate = new(1, 1);
     private BankSnapshot? _cache;
@@ -133,8 +150,8 @@ public sealed class FileSystemExamBankSource(
             throw new InvalidDataException("La version du manifeste d’examen n’est pas prise en charge.");
         }
 
-        string[] exerciseIds = ReadOptionalStringArray(root, "eligibleExerciseIds");
-        string[] efScenarioIds = ReadOptionalStringArray(root, "eligibleEfScenarioIds");
+        string[] exerciseIds = ReadOptionalStringArray(root, "eligibleExerciseIds", MaximumEligibleItems);
+        string[] efScenarioIds = ReadOptionalStringArray(root, "eligibleEfScenarioIds", MaximumEligibleItems);
         JsonElement.ArrayEnumerator sqlItems = root.TryGetProperty("sqlItems", out JsonElement sqlItemsElement)
             ? sqlItemsElement.EnumerateArray()
             : default;
@@ -149,7 +166,9 @@ public sealed class FileSystemExamBankSource(
                 exercise.Id,
                 exercise.Version,
                 exercise.Revision,
-                MasteryDomain.CSharp,
+                // Le domaine vient de la compétence travaillée : un item d'examen « api-* »
+                // alimente le score Api, sans quoi ce domaine ne pourrait jamais atteindre son seuil.
+                MasterySkillDomains.FromSkills(exercise.Skills),
                 exercise.Title,
                 exercise.Statement,
                 exercise.Constraints,
@@ -169,7 +188,10 @@ public sealed class FileSystemExamBankSource(
             candidates.Add(await LoadEfCandidateAsync(scenarioId, cancellationToken));
         }
 
-        if (candidates.Count is < 2 or > 16
+        // Le vivier résolu suit la même borne que les listes d'éligibilité qui le composent : c'est le
+        // même ensemble, une fois les identifiants remplacés par les candidats correspondants. Le
+        // plancher de deux, lui, reste : un vivier d'un seul item rendrait tout tirage prévisible.
+        if (candidates.Count is < 2 or > MaximumEligibleItems
             || candidates.Select(item => item.ItemId).Distinct(StringComparer.Ordinal).Count() != candidates.Count)
         {
             throw new InvalidDataException("La liste compatible de l’examen est invalide.");
@@ -218,7 +240,7 @@ public sealed class FileSystemExamBankSource(
             Array.AsReadOnly(rows),
             expected.GetProperty("ordered").GetBoolean(),
             expected.GetProperty("numericTolerance").GetDecimal());
-        string[] constraints = ReadOptionalStringArray(item, "constraints");
+        string[] constraints = ReadOptionalStringArray(item, "constraints", MaximumItemConstraints);
         string starter = ReadRequiredString(item, "starterQuery");
         string solution = ReadRequiredString(item, "solutionQuery");
         if (columns.Length is < 1 or > 50
@@ -367,7 +389,7 @@ public sealed class FileSystemExamBankSource(
         }
     }
 
-    private static string[] ReadOptionalStringArray(JsonElement element, string name)
+    private static string[] ReadOptionalStringArray(JsonElement element, string name, int maximumCount)
     {
         if (!element.TryGetProperty(name, out JsonElement value))
         {
@@ -375,7 +397,7 @@ public sealed class FileSystemExamBankSource(
         }
 
         string[] values = value.EnumerateArray().Select(item => item.GetString() ?? string.Empty).ToArray();
-        if (values.Length > 16
+        if (values.Length > maximumCount
             || values.Any(string.IsNullOrWhiteSpace)
             || values.Distinct(StringComparer.Ordinal).Count() != values.Length)
         {

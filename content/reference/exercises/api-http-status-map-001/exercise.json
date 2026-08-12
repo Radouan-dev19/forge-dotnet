@@ -15,13 +15,13 @@
     "statement":  "statement.md",
     "constraints":  [
                         "Conserver exactement la signature publique",
-                        "Faire primer la création, puis distinguer ressource trouvée et absente.",
-                        "Ne jamais dépendre du réseau, d’un secret réel ou d’un état global"
+                        "Faire primer la création, puis distinguer ressource trouvée et ressource absente.",
+                        "Ne consulter aucun stockage : les deux indicateurs suffisent à décider"
                     ],
     "examples":  [
                      {
-                         "input":  "[{\"value\":[true,false],\"Count\":2},200]",
-                         "output":  "[{\"value\":[true,true],\"Count\":2},201]"
+                         "input":  "[true,false]",
+                         "output":  "200"
                      }
                  ],
     "reflectionFields":  [
@@ -54,7 +54,7 @@
                   {
                       "level":  4,
                       "kind":  "partial-pseudocode",
-                      "content":  "valider les entrées ; appliquer la décision bornée ; retourner un résultat déterministe sans effet externe"
+                      "content":  "traiter d'abord la création, qui prime sur la lecture ; ensuite, distinguer la ressource trouvée de la ressource absente et retourner le statut correspondant"
                   }
               ],
     "solution":  {
@@ -67,9 +67,10 @@
     "explanation":  "explanation.md",
     "complexity":  "O(1) en temps et O(1) en espace",
     "commonMistakes":  [
-                           "Coder seulement les exemples visibles",
-                           "Masquer une erreur ou accepter une entrée hors contrat",
-                           "Confondre une règle pure avec le transport ou une ressource externe"
+                           "Évaluer la présence avant la création et retourner le statut de lecture pour une ressource créée",
+                           "Retourner un statut de succès pour une ressource absente",
+                           "Retourner le statut d'absence après une création, au motif que la ressource n'existait pas avant",
+                           "Employer un statut de succès générique là où le contrat en annonce un précis"
                        ],
     "variantId":  "api-route-normalize-001",
     "reviewCards":  [

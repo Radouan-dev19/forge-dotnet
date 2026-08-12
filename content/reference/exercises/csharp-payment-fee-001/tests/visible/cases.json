@@ -22,6 +22,13 @@
                       "expected":  0,
                       "expectedException":  null,
                       "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Visible_LargeCardAmount",
+                      "message":  "Montant élevé par carte : réfute un forfait fixe au lieu d'un taux.",
+                      "arguments":  [200,true],
+                      "expected":  3,
+                      "argumentsUnchanged":  true
                   }
               ]
 }

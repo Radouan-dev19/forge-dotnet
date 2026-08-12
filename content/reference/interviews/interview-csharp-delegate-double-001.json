@@ -1,24 +1,24 @@
 {
-    "schemaVersion":  1,
-    "id":  "interview-csharp-delegate-double-001",
-    "version":  1,
-    "title":  "Transformer avec un comportement injecté",
-    "level":  "junior",
-    "durationMinutes":  5,
-    "skills":  [
-                   "csharp.delegates"
-               ],
-    "question":  "Comment résoudriez-vous « Transformer avec un comportement injecté » et comment prouveriez-vous les bornes ?",
-    "observableCriteria":  [
-                               "Le contrat et une borne sont explicitement reformulés",
-                               "La complexité et un test de réfutation sont justifiés"
-                           ],
-    "modelAnswer":  "Appliquer le même delegate à chaque élément sans modifier l’entrée. La preuve comprend un cas nominal, une borne et un cas différent des exemples ; O(n) en temps et O(n) en espace.",
-    "commonMistakes":  [
-                           "Réciter le code sans invariant ni méthode de test"
-                       ],
-    "variants":  [
-                     "Changer une borne ou le volume tout en conservant la même règle de transformer avec un comportement injecté."
-                 ],
-    "license":  "CC-BY-4.0"
+  "schemaVersion": 1,
+  "id": "interview-csharp-delegate-double-001",
+  "version": 1,
+  "title": "Transformer avec un comportement injecté",
+  "level": "junior",
+  "durationMinutes": 5,
+  "skills": [
+    "csharp.delegates"
+  ],
+  "question": "Comment résoudriez-vous « Transformer avec un comportement injecté » et comment prouveriez-vous les bornes ?",
+  "observableCriteria": [
+    "Le comportement injecté est appliqué à chaque élément, sans exception cachée",
+    "L'absence de mutation de l'entrée est vérifiée indépendamment du comportement injecté"
+  ],
+  "modelAnswer": "Appliquer le même delegate à chaque élément sans modifier l’entrée. Je prouve par une transformation identité, une transformation constante et une séquence vide ; O(n) en temps et O(n) en espace.",
+  "commonMistakes": [
+    "Supposer que le comportement injecté est sans effet de bord et muter l'entrée"
+  ],
+  "variants": [
+    "Changer une borne ou le volume tout en conservant la même règle de transformer avec un comportement injecté."
+  ],
+  "license": "CC-BY-4.0"
 }

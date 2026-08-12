@@ -36,6 +36,20 @@
                                    ],
                       "expectedException":  null,
                       "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_SingleElement",
+                      "message":  "Un seul élément : aucun successeur plus grand.",
+                      "arguments":  [[5]],
+                      "expected":  [-1],
+                      "argumentsUnchanged":  true
+                  },
+                  {
+                      "name":  "Hidden_EqualThenGreater",
+                      "message":  "Deux valeurs égales suivies d'une plus grande : l'égalité ne compte pas comme strictement supérieure.",
+                      "arguments":  [[2,2,3]],
+                      "expected":  [3,3,-1],
+                      "argumentsUnchanged":  true
                   }
               ]
 }

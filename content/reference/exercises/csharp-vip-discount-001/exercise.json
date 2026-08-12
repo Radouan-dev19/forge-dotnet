@@ -20,8 +20,8 @@
                     ],
     "examples":  [
                      {
-                         "input":  "[{\"value\":[100,true],\"Count\":2},90]",
-                         "output":  "[{\"value\":[100,false],\"Count\":2},100]"
+                         "input":  "[100,true]",
+                         "output":  "90"
                      }
                  ],
     "reflectionFields":  [
@@ -54,7 +54,7 @@
                   {
                       "level":  4,
                       "kind":  "partial-pseudocode",
-                      "content":  "valider les bornes ; parcourir ou décider ; retourner un nouveau résultat déterministe"
+                      "content":  "si total est négatif lever une erreur d'argument ; choisir le taux selon la qualité de l'acheteur ; multiplier le total par le complément du taux, puis arrondir une seule fois à deux décimales en s'éloignant de zéro"
                   }
               ],
     "solution":  {
@@ -67,9 +67,10 @@
     "explanation":  "explanation.md",
     "complexity":  "O(1) en temps et O(1) en espace",
     "commonMistakes":  [
-                           "Coder uniquement les exemples visibles",
-                           "Oublier une borne ou modifier une entrée",
-                           "Annoncer une complexité sans compter les opérations dominantes"
+                           "Soustraire une remise déjà arrondie au lieu d'arrondir le net une seule fois",
+                           "Appliquer le taux au lieu de son complément et retourner la remise à la place du net",
+                           "Employer le mode d'arrondi par défaut, qui tranche au pair le plus proche",
+                           "Accepter un total négatif et produire un net négatif"
                        ],
     "variantId":  "csharp-stock-reservation-001",
     "reviewCards":  [

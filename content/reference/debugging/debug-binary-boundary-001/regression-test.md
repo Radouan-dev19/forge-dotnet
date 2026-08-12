@@ -1,3 +1,3 @@
 # Non-régression
 
-Exécuter les quatre cas du runner, dont la borne cachée. Le test doit échouer sur roken/Submission.cs, réussir sur correction/Submission.cs et vérifier l’absence de mutation pour les tableaux.
+Couvrir la première référence, une référence intermédiaire, la dernière référence, une référence absente et un catalogue d'un seul élément. Le jeu doit échouer sur `broken/Submission.cs` pour la dernière référence et réussir sur `correction/Submission.cs`.

@@ -27,6 +27,20 @@
                       "expected":  0,
                       "expectedException":  null,
                       "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_NullInput",
+                      "message":  "Référence absente : refus explicite.",
+                      "arguments":  [null],
+                      "expectedException":  "ArgumentNullException",
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_ZeroOnly",
+                      "message":  "Zéro seul : pair, donc pris en compte, pour une somme nulle.",
+                      "arguments":  [[0]],
+                      "expected":  0,
+                      "argumentsUnchanged":  true
                   }
               ]
 }

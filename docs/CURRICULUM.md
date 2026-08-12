@@ -40,6 +40,23 @@ Le catalogue final contient au moins 70 leçons, 80 exercices C#/algo, 25 labs d
 
 À la validation de lʼincrément 10, S1–S24 sont matérialisées : 70 leçons, 135 exercices dont 35 activités API/tests/sécurité et 15 activités Git/Docker/CI/Azure, 25 DebugLabs, 40 scénarios SQL/EF, 190 questions dʼentretien (120 junior, 50 intermédiaire, 20 avancé), 50 cartes dʼanglais plus une activité historique, 8 mini-projets, 1 projet final guidé et 8 examens. Les détails, limites du mode Azure simulé et preuves de volume figurent dans `CONTENT_S21_S24.md`.
 
+### État courant du volume de pratique
+
+Le relevé ci-dessus est celui de lʼincrément 10 et nʼest pas réécrit. Depuis, la reprise de densité
+décrite dans `ROADMAP.md` porte le catalogue à **142 exercices** et **197 fiches dʼentretien**. La
+répartition par semaine reste inégale et cʼest la limite à connaître avant de sʼengager sur le
+parcours :
+
+| Période | Exercices | Par semaine |
+|---|---:|---:|
+| S1–S10 | 88 | 8,8 |
+| S11–S17 | 42 | 6,0 |
+| S18–S20 | 9 | 3,0 |
+| S21–S24 | 6 | 1,5 |
+
+La cible est de huit exercices par semaine sur S11–S17. Le comptage exact est figé par la matrice de
+`ContentS11S20CoverageTests`, qui refuse toute dérive dans un sens comme dans lʼautre.
+
 ## Structure d'une semaine
 
 - Diagnostic court des acquis et révisions dues.

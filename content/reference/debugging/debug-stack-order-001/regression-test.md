@@ -1,3 +1,3 @@
 # Non-régression
 
-Exécuter les quatre cas du runner, dont la borne cachée. Le test doit échouer sur roken/Submission.cs, réussir sur correction/Submission.cs et vérifier l’absence de mutation pour les tableaux.
+Couvrir un libellé de trois caractères, un libellé de deux caractères, un libellé d'un seul caractère et un libellé vide. Le jeu doit échouer sur `broken/Submission.cs` dès deux caractères et réussir sur `correction/Submission.cs`.

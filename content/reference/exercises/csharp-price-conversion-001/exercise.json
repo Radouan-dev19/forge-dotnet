@@ -16,7 +16,7 @@
     "Refuser tout montant négatif avec ArgumentOutOfRangeException"
   ],
   "examples": [
-    { "input": "12.34m", "output": "1234" },
+    { "input": "[12.34]", "output": "1234" },
     { "input": "10.005m", "output": "1001" }
   ],
   "reflectionFields": ["reformulation", "inputs", "expectedOutput", "edgeCases", "hypothesis", "plan"],

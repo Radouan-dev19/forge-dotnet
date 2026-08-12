@@ -16,7 +16,7 @@
     "Refuser null avec ArgumentNullException"
   ],
   "examples": [
-    { "input": "Chat, chat ! chien.", "output": "{chat: 2, chien: 1}" },
+    { "input": "[\"Chat, chat ! chien.\"]", "output": "{\"chat\":2,\"chien\":1}" },
     { "input": "   ", "output": "{}" }
   ],
   "reflectionFields": ["reformulation", "inputs", "expectedOutput", "edgeCases", "hypothesis", "plan"],

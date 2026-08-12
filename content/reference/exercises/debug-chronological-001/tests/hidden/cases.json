@@ -25,6 +25,20 @@
                       "expected":  true,
                       "expectedException":  null,
                       "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_DisorderInMiddle",
+                      "message":  "Rupture au milieu : réfute une comparaison limitée aux extrémités.",
+                      "arguments":  [[1,3,2]],
+                      "expected":  false,
+                      "argumentsUnchanged":  true
+                  },
+                  {
+                      "name":  "Hidden_EqualTimestamps",
+                      "message":  "Horodatages égaux : l'ordre est conservé, la comparaison n'est pas stricte.",
+                      "arguments":  [[0,0]],
+                      "expected":  true,
+                      "argumentsUnchanged":  true
                   }
               ]
 }

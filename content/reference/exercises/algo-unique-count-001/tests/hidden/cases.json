@@ -28,6 +28,20 @@
                       "expected":  3,
                       "expectedException":  null,
                       "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_AllIdentical",
+                      "message":  "Toutes les valeurs sont identiques : réfute un comptage de la longueur.",
+                      "arguments":  [[7,7,7,7]],
+                      "expected":  1,
+                      "argumentsUnchanged":  true
+                  },
+                  {
+                      "name":  "Hidden_OppositeSigns",
+                      "message":  "Deux valeurs opposées : réfute un comptage sur la valeur absolue.",
+                      "arguments":  [[2,-2]],
+                      "expected":  2,
+                      "argumentsUnchanged":  true
                   }
               ]
 }

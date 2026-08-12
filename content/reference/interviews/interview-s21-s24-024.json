@@ -1,24 +1,24 @@
 {
-    "schemaVersion":  1,
-    "id":  "interview-s21-s24-024",
-    "version":  1,
-    "title":  "Mesurer avant optimisation",
-    "level":  "intermediate",
-    "durationMinutes":  9,
-    "skills":  [
-                   "performance.method"
-               ],
-    "question":  "Quelle séquence appliquez-vous avant de modifier une requête lente ?",
-    "observableCriteria":  [
-                               "La réponse prend une décision explicite et cite une preuve observable",
-                               "Une limite de sécurité, de coût, de portée ou de validité est reconnue"
-                           ],
-    "modelAnswer":  "Je reproduis avec un jeu borné, fixe la mesure et le budget, localise le coût, change une seule hypothèse puis compare et ajoute une non-régression.",
-    "commonMistakes":  [
-                           "Employer un slogan sans contrainte, preuve ni limite vérifiable"
-                       ],
-    "variants":  [
-                     "Changez une contrainte du scénario « Mesurer avant optimisation » et expliquez si la décision reste valide."
-                 ],
-    "license":  "CC-BY-4.0"
+  "schemaVersion": 1,
+  "id": "interview-s21-s24-024",
+  "version": 1,
+  "title": "Mesurer avant optimisation",
+  "level": "intermediate",
+  "durationMinutes": 9,
+  "skills": [
+    "performance.method"
+  ],
+  "question": "Quelle séquence appliquez-vous avant de modifier une requête lente ?",
+  "observableCriteria": [
+    "La mesure et le budget sont fixés avant toute modification du code",
+    "Une seule hypothèse est changée à la fois, et une non-régression clôt la séquence"
+  ],
+  "modelAnswer": "Je reproduis avec un jeu borné, fixe la mesure et le budget, localise le coût, change une seule hypothèse puis compare et ajoute une non-régression.",
+  "commonMistakes": [
+    "Modifier plusieurs choses puis attribuer le gain à celle qu'on préférait"
+  ],
+  "variants": [
+    "Changez une contrainte du scénario « Mesurer avant optimisation » et expliquez si la décision reste valide."
+  ],
+  "license": "CC-BY-4.0"
 }

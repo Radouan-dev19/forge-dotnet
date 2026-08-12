@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using System.Text.Json;
 using ForgeDotNet.Application.Analytics;
 using ForgeDotNet.Application.CodeRunner;
 using ForgeDotNet.Application.Content;
@@ -9,6 +10,7 @@ using ForgeDotNet.Application.Exams;
 using ForgeDotNet.Application.IdentityLocal;
 using ForgeDotNet.Application.Mastery;
 using ForgeDotNet.Application.Practice;
+using ForgeDotNet.Application.Projects;
 using ForgeDotNet.Application.Reviews;
 using ForgeDotNet.Application.SqlLab;
 using ForgeDotNet.Application.WeeklyPlanning;
@@ -21,6 +23,7 @@ using ForgeDotNet.Infrastructure.Diagnostic;
 using ForgeDotNet.Infrastructure.Exams;
 using ForgeDotNet.Infrastructure.Persistence;
 using ForgeDotNet.Infrastructure.Practice;
+using ForgeDotNet.Infrastructure.Projects;
 using ForgeDotNet.Infrastructure.SqlLab;
 using ForgeDotNet.Infrastructure.WeeklyPlanning;
 using ForgeDotNet.Web.Components;
@@ -29,7 +32,14 @@ using Microsoft.AspNetCore.DataProtection;
 
 const string MigrateOnlyArgument = "--migrate-only";
 const string ValidateContentArgument = "--validate-content";
+const string EmitContentDebtArgument = "--emit-content-debt";
 const string LoadCatalogArgument = "--load-catalog";
+if (args.Contains(EmitContentDebtArgument, StringComparer.Ordinal))
+{
+    Environment.ExitCode = await RunContentDebtEmissionAsync(args);
+    return;
+}
+
 if (args.Contains(ValidateContentArgument, StringComparer.Ordinal))
 {
     Environment.ExitCode = await RunContentValidationAsync(args);
@@ -90,6 +100,7 @@ builder.Services.AddSingleton(new PracticeContentOptions
     CatalogDirectoryPath = catalogDirectory,
 });
 builder.Services.AddSingleton<IPracticeExerciseSource, FileSystemPracticeExerciseSource>();
+builder.Services.AddSingleton<IProjectSource, FileSystemProjectSource>();
 builder.Services.AddSingleton<PracticeCoordinator>();
 builder.Services.AddScoped<PracticeService>();
 builder.Services.AddSingleton(new DebugContentOptions
@@ -125,6 +136,18 @@ sqlLabOptions.Validate();
 builder.Services.AddSingleton(sqlLabOptions);
 builder.Services.AddSingleton<SqlServerLabGateway>();
 builder.Services.AddSingleton<ISqlLabGateway>(services => services.GetRequiredService<SqlServerLabGateway>());
+string sqlScenarioDirectory = ResolveConfiguredPath(
+    builder.Configuration["Content:SqlScenarioDirectoryPath"],
+    Path.Combine(contentRoot, "sql"),
+    builder.Environment.ContentRootPath);
+builder.Services.AddSingleton(new SqlScenarioContentOptions
+{
+    ContentRootPath = contentRoot,
+    ScenarioDirectoryPath = sqlScenarioDirectory,
+});
+// Les scénarios SQL vivent hors du catalogue du lecteur : ils ont leur propre snapshot validé.
+builder.Services.AddSingleton(new SqlScenarioCatalog(contentOptions, sqlScenarioDirectory));
+builder.Services.AddSingleton<ISqlScenarioSource, FileSystemSqlScenarioSource>();
 builder.Services.AddScoped<SqlLabService>();
 builder.Services.AddScoped<MasteryService>();
 builder.Services.AddScoped<ReviewService>();
@@ -144,6 +167,8 @@ builder.Services.AddSingleton<IExamSqlItemSource>(services => services.GetRequir
 builder.Services.AddSingleton<ISqlExamRunner, SqlLabExamRunner>();
 builder.Services.AddScoped<ExamService>();
 CodeRunnerMode codeRunnerMode = CodeRunnerModeParser.Parse(builder.Configuration["CodeRunner:Mode"]);
+// L'interface doit décrire l'installation réellement configurée, jamais un mode supposé.
+builder.Services.AddSingleton(new CodeRunnerModeDescriptor(codeRunnerMode));
 builder.Services.AddSingleton<IManualCodeRunPackageExporter, ManualCodeRunPackageExporter>();
 builder.Services.AddSingleton(new DockerRunContentOptions
 {
@@ -210,6 +235,7 @@ switch (codeRunnerMode)
 }
 builder.Services.AddSingleton<RunExerciseHistory>();
 builder.Services.AddScoped<RunExercise>();
+builder.Services.AddScoped<SubmitProject>();
 builder.Services.AddSingleton(new LessonContentOptions
 {
     ContentRootPath = contentRoot,
@@ -269,6 +295,10 @@ builder.Services.AddHealthChecks()
 var app = builder.Build();
 
 await InitializeReaderContentAsync(app.Services, catalogDirectory);
+// Le catalogue SQL est chargé au démarrage : un scénario invalide arrête l'application plutôt que
+// de laisser le parcours SQL se dégrader silencieusement à la première ouverture de la page.
+await app.Services.GetRequiredService<SqlScenarioCatalog>().LoadAsync();
+_ = await app.Services.GetRequiredService<ISqlScenarioSource>().ListAsync();
 _ = await app.Services.GetRequiredService<IPracticeExerciseSource>().ListAsync();
 _ = await app.Services.GetRequiredService<IDebugScenarioSource>().ListAsync();
 _ = await app.Services.GetRequiredService<IDiagnosticBankSource>().GetAsync();
@@ -356,6 +386,106 @@ static async Task<int> RunContentValidationAsync(string[] arguments)
         $"{status} : {report.DocumentsExamined} document(s), {report.FilesExamined} fichier(s), "
         + $"{report.Issues.Count} erreur(s), {report.AcceptedDocuments} document(s) accepté(s).");
     return report.IsValid ? 0 : 1;
+}
+
+/// <summary>
+/// Régénère le registre de dette éditoriale à partir des défauts d'authenticité réellement
+/// observés. La commande est volontairement explicite : elle laisse une trace lisible dans le
+/// diff Git, et le test de non-régression refuse toute dette supérieure au plafond figé.
+/// </summary>
+static async Task<int> RunContentDebtEmissionAsync(string[] arguments)
+{
+    if (arguments.Length < 2 || arguments[0] != EmitContentDebtArgument)
+    {
+        Console.Error.WriteLine("Usage : --emit-content-debt <dossier-sous-content> [<dossier> ...]");
+        return 2;
+    }
+
+    string? repositoryRoot = FindRepositoryRoot(Directory.GetCurrentDirectory());
+    if (repositoryRoot is null)
+    {
+        Console.Error.WriteLine("Racine du dépôt introuvable : exécuter la commande depuis Forge.NET.");
+        return 2;
+    }
+
+    string contentRoot = Path.Combine(repositoryRoot, "content");
+    var validationService = new FileSystemContentValidationService(new ContentValidationOptions
+    {
+        ContentRootPath = contentRoot,
+        LegacyDebtPath = null,
+    });
+
+    // Clé (zone, chemin relatif au lot) : un lot recopié ailleurs conserve la même dette.
+    var codesByEntry = new SortedDictionary<(string Area, string File), SortedSet<string>>(
+        Comparer<(string Area, string File)>.Create((left, right) =>
+        {
+            int area = string.CompareOrdinal(left.Area, right.Area);
+            return area != 0 ? area : string.CompareOrdinal(left.File, right.File);
+        }));
+
+    foreach (string target in arguments.Skip(1))
+    {
+        string targetPath = ResolveRepositoryPath(target, repositoryRoot);
+        string area = Path.GetRelativePath(contentRoot, targetPath).Replace('\\', '/');
+        ContentValidationReport report = await validationService.ValidateAsync(targetPath);
+        foreach (ContentValidationIssue issue in report.Issues)
+        {
+            if (!ContentAuthenticityRules.IsAuthenticityCode(issue.Code))
+            {
+                continue;
+            }
+
+            string file = issue.FilePath.StartsWith(area + "/", StringComparison.Ordinal)
+                ? issue.FilePath[(area.Length + 1)..]
+                : issue.FilePath;
+            if (!codesByEntry.TryGetValue((area, file), out SortedSet<string>? codes))
+            {
+                codes = new SortedSet<string>(StringComparer.Ordinal);
+                codesByEntry.Add((area, file), codes);
+            }
+
+            codes.Add(issue.Code);
+        }
+    }
+
+    string registryPath = Path.Combine(contentRoot, ContentValidationOptions.DefaultLegacyDebtFileName);
+    Directory.CreateDirectory(Path.GetDirectoryName(registryPath)!);
+    await using (var stream = File.Create(registryPath))
+    await using (var writer = new Utf8JsonWriter(stream, new JsonWriterOptions { Indented = true }))
+    {
+        writer.WriteStartObject();
+        writer.WriteNumber("schemaVersion", 1);
+        writer.WriteString(
+            "description",
+            "Registre de la dette éditoriale héritée du générateur de contenu. Chaque ligne "
+            + "tolère un défaut d'authenticité précis sur un document précis. Un défaut non "
+            + "déclaré refuse le lot, et une déclaration devenue inutile le refuse aussi : la "
+            + "dette ne peut donc que décroître. Régénérer avec --emit-content-debt.");
+        writer.WriteNumber("entryCount", codesByEntry.Count);
+        writer.WriteStartArray("entries");
+        foreach (((string area, string file), SortedSet<string> codes) in codesByEntry)
+        {
+            writer.WriteStartObject();
+            writer.WriteString("area", area);
+            writer.WriteString("file", file);
+            writer.WriteStartArray("codes");
+            foreach (string code in codes)
+            {
+                writer.WriteStringValue(code);
+            }
+
+            writer.WriteEndArray();
+            writer.WriteEndObject();
+        }
+
+        writer.WriteEndArray();
+        writer.WriteEndObject();
+    }
+
+    Console.WriteLine(
+        $"DETTE ECRITE : {codesByEntry.Count} document(s), "
+        + $"{codesByEntry.Sum(entry => entry.Value.Count)} déclaration(s), fichier={registryPath}.");
+    return 0;
 }
 
 static async Task<int> RunCatalogAsync(string[] arguments)

@@ -20,8 +20,8 @@
                     ],
     "examples":  [
                      {
-                         "input":  "[{\"value\":[\"aaabb\"],\"Count\":1},2]",
-                         "output":  "[{\"value\":[\"\"],\"Count\":1},0]"
+                         "input":  "[\"aaabb\"]",
+                         "output":  "2"
                      }
                  ],
     "reflectionFields":  [
@@ -54,7 +54,7 @@
                   {
                       "level":  4,
                       "kind":  "partial-pseudocode",
-                      "content":  "valider les bornes ; parcourir ou décider ; retourner un nouveau résultat déterministe"
+                      "content":  "si le texte est vide retourner zéro ; sinon partir d'un groupe, puis parcourir à partir du deuxième caractère et incrémenter à chaque différence avec le précédent"
                   }
               ],
     "solution":  {
@@ -67,9 +67,10 @@
     "explanation":  "explanation.md",
     "complexity":  "O(n) en temps et O(1) en espace",
     "commonMistakes":  [
-                           "Coder uniquement les exemples visibles",
-                           "Oublier une borne ou modifier une entrée",
-                           "Annoncer une complexité sans compter les opérations dominantes"
+                           "Partir de zéro groupe et oublier le premier",
+                           "Compter les caractères identiques au lieu des changements",
+                           "Commencer le parcours au premier caractère et lire un indice négatif",
+                           "Retourner un groupe pour une chaîne vide"
                        ],
     "variantId":  "debug-safe-divide-001",
     "reviewCards":  [

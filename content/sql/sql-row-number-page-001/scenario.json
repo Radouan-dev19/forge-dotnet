@@ -30,8 +30,12 @@
     "timeoutSeconds":  5,
     "maxRows":  20,
     "effectAssertions":  [
-                             "Les quatre clients, cinq commandes et six lignes restent inchangés après rollback"
+                             "Les seules commandes dont le rang tombe dans l'intervalle demandé sont retournées, sans modification"
                          ],
     "solutionPath":  "solution.md",
+    "reviewCards": [
+        "card-sql-row-number-page-001-rule",
+        "card-sql-row-number-page-001-edge"
+    ],
     "license":  "CC-BY-4.0"
 }

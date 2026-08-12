@@ -1,4 +1,5 @@
 using ForgeDotNet.Domain.Practice;
+using ForgeDotNet.Domain.Projects;
 using ForgeDotNet.Domain.SqlLab;
 
 namespace ForgeDotNet.Infrastructure.Persistence;
@@ -15,6 +16,38 @@ internal sealed class PracticeLearningAttemptRecord
     public int TotalTests { get; set; }
     public int PassedTests { get; set; }
     public Guid DiagnosticId { get; set; }
+    public DateTimeOffset ObservedAtUtc { get; set; }
+}
+
+/// <summary>
+/// Soumission de projet, ajoutée sans jamais être modifiée, comme les observations de pratique.
+/// </summary>
+internal sealed class ProjectSubmissionRecord
+{
+    public Guid Id { get; set; }
+
+    public Guid ProfileId { get; set; }
+
+    public string ProjectId { get; set; } = string.Empty;
+
+    public int ProjectVersion { get; set; }
+
+    public string ContentRevision { get; set; } = string.Empty;
+
+    public string SubmissionFingerprint { get; set; } = string.Empty;
+
+    public ProjectSubmissionStatus Status { get; set; }
+
+    public int TotalSuites { get; set; }
+
+    public int PassedSuites { get; set; }
+
+    public int TotalTests { get; set; }
+
+    public int PassedTests { get; set; }
+
+    public bool AutomaticallyVerified { get; set; }
+
     public DateTimeOffset ObservedAtUtc { get; set; }
 }
 

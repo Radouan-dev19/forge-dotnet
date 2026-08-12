@@ -7,6 +7,9 @@
     "drawCount":  8,
     "passingScore":  80,
     "eligibleExerciseIds":  [
+                                "tests-boundary-probe-001",
+                                "tests-shared-state-leak-001",
+                                "quality-unreachable-branch-001",
                                 "tests-boundary-values-001",
                                 "tests-quantity-rule-001",
                                 "tests-shipping-theory-001",

@@ -2,7 +2,7 @@
     "schemaVersion":  1,
     "id":  "debug-array-empty-001",
     "version":  1,
-    "title":  "Moyenne d’un tableau vide",
+    "title":  "Moyenne indisponible pour un client sans commande",
     "difficulty":  2,
     "skills":  [
                    "debugging.data"
@@ -13,17 +13,18 @@
     "estimatedMinutes":  40,
     "brokenRepositoryPath":  "broken/",
     "ticketPath":  "ticket.md",
-    "expectedBehavior":  "Le résultat doit respecter tous les cas du contrat sans mutation cachée. La division utilise une longueur nulle.",
+    "expectedBehavior":  "Pour au moins une valeur, la moyenne est le total divisé par le nombre d'éléments. Pour un historique vide, le contrat annonce zéro et aucune interruption. L'entrée reçue n'est jamais modifiée.",
     "logsPath":  "logs.txt",
     "checklist":  [
-                      "Reproduire avec le cas de borne",
-                      "Placer un breakpoint avant la divergence",
-                      "Comparer entrée et valeur intermédiaire",
-                      "Ajouter le cas de non-régression"
+                      "Reproduire avec un historique de commandes vide",
+                      "Observer le nombre d'éléments juste avant le calcul final",
+                      "Comparer le chemin suivi par un historique à deux commandes et par un historique vide",
+                      "Ajouter l'historique vide au jeu de non-régression"
                   ],
     "observationQuestions":  [
-                                 "Quelle est la première valeur qui diverge du résultat prédit ?",
-                                 "Quelle condition ou mutation explique causalement ce symptôme ?"
+                                 "Quelle valeur prend le nombre d'éléments quand l'historique est vide ?",
+                                 "Le contrat annonce-t-il une interruption ou une valeur pour ce cas ?",
+                                 "Quelle est la plus petite entrée qui reproduit le symptôme ?"
                              ],
     "correctionPath":  "correction/",
     "regressionTestPath":  "regression-test.md",

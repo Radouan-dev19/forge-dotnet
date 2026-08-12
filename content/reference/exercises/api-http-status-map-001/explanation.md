@@ -1,3 +1,7 @@
 # Explication
 
-Faire primer la création, puis distinguer ressource trouvée et absente. La solution sépare validation et décision, sans état externe. Complexité : **O(1) en temps et O(1) en espace**. Les cas cachés varient les frontières et réfutent une constante mémorisée. Après lecture, la tentative n’est pas maîtrisée : expliquez la règle avec vos mots et planifiez une reprise à blanc.
+Faire primer la création, puis distinguer ressource trouvée et ressource absente.
+
+La création est un résultat, pas un cas particulier de lecture : elle a son propre statut et elle prime. Évaluer la présence en premier ferait retourner un statut de lecture pour une ressource qui vient d'être créée, ou pire, un statut d'absence — puisqu'elle n'existait pas avant l'appel.
+
+Le reste est la distinction la plus banale d'une interface web, et la plus souvent mal traitée : une ressource absente n'est pas un succès avec un corps vide. Le statut porte l'information, et un client bien écrit se fie à lui avant de regarder le corps. La décision est en temps constant.

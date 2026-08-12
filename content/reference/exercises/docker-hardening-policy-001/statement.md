@@ -2,6 +2,6 @@
 
 Implémentez Submission.IsHardened avec la signature fournie. Exiger simultanément utilisateur non-root, lecture seule et no-new-privileges.
 
-Le résultat reste déterministe et hors ligne. Écrivez avant le code un cas nominal, une frontière, un refus et la menace ou régression que ces preuves préviennent. N’utilisez aucun secret réel.
+La décision reste déterministe et hors ligne : aucun conteneur n'est exécuté. Écrivez avant le code : la configuration complète, puis les trois cas où un seul réglage manque. Nommez ce que l'absence d'interdiction d'élévation permet malgré une identité non privilégiée.
 
-Exemple : entrée $(Convert-JsonCompact System.Object[] System.Object[][0]), sortie $(Convert-JsonCompact System.Object[] System.Object[][1]).
+Exemple : entrée `[true,true,true]`, sortie `true`.

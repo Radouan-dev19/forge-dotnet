@@ -15,13 +15,13 @@
     "statement":  "statement.md",
     "constraints":  [
                         "Conserver exactement la signature publique",
-                        "Un bref est prêt seulement sʼil nomme lʼimpact, cite une preuve et attribue la prochaine action.",
-                        "Rester déterministe, hors ligne et indépendant de toute ressource Azure réelle"
+                        "Un bref est prêt seulement s'il nomme l'impact, cite une preuve et attribue la prochaine action.",
+                        "N'interroger aucune source distante : les trois éléments sont fournis"
                     ],
     "examples":  [
                      {
-                         "input":  "[{\"value\":[true,true,true],\"Count\":3},\"ready\"]",
-                         "output":  "[{\"value\":[true,false,true],\"Count\":3},\"incomplete\"]"
+                         "input":  "[true,true,true]",
+                         "output":  "\"ready\""
                      }
                  ],
     "reflectionFields":  [
@@ -54,7 +54,7 @@
                   {
                       "level":  4,
                       "kind":  "partial-pseudocode",
-                      "content":  "valider les entrées ; appliquer la garde la plus stricte ; retourner une décision explicite et déterministe"
+                      "content":  "exiger les trois éléments ensemble : l'impact nommé, une preuve citée et la prochaine action attribuée ; l'absence d'un seul rend le bref incomplet"
                   }
               ],
     "solution":  {
@@ -67,9 +67,10 @@
     "explanation":  "explanation.md",
     "complexity":  "O(1) en temps et O(1) en espace",
     "commonMistakes":  [
-                           "Coder seulement les exemples visibles",
-                           "Présenter une étape manuelle ou cloud comme une validation automatique",
-                           "Masquer une valeur invalide ou supprimer une garde de sécurité"
+                           "Considérer prêt un bref qui décrit sans citer aucune preuve",
+                           "Omettre l'attribution de la prochaine action et produire un document sans effet",
+                           "Remplacer l'impact par une excuse",
+                           "Traiter les trois éléments comme alternatifs plutôt que cumulatifs"
                        ],
     "variantId":  "azure-hosting-decision-001",
     "reviewCards":  [

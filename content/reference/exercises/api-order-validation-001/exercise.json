@@ -16,12 +16,12 @@
     "constraints":  [
                         "Conserver exactement la signature publique",
                         "Distinguer absence conventionnelle, plage invalide et valeur acceptée.",
-                        "Ne jamais dépendre du réseau, d’un secret réel ou d’un état global"
+                        "Ne consulter aucun stock ni aucun catalogue : seule la quantité décide"
                     ],
     "examples":  [
                      {
-                         "input":  "[{\"value\":[1],\"Count\":1},\"valid\"]",
-                         "output":  "[{\"value\":[0],\"Count\":1},\"required\"]"
+                         "input":  "[1]",
+                         "output":  "\"valid\""
                      }
                  ],
     "reflectionFields":  [
@@ -54,7 +54,7 @@
                   {
                       "level":  4,
                       "kind":  "partial-pseudocode",
-                      "content":  "valider les entrées ; appliquer la décision bornée ; retourner un résultat déterministe sans effet externe"
+                      "content":  "traiter d'abord la valeur conventionnelle d'absence, qui a son propre état ; ensuite refuser toute valeur hors de la plage acceptée ; le reste est valide"
                   }
               ],
     "solution":  {
@@ -67,9 +67,10 @@
     "explanation":  "explanation.md",
     "complexity":  "O(1) en temps et O(1) en espace",
     "commonMistakes":  [
-                           "Coder seulement les exemples visibles",
-                           "Masquer une erreur ou accepter une entrée hors contrat",
-                           "Confondre une règle pure avec le transport ou une ressource externe"
+                           "Confondre l'absence et la valeur hors plage, qui ne se corrigent pas de la même façon",
+                           "Tester la plage avant l'absence et rendre l'état d'absence inatteignable",
+                           "Employer des comparaisons larges et décaler l'une des deux bornes",
+                           "Retourner un état valide pour une valeur négative"
                        ],
     "variantId":  "api-di-lifetime-choice-001",
     "reviewCards":  [

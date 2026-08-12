@@ -1,24 +1,24 @@
 {
-    "schemaVersion":  1,
-    "id":  "interview-csharp-lambda-threshold-001",
-    "version":  1,
-    "title":  "Compter avec une lambda",
-    "level":  "junior",
-    "durationMinutes":  5,
-    "skills":  [
-                   "csharp.lambdas"
-               ],
-    "question":  "Comment résoudriez-vous « Compter avec une lambda » et comment prouveriez-vous les bornes ?",
-    "observableCriteria":  [
-                               "Le contrat et une borne sont explicitement reformulés",
-                               "La complexité et un test de réfutation sont justifiés"
-                           ],
-    "modelAnswer":  "La lambda exprime le prédicat et la borne reste inclusive. La preuve comprend un cas nominal, une borne et un cas différent des exemples ; O(n) en temps et O(1) en espace.",
-    "commonMistakes":  [
-                           "Réciter le code sans invariant ni méthode de test"
-                       ],
-    "variants":  [
-                     "Changer une borne ou le volume tout en conservant la même règle de compter avec une lambda."
-                 ],
-    "license":  "CC-BY-4.0"
+  "schemaVersion": 1,
+  "id": "interview-csharp-lambda-threshold-001",
+  "version": 1,
+  "title": "Compter avec une lambda",
+  "level": "junior",
+  "durationMinutes": 5,
+  "skills": [
+    "csharp.lambdas"
+  ],
+  "question": "Comment résoudriez-vous « Compter avec une lambda » et comment prouveriez-vous les bornes ?",
+  "observableCriteria": [
+    "Le prédicat est porté par la lambda, la fonction ne dupliquant pas la règle",
+    "L'inclusivité de la borne est explicite"
+  ],
+  "modelAnswer": "La lambda exprime le prédicat et la borne reste inclusive. Je prouve par la borne exacte, une valeur en dessous et une séquence vide ; O(n) en temps et O(1) en espace.",
+  "commonMistakes": [
+    "Réécrire la condition dans la fonction et laisser deux définitions du seuil divergerd"
+  ],
+  "variants": [
+    "Changer une borne ou le volume tout en conservant la même règle de compter avec une lambda."
+  ],
+  "license": "CC-BY-4.0"
 }

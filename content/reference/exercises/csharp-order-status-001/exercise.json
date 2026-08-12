@@ -20,8 +20,8 @@
                     ],
     "examples":  [
                      {
-                         "input":  "[{\"value\":[0],\"Count\":1},\"draft\"]",
-                         "output":  "[{\"value\":[2],\"Count\":1},\"shipped\"]"
+                         "input":  "[0]",
+                         "output":  "\"draft\""
                      }
                  ],
     "reflectionFields":  [
@@ -54,7 +54,7 @@
                   {
                       "level":  4,
                       "kind":  "partial-pseudocode",
-                      "content":  "valider les bornes ; parcourir ou décider ; retourner un nouveau résultat déterministe"
+                      "content":  "associer chaque code connu à son étiquette par une correspondance exhaustive ; prévoir une branche de repli qui retourne l'étiquette inconnue pour tout autre code"
                   }
               ],
     "solution":  {
@@ -67,9 +67,10 @@
     "explanation":  "explanation.md",
     "complexity":  "O(1) en temps et O(1) en espace",
     "commonMistakes":  [
-                           "Coder uniquement les exemples visibles",
-                           "Oublier une borne ou modifier une entrée",
-                           "Annoncer une complexité sans compter les opérations dominantes"
+                           "Omettre la branche de repli et laisser un code inattendu sans réponse",
+                           "Rattacher un code inconnu au dernier état valide",
+                           "Décaler les codes d'une unité en supposant que la numérotation commence à un",
+                           "Retourner une étiquette dont la casse diffère du contrat"
                        ],
     "variantId":  "csharp-customer-name-001",
     "reviewCards":  [

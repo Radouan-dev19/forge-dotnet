@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "id": "interview-security-scope-grant-001",
+  "version": 1,
+  "title": "Accorder une portée sans jamais l'accorder par défaut",
+  "level": "intermediate",
+  "durationMinutes": 10,
+  "skills": ["security.authorization"],
+  "question": "Un jeton porte à la fois une autorisation large sur une famille de portées et un refus sur l'une d'elles. Comment tranchez-vous, et pourquoi ne pas simplement retenir la première entrée qui correspond ?",
+  "observableCriteria": [
+    "Le refus est présenté comme prioritaire, et l'indépendance vis-à-vis de l'ordre est justifiée",
+    "L'origine externe de l'ordre des entrées est identifiée comme la raison du choix",
+    "La décision négative par défaut est présentée comme l'absence de règle, non comme une règle"
+  ],
+  "modelAnswer": "Le refus l'emporte, et il l'emporte quelle que soit sa position. Retenir la première entrée qui correspond ferait dépendre la décision de l'ordre des portées dans le jeton, or cet ordre vient de l'émetteur du jeton, donc de l'extérieur : il suffirait d'un jeton rangé autrement pour contourner le refus. Concrètement, une entrée de refus qui couvre la portée exigée permet de conclure immédiatement, alors qu'une autorisation qui la couvre ne permet rien de conclure et oblige à continuer la lecture, puisqu'un refus peut encore venir. Le point de départ est la décision négative : je n'écris aucune règle pour refuser une portée non accordée, seule une correspondance explicite déplace la décision. Enfin je compare les portées en tenant compte de la casse, parce qu'une portée est un identifiant et non du texte d'affichage.",
+  "commonMistakes": [
+    "Résoudre la contradiction par l'ordre de lecture, ce qui déplace la décision vers l'émetteur du jeton",
+    "Écrire une branche explicite pour refuser, et laisser le chemin par défaut accorder"
+  ],
+  "variants": [
+    "Demander comment se comporte la règle si deux refus se recouvrent partiellement.",
+    "Ajouter une portée héritée d'un rôle et demander où elle s'insère dans la décision."
+  ],
+  "license": "CC-BY-4.0"
+}

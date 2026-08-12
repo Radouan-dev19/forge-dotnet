@@ -15,13 +15,13 @@
     "statement":  "statement.md",
     "constraints":  [
                         "Conserver exactement la signature publique",
-                        "Container Apps exige à la fois un besoin de révisions de conteneur et un artefact déjà conteneurisé.",
-                        "Rester déterministe, hors ligne et indépendant de toute ressource Azure réelle"
+                        "L'hébergement de conteneurs exige à la fois un besoin de révisions et un artefact déjà conteneurisé.",
+                        "N'interroger aucun abonnement : les deux contraintes du service sont fournies"
                     ],
     "examples":  [
                      {
-                         "input":  "[{\"value\":[true,true],\"Count\":2},\"container-apps\"]",
-                         "output":  "[{\"value\":[false,true],\"Count\":2},\"app-service\"]"
+                         "input":  "[true,true]",
+                         "output":  "\"container-apps\""
                      }
                  ],
     "reflectionFields":  [
@@ -54,7 +54,7 @@
                   {
                       "level":  4,
                       "kind":  "partial-pseudocode",
-                      "content":  "valider les entrées ; appliquer la garde la plus stricte ; retourner une décision explicite et déterministe"
+                      "content":  "n'orienter vers l'hébergement de conteneurs que si les deux conditions sont réunies : un besoin réel de révisions simultanées et un artefact déjà conteneurisé ; dans tous les autres cas, retenir le service applicatif géré"
                   }
               ],
     "solution":  {
@@ -67,9 +67,10 @@
     "explanation":  "explanation.md",
     "complexity":  "O(1) en temps et O(1) en espace",
     "commonMistakes":  [
-                           "Coder seulement les exemples visibles",
-                           "Présenter une étape manuelle ou cloud comme une validation automatique",
-                           "Masquer une valeur invalide ou supprimer une garde de sécurité"
+                           "Choisir l'hébergement de conteneurs sur le seul besoin de révisions, sans artefact conteneurisé",
+                           "Choisir l'hébergement de conteneurs parce qu'un conteneur existe, sans usage des révisions",
+                           "Traiter les deux conditions comme alternatives plutôt que cumulatives",
+                           "Justifier le choix par la nouveauté plutôt que par une contrainte du service"
                        ],
     "variantId":  "azure-secret-source-001",
     "reviewCards":  [

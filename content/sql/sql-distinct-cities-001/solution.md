@@ -4,4 +4,4 @@
 SELECT DISTINCT City FROM dbo.Customers ORDER BY City;
 ```
 
-La requête fixe le grain avant projection, borne le résultat et utilise uniquement le schéma visible. Sa preuve compare colonnes, lignes et ordre, jamais un coût ou une durée exacte.
+Éliminer les répétitions et regrouper produisent ici le même résultat, et la lisibilité tranche : on ne calcule rien par groupe, donc l'intention est bien de dédupliquer. Le tri est indispensable, car l'unicité n'implique aucun ordre.

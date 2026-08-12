@@ -16,12 +16,12 @@
     "constraints":  [
                         "Conserver exactement la signature publique",
                         "Comparer chaque rôle complet sans recherche partielle ni valeur implicite.",
-                        "Ne jamais dépendre du réseau, d’un secret réel ou d’un état global"
+                        "Ne consulter aucun annuaire de rôles : la liste déclarée est la seule source"
                     ],
     "examples":  [
                      {
-                         "input":  "[{\"value\":[\"Reader,Operator\",\"Operator\"],\"Count\":2},true]",
-                         "output":  "[{\"value\":[\"Reader\",\"Admin\"],\"Count\":2},false]"
+                         "input":  "[\"Reader,Operator\",\"Operator\"]",
+                         "output":  "true"
                      }
                  ],
     "reflectionFields":  [
@@ -54,7 +54,7 @@
                   {
                       "level":  4,
                       "kind":  "partial-pseudocode",
-                      "content":  "valider les entrées ; appliquer la décision bornée ; retourner un résultat déterministe sans effet externe"
+                      "content":  "refuser si la liste ou le rôle attendu est absent ou composé de blancs ; découper la liste sur la virgule en retirant les segments vides et les blancs de bordure ; conclure si l'un des segments est exactement égal au rôle attendu"
                   }
               ],
     "solution":  {
@@ -67,9 +67,10 @@
     "explanation":  "explanation.md",
     "complexity":  "O(n) en temps et O(n) en espace",
     "commonMistakes":  [
-                           "Coder seulement les exemples visibles",
-                           "Masquer une erreur ou accepter une entrée hors contrat",
-                           "Confondre une règle pure avec le transport ou une ressource externe"
+                           "Chercher le rôle comme sous-chaîne et accorder un droit détenu par un rôle voisin",
+                           "Comparer sans retirer les blancs de bordure autour des segments",
+                           "Accepter une liste vide comme si elle contenait le rôle attendu",
+                           "Lever une exception quand aucun rôle n'est déclaré au lieu de refuser"
                        ],
     "variantId":  "security-owner-policy-001",
     "reviewCards":  [

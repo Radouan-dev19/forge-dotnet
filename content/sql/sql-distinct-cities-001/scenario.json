@@ -29,8 +29,12 @@
     "timeoutSeconds":  5,
     "maxRows":  20,
     "effectAssertions":  [
-                             "Les quatre clients, cinq commandes et six lignes restent inchangés après rollback"
+                             "Chaque ville présente parmi les clients apparaît exactement une fois et aucun client n'est modifié"
                          ],
     "solutionPath":  "solution.md",
+    "reviewCards": [
+        "card-sql-distinct-cities-001-rule",
+        "card-sql-distinct-cities-001-edge"
+    ],
     "license":  "CC-BY-4.0"
 }

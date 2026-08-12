@@ -24,6 +24,20 @@
                       "expected":  false,
                       "expectedException":  null,
                       "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_RollbackOnly",
+                      "message":  "Retour arrière documenté seul : insuffisant.",
+                      "arguments":  [false,false,true],
+                      "expected":  false,
+                      "argumentsUnchanged":  true
+                  },
+                  {
+                      "name":  "Hidden_SecurityOnly",
+                      "message":  "Revue de sécurité seule : insuffisante.",
+                      "arguments":  [false,true,false],
+                      "expected":  false,
+                      "argumentsUnchanged":  true
                   }
               ]
 }

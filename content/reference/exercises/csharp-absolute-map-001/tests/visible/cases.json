@@ -32,6 +32,13 @@
                                    ],
                       "expectedException":  null,
                       "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Visible_SingleNegative",
+                      "message":  "Un seul élément négatif : la valeur absolue est positive.",
+                      "arguments":  [[-1]],
+                      "expected":  [1],
+                      "argumentsUnchanged":  true
                   }
               ]
 }

@@ -16,12 +16,12 @@
     "constraints":  [
                         "Conserver exactement la signature publique",
                         "La borne supérieure est strictement inférieure à la longueur et la borne basse vaut zéro.",
-                        "Ne jamais dépendre du réseau, d’un secret réel ou d’un état global"
+                        "Ne consulter aucune collection réelle : seuls l'index et la longueur sont fournis"
                     ],
     "examples":  [
                      {
-                         "input":  "[{\"value\":[0,1],\"Count\":2},true]",
-                         "output":  "[{\"value\":[1,1],\"Count\":2},false]"
+                         "input":  "[0,1]",
+                         "output":  "true"
                      }
                  ],
     "reflectionFields":  [
@@ -54,7 +54,7 @@
                   {
                       "level":  4,
                       "kind":  "partial-pseudocode",
-                      "content":  "valider les entrées ; appliquer la décision bornée ; retourner un résultat déterministe sans effet externe"
+                      "content":  "refuser toute longueur négative ; sinon accepter l'index seulement s'il est supérieur ou égal à zéro et strictement inférieur à la longueur"
                   }
               ],
     "solution":  {
@@ -67,9 +67,10 @@
     "explanation":  "explanation.md",
     "complexity":  "O(1) en temps et O(1) en espace",
     "commonMistakes":  [
-                           "Coder seulement les exemples visibles",
-                           "Masquer une erreur ou accepter une entrée hors contrat",
-                           "Confondre une règle pure avec le transport ou une ressource externe"
+                           "Accepter l'index exactement égal à la longueur, l'erreur de un la plus fréquente",
+                           "Refuser l'index zéro, qui est la première position valide",
+                           "Accepter n'importe quel index sur une longueur nulle",
+                           "Accepter une longueur négative comme si elle valait zéro"
                        ],
     "variantId":  "quality-review-severity-001",
     "reviewCards":  [

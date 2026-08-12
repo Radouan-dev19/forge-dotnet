@@ -31,8 +31,12 @@
     "timeoutSeconds":  5,
     "maxRows":  20,
     "effectAssertions":  [
-                             "Les quatre clients, cinq commandes et six lignes restent inchangés après rollback"
+                             "Seuls les clients sans aucune commande sont retournés et aucune commande n'est supprimée pour le vérifier"
                          ],
     "solutionPath":  "solution.md",
+    "reviewCards": [
+        "card-sql-customers-without-orders-001-rule",
+        "card-sql-customers-without-orders-001-edge"
+    ],
     "license":  "CC-BY-4.0"
 }

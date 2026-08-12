@@ -22,6 +22,13 @@
                       "expected":  false,
                       "expectedException":  null,
                       "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Visible_LastValidIndex",
+                      "message":  "Dernier indice valide : accepté, réfute une borne haute trop stricte.",
+                      "arguments":  [2,3],
+                      "expected":  true,
+                      "argumentsUnchanged":  true
                   }
               ]
 }

@@ -2,6 +2,6 @@
 
 Implémentez Submission.IsValidQuantity avec la signature fournie. Exprimer directement la plage inclusive pour rendre ses quatre frontières testables.
 
-Le résultat reste déterministe et hors ligne. Écrivez avant le code un cas nominal, une frontière, un refus et la menace ou régression que ces preuves préviennent. N’utilisez aucun secret réel.
+La validation reste déterministe et hors ligne, sans consulter aucun stock. Écrivez avant le code : les deux bornes exactes, la valeur juste en dessous du minimum et celle juste au-dessus du maximum. Nommez ce que ces quatre valeurs prouvent qu'une valeur intérieure ne prouve pas.
 
-Exemple : entrée $(Convert-JsonCompact System.Object[] System.Object[][0]), sortie $(Convert-JsonCompact System.Object[] System.Object[][1]).
+Exemple : entrée `[1]`, sortie `true`.

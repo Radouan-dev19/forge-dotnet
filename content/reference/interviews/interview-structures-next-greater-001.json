@@ -1,24 +1,24 @@
 {
-    "schemaVersion":  1,
-    "id":  "interview-structures-next-greater-001",
-    "version":  1,
-    "title":  "Trouver le prochain élément supérieur",
-    "level":  "intermediate",
-    "durationMinutes":  5,
-    "skills":  [
-                   "structures.stack"
-               ],
-    "question":  "Comment résoudriez-vous « Trouver le prochain élément supérieur » et comment prouveriez-vous les bornes ?",
-    "observableCriteria":  [
-                               "Le contrat et une borne sont explicitement reformulés",
-                               "La complexité et un test de réfutation sont justifiés"
-                           ],
-    "modelAnswer":  "La pile conserve les indices encore sans réponse et chaque indice en sort une fois. La preuve comprend un cas nominal, une borne et un cas différent des exemples ; O(n) en temps et O(n) en espace.",
-    "commonMistakes":  [
-                           "Réciter le code sans invariant ni méthode de test"
-                       ],
-    "variants":  [
-                     "Changer une borne ou le volume tout en conservant la même règle de trouver le prochain élément supérieur."
-                 ],
-    "license":  "CC-BY-4.0"
+  "schemaVersion": 1,
+  "id": "interview-structures-next-greater-001",
+  "version": 1,
+  "title": "Trouver le prochain élément supérieur",
+  "level": "intermediate",
+  "durationMinutes": 5,
+  "skills": [
+    "structures.stack"
+  ],
+  "question": "Comment résoudriez-vous « Trouver le prochain élément supérieur » et comment prouveriez-vous les bornes ?",
+  "observableCriteria": [
+    "Ce que la pile contient est nommé : les indices encore sans réponse",
+    "Le coût linéaire est justifié par le fait que chaque indice entre et sort une fois"
+  ],
+  "modelAnswer": "La pile conserve les indices encore sans réponse et chaque indice en sort une fois. Je prouve par une suite décroissante, une suite croissante, des égalités et un tableau à un élément ; O(n) en temps et O(n) en espace.",
+  "commonMistakes": [
+    "Décrire la pile comme contenant des valeurs et perdre la position à renseigner"
+  ],
+  "variants": [
+    "Changer une borne ou le volume tout en conservant la même règle de trouver le prochain élément supérieur."
+  ],
+  "license": "CC-BY-4.0"
 }

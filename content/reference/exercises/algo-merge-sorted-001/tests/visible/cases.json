@@ -39,6 +39,13 @@
                                    ],
                       "expectedException":  null,
                       "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Visible_RightEmpty",
+                      "message":  "Séquence droite vide : réfute une fusion qui exige les deux côtés.",
+                      "arguments":  [[1,2],[]],
+                      "expected":  [1,2],
+                      "argumentsUnchanged":  true
                   }
               ]
 }

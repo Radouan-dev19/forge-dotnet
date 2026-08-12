@@ -28,6 +28,20 @@
                       "expected":  -1,
                       "expectedException":  null,
                       "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_TwoChildrenOfRoot",
+                      "message":  "Deux enfants de la racine : la profondeur ne dépend pas de la fratrie.",
+                      "arguments":  [[-1,0,0],2],
+                      "expected":  1,
+                      "argumentsUnchanged":  true
+                  },
+                  {
+                      "name":  "Hidden_NegativeNode",
+                      "message":  "Indice négatif : réfute une garde qui ne contrôle que la borne haute.",
+                      "arguments":  [[-1,0,1],-1],
+                      "expected":  -1,
+                      "argumentsUnchanged":  true
                   }
               ]
 }

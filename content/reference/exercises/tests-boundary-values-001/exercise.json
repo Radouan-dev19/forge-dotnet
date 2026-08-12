@@ -16,12 +16,12 @@
     "constraints":  [
                         "Conserver exactement la signature publique",
                         "Refuser des bornes incohérentes puis comparer exactement les deux frontières.",
-                        "Ne jamais dépendre du réseau, d’un secret réel ou d’un état global"
+                        "Ne consulter aucune collection : la valeur et les deux bornes sont fournies"
                     ],
     "examples":  [
                      {
-                         "input":  "[{\"value\":[1,1,100],\"Count\":3},true]",
-                         "output":  "[{\"value\":[50,1,100],\"Count\":3},false]"
+                         "input":  "[1,1,100]",
+                         "output":  "true"
                      }
                  ],
     "reflectionFields":  [
@@ -54,7 +54,7 @@
                   {
                       "level":  4,
                       "kind":  "partial-pseudocode",
-                      "content":  "valider les entrées ; appliquer la décision bornée ; retourner un résultat déterministe sans effet externe"
+                      "content":  "refuser d'emblée des bornes incohérentes, qui ne définissent aucun intervalle ; sinon conclure que la valeur est une frontière lorsqu'elle égale exactement l'une des deux extrémités"
                   }
               ],
     "solution":  {
@@ -67,9 +67,10 @@
     "explanation":  "explanation.md",
     "complexity":  "O(1) en temps et O(1) en espace",
     "commonMistakes":  [
-                           "Coder seulement les exemples visibles",
-                           "Masquer une erreur ou accepter une entrée hors contrat",
-                           "Confondre une règle pure avec le transport ou une ressource externe"
+                           "Traiter des bornes inversées comme un intervalle vide au lieu de les refuser",
+                           "Ne tester qu'une des deux extrémités",
+                           "Considérer une valeur intérieure comme une frontière",
+                           "Refuser des bornes égales, qui définissent un intervalle d'une seule valeur"
                        ],
     "variantId":  "tests-quantity-rule-001",
     "reviewCards":  [

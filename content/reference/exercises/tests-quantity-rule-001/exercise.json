@@ -16,12 +16,12 @@
     "constraints":  [
                         "Conserver exactement la signature publique",
                         "Exprimer directement la plage inclusive pour rendre ses quatre frontières testables.",
-                        "Ne jamais dépendre du réseau, d’un secret réel ou d’un état global"
+                        "Ne consulter aucun stock : seule la quantité demandée décide"
                     ],
     "examples":  [
                      {
-                         "input":  "[{\"value\":[1],\"Count\":1},true]",
-                         "output":  "[{\"value\":[0],\"Count\":1},false]"
+                         "input":  "[1]",
+                         "output":  "true"
                      }
                  ],
     "reflectionFields":  [
@@ -54,7 +54,7 @@
                   {
                       "level":  4,
                       "kind":  "partial-pseudocode",
-                      "content":  "valider les entrées ; appliquer la décision bornée ; retourner un résultat déterministe sans effet externe"
+                      "content":  "exprimer directement la plage inclusive : la quantité est acceptée lorsqu'elle est supérieure ou égale au minimum et inférieure ou égale au maximum"
                   }
               ],
     "solution":  {
@@ -67,9 +67,10 @@
     "explanation":  "explanation.md",
     "complexity":  "O(1) en temps et O(1) en espace",
     "commonMistakes":  [
-                           "Coder seulement les exemples visibles",
-                           "Masquer une erreur ou accepter une entrée hors contrat",
-                           "Confondre une règle pure avec le transport ou une ressource externe"
+                           "Employer une comparaison stricte et exclure l'une des deux bornes",
+                           "Refuser la quantité minimale, qui est pourtant valide",
+                           "Accepter une quantité nulle ou négative",
+                           "Écrire deux conditions séparées dont l'une devient inatteignable"
                        ],
     "variantId":  "tests-shipping-theory-001",
     "reviewCards":  [

@@ -20,8 +20,8 @@
                     ],
     "examples":  [
                      {
-                         "input":  "[{\"value\":[{\"pen\":3},\"pen\"],\"Count\":2},3]",
-                         "output":  "[{\"value\":[{\"pen\":3},\"book\"],\"Count\":2},0]"
+                         "input":  "[{\"pen\":3},\"pen\"]",
+                         "output":  "3"
                      }
                  ],
     "reflectionFields":  [
@@ -54,7 +54,7 @@
                   {
                       "level":  4,
                       "kind":  "partial-pseudocode",
-                      "content":  "valider les bornes ; parcourir ou décider ; retourner un nouveau résultat déterministe"
+                      "content":  "si stock est null lever ArgumentNullException ; si key est absente ou composée de blancs retourner zéro ; sinon tenter la lecture et retourner zéro lorsque la clé n'existe pas"
                   }
               ],
     "solution":  {
@@ -67,9 +67,10 @@
     "explanation":  "explanation.md",
     "complexity":  "O(1) amorti en temps et O(1) en espace",
     "commonMistakes":  [
-                           "Coder uniquement les exemples visibles",
-                           "Oublier une borne ou modifier une entrée",
-                           "Annoncer une complexité sans compter les opérations dominantes"
+                           "Indexer directement le dictionnaire et lever sur une clé absente",
+                           "Utiliser l'indexeur en écriture pour tester la présence, ce qui insère la clé",
+                           "Confondre une clé absente et un dictionnaire absent, qui n'ont pas la même issue",
+                           "Traiter une clé composée de blancs comme une clé valide"
                        ],
     "variantId":  "csharp-date-span-001",
     "reviewCards":  [

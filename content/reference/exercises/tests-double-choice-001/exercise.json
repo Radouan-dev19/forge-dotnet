@@ -15,13 +15,13 @@
     "statement":  "statement.md",
     "constraints":  [
                         "Conserver exactement la signature publique",
-                        "Choisir spy pour l’interaction, fake pour le comportement et stub pour une réponse.",
-                        "Ne jamais dépendre du réseau, d’un secret réel ou d’un état global"
+                        "Choisir le constat pour l'interaction, l'implémentation simplifiée pour le comportement, la réponse fixe sinon.",
+                        "N'instancier aucun double réel : seuls les deux besoins sont fournis"
                     ],
     "examples":  [
                      {
-                         "input":  "[{\"value\":[false,false],\"Count\":2},\"stub\"]",
-                         "output":  "[{\"value\":[true,false],\"Count\":2},\"fake\"]"
+                         "input":  "[false,false]",
+                         "output":  "\"stub\""
                      }
                  ],
     "reflectionFields":  [
@@ -54,7 +54,7 @@
                   {
                       "level":  4,
                       "kind":  "partial-pseudocode",
-                      "content":  "valider les entrées ; appliquer la décision bornée ; retourner un résultat déterministe sans effet externe"
+                      "content":  "poser d'abord la question de l'interaction : si l'appel lui-même est le comportement attendu, le double doit le constater ; sinon, un besoin de comportement réel demande une implémentation simplifiée, et une simple réponse suffit dans tous les autres cas"
                   }
               ],
     "solution":  {
@@ -67,9 +67,10 @@
     "explanation":  "explanation.md",
     "complexity":  "O(1) en temps et O(1) en espace",
     "commonMistakes":  [
-                           "Coder seulement les exemples visibles",
-                           "Masquer une erreur ou accepter une entrée hors contrat",
-                           "Confondre une règle pure avec le transport ou une ressource externe"
+                           "Évaluer le besoin de comportement avant celui d'interaction",
+                           "Choisir un double qui constate l'appel alors qu'un résultat vérifiable existe",
+                           "Traiter les deux indicateurs comme indépendants alors que le premier prime",
+                           "Choisir une implémentation simplifiée là où une réponse fixe suffirait"
                        ],
     "variantId":  "tests-saved-identity-001",
     "reviewCards":  [

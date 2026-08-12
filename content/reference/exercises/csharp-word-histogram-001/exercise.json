@@ -20,8 +20,8 @@
                     ],
     "examples":  [
                      {
-                         "input":  "[{\"value\":[\"chat chien chat\"],\"Count\":1},{\"chat\":2,\"chien\":1}]",
-                         "output":  "[{\"value\":[\"\"],\"Count\":1},{}]"
+                         "input":  "[\"chat chien chat\"]",
+                         "output":  "{\"chat\":2,\"chien\":1}"
                      }
                  ],
     "reflectionFields":  [
@@ -54,7 +54,7 @@
                   {
                       "level":  4,
                       "kind":  "partial-pseudocode",
-                      "content":  "valider les bornes ; parcourir ou décider ; retourner un nouveau résultat déterministe"
+                      "content":  "créer le dictionnaire avec un comparateur insensible à la casse ; si text est absent ou composé de blancs retourner ce dictionnaire vide ; découper sur l'espace en retirant les segments vides ; pour chaque mot, incrémenter le compte existant ou l'initialiser à un"
                   }
               ],
     "solution":  {
@@ -67,9 +67,10 @@
     "explanation":  "explanation.md",
     "complexity":  "O(n) en temps et O(k) en espace",
     "commonMistakes":  [
-                           "Coder uniquement les exemples visibles",
-                           "Oublier une borne ou modifier une entrée",
-                           "Annoncer une complexité sans compter les opérations dominantes"
+                           "Créer le dictionnaire avec le comparateur par défaut et compter deux fois le même mot selon sa casse",
+                           "Conserver les segments vides et compter des mots inexistants sur les espaces répétés",
+                           "Indexer directement le dictionnaire pour lire un compte absent",
+                           "Retourner une valeur absente au lieu d'un dictionnaire vide pour une entrée vide"
                        ],
     "variantId":  "csharp-absolute-map-001",
     "reviewCards":  [

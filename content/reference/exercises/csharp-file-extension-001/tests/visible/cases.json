@@ -20,6 +20,13 @@
                       "expected":  "",
                       "expectedException":  null,
                       "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Visible_UpperCaseExtension",
+                      "message":  "Extension en majuscules : le résultat est normalisé en minuscules.",
+                      "arguments":  ["a.TXT"],
+                      "expected":  ".txt",
+                      "argumentsUnchanged":  true
                   }
               ]
 }

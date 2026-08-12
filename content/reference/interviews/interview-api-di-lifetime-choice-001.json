@@ -1,24 +1,24 @@
 {
-    "schemaVersion":  1,
-    "id":  "interview-api-di-lifetime-choice-001",
-    "version":  1,
-    "title":  "Choisir une durée de vie DI",
-    "level":  "junior",
-    "durationMinutes":  6,
-    "skills":  [
-                   "api.di"
-               ],
-    "question":  "Comment implémenteriez-vous « Choisir une durée de vie DI » et quelles preuves réfutent les contournements ?",
-    "observableCriteria":  [
-                               "Le contrat, une frontière et un refus sont explicités",
-                               "La complexité et une preuve de sécurité ou de non-régression sont justifiées"
-                           ],
-    "modelAnswer":  "L’état de requête impose scoped ; un service partagé doit être explicitement sans état. Je sépare validation et décision, je teste un cas nominal et les frontières, puis je vérifie qu’aucune donnée sensible ni état externe n’entre dans la preuve. O(1) en temps et O(1) en espace.",
-    "commonMistakes":  [
-                           "Réciter le code sans expliquer le contrat ni la preuve"
-                       ],
-    "variants":  [
-                     "Changer la frontière ou le droit tout en conservant la règle de choisir une durée de vie di."
-                 ],
-    "license":  "CC-BY-4.0"
+  "schemaVersion": 1,
+  "id": "interview-api-di-lifetime-choice-001",
+  "version": 1,
+  "title": "Choisir une durée de vie DI",
+  "level": "junior",
+  "durationMinutes": 6,
+  "skills": [
+    "api.di"
+  ],
+  "question": "Comment implémenteriez-vous « Choisir une durée de vie DI » et quelles preuves réfutent les contournements ?",
+  "observableCriteria": [
+    "L'état porté par la requête est la raison invoquée, pas la fréquence d'appel",
+    "L'absence d'état d'un service partagé est présentée comme une propriété à vérifier, non à supposer"
+  ],
+  "modelAnswer": "L’état de requête impose scoped ; un service partagé doit être explicitement sans état. Je teste le cas d'un service partagé qui capture une dépendance à durée de vie plus courte, parce que c'est le défaut qui ne se manifeste qu'en charge. O(1) en temps et O(1) en espace.",
+  "commonMistakes": [
+    "Choisir une durée de vie longue pour la performance en y capturant un état de requête"
+  ],
+  "variants": [
+    "Changer la frontière ou le droit tout en conservant la règle de choisir une durée de vie di."
+  ],
+  "license": "CC-BY-4.0"
 }

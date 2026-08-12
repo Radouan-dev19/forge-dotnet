@@ -21,6 +21,20 @@
                                     ],
                       "expectedException":  "ArgumentOutOfRangeException",
                       "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_NegativeUnitPrice",
+                      "message":  "Prix unitaire négatif : refus, au même titre qu'une quantité négative.",
+                      "arguments":  [-1,2],
+                      "expectedException":  "ArgumentOutOfRangeException",
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_ExactMidpoint",
+                      "message":  "Résultat exactement à mi-chemin : l'arrondi s'éloigne de zéro.",
+                      "arguments":  [0.125,2],
+                      "expected":  0.25,
+                      "argumentsUnchanged":  true
                   }
               ]
 }

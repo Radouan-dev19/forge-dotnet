@@ -22,6 +22,20 @@
                       "expected":  false,
                       "expectedException":  null,
                       "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_NegativeLength",
+                      "message":  "Longueur négative : refusée avant même l'examen de l'indice.",
+                      "arguments":  [0,-1],
+                      "expected":  false,
+                      "argumentsUnchanged":  true
+                  },
+                  {
+                      "name":  "Hidden_IndexEqualsLength",
+                      "message":  "Indice égal à la longueur : hors bornes, la comparaison est stricte.",
+                      "arguments":  [3,3],
+                      "expected":  false,
+                      "argumentsUnchanged":  true
                   }
               ]
 }

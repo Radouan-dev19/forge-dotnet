@@ -20,6 +20,20 @@
                       "expected":  "range",
                       "expectedException":  null,
                       "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_FarAboveRange",
+                      "message":  "Quantité très supérieure : hors intervalle, comme cent un.",
+                      "arguments":  [10000],
+                      "expected":  "range",
+                      "argumentsUnchanged":  true
+                  },
+                  {
+                      "name":  "Hidden_MiddleOfRange",
+                      "message":  "Quantité au milieu de l'intervalle : acceptée sans réserve.",
+                      "arguments":  [50],
+                      "expected":  "valid",
+                      "argumentsUnchanged":  true
                   }
               ]
 }

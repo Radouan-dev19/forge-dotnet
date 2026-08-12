@@ -20,6 +20,13 @@
                       "expected":  0,
                       "expectedException":  null,
                       "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Visible_SingleStep",
+                      "message":  "Deux se réduit en une étape : réfute un compteur décalé d'une unité.",
+                      "arguments":  [2],
+                      "expected":  1,
+                      "argumentsUnchanged":  true
                   }
               ]
 }

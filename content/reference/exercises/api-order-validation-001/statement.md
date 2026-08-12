@@ -2,6 +2,6 @@
 
 Implémentez Submission.QuantityState avec la signature fournie. Distinguer absence conventionnelle, plage invalide et valeur acceptée.
 
-Le résultat reste déterministe et hors ligne. Écrivez avant le code un cas nominal, une frontière, un refus et la menace ou régression que ces preuves préviennent. N’utilisez aucun secret réel.
+La validation reste déterministe et hors ligne, sans consulter aucun stock. Écrivez avant le code : une quantité acceptée, les deux bornes exactes de la plage, la valeur conventionnelle d'absence et une valeur négative. Nommez ce qu'un message d'erreur fondu ferait perdre au client.
 
-Exemple : entrée $(Convert-JsonCompact System.Object[] System.Object[][0]), sortie $(Convert-JsonCompact System.Object[] System.Object[][1]).
+Exemple : entrée `[1]`, sortie `"valid"`.

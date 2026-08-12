@@ -46,6 +46,61 @@ public sealed class ContentValidationTests
         });
     }
 
+    [Theory]
+    [InlineData("unsubstituted-placeholder", "unsubstituted-placeholder")]
+    [InlineData("hollow-lesson", "hollow-lesson")]
+    [InlineData("cloned-content", "cloned-content")]
+    public async Task AuthenticityFixtureIsRejectedByItsOwnRule(string fixtureName, string expectedCode)
+    {
+        var validator = CreateValidator();
+
+        var report = await validator.ValidateAsync(
+            Path.Combine(ContentRoot, "fixtures", "invalid", fixtureName));
+
+        Assert.False(report.IsValid, FormatIssues(report.Issues));
+        Assert.Equal(0, report.AcceptedDocuments);
+        Assert.All(report.Issues, issue => Assert.Equal(expectedCode, issue.Code));
+    }
+
+    [Fact]
+    public async Task GenericTypeCitedAsCodeIsNotMistakenForRawHtml()
+    {
+        string fixtureRoot = CreateTemporaryContentDirectory();
+        string source = Path.Combine(ContentRoot, "fixtures", "valid", "curriculum", "lessons", "lesson-types-001");
+        string destination = Path.Combine(fixtureRoot, "curriculum", "lessons", "generic-prose");
+        CopyDirectory(source, destination);
+        string manifestPath = Path.Combine(destination, "lesson.json");
+        await File.WriteAllTextAsync(
+            manifestPath,
+            (await File.ReadAllTextAsync(manifestPath))
+                .Replace("lesson-types-001", "generic-prose", StringComparison.Ordinal));
+        await File.WriteAllTextAsync(
+            Path.Combine(destination, "lesson.md"),
+            "# Générique\n\nUne méthode retourne `IReadOnlyList<T>` et accepte `Func<int, bool>`.\n\n"
+            + "```csharp\npublic static int Count<T>(IReadOnlyList<T> items) => items.Count;\n```\n");
+
+        try
+        {
+            var report = await CreateValidator().ValidateAsync(fixtureRoot);
+
+            Assert.DoesNotContain(report.Issues, issue => issue.Code == "raw-html");
+        }
+        finally
+        {
+            Directory.Delete(fixtureRoot, recursive: true);
+        }
+    }
+
+    [Fact]
+    public async Task AuthenticityRulesStayInertOnContentThatDoesNotViolateThem()
+    {
+        var validator = CreateValidator();
+
+        var report = await validator.ValidateAsync(Path.Combine(ContentRoot, "fixtures", "valid"));
+
+        Assert.DoesNotContain(report.Issues, issue => ContentAuthenticityRules.IsAuthenticityCode(issue.Code));
+    }
+
     [Fact]
     public async Task DirectoryOutsideContentIsRejectedBeforeReadingFiles()
     {

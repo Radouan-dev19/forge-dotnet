@@ -1,24 +1,24 @@
 {
-    "schemaVersion":  1,
-    "id":  "interview-s21-s24-015",
-    "version":  1,
-    "title":  "Construire un log structuré",
-    "level":  "intermediate",
-    "durationMinutes":  9,
-    "skills":  [
-                   "observability.logs"
-               ],
-    "question":  "Quels champs conservez-vous pour diagnostiquer une requête sans exposer son contenu ?",
-    "observableCriteria":  [
-                               "La réponse prend une décision explicite et cite une preuve observable",
-                               "Une limite de sécurité, de coût, de portée ou de validité est reconnue"
-                           ],
-    "modelAnswer":  "Je conserve horodatage, niveau, événement, corrélation, route normalisée, durée et résultat. Jʼexclus corps, en-têtes dʼauthentification et identifiants personnels.",
-    "commonMistakes":  [
-                           "Employer un slogan sans contrainte, preuve ni limite vérifiable"
-                       ],
-    "variants":  [
-                     "Changez une contrainte du scénario « Construire un log structuré » et expliquez si la décision reste valide."
-                 ],
-    "license":  "CC-BY-4.0"
+  "schemaVersion": 1,
+  "id": "interview-s21-s24-015",
+  "version": 1,
+  "title": "Construire un log structuré",
+  "level": "intermediate",
+  "durationMinutes": 9,
+  "skills": [
+    "observability.logs"
+  ],
+  "question": "Quels champs conservez-vous pour diagnostiquer une requête sans exposer son contenu ?",
+  "observableCriteria": [
+    "Les champs conservés sont énumérés et suffisent à reconstituer une requête",
+    "Au moins un champ volontairement exclu est nommé, avec la raison de son exclusion"
+  ],
+  "modelAnswer": "Je conserve horodatage, niveau, événement, corrélation, route normalisée, durée et résultat. Jʼexclus corps, en-têtes dʼauthentification et identifiants personnels.",
+  "commonMistakes": [
+    "Qualifier la journalisation de sûre sans nommer un seul champ écarté"
+  ],
+  "variants": [
+    "Changez une contrainte du scénario « Construire un log structuré » et expliquez si la décision reste valide."
+  ],
+  "license": "CC-BY-4.0"
 }

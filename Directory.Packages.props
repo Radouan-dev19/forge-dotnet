@@ -4,6 +4,8 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageVersion Include="coverlet.collector" Version="6.0.4" />
+    <!-- Compilation en mémoire des exercices dans les tests, sans dépendre du moteur Docker. -->
+    <PackageVersion Include="Microsoft.CodeAnalysis.CSharp" Version="5.0.0" />
     <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.14.1" />
     <PackageVersion Include="Microsoft.AspNetCore.Mvc.Testing" Version="10.0.8" />
     <PackageVersion Include="Microsoft.EntityFrameworkCore.Design" Version="10.0.10" />

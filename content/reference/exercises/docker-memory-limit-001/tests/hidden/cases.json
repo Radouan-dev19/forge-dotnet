@@ -20,6 +20,20 @@
                       "expected":  1024,
                       "expectedException":  null,
                       "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_AtUpperBound",
+                      "message":  "Demande exactement à la borne haute : conservée.",
+                      "arguments":  [1024],
+                      "expected":  1024,
+                      "argumentsUnchanged":  true
+                  },
+                  {
+                      "name":  "Hidden_NegativeRequest",
+                      "message":  "Demande négative : repli sur le défaut, comme pour zéro.",
+                      "arguments":  [-5],
+                      "expected":  256,
+                      "argumentsUnchanged":  true
                   }
               ]
 }

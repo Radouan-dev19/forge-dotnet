@@ -16,12 +16,12 @@
     "constraints":  [
                         "Conserver exactement la signature publique",
                         "Un jalon est révisable uniquement si tests, revue de sécurité et retour arrière documenté sont tous présents.",
-                        "Rester déterministe, hors ligne et indépendant de toute ressource Azure réelle"
+                        "N'interroger aucun système de livraison : les trois conditions sont fournies"
                     ],
     "examples":  [
                      {
-                         "input":  "[{\"value\":[true,true,true],\"Count\":3},true]",
-                         "output":  "[{\"value\":[false,true,true],\"Count\":3},false]"
+                         "input":  "[true,true,true]",
+                         "output":  "true"
                      }
                  ],
     "reflectionFields":  [
@@ -54,7 +54,7 @@
                   {
                       "level":  4,
                       "kind":  "partial-pseudocode",
-                      "content":  "valider les entrées ; appliquer la garde la plus stricte ; retourner une décision explicite et déterministe"
+                      "content":  "exiger les trois conditions ensemble : les tests passés, la revue de sécurité effectuée et le retour arrière documenté ; l'absence d'une seule rend le jalon non révisable"
                   }
               ],
     "solution":  {
@@ -67,9 +67,10 @@
     "explanation":  "explanation.md",
     "complexity":  "O(1) en temps et O(1) en espace",
     "commonMistakes":  [
-                           "Coder seulement les exemples visibles",
-                           "Présenter une étape manuelle ou cloud comme une validation automatique",
-                           "Masquer une valeur invalide ou supprimer une garde de sécurité"
+                           "Déclarer un jalon révisable sur les seuls tests verts",
+                           "Omettre le retour arrière documenté et déployer sans plan de repli",
+                           "Considérer la revue de sécurité comme facultative quand les tests passent",
+                           "Traiter les trois conditions comme alternatives plutôt que cumulatives"
                        ],
     "variantId":  "azure-incident-brief-001",
     "reviewCards":  [

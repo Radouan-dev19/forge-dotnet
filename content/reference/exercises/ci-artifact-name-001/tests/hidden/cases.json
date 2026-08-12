@@ -21,6 +21,20 @@
                       "expected":  "tests-release-3",
                       "expectedException":  null,
                       "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_ZeroRunNumber",
+                      "message":  "Numéro de run nul : refusé, une exécution est numérotée à partir de un.",
+                      "arguments":  ["main",0],
+                      "expectedException":  "ArgumentException",
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_NegativeRunNumber",
+                      "message":  "Numéro de run négatif : refusé au même titre que zéro.",
+                      "arguments":  ["main",-1],
+                      "expectedException":  "ArgumentException",
+                      "argumentsUnchanged":  false
                   }
               ]
 }

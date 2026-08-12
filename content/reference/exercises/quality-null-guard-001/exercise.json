@@ -16,12 +16,12 @@
     "constraints":  [
                         "Conserver exactement la signature publique",
                         "Traiter absence et blanc avant toute déréférence, sans opérateur de suppression.",
-                        "Ne jamais dépendre du réseau, d’un secret réel ou d’un état global"
+                        "N'employer aucun opérateur affirmant une non-nullité que rien ne garantit"
                     ],
     "examples":  [
                      {
-                         "input":  "[{\"value\":[\" value \"],\"Count\":1},\"value\"]",
-                         "output":  "[{\"value\":[\"\"],\"Count\":1},\"n/a\"]"
+                         "input":  "[\" value \"]",
+                         "output":  "\"value\""
                      }
                  ],
     "reflectionFields":  [
@@ -54,7 +54,7 @@
                   {
                       "level":  4,
                       "kind":  "partial-pseudocode",
-                      "content":  "valider les entrées ; appliquer la décision bornée ; retourner un résultat déterministe sans effet externe"
+                      "content":  "traiter ensemble, en tête de méthode, la valeur absente, la chaîne vide et la chaîne de blancs, en retournant le repli ; sinon retirer les blancs de bordure et retourner la valeur normalisée"
                   }
               ],
     "solution":  {
@@ -67,9 +67,10 @@
     "explanation":  "explanation.md",
     "complexity":  "O(n) en temps et O(n) en espace",
     "commonMistakes":  [
-                           "Coder seulement les exemples visibles",
-                           "Masquer une erreur ou accepter une entrée hors contrat",
-                           "Confondre une règle pure avec le transport ou une ressource externe"
+                           "Affirmer la non-nullité par un opérateur au lieu d'écrire une garde",
+                           "Traiter l'absence sans traiter la chaîne de blancs, qui passe alors pour une valeur",
+                           "Retourner le repli sans avoir retiré les blancs sur le chemin nominal",
+                           "Lever sur une absence que le contrat prévoit de replier"
                        ],
     "variantId":  "quality-regression-bounds-001",
     "reviewCards":  [

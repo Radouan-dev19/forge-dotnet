@@ -16,12 +16,12 @@
     "constraints":  [
                         "Conserver exactement la signature publique",
                         "Valider les durées puis retenir le budget le plus contraignant.",
-                        "Ne jamais dépendre du réseau, d’un secret réel ou d’un état global"
+                        "Ne lire aucune horloge : les deux durées viennent des paramètres"
                     ],
     "examples":  [
                      {
-                         "input":  "[{\"value\":[5,30],\"Count\":2},5]",
-                         "output":  "[{\"value\":[60,30],\"Count\":2},30]"
+                         "input":  "[5,30]",
+                         "output":  "5"
                      }
                  ],
     "reflectionFields":  [
@@ -54,7 +54,7 @@
                   {
                       "level":  4,
                       "kind":  "partial-pseudocode",
-                      "content":  "valider les entrées ; appliquer la décision bornée ; retourner un résultat déterministe sans effet externe"
+                      "content":  "refuser toute durée nulle ou négative, des deux côtés ; sinon retenir la plus petite des deux durées, qui est le budget effectivement applicable"
                   }
               ],
     "solution":  {
@@ -67,9 +67,10 @@
     "explanation":  "explanation.md",
     "complexity":  "O(1) en temps et O(1) en espace",
     "commonMistakes":  [
-                           "Coder seulement les exemples visibles",
-                           "Masquer une erreur ou accepter une entrée hors contrat",
-                           "Confondre une règle pure avec le transport ou une ressource externe"
+                           "Retenir la durée demandée par l'appelant sans la confronter au plafond",
+                           "Accepter une durée nulle et produire une annulation immédiate",
+                           "Ramener silencieusement une durée invalide à une valeur par défaut au lieu de refuser",
+                           "Retenir la plus grande des deux durées et desserrer le budget"
                        ],
     "variantId":  "security-bearer-header-001",
     "reviewCards":  [

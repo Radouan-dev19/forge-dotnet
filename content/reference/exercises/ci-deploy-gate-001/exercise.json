@@ -16,12 +16,12 @@
     "constraints":  [
                         "Conserver exactement la signature publique",
                         "Exiger simultanément preuves vertes, environnement protégé et approbation.",
-                        "Ne jamais dépendre du réseau, d’un secret réel ou d’un état global"
+                        "N'interroger aucun système de déploiement : les trois conditions sont fournies"
                     ],
     "examples":  [
                      {
-                         "input":  "[{\"value\":[true,true,true],\"Count\":3},true]",
-                         "output":  "[{\"value\":[false,true,true],\"Count\":3},false]"
+                         "input":  "[true,true,true]",
+                         "output":  "true"
                      }
                  ],
     "reflectionFields":  [
@@ -54,7 +54,7 @@
                   {
                       "level":  4,
                       "kind":  "partial-pseudocode",
-                      "content":  "valider les entrées ; appliquer la décision bornée ; retourner un résultat déterministe sans effet externe"
+                      "content":  "exiger les trois conditions ensemble : les preuves automatiques vertes, l'environnement cible protégé et l'approbation donnée ; l'absence d'une seule ferme la porte"
                   }
               ],
     "solution":  {
@@ -67,9 +67,10 @@
     "explanation":  "explanation.md",
     "complexity":  "O(1) en temps et O(1) en espace",
     "commonMistakes":  [
-                           "Coder seulement les exemples visibles",
-                           "Masquer une erreur ou accepter une entrée hors contrat",
-                           "Confondre une règle pure avec le transport ou une ressource externe"
+                           "Déployer sur les seules preuves vertes, sans protection de l'environnement cible",
+                           "Considérer l'approbation comme suffisante sans preuves automatiques",
+                           "Traiter les trois conditions comme alternatives plutôt que cumulatives",
+                           "Rendre une étape non bloquante pour livrer plus vite"
                        ],
     "variantId":  "api-http-status-map-001",
     "reviewCards":  [

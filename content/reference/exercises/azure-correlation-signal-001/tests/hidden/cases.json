@@ -21,6 +21,20 @@
                                     ],
                       "expectedException":  "ArgumentOutOfRangeException",
                       "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_JustAboveLatencyThreshold",
+                      "message":  "Une milliseconde au-dessus du seuil : l'alerte de latence se déclenche.",
+                      "arguments":  [0,751],
+                      "expected":  "latency",
+                      "argumentsUnchanged":  true
+                  },
+                  {
+                      "name":  "Hidden_NegativeLatency",
+                      "message":  "Latence négative : refusée au même titre qu'un compte d'erreurs négatif.",
+                      "arguments":  [1,-1],
+                      "expectedException":  "ArgumentOutOfRangeException",
+                      "argumentsUnchanged":  false
                   }
               ]
 }

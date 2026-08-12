@@ -22,6 +22,13 @@
                       "expected":  20,
                       "expectedException":  null,
                       "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Visible_FirstPageIsZero",
+                      "message":  "Première page : aucun élément n'est sauté.",
+                      "arguments":  [1,100],
+                      "expected":  0,
+                      "argumentsUnchanged":  true
                   }
               ]
 }

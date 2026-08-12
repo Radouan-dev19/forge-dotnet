@@ -16,12 +16,12 @@
     "constraints":  [
                         "Conserver exactement la signature publique",
                         "Valider les trois valeurs et comparer la fenêtre totale au budget.",
-                        "Ne jamais dépendre du réseau, d’un secret réel ou d’un état global"
+                        "N'exécuter aucun contrôle de santé réel : les trois valeurs sont fournies"
                     ],
     "examples":  [
                      {
-                         "input":  "[{\"value\":[5,6,30],\"Count\":3},true]",
-                         "output":  "[{\"value\":[10,4,30],\"Count\":3},false]"
+                         "input":  "[5,6,30]",
+                         "output":  "true"
                      }
                  ],
     "reflectionFields":  [
@@ -54,7 +54,7 @@
                   {
                       "level":  4,
                       "kind":  "partial-pseudocode",
-                      "content":  "valider les entrées ; appliquer la décision bornée ; retourner un résultat déterministe sans effet externe"
+                      "content":  "refuser toute valeur non strictement positive parmi les trois ; sinon multiplier l'intervalle par le nombre d'essais, la multiplication étant vérifiée, et accepter tant que cette fenêtre ne dépasse pas le budget"
                   }
               ],
     "solution":  {
@@ -67,9 +67,10 @@
     "explanation":  "explanation.md",
     "complexity":  "O(1) en temps et O(1) en espace",
     "commonMistakes":  [
-                           "Coder seulement les exemples visibles",
-                           "Masquer une erreur ou accepter une entrée hors contrat",
-                           "Confondre une règle pure avec le transport ou une ressource externe"
+                           "Additionner l'intervalle et le nombre d'essais au lieu de les multiplier",
+                           "Refuser une fenêtre exactement égale au budget",
+                           "Diviser ou multiplier avant d'avoir validé les trois valeurs",
+                           "Multiplier sans contrôle de dépassement sur de grandes valeurs"
                        ],
     "variantId":  "docker-hardening-policy-001",
     "reviewCards":  [

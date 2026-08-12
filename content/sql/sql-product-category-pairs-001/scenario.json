@@ -31,8 +31,12 @@
     "timeoutSeconds":  5,
     "maxRows":  20,
     "effectAssertions":  [
-                             "Les quatre clients, cinq commandes et six lignes restent inchangés après rollback"
+                             "Chaque paire de produits d'une même catégorie apparaît une seule fois, jamais dans les deux sens, et aucun produit n'est modifié"
                          ],
     "solutionPath":  "solution.md",
+    "reviewCards": [
+        "card-sql-product-category-pairs-001-rule",
+        "card-sql-product-category-pairs-001-edge"
+    ],
     "license":  "CC-BY-4.0"
 }

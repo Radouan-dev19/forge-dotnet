@@ -23,6 +23,20 @@
                                     ],
                       "expectedException":  "ArgumentException",
                       "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_AtLowerBound",
+                      "message":  "Valeur exactement à la borne basse : elle est conservée.",
+                      "arguments":  [1,1,10],
+                      "expected":  1,
+                      "argumentsUnchanged":  true
+                  },
+                  {
+                      "name":  "Hidden_EqualBounds",
+                      "message":  "Bornes égales : l'intervalle d'un seul point reste valide.",
+                      "arguments":  [5,5,5],
+                      "expected":  5,
+                      "argumentsUnchanged":  true
                   }
               ]
 }

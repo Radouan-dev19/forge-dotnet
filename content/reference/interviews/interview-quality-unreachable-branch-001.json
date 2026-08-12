@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "id": "interview-quality-unreachable-branch-001",
+  "version": 1,
+  "title": "Repérer la branche qu'aucune valeur n'atteindra",
+  "level": "advanced",
+  "durationMinutes": 15,
+  "skills": ["quality.static-analysis"],
+  "question": "L'analyse statique signale une branche inatteignable dans une cascade de conditions numériques, et l'auteur affirme qu'elle est nécessaire. Comment tranchez-vous, et comment auriez-vous détecté le cas vous-même ?",
+  "observableCriteria": [
+    "La détection est décrite comme un raisonnement sur la réunion des conditions antérieures, pas sur des paires",
+    "La branche morte est présentée comme une intention jamais appliquée, non comme du code superflu",
+    "Un témoin concret est proposé pour trancher le désaccord plutôt qu'un argument d'autorité"
+  ],
+  "modelAnswer": "Je tranche par un témoin, pas par un avis : soit j'exhibe une valeur qui atteint la branche, et l'analyse a tort, soit personne n'en trouve, et la branche est morte. Pour le faire moi-même, je traduis chaque condition en l'ensemble des valeurs qu'elle accepte et j'accumule la réunion des conditions antérieures. Le point à ne pas manquer est qu'il faut raisonner sur cette réunion et non sur des paires : une branche peut rester atteignable face à chaque condition prise seule et être morte face à leur réunion, par exemple quand deux conditions découpent déjà tout le domaine. Je fais aussi attention à deux détails qui faussent le verdict en silence : deux intervalles contigus doivent fusionner, sinon un trou de largeur nulle fait croire à une valeur atteignable ; et les bornes se calculent dans un type plus large, faute de quoi la valeur juste au-delà de la plus grande déborde et l'intervalle change de sens. Enfin, l'enjeu n'est pas de supprimer du code inutile : c'est qu'une règle a été écrite, crue active, et jamais appliquée.",
+  "commonMistakes": [
+    "Valider ou invalider l'avertissement par relecture d'intention plutôt que par un témoin",
+    "Raisonner condition par condition et manquer une couverture produite par leur réunion"
+  ],
+  "variants": [
+    "Ajouter une condition portant sur une seconde variable et demander ce que devient le raisonnement.",
+    "Demander comment produire automatiquement le témoin d'atteignabilité à afficher dans le rapport."
+  ],
+  "license": "CC-BY-4.0"
+}

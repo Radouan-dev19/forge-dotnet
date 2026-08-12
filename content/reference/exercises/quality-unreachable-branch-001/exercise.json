@@ -1,0 +1,83 @@
+{
+  "schemaVersion": 1,
+  "id": "quality-unreachable-branch-001",
+  "version": 1,
+  "title": "Repérer la branche qu'aucune valeur n'atteindra",
+  "kind": "algorithm",
+  "difficulty": 5,
+  "skills": ["quality.static-analysis"],
+  "prerequisites": ["quality-static-analysis-001"],
+  "estimatedMinutes": 60,
+  "statement": "statement.md",
+  "constraints": [
+    "Conserver exactement la signature publique",
+    "Le domaine analysé est celui des entiers signés sur trente-deux bits, bornes comprises",
+    "Deux intervalles contigus ne laissent aucun trou entre eux",
+    "Une condition que le domaine ne peut pas satisfaire est inatteignable par elle-même"
+  ],
+  "examples": [
+    {
+      "input": "[\"<10|<5\"]",
+      "output": "2"
+    },
+    {
+      "input": "[\"<0|>=0\"]",
+      "output": "0"
+    }
+  ],
+  "reflectionFields": [
+    "reformulation",
+    "inputs",
+    "expectedOutput",
+    "edgeCases",
+    "hypothesis",
+    "plan"
+  ],
+  "starterPath": "starter/",
+  "visibleTestsPath": "tests/visible/",
+  "hiddenTestsPath": "tests/hidden/",
+  "hints": [
+    {
+      "level": 1,
+      "kind": "socratic",
+      "content": "Comparer les conditions deux à deux suffit-il ? Deux conditions antérieures peuvent chacune ne couvrir qu'une partie de la troisième et la rendre morte à elles deux."
+    },
+    {
+      "level": 2,
+      "kind": "location",
+      "content": "Séparez trois choses : traduire une condition en ce qu'elle accepte, décider si cet ensemble est déjà couvert, et enregistrer qu'il l'est désormais. La deuxième est la seule qui demande de réfléchir."
+    },
+    {
+      "level": 3,
+      "kind": "strategy",
+      "content": "Représentez ce qui est déjà couvert comme une réunion d'intervalles maintenue triée et sans chevauchement. Un curseur qui part de la borne basse du candidat et qu'aucun intervalle ne fait avancer révèle un trou, donc une valeur encore atteignable."
+    },
+    {
+      "level": 4,
+      "kind": "partial-pseudocode",
+      "content": "traduire la condition en borne basse et borne haute ; conclure immédiatement si la borne basse dépasse la haute ; sinon placer un curseur sur la borne basse et parcourir les couvertures triées, chacune qui contient le curseur le repoussant juste après sa propre borne haute ; si le curseur dépasse la borne haute du candidat, la condition est morte ; sinon l'ajouter aux couvertures en fusionnant tout ce qui la touche, contiguïté comprise"
+    }
+  ],
+  "solution": {
+    "path": "solution/",
+    "unlock": {
+      "seriousAttempts": 2,
+      "minimumDelayMinutes": 10
+    }
+  },
+  "explanation": "explanation.md",
+  "complexity": "O(n²) en temps dans le pire cas et O(n) en espace, pour n conditions analysées",
+  "commonMistakes": [
+    "Comparer les conditions deux à deux, ce qui rate une branche couverte par la réunion de plusieurs autres",
+    "Calculer les bornes dans le type analysé, où la valeur juste après la plus grande déborde en silence",
+    "Ne pas fusionner deux intervalles contigus, ce qui laisse un trou de largeur nulle et déclare atteignable une branche morte",
+    "Traiter une condition que le domaine ne peut satisfaire comme atteignable faute de couverture antérieure"
+  ],
+  "variantId": "quality-complexity-budget-001",
+  "reviewCards": [
+    "card-quality-unreachable-branch-001-rule",
+    "card-quality-unreachable-branch-001-edge"
+  ],
+  "interviewQuestionId": "interview-quality-unreachable-branch-001",
+  "license": "CC-BY-4.0"
+}

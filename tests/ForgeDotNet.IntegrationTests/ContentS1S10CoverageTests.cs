@@ -77,7 +77,7 @@ public sealed class ContentS1S10CoverageTests
         string[] debug = Directory.GetFiles(
             Path.Combine(catalog, "debugging"), "scenario.json", SearchOption.AllDirectories);
         string[] sql = Directory.GetFiles(Path.Combine(root, "sql"), "scenario.json", SearchOption.AllDirectories);
-        string[] projects = Directory.GetFiles(Path.Combine(catalog, "projects"), "*.json", SearchOption.TopDirectoryOnly)
+        string[] projects = Directory.GetFiles(Path.Combine(catalog, "projects"), "project.json", SearchOption.AllDirectories)
             .Where(path => Read(path).RootElement.GetProperty("weeks").EnumerateArray().Max(value => value.GetInt32()) <= 10)
             .ToArray();
         var s11S20InterviewIds = s11S20ExerciseIds.Select(id => $"interview-{id}").ToHashSet(StringComparer.Ordinal);
@@ -198,9 +198,11 @@ public sealed class ContentS1S10CoverageTests
                 || (skill.GetString() ?? string.Empty).StartsWith("ci.", StringComparison.Ordinal)))
             .SelectMany(path => Directory.GetFiles(Path.GetDirectoryName(path)!, "*", SearchOption.AllDirectories))
             .ToArray();
-        string[] s1S10ProjectFiles = Directory.GetFiles(Path.Combine(catalog, "projects"), "*.json", SearchOption.TopDirectoryOnly)
+        string[] s1S10ProjectFiles = Directory.GetFiles(Path.Combine(catalog, "projects"), "project.json", SearchOption.AllDirectories)
             .Where(path => Read(path).RootElement.GetProperty("weeks").EnumerateArray().Max(value => value.GetInt32()) <= 10)
-            .SelectMany(path => new[] { path, Path.ChangeExtension(path, ".md") })
+            // Un projet porte un dossier : le brief, le starter et les suites y sont inspectés
+            // au même titre que le manifeste.
+            .SelectMany(path => Directory.GetFiles(Path.GetDirectoryName(path)!, "*", SearchOption.AllDirectories))
             .ToArray();
         string[] inspected = s1S10LessonFiles
             .Concat(s1S10ExerciseFiles)

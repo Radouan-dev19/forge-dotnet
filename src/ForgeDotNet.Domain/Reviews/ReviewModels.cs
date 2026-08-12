@@ -11,6 +11,11 @@ public enum ReviewSourceKind
     MissedDiagnosticQuestion,
     SolutionViewed,
     Personal,
+
+    /// <summary>
+    /// Carte de révision attachée à un exercice déjà pratiqué, corrigée côté serveur.
+    /// </summary>
+    ExerciseReviewCard,
 }
 
 public enum ReviewScheduleKind

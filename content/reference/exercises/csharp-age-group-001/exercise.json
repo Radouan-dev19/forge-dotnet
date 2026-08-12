@@ -20,8 +20,8 @@
                     ],
     "examples":  [
                      {
-                         "input":  "[{\"value\":[17],\"Count\":1},\"minor\"]",
-                         "output":  "[{\"value\":[18],\"Count\":1},\"adult\"]"
+                         "input":  "[17]",
+                         "output":  "\"minor\""
                      }
                  ],
     "reflectionFields":  [
@@ -54,7 +54,7 @@
                   {
                       "level":  4,
                       "kind":  "partial-pseudocode",
-                      "content":  "valider les bornes ; parcourir ou décider ; retourner un nouveau résultat déterministe"
+                      "content":  "si age est négatif retourner l'état invalide ; sinon comparer à dix-huit puis à soixante-cinq avec des inégalités strictes ; la dernière tranche ne teste plus rien puisque les précédentes ont échoué"
                   }
               ],
     "solution":  {
@@ -67,9 +67,10 @@
     "explanation":  "explanation.md",
     "complexity":  "O(1) en temps et O(1) en espace",
     "commonMistakes":  [
-                           "Coder uniquement les exemples visibles",
-                           "Oublier une borne ou modifier une entrée",
-                           "Annoncer une complexité sans compter les opérations dominantes"
+                           "Traiter un âge négatif comme la première tranche valide",
+                           "Comparer avec une inégalité large et décaler la tranche d'une année",
+                           "Tester les tranches du plus grand au plus petit et rendre une branche inatteignable",
+                           "Retourner une étiquette dont la casse diffère du contrat"
                        ],
     "variantId":  "csharp-copy-sanitized-001",
     "reviewCards":  [

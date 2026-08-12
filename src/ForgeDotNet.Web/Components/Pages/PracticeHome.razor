@@ -1,5 +1,6 @@
 @page "/practice"
 @inject PracticeService Practice
+@inject CodeRunnerModeDescriptor RunnerMode
 
 <PageTitle>Pratique manuelle — Forge.NET</PageTitle>
 
@@ -9,12 +10,23 @@
     <h2 id="practice-intro-title">Protocole anti-dépendance</h2>
     <p>
         Forge.NET exige une réflexion structurée avant les indices, trace les tentatives et protège les solutions.
-        Cet incrément n’exécute, ne compile et ne teste aucun code.
     </p>
-    <p class="notice" role="status">
-        Toute vérification est une déclaration manuelle de l’utilisateur ; elle ne constitue ni une réussite automatique,
-        ni une preuve de maîtrise.
-    </p>
+    @if (RunnerMode.IsManual)
+    {
+        <p class="notice" role="status">
+            Cette installation est configurée en mode manuel : elle n’exécute, ne compile et ne teste aucun code.
+            Toute vérification est une déclaration de l’utilisateur ; elle ne constitue ni une réussite automatique,
+            ni une preuve de maîtrise.
+        </p>
+    }
+    else
+    {
+        <p class="notice" role="status">
+            Cette installation dispose d’un exécuteur de code isolé. Le processus web n’exécute jamais votre code
+            lui-même : il le confie à un conteneur éphémère, sans réseau et sans privilège. Une déclaration manuelle
+            reste, elle, une simple affirmation et ne prouve aucune maîtrise.
+        </p>
+    }
 </section>
 
 @if (_error is not null)

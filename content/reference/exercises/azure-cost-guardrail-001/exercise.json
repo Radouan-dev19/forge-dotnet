@@ -16,12 +16,12 @@
     "constraints":  [
                         "Conserver exactement la signature publique",
                         "Autoriser seulement un coût estimé dans le budget avec un plan de suppression vérifié.",
-                        "Rester déterministe, hors ligne et indépendant de toute ressource Azure réelle"
+                        "N'interroger aucune facturation distante : le coût estimé et le budget sont fournis"
                     ],
     "examples":  [
                      {
-                         "input":  "[{\"value\":[2.5,5,true],\"Count\":3},\"allow\"]",
-                         "output":  "[{\"value\":[7,5,true],\"Count\":3},\"block\"]"
+                         "input":  "[2.5,5,true]",
+                         "output":  "\"allow\""
                      }
                  ],
     "reflectionFields":  [
@@ -54,7 +54,7 @@
                   {
                       "level":  4,
                       "kind":  "partial-pseudocode",
-                      "content":  "valider les entrées ; appliquer la garde la plus stricte ; retourner une décision explicite et déterministe"
+                      "content":  "refuser un coût négatif ou un budget nul, qui ne décrivent rien d'exploitable ; refuser ensuite tant qu'aucun plan de suppression n'est prêt, quel que soit le coût ; enfin, autoriser seulement si le coût estimé tient dans le budget, l'égalité étant acceptée"
                   }
               ],
     "solution":  {
@@ -67,9 +67,10 @@
     "explanation":  "explanation.md",
     "complexity":  "O(1) en temps et O(1) en espace",
     "commonMistakes":  [
-                           "Coder seulement les exemples visibles",
-                           "Présenter une étape manuelle ou cloud comme une validation automatique",
-                           "Masquer une valeur invalide ou supprimer une garde de sécurité"
+                           "Autoriser un coût dans le budget alors qu'aucun plan de suppression n'existe",
+                           "Refuser un coût exactement égal au budget",
+                           "Évaluer le budget avant le plan de suppression et masquer la condition oubliée",
+                           "Accepter un budget nul, qui ne borne rien"
                        ],
     "variantId":  "azure-release-evidence-001",
     "reviewCards":  [

@@ -28,13 +28,18 @@ public sealed class ContentS21S24CoverageTests
             id => Assert.StartsWith("azure-", id.GetString(), StringComparison.Ordinal));
 
         Assert.Equal(70, Directory.GetFiles(Path.Combine(CatalogRoot, "curriculum", "lessons"), "lesson.json", SearchOption.AllDirectories).Length);
-        Assert.Equal(135, Directory.GetFiles(Path.Combine(CatalogRoot, "exercises"), "exercise.json", SearchOption.AllDirectories).Length);
+        Assert.Equal(142, Directory.GetFiles(Path.Combine(CatalogRoot, "exercises"), "exercise.json", SearchOption.AllDirectories).Length);
         Assert.Equal(25, Directory.GetFiles(Path.Combine(CatalogRoot, "debugging"), "scenario.json", SearchOption.AllDirectories).Length);
-        Assert.Equal(190, Directory.GetFiles(Path.Combine(CatalogRoot, "interviews"), "*.json", SearchOption.TopDirectoryOnly).Length);
+        Assert.Equal(197, Directory.GetFiles(Path.Combine(CatalogRoot, "interviews"), "*.json", SearchOption.TopDirectoryOnly).Length);
         Assert.Equal(51, Directory.GetFiles(Path.Combine(CatalogRoot, "english"), "*.json", SearchOption.TopDirectoryOnly).Length);
-        Assert.Equal(9, Directory.GetFiles(Path.Combine(CatalogRoot, "projects"), "*.json", SearchOption.TopDirectoryOnly).Length);
+        // Un projet porte désormais un dossier, comme un exercice : son manifeste s'appelle
+        // project.json et ses suites d'acceptation vivent à côté.
+        Assert.Equal(9, Directory.GetDirectories(Path.Combine(CatalogRoot, "projects")).Length);
         Assert.Equal(8, Directory.GetFiles(Path.Combine(ContentRoot, "exams"), "exam.json", SearchOption.AllDirectories).Length);
-        Assert.Equal(2_014, Directory.GetFiles(CatalogRoot, "*", SearchOption.AllDirectories).Length);
+        // La banque de cartes de révision ajoute un fichier au catalogue : c'est la seule source
+        // de rétention espacée qui survive à l'expiration des preuves du bilan d'entrée.
+        Assert.Single(Directory.GetFiles(Path.Combine(CatalogRoot, "reviews"), "*.json", SearchOption.TopDirectoryOnly));
+        Assert.Equal(2_129, Directory.GetFiles(CatalogRoot, "*", SearchOption.AllDirectories).Length);
     }
 
     [Fact]
@@ -53,8 +58,23 @@ public sealed class ContentS21S24CoverageTests
                 .Select(hint => hint.GetProperty("level").GetInt32()).ToArray());
             Assert.Contains(root.GetProperty("variantId").GetString()!, ids);
             Assert.StartsWith("interview-azure-", root.GetProperty("interviewQuestionId").GetString(), StringComparison.Ordinal);
-            Assert.Equal(2, Read(Path.Combine(directory, "tests", "visible", "cases.json")).RootElement.GetProperty("cases").GetArrayLength());
-            Assert.Equal(2, Read(Path.Combine(directory, "tests", "hidden", "cases.json")).RootElement.GetProperty("cases").GetArrayLength());
+            // Contrat de CONTENT_AUTHORING_STANDARD : trois cas visibles et quatre cachés, sauf
+            // lorsque tous les paramètres sont booléens — le domaine ne compte alors que deux
+            // puissance n entrées, et les couvrir toutes vaut mieux que de répéter des arguments.
+            int visible = Read(Path.Combine(directory, "tests", "visible", "cases.json"))
+                .RootElement.GetProperty("cases").GetArrayLength();
+            int hidden = Read(Path.Combine(directory, "tests", "hidden", "cases.json"))
+                .RootElement.GetProperty("cases").GetArrayLength();
+            string[] parameterTypes = Read(Path.Combine(directory, "tests", "runner.json"))
+                .RootElement.GetProperty("parameterTypes").EnumerateArray()
+                .Select(type => type.GetString()!).ToArray();
+            bool booleanDomain = parameterTypes.Length > 0
+                && parameterTypes.All(type => string.Equals(type, "bool", StringComparison.Ordinal));
+
+            Assert.True(
+                (visible >= 3 && hidden >= 4)
+                || (booleanDomain && visible + hidden >= 1 << parameterTypes.Length),
+                $"{id} : couverture insuffisante ({visible} visibles, {hidden} cachés).");
             Assert.Contains("NotImplementedException", File.ReadAllText(Path.Combine(directory, "starter", "Submission.cs")), StringComparison.Ordinal);
             Assert.DoesNotContain("NotImplementedException", File.ReadAllText(Path.Combine(directory, "solution", "Submission.cs")), StringComparison.Ordinal);
         }
@@ -65,9 +85,9 @@ public sealed class ContentS21S24CoverageTests
     {
         JsonElement[] interviews = Directory.GetFiles(Path.Combine(CatalogRoot, "interviews"), "*.json")
             .Select(path => Read(path).RootElement.Clone()).ToArray();
-        Assert.Equal(120, interviews.Count(item => item.GetProperty("level").GetString() == "junior"));
-        Assert.Equal(50, interviews.Count(item => item.GetProperty("level").GetString() == "intermediate"));
-        Assert.Equal(20, interviews.Count(item => item.GetProperty("level").GetString() == "advanced"));
+        Assert.Equal(123, interviews.Count(item => item.GetProperty("level").GetString() == "junior"));
+        Assert.Equal(53, interviews.Count(item => item.GetProperty("level").GetString() == "intermediate"));
+        Assert.Equal(21, interviews.Count(item => item.GetProperty("level").GetString() == "advanced"));
         JsonElement[] newInterviews = interviews.Where(item =>
             item.GetProperty("id").GetString()!.StartsWith("interview-s21-s24-", StringComparison.Ordinal)
             || item.GetProperty("id").GetString()!.StartsWith("interview-azure-", StringComparison.Ordinal)).ToArray();
@@ -93,7 +113,8 @@ public sealed class ContentS21S24CoverageTests
     public void FinalProjectIsGuidedButNeverSuppliedAndItsRubricIsComplete()
     {
         const string id = "project-final-service-operations-001";
-        string manifestPath = Path.Combine(CatalogRoot, "projects", $"{id}.json");
+        string projectDirectory = Path.Combine(CatalogRoot, "projects", id);
+        string manifestPath = Path.Combine(projectDirectory, "project.json");
         using JsonDocument project = Read(manifestPath);
         JsonElement root = project.RootElement;
 
@@ -106,8 +127,12 @@ public sealed class ContentS21S24CoverageTests
             Assert.False(string.IsNullOrWhiteSpace(milestone.GetProperty("evidence").GetString()));
             Assert.True(milestone.GetProperty("acceptanceCriteria").GetArrayLength() >= 3);
         });
-        Assert.Empty(Directory.GetDirectories(Path.Combine(CatalogRoot, "projects"), $"{id}*"));
-        string brief = File.ReadAllText(Path.Combine(CatalogRoot, "projects", root.GetProperty("briefPath").GetString()!));
+        // Le projet final reste guidé sans être fourni : ni squelette, ni corrigé, ni suite
+        // d'acceptation qui dicterait sa forme. C'est une soutenance, pas un exercice long.
+        Assert.False(Directory.Exists(Path.Combine(projectDirectory, "starter")));
+        Assert.False(Directory.Exists(Path.Combine(projectDirectory, "solution")));
+        Assert.False(root.TryGetProperty("acceptanceSuites", out _));
+        string brief = File.ReadAllText(Path.Combine(projectDirectory, root.GetProperty("briefPath").GetString()!));
         Assert.Contains("Aucun squelette métier", brief, StringComparison.Ordinal);
         Assert.Contains("mode simulé", brief, StringComparison.OrdinalIgnoreCase);
         Assert.DoesNotContain("public static class Submission", brief, StringComparison.Ordinal);

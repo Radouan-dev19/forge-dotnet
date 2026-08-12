@@ -10,6 +10,26 @@ public sealed class ReviewSchedulingTests
     private static readonly TimeZoneInfo Paris = TimeZoneInfo.FindSystemTimeZoneById("Europe/Paris");
     private static readonly Guid ProfileId = Guid.Parse("aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee");
 
+    /// <summary>
+    /// Borne l'élargissement des sources admissibles à la rétention espacée.
+    /// </summary>
+    /// <remarks>
+    /// L'éligibilité était verrouillée sur la seule question ratée du bilan d'entrée, ce qui rendait
+    /// la composante inalimentable dès que ces preuves expiraient. Les cartes d'exercice l'ont
+    /// rejointe ; aucune autre source ne doit suivre sans décision explicite.
+    /// </remarks>
+    [Theory]
+    [InlineData(ReviewSourceKind.MissedDiagnosticQuestion, true)]
+    [InlineData(ReviewSourceKind.ExerciseReviewCard, true)]
+    [InlineData(ReviewSourceKind.PracticeError, false)]
+    [InlineData(ReviewSourceKind.DebuggingBug, false)]
+    [InlineData(ReviewSourceKind.SqlError, false)]
+    [InlineData(ReviewSourceKind.ExamFailure, false)]
+    [InlineData(ReviewSourceKind.SolutionViewed, false)]
+    [InlineData(ReviewSourceKind.Personal, false)]
+    public void OnlyServerCorrectedSourcesProduceMasteryEvidence(ReviewSourceKind kind, bool expected) =>
+        Assert.Equal(expected, ReviewRules.ProducesMasteryEvidence(kind));
+
     [Fact]
     public void GeneralSuccessesFollowEveryDocumentedInterval()
     {

@@ -30,8 +30,12 @@
     "timeoutSeconds":  5,
     "maxRows":  20,
     "effectAssertions":  [
-                             "Les quatre clients, cinq commandes et six lignes restent inchangés après rollback"
+                             "Seules les colonnes projetées sont retournées et le statut des commandes payées reste inchangé"
                          ],
     "solutionPath":  "solution.md",
+    "reviewCards": [
+        "card-sql-covering-read-001-rule",
+        "card-sql-covering-read-001-edge"
+    ],
     "license":  "CC-BY-4.0"
 }

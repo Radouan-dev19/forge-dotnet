@@ -2,7 +2,7 @@
     "schemaVersion":  1,
     "id":  "debug-queue-window-001",
     "version":  1,
-    "title":  "Fenêtre qui oublie le sortant",
+    "title":  "Total de fin de période qui inclut toute l'année",
     "difficulty":  3,
     "skills":  [
                    "debugging.data"
@@ -13,17 +13,18 @@
     "estimatedMinutes":  40,
     "brokenRepositoryPath":  "broken/",
     "ticketPath":  "ticket.md",
-    "expectedBehavior":  "Le résultat doit respecter tous les cas du contrat sans mutation cachée. Le calcul additionne toute l’historique au lieu de la fenêtre finale.",
+    "expectedBehavior":  "Le total porte sur les dernières périodes demandées, et sur l'historique entier lorsque la fenêtre le dépasse. Une fenêtre nulle ou négative donne zéro. L'historique reçu n'est jamais modifié.",
     "logsPath":  "logs.txt",
     "checklist":  [
-                      "Reproduire avec le cas de borne",
-                      "Placer un breakpoint avant la divergence",
-                      "Comparer entrée et valeur intermédiaire",
-                      "Ajouter le cas de non-régression"
+                      "Reproduire avec un historique de trois périodes et une fenêtre de deux",
+                      "Observer la première période effectivement additionnée",
+                      "Comparer le nombre de périodes additionnées à la fenêtre demandée",
+                      "Vérifier le comportement lorsque la fenêtre dépasse l'historique"
                   ],
     "observationQuestions":  [
-                                 "Quelle est la première valeur qui diverge du résultat prédit ?",
-                                 "Quelle condition ou mutation explique causalement ce symptôme ?"
+                                 "À partir de quelle période l'addition commence-t-elle réellement ?",
+                                 "La taille de fenêtre demandée influence-t-elle le parcours observé ?",
+                                 "Pourquoi le symptôme disparaît-il quand la fenêtre dépasse l'historique ?"
                              ],
     "correctionPath":  "correction/",
     "regressionTestPath":  "regression-test.md",

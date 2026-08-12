@@ -28,6 +28,14 @@ internal static class SqlLabTemplate
             (3, N'Linus', 40.25, '2026-01-12T14:15:00');
         """;
 
+    /// <summary>
+    /// Base de démonstration du laboratoire, servie lorsqu'aucun scénario publié n'est demandé.
+    /// </summary>
+    public static SqlLabProvisioning ReferenceProvisioning { get; } = SqlLabProvisioning.Create(
+        "sql-lab-reference-001",
+        SchemaAndDatasetSql,
+        VisibleSchema);
+
     public static SqlLabLimits CreateLimits(SqlLabOptions options) => new(
         options.QueryTimeoutSeconds,
         options.MaximumRows,

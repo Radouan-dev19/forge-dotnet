@@ -1,0 +1,6 @@
+{
+  "schemaVersion": 1,
+  "description": "Registre de la dette \u00E9ditoriale h\u00E9rit\u00E9e du g\u00E9n\u00E9rateur de contenu. Chaque ligne tol\u00E8re un d\u00E9faut d\u0027authenticit\u00E9 pr\u00E9cis sur un document pr\u00E9cis. Un d\u00E9faut non d\u00E9clar\u00E9 refuse le lot, et une d\u00E9claration devenue inutile le refuse aussi : la dette ne peut donc que d\u00E9cro\u00EEtre. R\u00E9g\u00E9n\u00E9rer avec --emit-content-debt.",
+  "entryCount": 0,
+  "entries": []
+}

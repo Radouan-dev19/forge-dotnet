@@ -20,8 +20,8 @@
                     ],
     "examples":  [
                      {
-                         "input":  "[{\"value\":[\" ada \"],\"Count\":1},\"ADA\"]",
-                         "output":  "[{\"value\":[\"\"],\"Count\":1},\"(inconnu)\"]"
+                         "input":  "[\" ada \"]",
+                         "output":  "\"ADA\""
                      }
                  ],
     "reflectionFields":  [
@@ -54,7 +54,7 @@
                   {
                       "level":  4,
                       "kind":  "partial-pseudocode",
-                      "content":  "valider les bornes ; parcourir ou décider ; retourner un nouveau résultat déterministe"
+                      "content":  "si name est absent ou uniquement composé de blancs retourner le repli annoncé ; sinon retirer les blancs de bordure, puis passer en majuscules avec la culture invariante"
                   }
               ],
     "solution":  {
@@ -67,9 +67,10 @@
     "explanation":  "explanation.md",
     "complexity":  "O(n) en temps et O(n) en espace",
     "commonMistakes":  [
-                           "Coder uniquement les exemples visibles",
-                           "Oublier une borne ou modifier une entrée",
-                           "Annoncer une complexité sans compter les opérations dominantes"
+                           "Déréférencer name avant d'avoir traité son absence",
+                           "Accepter une chaîne de blancs comme un nom valide et retourner une chaîne vide",
+                           "Employer la casse de la culture courante, dont le résultat dépend de la machine",
+                           "Passer en majuscules avant de retirer les blancs, ce qui les laisse en bordure"
                        ],
     "variantId":  "csharp-order-status-001",
     "reviewCards":  [

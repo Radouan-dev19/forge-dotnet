@@ -9,6 +9,19 @@ public enum CodeRunnerMode
     Docker,
 }
 
+/// <summary>
+/// Mode réellement configuré pour cette installation, exposé à l'interface.
+/// </summary>
+/// <remarks>
+/// Une énumération ne peut pas être enregistrée telle quelle dans le conteneur, et l'interface doit
+/// pouvoir décrire l'installation exécutée plutôt qu'un mode supposé : la page Pratique affirmait
+/// qu'aucun code n'était jamais exécuté, ce qui est faux d'une installation avec runner Docker.
+/// </remarks>
+public sealed record CodeRunnerModeDescriptor(CodeRunnerMode Mode)
+{
+    public bool IsManual => Mode == CodeRunnerMode.Manual;
+}
+
 public static class CodeRunnerModeParser
 {
     public static CodeRunnerMode Parse(string? configuredValue)

@@ -83,7 +83,7 @@ public static class ReviewRules
         DateOnly nextDue = answeredOn.AddDays(nextInterval);
         bool masteryEligible = verified
             && item.Card.CanProduceMasteryEvidence
-            && item.Source.Kind == ReviewSourceKind.MissedDiagnosticQuestion
+            && ProducesMasteryEvidence(item.Source.Kind)
             && item.Card.EvaluationMode == ReviewEvaluationMode.Choice;
         decimal score = outcome == ReviewOutcome.Succeeded ? 100m : 0m;
         string fingerprint = Fingerprint(answer);
@@ -128,6 +128,27 @@ public static class ReviewRules
 
         return intervals[item.CurrentIntervalIndex];
     }
+
+    /// <summary>
+    /// Sources dont une réponse peut alimenter la composante de rétention espacée.
+    /// </summary>
+    /// <remarks>
+    /// La liste était réduite à la seule question ratée du bilan d'entrée. Ce bilan compte
+    /// trente-six questions passées une seule fois, et toute preuve expire au terme fixé par la
+    /// politique de maîtrise : la composante devenait inalimentable pour tout le monde au bout de ce
+    /// délai, et dès le départ pour qui avait répondu juste. Son poids n'étant jamais redistribué,
+    /// le score d'un domaine plafonnait alors sous le seuil critique quel que soit le travail fourni.
+    ///
+    /// Les cartes d'exercice rejoignent donc la liste. Les garanties restent les mêmes pour toutes
+    /// les sources : correction serveur (<c>verified</c>), mode à choix, et carte déclarant
+    /// explicitement pouvoir produire une preuve. Aucun seuil n'est abaissé.
+    /// </remarks>
+    public static bool ProducesMasteryEvidence(ReviewSourceKind kind) => kind switch
+    {
+        ReviewSourceKind.MissedDiagnosticQuestion => true,
+        ReviewSourceKind.ExerciseReviewCard => true,
+        _ => false,
+    };
 
     private static (ReviewOutcome Outcome, bool Verified) Evaluate(ReviewCard card, ReviewAnswer answer)
     {

@@ -20,6 +20,13 @@
                       "expected":  0,
                       "expectedException":  null,
                       "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Visible_SingleEvent",
+                      "message":  "Un seul événement, sans séparateur.",
+                      "arguments":  ["A"],
+                      "expected":  1,
+                      "argumentsUnchanged":  true
                   }
               ]
 }

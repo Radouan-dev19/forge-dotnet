@@ -15,13 +15,13 @@
     "statement":  "statement.md",
     "constraints":  [
                         "Conserver exactement la signature publique",
-                        "Appliquer un backoff déterministe borné sans attente réelle dans l’exercice.",
-                        "Ne pas modifier les entrées reçues sauf mention explicite"
+                        "Appliquer un report exponentiel déterministe et borné, sans attente réelle.",
+                        "N'attendre réellement à aucun moment : seul le délai est calculé"
                     ],
     "examples":  [
                      {
-                         "input":  "[{\"value\":[0],\"Count\":1},100]",
-                         "output":  "[{\"value\":[3],\"Count\":1},800]"
+                         "input":  "[0]",
+                         "output":  "100"
                      }
                  ],
     "reflectionFields":  [
@@ -54,7 +54,7 @@
                   {
                       "level":  4,
                       "kind":  "partial-pseudocode",
-                      "content":  "valider les bornes ; parcourir ou décider ; retourner un nouveau résultat déterministe"
+                      "content":  "refuser un numéro de tentative négatif ; plafonner l'exposant au maximum prévu ; produire le délai en multipliant la base par deux élevé à cet exposant, sans jamais attendre réellement"
                   }
               ],
     "solution":  {
@@ -67,9 +67,10 @@
     "explanation":  "explanation.md",
     "complexity":  "O(1) en temps et O(1) en espace",
     "commonMistakes":  [
-                           "Coder uniquement les exemples visibles",
-                           "Oublier une borne ou modifier une entrée",
-                           "Annoncer une complexité sans compter les opérations dominantes"
+                           "Laisser l'exposant croître sans plafond et produire un délai qui déborde",
+                           "Attendre réellement dans la fonction et rendre le test lent et non reproductible",
+                           "Retourner un délai nul pour la première tentative alors que la base s'applique",
+                           "Accepter un numéro de tentative négatif"
                        ],
     "variantId":  "debug-median-001",
     "reviewCards":  [

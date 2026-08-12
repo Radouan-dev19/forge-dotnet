@@ -35,6 +35,13 @@
                                    ],
                       "expectedException":  null,
                       "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Visible_WindowEqualsLength",
+                      "message":  "Fenêtre égale à la longueur : une seule somme, celle du tout.",
+                      "arguments":  [[1,2,3],3],
+                      "expected":  [6],
+                      "argumentsUnchanged":  true
                   }
               ]
 }

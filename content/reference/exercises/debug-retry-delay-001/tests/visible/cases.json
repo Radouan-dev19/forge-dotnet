@@ -20,6 +20,13 @@
                       "expected":  800,
                       "expectedException":  null,
                       "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Visible_AtCap",
+                      "message":  "Tentative exactement au plafond d'exposant : le délai est déjà maximal.",
+                      "arguments":  [5],
+                      "expected":  3200,
+                      "argumentsUnchanged":  true
                   }
               ]
 }

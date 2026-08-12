@@ -30,8 +30,12 @@
     "timeoutSeconds":  5,
     "maxRows":  20,
     "effectAssertions":  [
-                             "Les quatre clients, cinq commandes et six lignes restent inchangés après rollback"
+                             "Les commandes du client ciblé sont lues sans être modifiées et aucune autre commande n'entre dans le résultat"
                          ],
     "solutionPath":  "solution.md",
+    "reviewCards": [
+        "card-sql-composite-access-001-rule",
+        "card-sql-composite-access-001-edge"
+    ],
     "license":  "CC-BY-4.0"
 }

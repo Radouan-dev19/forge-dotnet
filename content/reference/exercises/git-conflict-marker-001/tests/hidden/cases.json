@@ -20,6 +20,20 @@
                       "expected":  false,
                       "expectedException":  null,
                       "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_NullText",
+                      "message":  "Texte absent : aucun conflit, sans exception.",
+                      "arguments":  [null],
+                      "expected":  false,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_TooFewChevrons",
+                      "message":  "Six chevrons au lieu de sept : ce n'est pas un marqueur.",
+                      "arguments":  ["\u003C\u003C\u003C\u003C\u003C\u003C HEAD"],
+                      "expected":  false,
+                      "argumentsUnchanged":  true
                   }
               ]
 }

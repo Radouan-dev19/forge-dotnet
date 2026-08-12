@@ -20,6 +20,13 @@
                       "expected":  "(inconnu)",
                       "expectedException":  null,
                       "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Visible_NoTrimNeeded",
+                      "message":  "Nom déjà propre : seule la casse change.",
+                      "arguments":  ["ada"],
+                      "expected":  "ADA",
+                      "argumentsUnchanged":  true
                   }
               ]
 }

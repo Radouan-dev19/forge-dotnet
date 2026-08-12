@@ -30,8 +30,12 @@
     "timeoutSeconds":  5,
     "maxRows":  20,
     "effectAssertions":  [
-                             "Les quatre clients, cinq commandes et six lignes restent inchangés après rollback"
+                             "Tous les clients apparaissent, ceux sans commande à zéro, et aucune commande n'est créée pour les compléter"
                          ],
     "solutionPath":  "solution.md",
+    "reviewCards": [
+        "card-sql-customer-order-count-001-rule",
+        "card-sql-customer-order-count-001-edge"
+    ],
     "license":  "CC-BY-4.0"
 }

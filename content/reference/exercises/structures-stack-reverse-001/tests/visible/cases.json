@@ -20,6 +20,13 @@
                       "expected":  "",
                       "expectedException":  null,
                       "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Visible_SingleCharacter",
+                      "message":  "Un seul caractère : l'inversion est l'identité.",
+                      "arguments":  ["a"],
+                      "expected":  "a",
+                      "argumentsUnchanged":  true
                   }
               ]
 }

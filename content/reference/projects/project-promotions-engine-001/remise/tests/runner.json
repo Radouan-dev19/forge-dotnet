@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "suiteId": "project-promotions-engine-001.remise.v2",
+  "exerciseId": "project-promotions-engine-001.remise",
+  "exerciseVersion": 2,
+  "typeName": "Submission",
+  "methodName": "BestDiscount",
+  "parameterTypes": ["decimal", "int", "bool"],
+  "returnType": "decimal"
+}
