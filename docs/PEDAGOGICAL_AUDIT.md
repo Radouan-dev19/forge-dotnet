@@ -403,18 +403,49 @@ il échouait sur six domaines ; il est vert.
 - **L'explication**, 10 % du score : aucune preuve serveur honnête n'existe pour cette composante.
   Son poids est perdu, ce qui fixe le plafond général à 90 — au-dessus des seuils, mais dit.
 - **Les portes B, C et D** : leurs vingt et une exigences n'ont aucun producteur. Elles sont
-  désormais visibles et comptées, elles ne sont pas satisfaites.
+  désormais visibles, comptées **et diagnostiquées**, mais toujours pas satisfaites.
+
+  L'inventaire de `ProjectAchievementTests` porte maintenant, pour chaque clé, ce qui lui manque :
+  **quinze** attendent un livrable vérifié côté serveur, **six** exigent un jugement humain et ne
+  descendront jamais par du code — Git propre, présentation, entretien blanc, architecture pragmatique,
+  anglais, défense finale. Trois cas de test prouvent que le blocage est total porte par porte, et non
+  le fait d'une exigence isolée.
+
+  La reprise a cherché quelle clé pouvait être branchée sur une preuve déjà collectée. Réponse
+  mesurée : **aucune**. Le candidat le plus crédible, « EF Core », a été instrumenté puis retiré après
+  vérification : `FileSystemSqlScenarioSource` n'expose que le mode de contrat `sql`, or les cinq
+  scénarios `ef-*` déclarent le mode `ef` et sont donc absents du laboratoire ; et un scénario EF n'est
+  tirable en examen que s'il porte un dossier `exam/`, que **trois des cinq n'ont pas**. Aucun chemin du
+  produit ne permet de valider les cinq. Livrer ce producteur aurait fait descendre le plafond de clés
+  sans producteur sans rien débloquer — le faux signal exact que ce cliquet existe pour empêcher.
+  `EfScenarioReachabilityTests` fige le diagnostic.
+
+  Fait à retenir pour l'audit lui-même : trois scénarios de contenu publiés, validés par le validateur
+  et comptés dans les volumes sont **inatteignables par tout chemin d'apprenant**. Le validateur
+  contrôle la structure d'un document, jamais son accessibilité depuis le produit. C'est le même angle
+  mort que celui relevé sur les laboratoires.
 - Les domaines non critiques encore découverts, dont le seuil de 80 reste franchissable sans
   rétention : intégration continue, architecture, Docker et anglais, soit 20 exercices.
-- Volume de pratique en S11–S24 : **4,1** exercices par semaine contre 8,8 en S1–S10, après le lot 1
-  de la reprise décrite dans `ROADMAP.md`. Les semaines S11 à S17 sont passées de 5,1 à **6,0** ; la
-  cible de huit par semaine demande quatorze exercices de plus. La reprise des échelles d'indices,
-  elle, améliorait la qualité de la boucle et non son volume.
+- Volume de pratique en S11–S24 : **5,4** exercices par semaine contre 8,8 en S1–S10, après le lot 1
+  de la reprise décrite dans `ROADMAP.md`, le lot JWT de S14, le lot OAuth/OIDC de S21 et le lot
+  REST de S11–S13. Les semaines S11 à S14 atteignent désormais la cible de huit — S11 à S13 à dix
+  exercices depuis le lot REST, S14 à douze depuis le lot JWT ; restent S15 à S17, encore à six.
+  S21 monte à sept exercices. La reprise des échelles d'indices, elle, améliorait la qualité de la
+  boucle et non son volume.
+- Manques REST comblés (T10) : versionnage, ETag et concurrence conditionnelle, limitation de débit,
+  Cache-Control, CORS et webhooks ont chacun leur leçon et deux exercices en S11–S13. Le lien entre
+  l'ETag conditionnel et la concurrence optimiste des bases — `sql-isolation-001`,
+  `ef-core-data-access-001` — est rendu explicite, et les webhooks réutilisent la vérification de
+  signature HMAC du lot jetons. Restent hors périmètre les fondamentaux distribués (T11) et le
+  front-end (T12).
 - Forme des activités S19–S22 : les exercices `docker-*`, `ci-*` et `azure-*` sont des fonctions
   pures sur un domaine d'entrée de quelques valeurs. Ils entraînent la décision et non le geste, et un
   domaine aussi étroit se résout par une table de correspondance mémorisée. La pratique réelle de ces
-  sujets passe par les six laboratoires de `content/labs/`, dont aucun n'est encore rattaché au
-  parcours public.
+  sujets passe par les huit laboratoires de `content/labs/`, longtemps invisibles du parcours et
+  désormais servis par les pages `/labs` : chaque manifeste `lab.json` est validé au démarrage, chaque
+  page annonce que la réussite est déclarée par l'apprenant, hors du bac à sable, et ne produit aucune
+  preuve de maîtrise. Le rattachement rend les laboratoires trouvables ; il ne change pas la forme des
+  exercices, qui reste le défaut relevé ici.
 - ~~Dédoublonnage des 190 fiches d'entretien — 190 questions distinctes mais 29 critères observables
   seulement — et des 50 cartes d'anglais.~~ **Clos** : 401 critères et 204 erreurs fréquentes
   distincts sur les 197 fiches, 51 consignes et 51 réponses distinctes sur les cartes d'anglais, et
@@ -426,7 +457,7 @@ il échouait sur six domaines ; il est vert.
 - Les tests d'intégration dépendant de Docker n'ont pas pu s'exécuter, comme lors de l'audit
   initial : 76 échecs, tous dans des classes qui exigent un démon Docker ou le secret SqlLab,
   lui-même produit par `scripts/start-sql-lab.ps1`, qui exige Docker. Aucune conclusion nouvelle
-  n'est tirée sur leur résultat. Les 415 autres tests d'intégration, 147 tests unitaires et 44 tests
+  n'est tirée sur leur résultat. Les 437 autres tests d'intégration, 156 tests unitaires et 56 tests
   de bout en bout sont verts, et `dotnet format --verify-no-changes` ne signale aucun écart.
 - **Le trajet réel d'une soumission de projet n'a pas pu être exécuté** : éditeur → conteneur →
   suites → accomplissement exige un démon Docker et un navigateur, absents ici. Le producteur est

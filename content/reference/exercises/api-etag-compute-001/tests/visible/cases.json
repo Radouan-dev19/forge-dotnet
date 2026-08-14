@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "cases": [
+    {
+      "name": "Visible_KnownRepresentation",
+      "message": "Empreinte forte d'une représentation.",
+      "arguments": [
+        "{\"id\":42,\"status\":\"paid\"}"
+      ],
+      "expected": "\"52f7a7f3bcdd056ac42991ae129a221b226c1bc0c035f6c4c0e1975395689a08\"",
+      "expectedException": null,
+      "argumentsUnchanged": false
+    },
+    {
+      "name": "Visible_DifferentContent",
+      "message": "Un caractère de différence, empreinte différente.",
+      "arguments": [
+        "{\"id\":42,\"status\":\"open\"}"
+      ],
+      "expected": "\"21469739e7afd84a3522ac401b5df14337dc2d7f0ea443eee9bee83417590a61\"",
+      "expectedException": null,
+      "argumentsUnchanged": false
+    },
+    {
+      "name": "Visible_OtherResource",
+      "message": "Une autre représentation, une autre empreinte.",
+      "arguments": [
+        "{\"id\":7,\"lines\":3}"
+      ],
+      "expected": "\"45012a83fd071da0db82ad99d163cdd3f99b2280ea4988aa9efbc013d9122d31\"",
+      "expectedException": null,
+      "argumentsUnchanged": false
+    }
+  ]
+}

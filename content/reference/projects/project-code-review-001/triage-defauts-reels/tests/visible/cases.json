@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "cases": [
+    {
+      "name": "Visible_MissingNullCheckIsBlockingCorrectness",
+      "message": "Un oubli de controle de nullite casse la correction : blocking:correctness.",
+      "arguments": ["missing-null-check"],
+      "expected": "blocking:correctness",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Visible_OffByOneIsBlockingCorrectness",
+      "message": "Un depassement d'indice casse la correction : blocking:correctness.",
+      "arguments": ["off-by-one"],
+      "expected": "blocking:correctness",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Visible_SqlInjectionIsBlockingSecurity",
+      "message": "Une injection SQL ouvre une breche : blocking:security.",
+      "arguments": ["sql-injection"],
+      "expected": "blocking:security",
+      "argumentsUnchanged": true
+    }
+  ]
+}

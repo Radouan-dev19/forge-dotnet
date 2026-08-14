@@ -1,0 +1,43 @@
+{
+  "schemaVersion": 1,
+  "id": "git-review",
+  "version": 1,
+  "title": "Conflit réel, résolu puis relu",
+  "weeks": [18],
+  "skills": ["git.conflicts", "quality.review"],
+  "recommendedBefore": ["git-branches-conflicts-001", "quality-review-diffs-001"],
+  "estimatedMinutes": 90,
+  "briefPath": "README.md",
+  "objectives": [
+    {
+      "id": "provoke-a-real-conflict",
+      "goal": "Provoquer un conflit véritable dans un dépôt jetable, plutôt que d'en lire la description dans un cours.",
+      "observableProof": "Le script montre les trois marqueurs dans le fichier en conflit avant toute résolution."
+    },
+    {
+      "id": "resolve-without-losing-intent",
+      "goal": "Résoudre en conservant les deux exigences qui s'affrontent, au lieu de choisir un côté pour faire disparaître le marqueur.",
+      "observableProof": "L'historique final contient les deux comportements attendus, vérifiés après résolution."
+    },
+    {
+      "id": "grade-a-diff",
+      "goal": "Relire un diff avec une grille fixée d'avance et classer chaque remarque selon ce qu'elle bloque.",
+      "observableProof": "Chaque remarque produite porte l'une des quatre catégories, et une suggestion de style n'est jamais classée bloquante."
+    }
+  ],
+  "commands": [
+    {
+      "shell": "powershell",
+      "command": "powershell -ExecutionPolicy Bypass -File content/labs/git-review/verify-conflict.ps1",
+      "purpose": "Crée un dépôt temporaire, provoque le conflit, prouve les marqueurs puis valide l'historique résolu."
+    }
+  ],
+  "limits": [
+    "Le dépôt manipulé est temporaire et détruit à la fin : aucun dépôt de travail n'est touché, donc rien n'y est dit d'un conflit sur une branche partagée.",
+    "La grille de revue s'applique à la main. Personne ne conteste votre classement, ce qu'un relecteur humain ferait."
+  ],
+  "evidencePolicy": "learner-declared-outside-sandbox",
+  "requiresDocker": false,
+  "requiresNetwork": false,
+  "license": "CC-BY-4.0"
+}

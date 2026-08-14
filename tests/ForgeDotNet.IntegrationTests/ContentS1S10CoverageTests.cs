@@ -70,12 +70,24 @@ public sealed class ContentS1S10CoverageTests
                 Path.Combine(catalog, "curriculum", "lessons"), "lesson.json", SearchOption.AllDirectories)
             .Where(path => Read(path).RootElement.GetProperty("week").GetInt32() <= 10)
             .ToArray();
+        // La piste senior (senior-*) vit dans son propre parcours forge-senior-reference, hors du
+        // socle S1–S10 : ses exercices ne sont pas comptes ici.
         string[] exercises = Directory.GetFiles(
                 Path.Combine(catalog, "exercises"), "exercise.json", SearchOption.AllDirectories)
-            .Where(path => !s11S20ExerciseIds.Contains(Path.GetFileName(Path.GetDirectoryName(path)!)))
+            .Where(path => !s11S20ExerciseIds.Contains(Path.GetFileName(Path.GetDirectoryName(path)!))
+                && !Path.GetFileName(Path.GetDirectoryName(path)!).StartsWith("senior-", StringComparison.Ordinal))
             .ToArray();
+        // Les scénarios de débogage des blocs front-end (front-*) et senior (senior-*) relèvent des
+        // semaines 25 et au-dela, pas du socle S1–S10 : ils sont comptes par leur propre bloc.
         string[] debug = Directory.GetFiles(
-            Path.Combine(catalog, "debugging"), "scenario.json", SearchOption.AllDirectories);
+                Path.Combine(catalog, "debugging"), "scenario.json", SearchOption.AllDirectories)
+            .Where(path =>
+            {
+                string id = Path.GetFileName(Path.GetDirectoryName(path)!);
+                return !id.StartsWith("front-", StringComparison.Ordinal)
+                    && !id.StartsWith("senior-", StringComparison.Ordinal);
+            })
+            .ToArray();
         string[] sql = Directory.GetFiles(Path.Combine(root, "sql"), "scenario.json", SearchOption.AllDirectories);
         string[] projects = Directory.GetFiles(Path.Combine(catalog, "projects"), "project.json", SearchOption.AllDirectories)
             .Where(path => Read(path).RootElement.GetProperty("weeks").EnumerateArray().Max(value => value.GetInt32()) <= 10)
@@ -86,12 +98,14 @@ public sealed class ContentS1S10CoverageTests
             {
                 string id = Read(path).RootElement.GetProperty("id").GetString()!;
                 return !s11S20InterviewIds.Contains(id)
-                    && !id.StartsWith("interview-s21-s24-", StringComparison.Ordinal);
+                    && !id.StartsWith("interview-s21-s24-", StringComparison.Ordinal)
+                    && !id.StartsWith("interview-senior-", StringComparison.Ordinal);
             })
             .ToArray();
         string[] exams = Directory.GetFiles(Path.Combine(root, "exams"), "exam.json", SearchOption.AllDirectories)
             .Where(path => Read(path).RootElement.GetProperty("id").GetString() is not
-                ("api-security-v1" or "tests-quality-v1" or "azure-observability-v1" or "final-readiness-v1"))
+                ("api-security-v1" or "tests-quality-v1" or "azure-observability-v1" or "final-readiness-v1"
+                    or "senior-readiness-v1"))
             .ToArray();
 
         Assert.Equal(30, lessons.Length);
@@ -196,6 +210,12 @@ public sealed class ContentS1S10CoverageTests
                 || (skill.GetString() ?? string.Empty).StartsWith("git.", StringComparison.Ordinal)
                 || (skill.GetString() ?? string.Empty).StartsWith("docker.", StringComparison.Ordinal)
                 || (skill.GetString() ?? string.Empty).StartsWith("ci.", StringComparison.Ordinal)))
+            .Where(path =>
+            {
+                string exerciseId = Path.GetFileName(Path.GetDirectoryName(path)!);
+                return !exerciseId.StartsWith("front-", StringComparison.Ordinal)
+                    && !exerciseId.StartsWith("senior-", StringComparison.Ordinal);
+            })
             .SelectMany(path => Directory.GetFiles(Path.GetDirectoryName(path)!, "*", SearchOption.AllDirectories))
             .ToArray();
         string[] s1S10ProjectFiles = Directory.GetFiles(Path.Combine(catalog, "projects"), "project.json", SearchOption.AllDirectories)
@@ -207,7 +227,9 @@ public sealed class ContentS1S10CoverageTests
         string[] inspected = s1S10LessonFiles
             .Concat(s1S10ExerciseFiles)
             .Concat(s1S10ProjectFiles)
-            .Concat(Directory.GetFiles(Path.Combine(catalog, "debugging"), "*", SearchOption.AllDirectories))
+            .Concat(Directory.GetFiles(Path.Combine(catalog, "debugging"), "*", SearchOption.AllDirectories)
+                .Where(path => !path.Replace('\\', '/').Contains("/debugging/front-", StringComparison.OrdinalIgnoreCase)
+                    && !path.Replace('\\', '/').Contains("/debugging/senior-", StringComparison.OrdinalIgnoreCase)))
             .Concat(Directory.GetFiles(Path.Combine(catalog, "english"), "*", SearchOption.AllDirectories))
             .Concat(Directory.GetFiles(Path.Combine(root, "sql"), "*", SearchOption.AllDirectories))
             .Where(path => Path.GetExtension(path) is ".md" or ".json" or ".sql")

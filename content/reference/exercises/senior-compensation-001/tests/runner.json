@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "suiteId": "senior-compensation-001.v1",
+  "exerciseId": "senior-compensation-001",
+  "exerciseVersion": 1,
+  "typeName": "Submission",
+  "methodName": "CompensationOrder",
+  "parameterTypes": ["string"],
+  "returnType": "string"
+}

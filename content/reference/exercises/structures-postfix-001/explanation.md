@@ -1,7 +1,38 @@
 # Explication
 
-Dépiler la droite puis la gauche, et limiter ce contrat pédagogique à l'addition et à la multiplication.
+La notation postfixée — les opérandes d'abord, l'opérateur ensuite — a une propriété qui
+explique sa longévité dans les machines virtuelles et les calculatrices : elle s'évalue sans
+parenthèses, sans priorités et sans regarder en avant, avec une pile pour toute mémoire.
+L'exercice fait construire cet évaluateur minimal, et sa seule vraie chausse-trape tient en deux
+lignes.
 
-L'ordre de dépilement porte la sémantique. Le dernier opérande empilé est celui de droite : le dépiler en premier est la seule façon de reconstituer l'expression. L'erreur ne se voit ni sur une addition ni sur une multiplication — elle attend une opération non commutative pour se manifester, c'est-à-dire hors du périmètre de cet exercice. La connaître compte plus que la subir ici.
+Le principe d'abord : chaque nombre rencontré s'empile ; chaque opérateur consomme les *deux
+derniers* nombres en attente, calcule, et rempile le résultat, qui redevient un opérande comme
+un autre. Cette uniformité — le résultat intermédiaire n'a aucun statut spécial — est ce qui
+rend l'évaluation composable : `2 3 + 4 *` déroule vingt sans qu'aucune priorité n'ait été
+consultée, parce que l'ordre des tokens *est* l'ordre d'évaluation. Comprendre cela, c'est
+comprendre pourquoi les compilateurs traduisent les expressions infixes vers cette forme avant
+de les exécuter.
 
-Le périmètre est volontairement réduit à deux opérateurs : un exercice qui annonce moins que ce qu'il traite reste utilisable, un qui prétend davantage induit en erreur. Le parcours est linéaire et la pile croît avec le nombre d'opérandes en attente.
+La chausse-trape maintenant : l'ordre du dépilage. Le sommet de la pile est le dernier nombre
+empilé, donc l'opérande *droit* — la solution dépile `right` puis `left`, dans cet ordre nommé.
+Avec l'addition et la multiplication, opérations commutatives, l'inversion serait invisible ;
+c'est exactement pour cela que le contrat le fixe et que la solution le commente — le jour où la
+soustraction entre au catalogue, `left - right` et `right - left` divergent, et l'évaluateur
+écrit avec les bons noms survit au changement quand l'autre produit des signes inversés. Écrire
+le code d'aujourd'hui avec les distinctions dont demain aura besoin, même quand elles sont
+encore indifférentes : c'est une forme d'honnêteté du nommage que l'exercice entraîne.
+
+Le contrat assume ses limites, et les nommer fait partie de la leçon : deux opérateurs
+seulement, des expressions bien formées — pas de garde contre la pile vide ni les tokens
+inconnus, un opérateur non reconnu tombant dans la branche de la multiplication. C'est un choix
+pédagogique annoncé dans l'énoncé, pas un oubli : l'évaluateur robuste — validation des tokens,
+arité vérifiée, message d'erreur positionné — est l'étape suivante naturelle, et savoir dire ce
+qui manque vaut autant que savoir l'écrire. Le `TryParse` sert déjà de trieur nombre-contre-
+opérateur, la forme sans exception du discernement de tokens ; les nombres négatifs en
+bénéficient au passage, `-3` étant un token analysable.
+
+Le coût est linéaire : chaque token est traité une fois, la pile monte et descend au rythme des
+opérandes en attente. La transposition dépasse l'arithmétique : files d'instructions, moteurs de
+règles, interpréteurs de filtres — partout où une expression doit s'évaluer sans analyseur
+syntaxique complet, la forme postfixée et sa pile restent l'outil le plus simple qui marche.

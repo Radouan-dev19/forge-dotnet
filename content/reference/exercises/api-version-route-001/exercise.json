@@ -1,0 +1,82 @@
+{
+    "schemaVersion":  1,
+    "id":  "api-version-route-001",
+    "version":  1,
+    "title":  "Résoudre la version d'une route",
+    "kind":  "csharp",
+    "difficulty":  3,
+    "skills":  [
+                   "api.contracts"
+               ],
+    "prerequisites":  [
+                          "api-versioning-001"
+                      ],
+    "estimatedMinutes":  35,
+    "statement":  "statement.md",
+    "constraints":  [
+                        "Conserver exactement la signature publique",
+                        "Un segment de version présent mais non pris en charge rend le verdict d'inexistence, jamais un repli silencieux",
+                        "L'absence de segment de version retombe sur la version par défaut fournie"
+                    ],
+    "examples":  [
+                     {
+                         "input":  "[\"/v2/orders/42\", \"v1,v2,v3\", \"v3\"]",
+                         "output":  "\"v2\""
+                     }
+                 ],
+    "reflectionFields":  [
+                             "reformulation",
+                             "inputs",
+                             "expectedOutput",
+                             "edgeCases",
+                             "hypothesis",
+                             "plan"
+                         ],
+    "starterPath":  "starter/",
+    "visibleTestsPath":  "tests/visible/",
+    "hiddenTestsPath":  "tests/hidden/",
+    "hints":  [
+                  {
+                      "level":  1,
+                      "kind":  "socratic",
+                      "content":  "Trois situations se distinguent : version absente, version présente et prise en charge, version présente mais inconnue — laquelle ne doit surtout pas se confondre avec un repli ?"
+                  },
+                  {
+                      "level":  2,
+                      "kind":  "location",
+                      "content":  "Isolez le premier segment du chemin, reconnaissez s'il porte la forme d'une version, puis décidez ; l'analyse du chemin et la décision sont deux étapes."
+                  },
+                  {
+                      "level":  3,
+                      "kind":  "strategy",
+                      "content":  "Un segment de version a une forme reconnaissable ; s'il l'a mais n'est pas dans la liste prise en charge, c'est une demande explicite d'une version qui n'existe pas, à distinguer de l'absence de demande."
+                  },
+                  {
+                      "level":  4,
+                      "kind":  "partial-pseudocode",
+                      "content":  "découper le chemin en segments non vides ; si le premier segment a la forme d'une version, le normaliser et le confronter à la liste prise en charge : rendre ce segment s'il y figure, sinon rendre le verdict d'inexistence ; si le premier segment n'a pas la forme d'une version, rendre la version par défaut"
+                  }
+              ],
+    "solution":  {
+                     "path":  "solution/",
+                     "unlock":  {
+                                    "seriousAttempts":  2,
+                                    "minimumDelayMinutes":  10
+                                }
+                 },
+    "explanation":  "explanation.md",
+    "complexity":  "O(n) en temps, n étant la longueur du chemin",
+    "commonMistakes":  [
+                           "Confondre une version demandée mais inconnue avec l'absence de version et servir la version par défaut",
+                           "Chercher le segment de version n'importe où dans le chemin plutôt qu'en tête",
+                           "Comparer les versions avec sensibilité à la casse et refuser V2 pour v2",
+                           "Traiter un chemin vide ou racine comme une erreur au lieu de rendre la version par défaut"
+                       ],
+    "variantId":  "api-version-change-001",
+    "reviewCards":  [
+                        "card-api-version-route-001-rule",
+                        "card-api-version-route-001-edge"
+                    ],
+    "interviewQuestionId":  "interview-api-version-route-001",
+    "license":  "CC-BY-4.0"
+}

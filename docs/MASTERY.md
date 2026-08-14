@@ -82,6 +82,35 @@ vérifiée automatiquement, et `IsVerifiedAchievement` rejette de toute façon `
 clés produites, soit parmi les **vingt et une** clés déclarées sans producteur, et ce dernier nombre
 ne peut que descendre.
 
+#### Diagnostic des vingt et une clés restantes
+
+L’inventaire ne se contente plus de compter : chaque clé sans producteur porte **ce qui lui manque et
+pourquoi**, et le test refuse une justification trop courte pour être actionnable. Le classement suit
+un principe unique — *un accomplissement ne s’attribue que sur une preuve qui exerce le même artefact
+que son intitulé nomme*. Les exercices `api-*`, `docker-*`, `ci-*` et `tests-*` sont des fonctions
+pures qui raisonnent **sur** leur sujet sans le pratiquer ; en tirer l’accomplissement correspondant
+fabriquerait le faux signal que cette politique existe pour empêcher.
+
+| Blocage | Clés | Ce qu’il faut |
+|---|---:|---|
+| Contenu vérifiable manquant | **15** | un livrable exécuté et vérifié côté serveur |
+| Jugement humain requis | **6** | rien de ce que du code peut produire |
+
+Les six clés du second groupe — Git propre, présentation de 10 minutes, entretien blanc, architecture
+pragmatique, anglais, défense finale — ne descendront jamais par du code. Les compter comme une dette
+technique conduirait à fabriquer une preuve automatique de ce qui ne s’automatise pas, par exemple un
+entretien noté par une suite de tests.
+
+**Une tentative écartée, et sa raison.** L’exigence « EF Core » paraissait branchable sur les
+validations du laboratoire SQL : cinq scénarios `ef-*` sont publiés, ils exécutent du vrai code EF Core
+et leur résultat est comparé côté serveur. La vérification a montré le contraire.
+`FileSystemSqlScenarioSource` n’expose que les scénarios dont le contrat déclare le mode `sql`, et les
+scénarios EF déclarent le mode `ef` : ils sont donc absents du laboratoire. Par ailleurs un scénario EF
+n’est tirable en examen que s’il porte un dossier `exam/`, et **trois des cinq n’en ont pas**. Aucun
+chemin du produit ne permet donc de valider les cinq, et l’exigence reste classée « contenu
+manquant ». `EfScenarioReachabilityTests` fige ce diagnostic pour que la prochaine tentative le trouve
+écrit au lieu de le redécouvrir.
+
 | Porte | Conditions cumulatives |
 |---|---|
 | A — Junior fiable | C# ≥85, débogage ≥80, SQL ≥75, 10 exercices vérifiés sans aide et non contaminés, mini-projet console vérifié, examen sans aide de 90 minutes |
@@ -128,7 +157,10 @@ déclaration manuelle est refusée par la politique. Son poids de 10 % est donc 
 plafond général à 90. C’est la seule composante encore inventoriée comme non produite.
 
 Les portes B, C et D restent fermées : leurs vingt et une exigences d’accomplissement n’ont aucun
-producteur, ce que `ProjectAchievementTests` consigne.
+producteur, ce que `ProjectAchievementTests` consigne — et le blocage est **total**, pas partiel. Trois
+cas de test le prouvent porte par porte : aucune exigence d’accomplissement de B, C ou D ne figure
+parmi les clés produites. Un apprenant ne lit donc pas « Porte B — bloquée » par accident de
+configuration, mais parce qu’aucune de ses sept exigences n’est satisfiable en l’état.
 
 **Limite du quiz, assumée** : seule une réussite est persistée, si bien qu’une réponse juste au
 cinquième essai vaut la première. À 5 % de poids et sous la règle « accumulation de quiz faciles →

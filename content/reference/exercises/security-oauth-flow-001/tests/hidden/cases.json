@@ -1,0 +1,55 @@
+{
+  "schemaVersion": 1,
+  "cases": [
+    {
+      "name": "Hidden_SwappedOrder",
+      "message": "Ordre inversé des étiquettes : même verdict.",
+      "arguments": [
+        "confidential,user-present"
+      ],
+      "expected": "authorization-code-pkce",
+      "expectedException": null,
+      "argumentsUnchanged": false
+    },
+    {
+      "name": "Hidden_MixedCaseSpaced",
+      "message": "Casse et espaces mélangés : la normalisation absorbe.",
+      "arguments": [
+        " User-Present , PUBLIC "
+      ],
+      "expected": "authorization-code-pkce",
+      "expectedException": null,
+      "argumentsUnchanged": false
+    },
+    {
+      "name": "Hidden_MissingAxis",
+      "message": "Axe de confidentialité absent : profil invalide.",
+      "arguments": [
+        "user-present"
+      ],
+      "expected": "invalid-profile",
+      "expectedException": null,
+      "argumentsUnchanged": false
+    },
+    {
+      "name": "Hidden_Contradiction",
+      "message": "Deux étiquettes du même axe : profil invalide.",
+      "arguments": [
+        "user-present,machine-only,public"
+      ],
+      "expected": "invalid-profile",
+      "expectedException": null,
+      "argumentsUnchanged": false
+    },
+    {
+      "name": "Hidden_UnknownTag",
+      "message": "Étiquette inconnue : rien ne se devine.",
+      "arguments": [
+        "user-present,public,implicit"
+      ],
+      "expected": "invalid-profile",
+      "expectedException": null,
+      "argumentsUnchanged": false
+    }
+  ]
+}

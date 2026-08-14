@@ -21,6 +21,10 @@
                                 "quality-diff-risk-001",
                                 "tests-expiry-clock-001",
                                 "security-owner-policy-001",
-                                "security-login-message-001"
+                                "security-login-message-001",
+                                "git-commit-subject-001",
+                                "git-version-patch-001",
+                                "ci-job-result-001",
+                                "docker-health-window-001"
                             ]
 }

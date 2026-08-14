@@ -1,0 +1,58 @@
+{
+  "schemaVersion": 1,
+  "id": "container-delivery",
+  "version": 1,
+  "title": "Conteneur durci publié sur la boucle locale",
+  "weeks": [19, 20],
+  "skills": ["docker.images", "docker.runtime", "docker.compose"],
+  "recommendedBefore": ["docker-images-layers-001", "docker-runtime-security-001"],
+  "estimatedMinutes": 150,
+  "briefPath": "README.md",
+  "objectives": [
+    {
+      "id": "pinned-bases",
+      "goal": "Retrouver, dans la recette d'image, pourquoi les images de base sont désignées par empreinte et non par étiquette mouvante.",
+      "observableProof": "Les deux étapes de construction citent une empreinte, et aucune étiquette flottante n'apparaît dans la recette."
+    },
+    {
+      "id": "unprivileged-runtime",
+      "goal": "Énumérer les garde-fous d'exécution réellement déclarés, puis dire lequel limite l'effet de la compromission des autres.",
+      "observableProof": "Le service démarre sans privilège, en lecture seule, capacités retirées et élévation refusée, tout cela déclaré dans la composition."
+    },
+    {
+      "id": "loopback-only",
+      "goal": "Vérifier sur quelle interface le service est réellement publié, et ce que cela empêche depuis le réseau local.",
+      "observableProof": "La publication est restreinte à l'adresse de boucle, donc aucune autre machine du réseau n'atteint le service."
+    },
+    {
+      "id": "bounded-resources",
+      "goal": "Relever les bornes de mémoire, de processeur et de processus, puis prédire ce qu'un dépassement produit.",
+      "observableProof": "La composition déclare ses trois bornes et une sonde de santé, et le service est signalé sain avant que la commande ne rende la main."
+    }
+  ],
+  "commands": [
+    {
+      "shell": "docker",
+      "command": "docker compose -f content/labs/container-delivery/compose.yaml config",
+      "purpose": "Rend la composition résolue sans rien démarrer, ce qui permet de relire les garde-fous tels que le moteur les comprendra."
+    },
+    {
+      "shell": "docker",
+      "command": "docker compose -f content/labs/container-delivery/compose.yaml up --build --wait",
+      "purpose": "Construit l'image puis attend que la sonde de santé déclare le service prêt, ce qui échoue explicitement si elle ne passe jamais."
+    },
+    {
+      "shell": "docker",
+      "command": "docker compose -f content/labs/container-delivery/compose.yaml down --volumes",
+      "purpose": "Arrête le service et retire ses volumes, de sorte qu'aucune trace de la répétition ne survive à l'exercice."
+    }
+  ],
+  "limits": [
+    "Les preuves d'authentification sont montées depuis des fichiers situés hors du dépôt, désignés par variables d'environnement décrites dans le brief : n'y placez que des valeurs factices.",
+    "Un service sain sur la boucle locale ne dit rien de son comportement derrière un répartiteur, ni de sa tenue face à un trafic réel."
+  ],
+  "evidencePolicy": "learner-declared-outside-sandbox",
+  "requiresDocker": true,
+  "requiresNetwork": true,
+  "license": "CC-BY-4.0"
+}

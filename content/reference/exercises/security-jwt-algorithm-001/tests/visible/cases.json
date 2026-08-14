@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "cases": [
+    {
+      "name": "Visible_MatchingAlgorithm",
+      "message": "Annonce conforme à l'exigence du vérificateur.",
+      "arguments": [
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyLTQ4MiJ9.FQTI5GJDoD1r_IJNfmWdl5139NEOTWjxvtVCKf231_c",
+        "HS256"
+      ],
+      "expected": true,
+      "expectedException": null,
+      "argumentsUnchanged": false
+    },
+    {
+      "name": "Visible_NoneAlgorithm",
+      "message": "Annonce none : refus inconditionnel.",
+      "arguments": [
+        "eyJhbGciOiJub25lIiwidHlwIjoiSldUIn0.eyJzdWIiOiJ1c2VyLTQ4MiJ9.TcAm7egVlVzjjPMNvBIoQaqG1U0R2DL4w9ELRl7hFGw",
+        "HS256"
+      ],
+      "expected": false,
+      "expectedException": null,
+      "argumentsUnchanged": false
+    },
+    {
+      "name": "Visible_OtherAlgorithm",
+      "message": "Annonce HS512 face à une exigence HS256 : refus.",
+      "arguments": [
+        "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyLTQ4MiJ9.7wROoEoliVT-i0rOdnUO9SfSfZvOURti582Eph-DYZ8",
+        "HS256"
+      ],
+      "expected": false,
+      "expectedException": null,
+      "argumentsUnchanged": false
+    }
+  ]
+}

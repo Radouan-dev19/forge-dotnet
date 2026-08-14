@@ -1,0 +1,48 @@
+{
+  "schemaVersion": 1,
+  "id": "api-mini-erp",
+  "version": 1,
+  "title": "Tranche HTTP réelle d'un mini-ERP",
+  "weeks": [11, 12, 13, 14],
+  "skills": ["api.contracts", "api.validation", "api.pagination", "security.authorization"],
+  "recommendedBefore": ["api-controllers-dtos-001", "api-validation-problem-details-001"],
+  "estimatedMinutes": 180,
+  "briefPath": "README.md",
+  "objectives": [
+    {
+      "id": "contract-matches-routes",
+      "goal": "Lire le contrat publié puis vérifier qu'il décrit exactement les routes et les statuts que la suite éprouve, sans en promettre un de plus.",
+      "observableProof": "La suite de contrat échoue si une route documentée disparaît ou si un statut annoncé n'est plus produit."
+    },
+    {
+      "id": "problem-details-shape",
+      "goal": "Observer la forme d'une réponse d'erreur normalisée et retrouver, dans le corps rendu, chaque violation que la demande contenait.",
+      "observableProof": "Un corps invalide produit un dictionnaire de violations, et non le premier défaut rencontré."
+    },
+    {
+      "id": "authorization-refusal",
+      "goal": "Distinguer un appel non authentifié d'un appel authentifié mais interdit, et retrouver cette différence dans les statuts.",
+      "observableProof": "La même route rend 401 sans clé, 403 avec une clé de portée insuffisante et 200 avec la clé attendue."
+    },
+    {
+      "id": "bounded-pagination",
+      "goal": "Demander une page plus grande que le plafond du service et constater ce que le serveur renvoie réellement.",
+      "observableProof": "La taille rendue est rabattue au plafond, et le tri reste total d'un appel au suivant."
+    }
+  ],
+  "commands": [
+    {
+      "shell": "dotnet",
+      "command": "dotnet test content/labs/api-mini-erp/tests/ForgeApiLab.Tests/ForgeApiLab.Tests.csproj",
+      "purpose": "Exécute la suite de contrat, qui monte l'API en mémoire et compare statuts et corps aux attentes publiées."
+    }
+  ],
+  "limits": [
+    "Les clés d'authentification sont factices et viennent de la configuration de test ou d'un fichier monté hors du dépôt : aucune n'est journalisée.",
+    "L'API est montée en mémoire par la suite de tests, sans écoute réseau ni base de données : ce laboratoire ne dit rien du comportement sous charge."
+  ],
+  "evidencePolicy": "learner-declared-outside-sandbox",
+  "requiresDocker": false,
+  "requiresNetwork": false,
+  "license": "CC-BY-4.0"
+}

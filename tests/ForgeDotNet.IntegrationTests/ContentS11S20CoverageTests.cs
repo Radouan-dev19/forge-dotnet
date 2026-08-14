@@ -6,7 +6,7 @@ namespace ForgeDotNet.IntegrationTests;
 public sealed class ContentS11S20CoverageTests
 {
     private static readonly string[] S11S20LabDirectories =
-        ["api-mini-erp", "ci-delivery", "container-delivery", "git-review", "testing-strategy"];
+        ["api-jwt-bearer", "api-mini-erp", "ci-delivery", "container-delivery", "git-review", "testing-strategy"];
     private static readonly string ContentRoot = FindContentRoot();
     private static readonly string CatalogRoot = Path.Combine(ContentRoot, "reference");
 
@@ -16,20 +16,25 @@ public sealed class ContentS11S20CoverageTests
         using JsonDocument curriculum = Read(Path.Combine(CatalogRoot, "curriculum", "forge-reference.json"));
         JsonElement[] modules = curriculum.RootElement.GetProperty("modules").EnumerateArray().ToArray();
 
-        Assert.Equal(24, curriculum.RootElement.GetProperty("weeks").GetInt32());
-        Assert.Equal(24, modules.Length);
-        Assert.Equal(Enumerable.Range(1, 24), modules.Select(module => module.GetProperty("weeks")[0].GetInt32()));
+        Assert.Equal(27, curriculum.RootElement.GetProperty("weeks").GetInt32());
+        Assert.Equal(27, modules.Length);
+        Assert.Equal(Enumerable.Range(1, 27), modules.Select(module => module.GetProperty("weeks")[0].GetInt32()));
 
         JsonElement[] incrementModules = modules.Where(module =>
             module.GetProperty("weeks")[0].GetInt32() is >= 11 and <= 20).ToArray();
         Assert.Equal(10, incrementModules.Length);
-        Assert.All(incrementModules, module => Assert.Equal(3, module.GetProperty("lessonIds").GetArrayLength()));
+        // S11 à S13 portent cinq leçons depuis le lot REST — deux sujets de plus par semaine :
+        // versionnage et ETag en S11, débit et cache en S12, CORS et webhooks en S13. La semaine
+        // 14 en porte cinq aussi depuis le lot JWT.
+        Assert.Equal(
+            [5, 5, 5, 5, 3, 3, 3, 3, 3, 3],
+            incrementModules.Select(module => module.GetProperty("lessonIds").GetArrayLength()));
         // Matrice figée du volume de pratique en S11–S17. Ces semaines partaient toutes de cinq
         // exercices, contre 8,8 par semaine en S1–S10 : l'écart porte précisément sur les semaines
-        // qui décident d'une embauche backend. Le comptage exact — et non un plancher — garde la
-        // reprise visible semaine par semaine à mesure qu'elle avance.
+        // qui décident d'une embauche backend. Le lot REST porte S11 à S13 à dix exercices chacune —
+        // atteignant et dépassant la cible de huit — et le lot JWT porte S14 à douze.
         Assert.Equal(
-            [6, 6, 6, 6, 6, 6, 6],
+            [10, 10, 10, 12, 6, 6, 6],
             incrementModules
                 .Where(module => module.GetProperty("weeks")[0].GetInt32() <= 17)
                 .Select(module => module.GetProperty("exerciseIds").GetArrayLength()));
@@ -40,9 +45,9 @@ public sealed class ContentS11S20CoverageTests
             .Select(value => value.GetString()!).ToArray();
         string[] exerciseIds = incrementModules.SelectMany(module => module.GetProperty("exerciseIds").EnumerateArray())
             .Select(value => value.GetString()!).ToArray();
-        Assert.Equal(30, lessonIds.Length);
-        Assert.Equal(51, exerciseIds.Length);
-        Assert.Equal(42, incrementModules.Where(module => module.GetProperty("weeks")[0].GetInt32() <= 17)
+        Assert.Equal(38, lessonIds.Length);
+        Assert.Equal(69, exerciseIds.Length);
+        Assert.Equal(60, incrementModules.Where(module => module.GetProperty("weeks")[0].GetInt32() <= 17)
             .Sum(module => module.GetProperty("exerciseIds").GetArrayLength()));
         Assert.Equal(9, incrementModules.Where(module => module.GetProperty("weeks")[0].GetInt32() >= 18)
             .Sum(module => module.GetProperty("exerciseIds").GetArrayLength()));
@@ -54,20 +59,24 @@ public sealed class ContentS11S20CoverageTests
                 Assert.Single(module.GetProperty("prerequisites").EnumerateArray()).GetString());
         }
 
-        Assert.Equal(60, modules.Take(20).SelectMany(module => module.GetProperty("lessonIds").EnumerateArray()).Count());
-        Assert.Equal(139, modules.Take(20).SelectMany(module => module.GetProperty("exerciseIds").EnumerateArray()).Count());
+        Assert.Equal(68, modules.Take(20).SelectMany(module => module.GetProperty("lessonIds").EnumerateArray()).Count());
+        Assert.Equal(157, modules.Take(20).SelectMany(module => module.GetProperty("exerciseIds").EnumerateArray()).Count());
         HashSet<string> finalExerciseIds = modules.Skip(20)
             .SelectMany(module => module.GetProperty("exerciseIds").EnumerateArray())
             .Select(value => value.GetString()!).ToHashSet(StringComparer.Ordinal);
-        Assert.Equal(136, Directory.GetDirectories(Path.Combine(CatalogRoot, "exercises"))
-            .Select(Path.GetFileName).Count(id => id is not null && !finalExerciseIds.Contains(id)));
+        // La piste senior (senior-*) vit dans son propre parcours et n'entre pas dans ce releve du
+        // socle junior : ses exercices sont exclus du compte des dossiers hors bassin final.
+        Assert.Equal(154, Directory.GetDirectories(Path.Combine(CatalogRoot, "exercises"))
+            .Select(Path.GetFileName)
+            .Count(id => id is not null && !finalExerciseIds.Contains(id)
+                && !id.StartsWith("senior-", StringComparison.Ordinal)));
     }
 
     [Fact]
     public void EveryNewExerciseHasProgressiveAidPrivateTestsAndARealVariant()
     {
         HashSet<string> ids = S11S20ExerciseIds();
-        Assert.Equal(51, ids.Count);
+        Assert.Equal(69, ids.Count);
         foreach (string id in ids)
         {
             string directory = Path.Combine(CatalogRoot, "exercises", id);
@@ -111,14 +120,18 @@ public sealed class ContentS11S20CoverageTests
 
         using JsonDocument apiExam = Read(Path.Combine(ContentRoot, "exams", "api-security-v1", "exam.json"));
         using JsonDocument testsExam = Read(Path.Combine(ContentRoot, "exams", "tests-quality-v1", "exam.json"));
-        Assert.Equal(20, apiExam.RootElement.GetProperty("eligibleExerciseIds").GetArrayLength());
+        Assert.Equal(45, apiExam.RootElement.GetProperty("eligibleExerciseIds").GetArrayLength());
         Assert.Equal(18, testsExam.RootElement.GetProperty("eligibleExerciseIds").GetArrayLength());
         Assert.Equal(8, apiExam.RootElement.GetProperty("drawCount").GetInt32());
         Assert.Equal(8, testsExam.RootElement.GetProperty("drawCount").GetInt32());
         Assert.Equal(80m, apiExam.RootElement.GetProperty("passingScore").GetDecimal());
         Assert.Equal(80m, testsExam.RootElement.GetProperty("passingScore").GetDecimal());
+        // L'examen de sécurité tire aussi les cinq exercices OAuth/OIDC de la semaine 21 :
+        // son bassin s'étend donc aux modules finals, contrairement à l'examen de tests.
+        HashSet<string> securityEligiblePool = S11S20ExerciseIds();
+        securityEligiblePool.UnionWith(FinalModuleExerciseIds());
         Assert.All(apiExam.RootElement.GetProperty("eligibleExerciseIds").EnumerateArray(),
-            value => Assert.Contains(value.GetString()!, S11S20ExerciseIds()));
+            value => Assert.Contains(value.GetString()!, securityEligiblePool));
         Assert.All(testsExam.RootElement.GetProperty("eligibleExerciseIds").EnumerateArray(),
             value => Assert.Contains(value.GetString()!, S11S20ExerciseIds()));
     }
@@ -176,6 +189,16 @@ public sealed class ContentS11S20CoverageTests
             Assert.DoesNotContain(forbidden, text, StringComparison.OrdinalIgnoreCase);
         Assert.Contains("forge-fake-operator-key", text, StringComparison.Ordinal);
         Assert.Contains("fake", text, StringComparison.OrdinalIgnoreCase);
+    }
+
+    private static HashSet<string> FinalModuleExerciseIds()
+    {
+        using JsonDocument curriculum = Read(Path.Combine(CatalogRoot, "curriculum", "forge-reference.json"));
+        return curriculum.RootElement.GetProperty("modules").EnumerateArray()
+            .Where(module => module.GetProperty("weeks")[0].GetInt32() >= 21)
+            .SelectMany(module => module.GetProperty("exerciseIds").EnumerateArray())
+            .Select(value => value.GetString()!)
+            .ToHashSet(StringComparer.Ordinal);
     }
 
     private static HashSet<string> S11S20ExerciseIds()

@@ -88,6 +88,17 @@ porte de déploiement.
 | Champs de réflexion | 6 |
 | `explanation.md` et `review-cards.md` | propres à l'exercice |
 | Question d'entretien | dédiée, référencée par `interviewQuestionId` |
+| Largeur de `starter/` et `solution/` | **120 caractères par ligne au plus** |
+| Longueur d'`explanation.md` | **350 mots au moins** |
+
+Ces deux dernières exigences sont figées par `ExerciseReadabilityTests`, avec des plafonds
+d'infractions à zéro qui ne peuvent que descendre — le modèle du registre de dette. Elles sont
+nées d'un relevé : 84 solutions sur 148 portaient une ligne au-delà de 120 caractères — record à
+414 — et 136 explications restaient sous 350 mots, médiane à 115. Or ouvrir la solution met la
+pratique de l'exercice à zéro : l'artefact payé au prix fort doit être exemplaire — une
+instruction par ligne, un commentaire par décision non évidente — et l'explication, boucle de
+retour d'une pratique qui pèse 45 % du score, doit argumenter le pourquoi, les cas cachés, le
+coût et la transposition, jamais paraphraser le code.
 
 Le starter doit **compiler** et **échouer** au moins un cas : un starter qui passe déjà rend
 l'exercice sans objet.

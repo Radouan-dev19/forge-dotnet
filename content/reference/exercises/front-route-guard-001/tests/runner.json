@@ -1,0 +1,15 @@
+{
+    "schemaVersion": 1,
+    "suiteId": "front-route-guard-001.v1",
+    "exerciseId": "front-route-guard-001",
+    "exerciseVersion": 1,
+    "typeName": "Submission",
+    "methodName": "GuardDecision",
+    "parameterTypes": [
+        "string",
+        "string",
+        "int",
+        "string"
+    ],
+    "returnType": "string"
+}

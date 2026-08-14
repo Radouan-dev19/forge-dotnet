@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "cases": [
+    {
+      "name": "Hidden_DeuxEtapes",
+      "message": "Deux etapes : inversion simple.",
+      "arguments": ["a;b"],
+      "expected": "undo-b;undo-a",
+      "expectedException": null,
+      "argumentsUnchanged": false
+    },
+    {
+      "name": "Hidden_QuatreEtapes",
+      "message": "Quatre etapes : inversion complete.",
+      "arguments": ["x;y;z;w"],
+      "expected": "undo-w;undo-z;undo-y;undo-x",
+      "expectedException": null,
+      "argumentsUnchanged": false
+    },
+    {
+      "name": "Hidden_EtapeUnique",
+      "message": "Nom d'etape distinct, une seule compensation.",
+      "arguments": ["single"],
+      "expected": "undo-single",
+      "expectedException": null,
+      "argumentsUnchanged": false
+    },
+    {
+      "name": "Hidden_SegmentsAvecEspaces",
+      "message": "Deux etapes nommees, inversion.",
+      "arguments": ["one;two"],
+      "expected": "undo-two;undo-one",
+      "expectedException": null,
+      "argumentsUnchanged": false
+    },
+    {
+      "name": "Hidden_CorpsNul",
+      "message": "Corps absent : faute d'appel.",
+      "arguments": [null],
+      "expectedException": "ArgumentNullException",
+      "argumentsUnchanged": false
+    }
+  ]
+}

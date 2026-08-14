@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "cases": [
+    {
+      "name": "Visible_AllowWithScope",
+      "message": "Jeton valide portant le droit exige : acces autorise.",
+      "arguments": [
+        "eyJhbGciOiJub25lIn0.eyJleHAiOjIwMDAsInNjb3BlIjoib3JkZXJzLnJlYWQifQ.sig",
+        "orders.read",
+        1000,
+        "/orders"
+      ],
+      "expected": "allow",
+      "expectedException": null,
+      "argumentsUnchanged": false
+    },
+    {
+      "name": "Visible_ExpiredRedirects",
+      "message": "Jeton expire : redirection vers la connexion avec chemin de retour.",
+      "arguments": [
+        "eyJhbGciOiJub25lIn0.eyJleHAiOjUwMCwic2NvcGUiOiJvcmRlcnMucmVhZCJ9.sig",
+        "orders.read",
+        1000,
+        "/orders/42"
+      ],
+      "expected": "redirect:login?return=/orders/42",
+      "expectedException": null,
+      "argumentsUnchanged": false
+    },
+    {
+      "name": "Visible_MissingScopeForbidden",
+      "message": "Jeton valide sans le droit exige : interdit.",
+      "arguments": [
+        "eyJhbGciOiJub25lIn0.eyJleHAiOjIwMDAsInNjb3BlIjoicHJvZmlsZS5yZWFkIn0.sig",
+        "orders.read",
+        1000,
+        "/orders"
+      ],
+      "expected": "forbidden",
+      "expectedException": null,
+      "argumentsUnchanged": false
+    }
+  ]
+}

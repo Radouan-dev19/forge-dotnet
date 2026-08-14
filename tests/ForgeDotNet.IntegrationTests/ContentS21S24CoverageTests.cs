@@ -15,38 +15,85 @@ public sealed class ContentS21S24CoverageTests
         using JsonDocument curriculum = Read(Path.Combine(CatalogRoot, "curriculum", "forge-reference.json"));
         JsonElement[] modules = curriculum.RootElement.GetProperty("modules").EnumerateArray().ToArray();
 
-        Assert.Equal(24, curriculum.RootElement.GetProperty("weeks").GetInt32());
-        Assert.Equal(4, curriculum.RootElement.GetProperty("version").GetInt32());
-        Assert.Equal(Enumerable.Range(1, 24), modules.Select(Week));
+        Assert.Equal(27, curriculum.RootElement.GetProperty("weeks").GetInt32());
+        Assert.Equal(5, curriculum.RootElement.GetProperty("version").GetInt32());
+        Assert.Equal(Enumerable.Range(1, 27), modules.Select(Week));
         Assert.All(modules.Skip(1), module =>
             Assert.Equal($"week-{Week(module) - 1}", Assert.Single(module.GetProperty("prerequisites").EnumerateArray()).GetString()));
 
-        JsonElement[] finalModules = modules.Where(module => Week(module) >= 21).ToArray();
-        Assert.Equal([3, 3, 2, 2], finalModules.Select(module => module.GetProperty("lessonIds").GetArrayLength()));
-        Assert.Equal([2, 2, 1, 1], finalModules.Select(module => module.GetProperty("exerciseIds").GetArrayLength()));
+        JsonElement[] finalModules = modules.Where(module => Week(module) is >= 21 and <= 24).ToArray();
+        // La semaine 21 porte, en plus de son socle Azure, le lot OAuth/OIDC : trois leçons
+        // et cinq exercices security-*, l'identité gérée étant un flux d'identifiants client.
+        Assert.Equal([6, 3, 2, 2], finalModules.Select(module => module.GetProperty("lessonIds").GetArrayLength()));
+        Assert.Equal([7, 2, 1, 1], finalModules.Select(module => module.GetProperty("exerciseIds").GetArrayLength()));
         Assert.All(finalModules.SelectMany(module => module.GetProperty("exerciseIds").EnumerateArray()),
-            id => Assert.StartsWith("azure-", id.GetString(), StringComparison.Ordinal));
+            id => Assert.True(
+                id.GetString()!.StartsWith("azure-", StringComparison.Ordinal)
+                    || id.GetString()!.StartsWith("security-", StringComparison.Ordinal),
+                $"Exercice final hors familles attendues : {id.GetString()}"));
 
-        Assert.Equal(70, Directory.GetFiles(Path.Combine(CatalogRoot, "curriculum", "lessons"), "lesson.json", SearchOption.AllDirectories).Length);
-        Assert.Equal(142, Directory.GetFiles(Path.Combine(CatalogRoot, "exercises"), "exercise.json", SearchOption.AllDirectories).Length);
-        Assert.Equal(25, Directory.GetFiles(Path.Combine(CatalogRoot, "debugging"), "scenario.json", SearchOption.AllDirectories).Length);
-        Assert.Equal(197, Directory.GetFiles(Path.Combine(CatalogRoot, "interviews"), "*.json", SearchOption.TopDirectoryOnly).Length);
+        Assert.Equal(96, Directory.GetFiles(Path.Combine(CatalogRoot, "curriculum", "lessons"), "lesson.json", SearchOption.AllDirectories).Length);
+        Assert.Equal(177, Directory.GetFiles(Path.Combine(CatalogRoot, "exercises"), "exercise.json", SearchOption.AllDirectories).Length);
+        Assert.Equal(29, Directory.GetFiles(Path.Combine(CatalogRoot, "debugging"), "scenario.json", SearchOption.AllDirectories).Length);
+        Assert.Equal(232, Directory.GetFiles(Path.Combine(CatalogRoot, "interviews"), "*.json", SearchOption.TopDirectoryOnly).Length);
         Assert.Equal(51, Directory.GetFiles(Path.Combine(CatalogRoot, "english"), "*.json", SearchOption.TopDirectoryOnly).Length);
         // Un projet porte désormais un dossier, comme un exercice : son manifeste s'appelle
         // project.json et ses suites d'acceptation vivent à côté.
-        Assert.Equal(9, Directory.GetDirectories(Path.Combine(CatalogRoot, "projects")).Length);
-        Assert.Equal(8, Directory.GetFiles(Path.Combine(ContentRoot, "exams"), "exam.json", SearchOption.AllDirectories).Length);
+        Assert.Equal(10, Directory.GetDirectories(Path.Combine(CatalogRoot, "projects")).Length);
+        Assert.Equal(9, Directory.GetFiles(Path.Combine(ContentRoot, "exams"), "exam.json", SearchOption.AllDirectories).Length);
         // La banque de cartes de révision ajoute un fichier au catalogue : c'est la seule source
         // de rétention espacée qui survive à l'expiration des preuves du bilan d'entrée.
         Assert.Single(Directory.GetFiles(Path.Combine(CatalogRoot, "reviews"), "*.json", SearchOption.TopDirectoryOnly));
-        Assert.Equal(2_129, Directory.GetFiles(CatalogRoot, "*", SearchOption.AllDirectories).Length);
+        Assert.Equal(2_582, Directory.GetFiles(CatalogRoot, "*", SearchOption.AllDirectories).Length);
     }
 
     [Fact]
-    public void SixAzureActivitiesHaveProgressiveAidPrivateProofsAndBuildableContracts()
+    public void FrontEndBlockHasExpectedVolumesAndBuildableContracts()
+    {
+        using JsonDocument curriculum = Read(Path.Combine(CatalogRoot, "curriculum", "forge-reference.json"));
+        JsonElement[] frontModules = curriculum.RootElement.GetProperty("modules").EnumerateArray()
+            .Where(module => Week(module) is >= 25 and <= 27).ToArray();
+        // Bloc front-end dédié (S25–S27) : quatre leçons de socle et deux exercices en S25, deux
+        // leçons de framework et un exercice en S26, la leçon Blazor et un exercice en S27.
+        Assert.Equal(3, frontModules.Length);
+        Assert.Equal([4, 2, 1], frontModules.Select(module => module.GetProperty("lessonIds").GetArrayLength()));
+        Assert.Equal([2, 1, 1], frontModules.Select(module => module.GetProperty("exerciseIds").GetArrayLength()));
+
+        string[] exerciseIds = frontModules.SelectMany(module => module.GetProperty("exerciseIds").EnumerateArray())
+            .Select(value => value.GetString()!).ToArray();
+        Assert.Equal(4, exerciseIds.Length);
+        Assert.All(exerciseIds, id => Assert.StartsWith("front-", id));
+
+        foreach (string id in exerciseIds)
+        {
+            string directory = Path.Combine(CatalogRoot, "exercises", id);
+            using JsonDocument manifest = Read(Path.Combine(directory, "exercise.json"));
+            JsonElement root = manifest.RootElement;
+            Assert.Equal([1, 2, 3, 4], root.GetProperty("hints").EnumerateArray()
+                .Select(hint => hint.GetProperty("level").GetInt32()).ToArray());
+            Assert.Equal(6, root.GetProperty("reflectionFields").GetArrayLength());
+            Assert.Contains(root.GetProperty("variantId").GetString()!, exerciseIds);
+            Assert.True(Read(Path.Combine(directory, "tests", "visible", "cases.json"))
+                .RootElement.GetProperty("cases").GetArrayLength() >= 3);
+            Assert.True(Read(Path.Combine(directory, "tests", "hidden", "cases.json"))
+                .RootElement.GetProperty("cases").GetArrayLength() >= 4);
+            Assert.Contains("NotImplementedException", File.ReadAllText(Path.Combine(directory, "starter", "Submission.cs")), StringComparison.Ordinal);
+            Assert.DoesNotContain("NotImplementedException", File.ReadAllText(Path.Combine(directory, "solution", "Submission.cs")), StringComparison.Ordinal);
+        }
+
+        string[] lessonIds = frontModules.SelectMany(module => module.GetProperty("lessonIds").EnumerateArray())
+            .Select(value => value.GetString()!).ToArray();
+        Assert.Equal(7, lessonIds.Length);
+        Assert.All(lessonIds, id => Assert.True(
+            File.Exists(Path.Combine(CatalogRoot, "curriculum", "lessons", id, "lesson.json")),
+            $"Leçon front-end absente : {id}"));
+    }
+
+    [Fact]
+    public void FinalWeekActivitiesHaveProgressiveAidPrivateProofsAndBuildableContracts()
     {
         string[] ids = S21S24ExerciseIds();
-        Assert.Equal(6, ids.Length);
+        Assert.Equal(11, ids.Length);
 
         foreach (string id in ids)
         {
@@ -57,7 +104,11 @@ public sealed class ContentS21S24CoverageTests
             Assert.Equal([1, 2, 3, 4], root.GetProperty("hints").EnumerateArray()
                 .Select(hint => hint.GetProperty("level").GetInt32()).ToArray());
             Assert.Contains(root.GetProperty("variantId").GetString()!, ids);
-            Assert.StartsWith("interview-azure-", root.GetProperty("interviewQuestionId").GetString(), StringComparison.Ordinal);
+            string interviewId = root.GetProperty("interviewQuestionId").GetString()!;
+            Assert.True(
+                interviewId.StartsWith("interview-azure-", StringComparison.Ordinal)
+                    || interviewId.StartsWith("interview-security-", StringComparison.Ordinal),
+                $"{id} : fiche d'entretien hors familles attendues ({interviewId}).");
             // Contrat de CONTENT_AUTHORING_STANDARD : trois cas visibles et quatre cachés, sauf
             // lorsque tous les paramètres sont booléens — le domaine ne compte alors que deux
             // puissance n entrées, et les couvrir toutes vaut mieux que de répéter des arguments.
@@ -85,9 +136,9 @@ public sealed class ContentS21S24CoverageTests
     {
         JsonElement[] interviews = Directory.GetFiles(Path.Combine(CatalogRoot, "interviews"), "*.json")
             .Select(path => Read(path).RootElement.Clone()).ToArray();
-        Assert.Equal(123, interviews.Count(item => item.GetProperty("level").GetString() == "junior"));
-        Assert.Equal(53, interviews.Count(item => item.GetProperty("level").GetString() == "intermediate"));
-        Assert.Equal(21, interviews.Count(item => item.GetProperty("level").GetString() == "advanced"));
+        Assert.Equal(126, interviews.Count(item => item.GetProperty("level").GetString() == "junior"));
+        Assert.Equal(71, interviews.Count(item => item.GetProperty("level").GetString() == "intermediate"));
+        Assert.Equal(35, interviews.Count(item => item.GetProperty("level").GetString() == "advanced"));
         JsonElement[] newInterviews = interviews.Where(item =>
             item.GetProperty("id").GetString()!.StartsWith("interview-s21-s24-", StringComparison.Ordinal)
             || item.GetProperty("id").GetString()!.StartsWith("interview-azure-", StringComparison.Ordinal)).ToArray();
@@ -152,7 +203,8 @@ public sealed class ContentS21S24CoverageTests
                 .Select(item => item.GetString()!).ToArray();
             Assert.Equal(8, exam.RootElement.GetProperty("drawCount").GetInt32());
             Assert.Equal(80m, exam.RootElement.GetProperty("passingScore").GetDecimal());
-            Assert.InRange(candidates.Length, 15, 16);
+            (int minCandidates, int maxCandidates) = directory == "final-readiness-v1" ? (20, 20) : (19, 19);
+            Assert.InRange(candidates.Length, minCandidates, maxCandidates);
             Assert.Equal(candidates.Length, candidates.Distinct(StringComparer.Ordinal).Count());
             Assert.All(candidates, id => Assert.Contains(id, exerciseIds));
             Assert.Single(Directory.GetFiles(examDirectory, "*", SearchOption.AllDirectories));
@@ -214,7 +266,7 @@ public sealed class ContentS21S24CoverageTests
     {
         using JsonDocument curriculum = Read(Path.Combine(CatalogRoot, "curriculum", "forge-reference.json"));
         return curriculum.RootElement.GetProperty("modules").EnumerateArray()
-            .Where(module => Week(module) >= 21)
+            .Where(module => Week(module) is >= 21 and <= 24)
             .SelectMany(module => module.GetProperty("exerciseIds").EnumerateArray())
             .Select(value => value.GetString()!)
             .ToArray();

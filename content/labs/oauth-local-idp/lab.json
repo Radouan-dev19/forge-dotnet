@@ -1,0 +1,55 @@
+{
+  "schemaVersion": 1,
+  "id": "oauth-local-idp",
+  "version": 1,
+  "title": "Guichet d'autorisation local, en processus",
+  "weeks": [21],
+  "skills": ["security.token", "security.authentication"],
+  "recommendedBefore": [
+    "oauth-flows-001",
+    "oauth-pkce-001",
+    "oidc-identity-001",
+    "security-pkce-challenge-001"
+  ],
+  "estimatedMinutes": 150,
+  "briefPath": "README.md",
+  "objectives": [
+    {
+      "id": "trace-both-flows",
+      "goal": "Suivre les deux flux de bout en bout dans le code du guichet et relier chaque étape à la leçon qui la décrit.",
+      "observableProof": "Pour chaque requête des tests — autorisation, échange, identifiants client —, la ligne du guichet qui la traite est identifiée et son rôle nommé."
+    },
+    {
+      "id": "observe-pkce-refusal",
+      "goal": "Provoquer le refus d'un code_verifier faux et lire où la comparaison d'empreintes échoue.",
+      "observableProof": "La suite montre l'échange refusé en invalid_grant quand le secret présenté ne correspond pas à l'empreinte déposée, et accepté sinon."
+    },
+    {
+      "id": "observe-state-and-substitution",
+      "goal": "Constater que le state rejoué et le jeton d'accès déguisé en identité échouent pour deux raisons différentes.",
+      "observableProof": "Le registre refuse la seconde consommation du même state, et l'inspecteur rend wrong-audience pour le jeton d'accès — deux verdicts distincts, deux parades."
+    },
+    {
+      "id": "compare-token-shapes",
+      "goal": "Comparer les réponses des deux flux et expliquer pourquoi la machine ne reçoit pas de jeton d'identité.",
+      "observableProof": "La réponse du flux machine porte un jeton d'accès et aucun id_token, ce que la suite vérifie explicitement."
+    }
+  ],
+  "commands": [
+    {
+      "shell": "dotnet",
+      "command": "dotnet test content/labs/oauth-local-idp/tests/ForgeOAuthLab.Tests/ForgeOAuthLab.Tests.csproj",
+      "purpose": "Monte le guichet en mémoire et déroule les deux flux, les refus PKCE et state, et la substitution de jetons."
+    }
+  ],
+  "limits": [
+    "Le guichet est pédagogique et mono-processus : pas d'écran de connexion, utilisateur factice auto-approuvé, état en mémoire perdu à l'arrêt.",
+    "Les jetons sont signés en HMAC local : la publication de clés et la signature asymétrique d'un fournisseur réel ne sont pas pratiquées ici.",
+    "Le jeton de rafraîchissement et sa rotation ne circulent pas dans ce guichet : leur calcul se travaille dans l'exercice dédié de la semaine.",
+    "La première exécution restaure des paquets de test : elle suppose un cache local peuplé ou un accès au dépôt de paquets."
+  ],
+  "evidencePolicy": "learner-declared-outside-sandbox",
+  "requiresDocker": false,
+  "requiresNetwork": false,
+  "license": "CC-BY-4.0"
+}

@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "cases": [
+    {
+      "name": "Hidden_DeploiementsCouples",
+      "message": "Deux equipes mais un deploiement couple : on garde.",
+      "arguments": [2, 1, 0],
+      "expected": "keep-monolith",
+      "expectedException": null,
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_CinqEquipes",
+      "message": "Cinq equipes, aucun couplage, aucune table partagee : extraction.",
+      "arguments": [5, 0, 0],
+      "expected": "extract-service",
+      "expectedException": null,
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_UneTablePartagee",
+      "message": "Deux equipes, une table partagee : on garde.",
+      "arguments": [2, 0, 1],
+      "expected": "keep-monolith",
+      "expectedException": null,
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_QuatreEquipes",
+      "message": "Quatre equipes, decouplees, sans partage : extraction.",
+      "arguments": [4, 0, 0],
+      "expected": "extract-service",
+      "expectedException": null,
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_EquipeNulle",
+      "message": "Zero equipe : compteur incoherent.",
+      "arguments": [0, 0, 0],
+      "expectedException": "ArgumentOutOfRangeException",
+      "argumentsUnchanged": false
+    }
+  ]
+}

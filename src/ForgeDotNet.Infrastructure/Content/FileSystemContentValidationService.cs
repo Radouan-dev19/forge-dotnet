@@ -275,12 +275,15 @@ public sealed partial class FileSystemContentValidationService : IContentValidat
         }
 
         // Un projet porte désormais un dossier, comme une leçon ou un exercice : il lui faut un
-        // starter et des suites d'acceptation à côté de son manifeste.
+        // starter et des suites d'acceptation à côté de son manifeste. Un laboratoire suit la même
+        // règle, et pour une raison plus forte : son manifeste s'appelle lab.json dans tous les cas,
+        // donc seul le nom du dossier peut porter son identité.
         string expectedLocationName = documentType is ContentDocumentType.Lesson
             or ContentDocumentType.Exercise
             or ContentDocumentType.DebugScenario
             or ContentDocumentType.SqlScenario
             or ContentDocumentType.Project
+            or ContentDocumentType.Lab
             ? Directory.GetParent(fullPath)?.Name ?? string.Empty
             : Path.GetFileNameWithoutExtension(fullPath);
 

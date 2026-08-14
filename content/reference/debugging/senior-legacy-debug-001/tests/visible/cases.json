@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "cases": [
+    {
+      "name": "Visible_DernierePagePartielle",
+      "message": "Dix elements par pages de trois : quatre pages, la derniere partielle.",
+      "arguments": [10, 3],
+      "expected": 4,
+      "expectedException": null,
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Visible_MultipleExact",
+      "message": "Neuf elements par pages de trois : trois pages pleines.",
+      "arguments": [9, 3],
+      "expected": 3,
+      "expectedException": null,
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Visible_MoinsQuUnePage",
+      "message": "Un element par pages de trois : une page.",
+      "arguments": [1, 3],
+      "expected": 1,
+      "expectedException": null,
+      "argumentsUnchanged": true
+    }
+  ]
+}

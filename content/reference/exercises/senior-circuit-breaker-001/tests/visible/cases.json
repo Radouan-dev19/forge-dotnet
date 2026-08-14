@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "cases": [
+    {
+      "name": "Visible_ThreeFailsOpen",
+      "message": "Trois echecs consecutifs coupent le circuit.",
+      "arguments": [
+        "fail;fail;fail"
+      ],
+      "expected": "open",
+      "expectedException": null,
+      "argumentsUnchanged": false
+    },
+    {
+      "name": "Visible_SuccessResetsCounter",
+      "message": "Un succes efface les echecs isoles : le circuit reste closed.",
+      "arguments": [
+        "fail;ok;fail"
+      ],
+      "expected": "closed",
+      "expectedException": null,
+      "argumentsUnchanged": false
+    },
+    {
+      "name": "Visible_TickEntersHalfOpen",
+      "message": "Apres l'ouverture, un tick fait passer en half-open.",
+      "arguments": [
+        "fail;fail;fail;tick"
+      ],
+      "expected": "half-open",
+      "expectedException": null,
+      "argumentsUnchanged": false
+    }
+  ]
+}

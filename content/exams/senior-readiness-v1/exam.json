@@ -1,0 +1,19 @@
+{
+    "schemaVersion":  1,
+    "id":  "senior-readiness-v1",
+    "title":  "Examen senior — fondamentaux distribues S25-S32",
+    "version":  1,
+    "durationMinutes":  120,
+    "drawCount":  5,
+    "passingScore":  80,
+    "eligibleExerciseIds":  [
+                                "senior-circuit-breaker-001",
+                                "senior-idempotency-key-001",
+                                "senior-consumer-decision-001",
+                                "senior-compensation-001",
+                                "senior-decomposition-001",
+                                "senior-error-budget-001",
+                                "senior-review-triage-001",
+                                "senior-legacy-trace-001"
+                            ]
+}

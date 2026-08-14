@@ -54,7 +54,7 @@ seniors à un « parcours distinct de 12–24 mois » qui n'existe pas.
 | T7 | Exercices hors banque d'examen | **43/142** jamais tirables | Moyenne |
 | T8 | Densité de pratique | S1–S10 **8,8**/sem, S11–S17 **6,0**, S18–S20 **3,0**, S21–S24 **1,5** | Moyenne |
 | T9 | Exercices à domaine trivial | **12** entièrement booléens (≤ 16 entrées possibles) | Moyenne |
-| T10 | Manques REST | versionnage, `ETag`/`If-Match`, limitation de débit, `Cache-Control`, CORS, webhooks : 0 ou quasi | Moyenne |
+| T10 | Manques REST | ~~versionnage, `ETag`/`If-Match`, limitation de débit, `Cache-Control`, CORS, webhooks : 0 ou quasi~~ **Clos** : 6 leçons et 12 exercices ajoutés en S11–S13, un par sujet, câblés à l'examen `api-security-v1` | Moyenne |
 | T11 | Fondamentaux distribués | `messaging` 0, `circuit breaker` 0, `outbox` 0, `résilience` 0 | Moyenne |
 | T12 | Front-end | **0** JS/TS, **0** bUnit, Blazor jamais enseigné | **Élevée** |
 | T13 | Revue de code et legacy | aucune, et `code-review` est une clé sans producteur | Élevée |

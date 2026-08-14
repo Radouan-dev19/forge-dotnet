@@ -1,0 +1,55 @@
+{
+  "schemaVersion": 1,
+  "id": "blazor-jwt-client",
+  "version": 1,
+  "title": "Client Blazor authentifié par jeton",
+  "weeks": [27],
+  "skills": ["csharp.blazor", "security.token"],
+  "recommendedBefore": [
+    "front-blazor-essentials-001",
+    "front-form-field-state-001",
+    "front-client-server-contract-001",
+    "front-route-guard-001"
+  ],
+  "estimatedMinutes": 150,
+  "briefPath": "README.md",
+  "objectives": [
+    {
+      "id": "render-authenticated",
+      "goal": "Consommer un client de commandes protégé uniquement lorsque l'état d'authentification cascade prouve une identité, puis rendre la liste obtenue dans le composant.",
+      "observableProof": "Avec une session autorisée, la suite bUnit rend OrdersView et retrouve les deux commandes A-1 et A-2 dans le balisage produit."
+    },
+    {
+      "id": "refuse-unauthenticated",
+      "goal": "Traiter l'absence d'identité comme une garde de route : afficher un refus explicite et n'émettre aucun appel vers le client protégé.",
+      "observableProof": "Avec une session non autorisée, le balisage contient « Connexion requise » et le compteur d'appels du faux client reste à zéro."
+    },
+    {
+      "id": "cancel-in-flight",
+      "goal": "Détenir la CancellationTokenSource du chargement en champ et l'annuler depuis le bouton Annuler, en libérant proprement le jeton dans Dispose.",
+      "observableProof": "La suite clique sur Annuler pendant un chargement en vol, le jeton passe à IsCancellationRequested et le composant affiche « Chargement annulé. »."
+    },
+    {
+      "id": "green-bunit-suite",
+      "goal": "Exécuter la suite bUnit à l'intérieur du test de solution et vérifier qu'elle couvre les trois comportements avant d'y toucher.",
+      "observableProof": "La commande de test rend une suite entièrement verte, en mémoire, sans navigateur ni conteneur ni service externe."
+    }
+  ],
+  "commands": [
+    {
+      "shell": "dotnet",
+      "command": "dotnet test content/labs/blazor-jwt-client/tests/ForgeBlazorJwtClient.Tests/ForgeBlazorJwtClient.Tests.csproj",
+      "purpose": "Rend le composant OrdersView via bUnit et éprouve le rendu authentifié, le refus non authentifié et l'annulation d'un chargement en vol."
+    }
+  ],
+  "limits": [
+    "Aucun fournisseur d'identité réel : la session et l'état d'authentification sont fabriqués par le harnais de test bUnit, il n'y a ni obtention, ni rafraîchissement, ni révocation du jeton.",
+    "Le jeton et l'AuthenticationState sont simulés dans les tests via AddTestAuthorization : le composant lit un état déjà résolu, pas un jeton signé validé côté serveur.",
+    "Rien n'est prouvé sur le transport : ni navigateur, ni requête HTTP réelle, ni en-tête Authorization émis vers une API distante ne sont exercés ici.",
+    "La première exécution de dotnet test restaure des paquets NuGet, dont bunit et AngleSharp : elle exige un cache local déjà peuplé ou un accès au dépôt de paquets."
+  ],
+  "evidencePolicy": "learner-declared-outside-sandbox",
+  "requiresDocker": false,
+  "requiresNetwork": false,
+  "license": "CC-BY-4.0"
+}

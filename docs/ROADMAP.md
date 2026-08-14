@@ -176,7 +176,9 @@ par semaine, et la matrice figée de `ContentS11S20CoverageTests` la rend visibl
 | Lot | Semaines portées | Exercices ajoutés | Densité S11–S17 |
 |---|---|---:|---:|
 | Lot 0 | S11 | 1 — `api-content-negotiation-001` | 5,1 → 5,3 |
-| Lot 1 | S12 à S17 | 6 | 5,3 → **6,0** |
+| Lot 1 | S12 à S17 | 6 | 5,3 → 6,0 |
+| Lot JWT | S14 | 6 — `security-jwt-*` | 6,0 → 6,9 |
+| Lot REST | S11 à S13 | 12 — versionnage, ETag, débit, cache, CORS, webhooks | 6,9 → **8,6** |
 
 Le lot 1 ajoute `api-validation-aggregate-001` (S12), `api-sort-expression-001` (S13),
 `security-scope-grant-001` (S14), `tests-boundary-probe-001` (S15),
@@ -192,7 +194,28 @@ exemple — se résout par une table de correspondance apprise par cœur, ce qui
 la compétence annoncée. C'est le défaut structurel des activités `azure-*`, `docker-*` et `ci-*`
 existantes, et il ne se corrige pas en ajoutant des exercices de la même forme.
 
-**Cible restante : huit exercices par semaine sur S11–S17**, soit quatorze exercices de plus. Les
+Le lot JWT ajoute à S14 deux leçons — anatomie d'un jeton, ordre de validation — et six exercices
+`security-jwt-*` qui font décoder, signer et valider des jetons réels avec la cryptographie de la
+BCL, plus le laboratoire `api-jwt-bearer` qui câble le middleware correspondant. S14 devient la
+première semaine à dépasser la cible, avec douze exercices.
+
+Le lot OAuth/OIDC prolonge cette piste en S21 — la compétence d'identité de la semaine rend le
+placement cohérent, l'identité gérée étant un flux d'identifiants client : trois leçons
+(`oauth-flows-001`, `oauth-pkce-001`, `oidc-identity-001`), cinq exercices `security-*` sur les
+noyaux décidables — défi PKCE, verdict de state, choix de flux, revendications du jeton
+d'identité, fenêtre de rotation — et le laboratoire `oauth-local-idp`, un guichet d'autorisation
+en processus qui déroule les deux flux sans aucun fournisseur réel.
+
+Le lot REST comble les six manques d'API relevés par l'audit (T10) en portant S11 à S13 à dix
+exercices chacune : un sujet par paire d'exercices — versionnage (`api-versioning-001`), ETag et
+concurrence conditionnelle (`api-etag-concurrency-001`), limitation de débit
+(`api-rate-limiting-001`), Cache-Control (`api-cache-control-001`), CORS (`api-cors-001`) et
+webhooks (`api-webhooks-001`). Deux continuités sont montrées explicitement : l'ETag conditionnel
+est la concurrence optimiste de `sql-isolation-001` et `ef-core-data-access-001` remontée dans
+HTTP, et la vérification de signature des webhooks réutilise le HMAC du lot jetons. Ce lot fait
+franchir la cible de huit exercices à S11–S14, ce qui sert aussi la reprise de densité (T8).
+
+**Cible restante : huit exercices par semaine sur S11–S13 et S15–S17**, soit huit exercices de plus. Les
 sujets qu'un runner à méthode statique ne peut pas héberger réellement — écrire un vrai fichier de
 conteneur, une vraie définition de pipeline, un vrai déploiement — relèvent des laboratoires de
 `content/labs/`, pas des exercices : les décliner sur le modèle de `labs/api-mini-erp/` est un lot

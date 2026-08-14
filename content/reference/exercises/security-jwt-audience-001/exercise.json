@@ -1,0 +1,82 @@
+{
+    "schemaVersion":  1,
+    "id":  "security-jwt-audience-001",
+    "version":  1,
+    "title":  "Contrôler l'audience d'un jeton",
+    "kind":  "csharp",
+    "difficulty":  3,
+    "skills":  [
+                   "security.token"
+               ],
+    "prerequisites":  [
+                          "security-jwt-anatomy-001"
+                      ],
+    "estimatedMinutes":  30,
+    "statement":  "statement.md",
+    "constraints":  [
+                        "Conserver exactement la signature publique",
+                        "La revendication d'audience accepte deux formes JSON, chaîne ou tableau de chaînes, et aucune autre",
+                        "La correspondance est stricte et sensible à la casse ; son absence est un refus, pas une valeur par défaut"
+                    ],
+    "examples":  [
+                     {
+                         "input":  "[\"<jeton aud=forge-api>\", \"forge-api\"]",
+                         "output":  "true"
+                     }
+                 ],
+    "reflectionFields":  [
+                             "reformulation",
+                             "inputs",
+                             "expectedOutput",
+                             "edgeCases",
+                             "hypothesis",
+                             "plan"
+                         ],
+    "starterPath":  "starter/",
+    "visibleTestsPath":  "tests/visible/",
+    "hiddenTestsPath":  "tests/hidden/",
+    "hints":  [
+                  {
+                      "level":  1,
+                      "kind":  "socratic",
+                      "content":  "Que risque une API qui accepte un jeton parfaitement signé mais émis pour un autre service du même émetteur ?"
+                  },
+                  {
+                      "level":  2,
+                      "kind":  "location",
+                      "content":  "La difficulté est entièrement dans la lecture de la revendication d'audience, dont le type JSON varie d'un émetteur à l'autre ; la décision qui suit est une simple appartenance."
+                  },
+                  {
+                      "level":  3,
+                      "kind":  "strategy",
+                      "content":  "Raisonnez par forme JSON : une chaîne se compare directement, un tableau se parcourt en ne comparant que ses éléments chaîne, et toute autre forme — nombre, objet, absence — se refuse."
+                  },
+                  {
+                      "level":  4,
+                      "kind":  "partial-pseudocode",
+                      "content":  "décoder la charge utile et refuser tout jeton illisible ; chercher la revendication d'audience et refuser si elle manque ; si c'est une chaîne, répondre par l'égalité stricte avec l'audience attendue ; si c'est un tableau, répondre vrai dès qu'un élément chaîne correspond strictement ; refuser toute autre forme"
+                  }
+              ],
+    "solution":  {
+                     "path":  "solution/",
+                     "unlock":  {
+                                    "seriousAttempts":  2,
+                                    "minimumDelayMinutes":  10
+                                }
+                 },
+    "explanation":  "explanation.md",
+    "complexity":  "O(n + k) en temps, n étant la taille de la charge utile et k le nombre d'audiences portées",
+    "commonMistakes":  [
+                           "Ne gérer que la forme chaîne et refuser tout jeton dont l'audience est un tableau pourtant conforme",
+                           "Comparer l'audience sans tenir compte de la casse et accepter un service homonyme",
+                           "Traiter l'absence d'audience comme une acceptation par défaut au lieu d'un refus",
+                           "Lever sur un élément de tableau non textuel au lieu de l'ignorer et de poursuivre"
+                       ],
+    "variantId":  "security-jwt-decode-001",
+    "reviewCards":  [
+                        "card-security-jwt-audience-001-rule",
+                        "card-security-jwt-audience-001-edge"
+                    ],
+    "interviewQuestionId":  "interview-security-jwt-audience-001",
+    "license":  "CC-BY-4.0"
+}

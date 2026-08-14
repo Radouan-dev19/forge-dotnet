@@ -1,0 +1,40 @@
+{
+    "schemaVersion":  1,
+    "id":  "oidc-identity-001",
+    "version":  1,
+    "title":  "OAuth n'est pas OIDC : autorisation, identité et vie des jetons",
+    "week":  21,
+    "skills":  [
+                   {
+                       "id":  "security.token",
+                       "weight":  0.6
+                   },
+                   {
+                       "id":  "security.authentication",
+                       "weight":  0.4
+                   }
+               ],
+    "prerequisites":  [
+                          "oauth-pkce-001"
+                      ],
+    "estimatedMinutes":  70,
+    "objectives":  [
+                       "Expliquer pourquoi un jeton d'accès ne prouve pas une identité, valider un jeton d'identité et décrire rotation et révocation des jetons de rafraîchissement"
+                   ],
+    "sections":  [
+                     "intuition",
+                     "explanation",
+                     "example",
+                     "counterExample",
+                     "check",
+                     "guided",
+                     "independent",
+                     "debugging",
+                     "interview",
+                     "summary",
+                     "reviewCards",
+                     "masteryTest"
+                 ],
+    "markdownPath":  "lesson.md",
+    "license":  "CC-BY-4.0"
+}

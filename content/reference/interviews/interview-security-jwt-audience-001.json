@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "id": "interview-security-jwt-audience-001",
+  "version": 1,
+  "title": "Contrôler l'audience d'un jeton",
+  "level": "junior",
+  "durationMinutes": 6,
+  "skills": [
+    "security.token"
+  ],
+  "question": "À quoi sert la revendication d'audience d'un jeton, et quelles formes votre vérification doit-elle accepter ?",
+  "observableCriteria": [
+    "Le rejeu croisé entre services d'un même émetteur est décrit comme le risque couvert",
+    "Les deux formes légitimes — chaîne et tableau de chaînes — sont citées avec le refus de toute autre",
+    "L'absence de la revendication est traitée comme un refus, pas comme une permission"
+  ],
+  "modelAnswer": "L'audience nomme les services auxquels le jeton est destiné. Sans ce contrôle, un jeton authentique volé à une API de consultation ouvre l'API d'administration du même émetteur, puisque la signature y est la même : c'est le rejeu croisé. La norme permet une chaîne unique ou un tableau de chaînes ; je gère les deux, je compare strictement et en tenant compte de la casse, et je refuse toute autre forme ainsi que l'absence de la revendication — un jeton sans destinataire n'est destiné à personne.",
+  "commonMistakes": [
+    "Ne gérer que la forme chaîne et rejeter en production les jetons multi-services conformes",
+    "Considérer l'absence d'audience comme une absence de restriction"
+  ],
+  "variants": [
+    "Décider du comportement face à un tableau d'audiences contenant des éléments non textuels.",
+    "Expliquer la différence entre le contrôle d'audience et celui d'émetteur, et pourquoi les deux existent."
+  ],
+  "license": "CC-BY-4.0"
+}

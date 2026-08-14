@@ -22,6 +22,10 @@
                                 "csharp-array-positive-sum-001",
                                 "csharp-string-palindrome-001",
                                 "csharp-date-span-001",
-                                "csharp-dictionary-default-001"
+                                "csharp-dictionary-default-001",
+                                "csharp-date-business-days-001",
+                                "csharp-date-expiry-001",
+                                "csharp-dictionary-stock-001",
+                                "csharp-string-frequency-001"
                             ]
 }

@@ -192,6 +192,10 @@ public static partial class ExamRules
     public static void ValidateBlueprint(ExamBlueprint blueprint)
     {
         ArgumentNullException.ThrowIfNull(blueprint);
+
+        // Le vivier grandit avec le catalogue : sa borne n'est qu'un garde-fou contre une liste
+        // absurde, alignée sur celle des listes d'éligibilité de la source (256). Ce n'est pas un
+        // plafond éditorial — le rétrécir rendrait intirable tout exercice publié au-delà.
         if (!IdPattern().IsMatch(blueprint.Id ?? string.Empty)
             || blueprint.Version < 1
             || !RevisionPattern().IsMatch(blueprint.Revision ?? string.Empty)
@@ -201,7 +205,7 @@ public static partial class ExamRules
             || blueprint.DrawCount is < 1 or > 8
             || blueprint.PassingScore is < 0 or > 100
             || blueprint.Candidates.Count < blueprint.DrawCount
-            || blueprint.Candidates.Count > 32
+            || blueprint.Candidates.Count > 256
             || blueprint.Candidates.Select(item => item.ItemId).Distinct(StringComparer.Ordinal).Count()
                 != blueprint.Candidates.Count)
         {

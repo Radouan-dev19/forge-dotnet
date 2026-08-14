@@ -22,6 +22,14 @@
                                 "csharp-lambda-threshold-001",
                                 "csharp-linq-even-sum-001",
                                 "csharp-linq-top-three-001",
-                                "csharp-json-number-count-001"
+                                "csharp-json-number-count-001",
+                                "csharp-absolute-map-001",
+                                "csharp-average-001",
+                                "csharp-csv-field-count-001",
+                                "csharp-distinct-sorted-001",
+                                "csharp-file-extension-001",
+                                "csharp-filter-minimum-001",
+                                "csharp-sequence-copy-001",
+                                "csharp-word-histogram-001"
                             ]
 }

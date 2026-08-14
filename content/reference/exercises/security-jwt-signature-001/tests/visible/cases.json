@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "cases": [
+    {
+      "name": "Visible_ValidToken",
+      "message": "Jeton intact, bonne clé : la signature se recalcule à l'identique.",
+      "arguments": [
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyLTQ4MiIsInNjb3BlIjoib3JkZXJzLnJlYWQiLCJpc3MiOiJmb3JnZS1pc3N1ZXIifQ.eQod_7ZKbIdX9R5cl97hBBSq1DgGJPZSNekAKxwLqv8",
+        "forge-fake-jwt-secret"
+      ],
+      "expected": true,
+      "expectedException": null,
+      "argumentsUnchanged": false
+    },
+    {
+      "name": "Visible_WrongSecret",
+      "message": "Même jeton, autre clé : le condensat recalculé diffère.",
+      "arguments": [
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyLTQ4MiIsInNjb3BlIjoib3JkZXJzLnJlYWQiLCJpc3MiOiJmb3JnZS1pc3N1ZXIifQ.eQod_7ZKbIdX9R5cl97hBBSq1DgGJPZSNekAKxwLqv8",
+        "forge-fake-other-key"
+      ],
+      "expected": false,
+      "expectedException": null,
+      "argumentsUnchanged": false
+    },
+    {
+      "name": "Visible_TamperedPayload",
+      "message": "Charge utile remplacée après signature : falsification détectée.",
+      "arguments": [
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoib3BlcmF0b3IiLCJ6b25lIjoiZXhwZWRpdGlvbiJ9.eQod_7ZKbIdX9R5cl97hBBSq1DgGJPZSNekAKxwLqv8",
+        "forge-fake-jwt-secret"
+      ],
+      "expected": false,
+      "expectedException": null,
+      "argumentsUnchanged": false
+    }
+  ]
+}

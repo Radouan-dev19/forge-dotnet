@@ -1,0 +1,52 @@
+{
+  "schemaVersion": 1,
+  "cases": [
+    {
+      "name": "Hidden_TooShort",
+      "message": "Valeur non vide trop courte face a minlen.",
+      "arguments": ["required;minlen=3", "input=ab"],
+      "expected": "dirty-untouched-invalid",
+      "expectedException": null,
+      "argumentsUnchanged": false
+    },
+    {
+      "name": "Hidden_ResetClearsTouched",
+      "message": "Reset ramene la valeur initiale et efface le contact.",
+      "arguments": ["required", "input=hi;blur;reset"],
+      "expected": "pristine-untouched-invalid",
+      "expectedException": null,
+      "argumentsUnchanged": false
+    },
+    {
+      "name": "Hidden_OptionalEmptyValid",
+      "message": "Champ facultatif vide : valide meme apres un blur.",
+      "arguments": ["optional", "blur"],
+      "expected": "pristine-touched-valid",
+      "expectedException": null,
+      "argumentsUnchanged": false
+    },
+    {
+      "name": "Hidden_OptionalTooShort",
+      "message": "Facultatif mais valeur non vide trop courte : minlen s'applique.",
+      "arguments": ["optional;minlen=3", "input=xy"],
+      "expected": "dirty-untouched-invalid",
+      "expectedException": null,
+      "argumentsUnchanged": false
+    },
+    {
+      "name": "Hidden_LastInputWins",
+      "message": "Deuxieme saisie remplace la premiere, plus courte que minlen.",
+      "arguments": ["required;minlen=3", "input=abcd;input=z"],
+      "expected": "dirty-untouched-invalid",
+      "expectedException": null,
+      "argumentsUnchanged": false
+    },
+    {
+      "name": "Hidden_NullFieldThrows",
+      "message": "Regles absentes : ArgumentNullException.",
+      "arguments": [null, "blur"],
+      "expectedException": "ArgumentNullException",
+      "argumentsUnchanged": false
+    }
+  ]
+}

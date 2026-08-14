@@ -1,0 +1,82 @@
+{
+    "schemaVersion":  1,
+    "id":  "security-jwt-lifetime-001",
+    "version":  1,
+    "title":  "Décider la fenêtre de validité d'un jeton",
+    "kind":  "csharp",
+    "difficulty":  3,
+    "skills":  [
+                   "security.token"
+               ],
+    "prerequisites":  [
+                          "security-jwt-validation-001"
+                      ],
+    "estimatedMinutes":  35,
+    "statement":  "statement.md",
+    "constraints":  [
+                        "Conserver exactement la signature publique",
+                        "L'expiration est stricte : à l'instant exact où le jeton expire, tolérance comprise, il est refusé",
+                        "Un jeton sans expiration est refusé : une durée de vie illimitée n'est pas un cas valide"
+                    ],
+    "examples":  [
+                     {
+                         "input":  "[\"<jeton avec exp>\", 1749990000, 30]",
+                         "output":  "true"
+                     }
+                 ],
+    "reflectionFields":  [
+                             "reformulation",
+                             "inputs",
+                             "expectedOutput",
+                             "edgeCases",
+                             "hypothesis",
+                             "plan"
+                         ],
+    "starterPath":  "starter/",
+    "visibleTestsPath":  "tests/visible/",
+    "hiddenTestsPath":  "tests/hidden/",
+    "hints":  [
+                  {
+                      "level":  1,
+                      "kind":  "socratic",
+                      "content":  "La tolérance d'horloge agrandit-elle la fenêtre de validité des deux côtés, ou d'un seul — et dans quel sens à chaque borne ?"
+                  },
+                  {
+                      "level":  2,
+                      "kind":  "location",
+                      "content":  "Toute la décision tient dans deux inégalités sur des entiers, une par borne temporelle ; le décodage qui les précède ne fait que les alimenter."
+                  },
+                  {
+                      "level":  3,
+                      "kind":  "strategy",
+                      "content":  "Distinguez la borne obligatoire de la borne facultative : l'absence d'expiration refuse le jeton, l'absence de prise d'effet laisse passer — et faites vos additions en long pour éviter le débordement."
+                  },
+                  {
+                      "level":  4,
+                      "kind":  "partial-pseudocode",
+                      "content":  "décoder la charge utile et refuser tout jeton illisible ; exiger une expiration numérique ; refuser si l'instant courant atteint ou dépasse l'expiration augmentée de la tolérance ; si une prise d'effet est présente, refuser tant que l'instant courant reste sous la prise d'effet diminuée de la tolérance ; sinon accepter"
+                  }
+              ],
+    "solution":  {
+                     "path":  "solution/",
+                     "unlock":  {
+                                    "seriousAttempts":  2,
+                                    "minimumDelayMinutes":  10
+                                }
+                 },
+    "explanation":  "explanation.md",
+    "complexity":  "O(n) en temps pour le décodage, n étant la taille de la charge utile, puis O(1) pour la décision",
+    "commonMistakes":  [
+                           "Accepter le jeton à l'instant exact de l'expiration augmentée de la tolérance, alors que la borne est stricte",
+                           "Appliquer la tolérance dans le mauvais sens et rétrécir la fenêtre au lieu de l'élargir",
+                           "Traiter l'absence d'expiration comme une validité illimitée au lieu d'un refus",
+                           "Additionner expiration et tolérance en int et déborder sur les grandes valeurs d'époque"
+                       ],
+    "variantId":  "security-jwt-order-001",
+    "reviewCards":  [
+                        "card-security-jwt-lifetime-001-rule",
+                        "card-security-jwt-lifetime-001-edge"
+                    ],
+    "interviewQuestionId":  "interview-security-jwt-lifetime-001",
+    "license":  "CC-BY-4.0"
+}

@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "cases": [
+    {
+      "name": "Hidden_PileAuSeuil",
+      "message": "Cinq livraisons : pas encore empoisonne, on traite.",
+      "arguments": [5, "m3", ""],
+      "expected": "process",
+      "expectedException": null,
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_EmpoisonnePrimeSurDoublon",
+      "message": "Empoisonne meme s'il est deja traite : lettres mortes d'abord.",
+      "arguments": [6, "m1", "m1"],
+      "expected": "dead-letter",
+      "expectedException": null,
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_DoublonDansUneListe",
+      "message": "Identifiant present dans une liste : acquittement de doublon.",
+      "arguments": [1, "m2", "m1,m2,m3"],
+      "expected": "ack-duplicate",
+      "expectedException": null,
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_NouveauMessage",
+      "message": "Identifiant absent de la liste : on traite.",
+      "arguments": [3, "new", "a,b"],
+      "expected": "process",
+      "expectedException": null,
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_LivraisonNulle",
+      "message": "Moins d'une livraison : entree absurde.",
+      "arguments": [0, "m1", ""],
+      "expectedException": "ArgumentOutOfRangeException",
+      "argumentsUnchanged": false
+    }
+  ]
+}

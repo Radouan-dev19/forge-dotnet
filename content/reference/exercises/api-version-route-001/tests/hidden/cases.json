@@ -1,0 +1,65 @@
+{
+  "schemaVersion": 1,
+  "cases": [
+    {
+      "name": "Hidden_RootPath",
+      "message": "Chemin racine : défaut.",
+      "arguments": [
+        "/",
+        "v1,v2",
+        "v2"
+      ],
+      "expected": "v2",
+      "expectedException": null,
+      "argumentsUnchanged": false
+    },
+    {
+      "name": "Hidden_EmptyPath",
+      "message": "Chemin vide : défaut.",
+      "arguments": [
+        "",
+        "v1,v2",
+        "v2"
+      ],
+      "expected": "v2",
+      "expectedException": null,
+      "argumentsUnchanged": false
+    },
+    {
+      "name": "Hidden_CaseInsensitive",
+      "message": "Version en majuscules : reconnue.",
+      "arguments": [
+        "/V2/orders",
+        "v1,v2",
+        "v1"
+      ],
+      "expected": "v2",
+      "expectedException": null,
+      "argumentsUnchanged": false
+    },
+    {
+      "name": "Hidden_LeadingResource",
+      "message": "Ressource en tête sans version : défaut.",
+      "arguments": [
+        "/health",
+        "v1,v2",
+        "v2"
+      ],
+      "expected": "v2",
+      "expectedException": null,
+      "argumentsUnchanged": false
+    },
+    {
+      "name": "Hidden_MultiDigit",
+      "message": "Version à plusieurs chiffres prise en charge.",
+      "arguments": [
+        "/v10/items",
+        "v9,v10",
+        "v10"
+      ],
+      "expected": "v10",
+      "expectedException": null,
+      "argumentsUnchanged": false
+    }
+  ]
+}

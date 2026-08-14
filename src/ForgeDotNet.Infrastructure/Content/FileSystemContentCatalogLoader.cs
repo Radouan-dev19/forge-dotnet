@@ -429,6 +429,11 @@ public sealed class FileSystemContentCatalogLoader : IContentCatalogLoader
         ContentDocumentType.EnglishActivity => $"{root.GetProperty("situation").GetString()} {JoinStrings(root.GetProperty("instructions"))}",
         ContentDocumentType.Project => string.Join(' ', root.GetProperty("milestones").EnumerateArray().Select(milestone =>
             $"{milestone.GetProperty("title").GetString()} {milestone.GetProperty("evidence").GetString()}")),
+
+        // Sans ce cas, un laboratoire tomberait sur le résumé vide du défaut et resterait introuvable
+        // par la recherche, ce qui reproduirait à l'échelle du catalogue le défaut qu'on corrige.
+        ContentDocumentType.Lab => string.Join(' ', root.GetProperty("objectives").EnumerateArray().Select(objective =>
+            $"{objective.GetProperty("goal").GetString()} {objective.GetProperty("observableProof").GetString()}")),
         _ => string.Empty,
     };
 

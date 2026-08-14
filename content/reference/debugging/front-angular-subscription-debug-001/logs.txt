@@ -1,0 +1,1 @@
+Event=SubscriptionAudit Level=Warning LiveSubscriptions=37 ExpectedSubscriptions=0 HeapMB=312 Screen=orders CorrelationId=dbg-front-angular-001

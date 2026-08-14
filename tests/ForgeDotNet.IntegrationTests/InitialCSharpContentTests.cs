@@ -46,7 +46,7 @@ public sealed class InitialCSharpContentTests(DockerSecurityFixture dockerFixtur
         // Le redéclarer ici le laissait dériver sans que personne ne le voie, puisque cette classe
         // ne s'exécute qu'avec un démon disponible : seul un plancher est donc vérifié.
         Assert.True(
-            exerciseIds.Length >= 142,
+            exerciseIds.Length >= 148,
             $"{exerciseIds.Length} exercices publiés : le catalogue a perdu du contenu.");
 
         await Task.WhenAll(exerciseIds.Select(async exerciseId =>

@@ -1,0 +1,62 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://forge-dotnet.local/schemas/v1/lab.schema.json",
+  "title": "Laboratoire Forge.NET v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion", "id", "version", "title", "weeks", "skills", "recommendedBefore",
+    "estimatedMinutes", "briefPath", "objectives", "commands", "limits", "evidencePolicy", "license"
+  ],
+  "properties": {
+    "schemaVersion": { "type": "integer", "const": 1 },
+    "id": { "type": "string", "pattern": "^[a-z0-9]+(?:[.-][a-z0-9]+)*$", "minLength": 3, "maxLength": 128 },
+    "version": { "type": "integer", "minimum": 1 },
+    "title": { "type": "string", "minLength": 3, "maxLength": 200 },
+    "weeks": { "type": "array", "minItems": 1, "maxItems": 24, "uniqueItems": true, "items": { "type": "integer", "minimum": 1, "maximum": 27 } },
+    "skills": { "type": "array", "minItems": 1, "maxItems": 30, "uniqueItems": true, "items": { "type": "string", "pattern": "^[a-z0-9]+(?:[.-][a-z0-9]+)*$" } },
+    "recommendedBefore": {
+      "description": "Contenu du catalogue de référence à travailler avant ce laboratoire. Le champ ne s'appelle pas prerequisites parce que ce nom désigne, partout ailleurs, une référence résolue à l'intérieur du même catalogue : un laboratoire vit sous content/labs et pointe vers content/reference, donc son propre catalogue ne peut pas la résoudre. L'existence de ces identifiants est vérifiée par un test dédié, entre les deux catalogues.",
+      "type": "array", "maxItems": 30, "uniqueItems": true,
+      "items": { "type": "string", "pattern": "^[a-z0-9]+(?:[.-][a-z0-9]+)*$" }
+    },
+    "estimatedMinutes": { "type": "integer", "minimum": 15, "maximum": 1200 },
+    "briefPath": { "type": "string", "pattern": "^[A-Za-z0-9._/-]+$" },
+
+    "objectives": {
+      "type": "array", "minItems": 2, "maxItems": 20,
+      "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["id", "goal", "observableProof"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^[a-z0-9]+(?:[.-][a-z0-9]+)*$" },
+          "goal": { "type": "string", "minLength": 20, "maxLength": 500 },
+          "observableProof": { "type": "string", "minLength": 20, "maxLength": 500 }
+        }
+      }
+    },
+
+    "commands": {
+      "type": "array", "minItems": 1, "maxItems": 20,
+      "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["shell", "command", "purpose"],
+        "properties": {
+          "shell": { "type": "string", "enum": ["powershell", "docker", "git", "dotnet"] },
+          "command": { "type": "string", "minLength": 5, "maxLength": 500 },
+          "purpose": { "type": "string", "minLength": 20, "maxLength": 500 }
+        }
+      }
+    },
+
+    "limits": { "type": "array", "minItems": 1, "maxItems": 20, "uniqueItems": true, "items": { "type": "string", "minLength": 20, "maxLength": 500 } },
+
+    "evidencePolicy": { "const": "learner-declared-outside-sandbox" },
+
+    "requiresDocker": { "type": "boolean" },
+    "requiresNetwork": { "type": "boolean" },
+
+    "license": { "type": "string", "pattern": "^[A-Za-z0-9.-]+$", "minLength": 3, "maxLength": 80 },
+    "attribution": { "type": "string", "minLength": 3, "maxLength": 300 }
+  }
+}

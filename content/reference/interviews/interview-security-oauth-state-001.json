@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "id": "interview-security-oauth-state-001",
+  "version": 1,
+  "title": "Rendre un verdict sur le state de retour",
+  "level": "intermediate",
+  "durationMinutes": 7,
+  "skills": [
+    "security.token",
+    "security.authentication"
+  ],
+  "question": "Que protège le paramètre state d'un flux d'autorisation, et comment votre client doit-il le gérer du tirage jusqu'au retour ?",
+  "observableCriteria": [
+    "La menace couverte est nommée : la réponse de redirection forgée inter-site, distincte du rejeu de jeton",
+    "Le cycle complet est décrit : tirage imprévisible, liaison à la session initiatrice, vérification et consommation atomiques au retour",
+    "Les verdicts sont différenciés : absent, rejoué, inconnu — avec la réponse opérationnelle de chacun"
+  ],
+  "modelAnswer": "Le state authentifie la réponse de redirection : sans lui, un attaquant fait visiter à sa victime une adresse de rappel portant son propre code, et la victime se retrouve sur le compte de l'attaquant. Je tire un state imprévisible, je le lie à la session du navigateur qui initie le flux, et au retour je vérifie et consomme en un geste atomique — la seconde présentation échoue. Je distingue trois refus : le retour sans state ne se rattache à rien, le state déjà servi est un rejeu — lien recliqué ou capture —, le state jamais émis signale une forgerie en cours, et chacun se journalise sous son nom.",
+  "commonMistakes": [
+    "Vérifier l'appartenance du state sans le consommer, ce qui rend toute adresse de rappel capturée rejouable",
+    "Confondre le rôle du state avec celui du nonce, qui protège le jeton d'identité et non la redirection"
+  ],
+  "variants": [
+    "Expliquer où stocker le state côté client pour qu'il survive à la redirection sans être lisible d'un autre site.",
+    "Adapter la gestion du state à une application qui ouvre plusieurs flux en parallèle."
+  ],
+  "license": "CC-BY-4.0"
+}

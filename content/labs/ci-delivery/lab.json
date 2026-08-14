@@ -1,0 +1,43 @@
+{
+  "schemaVersion": 1,
+  "id": "ci-delivery",
+  "version": 1,
+  "title": "Chaîne de livraison rejouée localement",
+  "weeks": [20],
+  "skills": ["ci.pipeline", "ci.artifacts", "ci.gates"],
+  "recommendedBefore": ["ci-pipeline-build-test-001", "ci-deployment-gates-001"],
+  "estimatedMinutes": 120,
+  "briefPath": "README.md",
+  "objectives": [
+    {
+      "id": "least-privilege-workflow",
+      "goal": "Relever, dans la définition de chaîne, la permission accordée au jeton et ce qu'elle interdit au reste.",
+      "observableProof": "La définition n'accorde que la lecture du contenu, et aucune étape ne reçoit de valeur sensible."
+    },
+    {
+      "id": "ordered-stages",
+      "goal": "Suivre l'ordre imposé entre compilation, tests et répétition de livraison, et dire ce qu'un ordre inversé masquerait.",
+      "observableProof": "L'étape de livraison déclare dépendre de l'étape de construction et de test, jamais l'inverse."
+    },
+    {
+      "id": "first-failure-stops",
+      "goal": "Rejouer la même séquence sur votre poste et constater qu'elle s'arrête au premier code de sortie non nul.",
+      "observableProof": "Un test rendu volontairement rouge interrompt la séquence avant l'étape d'image."
+    }
+  ],
+  "commands": [
+    {
+      "shell": "powershell",
+      "command": "powershell -ExecutionPolicy Bypass -File content/labs/ci-delivery/verify-ci.ps1",
+      "purpose": "Rejoue localement les commandes de compilation, de tests et d'image, dans l'ordre de la chaîne et avec le même arrêt au premier échec."
+    }
+  ],
+  "limits": [
+    "Les actions référencées le sont par version majeure. Dans une organisation, une politique de dépendances peut exiger leur empreinte exacte, ce que ce laboratoire n'impose pas.",
+    "Rejouer la séquence sur votre poste ne prouve pas qu'un exécuteur distant produirait le même résultat : l'environnement, lui, n'est pas reproduit ici."
+  ],
+  "evidencePolicy": "learner-declared-outside-sandbox",
+  "requiresDocker": true,
+  "requiresNetwork": false,
+  "license": "CC-BY-4.0"
+}

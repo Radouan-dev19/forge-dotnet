@@ -1,0 +1,82 @@
+{
+    "schemaVersion":  1,
+    "id":  "api-cors-preflight-001",
+    "version":  1,
+    "title":  "Décider l'issue d'un préflight",
+    "kind":  "csharp",
+    "difficulty":  4,
+    "skills":  [
+                   "api.contracts"
+               ],
+    "prerequisites":  [
+                          "api-cors-001"
+                      ],
+    "estimatedMinutes":  40,
+    "statement":  "statement.md",
+    "constraints":  [
+                        "Conserver exactement la signature publique",
+                        "La méthode demandée doit être autorisée ET chaque en-tête demandé doit l'être",
+                        "Un seul en-tête demandé non autorisé suffit à refuser le préflight"
+                    ],
+    "examples":  [
+                     {
+                         "input":  "[\"PUT\", \"GET,PUT,DELETE\", \"content-type,authorization\", \"content-type,authorization,x-trace\"]",
+                         "output":  "true"
+                     }
+                 ],
+    "reflectionFields":  [
+                             "reformulation",
+                             "inputs",
+                             "expectedOutput",
+                             "edgeCases",
+                             "hypothesis",
+                             "plan"
+                         ],
+    "starterPath":  "starter/",
+    "visibleTestsPath":  "tests/visible/",
+    "hiddenTestsPath":  "tests/hidden/",
+    "hints":  [
+                  {
+                      "level":  1,
+                      "kind":  "socratic",
+                      "content":  "Le préflight demande la permission d'une méthode ET d'un ensemble d'en-têtes : suffit-il que la méthode passe pour que la vraie requête soit envoyée ?"
+                  },
+                  {
+                      "level":  2,
+                      "kind":  "location",
+                      "content":  "Deux vérifications indépendantes : l'appartenance de la méthode à l'ensemble autorisé, et l'inclusion de tous les en-têtes demandés dans l'ensemble autorisé."
+                  },
+                  {
+                      "level":  3,
+                      "kind":  "strategy",
+                      "content":  "La casse des méthodes et des en-têtes se traite différemment : la méthode se compare sans casse, les noms d'en-têtes aussi ; le refus est un ET logique, un seul manquant suffit."
+                  },
+                  {
+                      "level":  4,
+                      "kind":  "partial-pseudocode",
+                      "content":  "analyser les ensembles autorisés en insensible à la casse ; refuser si la méthode demandée n'y figure pas ; parcourir les en-têtes demandés et refuser au premier absent de l'ensemble autorisé ; sinon accepter"
+                  }
+              ],
+    "solution":  {
+                     "path":  "solution/",
+                     "unlock":  {
+                                    "seriousAttempts":  2,
+                                    "minimumDelayMinutes":  10
+                                }
+                 },
+    "explanation":  "explanation.md",
+    "complexity":  "O(n) en temps, n étant la taille cumulée des listes",
+    "commonMistakes":  [
+                           "Accepter le préflight sur la seule méthode en ignorant un en-tête demandé non autorisé",
+                           "Comparer les noms d'en-têtes avec sensibilité à la casse alors qu'ils sont insensibles",
+                           "Traiter une liste d'en-têtes demandés vide comme un refus au lieu d'une absence d'exigence",
+                           "Exiger que les en-têtes autorisés soient tous demandés, en confondant les deux sens de l'inclusion"
+                       ],
+    "variantId":  "api-cors-origin-001",
+    "reviewCards":  [
+                        "card-api-cors-preflight-001-rule",
+                        "card-api-cors-preflight-001-edge"
+                    ],
+    "interviewQuestionId":  "interview-api-cors-preflight-001",
+    "license":  "CC-BY-4.0"
+}

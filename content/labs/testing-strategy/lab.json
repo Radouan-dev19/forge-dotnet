@@ -1,0 +1,43 @@
+{
+  "schemaVersion": 1,
+  "id": "testing-strategy",
+  "version": 1,
+  "title": "Règle métier éprouvée par ses frontières",
+  "weeks": [15, 16, 17],
+  "skills": ["tests.boundaries", "tests.doubles", "quality.regression"],
+  "recommendedBefore": ["tests-xunit-aaa-001", "tests-boundaries-theories-001"],
+  "estimatedMinutes": 120,
+  "briefPath": "README.md",
+  "objectives": [
+    {
+      "id": "boundary-coverage",
+      "goal": "Repérer, dans la suite fournie, quelle valeur de test réfute quelle erreur possible de la règle métier.",
+      "observableProof": "Décaler une borne de la règle d'une unité fait échouer un cas nommé, jamais l'ensemble de la suite."
+    },
+    {
+      "id": "injected-clock",
+      "goal": "Comprendre pourquoi la date est reçue en paramètre au lieu d'être lue dans la règle, et ce que cela rend possible.",
+      "observableProof": "La suite fixe une date d'expiration précise et reste verte quel que soit le jour où on la lance."
+    },
+    {
+      "id": "regression-witness",
+      "goal": "Ajouter un cas qui échouerait sur la version fautive de la règle et passerait sur la version corrigée.",
+      "observableProof": "Le cas ajouté échoue avant modification de la règle et passe après, ce qui en fait une non-régression et non une redondance."
+    }
+  ],
+  "commands": [
+    {
+      "shell": "dotnet",
+      "command": "dotnet test content/labs/testing-strategy/ForgeTestingLab.Tests/ForgeTestingLab.Tests.csproj",
+      "purpose": "Exécute la suite de la bibliothèque métier, sans base partagée, sans réseau et sans horloge système."
+    }
+  ],
+  "limits": [
+    "La règle métier est volontairement petite : ce laboratoire enseigne la sélection des cas, pas la conception d'un domaine complet.",
+    "Aucune dépendance externe n'est doublée ici, donc rien n'y est dit du coût d'un double mal choisi sur une frontière réseau."
+  ],
+  "evidencePolicy": "learner-declared-outside-sandbox",
+  "requiresDocker": false,
+  "requiresNetwork": false,
+  "license": "CC-BY-4.0"
+}

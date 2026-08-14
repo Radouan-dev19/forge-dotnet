@@ -1,0 +1,36 @@
+{
+    "schemaVersion":  1,
+    "id":  "senior-messaging-001",
+    "version":  1,
+    "title":  "Messagerie : consommateur idempotent, outbox, lettres mortes",
+    "week":  27,
+    "skills":  [
+                   {
+                       "id":  "quality.messaging",
+                       "weight":  1
+                   }
+               ],
+    "prerequisites":  [
+                          "senior-idempotency-001"
+                      ],
+    "estimatedMinutes":  75,
+    "objectives":  [
+                       "Expliquer le consommateur idempotent, le motif outbox pour publier de façon atomique, et la file de lettres mortes qui isole un message empoisonné"
+                   ],
+    "sections":  [
+                     "intuition",
+                     "explanation",
+                     "example",
+                     "counterExample",
+                     "check",
+                     "guided",
+                     "independent",
+                     "debugging",
+                     "interview",
+                     "summary",
+                     "reviewCards",
+                     "masteryTest"
+                 ],
+    "markdownPath":  "lesson.md",
+    "license":  "CC-BY-4.0"
+}

@@ -1,0 +1,82 @@
+{
+    "schemaVersion":  1,
+    "id":  "security-jwt-algorithm-001",
+    "version":  1,
+    "title":  "Imposer l'algorithme de signature",
+    "kind":  "csharp",
+    "difficulty":  3,
+    "skills":  [
+                   "security.token"
+               ],
+    "prerequisites":  [
+                          "security-jwt-validation-001"
+                      ],
+    "estimatedMinutes":  30,
+    "statement":  "statement.md",
+    "constraints":  [
+                        "Conserver exactement la signature publique",
+                        "Le refus de l'algorithme none est inconditionnel, quelle que soit sa casse",
+                        "La comparaison avec l'algorithme exigé est sensible à la casse, comme la norme des en-têtes JOSE"
+                    ],
+    "examples":  [
+                     {
+                         "input":  "[\"<en-tête HS256>.<charge-utile>.<signature>\", \"HS256\"]",
+                         "output":  "true"
+                     }
+                 ],
+    "reflectionFields":  [
+                             "reformulation",
+                             "inputs",
+                             "expectedOutput",
+                             "edgeCases",
+                             "hypothesis",
+                             "plan"
+                         ],
+    "starterPath":  "starter/",
+    "visibleTestsPath":  "tests/visible/",
+    "hiddenTestsPath":  "tests/hidden/",
+    "hints":  [
+                  {
+                      "level":  1,
+                      "kind":  "socratic",
+                      "content":  "Qui a écrit l'en-tête que vous êtes en train de lire — et qu'est-ce que cela interdit d'en déduire ?"
+                  },
+                  {
+                      "level":  2,
+                      "kind":  "location",
+                      "content":  "Le premier segment du jeton porte l'annonce d'algorithme ; toute la décision tient dans sa confrontation avec le paramètre du vérificateur."
+                  },
+                  {
+                      "level":  3,
+                      "kind":  "strategy",
+                      "content":  "Trois refus distincts à couvrir : l'annonce absente, l'annonce none sous toutes ses casses, et l'annonce différente de l'algorithme exigé — un seul chemin mène à vrai."
+                  },
+                  {
+                      "level":  4,
+                      "kind":  "partial-pseudocode",
+                      "content":  "refuser tout jeton sans trois segments ; décoder le premier segment en Base64Url et refuser s'il n'est pas un objet JSON ; y lire l'annonce d'algorithme et refuser si elle manque ou n'est pas une chaîne ; refuser none sans tenir compte de la casse ; sinon comparer strictement à l'algorithme exigé"
+                  }
+              ],
+    "solution":  {
+                     "path":  "solution/",
+                     "unlock":  {
+                                    "seriousAttempts":  2,
+                                    "minimumDelayMinutes":  10
+                                }
+                 },
+    "explanation":  "explanation.md",
+    "complexity":  "O(n) en temps et O(n) en espace, n étant la taille de l'en-tête décodé",
+    "commonMistakes":  [
+                           "Comparer l'annonce d'algorithme sans tenir compte de la casse et accepter hs256 pour HS256",
+                           "Oublier que none peut s'écrire None ou NONE et ne refuser que la forme minuscule",
+                           "Lever une exception sur un en-tête indécodable au lieu de refuser le jeton",
+                           "Croire l'annonce de l'en-tête et choisir le mécanisme de vérification d'après elle"
+                       ],
+    "variantId":  "security-jwt-signature-001",
+    "reviewCards":  [
+                        "card-security-jwt-algorithm-001-rule",
+                        "card-security-jwt-algorithm-001-edge"
+                    ],
+    "interviewQuestionId":  "interview-security-jwt-algorithm-001",
+    "license":  "CC-BY-4.0"
+}

@@ -2,7 +2,11 @@ namespace ForgeDotNet.Infrastructure.Content;
 
 public sealed class ContentValidationOptions
 {
-    public const long DefaultMaximumFileSizeBytes = 256 * 1024;
+    // La banque de cartes de révision est volontairement un fichier unique — les tests de
+    // chargement imposent un seul JSON sous reviews/ — et elle grandit avec chaque exercice
+    // câblé : 188 exercices couverts dépassent 256 Kio. Cette borne est une garde contre un
+    // fichier aberrant, pas un cliquet éditorial : la relever n'assouplit aucune règle de fond.
+    public const long DefaultMaximumFileSizeBytes = 512 * 1024;
     public const int DefaultMaximumFiles = 10_000;
     public const int DefaultMaximumCloneOccurrences = 3;
     public const int DefaultMinimumCloneParagraphWords = 12;

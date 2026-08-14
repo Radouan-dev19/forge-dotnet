@@ -1,0 +1,82 @@
+{
+    "schemaVersion":  1,
+    "id":  "api-token-bucket-001",
+    "version":  1,
+    "title":  "Faire évoluer un seau de jetons",
+    "kind":  "csharp",
+    "difficulty":  3,
+    "skills":  [
+                   "api.contracts"
+               ],
+    "prerequisites":  [
+                          "api-rate-limiting-001"
+                      ],
+    "estimatedMinutes":  35,
+    "statement":  "statement.md",
+    "constraints":  [
+                        "Conserver exactement la signature publique",
+                        "La recharge est plafonnée à la capacité : un seau inactif n'accumule pas un crédit illimité",
+                        "Un appel sans jeton disponible est refusé sans consommation, jamais par un solde négatif"
+                    ],
+    "examples":  [
+                     {
+                         "input":  "[2, 5, 1]",
+                         "output":  "2"
+                     }
+                 ],
+    "reflectionFields":  [
+                             "reformulation",
+                             "inputs",
+                             "expectedOutput",
+                             "edgeCases",
+                             "hypothesis",
+                             "plan"
+                         ],
+    "starterPath":  "starter/",
+    "visibleTestsPath":  "tests/visible/",
+    "hiddenTestsPath":  "tests/hidden/",
+    "hints":  [
+                  {
+                      "level":  1,
+                      "kind":  "socratic",
+                      "content":  "Que se passerait-il, sans plafond, pour un client resté inactif une journée puis qui envoie tout d'un coup ?"
+                  },
+                  {
+                      "level":  2,
+                      "kind":  "location",
+                      "content":  "Deux gestes ordonnés : recharger en plafonnant à la capacité, puis décider de l'admission sur le solde ainsi obtenu."
+                  },
+                  {
+                      "level":  3,
+                      "kind":  "strategy",
+                      "content":  "Le plafond s'applique à la recharge, pas au solde final ; l'admission ne consomme un jeton que s'il en reste, sinon le solde ne bouge pas."
+                  },
+                  {
+                      "level":  4,
+                      "kind":  "partial-pseudocode",
+                      "content":  "valider capacité strictement positive et recharge non négative ; calculer le disponible comme le minimum entre la capacité et le solde augmenté de la recharge ; si le disponible est strictement positif, rendre le disponible diminué de un ; sinon rendre le disponible inchangé"
+                  }
+              ],
+    "solution":  {
+                     "path":  "solution/",
+                     "unlock":  {
+                                    "seriousAttempts":  2,
+                                    "minimumDelayMinutes":  10
+                                }
+                 },
+    "explanation":  "explanation.md",
+    "complexity":  "O(1) en temps et en espace",
+    "commonMistakes":  [
+                           "Plafonner le solde final au lieu de la recharge, ce qui empêche de consommer le dernier jeton",
+                           "Laisser un seau inactif accumuler un crédit au-delà de sa capacité",
+                           "Rendre un solde négatif quand le seau est vide au lieu de refuser sans consommer",
+                           "Additionner solde et recharge sans borne et déborder sur de longues inactivités"
+                       ],
+    "variantId":  "api-retry-after-001",
+    "reviewCards":  [
+                        "card-api-token-bucket-001-rule",
+                        "card-api-token-bucket-001-edge"
+                    ],
+    "interviewQuestionId":  "interview-api-token-bucket-001",
+    "license":  "CC-BY-4.0"
+}

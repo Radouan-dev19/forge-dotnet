@@ -1,0 +1,67 @@
+{
+  "schemaVersion": 1,
+  "id": "react-orders-client",
+  "version": 1,
+  "title": "Client React de commandes sur API a jeton Bearer",
+  "weeks": [26],
+  "skills": ["quality.react", "security.token"],
+  "recommendedBefore": [
+    "front-react-essentials-001",
+    "front-client-server-contract-001",
+    "front-state-reducer-001"
+  ],
+  "estimatedMinutes": 180,
+  "briefPath": "README.md",
+  "objectives": [
+    {
+      "id": "build-the-client",
+      "goal": "Restaurer les dependances epinglees depuis le verrou puis compiler le petit client React fourni sous src/ pour disposer d'une base qui monte sans erreur.",
+      "observableProof": "npm ci s'acheve sans conflit de resolution et l'arbre installe correspond exactement au package-lock.json committe, sans aucune version flottante."
+    },
+    {
+      "id": "run-the-suite",
+      "goal": "Executer la suite Vitest en environnement jsdom et verifier qu'elle couvre le rendu authentifie, le refus sans jeton et l'annulation avant d'y toucher.",
+      "observableProof": "npm test rend la suite OrdersView.test.tsx entierement verte, avec ses trois cas, dans un DOM simule et sans navigateur reel."
+    },
+    {
+      "id": "wire-to-jwt-api",
+      "goal": "Relier le client a l'API du laboratoire api-jwt-bearer : le service attache le jeton en en-tete Authorization: Bearer et traduit les statuts 401 et 403 en erreurs distinctes.",
+      "observableProof": "Le test authentifie montre l'en-tete Authorization: Bearer sur l'appel a /orders, et OrdersService leve login-required, unauthorized ou forbidden selon le statut renvoye."
+    },
+    {
+      "id": "guard-the-route",
+      "goal": "Lire l'aide de garde de route qui decode le jeton et tranche entre autoriser, rediriger vers la connexion et interdire, en reproduisant cote client la distinction 401 contre 403 du serveur.",
+      "observableProof": "guardOrdersRoute rend redirect sans jeton ou sur jeton expire, forbidden sur portee absente, et allow sur jeton portant orders.read."
+    },
+    {
+      "id": "navigate-existing-base",
+      "goal": "Parcourir la base existante pour situer chaque responsabilite : service d'acces, hook de chargement, vue, aide de garde, et decrire comment l'annulation via AbortController circule du hook au service.",
+      "observableProof": "Pour chaque fichier de src/, le role est nomme par ecrit et le chemin du signal d'annulation, du controleur du hook jusqu'au parametre de fetch, est trace."
+    }
+  ],
+  "commands": [
+    {
+      "shell": "powershell",
+      "command": "npm ci",
+      "purpose": "Restaure les dependances exactement telles que figees dans le package-lock.json committe, sans les reresoudre ni toucher aux versions."
+    },
+    {
+      "shell": "powershell",
+      "command": "npm test",
+      "purpose": "Lance Vitest une seule fois en environnement jsdom et eprouve le rendu authentifie, le refus sans jeton et l'annulation."
+    }
+  ],
+  "limits": [
+    "Ce laboratoire exige une installation reseau unique : npm ci telecharge les paquets epingles la premiere fois, contrairement au reste du parcours.",
+    "C'est le seul palier du parcours qui touche le reseau : partout ailleurs, aucune connexion sortante n'est requise pour travailler.",
+    "Les versions sont figees a l'exact dans package.json, sans accent circonflexe ni tilde, et le package-lock.json est committe pour geler tout l'arbre.",
+    "node_modules n'est jamais versionne : le dossier est ignore par .gitignore et reconstruit localement par npm ci a partir du verrou.",
+    "La preuve est declaree par l'apprenant : Forge.NET ne lance ni navigateur ni npm, donc ce laboratoire n'ouvre aucune porte et ne produit aucune preuve automatisee.",
+    "Aucune emission de jeton ici : le service recoit un getter de jeton, il ne connait ni fournisseur d'identite, ni rafraichissement, ni revocation.",
+    "L'API n'est pas fournie : le client vise l'API du laboratoire api-jwt-bearer, qu'il faut monter separement pour un essai de bout en bout."
+  ],
+  "evidencePolicy": "learner-declared-outside-sandbox",
+  "requiresDocker": false,
+  "requiresNetwork": true,
+  "license": "CC-BY-4.0"
+}

@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "id": "interview-security-pkce-challenge-001",
+  "version": 1,
+  "title": "Vérifier un défi PKCE S256",
+  "level": "advanced",
+  "durationMinutes": 8,
+  "skills": [
+    "security.token"
+  ],
+  "question": "Expliquez la mécanique PKCE côté serveur d'autorisation : que vérifie-t-on à l'échange, comment, et contre quelle attaque ?",
+  "observableCriteria": [
+    "L'asymétrie temporelle est énoncée : l'empreinte voyage à l'aller par le navigateur, le secret ne sort qu'à l'échange direct",
+    "Le calcul est précis : condensat des octets ASCII, encodage urlisé sans remplissage, comparaison en temps constant",
+    "Les bornes du secret sont justifiées par l'entropie minimale d'une preuve non devinable"
+  ],
+  "modelAnswer": "À l'aller, le client publie l'empreinte S256 de son secret éphémère ; le guichet la mémorise avec le code. À l'échange, le client présente le secret en clair par un canal direct : je recalcule le condensat de ses octets ASCII, je l'encode en Base64Url sans remplissage et je compare en temps constant à l'empreinte déposée. Un code intercepté est ainsi inutilisable : son voleur n'a jamais vu le secret, et le condensat ne se renverse pas. Je valide aussi le secret lui-même — de 43 à 128 caractères d'un alphabet restreint — car une preuve trop courte se devine, ce qui ruinerait tout l'édifice.",
+  "commonMistakes": [
+    "Décrire PKCE comme un chiffrement de la redirection au lieu d'une preuve de possession",
+    "Oublier le retrait du remplissage et produire une empreinte qui ne correspond jamais"
+  ],
+  "variants": [
+    "Expliquer pourquoi la méthode en clair — l'empreinte égale au secret — n'apporte rien face à un intercepteur de l'aller.",
+    "Dire ce que PKCE change pour un client confidentiel qui présente déjà un secret d'application."
+  ],
+  "license": "CC-BY-4.0"
+}

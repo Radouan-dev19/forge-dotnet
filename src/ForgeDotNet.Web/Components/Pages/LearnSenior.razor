@@ -1,0 +1,141 @@
+@page "/learn-senior"
+@page "/learn-senior/{LessonId}"
+@inject BrowseSeniorTrack Senior
+
+<PageTitle>Piste senior — Forge.NET</PageTitle>
+
+@if (string.IsNullOrWhiteSpace(LessonId))
+{
+    <h1>Piste senior — S25 à S32</h1>
+
+    <div class="notice" role="note">
+        <p>
+            <strong>Ce que cette piste n'apprend pas.</strong> Recevoir la revue d'un humain qui n'est
+            pas d'accord, arbitrer sous pression, traverser un désaccord d'équipe : aucun contenu ne
+            remplace ces situations. La piste entraîne le raisonnement distribué et la revue de défauts
+            plantés, pas la relation humaine qui les entoure. C'est une limite assumée, pas un oubli.
+        </p>
+    </div>
+
+    @if (_library is null)
+    {
+        <p role="status">Chargement de la piste senior…</p>
+    }
+    else
+    {
+        <header class="reader-library-header">
+            <p class="eyebrow">Second parcours, distinct du socle des vingt-quatre semaines</p>
+            <h2>@_library.Title</h2>
+            <p>@_library.Description</p>
+        </header>
+
+        @foreach (CurriculumModuleView module in _library.Modules)
+        {
+            <section class="reader-module" aria-labelledby="senior-module-@module.Id">
+                <h2 id="senior-module-@module.Id">@module.Title</h2>
+                <ul class="lesson-list">
+                    @foreach (LessonSummaryView lesson in module.Lessons)
+                    {
+                        <li>
+                            <a href="learn-senior/@lesson.Id">@lesson.Title</a>
+                            <p>@lesson.Summary</p>
+                            <p class="lesson-meta">@lesson.EstimatedMinutes min · @string.Join(" · ", lesson.Skills)</p>
+                        </li>
+                    }
+                </ul>
+            </section>
+        }
+    }
+}
+else if (_isLoadingLesson)
+{
+    <p role="status">Chargement de la leçon…</p>
+}
+else if (_lesson is null)
+{
+    <h1>Leçon introuvable</h1>
+    <p>Cette leçon senior n'existe pas dans le catalogue publié.</p>
+    <a href="learn-senior">Retour à la piste senior</a>
+}
+else
+{
+    <article class="lesson-reader">
+        <header class="lesson-header">
+            <p class="eyebrow">Semaine @_lesson.Week · @_lesson.EstimatedMinutes minutes · piste senior</p>
+            <h1>@_lesson.Title</h1>
+            <p>@string.Join(" · ", _lesson.Skills)</p>
+        </header>
+
+        <div class="lesson-content">
+            @foreach (LessonSectionView section in _lesson.Sections)
+            {
+                <section id="@section.Id" class="lesson-section" aria-labelledby="senior-title-@section.Id">
+                    <h2 id="senior-title-@section.Id">@section.Title</h2>
+                    @foreach (LessonBlockView block in section.Blocks)
+                    {
+                        <LessonBlock Block="block" />
+                    }
+                </section>
+            }
+
+            <section class="quiz-panel" aria-labelledby="senior-quiz-title">
+                <h2 id="senior-quiz-title">Quiz de compréhension</h2>
+                <p>@_lesson.Quiz.Prompt</p>
+                <ul>
+                    @foreach (LessonQuizOptionView option in _lesson.Quiz.Options)
+                    {
+                        <li>@option.Text</li>
+                    }
+                </ul>
+                <p class="field-help">
+                    La piste senior se lit sans suivi de progression : ce quiz est un contrôle
+                    personnel, il n'enregistre aucune preuve de maîtrise.
+                </p>
+            </section>
+        </div>
+
+        <nav class="lesson-navigation" aria-label="Navigation entre les leçons senior">
+            @if (_lesson.PreviousLesson is not null)
+            {
+                <a href="learn-senior/@_lesson.PreviousLesson.Id">← @_lesson.PreviousLesson.Title</a>
+            }
+            else
+            {
+                <span>Début de la piste</span>
+            }
+            <a href="learn-senior">Toute la piste</a>
+            @if (_lesson.NextLesson is not null)
+            {
+                <a href="learn-senior/@_lesson.NextLesson.Id">@_lesson.NextLesson.Title →</a>
+            }
+            else
+            {
+                <span>Fin de la piste</span>
+            }
+        </nav>
+    </article>
+}
+
+@code {
+    [Parameter]
+    public string? LessonId { get; set; }
+
+    private LessonLibraryView? _library;
+    private LessonView? _lesson;
+    private bool _isLoadingLesson;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        if (string.IsNullOrWhiteSpace(LessonId))
+        {
+            _lesson = null;
+            _library = await Senior.GetLibraryAsync();
+        }
+        else
+        {
+            _isLoadingLesson = true;
+            _lesson = await Senior.GetLessonAsync(LessonId);
+            _isLoadingLesson = false;
+        }
+    }
+}

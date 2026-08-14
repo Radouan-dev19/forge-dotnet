@@ -1,0 +1,60 @@
+{
+  "schemaVersion": 1,
+  "id": "azure-operations",
+  "version": 1,
+  "title": "Exploitation et incident, en mode local de référence",
+  "weeks": [21, 22],
+  "skills": ["azure.hosting", "azure.identity", "observability.incident", "observability.correlation"],
+  "recommendedBefore": ["azure-hosting-choice-001", "observability-correlation-001"],
+  "estimatedMinutes": 210,
+  "briefPath": "README.md",
+  "objectives": [
+    {
+      "id": "hosting-decision-note",
+      "goal": "Comparer les deux modèles d'hébergement du plan et écrire la condition précise qui ferait revenir sur le choix retenu.",
+      "observableProof": "Le plan compilé rend une décision et la condition de réexamen qui l'accompagne, sans promettre une garantie de disponibilité."
+    },
+    {
+      "id": "inspect-infrastructure",
+      "goal": "Lire la définition d'infrastructure comme un document, en repérant ce qu'elle déclare et ce qu'elle laisse au dehors.",
+      "observableProof": "Les noms de paramètres décrivent des valeurs à fournir hors du dépôt, et aucune valeur sensible n'y figure."
+    },
+    {
+      "id": "resolve-simulated-incident",
+      "goal": "Diagnostiquer un incident à partir d'une télémétrie entièrement factice, en séparant ce qui est observé de ce qui est supposé.",
+      "observableProof": "Le script d'incident rend une chronologie, une hypothèse discriminante et l'observation qui la tranche."
+    },
+    {
+      "id": "state-what-is-unproven",
+      "goal": "Formuler ce que la répétition locale n'établit pas, avant qu'un lecteur ne le demande.",
+      "observableProof": "La sortie du mode local nomme explicitement acceptation par le fournisseur, disponibilité et coût comme non prouvés."
+    }
+  ],
+  "commands": [
+    {
+      "shell": "dotnet",
+      "command": "dotnet build content/labs/azure-operations/starter/DeploymentPlan.csproj",
+      "purpose": "Compile le plan de déploiement, qui porte la comparaison des modèles d'hébergement et la décision argumentée."
+    },
+    {
+      "shell": "powershell",
+      "command": "powershell -ExecutionPolicy Bypass -File content/labs/azure-operations/Verify-LocalMode.ps1",
+      "purpose": "Contrôle la cohérence locale des fichiers et des garde-fous, et rappelle ce que ce mode ne prouve pas."
+    },
+    {
+      "shell": "powershell",
+      "command": "powershell -ExecutionPolicy Bypass -File content/labs/azure-operations/Resolve-SimulatedIncident.ps1",
+      "purpose": "Rejoue un incident sur une télémétrie factice, du symptôme observé jusqu'à l'observation qui départage les hypothèses."
+    }
+  ],
+  "limits": [
+    "Le mode local se réussit sans abonnement. Il n'établit ni que le fournisseur accepterait la définition, ni les quotas, ni le comportement réel des règles réseau.",
+    "Un déploiement réel est facultatif, manuel et facturable. Il exige un groupe de ressources dédié, des tailles minimales, un budget, une heure de suppression et une vérification après suppression.",
+    "Une alerte de budget informe après un délai, elle ne coupe pas la dépense : le plafond réel doit être imposé sur la ressource ou automatisé.",
+    "La télémétrie de ce laboratoire est entièrement fabriquée : aucune mesure n'y décrit un système réel, et aucune conclusion de performance ne peut en être tirée."
+  ],
+  "evidencePolicy": "learner-declared-outside-sandbox",
+  "requiresDocker": false,
+  "requiresNetwork": false,
+  "license": "CC-BY-4.0"
+}

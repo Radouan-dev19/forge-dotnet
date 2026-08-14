@@ -8,6 +8,7 @@ using ForgeDotNet.Application.DebugLab;
 using ForgeDotNet.Application.Diagnostic;
 using ForgeDotNet.Application.Exams;
 using ForgeDotNet.Application.IdentityLocal;
+using ForgeDotNet.Application.Labs;
 using ForgeDotNet.Application.Mastery;
 using ForgeDotNet.Application.Practice;
 using ForgeDotNet.Application.Projects;
@@ -21,6 +22,7 @@ using ForgeDotNet.Infrastructure.Curriculum;
 using ForgeDotNet.Infrastructure.DebugLab;
 using ForgeDotNet.Infrastructure.Diagnostic;
 using ForgeDotNet.Infrastructure.Exams;
+using ForgeDotNet.Infrastructure.Labs;
 using ForgeDotNet.Infrastructure.Persistence;
 using ForgeDotNet.Infrastructure.Practice;
 using ForgeDotNet.Infrastructure.Projects;
@@ -148,6 +150,19 @@ builder.Services.AddSingleton(new SqlScenarioContentOptions
 // Les scénarios SQL vivent hors du catalogue du lecteur : ils ont leur propre snapshot validé.
 builder.Services.AddSingleton(new SqlScenarioCatalog(contentOptions, sqlScenarioDirectory));
 builder.Services.AddSingleton<ISqlScenarioSource, FileSystemSqlScenarioSource>();
+string labDirectory = ResolveConfiguredPath(
+    builder.Configuration["Content:LabDirectoryPath"],
+    Path.Combine(contentRoot, "labs"),
+    builder.Environment.ContentRootPath);
+builder.Services.AddSingleton(new LabContentOptions
+{
+    ContentRootPath = contentRoot,
+    LabDirectoryPath = labDirectory,
+});
+// Même raison que pour les scénarios SQL : un laboratoire porte une arborescence de code, pas un
+// document qui se lit, donc il a son propre snapshot validé hors du catalogue du lecteur.
+builder.Services.AddSingleton(new LabCatalog(contentOptions, labDirectory));
+builder.Services.AddSingleton<ILabSource, FileSystemLabSource>();
 builder.Services.AddScoped<SqlLabService>();
 builder.Services.AddScoped<MasteryService>();
 builder.Services.AddScoped<ReviewService>();
@@ -244,6 +259,16 @@ builder.Services.AddSingleton(new LessonContentOptions
 });
 builder.Services.AddSingleton<ILessonContentSource, FileSystemLessonContentSource>();
 builder.Services.AddScoped<BrowseLessons>();
+// Piste senior : un second lecteur, cable sur le parcours forge-senior-reference, distinct du junior.
+builder.Services.AddScoped(serviceProvider => new ForgeDotNet.Application.Curriculum.BrowseSeniorTrack(
+    new FileSystemLessonContentSource(
+        serviceProvider.GetRequiredService<ForgeDotNet.Application.Content.ContentCatalogProvider>(),
+        new LessonContentOptions
+        {
+            ContentRootPath = contentRoot,
+            CatalogDirectoryPath = catalogDirectory,
+            CurriculumId = "forge-senior-reference",
+        })));
 builder.Services.AddScoped<GetLessonReaderState>();
 builder.Services.AddScoped<SaveLessonNote>();
 builder.Services.AddScoped<SetLessonBookmark>();
@@ -299,6 +324,10 @@ await InitializeReaderContentAsync(app.Services, catalogDirectory);
 // de laisser le parcours SQL se dégrader silencieusement à la première ouverture de la page.
 await app.Services.GetRequiredService<SqlScenarioCatalog>().LoadAsync();
 _ = await app.Services.GetRequiredService<ISqlScenarioSource>().ListAsync();
+// Le catalogue des laboratoires suit la même règle : un manifeste invalide arrête l'application au
+// lieu de rendre la page des laboratoires vide sans explication.
+await app.Services.GetRequiredService<LabCatalog>().LoadAsync();
+_ = await app.Services.GetRequiredService<ILabSource>().ListAsync();
 _ = await app.Services.GetRequiredService<IPracticeExerciseSource>().ListAsync();
 _ = await app.Services.GetRequiredService<IDebugScenarioSource>().ListAsync();
 _ = await app.Services.GetRequiredService<IDiagnosticBankSource>().GetAsync();

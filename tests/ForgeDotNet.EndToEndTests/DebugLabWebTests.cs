@@ -23,7 +23,9 @@ public sealed class DebugLabWebTests : IClassFixture<ForgeWebApplicationFactory>
         Assert.Contains("Déboguer par la preuve", library, StringComparison.Ordinal);
         Assert.Contains("Tracer une NullReferenceException", library, StringComparison.Ordinal);
         Assert.Contains("Identifier un mauvais enregistrement DI", library, StringComparison.Ordinal);
-        Assert.Equal(25, Count(library, "href=\"debug-lab/debug-"));
+        // Vingt-huit scénarios : les vingt-cinq du socle (ids debug-*) plus les trois du bloc
+        // front-end (ids front-*). On compte donc tous les liens de détail, pas le seul préfixe debug-.
+        Assert.Equal(29, Count(library, "href=\"debug-lab/"));
 
         string initial = WebUtility.HtmlDecode(await _client.GetStringAsync("/debug-lab/debug-null-reference-001"));
         Assert.Contains("Reproduire", initial, StringComparison.Ordinal);

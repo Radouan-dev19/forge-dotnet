@@ -1,7 +1,38 @@
 # Explication
 
-Traiter absence et blanc avant toute déréférence, sans opérateur d'affirmation.
+La même expression que le repli optionnel du bloc langage — garde d'absence, rognage, valeur de
+repli — mais l'angle est celui de la *qualité du code face au compilateur*, et l'énoncé le dit
+par sa contrainte : sans opérateur de suppression. C'est un exercice sur le point d'exclamation,
+et sur ce qu'il détruit.
 
-L'opérateur qui affirme la non-nullité n'ajoute aucune garantie : il éteint l'avertissement du compilateur et déplace le défaut vers l'exécution, où il devient une exception de déréférence dont le message ne dit pas quel maillon manquait. Une garde explicite fait le travail que l'opérateur prétendait faire.
+Le contexte d'abord : les références nullables du langage moderne font du `null` une
+information de *type*. Une `string?` peut être absente, une `string` ne le devrait pas, et le
+compilateur suit les flux : après un test d'absence, il sait que la valeur est présente et
+laisse déréférencer sans avertissement. Ce suivi transforme une classe entière d'erreurs
+d'exécution — la référence nulle, la plus banale des exceptions de production — en
+avertissements de compilation. Mais le système a une trappe : l'opérateur de suppression, le
+point d'exclamation, qui dit au compilateur « fais-moi confiance, ce n'est pas nul ». L'énoncé
+demande ce qu'il déplace : la vérification, de la *compilation* vers l'*exécution*. Chaque
+suppression est une promesse non vérifiée — le compilateur se tait, et si la promesse est
+fausse, l'exception revient, en production, là où le système de types l'avait éradiquée.
 
-Trois entrées se ramènent au même repli : absente, vide, composée de blancs. Les traiter séparément est une source d'oubli, et la chaîne de blancs est celle qu'on oublie — elle passe alors pour une valeur et produit un résultat vide en aval. Le coût est linéaire dans la longueur de la valeur.
+La version propre n'a rien à supprimer, et c'est le modèle : `IsNullOrWhiteSpace` *est* le test
+que le compilateur comprend — après lui, dans la branche fausse, `value` est connu non nul, et
+le `Trim()` se déréférence sans avertissement ni point d'exclamation. La garde ne sert pas
+seulement la logique — absence et blanc vers le repli — elle sert le *raisonnement statique* :
+elle donne au compilateur ce dont il a besoin pour prouver le reste. Écrire du code que
+l'analyse comprend, plutôt que faire taire l'analyse, est toute la différence entre utiliser
+les nullables et les subir.
+
+La règle de revue qui en découle mérite d'être dite : chaque point d'exclamation dans un diff
+est une question — « pourquoi le compilateur ne peut-il pas le voir ? ». Parfois la réponse
+est légitime — une initialisation par framework, un contrat externe — et alors un commentaire
+la documente. Le plus souvent, la réponse est qu'une garde manque ou qu'un type devrait être
+nullable, et la suppression n'est que la dette qui masque le vrai correctif.
+
+Les cas suivent l'énoncé : la valeur ordinaire rognée, les bordures blanches, le tout-blanc et
+l'absent vers `n/a`. Le coût est négligeable.
+
+La transposition : traiter les avertissements de nullabilité comme des erreurs — la
+configuration du projet le permet —, réserver la suppression aux frontières documentées, et
+lire chaque `!` en revue comme un signal, jamais comme une ponctuation.

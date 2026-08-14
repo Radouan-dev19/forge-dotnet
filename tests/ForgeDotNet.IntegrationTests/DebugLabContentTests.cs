@@ -13,14 +13,14 @@ namespace ForgeDotNet.IntegrationTests;
 public sealed class DebugLabContentTests
 {
     [Fact]
-    public async Task TwentyFiveScenariosAreValidCompleteAndMappedToGenericRunnerSuites()
+    public async Task TwentyNineScenariosAreValidCompleteAndMappedToGenericRunnerSuites()
     {
         using DebugContentFixture fixture = await DebugContentFixture.CreateAsync();
 
         IReadOnlyList<DebugScenario> scenarios = await fixture.Source.ListAsync();
 
-        Assert.Equal(25, scenarios.Count);
-        Assert.Equal(25, scenarios.Select(item => item.Id).Distinct(StringComparer.Ordinal).Count());
+        Assert.Equal(29, scenarios.Count);
+        Assert.Equal(29, scenarios.Select(item => item.Id).Distinct(StringComparer.Ordinal).Count());
         Assert.All(scenarios, scenario =>
         {
             DebugLabRules.ValidateScenario(scenario);

@@ -1,0 +1,68 @@
+{
+  "schemaVersion": 1,
+  "id": "angular-orders-client",
+  "version": 1,
+  "title": "Client Angular de commandes sur API a jeton Bearer",
+  "weeks": [26],
+  "skills": ["quality.angular", "security.token"],
+  "recommendedBefore": [
+    "front-angular-essentials-001",
+    "front-client-server-contract-001",
+    "front-route-guard-001"
+  ],
+  "estimatedMinutes": 180,
+  "briefPath": "README.md",
+  "objectives": [
+    {
+      "id": "build-the-client",
+      "goal": "Restaurer les dependances epinglees depuis le verrou puis compiler le petit client Angular fourni sous src/app/ pour disposer d'une base qui monte sans erreur.",
+      "observableProof": "npm ci s'acheve sans conflit de resolution et l'arbre installe correspond exactement au package-lock.json committe, sans aucune version flottante."
+    },
+    {
+      "id": "run-the-suite",
+      "goal": "Executer la suite Jasmine via Karma en navigateur sans surveillance et verifier qu'elle couvre l'etat connexion requise, la liste authentifiee et le desabonnement.",
+      "observableProof": "npm test rend la suite orders.component.spec.ts entierement verte avec ses trois cas dans un ChromeHeadless, sans mode veille."
+    },
+    {
+      "id": "wire-to-jwt-api",
+      "goal": "Relier le client a l'API du laboratoire api-jwt-bearer : un HttpInterceptor attache le jeton en en-tete Authorization: Bearer sur chaque requete sortante de HttpClient.",
+      "observableProof": "AuthInterceptor clone la requete en ajoutant Authorization: Bearer quand un jeton existe, et la laisse inchangee sinon ; OrdersService vise GET /orders."
+    },
+    {
+      "id": "guard-and-unsubscribe",
+      "goal": "Lire la garde canActivate qui redirige vers /login sans jeton et le composant qui ferme son abonnement au demontage via takeUntil sur un Subject destroyed.",
+      "observableProof": "ordersGuard rend un UrlTree vers /login sans jeton et true avec jeton ; le test montre qu'une reponse emise apres destroy ne modifie plus le composant."
+    },
+    {
+      "id": "navigate-existing-base",
+      "goal": "Parcourir la base existante pour situer chaque responsabilite : magasin de jeton, intercepteur, service, composant, garde, et decrire comment le jeton circule du magasin jusqu'a l'en-tete de la requete.",
+      "observableProof": "Pour chaque fichier de src/app/, le role est nomme par ecrit et le chemin du jeton, du TokenStore jusqu'a l'en-tete Authorization pose par l'intercepteur, est trace."
+    }
+  ],
+  "commands": [
+    {
+      "shell": "powershell",
+      "command": "npm ci",
+      "purpose": "Restaure les dependances exactement telles que figees dans le package-lock.json committe, sans les reresoudre ni toucher aux versions."
+    },
+    {
+      "shell": "powershell",
+      "command": "npm test",
+      "purpose": "Lance la suite Jasmine via Karma une seule fois en ChromeHeadless et eprouve les etats connexion requise, liste et desabonnement."
+    }
+  ],
+  "limits": [
+    "Ce laboratoire exige une installation reseau unique : npm ci telecharge les paquets epingles la premiere fois, contrairement au reste du parcours.",
+    "C'est le seul palier du parcours qui touche le reseau : partout ailleurs, aucune connexion sortante n'est requise pour travailler.",
+    "Les versions sont figees a l'exact dans package.json, sans accent circonflexe ni tilde, et le package-lock.json est committe pour geler tout l'arbre.",
+    "node_modules n'est jamais versionne : le dossier est ignore par .gitignore et reconstruit localement par npm ci a partir du verrou.",
+    "La preuve est declaree par l'apprenant : Forge.NET ne lance ni navigateur ni npm, donc ce laboratoire n'ouvre aucune porte et ne produit aucune preuve automatisee.",
+    "La suite exige un navigateur Chrome ou ChromeHeadless via Karma : sans navigateur installe, elle ne peut pas s'executer localement.",
+    "Aucune emission de jeton ici : le magasin recoit un jeton par un getter, il ne connait ni fournisseur d'identite, ni rafraichissement, ni revocation.",
+    "L'API n'est pas fournie : le client vise l'API du laboratoire api-jwt-bearer, qu'il faut monter separement pour un essai de bout en bout."
+  ],
+  "evidencePolicy": "learner-declared-outside-sandbox",
+  "requiresDocker": false,
+  "requiresNetwork": true,
+  "license": "CC-BY-4.0"
+}

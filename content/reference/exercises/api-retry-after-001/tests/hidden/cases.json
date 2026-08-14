@@ -1,0 +1,74 @@
+{
+  "schemaVersion": 1,
+  "cases": [
+    {
+      "name": "Hidden_EndOfWindow",
+      "message": "Au quota, une seconde avant la réinitialisation.",
+      "arguments": [
+        5,
+        5,
+        1749990059,
+        60,
+        1749990000
+      ],
+      "expected": 1,
+      "expectedException": null,
+      "argumentsUnchanged": false
+    },
+    {
+      "name": "Hidden_PastWindow",
+      "message": "Fenêtre dépassée : plus rien à attendre.",
+      "arguments": [
+        5,
+        5,
+        1749990120,
+        60,
+        1749990000
+      ],
+      "expected": 0,
+      "expectedException": null,
+      "argumentsUnchanged": false
+    },
+    {
+      "name": "Hidden_OverQuota",
+      "message": "Au-delà du quota : traité comme limité.",
+      "arguments": [
+        9,
+        5,
+        1749990030,
+        60,
+        1749990000
+      ],
+      "expected": 30,
+      "expectedException": null,
+      "argumentsUnchanged": false
+    },
+    {
+      "name": "Hidden_InvalidWindow",
+      "message": "Durée de fenêtre nulle : faute d'appel.",
+      "arguments": [
+        5,
+        5,
+        1749990000,
+        0,
+        1749990000
+      ],
+      "expectedException": "ArgumentOutOfRangeException",
+      "argumentsUnchanged": false
+    },
+    {
+      "name": "Hidden_ExactReset",
+      "message": "Instant courant exactement à la réinitialisation.",
+      "arguments": [
+        5,
+        5,
+        1749990060,
+        60,
+        1749990000
+      ],
+      "expected": 0,
+      "expectedException": null,
+      "argumentsUnchanged": false
+    }
+  ]
+}

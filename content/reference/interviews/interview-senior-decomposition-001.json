@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "id": "interview-senior-decomposition-001",
+  "version": 1,
+  "title": "Refuser ou justifier un decoupage en services",
+  "level": "advanced",
+  "durationMinutes": 12,
+  "skills": ["quality.boundaries"],
+  "question": "Un responsable veut decouper le monolithe en microservices pour aller plus vite. Sur quels criteres acceptez-vous ou refusez-vous, et comment defendez-vous un refus ?",
+  "observableCriteria": [
+    "Pose le monolithe comme defaut et l'extraction comme cout a justifier, pas comme progres en soi",
+    "Nomme des criteres concrets : possession par equipe, deploiement independant, absence de donnees partagees",
+    "Sait refuser en expliquant l'asymetrie : decouper trop tot cree une dette distribuee rarement remboursee"
+  ],
+  "modelAnswer": "Je pars du monolithe et je demande ce qu'un service de plus achete vraiment. Trois signaux doivent converger : plusieurs equipes qui se genent sur le meme deployable, un besoin de deploiement independant, et aucune table partagee. Si les deploiements restent couples, l'extraction donne deux artefacts qui sortent ensemble, le pire des deux mondes. Si des donnees sont partagees, la frontiere passe au milieu de la base et le couplage devient cache. Je defends le refus par l'asymetrie des couts : garder un monolithe se corrige plus tard quand les signaux sont nets, tandis que recoller deux services est bien plus rare que d'en separer un. Le decoupage ajoute latence, pannes partielles et coherence eventuelle qu'il faut ensuite savoir exploiter.",
+  "commonMistakes": [
+    "Decouper sur le seul argument du nombre d'equipes, sans regarder le couplage de deploiement",
+    "Ignorer les tables partagees et croire la frontiere nette alors que la base recouple les services"
+  ],
+  "variants": [
+    "Quel premier signal vous ferait reconsiderer un refus initial de decoupage ?",
+    "Comment extrait-on un service quand des tables sont partagees, et a quel cout ?"
+  ],
+  "license": "CC-BY-4.0"
+}

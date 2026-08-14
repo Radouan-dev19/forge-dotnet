@@ -1,10 +1,10 @@
 {
     "schemaVersion":  1,
     "id":  "forge-reference",
-    "version":  4,
+    "version":  5,
     "title":  "Forge.NET — parcours professionnel S1 à S24",
     "description":  "Parcours local autonome couvrant C#, données, API, sécurité, tests, livraison, Azure optionnel, observabilité, projet final guidé, anglais et preuves de carrière.",
-    "weeks":  24,
+    "weeks":  27,
     "modules":  [
                     {
                         "id":  "week-1",
@@ -276,7 +276,9 @@
                         "lessonIds":  [
                                           "api-http-semantics-001",
                                           "api-routing-rest-001",
-                                          "api-controllers-dtos-001"
+                                          "api-controllers-dtos-001",
+                                          "api-versioning-001",
+                                          "api-etag-concurrency-001"
                                       ],
                         "exerciseIds":  [
                                        "api-content-negotiation-001",
@@ -284,7 +286,11 @@
                                             "api-route-normalize-001",
                                             "api-dto-customer-name-001",
                                             "api-method-idempotency-001",
-                                            "api-location-header-001"
+                                            "api-location-header-001",
+                                            "api-version-change-001",
+                                            "api-version-route-001",
+                                            "api-etag-compute-001",
+                                            "api-etag-precondition-001"
                                         ]
                     },
                     {
@@ -299,7 +305,9 @@
                         "lessonIds":  [
                                           "api-validation-problem-details-001",
                                           "api-di-lifetimes-001",
-                                          "api-configuration-secrets-errors-001"
+                                          "api-configuration-secrets-errors-001",
+                                          "api-rate-limiting-001",
+                                          "api-cache-control-001"
                                       ],
                         "exerciseIds":  [
                                             "api-validation-aggregate-001",
@@ -307,7 +315,11 @@
                                             "api-di-lifetime-choice-001",
                                             "api-config-key-001",
                                             "api-secret-redaction-001",
-                                            "api-error-status-001"
+                                            "api-error-status-001",
+                                            "api-token-bucket-001",
+                                            "api-retry-after-001",
+                                            "api-cache-directive-001",
+                                            "api-cache-storability-001"
                                         ]
                     },
                     {
@@ -322,7 +334,9 @@
                         "lessonIds":  [
                                           "api-async-cancellation-001",
                                           "api-pagination-filtering-sorting-001",
-                                          "api-openapi-contracts-001"
+                                          "api-openapi-contracts-001",
+                                          "api-cors-001",
+                                          "api-webhooks-001"
                                       ],
                         "exerciseIds":  [
                                             "api-sort-expression-001",
@@ -330,7 +344,11 @@
                                             "api-skip-count-001",
                                             "api-sort-whitelist-001",
                                             "api-filter-term-001",
-                                            "api-cancellation-budget-001"
+                                            "api-cancellation-budget-001",
+                                            "api-cors-origin-001",
+                                            "api-cors-preflight-001",
+                                            "api-webhook-signature-001",
+                                            "api-webhook-replay-001"
                                         ]
                     },
                     {
@@ -345,7 +363,9 @@
                         "lessonIds":  [
                                           "security-authentication-001",
                                           "security-authorization-roles-policies-001",
-                                          "security-owasp-api-001"
+                                          "security-owasp-api-001",
+                                          "security-jwt-anatomy-001",
+                                          "security-jwt-validation-001"
                                       ],
                         "exerciseIds":  [
                                             "security-scope-grant-001",
@@ -353,7 +373,13 @@
                                             "security-role-check-001",
                                             "security-owner-policy-001",
                                             "security-local-redirect-001",
-                                            "security-login-message-001"
+                                            "security-login-message-001",
+                                            "security-jwt-decode-001",
+                                            "security-jwt-signature-001",
+                                            "security-jwt-algorithm-001",
+                                            "security-jwt-lifetime-001",
+                                            "security-jwt-audience-001",
+                                            "security-jwt-order-001"
                                         ]
                     },
                     {
@@ -497,11 +523,19 @@
                         "lessonIds":  [
                                           "azure-hosting-choice-001",
                                           "azure-data-services-001",
-                                          "azure-managed-identity-key-vault-001"
+                                          "azure-managed-identity-key-vault-001",
+                                          "oauth-flows-001",
+                                          "oauth-pkce-001",
+                                          "oidc-identity-001"
                                       ],
                         "exerciseIds":  [
                                             "azure-hosting-decision-001",
-                                            "azure-secret-source-001"
+                                            "azure-secret-source-001",
+                                            "security-oauth-flow-001",
+                                            "security-pkce-challenge-001",
+                                            "security-oauth-state-001",
+                                            "security-oidc-idtoken-001",
+                                            "security-refresh-rotation-001"
                                         ]
                     },
                     {
@@ -555,6 +589,59 @@
                                       ],
                         "exerciseIds":  [
                                             "azure-incident-brief-001"
+                                        ]
+                    },
+                    {
+                        "id":  "week-25",
+                        "title":  "Semaine 25 — Front-end : socle transposable",
+                        "weeks":  [
+                                      25
+                                  ],
+                        "prerequisites":  [
+                                              "week-24"
+                                          ],
+                        "lessonIds":  [
+                                          "front-rendering-reconciliation-001",
+                                          "front-state-unidirectional-001",
+                                          "front-controlled-forms-001",
+                                          "front-client-server-contract-001"
+                                      ],
+                        "exerciseIds":  [
+                                            "front-state-reducer-001",
+                                            "front-form-field-state-001"
+                                        ]
+                    },
+                    {
+                        "id":  "week-26",
+                        "title":  "Semaine 26 — Front-end : Angular et React",
+                        "weeks":  [
+                                      26
+                                  ],
+                        "prerequisites":  [
+                                              "week-25"
+                                          ],
+                        "lessonIds":  [
+                                          "front-angular-essentials-001",
+                                          "front-react-essentials-001"
+                                      ],
+                        "exerciseIds":  [
+                                            "front-cache-decision-001"
+                                        ]
+                    },
+                    {
+                        "id":  "week-27",
+                        "title":  "Semaine 27 — Front-end : Blazor et intégration",
+                        "weeks":  [
+                                      27
+                                  ],
+                        "prerequisites":  [
+                                              "week-26"
+                                          ],
+                        "lessonIds":  [
+                                          "front-blazor-essentials-001"
+                                      ],
+                        "exerciseIds":  [
+                                            "front-route-guard-001"
                                         ]
                     }
                 ],

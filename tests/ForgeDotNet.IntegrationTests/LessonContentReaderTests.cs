@@ -17,9 +17,14 @@ public sealed class LessonContentReaderTests
         LessonContentDocument lesson = Assert.IsType<LessonContentDocument>(
             await source.GetLessonAsync("reference-types-001"));
 
-        Assert.Equal(24, library.Modules.Count);
-        Assert.All(library.Modules.Take(22), module => Assert.Equal(3, module.Lessons.Count));
-        Assert.All(library.Modules.Skip(22), module => Assert.Equal(2, module.Lessons.Count));
+        Assert.Equal(27, library.Modules.Count);
+        // Trois leçons par semaine, aux exceptions près : S11 à S13 en portent cinq depuis le
+        // lot REST, S14 cinq depuis le lot JWT, S21 six depuis le lot OAuth/OIDC, les deux semaines
+        // 23 et 24 deux, puis le bloc front-end ajoute quatre leçons de socle en S25, deux leçons
+        // de framework en S26 et la leçon Blazor en S27.
+        Assert.Equal(
+            [3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 5, 5, 5, 5, 3, 3, 3, 3, 3, 3, 6, 3, 2, 2, 4, 2, 1],
+            library.Modules.Select(module => module.Lessons.Count));
         Assert.Contains(
             library.Modules.SelectMany(module => module.Lessons),
             summary => summary.Id == "reference-types-001");
@@ -35,7 +40,7 @@ public sealed class LessonContentReaderTests
 
     /// <summary>
     /// Une leçon peut être structurellement valide et rester illisible : le validateur contrôle les
-    /// manifestes, pas le rendu. Ce test lit réellement les soixante-dix leçons publiées.
+    /// manifestes, pas le rendu. Ce test lit réellement les soixante-douze leçons publiées.
     /// </summary>
     [Fact]
     public async Task EveryPublishedLessonIsReadableWithFourteenSectionsAndOneQuiz()
@@ -49,7 +54,7 @@ public sealed class LessonContentReaderTests
             .Select(summary => summary.Id)
             .ToArray();
 
-        Assert.Equal(70, lessonIds.Length);
+        Assert.Equal(88, lessonIds.Length);
         foreach (string lessonId in lessonIds)
         {
             LessonContentDocument? lesson = await source.GetLessonAsync(lessonId);

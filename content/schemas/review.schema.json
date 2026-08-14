@@ -13,7 +13,7 @@
     "cards": {
       "type": "array",
       "minItems": 1,
-      "maxItems": 400,
+      "maxItems": 600,
       "items": {
         "type": "object",
         "additionalProperties": false,

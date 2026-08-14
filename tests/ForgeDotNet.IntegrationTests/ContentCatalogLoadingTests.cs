@@ -23,16 +23,17 @@ public sealed class ContentCatalogLoadingTests
         Assert.True(second.Succeeded, FormatIssues(second.Issues));
         ContentCatalog catalog = Assert.IsType<ContentCatalog>(first.Catalog);
         ContentCatalog secondCatalog = Assert.IsType<ContentCatalog>(second.Catalog);
-        // 493 documents pédagogiques, plus la banque de cartes de révision.
-        Assert.Equal(496, catalog.Items.Count);
+        // 597 documents pédagogiques, plus la banque de cartes de révision.
+        Assert.Equal(598, catalog.Items.Count);
         Assert.Single(catalog.GetByType(ContentDocumentType.ReviewCardBank));
-        Assert.Equal(142, catalog.GetByType(ContentDocumentType.Exercise).Count);
-        Assert.Equal(197, catalog.GetByType(ContentDocumentType.InterviewQuestion).Count);
-        Assert.Single(catalog.GetByType(ContentDocumentType.Curriculum));
-        Assert.Equal(70, catalog.GetByType(ContentDocumentType.Lesson).Count);
+        Assert.Equal(177, catalog.GetByType(ContentDocumentType.Exercise).Count);
+        Assert.Equal(232, catalog.GetByType(ContentDocumentType.InterviewQuestion).Count);
+        // Deux parcours désormais : le socle junior forge-reference et la piste senior forge-senior-reference.
+        Assert.Equal(2, catalog.GetByType(ContentDocumentType.Curriculum).Count);
+        Assert.Equal(96, catalog.GetByType(ContentDocumentType.Lesson).Count);
         Assert.Equal(51, catalog.GetByType(ContentDocumentType.EnglishActivity).Count);
-        Assert.Equal(25, catalog.GetByType(ContentDocumentType.DebugScenario).Count);
-        Assert.Equal(9, catalog.GetByType(ContentDocumentType.Project).Count);
+        Assert.Equal(29, catalog.GetByType(ContentDocumentType.DebugScenario).Count);
+        Assert.Equal(10, catalog.GetByType(ContentDocumentType.Project).Count);
         Assert.Equal(catalog.Revision, secondCatalog.Revision);
         string[] csharpTypeIds = catalog.GetBySkill("csharp.types")
             .Select(item => item.Id)

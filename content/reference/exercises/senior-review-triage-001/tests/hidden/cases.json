@@ -1,0 +1,52 @@
+{
+  "schemaVersion": 1,
+  "cases": [
+    {
+      "name": "Hidden_ConcurrenceNonSynchronisee",
+      "message": "Acces partage non synchronise : bloquant, concurrence.",
+      "arguments": ["unsynchronized-shared-state"],
+      "expected": "blocking:concurrency",
+      "expectedException": null,
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_SecretEnDur",
+      "message": "Secret code en dur : bloquant, securite.",
+      "arguments": ["hardcoded-secret"],
+      "expected": "blocking:security",
+      "expectedException": null,
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_DecalageUnite",
+      "message": "Erreur d'un cran : bloquant, correction.",
+      "arguments": ["off-by-one"],
+      "expected": "blocking:correctness",
+      "expectedException": null,
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_CommentaireManquant",
+      "message": "Commentaire de documentation manquant : mineur, style.",
+      "arguments": ["missing-doc-comment"],
+      "expected": "minor:style",
+      "expectedException": null,
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_Inconnu",
+      "message": "Constat non reconnu : classement honnete a unknown.",
+      "arguments": ["unrelated-id"],
+      "expected": "unknown",
+      "expectedException": null,
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_IdentifiantNul",
+      "message": "Identifiant nul : faute d'appel.",
+      "arguments": [null],
+      "expectedException": "ArgumentNullException",
+      "argumentsUnchanged": false
+    }
+  ]
+}

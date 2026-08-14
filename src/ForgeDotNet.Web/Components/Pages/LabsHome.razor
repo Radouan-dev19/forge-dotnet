@@ -1,0 +1,95 @@
+@page "/labs"
+@using ForgeDotNet.Application.Labs
+@using ForgeDotNet.Domain.Labs
+@inject ILabSource Labs
+
+<PageTitle>Laboratoires — Forge.NET</PageTitle>
+
+<h1>Laboratoires</h1>
+
+<section class="practice-panel" aria-labelledby="labs-intro-title">
+    <h2 id="labs-intro-title">Ce qu'un laboratoire prouve, et ce qu'il ne prouve pas</h2>
+    <p>
+        Un laboratoire est un vrai projet : fichier de projet compilable, image de conteneur durcie,
+        définition d'infrastructure, chaîne de livraison. C'est le seul endroit du parcours où ces
+        artefacts existent réellement plutôt qu'être décrits.
+    </p>
+    <p class="notice" role="status">
+        <strong>Il s'exécute sur votre poste, hors du bac à sable.</strong> Forge.NET ne lance aucune de
+        ses commandes, n'observe aucun de ses résultats et n'enregistre aucune réussite. Ce que vous en
+        tirez est <strong>déclaré</strong> par vous : aucun laboratoire ne produit de preuve de maîtrise,
+        et le tableau de progression ne les comptera pas.
+    </p>
+    <p class="field-help">
+        C'est une limite assumée, pas un défaut à contourner. Les preuves automatiques du parcours
+        viennent des exercices, des DebugLabs, du laboratoire SQL, des examens et des projets, tous
+        exécutés dans un conteneur éphémère contrôlé par le serveur.
+    </p>
+</section>
+
+@if (_error is not null)
+{
+    <p class="error-message" role="alert">@_error</p>
+}
+else if (_labs is null)
+{
+    <p role="status">Chargement des laboratoires publiés…</p>
+}
+else
+{
+    <section class="practice-panel" aria-labelledby="labs-list-title">
+        <h2 id="labs-list-title">Les @_labs.Count laboratoires publiés</h2>
+        <ul class="practice-exercise-list">
+            @foreach (Lab lab in _labs)
+            {
+                <li>
+                    <a href="labs/@lab.Id">@lab.Title</a>
+                    <p>
+                        Semaine @string.Join(", ", lab.Weeks) · @lab.EstimatedMinutes minutes ·
+                        @lab.Objectives.Count objectifs · contenu v@(lab.Version)
+                    </p>
+                    <p class="field-help">@Requirements(lab)</p>
+                </li>
+            }
+        </ul>
+    </section>
+}
+
+@code {
+    private IReadOnlyList<Lab>? _labs;
+    private string? _error;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            _labs = await Labs.ListAsync();
+        }
+        catch (Exception exception)
+        {
+            _error = exception.Message;
+        }
+    }
+
+    /// <summary>
+    /// Annonce les prérequis d'environnement avant l'ouverture, parce qu'un laboratoire qui exige
+    /// Docker ou un accès réseau ne peut pas être commencé sans eux.
+    /// </summary>
+    private static string Requirements(Lab lab)
+    {
+        var needs = new List<string>(2);
+        if (lab.RequiresDocker)
+        {
+            needs.Add("un démon Docker disponible");
+        }
+
+        if (lab.RequiresNetwork)
+        {
+            needs.Add("un accès réseau local");
+        }
+
+        return needs.Count == 0
+            ? "Aucun prérequis d'environnement : hors ligne et sans conteneur."
+            : $"Exige {string.Join(" et ", needs)}.";
+    }
+}

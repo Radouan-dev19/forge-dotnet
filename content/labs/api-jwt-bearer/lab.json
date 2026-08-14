@@ -1,0 +1,55 @@
+{
+  "schemaVersion": 1,
+  "id": "api-jwt-bearer",
+  "version": 1,
+  "title": "API protégée par jeton Bearer",
+  "weeks": [14],
+  "skills": ["security.token", "security.authentication", "security.authorization"],
+  "recommendedBefore": [
+    "security-jwt-anatomy-001",
+    "security-jwt-validation-001",
+    "security-jwt-signature-001",
+    "security-jwt-order-001"
+  ],
+  "estimatedMinutes": 150,
+  "briefPath": "README.md",
+  "objectives": [
+    {
+      "id": "wire-token-validation",
+      "goal": "Relier chaque propriété de TokenValidationParameters à l'étape de la chaîne de validation qu'elle configure, telle que travaillée à la main dans les exercices.",
+      "observableProof": "Pour chaque propriété du Program.cs — algorithme imposé, émetteur, audience, expiration exigée, tolérance —, l'étape correspondante de la chaîne est nommée par écrit."
+    },
+    {
+      "id": "distinguish-401-403",
+      "goal": "Provoquer et distinguer les deux refus : identité non prouvée contre droit manquant.",
+      "observableProof": "La suite montre 401 sans jeton, sur jeton expiré, sur clé fausse et sur audience étrangère, et 403 sur portée insuffisante — jamais l'un à la place de l'autre."
+    },
+    {
+      "id": "scope-policies",
+      "goal": "Lire comment une politique d'autorisation traduit la revendication de portées, au format OAuth séparé par des espaces, en décision par route.",
+      "observableProof": "L'écriture exige orders.write alors que la lecture se contente d'orders.read, et le jeton multi-portées passe les deux routes."
+    },
+    {
+      "id": "green-suite",
+      "goal": "Exécuter la suite en mémoire et vérifier qu'elle couvre les quatre situations du contrat avant d'y toucher.",
+      "observableProof": "La commande de test rend une suite entièrement verte, sans démon ni service externe."
+    }
+  ],
+  "commands": [
+    {
+      "shell": "dotnet",
+      "command": "dotnet test content/labs/api-jwt-bearer/tests/ForgeJwtLab.Tests/ForgeJwtLab.Tests.csproj",
+      "purpose": "Monte l'API en mémoire et éprouve les statuts 401, 403, 200 et 201 selon le jeton présenté."
+    }
+  ],
+  "limits": [
+    "Aucun fournisseur d'identité : les jetons naissent dans la fabrique de test, il n'y a ni parcours d'obtention, ni rafraîchissement, ni révocation.",
+    "La clé de signature est factice et vit dans la configuration locale du laboratoire : le geste de la sortir vers un coffre n'est pas pratiqué ici.",
+    "L'API est montée en mémoire par la suite : rien n'est prouvé sur le transport, TLS ou la charge.",
+    "La première exécution restaure des paquets NuGet : elle exige un cache local déjà peuplé ou un accès au dépôt de paquets."
+  ],
+  "evidencePolicy": "learner-declared-outside-sandbox",
+  "requiresDocker": false,
+  "requiresNetwork": false,
+  "license": "CC-BY-4.0"
+}

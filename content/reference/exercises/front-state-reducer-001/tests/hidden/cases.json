@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "cases": [
+    {
+      "name": "Hidden_UnknownVerbIgnored",
+      "message": "Verbe inconnu ignore, la pose valide s'applique.",
+      "arguments": ["a=1", "toggle:a;set:b=2"],
+      "expected": "a=1;b=2",
+      "expectedException": null,
+      "argumentsUnchanged": false
+    },
+    {
+      "name": "Hidden_LastSetWins",
+      "message": "Poses repetees sur la meme cle : la derniere gagne.",
+      "arguments": ["", "set:k=1;set:k=2;set:k=3"],
+      "expected": "k=3",
+      "expectedException": null,
+      "argumentsUnchanged": false
+    },
+    {
+      "name": "Hidden_IncTwice",
+      "message": "Deux increments s'enchainent depuis la valeur lue.",
+      "arguments": ["n=4", "inc:n;inc:n"],
+      "expected": "n=6",
+      "expectedException": null,
+      "argumentsUnchanged": false
+    },
+    {
+      "name": "Hidden_IncNonInteger",
+      "message": "Increment refuse sur du texte, la valeur reste intacte.",
+      "arguments": ["w=abc", "inc:w;set:m=0"],
+      "expected": "m=0;w=abc",
+      "expectedException": null,
+      "argumentsUnchanged": false
+    },
+    {
+      "name": "Hidden_NullStateThrows",
+      "message": "Etat absent : ArgumentNullException.",
+      "arguments": [null, "set:a=1"],
+      "expectedException": "ArgumentNullException",
+      "argumentsUnchanged": false
+    }
+  ]
+}

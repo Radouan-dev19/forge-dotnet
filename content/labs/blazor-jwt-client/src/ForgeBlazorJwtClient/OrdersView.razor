@@ -1,0 +1,103 @@
+@using Microsoft.AspNetCore.Components.Web
+@using Microsoft.AspNetCore.Components.Authorization
+@implements IDisposable
+@inject IOrdersClient OrdersClient
+
+@*
+    Vue des commandes derriere une session authentifiee par jeton.
+
+    Trois gestes sont demontres par la suite bUnit :
+      1. Garde de route : la vue lit l'etat d'authentification cascade et ne consomme
+         le client que si l'utilisateur est authentifie ; sinon elle affiche un refus.
+      2. AuthenticationStateProvider : l'etat arrive par [CascadingParameter], comme le
+         fournit un CascadingAuthenticationState en production.
+      3. Annulation : un chargement en vol peut etre annule via une CancellationTokenSource
+         detenue en champ, liberee dans Dispose.
+*@
+
+@if (!_authenticated)
+{
+    <p class="orders-locked">Connexion requise</p>
+}
+else if (_cancelled)
+{
+    <p class="orders-cancelled">Chargement annulé.</p>
+}
+else if (_loading)
+{
+    <p class="orders-loading">Chargement...</p>
+    <button type="button" class="orders-cancel" @onclick="Cancel">Annuler</button>
+}
+else
+{
+    <ul class="orders-list">
+        @foreach (string order in _orders)
+        {
+            <li>@order</li>
+        }
+    </ul>
+}
+
+@code {
+    private CancellationTokenSource? _cts;
+    private IReadOnlyList<string> _orders = Array.Empty<string>();
+    private bool _authenticated;
+    private bool _loading;
+    private bool _cancelled;
+    private bool _started;
+
+    /// <summary>
+    /// Etat d'authentification fourni en cascade par un CascadingAuthenticationState.
+    /// Absent ou non authentifie, la vue refuse d'appeler le client.
+    /// </summary>
+    [CascadingParameter]
+    public Task<AuthenticationState>? AuthenticationState { get; set; }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        // Le chargement ne demarre qu'une fois : les rendus ulterieurs ne le relancent pas.
+        if (_started)
+        {
+            return;
+        }
+
+        _started = true;
+
+        if (AuthenticationState is null)
+        {
+            _authenticated = false;
+            return;
+        }
+
+        AuthenticationState state = await AuthenticationState;
+        _authenticated = state.User.Identity?.IsAuthenticated == true;
+        if (!_authenticated)
+        {
+            // Garde de route : identite non prouvee, aucun appel au client protege.
+            return;
+        }
+
+        _cts = new CancellationTokenSource();
+        _loading = true;
+        try
+        {
+            _orders = await OrdersClient.GetOrdersAsync(_cts.Token);
+        }
+        catch (OperationCanceledException)
+        {
+            _cancelled = true;
+        }
+        finally
+        {
+            _loading = false;
+        }
+    }
+
+    private void Cancel() => _cts?.Cancel();
+
+    public void Dispose()
+    {
+        _cts?.Cancel();
+        _cts?.Dispose();
+    }
+}

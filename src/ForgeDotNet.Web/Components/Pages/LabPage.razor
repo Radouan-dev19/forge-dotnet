@@ -1,0 +1,142 @@
+@page "/labs/{LabId}"
+@using ForgeDotNet.Application.Labs
+@using ForgeDotNet.Domain.Labs
+@inject ILabSource Labs
+
+<PageTitle>@(_lab?.Title ?? "Laboratoire") — Forge.NET</PageTitle>
+
+@if (_error is not null)
+{
+    <p class="error-message" role="alert">@_error</p>
+}
+else if (_notFound)
+{
+    <p class="error-message" role="alert">
+        Aucun laboratoire publié ne porte cet identifiant. Revenez à la <a href="labs">liste des
+        laboratoires</a>.
+    </p>
+}
+else if (_lab is null)
+{
+    <p role="status">Chargement du laboratoire…</p>
+}
+else
+{
+    <h1>@_lab.Title</h1>
+    <p class="field-help">
+        Semaine @string.Join(", ", _lab.Weeks) · @_lab.EstimatedMinutes minutes ·
+        contenu v@(_lab.Version)
+    </p>
+
+    <section class="practice-panel" aria-labelledby="lab-evidence-title">
+        <h2 id="lab-evidence-title">Ce que ce laboratoire prouve</h2>
+        @if (_lab.IsLearnerDeclared)
+        {
+            <p class="notice" role="status">
+                <strong>Rien, du point de vue du serveur.</strong> Les commandes ci-dessous s'exécutent
+                sur votre poste, hors du bac à sable. Forge.NET ne les lance pas, ne lit pas leur sortie
+                et n'enregistre aucun résultat. Votre réussite est déclarée, elle ne produit aucune
+                preuve de maîtrise et n'ouvre aucune porte.
+            </p>
+            <p class="field-help">
+                Ce que le laboratoire prouve, il le prouve <em>à vous</em> : chaque objectif ci-dessous
+                porte l'observation qui permet de dire qu'il est atteint. Lisez-la avant de lancer la
+                commande, sinon vous verrez passer une sortie verte sans savoir ce qu'elle établit.
+            </p>
+        }
+        else
+        {
+            <p class="notice" role="status">
+                Ce laboratoire déclare une politique de preuve inattendue (@_lab.EvidencePolicy). En
+                l'absence de producteur vérifié, traitez sa réussite comme déclarée.
+            </p>
+        }
+    </section>
+
+    <section class="practice-panel" aria-labelledby="lab-brief-title">
+        <h2 id="lab-brief-title">Brief</h2>
+        <pre class="runner-output">@_lab.Brief</pre>
+    </section>
+
+    <section class="practice-panel" aria-labelledby="lab-objectives-title">
+        <h2 id="lab-objectives-title">Objectifs et preuve observable</h2>
+        <ul>
+            @foreach (LabObjective objective in _lab.Objectives)
+            {
+                <li>
+                    <strong>@objective.Goal</strong>
+                    <p class="field-help">Observation attendue : @objective.ObservableProof</p>
+                </li>
+            }
+        </ul>
+    </section>
+
+    <section class="practice-panel" aria-labelledby="lab-commands-title">
+        <h2 id="lab-commands-title">Commandes à exécuter vous-même</h2>
+        <p>
+            Lancez-les depuis la racine du dépôt, dans l'ordre. Chacune est suivie de ce qu'elle
+            établit.
+        </p>
+        <ol>
+            @foreach (LabCommand command in _lab.Commands)
+            {
+                <li>
+                    <pre class="runner-output">@command.Command</pre>
+                    <p class="field-help">@command.Purpose</p>
+                </li>
+            }
+        </ol>
+    </section>
+
+    <section class="practice-panel" aria-labelledby="lab-limits-title">
+        <h2 id="lab-limits-title">Limites annoncées</h2>
+        <p>
+            Ce que ce laboratoire n'établit pas. Les lire évite de tirer d'une sortie verte une
+            conclusion qu'elle ne porte pas.
+        </p>
+        <ul>
+            @foreach (string limit in _lab.Limits)
+            {
+                <li>@limit</li>
+            }
+        </ul>
+    </section>
+
+    <section class="practice-panel" aria-labelledby="lab-requirements-title">
+        <h2 id="lab-requirements-title">Prérequis</h2>
+        <ul>
+            <li>Démon Docker : @(_lab.RequiresDocker ? "requis" : "non requis")</li>
+            <li>Accès réseau : @(_lab.RequiresNetwork ? "requis" : "non requis")</li>
+            @if (_lab.Prerequisites.Count > 0)
+            {
+                <li>Contenu à avoir travaillé avant : @string.Join(", ", _lab.Prerequisites)</li>
+            }
+            <li>Compétences visées : @string.Join(", ", _lab.Skills)</li>
+        </ul>
+    </section>
+}
+
+@code {
+    [Parameter]
+    public string? LabId { get; set; }
+
+    private Lab? _lab;
+    private string? _error;
+    private bool _notFound;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        _error = null;
+        _notFound = false;
+        _lab = null;
+        try
+        {
+            _lab = await Labs.GetAsync(LabId ?? string.Empty);
+            _notFound = _lab is null;
+        }
+        catch (Exception exception)
+        {
+            _error = exception.Message;
+        }
+    }
+}

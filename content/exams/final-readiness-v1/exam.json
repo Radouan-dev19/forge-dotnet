@@ -22,6 +22,10 @@
                                 "azure-secret-source-001",
                                 "azure-correlation-signal-001",
                                 "azure-release-evidence-001",
-                                "azure-incident-brief-001"
+                                "azure-incident-brief-001",
+                                "front-state-reducer-001",
+                                "front-form-field-state-001",
+                                "front-cache-decision-001",
+                                "front-route-guard-001"
                             ]
 }

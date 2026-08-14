@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "cases": [
+    {
+      "name": "Hidden_AgeEqualsStale",
+      "message": "Age pile egal a staleAfter : bascule inclusive en revalidation.",
+      "arguments": ["storedAt=0", 30, 30, 120],
+      "expected": "stale-revalidate",
+      "expectedException": null,
+      "argumentsUnchanged": false
+    },
+    {
+      "name": "Hidden_AgeEqualsExpire",
+      "message": "Age pile egal a expireAfter : bascule en perime.",
+      "arguments": ["storedAt=0", 120, 30, 120],
+      "expected": "expired",
+      "expectedException": null,
+      "argumentsUnchanged": false
+    },
+    {
+      "name": "Hidden_JustBeforeExpire",
+      "message": "Une seconde avant expireAfter : encore a revalider.",
+      "arguments": ["storedAt=0", 119, 30, 120],
+      "expected": "stale-revalidate",
+      "expectedException": null,
+      "argumentsUnchanged": false
+    },
+    {
+      "name": "Hidden_NegativeAge",
+      "message": "Horloge decalee, age negatif : traite comme frais.",
+      "arguments": ["storedAt=1000", 990, 30, 120],
+      "expected": "fresh",
+      "expectedException": null,
+      "argumentsUnchanged": false
+    },
+    {
+      "name": "Hidden_InvertedThresholds",
+      "message": "staleAfter au-dessus de expireAfter : seuils incoherents.",
+      "arguments": ["storedAt=0", 10, 120, 30],
+      "expectedException": "ArgumentException",
+      "argumentsUnchanged": false
+    },
+    {
+      "name": "Hidden_MalformedEntry",
+      "message": "Entree vide sans prefixe storedAt : mal formee.",
+      "arguments": ["", 10, 30, 120],
+      "expectedException": "ArgumentException",
+      "argumentsUnchanged": false
+    }
+  ]
+}

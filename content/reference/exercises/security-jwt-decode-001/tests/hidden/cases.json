@@ -1,0 +1,58 @@
+{
+  "schemaVersion": 1,
+  "cases": [
+    {
+      "name": "Hidden_TruncatedPayload",
+      "message": "Charge utile tronquée : reste de un modulo quatre, décodage impossible.",
+      "arguments": [
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyLTQ4MiIsInNjb3BlIjoib3JkZXJzLnJlYWQiLCJpc3MiOiJmb3JnZS1pc3N1ZXIif.eQod_7ZKbIdX9R5cl97hBBSq1DgGJPZSNekAKxwLqv8",
+        "sub"
+      ],
+      "expectedException": "ArgumentException",
+      "argumentsUnchanged": false
+    },
+    {
+      "name": "Hidden_TwoSegments",
+      "message": "Deux segments seulement : jeton malformé.",
+      "arguments": [
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyLTQ4MiIsInNjb3BlIjoib3JkZXJzLnJlYWQiLCJpc3MiOiJmb3JnZS1pc3N1ZXIifQ",
+        "sub"
+      ],
+      "expectedException": "ArgumentException",
+      "argumentsUnchanged": false
+    },
+    {
+      "name": "Hidden_MissingClaim",
+      "message": "Revendication absente : chaîne vide, pas une exception.",
+      "arguments": [
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyLTQ4MiIsInNjb3BlIjoib3JkZXJzLnJlYWQiLCJpc3MiOiJmb3JnZS1pc3N1ZXIifQ.eQod_7ZKbIdX9R5cl97hBBSq1DgGJPZSNekAKxwLqv8",
+        "aud"
+      ],
+      "expected": "",
+      "expectedException": null,
+      "argumentsUnchanged": false
+    },
+    {
+      "name": "Hidden_NumericClaim",
+      "message": "Revendication numérique : texte JSON brut.",
+      "arguments": [
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyLTciLCJleHAiOjE3NTAwMDAwMDB9.fsYyajf3T_PuE2PPsTKEiR-TzV2tdI9cXEiSs0euYTI",
+        "exp"
+      ],
+      "expected": "1750000000",
+      "expectedException": null,
+      "argumentsUnchanged": false
+    },
+    {
+      "name": "Hidden_AccentedValue",
+      "message": "Valeur accentuée : le décodage UTF-8 doit la préserver.",
+      "arguments": [
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiTMOpYSBOb8OrbCIsInN1YiI6InVzZXItOSJ9.51VbM-dk0b_hGVANopqJPEz1Adnohr0dlh7u4xhckRg",
+        "name"
+      ],
+      "expected": "Léa Noël",
+      "expectedException": null,
+      "argumentsUnchanged": false
+    }
+  ]
+}
