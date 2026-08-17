@@ -1,0 +1,54 @@
+{
+  "schemaVersion": 1,
+  "cases": [
+    {
+      "name": "Hidden_MissingLeftIsRejected",
+      "message": "Une version absente est un appel fautif, pas une version nulle.",
+      "arguments": [null, "1.0.0"],
+      "expectedException": "ArgumentNullException",
+      "argumentsUnchanged": false
+    },
+    {
+      "name": "Hidden_TwoSegmentsAreRejected",
+      "message": "Un compte de segments variable rendrait la comparaison arbitraire.",
+      "arguments": ["1.2", "1.2.0"],
+      "expectedException": "ArgumentException",
+      "argumentsUnchanged": false
+    },
+    {
+      "name": "Hidden_NonNumericSegmentIsRejected",
+      "message": "Un segment qui n'est pas un entier ne se compare à rien.",
+      "arguments": ["1.2.0", "1.2.x"],
+      "expectedException": "ArgumentException",
+      "argumentsUnchanged": false
+    },
+    {
+      "name": "Hidden_NegativeSegmentIsRejected",
+      "message": "Aucune version ne porte de segment négatif.",
+      "arguments": ["1.-2.0", "1.2.0"],
+      "expectedException": "ArgumentException",
+      "argumentsUnchanged": false
+    },
+    {
+      "name": "Hidden_MinorDecidesWhenMajorTies",
+      "message": "Majeurs égaux : le mineur devient le premier écart.",
+      "arguments": ["3.4.0", "3.11.0"],
+      "expected": -1,
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_LeadingZeroesAreStillNumbers",
+      "message": "Un segment écrit avec des zéros de tête vaut le nombre qu'il représente.",
+      "arguments": ["1.02.0", "1.2.0"],
+      "expected": 0,
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_PatchDecidesWhenMajorAndMinorTie",
+      "message": "Le correctif ne tranche que lorsque les deux rangs précédents sont égaux.",
+      "arguments": ["0.1.1", "0.1.2"],
+      "expected": -1,
+      "argumentsUnchanged": true
+    }
+  ]
+}

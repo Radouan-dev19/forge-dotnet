@@ -7,7 +7,10 @@ Forge.NET est une application locale d'apprentissage actif de C# et .NET. Le MVP
 - SDK .NET `10.0.300` compatible avec [`global.json`](global.json).
 - PowerShell 5.1 ou 7+ pour le script de vérification.
 - Le CLI EF Core local, restauré par `dotnet tool restore`.
-- Docker Desktop avec les conteneurs Linux et Docker Compose v2 pour le mode Compose.
+- Docker Desktop avec les conteneurs Linux et Docker Compose v2 pour le mode Compose. **Moteur 25.0
+  ou plus récent** : le bac à sable monte `/input` en lié non récursif, une option dont la forme
+  antérieure a été supprimée du moteur. Sur une version plus ancienne, aucun conteneur d'exécution
+  n'est créé et le produit rend « Docker a refusé la politique d'isolation ».
 
 ## Lancement local
 
@@ -16,6 +19,44 @@ dotnet run --project src/ForgeDotNet.Web
 ```
 
 Avec le profil HTTP fourni, l'application est disponible sur [http://localhost:5012](http://localhost:5012). Le terminal affiche les adresses effectivement utilisées au démarrage.
+
+> **Sans étape supplémentaire, cette installation ne valide aucun exercice.** Le mode par défaut est
+> `Manual` : les soumissions sont enregistrées comme déclarées, aucun test n'est exécuté, et la
+> politique de maîtrise refuse une preuve qui ne rapporte aucun test — donc aucun domaine ne se
+> valide et aucune porte ne s'ouvre. Voir **Valider des exercices** ci-dessous.
+
+## Valider des exercices
+
+Trois modes existent. Un seul produit des preuves de maîtrise.
+
+| Mode | Ce qu'il fait | Preuve produite |
+|---|---|---|
+| `Manual` (défaut) | export ZIP à exécuter soi-même | aucune |
+| `Deterministic` | résultats simulés, pour les tests du produit | aucune |
+| `Docker` | compile et exécute la soumission dans un conteneur isolé | **oui** |
+
+Construisez d'abord l'image du bac à sable — son contexte est `src/ForgeDotNet.CodeRunner/Container`,
+pas la racine du dépôt :
+
+```powershell
+./scripts/build-code-runner.ps1
+```
+
+Le script affiche la référence immuable `sha256:…` à configurer. Le runner refuse une étiquette : une
+étiquette peut être redirigée vers une autre image entre la vérification de politique et l'exécution.
+
+```powershell
+dotnet run --project src/ForgeDotNet.Web `
+  --CodeRunner:Mode Docker `
+  --CodeRunner:Docker:ImageReference sha256:...
+```
+
+Relancez le script après toute modification du runner : l'empreinte change, et une référence périmée
+fait échouer le démarrage plutôt que de servir silencieusement une ancienne image.
+
+**Le mode Compose ne peut pas valider**, par construction : exécuter du code soumis exigerait de
+monter le socket Docker de l'hôte dans le conteneur web, c'est-à-dire d'y ouvrir un chemin d'évasion
+vers l'hôte. Compose sert à lire, planifier et réviser ; la validation passe par le mode CLI ci-dessus.
 
 Routes disponibles :
 
@@ -38,6 +79,8 @@ Routes disponibles :
 - `/mastery` : preuves, scores versionnés et portes de maîtrise explicables ;
 - `/reviews` : file de révisions dues et cartes personnelles ;
 - `/exams` et `/exams/{attemptId}` : examens sans aide gouvernés par l'échéance serveur ;
+- `/interviews` et `/interviews/{id}` : les 242 fiches d'entretien, critères observables et réponse modèle révélés à la demande — aucune preuve de maîtrise ;
+- `/english` et `/english/{id}` : les 51 cartes d'anglais professionnel, appariées écrit/oral — aucune preuve de maîtrise ;
 - `/health` : santé HTTP, intégrité SQLite et état des migrations.
 
 ## Lancement avec Docker Compose
@@ -211,6 +254,7 @@ Les analyseurs .NET utilisent le niveau `latest-recommended`. Les avertissements
 - [`docs/DIAGNOSTIC.md`](docs/DIAGNOSTIC.md)
 - [`docs/WEEKLY_PLAN.md`](docs/WEEKLY_PLAN.md)
 - [`docs/PRACTICE.md`](docs/PRACTICE.md)
+- [`docs/HUMAN_REVIEW.md`](docs/HUMAN_REVIEW.md) — les sept exigences qu'aucune machine ne vérifie, et le protocole de revue par un tiers
 - [`docs/CODE_RUNNER_CONTRACT.md`](docs/CODE_RUNNER_CONTRACT.md)
 - [`docs/SECURITY.md`](docs/SECURITY.md)
 - [`docs/ROADMAP.md`](docs/ROADMAP.md)

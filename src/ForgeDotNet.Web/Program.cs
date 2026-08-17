@@ -11,6 +11,7 @@ using ForgeDotNet.Application.IdentityLocal;
 using ForgeDotNet.Application.Labs;
 using ForgeDotNet.Application.Mastery;
 using ForgeDotNet.Application.Practice;
+using ForgeDotNet.Application.Preparation;
 using ForgeDotNet.Application.Projects;
 using ForgeDotNet.Application.Reviews;
 using ForgeDotNet.Application.SqlLab;
@@ -25,6 +26,7 @@ using ForgeDotNet.Infrastructure.Exams;
 using ForgeDotNet.Infrastructure.Labs;
 using ForgeDotNet.Infrastructure.Persistence;
 using ForgeDotNet.Infrastructure.Practice;
+using ForgeDotNet.Infrastructure.Preparation;
 using ForgeDotNet.Infrastructure.Projects;
 using ForgeDotNet.Infrastructure.SqlLab;
 using ForgeDotNet.Infrastructure.WeeklyPlanning;
@@ -103,6 +105,9 @@ builder.Services.AddSingleton(new PracticeContentOptions
 });
 builder.Services.AddSingleton<IPracticeExerciseSource, FileSystemPracticeExerciseSource>();
 builder.Services.AddSingleton<IProjectSource, FileSystemProjectSource>();
+// Contenus de préparation : ils s'affichent, ils ne produisent aucune observation de maîtrise.
+builder.Services.AddSingleton<IInterviewSource, FileSystemInterviewSource>();
+builder.Services.AddSingleton<IEnglishActivitySource, FileSystemEnglishActivitySource>();
 builder.Services.AddSingleton<PracticeCoordinator>();
 builder.Services.AddScoped<PracticeService>();
 builder.Services.AddSingleton(new DebugContentOptions

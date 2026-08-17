@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "id": "interview-git-rebase-or-merge-001",
+  "version": 1,
+  "title": "Choisir entre rebase et fusion",
+  "level": "junior",
+  "durationMinutes": 7,
+  "skills": ["git.branches"],
+  "question": "Votre branche a une histoire brouillonne et un collègue l'a déjà récupérée pour vous aider. Rebasez-vous, écrasez-vous, ou fusionnez-vous ? Qu'arrive-t-il chez lui si vous vous trompez ?",
+  "observableCriteria": [
+    "Le partage est traité comme une interdiction de réécriture, prioritaire sur toute considération de propreté",
+    "Le mécanisme des commits en double après réécriture est décrit concrètement",
+    "L'arbitrage de l'écrasement est présenté comme une perte assumée, pas comme un nettoyage neutre"
+  ],
+  "modelAnswer": "Je fusionne, parce que la branche est partagée et que cela interdit toute réécriture. Si je rebasais ou écrasais, je fabriquerais de nouveaux commits sans effacer les anciens : ils vivent déjà chez mon collègue. À sa prochaine synchronisation il récupère les nouveaux, garde les siens, et se retrouve avec chaque modification en double et des conflits que personne n'a introduits. L'histoire brouillonne est un vrai inconvénient, mais elle se règle avant de pousser, pas après. Et j'aurais gardé à l'esprit que l'écrasement n'est pas un nettoyage neutre : il jette le cheminement pour garder le résultat, ce qui est le bon arbitrage quand les commits disent « wip », et le mauvais quand ils racontent une progression qu'un lecteur futur aurait voulu suivre.",
+  "commonMistakes": [
+    "Décider sur la propreté de l'histoire avant de vérifier le partage",
+    "Croire qu'une réécriture efface les commits d'origine chez les autres"
+  ],
+  "variants": [
+    "Demander ce qui change si la branche est poussée mais que personne ne l'a récupérée.",
+    "Demander comment obtenir une histoire lisible sans jamais écraser."
+  ],
+  "license": "CC-BY-4.0"
+}

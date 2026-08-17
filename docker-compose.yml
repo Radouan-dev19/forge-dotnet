@@ -9,6 +9,15 @@ services:
       ASPNETCORE_ENVIRONMENT: Production
       ASPNETCORE_HTTP_PORTS: "8080"
       DOTNET_EnableDiagnostics: "0"
+      # Le mode Compose ne valide aucun exercice, et c'est délibéré : exécuter du code soumis
+      # exigerait de monter le socket Docker de l'hôte dans ce conteneur, c'est-à-dire d'y ouvrir un
+      # chemin d'évasion vers l'hôte — l'inverse exact du modèle de menace décrit dans
+      # docs/SECURITY.md. Ce service reste donc en lecture, planification et révision.
+      #
+      # Cette valeur n'est volontairement pas paramétrable : la rendre modifiable laisserait croire
+      # qu'une variable d'environnement suffit, alors que le conteneur n'a ni socket, ni capacités,
+      # ni système de fichiers inscriptible pour le faire. Pour valider des exercices, lancez le mode
+      # CLI avec un runner Docker — voir la section « Valider des exercices » du README.
       CodeRunner__Mode: Manual
       LocalData__DirectoryPath: /var/lib/forge-dotnet/data
       SqlLab__Enabled: ${FORGE_SQL_LAB_ENABLED:-false}

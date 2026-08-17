@@ -24,7 +24,7 @@ public sealed class ReviewCardQualityTests
     /// Exercices couverts par la banque. Ce plancher ne peut que monter : le baisser exige de
     /// modifier ce fichier, ce qui reste visible en revue.
     /// </summary>
-    private const int MinimumCoveredExercises = 205;
+    private const int MinimumCoveredExercises = 212;
 
     /// <summary>
     /// Nom que le contenu donne à chaque domaine de maîtrise, tel que le schéma des cartes l'énumère.

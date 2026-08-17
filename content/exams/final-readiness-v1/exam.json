@@ -7,6 +7,8 @@
     "drawCount":  8,
     "passingScore":  80,
     "eligibleExerciseIds":  [
+        "english-standup-order-001",
+        "english-review-comment-001",
                                 "csharp-price-conversion-001",
                                 "algo-pair-sum-001",
                                 "api-http-status-map-001",

@@ -368,11 +368,20 @@ starter, un corrigé de référence et **une suite d'acceptation par jalon**, ex
 soumission dont toutes les suites passent produit `project.console` en `AutomaticTests` ; une
 soumission faite en mode manuel est enregistrée comme déclarée et ne prouve rien.
 
-`ProjectCorrectnessTests` vérifie hors Docker que chaque corrigé de référence passe ses trente-six
-cas et que chaque starter en échoue au moins un. `MasteryRulesTests` prouve le passage de « porte A
-bloquée au seul motif du mini-projet » à « porte A ouverte », sans qu'aucun seuil ne bouge.
-`ProjectAchievementTests` tient l'inventaire des **vingt et une** clés encore sans producteur — un
+`ProjectCorrectnessTests` vérifie hors Docker que chaque corrigé de référence passe ses cas et que
+chaque starter en échoue au moins un. `MasteryRulesTests` prouve le passage de « porte A bloquée au
+seul motif du mini-projet » à « porte A ouverte », sans qu'aucun seuil ne bouge.
+`ProjectAchievementTests` tient l'inventaire des **dix-neuf** clés encore sans producteur — un
 plafond qui ne peut que descendre.
+
+Deux clés en sont sorties depuis, toutes deux au-delà de la porte A : `code-review`
+(`project-code-review-001`, S31) et `ef-core` (`project-orders-database-001`, dont les trois suites
+exécutent du vrai EF Core contre une vraie base SQLite dans le bac à sable). Cinq autres clés —
+`api.functional`, `tests.unit`, `tests.integration`, `docker`, `ci` — ont été examinées lors du même
+travail et **refusées** : le bac à sable ne sert aucune requête HTTP, ne découvre aucun test écrit par
+l'apprenant et ne bâtit aucune image. Leur produire un accomplissement sur un exercice qui *raisonne
+sur* le sujet aurait fait descendre le compteur sans rien ouvrir. Le détail par clé est dans
+`docs/MASTERY.md` et dans l'inventaire lui-même.
 
 ### Le score ne pouvait pas atteindre sa propre barre
 
@@ -401,17 +410,29 @@ il échouait sur six domaines ; il est vert.
 ### Ce qui reste ouvert
 
 - **L'explication**, 10 % du score : aucune preuve serveur honnête n'existe pour cette composante.
-  Son poids est perdu, ce qui fixe le plafond général à 90 — au-dessus des seuils, mais dit.
-- **Les portes B, C et D** : leurs vingt et une exigences n'ont aucun producteur. Elles sont
+  Son poids est perdu, ce qui fixe le plafond général à 90 — au-dessus des deux seuils (80 et 85),
+  donc coûteux en score sans fermer ni domaine ni porte, et dit plutôt que tu.
+
+  La reprise a cherché puis refusé trois routes : la carte à choix sur le « pourquoi » d'une solution
+  (elle mesure la reconnaissance, l'acte que le quiz mesure déjà, et paierait deux fois le même geste),
+  l'explication personnelle du protocole de pratique (contrôlée en longueur et en non-recopie, donc sur
+  l'effort et non la justesse, et atteignable seulement après une solution consultée, c'est-à-dire sur
+  un exercice contaminé), et la rubrique déterministe décrite dans `CONTENT_GUIDE.md` (elle note une
+  transcription si ses concepts obligatoires sont publiés, une devinette s'ils sont secrets). Le geste
+  que la composante nomme — produire un compte rendu causal dans ses propres mots — n'a pas de
+  substitut machine : ce qui le juge est un lecteur. L'explication rejoint donc en nature les six
+  exigences « jugement humain », dont elle est la seule **composante**. `MasteryRulesTests` rend le
+  refus exécutable ; le raisonnement est dans `docs/MASTERY.md`.
+- **Les portes B, C et D** : dix-neuf de leurs exigences n'ont aucun producteur. Elles sont
   désormais visibles, comptées **et diagnostiquées**, mais toujours pas satisfaites.
 
   L'inventaire de `ProjectAchievementTests` porte maintenant, pour chaque clé, ce qui lui manque :
-  **quinze** attendent un livrable vérifié côté serveur, **six** exigent un jugement humain et ne
+  **treize** attendent un livrable vérifié côté serveur, **six** exigent un jugement humain et ne
   descendront jamais par du code — Git propre, présentation, entretien blanc, architecture pragmatique,
-  anglais, défense finale. Trois cas de test prouvent que le blocage est total porte par porte, et non
-  le fait d'une exigence isolée.
+  anglais, défense finale. Deux clés sont sorties de l'inventaire, `code-review` et `ef-core`, et cinq
+  autres ont été examinées puis refusées faute de preuve honnête possible dans le bac à sable.
 
-  La reprise a cherché quelle clé pouvait être branchée sur une preuve déjà collectée. Réponse
+  La reprise a cherché quelle clé pouvait être branchée sur une preuve **déjà collectée**. Réponse
   mesurée : **aucune**. Le candidat le plus crédible, « EF Core », a été instrumenté puis retiré après
   vérification : `FileSystemSqlScenarioSource` n'expose que le mode de contrat `sql`, or les cinq
   scénarios `ef-*` déclarent le mode `ef` et sont donc absents du laboratoire ; et un scénario EF n'est
@@ -419,6 +440,11 @@ il échouait sur six domaines ; il est vert.
   produit ne permet de valider les cinq. Livrer ce producteur aurait fait descendre le plafond de clés
   sans producteur sans rien débloquer — le faux signal exact que ce cliquet existe pour empêcher.
   `EfScenarioReachabilityTests` fige le diagnostic.
+
+  La clé a été produite plus tard, par une preuve **nouvelle** et non par celles-là : un projet
+  vérifiable dont les suites exécutent EF Core dans le bac à sable. Les deux constats coexistent sans se
+  contredire — le produit savait exécuter EF Core, il n'avait simplement aucun chemin vérifié qui y
+  menât.
 
   Fait à retenir pour l'audit lui-même : trois scénarios de contenu publiés, validés par le validateur
   et comptés dans les volumes sont **inatteignables par tout chemin d'apprenant**. Le validateur
@@ -453,19 +479,159 @@ il échouait sur six domaines ; il est vert.
   nombre de critères — deux ou trois par fiche —, dont l'augmentation demanderait un panel humain
   pour juger de leur pertinence.
 - **P2-02** : aucun panel humain indépendant n'a été réuni.
-- Les sept personas n'ont pas été rejoués : navigateur et Docker restaient indisponibles.
-- Les tests d'intégration dépendant de Docker n'ont pas pu s'exécuter, comme lors de l'audit
-  initial : 76 échecs, tous dans des classes qui exigent un démon Docker ou le secret SqlLab,
-  lui-même produit par `scripts/start-sql-lab.ps1`, qui exige Docker. Aucune conclusion nouvelle
-  n'est tirée sur leur résultat. Les 437 autres tests d'intégration, 156 tests unitaires et 56 tests
-  de bout en bout sont verts, et `dotnet format --verify-no-changes` ne signale aucun écart.
-- **Le trajet réel d'une soumission de projet n'a pas pu être exécuté** : éditeur → conteneur →
-  suites → accomplissement exige un démon Docker et un navigateur, absents ici. Le producteur est
-  prouvé par test unitaire et les suites par vérification Roslyn hors ligne ; l'exécution isolée de
-  bout en bout reste à démontrer.
+- Les sept personas n'ont pas été rejoués. Docker est désormais disponible — voir la reprise du
+  17 août 2026 — mais aucun pilotage de navigateur n'existe dans le dépôt, et les tests de bout en
+  bout s'exécutent en processus sur `WebApplicationFactory` sans circuit Blazor interactif. La
+  condition porte sur des trajets d'interface qu'aucun de ces tests ne traverse.
+- Les tests d'intégration dépendant de Docker **s'exécutent désormais** : les 76 échecs
+  environnementaux sont tombés à zéro, et la suite complète est verte. Cette exécution a révélé trois
+  défauts bloquants qu'aucun test hors Docker ne pouvait voir ; ils sont corrigés et couverts.
+- **Le trajet réel d'une soumission de projet est désormais exécuté** de la soumission au verdict,
+  dans un conteneur isolé, par `ProjectSubmissionDockerRunnerTests`. Il l'était d'autant moins
+  auparavant qu'il ne fonctionnait pas : deux défauts l'empêchaient d'aboutir. Restent hors de portée
+  d'un test l'éditeur du navigateur et l'affichage de l'accomplissement dans le tableau de
+  progression.
 - 43 des 142 exercices ne figurent dans aucune banque d'examen : ils ne peuvent jamais être tirés. Ce
   nombre n'a pas monté malgré sept exercices neufs, tous inscrits dans la banque de leur examen ; il
   n'a pas baissé non plus, le reliquat portant sur des familles antérieures à la reprise.
+
+## Reprise du 17 août 2026 — avec un démon Docker
+
+Un moteur Docker était disponible pour la première fois. Ce qui a été exécuté, dans l'ordre :
+`scripts/start-sql-lab.ps1` (conteneur SqlLab et pont de test rendus sains, aucun secret affiché),
+construction de l'image runner depuis `src/ForgeDotNet.CodeRunner/Container`, puis la suite
+d'intégration complète.
+
+**Les 76 échecs environnementaux sont tombés à zéro : 637 tests d'intégration verts en une seule
+exécution**, dix-neuf de plus qu'avant la reprise — deux qui parcourent le trajet de soumission dans
+un conteneur réel, dix-sept qui figent hors Docker la convention de nommage des suites. Mais le
+résultat utile de cette reprise n'est pas ce chiffre : c'est ce que l'exécution réelle a révélé, et
+qu'aucune quantité de tests hors Docker n'aurait montré.
+
+### Trois défauts, tous dans une couture
+
+Chacun se tenait entre deux composants séparément prouvés corrects. C'est le constat le plus important
+de cette reprise, et il porte sur la stratégie de test elle-même, pas sur une ligne de code.
+
+**P1-A — Aucun conteneur ne pouvait être créé.** Le runner passait à `docker create` l'option de
+montage `bind-nonrecursive`, dépréciée depuis Docker 25 et **supprimée dans Docker 29**. Le moteur
+refusait la création ; le produit rendait « Docker a refusé la politique d'isolation ». Sur un poste à
+jour, **aucun exercice, aucun DebugLab, aucun projet ne pouvait s'exécuter** — et la vérification hors
+ligne restait verte pendant ce temps. Corrigé par `bind-recursive=disabled`, dont l'inspection confirme
+qu'elle produit la même option (`BindOptions.NonRecursive = true`). Les dix-huit contrôles d'isolation
+de `DockerCodeRunnerSecurityTests` passent, dont celui qui vérifie chaque garantie effective : aucune
+protection n'a été échangée contre ce correctif.
+
+**P1-B — Aucune soumission de projet ne pouvait aboutir.** `SubmitProject` construit une cible
+d'exécution de la forme `<projet>.<jalon>` — c'est la forme que `FileSystemProjectSource.FindSuiteAsync`
+redécoupe. Mais le contrat d'exécution validait cette cible contre un motif qui **n'admettait pas le
+point**, hérité de l'époque où seuls des exercices s'exécutaient. La requête était donc rejetée avant
+tout appel au bac à sable. Conséquence : le producteur d'accomplissement de la porte A n'avait jamais
+pu se déclencher, et les clés `project.console`, `code-review` et `ef-core` étaient inatteignables en
+pratique alors que tout le disait produit. Le motif admet désormais un second segment, et un seul,
+sans point interne : « .. » reste impossible par construction.
+
+**P1-C — Deux projets sur six nommaient mal leur manifeste de suite.**
+`project-code-review-001` et `project-orders-database-001` déclaraient `exerciseId` d'après le seul
+identifiant de projet, là où les quatre projets console déclarent la cible complète. Leurs suites
+étaient franchissables sous `ProjectCorrectnessTests` et introuvables à la soumission. Corrigé sur les
+cinq manifestes concernés.
+
+### Ce que ces trois défauts apprennent
+
+`ProjectCorrectnessTests` prouvait que chaque suite est franchissable.
+`DockerCodeRunnerSecurityTests` prouvait que le bac à sable tient sa politique. Les deux étaient verts,
+et **le produit était inutilisable** : rien ne prouvait qu'une soumission traverse effectivement le bac
+à sable. Une preuve par morceaux ne se recompose pas d'elle-même en preuve de bout en bout, et l'écart
+entre les deux est exactement l'endroit où un défaut peut vivre indéfiniment sans être vu.
+
+Deux règles nouvelles ferment cette couture :
+`ProjectSubmissionDockerRunnerTests` exécute le trajet réel — corrigé de référence, conteneur isolé,
+trois suites, statut agrégé, plus le cas symétrique du squelette qui doit échouer ; et
+`SuiteManifestIsNamedAfterTheRunIdentifierTheProductWillEmit` vérifie **hors Docker**, pour chaque suite
+publiée, que son manifeste nomme la cible que le produit émettra et que le contrat l'accepte. La
+seconde aurait suffi à attraper P1-B et P1-C en une seconde d'exécution.
+
+### Ce qui n'a pas été fait, et pourquoi le verdict ne bouge pas
+
+**Les sept personas n'ont pas été rejoués.** La condition n'est pas satisfaite : il n'existe dans ce
+dépôt aucun pilotage de navigateur. Les 61 tests de bout en bout s'exécutent sur
+`WebApplicationFactory`, c'est-à-dire un client HTTP en processus — ils ne chargent aucun circuit
+Blazor interactif, ne cliquent rien, et ne peuvent donc pas tenir lieu de rejeu. Les personas portent
+précisément sur des trajets d'interface : accès prématuré à une solution, message après consultation,
+choix d'un scénario SQL, retour après quatorze jours.
+
+**Le trajet de soumission est vérifié du rendu au verdict, pas de la frappe au pixel.** L'éditeur du
+navigateur et l'affichage de l'accomplissement dans le tableau de progression restent hors de portée
+d'un test. Le dire est plus utile que de laisser croire le contraire.
+
+**Aucun panel humain n'a été réuni.** Cette condition ne dépend pas de l'outillage.
+
+**Le verdict reste donc REFUSÉ**, et la reprise le confirme au lieu de le lever. Elle apporte
+néanmoins ce qu'un rejeu devait apporter : trois défauts bloquants trouvés, corrigés et couverts, dont
+deux rendaient le produit inutilisable pour n'importe quel apprenant sur un poste à jour.
+
+## Auto-suffisance de l'application, examinée séparément du contenu
+
+Les reprises précédentes portaient sur ce que le parcours enseigne. Celle-ci pose une autre question :
+un lecteur qui clone le dépôt et suit la documentation obtient-il une application qui sert ce qu'elle
+embarque ? **Non**, pour deux raisons indépendantes du contenu, toutes deux fermées depuis.
+
+### L'application livrée ne validait rien, et ne le disait pas
+
+Le mode par défaut est `Manual` dans `appsettings.json` **et** codé en dur dans `docker-compose.yml`.
+En mode manuel, `UnavailableCodeRunner` rend un résultat sans aucun test exécuté ; or la politique
+n'admet une preuve que si des tests ont réellement été rapportés. La chaîne complète était donc :
+aucune observation vérifiée, aucun domaine validable, **porte A fermée par configuration** et non par
+manque de travail. La page de maîtrise affichait « fermée » sans distinguer les deux.
+
+S'y ajoutait un obstacle matériel : la construction de l'image du bac à sable **n'était documentée
+nulle part**, et son contexte n'est pas la racine du dépôt mais `src/ForgeDotNet.CodeRunner/Container`
+— ce qu'aucun document ne permettait de deviner. Le message d'erreur de démarrage décrivait le format
+attendu (`sha256:` complet) sans dire comment l'obtenir.
+
+Fermé par : `scripts/build-code-runner.ps1`, qui construit le bon contexte et rend la référence
+immuable à configurer ; un message de démarrage qui nomme ce script ; une section « Valider des
+exercices » dans le README ; une bannière sur `/mastery` qui dit, en mode manuel, que l'installation ne
+peut produire aucune preuve — *« les scores ci-dessous mesurent une installation, pas votre niveau »*.
+`InstallationHonestyTests` et un test de bout en bout figent l'ensemble.
+
+Le mode Compose **reste** non validant, et c'est délibéré : exécuter du code soumis exigerait de monter
+le socket Docker de l'hôte dans le conteneur web, c'est-à-dire d'y ouvrir un chemin d'évasion, à
+l'opposé du modèle de menace. Ce qui change est que le fichier et le README le disent, au lieu de
+laisser le lecteur le découvrir.
+
+### 293 documents sur 618 n'avaient aucun écran
+
+`ContentDocumentType` déclare dix familles. Huit avaient une route. Deux n'en avaient aucune :
+**242 fiches d'entretien** et **51 cartes d'anglais**. Chargées, validées par `--validate-content`,
+comptées dans les instantanés de volume — et illisibles. Aucun fichier de `ForgeDotNet.Application` ni
+de `ForgeDotNet.Web` ne les mentionnait : elles n'existaient que dans la couche de chargement.
+
+C'est l'angle mort déjà nommé plus haut à propos des scénarios EF, mais d'une tout autre ampleur : *le
+validateur contrôle la structure d'un document, jamais son accessibilité depuis le produit*. Un lot de
+contenu pouvait donc être publié, mesuré et compté sans jamais atteindre personne.
+
+Ces deux familles portent précisément ce qui prépare aux exigences d'entretien et d'anglais que
+`docs/HUMAN_REVIEW.md` confie à un relecteur humain. Le matériel était soigné — `observableCriteria`,
+`modelAnswer`, `commonMistakes` — et inatteignable.
+
+Fermé par : `/interviews`, `/interviews/{id}`, `/english`, `/english/{id}`, un lien depuis chacun des
+175 exercices dont une fiche prolonge le travail, et la mention explicite qu'aucune de ces pages ne
+produit de preuve de maîtrise. La réponse modèle reste masquée jusqu'à une révélation demandée : la
+livrer d'emblée transformerait la préparation en lecture.
+
+**La règle qui généralise** : `ContentReachabilityWebTests` exige, pour **chaque** valeur de
+`ContentDocumentType`, une route déclarée et réellement servie. Un type ajouté sans écran fait échouer
+le test au moment où la question se pose utilement. Cette règle aurait signalé les 293 documents dès
+leur publication.
+
+### Ce que cela ne change pas
+
+Le verdict. Ces deux chantiers rendent l'application auto-suffisante **techniquement** — utilisable en
+suivant sa propre documentation, et servant l'intégralité du contenu qu'elle embarque. Ils ne changent
+ni poids, ni seuil, ni condition de porte, et n'ajoutent aucun producteur d'accomplissement. Les portes
+B, C et D restent fermées, les personas restent non rejoués, le panel humain reste à réunir.
 
 ## Réaudit
 
@@ -492,6 +658,14 @@ prouvés corrects — mais les deux conditions de levée sont inchangées : les 
 été rejoués, et ni navigateur ni démon Docker n'étaient disponibles pour le faire. Un verdict
 favorable ne peut être prononcé que par cette exécution, pas par la lecture des tests qui, eux, ne
 peuvent pas s'exécuter.
+
+**Le verdict reste REFUSÉ après le rejeu avec un démon Docker.** La première des deux conditions est
+partiellement remplie et partiellement non : la suite d'intégration s'exécute intégralement, mais les
+sept personas n'ont pas été rejoués faute de tout pilotage de navigateur — les tests de bout en bout
+sont des appels HTTP en processus, non un navigateur qui clique. La seconde condition, le panel
+humain, n'a pas bougé. Ce rejeu a en revanche produit ce qu'un rejeu doit produire : trois défauts
+bloquants, dont deux rendaient le produit inutilisable sur un poste Docker à jour, trouvés parce que
+le code s'est enfin exécuté au lieu d'être seulement vérifié.
 
 **Le verdict reste REFUSÉ après l'extinction de la dette éditoriale.** Le registre est passé de 159 à
 zéro par la reprise des 28 scénarios SQL, des 50 cartes d'anglais et des 191 fiches d'entretien, et le

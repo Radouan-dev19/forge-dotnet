@@ -83,7 +83,14 @@ public sealed partial record DockerCodeRunnerOptions
 
         if (!ImageReferencePattern().IsMatch(ImageReference ?? string.Empty))
         {
-            throw new InvalidDataException("L’image runner doit être référencée par un identifiant immuable sha256 complet.");
+            // Le format seul ne suffit pas à dépanner : la valeur manque presque toujours parce que
+            // l'image n'a jamais été construite, et sa construction n'est pas devinable — le contexte
+            // est src/ForgeDotNet.CodeRunner/Container, pas la racine du dépôt. Nommer le script
+            // évite que l'installation s'arrête sur une exigence de forme sans chemin de sortie.
+            throw new InvalidDataException(
+                "L’image runner doit être référencée par un identifiant immuable sha256 complet, jamais par une "
+                + "étiquette. Construisez-la avec scripts/build-code-runner.ps1 : il rend la référence à "
+                + "configurer dans CodeRunner:Docker:ImageReference.");
         }
 
         if (string.IsNullOrWhiteSpace(WorkspaceRootPath) || !Path.IsPathFullyQualified(WorkspaceRootPath))

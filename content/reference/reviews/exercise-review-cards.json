@@ -369,6 +369,58 @@
       ]
     },
     {
+      "id": "card-api-cache-directive-001-edge",
+      "exerciseId": "api-cache-directive-001",
+      "domain": "api",
+      "question": "Que rend une nature de réponse inconnue, et selon quel principe ?",
+      "correctOptionId": "c",
+      "options": [
+        { "id": "a", "text": "public, pour maximiser le bénéfice du cache" },
+        { "id": "b", "text": "private avec une durée par défaut" },
+        { "id": "c", "text": "no-store, par présomption de prudence : ce qu'on ne sait pas classer ne se met pas en cache" },
+        { "id": "d", "text": "Une exception, la nature étant obligatoire" }
+      ]
+    },
+    {
+      "id": "card-api-cache-directive-001-rule",
+      "exerciseId": "api-cache-directive-001",
+      "domain": "api",
+      "question": "Pourquoi la sensibilité se teste-t-elle en premier dans la composition d'une directive de cache ?",
+      "correctOptionId": "b",
+      "options": [
+        { "id": "a", "text": "Parce que c'est le cas le plus fréquent des réponses d'API" },
+        { "id": "b", "text": "Parce qu'une donnée sensible marquée publique par erreur est la pire issue : tester la sensibilité d'abord la rend impossible" },
+        { "id": "c", "text": "Parce que la sensibilité est la seule nature à porter une durée" },
+        { "id": "d", "text": "Parce que l'ordre des tests n'a en réalité aucune importance ici" }
+      ]
+    },
+    {
+      "id": "card-api-cache-storability-001-edge",
+      "exerciseId": "api-cache-storability-001",
+      "domain": "api",
+      "question": "Pourquoi la réponse d'un POST qui répond 200 n'est-elle pas stockable ?",
+      "correctOptionId": "a",
+      "options": [
+        { "id": "a", "text": "Resservir la réponse d'une action laisserait croire que l'action a eu lieu alors qu'aucune requête n'est partie" },
+        { "id": "b", "text": "Les réponses de POST dépassent toujours la taille cacheable" },
+        { "id": "c", "text": "Le statut 200 n'est jamais stockable, quelle que soit la méthode" },
+        { "id": "d", "text": "Les POST ne portent pas d'en-tête Cache-Control" }
+      ]
+    },
+    {
+      "id": "card-api-cache-storability-001-rule",
+      "exerciseId": "api-cache-storability-001",
+      "domain": "api",
+      "question": "Quelles deux conditions cumulatives rendent une réponse stockable en cache ?",
+      "correctOptionId": "d",
+      "options": [
+        { "id": "a", "text": "Un statut de succès et une taille inférieure à une limite" },
+        { "id": "b", "text": "Une méthode quelconque et un en-tête Cache-Control présent" },
+        { "id": "c", "text": "Une méthode d'écriture et un statut de redirection" },
+        { "id": "d", "text": "Une méthode de lecture sans effet — GET ou HEAD — et un statut figurant dans la liste stockable" }
+      ]
+    },
+    {
       "id": "card-api-cancellation-budget-001-rule",
       "exerciseId": "api-cancellation-budget-001",
       "domain": "api",
@@ -447,6 +499,58 @@
       ]
     },
     {
+      "id": "card-api-cors-origin-001-edge",
+      "exerciseId": "api-cors-origin-001",
+      "domain": "api",
+      "question": "Pourquoi l'écho de l'origine reçue sans liste blanche est-il dangereux ?",
+      "correctOptionId": "c",
+      "options": [
+        { "id": "a", "text": "Il ralentit la réponse en recopiant une chaîne longue" },
+        { "id": "b", "text": "Il oblige le navigateur à un second préflight" },
+        { "id": "c", "text": "Il revient à autoriser toutes les origines, identifiants compris, contournant le verrou joker-identifiants" },
+        { "id": "d", "text": "Il expose l'origine dans les journaux du serveur" }
+      ]
+    },
+    {
+      "id": "card-api-cors-origin-001-rule",
+      "exerciseId": "api-cors-origin-001",
+      "domain": "api",
+      "question": "Dans quel unique cas le joker d'origine est-il légitime ?",
+      "correctOptionId": "b",
+      "options": [
+        { "id": "a", "text": "Toujours, le joker étant plus simple à configurer" },
+        { "id": "b", "text": "Ressource ouverte à tous ET requête sans identifiants ; avec identifiants, il faut une origine nommée" },
+        { "id": "c", "text": "Uniquement pour les requêtes de préflight OPTIONS" },
+        { "id": "d", "text": "Uniquement quand la requête porte des identifiants" }
+      ]
+    },
+    {
+      "id": "card-api-cors-preflight-001-edge",
+      "exerciseId": "api-cors-preflight-001",
+      "domain": "api",
+      "question": "Un préflight sans aucun en-tête demandé : refus ou passage possible ?",
+      "correctOptionId": "b",
+      "options": [
+        { "id": "a", "text": "Refus systématique : un préflight doit toujours lister des en-têtes" },
+        { "id": "b", "text": "Passage possible : une liste d'en-têtes demandés vide est une absence d'exigence, la décision se fait sur la méthode" },
+        { "id": "c", "text": "Refus, sauf si la méthode est GET" },
+        { "id": "d", "text": "Passage seulement si les identifiants sont acceptés" }
+      ]
+    },
+    {
+      "id": "card-api-cors-preflight-001-rule",
+      "exerciseId": "api-cors-preflight-001",
+      "domain": "api",
+      "question": "Dans quel sens joue l'inclusion des en-têtes lors d'un préflight ?",
+      "correctOptionId": "a",
+      "options": [
+        { "id": "a", "text": "Chaque en-tête demandé doit être autorisé ; la liste autorisée peut être plus large" },
+        { "id": "b", "text": "Chaque en-tête autorisé doit être demandé, sinon le préflight échoue" },
+        { "id": "c", "text": "Les deux listes doivent être exactement identiques" },
+        { "id": "d", "text": "Seul le premier en-tête demandé est vérifié" }
+      ]
+    },
+    {
       "id": "card-api-di-lifetime-choice-001-rule",
       "exerciseId": "api-di-lifetime-choice-001",
       "domain": "api",
@@ -522,6 +626,58 @@
         { "id": "b", "text": "Du message d'exception, plus précis sur la cause réelle" },
         { "id": "c", "text": "Du type de l'exception levée, qui porte déjà la sémantique" },
         { "id": "d", "text": "De la trace d'appel, qui situe la couche fautive" }
+      ]
+    },
+    {
+      "id": "card-api-etag-compute-001-edge",
+      "exerciseId": "api-etag-compute-001",
+      "domain": "api",
+      "question": "Pourquoi fixer la casse de l'empreinte hexadécimale d'un ETag ?",
+      "correctOptionId": "a",
+      "options": [
+        { "id": "a", "text": "Majuscules et minuscules donnent deux textes distincts pour le même condensat : sans casse fixée, deux calculs ne coïncident pas" },
+        { "id": "b", "text": "La norme HTTP impose les majuscules pour les ETag" },
+        { "id": "c", "text": "Les minuscules occupent moins d'octets en mémoire" },
+        { "id": "d", "text": "La casse indique si l'ETag est fort ou faible" }
+      ]
+    },
+    {
+      "id": "card-api-etag-compute-001-rule",
+      "exerciseId": "api-etag-compute-001",
+      "domain": "api",
+      "question": "Quelles deux propriétés un ETag doit-il garantir, et grâce à quoi ?",
+      "correctOptionId": "c",
+      "options": [
+        { "id": "a", "text": "Confidentialité et compression, par un chiffrement du corps" },
+        { "id": "b", "text": "Unicité globale et brièveté, par un compteur croissant" },
+        { "id": "c", "text": "Stabilité et sensibilité, par un condensat sur une suite d'octets donnée" },
+        { "id": "d", "text": "Lisibilité et ordre, par une date de dernière modification" }
+      ]
+    },
+    {
+      "id": "card-api-etag-precondition-001-edge",
+      "exerciseId": "api-etag-precondition-001",
+      "domain": "api",
+      "question": "Pourquoi refuser par 428 une écriture qui ne porte aucune condition If-Match ?",
+      "correctOptionId": "d",
+      "options": [
+        { "id": "a", "text": "La spécification interdit toute écriture sans en-tête conditionnel" },
+        { "id": "b", "text": "Une écriture sans condition est toujours une tentative d'attaque" },
+        { "id": "c", "text": "Le serveur ne peut pas calculer d'ETag sans condition reçue" },
+        { "id": "d", "text": "Sans condition, l'écriture s'applique à l'aveugle et peut écraser une modification concurrente" }
+      ]
+    },
+    {
+      "id": "card-api-etag-precondition-001-rule",
+      "exerciseId": "api-etag-precondition-001",
+      "domain": "api",
+      "question": "Quel en-tête gouverne l'écriture conditionnelle, et quel statut signale un conflit ?",
+      "correctOptionId": "b",
+      "options": [
+        { "id": "a", "text": "If-None-Match, et le statut 304 signale le conflit" },
+        { "id": "b", "text": "If-Match, et le statut 412 signale que l'état a changé depuis la lecture" },
+        { "id": "c", "text": "If-Match, et le statut 200 signale toujours l'acceptation" },
+        { "id": "d", "text": "If-None-Match, et le statut 412 signale le conflit" }
       ]
     },
     {
@@ -681,6 +837,32 @@
       ]
     },
     {
+      "id": "card-api-retry-after-001-edge",
+      "exerciseId": "api-retry-after-001",
+      "domain": "api",
+      "question": "Que rendre comme Retry-After si l'instant courant a déjà dépassé la réinitialisation de la fenêtre ?",
+      "correctOptionId": "a",
+      "options": [
+        { "id": "a", "text": "Zéro : la fenêtre est passée, réessayer est permis, un délai négatif n'a pas de sens" },
+        { "id": "b", "text": "La durée entière de la fenêtre, par sécurité" },
+        { "id": "c", "text": "La valeur négative telle quelle, à charge du client" },
+        { "id": "d", "text": "Une erreur, l'état étant incohérent" }
+      ]
+    },
+    {
+      "id": "card-api-retry-after-001-rule",
+      "exerciseId": "api-retry-after-001",
+      "domain": "api",
+      "question": "Jusqu'à quel instant court le Retry-After d'une fenêtre fixe pour un client limité ?",
+      "correctOptionId": "c",
+      "options": [
+        { "id": "a", "text": "Jusqu'à la fin de la fenêtre précédente" },
+        { "id": "b", "text": "Jusqu'à ce que le client cesse d'appeler" },
+        { "id": "c", "text": "Jusqu'au début de la fenêtre suivante : début de la fenêtre courante plus sa durée" },
+        { "id": "d", "text": "Jusqu'au milieu de la fenêtre courante" }
+      ]
+    },
+    {
       "id": "card-api-route-normalize-001-rule",
       "exerciseId": "api-route-normalize-001",
       "domain": "api",
@@ -759,6 +941,32 @@
       ]
     },
     {
+      "id": "card-api-sort-expression-001-edge",
+      "exerciseId": "api-sort-expression-001",
+      "domain": "api",
+      "question": "Quand faut-il s'abstenir d'ajouter le champ de départage à la fin de l'ordre demandé ?",
+      "correctOptionId": "a",
+      "options": [
+        { "id": "a", "text": "Lorsque le client l'a déjà demandé : un second terme sur le même champ ne départage plus rien" },
+        { "id": "b", "text": "Lorsque le tri ne porte que sur un seul champ, déjà suffisant" },
+        { "id": "c", "text": "Lorsque le champ de départage figure dans la liste blanche" },
+        { "id": "d", "text": "Lorsque le client a demandé un tri décroissant" }
+      ]
+    },
+    {
+      "id": "card-api-sort-expression-001-rule",
+      "exerciseId": "api-sort-expression-001",
+      "domain": "api",
+      "question": "Pourquoi un tri sur un champ non unique suffit-il à rendre une pagination irreproductible ?",
+      "correctOptionId": "c",
+      "options": [
+        { "id": "a", "text": "Parce que le calcul du décalage devient faux dès que deux valeurs sont égales" },
+        { "id": "b", "text": "Parce que le moteur refuse de trier des valeurs égales et rend les lignes dans l'ordre d'insertion" },
+        { "id": "c", "text": "Parce que l'ordre relatif de deux lignes égales n'est pas défini et peut changer d'une requête à l'autre, si bien qu'une ligne peut être vue deux fois ou pas du tout" },
+        { "id": "d", "text": "Parce que la taille de page cesse d'être respectée lorsque des valeurs se répètent" }
+      ]
+    },
+    {
       "id": "card-api-sort-whitelist-001-rule",
       "exerciseId": "api-sort-whitelist-001",
       "domain": "api",
@@ -782,6 +990,162 @@
         { "id": "b", "text": "Parce que le nom de colonne est converti en texte avant l'envoi" },
         { "id": "c", "text": "Parce que le moteur refuse les paramètres dans une clause d'ordre" },
         { "id": "d", "text": "Parce que la paramétrisation protège les valeurs, pas les identifiants : un nom de colonne est concaténé" }
+      ]
+    },
+    {
+      "id": "card-api-token-bucket-001-edge",
+      "exerciseId": "api-token-bucket-001",
+      "domain": "api",
+      "question": "Que fait un seau vide face à un appel, et quel état reste interdit ?",
+      "correctOptionId": "b",
+      "options": [
+        { "id": "a", "text": "Il emprunte un jeton et rend le solde négatif jusqu'à la prochaine recharge" },
+        { "id": "b", "text": "Il refuse sans consommer, laissant le solde à zéro : le solde négatif fausserait la recharge et l'admission" },
+        { "id": "c", "text": "Il double sa capacité pour absorber la demande" },
+        { "id": "d", "text": "Il accepte l'appel mais journalise un dépassement" }
+      ]
+    },
+    {
+      "id": "card-api-token-bucket-001-rule",
+      "exerciseId": "api-token-bucket-001",
+      "domain": "api",
+      "question": "Sur quoi s'applique le plafond d'un seau de jetons, et que borne-t-il ?",
+      "correctOptionId": "a",
+      "options": [
+        { "id": "a", "text": "Sur la recharge : il borne la rafale, un seau inactif se remplissant jusqu'à la capacité sans la dépasser" },
+        { "id": "b", "text": "Sur le débit moyen, indépendamment de la capacité" },
+        { "id": "c", "text": "Sur le solde après consommation, pour éviter les négatifs" },
+        { "id": "d", "text": "Sur le nombre de clients simultanés" }
+      ]
+    },
+    {
+      "id": "card-api-validation-aggregate-001-order",
+      "exerciseId": "api-validation-aggregate-001",
+      "domain": "api",
+      "question": "Pourquoi l'ordre du rapport suit-il la déclaration des champs plutôt que l'ordre du corps reçu ?",
+      "correctOptionId": "d",
+      "options": [
+        { "id": "a", "text": "Parce que la déclaration est triée alphabétiquement, ce qui accélère la recherche" },
+        { "id": "b", "text": "Parce que le client range toujours ses champs dans un ordre imprévisible" },
+        { "id": "c", "text": "Parce que le premier champ déclaré est celui que le client doit corriger en priorité" },
+        { "id": "d", "text": "Parce que deux demandes équivalentes rangées différemment doivent produire le même rapport, sans quoi aucun test ne peut vérifier qu'un champ en a disparu" }
+      ]
+    },
+    {
+      "id": "card-api-validation-aggregate-001-rule",
+      "exerciseId": "api-validation-aggregate-001",
+      "domain": "api",
+      "question": "Que coûte réellement une validation qui répond dès la première violation rencontrée ?",
+      "correctOptionId": "b",
+      "options": [
+        { "id": "a", "text": "Un contrôle supplémentaire par champ, donc un temps de réponse proportionnel au corps reçu" },
+        { "id": "b", "text": "Un aller-retour réseau par champ fautif, alors que le serveur les connaissait tous au premier appel" },
+        { "id": "c", "text": "Une réponse plus volumineuse, que les clients anciens ne savent pas lire" },
+        { "id": "d", "text": "Une perte de la distinction entre un champ absent et un champ mal formé" }
+      ]
+    },
+    {
+      "id": "card-api-version-change-001-edge",
+      "exerciseId": "api-version-change-001",
+      "domain": "api",
+      "question": "De quel côté ranger une catégorie de changement qu'on ne sait pas classer ?",
+      "correctOptionId": "c",
+      "options": [
+        { "id": "a", "text": "Compatible : rien ne prouve qu'elle casse quelque chose" },
+        { "id": "b", "text": "À ignorer jusqu'à ce qu'un consommateur se plaigne" },
+        { "id": "c", "text": "Cassant, par présomption de danger : le doute protège les consommateurs" },
+        { "id": "d", "text": "Cela dépend uniquement de l'emplacement de la version" }
+      ]
+    },
+    {
+      "id": "card-api-version-change-001-rule",
+      "exerciseId": "api-version-change-001",
+      "domain": "api",
+      "question": "Quelle opération sur un contrat d'API laisse intacts tous les appels déjà en place ?",
+      "correctOptionId": "b",
+      "options": [
+        { "id": "a", "text": "Retirer un champ de réponse devenu inutile" },
+        { "id": "b", "text": "Ajouter un champ d'entrée facultatif, l'ancien comportement valant quand il est absent" },
+        { "id": "c", "text": "Rendre obligatoire un paramètre auparavant facultatif" },
+        { "id": "d", "text": "Renommer un champ de réponse pour un nom plus clair" }
+      ]
+    },
+    {
+      "id": "card-api-version-route-001-edge",
+      "exerciseId": "api-version-route-001",
+      "domain": "api",
+      "question": "Que sert un chemin sans segment de version, comme la racine ?",
+      "correctOptionId": "a",
+      "options": [
+        { "id": "a", "text": "La version par défaut : aucune version demandée est un cas normal" },
+        { "id": "b", "text": "Un refus, faute de version explicite" },
+        { "id": "c", "text": "Une erreur, la version étant obligatoire" },
+        { "id": "d", "text": "La dernière version tirée par ce client" }
+      ]
+    },
+    {
+      "id": "card-api-version-route-001-rule",
+      "exerciseId": "api-version-route-001",
+      "domain": "api",
+      "question": "Que doit rendre la résolution d'une version demandée dans le chemin mais absente de la liste prise en charge ?",
+      "correctOptionId": "b",
+      "options": [
+        { "id": "a", "text": "La version par défaut, pour servir quelque chose" },
+        { "id": "b", "text": "Un verdict d'inexistence : une version demandée mais inconnue ne se rabat pas en silence" },
+        { "id": "c", "text": "La version la plus proche numériquement" },
+        { "id": "d", "text": "La version la plus ancienne encore maintenue" }
+      ]
+    },
+    {
+      "id": "card-api-webhook-replay-001-edge",
+      "exerciseId": "api-webhook-replay-001",
+      "domain": "security",
+      "question": "Pourquoi la fenêtre anti-rejeu d'un webhook est-elle symétrique autour de l'instant courant ?",
+      "correctOptionId": "d",
+      "options": [
+        { "id": "a", "text": "Pour accepter les envois futurs programmés à l'avance" },
+        { "id": "b", "text": "Parce que la signature ne couvre pas le sens du temps" },
+        { "id": "c", "text": "Pour doubler la tolérance disponible" },
+        { "id": "d", "text": "L'horloge de l'émetteur peut être en avance : un envoi légèrement futur est aussi légitime qu'un envoi légèrement en retard" }
+      ]
+    },
+    {
+      "id": "card-api-webhook-replay-001-rule",
+      "exerciseId": "api-webhook-replay-001",
+      "domain": "security",
+      "question": "Que protège la fenêtre d'horodatage d'un webhook que sa signature ne protège pas ?",
+      "correctOptionId": "b",
+      "options": [
+        { "id": "a", "text": "La confidentialité du corps, que la signature laisse en clair" },
+        { "id": "b", "text": "Le rejeu : un envoi authentique capturé et renvoyé reste valide sans elle" },
+        { "id": "c", "text": "L'intégrité du corps, que la signature ne couvre pas" },
+        { "id": "d", "text": "L'identité de l'émetteur, absente de la signature" }
+      ]
+    },
+    {
+      "id": "card-api-webhook-signature-001-edge",
+      "exerciseId": "api-webhook-signature-001",
+      "domain": "security",
+      "question": "Pourquoi vérifier la signature d'un webhook sur le corps brut plutôt que re-sérialisé ?",
+      "correctOptionId": "a",
+      "options": [
+        { "id": "a", "text": "La re-sérialisation réordonne les clés et normalise les espaces : le corps diffère de celui signé et la signature échoue" },
+        { "id": "b", "text": "Le corps brut est plus rapide à condenser" },
+        { "id": "c", "text": "La re-sérialisation est interdite par la norme des webhooks" },
+        { "id": "d", "text": "Le corps brut contient l'en-tête de signature nécessaire" }
+      ]
+    },
+    {
+      "id": "card-api-webhook-signature-001-rule",
+      "exerciseId": "api-webhook-signature-001",
+      "domain": "security",
+      "question": "Sur quelle chaîne se recalcule la signature d'un webhook, et pourquoi inclure l'horodatage ?",
+      "correctOptionId": "c",
+      "options": [
+        { "id": "a", "text": "Sur le corps seul, l'horodatage étant vérifié à part sans lien" },
+        { "id": "b", "text": "Sur le corps re-sérialisé, pour normaliser la forme" },
+        { "id": "c", "text": "Sur l'horodatage et le corps brut joints : lier l'horodatage empêche de recoller un vieux corps à un horodatage frais" },
+        { "id": "d", "text": "Sur l'en-tête de signature lui-même" }
       ]
     },
     {
@@ -2280,6 +2644,58 @@
       ]
     },
     {
+      "id": "card-docker-image-tag-001-edge",
+      "exerciseId": "docker-image-tag-001",
+      "domain": "docker",
+      "question": "Pourquoi lire l'étiquette après le dernier deux-points et non le premier ?",
+      "correctOptionId": "c",
+      "options": [
+        { "id": "a", "text": "Parce que le premier deux-points sépare le registre du dépôt" },
+        { "id": "b", "text": "Parce que l'étiquette peut elle-même contenir un deux-points" },
+        { "id": "c", "text": "Parce qu'un registre privé s'écrit avec un port : lire le premier ferait passer toutes ses références sans contrôle" },
+        { "id": "d", "text": "Parce que la référence se lit de droite à gauche par convention" }
+      ]
+    },
+    {
+      "id": "card-docker-image-tag-001-rule",
+      "exerciseId": "docker-image-tag-001",
+      "domain": "docker",
+      "question": "Que porte une référence d'image écrite sans deux-points ?",
+      "correctOptionId": "b",
+      "options": [
+        { "id": "a", "text": "Aucune étiquette : la référence désigne le dépôt entier" },
+        { "id": "b", "text": "Implicitement l'étiquette mouvante, ce qui en fait le cas qu'un contrôle naïf laisse passer" },
+        { "id": "c", "text": "L'étiquette de la dernière image construite localement" },
+        { "id": "d", "text": "Une étiquette invalide, refusée par le démon" }
+      ]
+    },
+    {
+      "id": "card-docker-layer-cache-001-edge",
+      "exerciseId": "docker-layer-cache-001",
+      "domain": "docker",
+      "question": "Que coûte une copie des sources placée avant la restauration des dépendances ?",
+      "correctOptionId": "d",
+      "options": [
+        { "id": "a", "text": "Rien : la restauration est mise en cache indépendamment de la copie" },
+        { "id": "b", "text": "Une image plus volumineuse, sans effet sur la durée de construction" },
+        { "id": "c", "text": "Un risque de dépendances désynchronisées du code" },
+        { "id": "d", "text": "La restauration est refaite à chaque modification de code, alors que les dépendances n'ont pas bougé" }
+      ]
+    },
+    {
+      "id": "card-docker-layer-cache-001-rule",
+      "exerciseId": "docker-layer-cache-001",
+      "domain": "docker",
+      "question": "Combien d'étapes sont reconstruites quand la dernière étape d'une image change ?",
+      "correctOptionId": "a",
+      "options": [
+        { "id": "a", "text": "Une : l'étape modifiée est elle-même reconstruite" },
+        { "id": "b", "text": "Aucune : il n'y a plus d'étape après elle à invalider" },
+        { "id": "c", "text": "Toutes, le cache étant invalidé dans son ensemble" },
+        { "id": "d", "text": "Cela dépend de la nature de l'instruction modifiée" }
+      ]
+    },
+    {
       "id": "card-docker-memory-limit-001-rule",
       "exerciseId": "docker-memory-limit-001",
       "domain": "docker",
@@ -2446,6 +2862,58 @@
       ]
     },
     {
+      "id": "card-english-review-comment-001-edge",
+      "exerciseId": "english-review-comment-001",
+      "domain": "english",
+      "question": "Pourquoi l'étiquette d'un commentaire se lit-elle en tête et nulle part ailleurs ?",
+      "correctOptionId": "a",
+      "options": [
+        { "id": "a", "text": "Parce que chercher le mot dans tout le texte classerait « I must admit this is clever » comme bloquant" },
+        { "id": "b", "text": "Parce que la recherche dans tout le texte coûterait trop cher sur un long commentaire" },
+        { "id": "c", "text": "Parce que les outils de revue tronquent le commentaire après la première ligne" },
+        { "id": "d", "text": "Parce qu'une étiquette placée ailleurs relève d'une autre convention" }
+      ]
+    },
+    {
+      "id": "card-english-review-comment-001-rule",
+      "exerciseId": "english-review-comment-001",
+      "domain": "english",
+      "question": "Quelle catégorie donner à un commentaire de revue dépourvu d'étiquette de tête ?",
+      "correctOptionId": "b",
+      "options": [
+        { "id": "a", "text": "La plus forte : dans le doute, mieux vaut retenir la fusion" },
+        { "id": "b", "text": "La plus faible : un défaut bloquant donnerait à toute phrase le pouvoir d'arrêter une fusion" },
+        { "id": "c", "text": "Celle du commentaire précédent, par continuité de la discussion" },
+        { "id": "d", "text": "Une catégorie déduite du ton et de la longueur du commentaire" }
+      ]
+    },
+    {
+      "id": "card-english-standup-order-001-edge",
+      "exerciseId": "english-standup-order-001",
+      "domain": "english",
+      "question": "Que deviennent deux lignes portant la même étiquette dans un point remis en ordre ?",
+      "correctOptionId": "a",
+      "options": [
+        { "id": "a", "text": "Elles gardent leur ordre d'arrivée : elles racontent une chronologie, que tout tri détruirait" },
+        { "id": "b", "text": "Elles sont fusionnées en une seule ligne pour éviter la répétition" },
+        { "id": "c", "text": "Elles sont triées par ordre alphabétique, pour rendre le point comparable" },
+        { "id": "d", "text": "Seule la dernière est conservée, la plus récente faisant foi" }
+      ]
+    },
+    {
+      "id": "card-english-standup-order-001-rule",
+      "exerciseId": "english-standup-order-001",
+      "domain": "english",
+      "question": "Pourquoi le blocage se dit-il en dernier dans un point quotidien, et non en premier ?",
+      "correctOptionId": "c",
+      "options": [
+        { "id": "a", "text": "Parce qu'il est le moins important des trois éléments du point" },
+        { "id": "b", "text": "Parce qu'il ne concerne qu'une partie de l'équipe, contrairement au reste" },
+        { "id": "c", "text": "Parce qu'il est la seule partie qui appelle une réponse : annoncé avant tout contexte, il oblige l'équipe à reconstituer la situation" },
+        { "id": "d", "text": "Parce que l'usage veut qu'on termine sur une note ouverte" }
+      ]
+    },
+    {
       "id": "card-expiry-boundaries-001",
       "exerciseId": "csharp-date-expiry-001",
       "domain": "csharp",
@@ -2469,6 +2937,162 @@
         { "id": "b", "text": "La date d'échéance, repoussée du nombre de jours accordés" },
         { "id": "c", "text": "Les deux, pour conserver l'écart initial" },
         { "id": "d", "text": "Ni l'une ni l'autre : il s'applique après la comparaison" }
+      ]
+    },
+    {
+      "id": "card-front-cache-decision-001-edge",
+      "exerciseId": "front-cache-decision-001",
+      "domain": "api",
+      "question": "Que vaut le verdict pour un âge exactement égal à staleAfter, puis exactement égal à expireAfter ?",
+      "correctOptionId": "b",
+      "options": [
+        { "id": "a", "text": "fresh, puis stale-revalidate" },
+        { "id": "b", "text": "stale-revalidate, puis expired" },
+        { "id": "c", "text": "fresh, puis expired" },
+        { "id": "d", "text": "expired dans les deux cas" }
+      ]
+    },
+    {
+      "id": "card-front-cache-decision-001-rule",
+      "exerciseId": "front-cache-decision-001",
+      "domain": "api",
+      "question": "Qu'apporte la fenêtre stale-revalidate entre les seuils de fraîcheur et d'expiration ?",
+      "correctOptionId": "a",
+      "options": [
+        { "id": "a", "text": "Elle sert la copie périmée immédiatement tout en déclenchant une revalidation en arrière-plan, évitant à la fois la latence et la donnée trop vieille" },
+        { "id": "b", "text": "Elle interdit toute lecture jusqu'à la prochaine écriture du serveur" },
+        { "id": "c", "text": "Elle double la durée de fraîcheur de l'entrée" },
+        { "id": "d", "text": "Elle force un aller-retour réseau bloquant à chaque lecture" }
+      ]
+    },
+    {
+      "id": "card-front-form-field-state-001-edge",
+      "exerciseId": "front-form-field-state-001",
+      "domain": "csharp",
+      "question": "Que doit remettre à son état initial un reset, au-delà de la valeur saisie ?",
+      "correctOptionId": "b",
+      "options": [
+        { "id": "a", "text": "Rien d'autre : seule la valeur revient à vide" },
+        { "id": "b", "text": "La salissure et le contact : le champ redevient intact et non touché" },
+        { "id": "c", "text": "Uniquement le drapeau de validité, recalculé à vide" },
+        { "id": "d", "text": "Le champ entier, qui est retiré du formulaire" }
+      ]
+    },
+    {
+      "id": "card-front-form-field-state-001-rule",
+      "exerciseId": "front-form-field-state-001",
+      "domain": "csharp",
+      "question": "Pourquoi séparer l'état touché de l'état valide d'un champ de formulaire ?",
+      "correctOptionId": "a",
+      "options": [
+        { "id": "a", "text": "Parce que la validité mesure la valeur tandis que le contact mesure l'interaction : afficher une erreur avant tout contact punit l'utilisateur qui n'a encore rien saisi" },
+        { "id": "b", "text": "Parce qu'un champ touché est nécessairement invalide" },
+        { "id": "c", "text": "Parce que la validité ne peut être calculée qu'après un premier flou" },
+        { "id": "d", "text": "Parce que le serveur exige que les deux drapeaux soient transmis ensemble" }
+      ]
+    },
+    {
+      "id": "card-front-route-guard-001-edge",
+      "exerciseId": "front-route-guard-001",
+      "domain": "security",
+      "question": "Pourquoi comparer les portées par correspondance exacte plutôt que par préfixe ?",
+      "correctOptionId": "b",
+      "options": [
+        { "id": "a", "text": "Parce qu'un préfixe est plus lent à comparer qu'une chaîne entière" },
+        { "id": "b", "text": "Parce qu'une comparaison par préfixe accorderait par erreur orders.read à un jeton ne portant que orders.readonly" },
+        { "id": "c", "text": "Parce que les portées ne sont jamais séparées par des espaces" },
+        { "id": "d", "text": "Parce que la correspondance exacte est imposée par le format base64url" }
+      ]
+    },
+    {
+      "id": "card-front-route-guard-001-rule",
+      "exerciseId": "front-route-guard-001",
+      "domain": "security",
+      "question": "Quelles sont les trois issues d'un garde de route, et à quel profil d'utilisateur correspond chacune ?",
+      "correctOptionId": "a",
+      "options": [
+        { "id": "a", "text": "Autoriser l'utilisateur au jeton valide portant la portée requise ; rediriger vers la connexion celui sans jeton valide ; interdire l'utilisateur authentifié mais dépourvu de la portée" },
+        { "id": "b", "text": "Autoriser, mettre en cache la réponse, puis journaliser l'accès" },
+        { "id": "c", "text": "Autoriser tout jeton présent ; rediriger tout jeton expiré ; interdire tout jeton daté du futur" },
+        { "id": "d", "text": "Autoriser, rafraîchir le jeton, puis déconnecter la session" }
+      ]
+    },
+    {
+      "id": "card-front-state-reducer-001-edge",
+      "exerciseId": "front-state-reducer-001",
+      "domain": "csharp",
+      "question": "Que doit faire un incrément demandé sur une valeur qui n'est pas un entier valide ?",
+      "correctOptionId": "c",
+      "options": [
+        { "id": "a", "text": "Remettre la valeur à zéro puis l'incrémenter à un" },
+        { "id": "b", "text": "Lever une exception qui interrompt toute la réduction en cours" },
+        { "id": "c", "text": "Ignorer l'action et laisser la valeur inchangée, sans corrompre l'état" },
+        { "id": "d", "text": "Convertir la valeur en son code de caractère puis l'incrémenter" }
+      ]
+    },
+    {
+      "id": "card-front-state-reducer-001-rule",
+      "exerciseId": "front-state-reducer-001",
+      "domain": "csharp",
+      "question": "Pourquoi un réducteur doit-il construire un nouvel état plutôt que modifier celui qu'il reçoit ?",
+      "correctOptionId": "a",
+      "options": [
+        { "id": "a", "text": "Parce que modifier l'état reçu casse la comparaison par référence dont dépendent le rendu et l'annulation, et rend les transitions imprévisibles" },
+        { "id": "b", "text": "Parce que copier un dictionnaire est toujours plus rapide que le modifier en place" },
+        { "id": "c", "text": "Parce qu'un réducteur n'a pas le droit de lire l'état qu'il reçoit" },
+        { "id": "d", "text": "Parce que le langage interdit de modifier un dictionnaire existant" }
+      ]
+    },
+    {
+      "id": "card-git-branch-name-001-edge",
+      "exerciseId": "git-branch-name-001",
+      "domain": "continuous-integration",
+      "question": "Que produisent deux noms de branche ne différant que par une majuscule, sur un serveur Linux ?",
+      "correctOptionId": "a",
+      "options": [
+        { "id": "a", "text": "Deux branches distinctes, dont une seule finira fusionnée" },
+        { "id": "b", "text": "Une seule branche, la casse étant normalisée par le protocole" },
+        { "id": "c", "text": "Un refus explicite à la création de la seconde" },
+        { "id": "d", "text": "Deux branches fusionnées automatiquement à la première synchronisation" }
+      ]
+    },
+    {
+      "id": "card-git-branch-name-001-rule",
+      "exerciseId": "git-branch-name-001",
+      "domain": "continuous-integration",
+      "question": "Pourquoi convertir un caractère interdit en séparateur plutôt que le supprimer ?",
+      "correctOptionId": "c",
+      "options": [
+        { "id": "a", "text": "Parce que la suppression coûte un parcours supplémentaire de la chaîne" },
+        { "id": "b", "text": "Parce que les outils refusent un nom dont la longueur a changé" },
+        { "id": "c", "text": "Parce que la suppression colle deux mots en un seul et détruit la frontière que le caractère portait" },
+        { "id": "d", "text": "Parce que le séparateur est exigé par le format des références" }
+      ]
+    },
+    {
+      "id": "card-git-cherry-pick-risk-001-edge",
+      "exerciseId": "git-cherry-pick-risk-001",
+      "domain": "continuous-integration",
+      "question": "Que garantit un report de commit qui s'applique sans aucun conflit ?",
+      "correctOptionId": "b",
+      "options": [
+        { "id": "a", "text": "Que le comportement obtenu est celui de la branche d'origine" },
+        { "id": "b", "text": "Rien de plus qu'une compatibilité textuelle : le code peut dépendre d'un comportement qui a changé sur la cible" },
+        { "id": "c", "text": "Que les deux branches partagent le même ancêtre immédiat" },
+        { "id": "d", "text": "Que la suite de tests de la branche cible passera nécessairement" }
+      ]
+    },
+    {
+      "id": "card-git-cherry-pick-risk-001-rule",
+      "exerciseId": "git-cherry-pick-risk-001",
+      "domain": "continuous-integration",
+      "question": "Entre l'écart de commits et le partage de fichiers, lequel décide du risque d'un report ?",
+      "correctOptionId": "c",
+      "options": [
+        { "id": "a", "text": "L'écart seul : plus les branches ont divergé, plus le report est risqué" },
+        { "id": "b", "text": "Les deux à parts égales, combinés en un score" },
+        { "id": "c", "text": "Le partage de fichiers d'abord ; l'écart ne mesure une dérive que sur les fichiers réellement touchés" },
+        { "id": "d", "text": "Ni l'un ni l'autre : seul le nombre de lignes modifiées compte" }
       ]
     },
     {
@@ -2521,6 +3145,84 @@
         { "id": "b", "text": "Parce que les marqueurs peuvent apparaître dans un ordre quelconque" },
         { "id": "c", "text": "Parce qu'un seul des trois est réellement produit par l'outil" },
         { "id": "d", "text": "Parce qu'une résolution partielle laisse un marqueur isolé : exiger les trois laisserait passer ce cas" }
+      ]
+    },
+    {
+      "id": "card-git-rebase-or-merge-001-edge",
+      "exerciseId": "git-rebase-or-merge-001",
+      "domain": "continuous-integration",
+      "question": "Qu'arrive-t-il chez un collègue dont vous avez rebasé la branche qu'il avait déjà récupérée ?",
+      "correctOptionId": "b",
+      "options": [
+        { "id": "a", "text": "Ses commits sont remplacés par les vôtres à la synchronisation suivante" },
+        { "id": "b", "text": "Il garde les anciens et reçoit les nouveaux : chaque modification apparaît en double, avec des conflits que personne n'a introduits" },
+        { "id": "c", "text": "Sa copie locale est refusée par le serveur jusqu'à ce qu'il la supprime" },
+        { "id": "d", "text": "Rien : une réécriture ne se propage qu'aux clones créés après elle" }
+      ]
+    },
+    {
+      "id": "card-git-rebase-or-merge-001-rule",
+      "exerciseId": "git-rebase-or-merge-001",
+      "domain": "continuous-integration",
+      "question": "Pourquoi le partage d'une branche se teste-t-il avant la propreté de son histoire ?",
+      "correctOptionId": "d",
+      "options": [
+        { "id": "a", "text": "Parce que le partage est plus rapide à vérifier" },
+        { "id": "b", "text": "Parce qu'une branche partagée est toujours propre" },
+        { "id": "c", "text": "Parce que l'ordre est indifférent, les deux critères étant exclusifs" },
+        { "id": "d", "text": "Parce que le partage interdit toute réécriture : testé après, une branche partagée mais bruitée serait écrasée" }
+      ]
+    },
+    {
+      "id": "card-git-tag-precedence-001-edge",
+      "exerciseId": "git-tag-precedence-001",
+      "domain": "continuous-integration",
+      "question": "Pourquoi la comparaison de versions s'arrête-t-elle au premier segment qui diffère ?",
+      "correctOptionId": "d",
+      "options": [
+        { "id": "a", "text": "Pour éviter de lire des segments qui pourraient être mal formés" },
+        { "id": "b", "text": "Parce que les segments suivants sont toujours nuls après un écart" },
+        { "id": "c", "text": "Par économie : les comparaisons suivantes coûteraient trop cher" },
+        { "id": "d", "text": "Parce qu'un majeur supérieur signifie une rupture et l'emporte : poursuivre laisserait un mineur renverser une décision prise" }
+      ]
+    },
+    {
+      "id": "card-git-tag-precedence-001-rule",
+      "exerciseId": "git-tag-precedence-001",
+      "domain": "continuous-integration",
+      "question": "Pourquoi comparer les segments d'une version comme des nombres et non comme du texte ?",
+      "correctOptionId": "a",
+      "options": [
+        { "id": "a", "text": "Parce que dans l'ordre du dictionnaire la dixième correction précède la neuvième, et le pipeline déploie une version périmée" },
+        { "id": "b", "text": "Parce que la comparaison de chaînes dépend de la culture d'exécution" },
+        { "id": "c", "text": "Parce que les segments peuvent contenir des lettres qu'il faut ignorer" },
+        { "id": "d", "text": "Parce que la comparaison numérique est plus rapide sur un grand nombre d'étiquettes" }
+      ]
+    },
+    {
+      "id": "card-git-undo-strategy-001-edge",
+      "exerciseId": "git-undo-strategy-001",
+      "domain": "continuous-integration",
+      "question": "Qu'est-ce qui distingue un retrait doux d'un retrait dur, du point de vue du travail effectué ?",
+      "correctOptionId": "c",
+      "options": [
+        { "id": "a", "text": "Le doux conserve l'historique, le dur le réécrit" },
+        { "id": "b", "text": "Le doux ne fonctionne que sur un seul commit, le dur sur une série" },
+        { "id": "c", "text": "Le doux ramène les modifications dans la copie de travail ; le dur les jette sans filet" },
+        { "id": "d", "text": "Le doux exige une confirmation, le dur s'exécute immédiatement" }
+      ]
+    },
+    {
+      "id": "card-git-undo-strategy-001-rule",
+      "exerciseId": "git-undo-strategy-001",
+      "domain": "continuous-integration",
+      "question": "Pourquoi l'annulation par commit inverse est-elle la seule opération sûre sur un commit publié ?",
+      "correctOptionId": "b",
+      "options": [
+        { "id": "a", "text": "Parce qu'elle supprime le commit fautif chez tous ceux qui l'avaient récupéré" },
+        { "id": "b", "text": "Parce qu'elle ajoute au lieu de retirer : rien n'est réécrit, donc personne n'a de divergence à démêler" },
+        { "id": "c", "text": "Parce qu'elle est plus rapide qu'un retrait sur un dépôt volumineux" },
+        { "id": "d", "text": "Parce qu'elle verrouille la branche jusqu'à la synchronisation suivante" }
       ]
     },
     {
@@ -2625,6 +3327,32 @@
         { "id": "b", "text": "Non : le reste devient alors toujours négatif" },
         { "id": "c", "text": "Oui : un multiple de la valeur négative l'est aussi de son opposée, et le reste reste nul" },
         { "id": "d", "text": "Oui, mais seulement pour des dividendes positifs" }
+      ]
+    },
+    {
+      "id": "card-observability-sampling-decision-001-edge",
+      "exerciseId": "observability-sampling-decision-001",
+      "domain": "performance",
+      "question": "Quel défaut une empreinte de trace négative révèle-t-elle dans une décision d'échantillonnage ?",
+      "correctOptionId": "d",
+      "options": [
+        { "id": "a", "text": "Aucun : une empreinte est toujours positive par construction" },
+        { "id": "b", "text": "La comparaison au taux devient impossible et lève une exception" },
+        { "id": "c", "text": "Le seau calculé dépasse cent et sort de l'intervalle des pourcentages" },
+        { "id": "d", "text": "Le reste prend le signe du dividende : le seau devient négatif, donc toujours inférieur au taux, et la trace est conservée à tort" }
+      ]
+    },
+    {
+      "id": "card-observability-sampling-decision-001-rule",
+      "exerciseId": "observability-sampling-decision-001",
+      "domain": "performance",
+      "question": "Pourquoi une trace en erreur échappe-t-elle à l'échantillonnage, alors qu'une trace ordinaire non ?",
+      "correctOptionId": "b",
+      "options": [
+        { "id": "a", "text": "Parce qu'elle est plus courte et coûte moins cher à conserver" },
+        { "id": "b", "text": "Parce qu'une trace ordinaire sert à mesurer et vaut n'importe quelle autre, là où une trace en erreur sert à comprendre et n'a pas d'équivalent" },
+        { "id": "c", "text": "Parce que le taux d'échantillonnage ne s'applique qu'aux requêtes réussies par convention du protocole" },
+        { "id": "d", "text": "Parce que les erreurs sont rares, ce qui rend leur conservation gratuite" }
       ]
     },
     {
@@ -2784,6 +3512,32 @@
       ]
     },
     {
+      "id": "card-quality-unreachable-branch-001-edge",
+      "exerciseId": "quality-unreachable-branch-001",
+      "domain": "architecture",
+      "question": "Quel défaut apparaît si la réunion des conditions déjà couvertes ne fusionne que les chevauchements, sans traiter la contiguïté ?",
+      "correctOptionId": "a",
+      "options": [
+        { "id": "a", "text": "Un trou de largeur nulle subsiste entre deux intervalles qui se touchent, et une branche morte est déclarée vivante" },
+        { "id": "b", "text": "La réunion cesse d'être triée et le parcours en un passage devient faux" },
+        { "id": "c", "text": "Le nombre d'intervalles conservés croît sans borne au fil des conditions" },
+        { "id": "d", "text": "Les conditions d'égalité ne sont plus jamais reconnues comme couvertes" }
+      ]
+    },
+    {
+      "id": "card-quality-unreachable-branch-001-rule",
+      "exerciseId": "quality-unreachable-branch-001",
+      "domain": "architecture",
+      "question": "Pourquoi comparer chaque condition à ses devancières prises une par une ne suffit-il pas à détecter une branche morte ?",
+      "correctOptionId": "c",
+      "options": [
+        { "id": "a", "text": "Parce que l'ordre d'évaluation d'une cascade n'est pas garanti" },
+        { "id": "b", "text": "Parce que deux conditions peuvent porter sur des variables différentes" },
+        { "id": "c", "text": "Parce qu'une branche peut rester atteignable face à chaque devancière isolée et être morte face à leur réunion, qui couvre tout le domaine" },
+        { "id": "d", "text": "Parce que la comparaison de deux conditions est indécidable dans le cas général" }
+      ]
+    },
+    {
       "id": "card-reference-total-001-edge",
       "exerciseId": "reference-total-001",
       "domain": "csharp",
@@ -2862,55 +3616,16 @@
       ]
     },
     {
-      "id": "card-security-jwt-decode-001-rule",
-      "exerciseId": "security-jwt-decode-001",
+      "id": "card-security-jwt-algorithm-001-edge",
+      "exerciseId": "security-jwt-algorithm-001",
       "domain": "security",
-      "question": "Que faut-il restaurer sur un segment Base64Url avant de le confier au décodeur Base64 classique ?",
-      "correctOptionId": "b",
-      "options": [
-        { "id": "a", "text": "Rien : les deux alphabets sont identiques, seul le JSON diffère" },
-        { "id": "b", "text": "Les caractères plus et barre oblique, puis le remplissage déduit de la longueur modulo quatre" },
-        { "id": "c", "text": "Uniquement le remplissage : les caractères sont communs aux deux alphabets" },
-        { "id": "d", "text": "La casse des caractères, que Base64Url normalise en minuscules" }
-      ]
-    },
-    {
-      "id": "card-security-jwt-decode-001-edge",
-      "exerciseId": "security-jwt-decode-001",
-      "domain": "security",
-      "question": "Quelle longueur de segment Base64Url prouve une troncature plutôt qu'un remplissage à restaurer ?",
+      "question": "Comment l'annonce d'algorithme none se refuse-t-elle correctement ?",
       "correctOptionId": "c",
       "options": [
-        { "id": "a", "text": "Une longueur paire, le flux encodant les octets deux par deux" },
-        { "id": "b", "text": "Une longueur multiple de quatre, qui ne laisse aucune place au remplissage" },
-        { "id": "c", "text": "Un reste de un modulo quatre, qu'aucun flux Base64 valide ne produit" },
-        { "id": "d", "text": "Toute longueur inférieure à seize caractères" }
-      ]
-    },
-    {
-      "id": "card-security-jwt-signature-001-rule",
-      "exerciseId": "security-jwt-signature-001",
-      "domain": "security",
-      "question": "Sur quelle entrée exacte le condensat HMAC d'un jeton se recalcule-t-il côté vérificateur ?",
-      "correctOptionId": "a",
-      "options": [
-        { "id": "a", "text": "Les deux premiers segments encodés, joints par leur point séparateur" },
-        { "id": "b", "text": "La charge utile décodée, pour ignorer les variations d'encodage" },
-        { "id": "c", "text": "Le jeton entier, signature comprise" },
-        { "id": "d", "text": "L'en-tête seul, qui décrit le traitement" }
-      ]
-    },
-    {
-      "id": "card-security-jwt-signature-001-edge",
-      "exerciseId": "security-jwt-signature-001",
-      "domain": "security",
-      "question": "Pourquoi comparer deux condensats avec FixedTimeEquals plutôt qu'avec SequenceEqual ?",
-      "correctOptionId": "d",
-      "options": [
-        { "id": "a", "text": "SequenceEqual ne compare pas les tableaux d'octets élément par élément" },
-        { "id": "b", "text": "FixedTimeEquals est plus rapide sur les condensats courts" },
-        { "id": "c", "text": "SequenceEqual lève une exception quand les longueurs diffèrent" },
-        { "id": "d", "text": "Une comparaison qui s'arrête à la première différence révèle par sa durée jusqu'où la falsification était correcte" }
+        { "id": "a", "text": "Par une égalité stricte avec la chaîne none en minuscules" },
+        { "id": "b", "text": "En vérifiant que la signature du jeton n'est pas vide" },
+        { "id": "c", "text": "Sans tenir compte de la casse : une liste noire laxiste laisserait passer None" },
+        { "id": "d", "text": "En la remplaçant silencieusement par l'algorithme du serveur" }
       ]
     },
     {
@@ -2927,42 +3642,16 @@
       ]
     },
     {
-      "id": "card-security-jwt-algorithm-001-edge",
-      "exerciseId": "security-jwt-algorithm-001",
+      "id": "card-security-jwt-audience-001-edge",
+      "exerciseId": "security-jwt-audience-001",
       "domain": "security",
-      "question": "Comment l'annonce d'algorithme none se refuse-t-elle correctement ?",
-      "correctOptionId": "c",
-      "options": [
-        { "id": "a", "text": "Par une égalité stricte avec la chaîne none en minuscules" },
-        { "id": "b", "text": "En vérifiant que la signature du jeton n'est pas vide" },
-        { "id": "c", "text": "Sans tenir compte de la casse : une liste noire laxiste laisserait passer None" },
-        { "id": "d", "text": "En la remplaçant silencieusement par l'algorithme du serveur" }
-      ]
-    },
-    {
-      "id": "card-security-jwt-lifetime-001-rule",
-      "exerciseId": "security-jwt-lifetime-001",
-      "domain": "security",
-      "question": "Que fait un vérificateur correct d'un jeton dont la charge utile ne porte aucune expiration ?",
+      "question": "Quel risque couvre le contrôle d'audience qu'aucune vérification de signature ne couvre ?",
       "correctOptionId": "a",
       "options": [
-        { "id": "a", "text": "Il le refuse : sans expiration, un jeton volé devient un accès permanent" },
-        { "id": "b", "text": "Il l'accepte : l'absence de borne signifie une validité illimitée voulue" },
-        { "id": "c", "text": "Il applique une expiration par défaut d'une heure" },
-        { "id": "d", "text": "Il ne vérifie que la prise d'effet, seule borne obligatoire" }
-      ]
-    },
-    {
-      "id": "card-security-jwt-lifetime-001-edge",
-      "exerciseId": "security-jwt-lifetime-001",
-      "domain": "security",
-      "question": "À l'instant exact où l'expiration augmentée de la tolérance est atteinte, que vaut le jeton ?",
-      "correctOptionId": "b",
-      "options": [
-        { "id": "a", "text": "Il est encore valide : la borne est inclusive" },
-        { "id": "b", "text": "Il est refusé : la comparaison est strictement inférieure" },
-        { "id": "c", "text": "Cela dépend de la présence d'une prise d'effet" },
-        { "id": "d", "text": "Il est valide une dernière seconde, par convention" }
+        { "id": "a", "text": "Le rejeu d'un jeton authentique émis pour un autre service du même émetteur" },
+        { "id": "b", "text": "La falsification de la charge utile pendant le transport" },
+        { "id": "c", "text": "L'utilisation d'un jeton après son expiration" },
+        { "id": "d", "text": "La fuite du secret de signature côté serveur" }
       ]
     },
     {
@@ -2979,29 +3668,55 @@
       ]
     },
     {
-      "id": "card-security-jwt-audience-001-edge",
-      "exerciseId": "security-jwt-audience-001",
+      "id": "card-security-jwt-decode-001-edge",
+      "exerciseId": "security-jwt-decode-001",
       "domain": "security",
-      "question": "Quel risque couvre le contrôle d'audience qu'aucune vérification de signature ne couvre ?",
-      "correctOptionId": "a",
+      "question": "Quelle longueur de segment Base64Url prouve une troncature plutôt qu'un remplissage à restaurer ?",
+      "correctOptionId": "c",
       "options": [
-        { "id": "a", "text": "Le rejeu d'un jeton authentique émis pour un autre service du même émetteur" },
-        { "id": "b", "text": "La falsification de la charge utile pendant le transport" },
-        { "id": "c", "text": "L'utilisation d'un jeton après son expiration" },
-        { "id": "d", "text": "La fuite du secret de signature côté serveur" }
+        { "id": "a", "text": "Une longueur paire, le flux encodant les octets deux par deux" },
+        { "id": "b", "text": "Une longueur multiple de quatre, qui ne laisse aucune place au remplissage" },
+        { "id": "c", "text": "Un reste de un modulo quatre, qu'aucun flux Base64 valide ne produit" },
+        { "id": "d", "text": "Toute longueur inférieure à seize caractères" }
       ]
     },
     {
-      "id": "card-security-jwt-order-001-rule",
-      "exerciseId": "security-jwt-order-001",
+      "id": "card-security-jwt-decode-001-rule",
+      "exerciseId": "security-jwt-decode-001",
       "domain": "security",
-      "question": "Pourquoi la signature se vérifie-t-elle avant toute revendication ?",
-      "correctOptionId": "c",
+      "question": "Que faut-il restaurer sur un segment Base64Url avant de le confier au décodeur Base64 classique ?",
+      "correctOptionId": "b",
       "options": [
-        { "id": "a", "text": "Parce que son calcul est le plus coûteux et doit être amorti tôt" },
-        { "id": "b", "text": "Parce que la norme impose cet ordre pour l'interopérabilité des bibliothèques" },
-        { "id": "c", "text": "Parce qu'avant la preuve de signature, chaque revendication est une donnée que l'attaquant a pu écrire" },
-        { "id": "d", "text": "Parce que les revendications ne sont pas couvertes par la signature" }
+        { "id": "a", "text": "Rien : les deux alphabets sont identiques, seul le JSON diffère" },
+        { "id": "b", "text": "Les caractères plus et barre oblique, puis le remplissage déduit de la longueur modulo quatre" },
+        { "id": "c", "text": "Uniquement le remplissage : les caractères sont communs aux deux alphabets" },
+        { "id": "d", "text": "La casse des caractères, que Base64Url normalise en minuscules" }
+      ]
+    },
+    {
+      "id": "card-security-jwt-lifetime-001-edge",
+      "exerciseId": "security-jwt-lifetime-001",
+      "domain": "security",
+      "question": "À l'instant exact où l'expiration augmentée de la tolérance est atteinte, que vaut le jeton ?",
+      "correctOptionId": "b",
+      "options": [
+        { "id": "a", "text": "Il est encore valide : la borne est inclusive" },
+        { "id": "b", "text": "Il est refusé : la comparaison est strictement inférieure" },
+        { "id": "c", "text": "Cela dépend de la présence d'une prise d'effet" },
+        { "id": "d", "text": "Il est valide une dernière seconde, par convention" }
+      ]
+    },
+    {
+      "id": "card-security-jwt-lifetime-001-rule",
+      "exerciseId": "security-jwt-lifetime-001",
+      "domain": "security",
+      "question": "Que fait un vérificateur correct d'un jeton dont la charge utile ne porte aucune expiration ?",
+      "correctOptionId": "a",
+      "options": [
+        { "id": "a", "text": "Il le refuse : sans expiration, un jeton volé devient un accès permanent" },
+        { "id": "b", "text": "Il l'accepte : l'absence de borne signifie une validité illimitée voulue" },
+        { "id": "c", "text": "Il applique une expiration par défaut d'une heure" },
+        { "id": "d", "text": "Il ne vérifie que la prise d'effet, seule borne obligatoire" }
       ]
     },
     {
@@ -3018,133 +3733,42 @@
       ]
     },
     {
-      "id": "card-security-pkce-challenge-001-rule",
-      "exerciseId": "security-pkce-challenge-001",
+      "id": "card-security-jwt-order-001-rule",
+      "exerciseId": "security-jwt-order-001",
       "domain": "security",
-      "question": "Que prouve le code_verifier présenté à l'échange face à l'empreinte déposée à l'aller ?",
-      "correctOptionId": "b",
-      "options": [
-        { "id": "a", "text": "Que le client connaît le secret du guichet d'autorisation" },
-        { "id": "b", "text": "Que l'échangeur du code est bien le demandeur de l'aller : le condensat ne se renverse pas" },
-        { "id": "c", "text": "Que la redirection n'a pas été interceptée en chemin" },
-        { "id": "d", "text": "Que l'utilisateur a consenti aux portées demandées" }
-      ]
-    },
-    {
-      "id": "card-security-pkce-challenge-001-edge",
-      "exerciseId": "security-pkce-challenge-001",
-      "domain": "security",
-      "question": "Quelle borne la norme impose-t-elle au code_verifier, et pourquoi ?",
+      "question": "Pourquoi la signature se vérifie-t-elle avant toute revendication ?",
       "correctOptionId": "c",
       "options": [
-        { "id": "a", "text": "Exactement 64 caractères, la taille d'un condensat encodé" },
-        { "id": "b", "text": "Au plus 43 caractères, pour tenir dans une adresse" },
-        { "id": "c", "text": "De 43 à 128 caractères d'un alphabet restreint : l'entropie minimale d'une preuve non devinable" },
-        { "id": "d", "text": "Aucune : seule l'empreinte compte" }
+        { "id": "a", "text": "Parce que son calcul est le plus coûteux et doit être amorti tôt" },
+        { "id": "b", "text": "Parce que la norme impose cet ordre pour l'interopérabilité des bibliothèques" },
+        { "id": "c", "text": "Parce qu'avant la preuve de signature, chaque revendication est une donnée que l'attaquant a pu écrire" },
+        { "id": "d", "text": "Parce que les revendications ne sont pas couvertes par la signature" }
       ]
     },
     {
-      "id": "card-security-oauth-state-001-rule",
-      "exerciseId": "security-oauth-state-001",
+      "id": "card-security-jwt-signature-001-edge",
+      "exerciseId": "security-jwt-signature-001",
       "domain": "security",
-      "question": "Pourquoi un state présent à la fois dans les attentes et les consommés se classe-t-il rejeu ?",
-      "correctOptionId": "a",
-      "options": [
-        { "id": "a", "text": "Entre deux lectures d'un même fait, un contrôle de sécurité retient la plus défavorable" },
-        { "id": "b", "text": "Parce que le registre des attentes est toujours moins fiable" },
-        { "id": "c", "text": "Parce que la norme impose de purger les attentes en premier" },
-        { "id": "d", "text": "C'est une erreur : l'attente devrait primer" }
-      ]
-    },
-    {
-      "id": "card-security-oauth-state-001-edge",
-      "exerciseId": "security-oauth-state-001",
-      "domain": "security",
-      "question": "Quelle différence opérationnelle sépare un state inconnu d'un state rejoué ?",
+      "question": "Pourquoi comparer deux condensats avec FixedTimeEquals plutôt qu'avec SequenceEqual ?",
       "correctOptionId": "d",
       "options": [
-        { "id": "a", "text": "Aucune : les deux se refusent et se journalisent pareil" },
-        { "id": "b", "text": "Le rejoué s'accepte après confirmation de l'utilisateur" },
-        { "id": "c", "text": "L'inconnu se retente, le rejoué se refuse" },
-        { "id": "d", "text": "L'inconnu signale une forgerie en cours, le rejoué peut n'être qu'un lien recliqué : deux verdicts, deux journaux" }
+        { "id": "a", "text": "SequenceEqual ne compare pas les tableaux d'octets élément par élément" },
+        { "id": "b", "text": "FixedTimeEquals est plus rapide sur les condensats courts" },
+        { "id": "c", "text": "SequenceEqual lève une exception quand les longueurs diffèrent" },
+        { "id": "d", "text": "Une comparaison qui s'arrête à la première différence révèle par sa durée jusqu'où la falsification était correcte" }
       ]
     },
     {
-      "id": "card-security-oauth-flow-001-rule",
-      "exerciseId": "security-oauth-flow-001",
+      "id": "card-security-jwt-signature-001-rule",
+      "exerciseId": "security-jwt-signature-001",
       "domain": "security",
-      "question": "Pourquoi la présence d'un utilisateur se teste-t-elle avant la confidentialité du client ?",
-      "correctOptionId": "b",
-      "options": [
-        { "id": "a", "text": "Parce que l'axe de présence est plus fiable dans les profils" },
-        { "id": "b", "text": "Un humain présent impose le code avec preuve, même pour un client confidentiel : tester la confidentialité d'abord l'enverrait vers un flux sans consentement" },
-        { "id": "c", "text": "Pour des raisons de performance du guichet" },
-        { "id": "d", "text": "L'ordre est indifférent, les deux axes étant indépendants" }
-      ]
-    },
-    {
-      "id": "card-security-oauth-flow-001-edge",
-      "exerciseId": "security-oauth-flow-001",
-      "domain": "security",
-      "question": "Quel flux légitime couvre une machine incapable de garder un secret ?",
-      "correctOptionId": "c",
-      "options": [
-        { "id": "a", "text": "Les identifiants client, avec un secret embarqué dans le binaire" },
-        { "id": "b", "text": "Le code d'autorisation avec preuve, sans utilisateur" },
-        { "id": "c", "text": "Aucun : la réponse est une identité gérée par la plateforme, pas un contournement" },
-        { "id": "d", "text": "Le flux implicite, prévu pour ce cas" }
-      ]
-    },
-    {
-      "id": "card-security-oidc-idtoken-001-rule",
-      "exerciseId": "security-oidc-idtoken-001",
-      "domain": "security",
-      "question": "Que scelle la revendication d'empreinte du jeton d'identité ?",
+      "question": "Sur quelle entrée exacte le condensat HMAC d'un jeton se recalcule-t-il côté vérificateur ?",
       "correctOptionId": "a",
       "options": [
-        { "id": "a", "text": "Le couple identité-accès émis dans la même réponse : on ne peut pas assembler deux flux" },
-        { "id": "b", "text": "L'intégrité de la charge utile du jeton d'identité" },
-        { "id": "c", "text": "Le lien entre le jeton et la session du navigateur" },
-        { "id": "d", "text": "La fraîcheur du jeton d'accès face à son échéance" }
-      ]
-    },
-    {
-      "id": "card-security-oidc-idtoken-001-edge",
-      "exerciseId": "security-oidc-idtoken-001",
-      "domain": "security",
-      "question": "Pourquoi un jeton d'accès présenté comme jeton d'identité échoue-t-il à la validation ?",
-      "correctOptionId": "d",
-      "options": [
-        { "id": "a", "text": "Sa signature utilise un autre algorithme" },
-        { "id": "b", "text": "Il est trop court pour porter les revendications d'identité" },
-        { "id": "c", "text": "Son échéance est plus proche que celle d'une identité" },
-        { "id": "d", "text": "Il ne porte ni nonce ni les autres liens du client : ses revendications visent l'API, pas la connexion" }
-      ]
-    },
-    {
-      "id": "card-security-refresh-rotation-001-rule",
-      "exerciseId": "security-refresh-rotation-001",
-      "domain": "security",
-      "question": "Comment se compose la durée du prochain jeton de rafraîchissement tourné ?",
-      "correctOptionId": "c",
-      "options": [
-        { "id": "a", "text": "Toujours la durée de glissement, la session se prolongeant par l'usage" },
-        { "id": "b", "text": "Toujours le reste de session, le glissement n'étant qu'indicatif" },
-        { "id": "c", "text": "Le minimum entre la durée de glissement et le reste de session : les dernières fenêtres rétrécissent" },
-        { "id": "d", "text": "La somme des deux, pour absorber la dérive d'horloge" }
-      ]
-    },
-    {
-      "id": "card-security-refresh-rotation-001-edge",
-      "exerciseId": "security-refresh-rotation-001",
-      "domain": "security",
-      "question": "Que doit rendre le calcul de fenêtre à l'instant exact de l'échéance absolue ?",
-      "correctOptionId": "b",
-      "options": [
-        { "id": "a", "text": "Une exception : la session aurait dû être fermée avant" },
-        { "id": "b", "text": "Zéro : la session finie est un état ordinaire du cycle de vie, pas une erreur" },
-        { "id": "c", "text": "Une dernière fenêtre de grâce d'une durée de glissement" },
-        { "id": "d", "text": "Un négatif, à charge pour l'appelant de le traiter" }
+        { "id": "a", "text": "Les deux premiers segments encodés, joints par leur point séparateur" },
+        { "id": "b", "text": "La charge utile décodée, pour ignorer les variations d'encodage" },
+        { "id": "c", "text": "Le jeton entier, signature comprise" },
+        { "id": "d", "text": "L'en-tête seul, qui décrit le traitement" }
       ]
     },
     {
@@ -3200,6 +3824,84 @@
       ]
     },
     {
+      "id": "card-security-oauth-flow-001-edge",
+      "exerciseId": "security-oauth-flow-001",
+      "domain": "security",
+      "question": "Quel flux légitime couvre une machine incapable de garder un secret ?",
+      "correctOptionId": "c",
+      "options": [
+        { "id": "a", "text": "Les identifiants client, avec un secret embarqué dans le binaire" },
+        { "id": "b", "text": "Le code d'autorisation avec preuve, sans utilisateur" },
+        { "id": "c", "text": "Aucun : la réponse est une identité gérée par la plateforme, pas un contournement" },
+        { "id": "d", "text": "Le flux implicite, prévu pour ce cas" }
+      ]
+    },
+    {
+      "id": "card-security-oauth-flow-001-rule",
+      "exerciseId": "security-oauth-flow-001",
+      "domain": "security",
+      "question": "Pourquoi la présence d'un utilisateur se teste-t-elle avant la confidentialité du client ?",
+      "correctOptionId": "b",
+      "options": [
+        { "id": "a", "text": "Parce que l'axe de présence est plus fiable dans les profils" },
+        { "id": "b", "text": "Un humain présent impose le code avec preuve, même pour un client confidentiel : tester la confidentialité d'abord l'enverrait vers un flux sans consentement" },
+        { "id": "c", "text": "Pour des raisons de performance du guichet" },
+        { "id": "d", "text": "L'ordre est indifférent, les deux axes étant indépendants" }
+      ]
+    },
+    {
+      "id": "card-security-oauth-state-001-edge",
+      "exerciseId": "security-oauth-state-001",
+      "domain": "security",
+      "question": "Quelle différence opérationnelle sépare un state inconnu d'un state rejoué ?",
+      "correctOptionId": "d",
+      "options": [
+        { "id": "a", "text": "Aucune : les deux se refusent et se journalisent pareil" },
+        { "id": "b", "text": "Le rejoué s'accepte après confirmation de l'utilisateur" },
+        { "id": "c", "text": "L'inconnu se retente, le rejoué se refuse" },
+        { "id": "d", "text": "L'inconnu signale une forgerie en cours, le rejoué peut n'être qu'un lien recliqué : deux verdicts, deux journaux" }
+      ]
+    },
+    {
+      "id": "card-security-oauth-state-001-rule",
+      "exerciseId": "security-oauth-state-001",
+      "domain": "security",
+      "question": "Pourquoi un state présent à la fois dans les attentes et les consommés se classe-t-il rejeu ?",
+      "correctOptionId": "a",
+      "options": [
+        { "id": "a", "text": "Entre deux lectures d'un même fait, un contrôle de sécurité retient la plus défavorable" },
+        { "id": "b", "text": "Parce que le registre des attentes est toujours moins fiable" },
+        { "id": "c", "text": "Parce que la norme impose de purger les attentes en premier" },
+        { "id": "d", "text": "C'est une erreur : l'attente devrait primer" }
+      ]
+    },
+    {
+      "id": "card-security-oidc-idtoken-001-edge",
+      "exerciseId": "security-oidc-idtoken-001",
+      "domain": "security",
+      "question": "Pourquoi un jeton d'accès présenté comme jeton d'identité échoue-t-il à la validation ?",
+      "correctOptionId": "d",
+      "options": [
+        { "id": "a", "text": "Sa signature utilise un autre algorithme" },
+        { "id": "b", "text": "Il est trop court pour porter les revendications d'identité" },
+        { "id": "c", "text": "Son échéance est plus proche que celle d'une identité" },
+        { "id": "d", "text": "Il ne porte ni nonce ni les autres liens du client : ses revendications visent l'API, pas la connexion" }
+      ]
+    },
+    {
+      "id": "card-security-oidc-idtoken-001-rule",
+      "exerciseId": "security-oidc-idtoken-001",
+      "domain": "security",
+      "question": "Que scelle la revendication d'empreinte du jeton d'identité ?",
+      "correctOptionId": "a",
+      "options": [
+        { "id": "a", "text": "Le couple identité-accès émis dans la même réponse : on ne peut pas assembler deux flux" },
+        { "id": "b", "text": "L'intégrité de la charge utile du jeton d'identité" },
+        { "id": "c", "text": "Le lien entre le jeton et la session du navigateur" },
+        { "id": "d", "text": "La fraîcheur du jeton d'accès face à son échéance" }
+      ]
+    },
+    {
       "id": "card-security-owner-policy-001-rule",
       "exerciseId": "security-owner-policy-001",
       "domain": "security",
@@ -3226,6 +3928,58 @@
       ]
     },
     {
+      "id": "card-security-pkce-challenge-001-edge",
+      "exerciseId": "security-pkce-challenge-001",
+      "domain": "security",
+      "question": "Quelle borne la norme impose-t-elle au code_verifier, et pourquoi ?",
+      "correctOptionId": "c",
+      "options": [
+        { "id": "a", "text": "Exactement 64 caractères, la taille d'un condensat encodé" },
+        { "id": "b", "text": "Au plus 43 caractères, pour tenir dans une adresse" },
+        { "id": "c", "text": "De 43 à 128 caractères d'un alphabet restreint : l'entropie minimale d'une preuve non devinable" },
+        { "id": "d", "text": "Aucune : seule l'empreinte compte" }
+      ]
+    },
+    {
+      "id": "card-security-pkce-challenge-001-rule",
+      "exerciseId": "security-pkce-challenge-001",
+      "domain": "security",
+      "question": "Que prouve le code_verifier présenté à l'échange face à l'empreinte déposée à l'aller ?",
+      "correctOptionId": "b",
+      "options": [
+        { "id": "a", "text": "Que le client connaît le secret du guichet d'autorisation" },
+        { "id": "b", "text": "Que l'échangeur du code est bien le demandeur de l'aller : le condensat ne se renverse pas" },
+        { "id": "c", "text": "Que la redirection n'a pas été interceptée en chemin" },
+        { "id": "d", "text": "Que l'utilisateur a consenti aux portées demandées" }
+      ]
+    },
+    {
+      "id": "card-security-refresh-rotation-001-edge",
+      "exerciseId": "security-refresh-rotation-001",
+      "domain": "security",
+      "question": "Que doit rendre le calcul de fenêtre à l'instant exact de l'échéance absolue ?",
+      "correctOptionId": "b",
+      "options": [
+        { "id": "a", "text": "Une exception : la session aurait dû être fermée avant" },
+        { "id": "b", "text": "Zéro : la session finie est un état ordinaire du cycle de vie, pas une erreur" },
+        { "id": "c", "text": "Une dernière fenêtre de grâce d'une durée de glissement" },
+        { "id": "d", "text": "Un négatif, à charge pour l'appelant de le traiter" }
+      ]
+    },
+    {
+      "id": "card-security-refresh-rotation-001-rule",
+      "exerciseId": "security-refresh-rotation-001",
+      "domain": "security",
+      "question": "Comment se compose la durée du prochain jeton de rafraîchissement tourné ?",
+      "correctOptionId": "c",
+      "options": [
+        { "id": "a", "text": "Toujours la durée de glissement, la session se prolongeant par l'usage" },
+        { "id": "b", "text": "Toujours le reste de session, le glissement n'étant qu'indicatif" },
+        { "id": "c", "text": "Le minimum entre la durée de glissement et le reste de session : les dernières fenêtres rétrécissent" },
+        { "id": "d", "text": "La somme des deux, pour absorber la dérive d'horloge" }
+      ]
+    },
+    {
       "id": "card-security-role-check-001-rule",
       "exerciseId": "security-role-check-001",
       "domain": "security",
@@ -3249,6 +4003,240 @@
         { "id": "b", "text": "Celui du premier rôle de la liste, quel qu'il soit" },
         { "id": "c", "text": "Aucun : la recherche de sous-chaîne est équivalente à la comparaison exacte" },
         { "id": "d", "text": "Celui de tous les rôles dès que la liste est non vide" }
+      ]
+    },
+    {
+      "id": "card-security-scope-grant-001-edge",
+      "exerciseId": "security-scope-grant-001",
+      "domain": "security",
+      "question": "Que peut-on conclure d'une autorisation qui couvre la portée exigée, avant d'avoir lu la fin du jeton ?",
+      "correctOptionId": "d",
+      "options": [
+        { "id": "a", "text": "Que l'accès est accordé, la suite du jeton ne pouvant qu'ajouter des droits" },
+        { "id": "b", "text": "Que l'accès est accordé si aucune autre autorisation ne la contredit" },
+        { "id": "c", "text": "Que la lecture peut s'arrêter, la portée la plus large ayant été trouvée" },
+        { "id": "d", "text": "Rien encore : un refus rencontré plus loin peut la fermer, alors qu'un refus permettrait de conclure aussitôt" }
+      ]
+    },
+    {
+      "id": "card-security-scope-grant-001-rule",
+      "exerciseId": "security-scope-grant-001",
+      "domain": "security",
+      "question": "Pourquoi un refus de portée doit-il l'emporter indépendamment de sa position dans le jeton ?",
+      "correctOptionId": "b",
+      "options": [
+        { "id": "a", "text": "Parce que la lecture du jeton n'est pas garantie séquentielle" },
+        { "id": "b", "text": "Parce que l'ordre des entrées vient de l'émetteur du jeton : réémettre un jeton rangé autrement contournerait sinon le refus" },
+        { "id": "c", "text": "Parce qu'un refus est plus court à comparer qu'une autorisation" },
+        { "id": "d", "text": "Parce que les refus sont toujours écrits en fin de jeton par convention" }
+      ]
+    },
+    {
+      "id": "card-senior-circuit-breaker-001-edge",
+      "exerciseId": "senior-circuit-breaker-001",
+      "domain": "architecture",
+      "question": "A quoi sert l'etat semi-ouvert d'un disjoncteur apres un refroidissement ?",
+      "correctOptionId": "c",
+      "options": [
+        { "id": "a", "text": "A rejeter tous les appels definitivement" },
+        { "id": "b", "text": "A remettre le compteur d'echecs a zero sans rien tester" },
+        { "id": "c", "text": "A laisser passer un appel d'essai : un succes referme, un echec rouvre" },
+        { "id": "d", "text": "A doubler le seuil d'echecs tolere" }
+      ]
+    },
+    {
+      "id": "card-senior-circuit-breaker-001-rule",
+      "exerciseId": "senior-circuit-breaker-001",
+      "domain": "architecture",
+      "question": "Qu'est-ce qui fait passer un disjoncteur de l'etat ferme a l'etat ouvert ?",
+      "correctOptionId": "b",
+      "options": [
+        { "id": "a", "text": "Un seul echec, pour couper au plus tot" },
+        { "id": "b", "text": "Un nombre d'echecs consecutifs atteignant le seuil, un succes remettant le compte a zero" },
+        { "id": "c", "text": "L'ecoulement d'un delai fixe, independamment des echecs" },
+        { "id": "d", "text": "La reception d'un tick de refroidissement" }
+      ]
+    },
+    {
+      "id": "card-senior-compensation-001-edge",
+      "exerciseId": "senior-compensation-001",
+      "domain": "architecture",
+      "question": "Que rend la compensation d'une saga dont aucune etape n'a reussi avant l'echec ?",
+      "correctOptionId": "b",
+      "options": [
+        { "id": "a", "text": "Une action d'annulation pour l'etape en echec" },
+        { "id": "b", "text": "Rien : aucune etape n'a produit d'effet a defaire" },
+        { "id": "c", "text": "Une remise a zero globale du systeme" },
+        { "id": "d", "text": "Une erreur, car une saga doit toujours avoir compense" }
+      ]
+    },
+    {
+      "id": "card-senior-compensation-001-rule",
+      "exerciseId": "senior-compensation-001",
+      "domain": "architecture",
+      "question": "Dans quel ordre execute-t-on les actions compensatoires d'une saga, et pourquoi ?",
+      "correctOptionId": "c",
+      "options": [
+        { "id": "a", "text": "Dans l'ordre direct des etapes, car c'est l'ordre naturel" },
+        { "id": "b", "text": "Dans un ordre indifferent, chaque compensation etant independante" },
+        { "id": "c", "text": "Dans l'ordre inverse des etapes reussies, car une etape tardive depend des precedentes" },
+        { "id": "d", "text": "Seulement pour la derniere etape, les autres se compensant seules" }
+      ]
+    },
+    {
+      "id": "card-senior-consumer-decision-001-edge",
+      "exerciseId": "senior-consumer-decision-001",
+      "domain": "architecture",
+      "question": "Pourquoi un message dont le nombre de tentatives depasse le seuil part-il en lettres mortes ?",
+      "correctOptionId": "a",
+      "options": [
+        { "id": "a", "text": "Pour ne pas bloquer la file ni boucler indefiniment sur un message empoisonne" },
+        { "id": "b", "text": "Parce qu'un doublon ne doit jamais etre acquitte" },
+        { "id": "c", "text": "Pour accelerer les messages suivants" },
+        { "id": "d", "text": "Parce que la file est pleine" }
+      ]
+    },
+    {
+      "id": "card-senior-consumer-decision-001-rule",
+      "exerciseId": "senior-consumer-decision-001",
+      "domain": "architecture",
+      "question": "Dans quel ordre un consommateur tranche-t-il entre traiter, acquitter un doublon et envoyer en lettres mortes ?",
+      "correctOptionId": "b",
+      "options": [
+        { "id": "a", "text": "Doublon d'abord, puis message empoisonne, puis traitement" },
+        { "id": "b", "text": "Message empoisonne d'abord, puis doublon deja traite, puis traitement" },
+        { "id": "c", "text": "Traitement d'abord, le reste ensuite" },
+        { "id": "d", "text": "L'ordre est indifferent" }
+      ]
+    },
+    {
+      "id": "card-senior-decomposition-001-edge",
+      "exerciseId": "senior-decomposition-001",
+      "domain": "architecture",
+      "question": "Pourquoi des tables partagees interdisent-elles l'extraction d'un service meme avec plusieurs equipes ?",
+      "correctOptionId": "a",
+      "options": [
+        { "id": "a", "text": "Parce que la frontiere passe alors au milieu des donnees et recouple les services par la base" },
+        { "id": "b", "text": "Parce qu'il faut d'abord ajouter une equipe" },
+        { "id": "c", "text": "Parce que les tables partagees accelerent les requetes" },
+        { "id": "d", "text": "Elles ne changent rien a la decision" }
+      ]
+    },
+    {
+      "id": "card-senior-decomposition-001-rule",
+      "exerciseId": "senior-decomposition-001",
+      "domain": "architecture",
+      "question": "Quelle est la decision par defaut face a une demande de decoupage, et quelles conditions la renversent ?",
+      "correctOptionId": "d",
+      "options": [
+        { "id": "a", "text": "Decouper par defaut, car les microservices sont plus modernes" },
+        { "id": "b", "text": "Decouper des qu'il y a plus d'une equipe" },
+        { "id": "c", "text": "Garder le monolithe sauf si une seule equipe le possede" },
+        { "id": "d", "text": "Garder le monolithe, sauf conjonction de plusieurs equipes, d'aucun deploiement couple et d'aucune table partagee" }
+      ]
+    },
+    {
+      "id": "card-senior-error-budget-001-edge",
+      "exerciseId": "senior-error-budget-001",
+      "domain": "performance",
+      "question": "Que decide-t-on quand les echecs observes egalent exactement le budget autorise ?",
+      "correctOptionId": "b",
+      "options": [
+        { "id": "a", "text": "On gele, l'egalite comptant comme un depassement" },
+        { "id": "b", "text": "On livre encore : l'epuisement exige un depassement strict" },
+        { "id": "c", "text": "On double le budget" },
+        { "id": "d", "text": "On ignore la fenetre" }
+      ]
+    },
+    {
+      "id": "card-senior-error-budget-001-rule",
+      "exerciseId": "senior-error-budget-001",
+      "domain": "performance",
+      "question": "Comment obtient-on le nombre d'echecs autorises a partir d'un SLO exprime en points de base ?",
+      "correctOptionId": "c",
+      "options": [
+        { "id": "a", "text": "En prenant le SLO multiplie par le volume" },
+        { "id": "b", "text": "En autorisant zero echec, un SLO exigeant la perfection" },
+        { "id": "c", "text": "En appliquant la tolerance, 10000 moins le SLO, au volume, en division entiere" },
+        { "id": "d", "text": "En divisant le volume par le SLO" }
+      ]
+    },
+    {
+      "id": "card-senior-idempotency-key-001-edge",
+      "exerciseId": "senior-idempotency-key-001",
+      "domain": "api",
+      "question": "Que doit rendre l'endpoint au deuxieme envoi d'une requete portant une cle deja vue ?",
+      "correctOptionId": "d",
+      "options": [
+        { "id": "a", "text": "Une erreur de conflit systematique" },
+        { "id": "b", "text": "Le meme effet metier, execute une seconde fois" },
+        { "id": "c", "text": "Un refus silencieux sans reponse" },
+        { "id": "d", "text": "Le resultat memorise du premier traitement, sans rejouer l'effet" }
+      ]
+    },
+    {
+      "id": "card-senior-idempotency-key-001-rule",
+      "exerciseId": "senior-idempotency-key-001",
+      "domain": "api",
+      "question": "A quoi sert une cle d'idempotence sur un endpoint susceptible de recevoir plusieurs fois la meme requete ?",
+      "correctOptionId": "a",
+      "options": [
+        { "id": "a", "text": "A reconnaitre un rejeu et rendre le resultat deja calcule sans reexecuter l'effet" },
+        { "id": "b", "text": "A chiffrer le corps de la requete" },
+        { "id": "c", "text": "A garantir l'ordre d'arrivee des requetes" },
+        { "id": "d", "text": "A accelerer la premiere execution" }
+      ]
+    },
+    {
+      "id": "card-senior-legacy-trace-001-edge",
+      "exerciseId": "senior-legacy-trace-001",
+      "domain": "debugging",
+      "question": "Que doit produire un void qui ne suit aucune entree appliquee ?",
+      "correctOptionId": "a",
+      "options": [
+        { "id": "a", "text": "Aucun effet : il n'y a rien a annuler" },
+        { "id": "b", "text": "Une exception, car void exige une entree precedente" },
+        { "id": "c", "text": "Une remise a zero du solde" },
+        { "id": "d", "text": "Un solde negatif" }
+      ]
+    },
+    {
+      "id": "card-senior-legacy-trace-001-rule",
+      "exerciseId": "senior-legacy-trace-001",
+      "domain": "debugging",
+      "question": "Dans le grand livre hérité, que fait exactement le mot void ?",
+      "correctOptionId": "b",
+      "options": [
+        { "id": "a", "text": "Il remet le solde a zero" },
+        { "id": "b", "text": "Il annule l'effet de la derniere entree appliquee en le retranchant du solde" },
+        { "id": "c", "text": "Il ignore l'entree suivante" },
+        { "id": "d", "text": "Il double le dernier montant" }
+      ]
+    },
+    {
+      "id": "card-senior-review-triage-001-edge",
+      "exerciseId": "senior-review-triage-001",
+      "domain": "architecture",
+      "question": "Que coute un constat de style presente comme bloquant, et comment doit-il etre classe ?",
+      "correctOptionId": "c",
+      "options": [
+        { "id": "a", "text": "Rien ; c'est une bonne pratique de tout bloquer" },
+        { "id": "b", "text": "Il accelere la fusion et se classe blocking:style" },
+        { "id": "c", "text": "Il retarde des fusions saines et use la confiance ; il se classe minor:style" },
+        { "id": "d", "text": "Il se classe unknown" }
+      ]
+    },
+    {
+      "id": "card-senior-review-triage-001-rule",
+      "exerciseId": "senior-review-triage-001",
+      "domain": "architecture",
+      "question": "Quelles familles de constats de revue bloquent une fusion, et laquelle reste toujours un avis ?",
+      "correctOptionId": "a",
+      "options": [
+        { "id": "a", "text": "Correction, securite et concurrence bloquent ; le style ne bloque jamais" },
+        { "id": "b", "text": "Le style bloque, le reste est optionnel" },
+        { "id": "c", "text": "Tout constat bloque, par prudence" },
+        { "id": "d", "text": "Seule la securite bloque" }
       ]
     },
     {
@@ -4687,6 +5675,32 @@
       ]
     },
     {
+      "id": "card-tests-boundary-probe-001-edge",
+      "exerciseId": "tests-boundary-probe-001",
+      "domain": "tests",
+      "question": "Que se passe-t-il si l'on calcule la sonde extérieure d'une borne posée sur la limite du type ?",
+      "correctOptionId": "b",
+      "options": [
+        { "id": "a", "text": "Le calcul lève une exception que le test rapporte immédiatement" },
+        { "id": "b", "text": "Le calcul déborde en silence et la sonde atterrit à l'autre extrémité du type, testant l'inverse de l'intention" },
+        { "id": "c", "text": "La sonde est simplement égale à la borne, ce qui la rend redondante" },
+        { "id": "d", "text": "Le compilateur refuse l'opération sur une valeur limite connue" }
+      ]
+    },
+    {
+      "id": "card-tests-boundary-probe-001-rule",
+      "exerciseId": "tests-boundary-probe-001",
+      "domain": "tests",
+      "question": "Pourquoi faut-il deux sondes par borne d'un intervalle accepté, et non une seule ?",
+      "correctOptionId": "c",
+      "options": [
+        { "id": "a", "text": "Pour couvrir à la fois le cas nominal et le cas d'erreur de la règle" },
+        { "id": "b", "text": "Pour que le nombre de cas soit pair et la suite symétrique" },
+        { "id": "c", "text": "Parce qu'une borne peut être trop large ou trop stricte : la sonde extérieure réfute la première erreur, l'intérieure réfute la seconde" },
+        { "id": "d", "text": "Parce qu'une seule sonde ne permet pas de distinguer un refus d'une exception" }
+      ]
+    },
+    {
       "id": "card-tests-boundary-values-001-rule",
       "exerciseId": "tests-boundary-values-001",
       "domain": "tests",
@@ -4895,6 +5909,32 @@
       ]
     },
     {
+      "id": "card-tests-shared-state-leak-001-edge",
+      "exerciseId": "tests-shared-state-leak-001",
+      "domain": "tests",
+      "question": "Un test lit une clé absente de la base partagée. Pourquoi n'est-ce pas la fuite que l'on cherche ?",
+      "correctOptionId": "d",
+      "options": [
+        { "id": "a", "text": "Parce que la lecture d'une clé absente est optimisée et n'atteint jamais la base" },
+        { "id": "b", "text": "Parce que le test sera de toute façon réexécuté après le nettoyage" },
+        { "id": "c", "text": "Parce qu'une clé absente peut réapparaître dans un autre ordre d'exécution" },
+        { "id": "d", "text": "Parce qu'elle rend le test rouge à l'endroit du problème, alors que la fuite produit un test vert qui ne vérifie rien" }
+      ]
+    },
+    {
+      "id": "card-tests-shared-state-leak-001-rule",
+      "exerciseId": "tests-shared-state-leak-001",
+      "domain": "tests",
+      "question": "Pourquoi suivre séparément les clés insérées par le test courant et celles présentes dans la base partagée ?",
+      "correctOptionId": "a",
+      "options": [
+        { "id": "a", "text": "Parce qu'une clé présente peut venir du test courant ou d'un test antérieur, et qu'une seule collection rend ces deux origines indiscernables" },
+        { "id": "b", "text": "Parce que la base partagée peut contenir des clés que le format de trace n'exprime pas" },
+        { "id": "c", "text": "Pour pouvoir restaurer l'état initial de la base après l'analyse" },
+        { "id": "d", "text": "Pour compter séparément les insertions et les lectures dans le rapport final" }
+      ]
+    },
+    {
       "id": "card-tests-shipping-theory-001-rule",
       "exerciseId": "tests-shipping-theory-001",
       "domain": "tests",
@@ -4944,786 +5984,6 @@
         { "id": "b", "text": "Un corps de réponse mal formé" },
         { "id": "c", "text": "Un en-tête de localisation manquant" },
         { "id": "d", "text": "Une redirection traitée comme une erreur" }
-      ]
-    },
-    {
-      "id": "card-api-validation-aggregate-001-rule",
-      "exerciseId": "api-validation-aggregate-001",
-      "domain": "api",
-      "question": "Que coûte réellement une validation qui répond dès la première violation rencontrée ?",
-      "correctOptionId": "b",
-      "options": [
-        { "id": "a", "text": "Un contrôle supplémentaire par champ, donc un temps de réponse proportionnel au corps reçu" },
-        { "id": "b", "text": "Un aller-retour réseau par champ fautif, alors que le serveur les connaissait tous au premier appel" },
-        { "id": "c", "text": "Une réponse plus volumineuse, que les clients anciens ne savent pas lire" },
-        { "id": "d", "text": "Une perte de la distinction entre un champ absent et un champ mal formé" }
-      ]
-    },
-    {
-      "id": "card-api-validation-aggregate-001-order",
-      "exerciseId": "api-validation-aggregate-001",
-      "domain": "api",
-      "question": "Pourquoi l'ordre du rapport suit-il la déclaration des champs plutôt que l'ordre du corps reçu ?",
-      "correctOptionId": "d",
-      "options": [
-        { "id": "a", "text": "Parce que la déclaration est triée alphabétiquement, ce qui accélère la recherche" },
-        { "id": "b", "text": "Parce que le client range toujours ses champs dans un ordre imprévisible" },
-        { "id": "c", "text": "Parce que le premier champ déclaré est celui que le client doit corriger en priorité" },
-        { "id": "d", "text": "Parce que deux demandes équivalentes rangées différemment doivent produire le même rapport, sans quoi aucun test ne peut vérifier qu'un champ en a disparu" }
-      ]
-    },
-    {
-      "id": "card-api-sort-expression-001-rule",
-      "exerciseId": "api-sort-expression-001",
-      "domain": "api",
-      "question": "Pourquoi un tri sur un champ non unique suffit-il à rendre une pagination irreproductible ?",
-      "correctOptionId": "c",
-      "options": [
-        { "id": "a", "text": "Parce que le calcul du décalage devient faux dès que deux valeurs sont égales" },
-        { "id": "b", "text": "Parce que le moteur refuse de trier des valeurs égales et rend les lignes dans l'ordre d'insertion" },
-        { "id": "c", "text": "Parce que l'ordre relatif de deux lignes égales n'est pas défini et peut changer d'une requête à l'autre, si bien qu'une ligne peut être vue deux fois ou pas du tout" },
-        { "id": "d", "text": "Parce que la taille de page cesse d'être respectée lorsque des valeurs se répètent" }
-      ]
-    },
-    {
-      "id": "card-api-sort-expression-001-edge",
-      "exerciseId": "api-sort-expression-001",
-      "domain": "api",
-      "question": "Quand faut-il s'abstenir d'ajouter le champ de départage à la fin de l'ordre demandé ?",
-      "correctOptionId": "a",
-      "options": [
-        { "id": "a", "text": "Lorsque le client l'a déjà demandé : un second terme sur le même champ ne départage plus rien" },
-        { "id": "b", "text": "Lorsque le tri ne porte que sur un seul champ, déjà suffisant" },
-        { "id": "c", "text": "Lorsque le champ de départage figure dans la liste blanche" },
-        { "id": "d", "text": "Lorsque le client a demandé un tri décroissant" }
-      ]
-    },
-    {
-      "id": "card-security-scope-grant-001-rule",
-      "exerciseId": "security-scope-grant-001",
-      "domain": "security",
-      "question": "Pourquoi un refus de portée doit-il l'emporter indépendamment de sa position dans le jeton ?",
-      "correctOptionId": "b",
-      "options": [
-        { "id": "a", "text": "Parce que la lecture du jeton n'est pas garantie séquentielle" },
-        { "id": "b", "text": "Parce que l'ordre des entrées vient de l'émetteur du jeton : réémettre un jeton rangé autrement contournerait sinon le refus" },
-        { "id": "c", "text": "Parce qu'un refus est plus court à comparer qu'une autorisation" },
-        { "id": "d", "text": "Parce que les refus sont toujours écrits en fin de jeton par convention" }
-      ]
-    },
-    {
-      "id": "card-security-scope-grant-001-edge",
-      "exerciseId": "security-scope-grant-001",
-      "domain": "security",
-      "question": "Que peut-on conclure d'une autorisation qui couvre la portée exigée, avant d'avoir lu la fin du jeton ?",
-      "correctOptionId": "d",
-      "options": [
-        { "id": "a", "text": "Que l'accès est accordé, la suite du jeton ne pouvant qu'ajouter des droits" },
-        { "id": "b", "text": "Que l'accès est accordé si aucune autre autorisation ne la contredit" },
-        { "id": "c", "text": "Que la lecture peut s'arrêter, la portée la plus large ayant été trouvée" },
-        { "id": "d", "text": "Rien encore : un refus rencontré plus loin peut la fermer, alors qu'un refus permettrait de conclure aussitôt" }
-      ]
-    },
-    {
-      "id": "card-tests-boundary-probe-001-rule",
-      "exerciseId": "tests-boundary-probe-001",
-      "domain": "tests",
-      "question": "Pourquoi faut-il deux sondes par borne d'un intervalle accepté, et non une seule ?",
-      "correctOptionId": "c",
-      "options": [
-        { "id": "a", "text": "Pour couvrir à la fois le cas nominal et le cas d'erreur de la règle" },
-        { "id": "b", "text": "Pour que le nombre de cas soit pair et la suite symétrique" },
-        { "id": "c", "text": "Parce qu'une borne peut être trop large ou trop stricte : la sonde extérieure réfute la première erreur, l'intérieure réfute la seconde" },
-        { "id": "d", "text": "Parce qu'une seule sonde ne permet pas de distinguer un refus d'une exception" }
-      ]
-    },
-    {
-      "id": "card-tests-boundary-probe-001-edge",
-      "exerciseId": "tests-boundary-probe-001",
-      "domain": "tests",
-      "question": "Que se passe-t-il si l'on calcule la sonde extérieure d'une borne posée sur la limite du type ?",
-      "correctOptionId": "b",
-      "options": [
-        { "id": "a", "text": "Le calcul lève une exception que le test rapporte immédiatement" },
-        { "id": "b", "text": "Le calcul déborde en silence et la sonde atterrit à l'autre extrémité du type, testant l'inverse de l'intention" },
-        { "id": "c", "text": "La sonde est simplement égale à la borne, ce qui la rend redondante" },
-        { "id": "d", "text": "Le compilateur refuse l'opération sur une valeur limite connue" }
-      ]
-    },
-    {
-      "id": "card-tests-shared-state-leak-001-rule",
-      "exerciseId": "tests-shared-state-leak-001",
-      "domain": "tests",
-      "question": "Pourquoi suivre séparément les clés insérées par le test courant et celles présentes dans la base partagée ?",
-      "correctOptionId": "a",
-      "options": [
-        { "id": "a", "text": "Parce qu'une clé présente peut venir du test courant ou d'un test antérieur, et qu'une seule collection rend ces deux origines indiscernables" },
-        { "id": "b", "text": "Parce que la base partagée peut contenir des clés que le format de trace n'exprime pas" },
-        { "id": "c", "text": "Pour pouvoir restaurer l'état initial de la base après l'analyse" },
-        { "id": "d", "text": "Pour compter séparément les insertions et les lectures dans le rapport final" }
-      ]
-    },
-    {
-      "id": "card-tests-shared-state-leak-001-edge",
-      "exerciseId": "tests-shared-state-leak-001",
-      "domain": "tests",
-      "question": "Un test lit une clé absente de la base partagée. Pourquoi n'est-ce pas la fuite que l'on cherche ?",
-      "correctOptionId": "d",
-      "options": [
-        { "id": "a", "text": "Parce que la lecture d'une clé absente est optimisée et n'atteint jamais la base" },
-        { "id": "b", "text": "Parce que le test sera de toute façon réexécuté après le nettoyage" },
-        { "id": "c", "text": "Parce qu'une clé absente peut réapparaître dans un autre ordre d'exécution" },
-        { "id": "d", "text": "Parce qu'elle rend le test rouge à l'endroit du problème, alors que la fuite produit un test vert qui ne vérifie rien" }
-      ]
-    },
-    {
-      "id": "card-quality-unreachable-branch-001-rule",
-      "exerciseId": "quality-unreachable-branch-001",
-      "domain": "architecture",
-      "question": "Pourquoi comparer chaque condition à ses devancières prises une par une ne suffit-il pas à détecter une branche morte ?",
-      "correctOptionId": "c",
-      "options": [
-        { "id": "a", "text": "Parce que l'ordre d'évaluation d'une cascade n'est pas garanti" },
-        { "id": "b", "text": "Parce que deux conditions peuvent porter sur des variables différentes" },
-        { "id": "c", "text": "Parce qu'une branche peut rester atteignable face à chaque devancière isolée et être morte face à leur réunion, qui couvre tout le domaine" },
-        { "id": "d", "text": "Parce que la comparaison de deux conditions est indécidable dans le cas général" }
-      ]
-    },
-    {
-      "id": "card-quality-unreachable-branch-001-edge",
-      "exerciseId": "quality-unreachable-branch-001",
-      "domain": "architecture",
-      "question": "Quel défaut apparaît si la réunion des conditions déjà couvertes ne fusionne que les chevauchements, sans traiter la contiguïté ?",
-      "correctOptionId": "a",
-      "options": [
-        { "id": "a", "text": "Un trou de largeur nulle subsiste entre deux intervalles qui se touchent, et une branche morte est déclarée vivante" },
-        { "id": "b", "text": "La réunion cesse d'être triée et le parcours en un passage devient faux" },
-        { "id": "c", "text": "Le nombre d'intervalles conservés croît sans borne au fil des conditions" },
-        { "id": "d", "text": "Les conditions d'égalité ne sont plus jamais reconnues comme couvertes" }
-      ]
-    },
-    {
-      "id": "card-api-version-change-001-rule",
-      "exerciseId": "api-version-change-001",
-      "domain": "api",
-      "question": "Quelle opération sur un contrat d'API laisse intacts tous les appels déjà en place ?",
-      "correctOptionId": "b",
-      "options": [
-        { "id": "a", "text": "Retirer un champ de réponse devenu inutile" },
-        { "id": "b", "text": "Ajouter un champ d'entrée facultatif, l'ancien comportement valant quand il est absent" },
-        { "id": "c", "text": "Rendre obligatoire un paramètre auparavant facultatif" },
-        { "id": "d", "text": "Renommer un champ de réponse pour un nom plus clair" }
-      ]
-    },
-    {
-      "id": "card-api-version-change-001-edge",
-      "exerciseId": "api-version-change-001",
-      "domain": "api",
-      "question": "De quel côté ranger une catégorie de changement qu'on ne sait pas classer ?",
-      "correctOptionId": "c",
-      "options": [
-        { "id": "a", "text": "Compatible : rien ne prouve qu'elle casse quelque chose" },
-        { "id": "b", "text": "À ignorer jusqu'à ce qu'un consommateur se plaigne" },
-        { "id": "c", "text": "Cassant, par présomption de danger : le doute protège les consommateurs" },
-        { "id": "d", "text": "Cela dépend uniquement de l'emplacement de la version" }
-      ]
-    },
-    {
-      "id": "card-api-version-route-001-rule",
-      "exerciseId": "api-version-route-001",
-      "domain": "api",
-      "question": "Que doit rendre la résolution d'une version demandée dans le chemin mais absente de la liste prise en charge ?",
-      "correctOptionId": "b",
-      "options": [
-        { "id": "a", "text": "La version par défaut, pour servir quelque chose" },
-        { "id": "b", "text": "Un verdict d'inexistence : une version demandée mais inconnue ne se rabat pas en silence" },
-        { "id": "c", "text": "La version la plus proche numériquement" },
-        { "id": "d", "text": "La version la plus ancienne encore maintenue" }
-      ]
-    },
-    {
-      "id": "card-api-version-route-001-edge",
-      "exerciseId": "api-version-route-001",
-      "domain": "api",
-      "question": "Que sert un chemin sans segment de version, comme la racine ?",
-      "correctOptionId": "a",
-      "options": [
-        { "id": "a", "text": "La version par défaut : aucune version demandée est un cas normal" },
-        { "id": "b", "text": "Un refus, faute de version explicite" },
-        { "id": "c", "text": "Une erreur, la version étant obligatoire" },
-        { "id": "d", "text": "La dernière version tirée par ce client" }
-      ]
-    },
-    {
-      "id": "card-api-etag-compute-001-rule",
-      "exerciseId": "api-etag-compute-001",
-      "domain": "api",
-      "question": "Quelles deux propriétés un ETag doit-il garantir, et grâce à quoi ?",
-      "correctOptionId": "c",
-      "options": [
-        { "id": "a", "text": "Confidentialité et compression, par un chiffrement du corps" },
-        { "id": "b", "text": "Unicité globale et brièveté, par un compteur croissant" },
-        { "id": "c", "text": "Stabilité et sensibilité, par un condensat sur une suite d'octets donnée" },
-        { "id": "d", "text": "Lisibilité et ordre, par une date de dernière modification" }
-      ]
-    },
-    {
-      "id": "card-api-etag-compute-001-edge",
-      "exerciseId": "api-etag-compute-001",
-      "domain": "api",
-      "question": "Pourquoi fixer la casse de l'empreinte hexadécimale d'un ETag ?",
-      "correctOptionId": "a",
-      "options": [
-        { "id": "a", "text": "Majuscules et minuscules donnent deux textes distincts pour le même condensat : sans casse fixée, deux calculs ne coïncident pas" },
-        { "id": "b", "text": "La norme HTTP impose les majuscules pour les ETag" },
-        { "id": "c", "text": "Les minuscules occupent moins d'octets en mémoire" },
-        { "id": "d", "text": "La casse indique si l'ETag est fort ou faible" }
-      ]
-    },
-    {
-      "id": "card-api-etag-precondition-001-rule",
-      "exerciseId": "api-etag-precondition-001",
-      "domain": "api",
-      "question": "Quel en-tête gouverne l'écriture conditionnelle, et quel statut signale un conflit ?",
-      "correctOptionId": "b",
-      "options": [
-        { "id": "a", "text": "If-None-Match, et le statut 304 signale le conflit" },
-        { "id": "b", "text": "If-Match, et le statut 412 signale que l'état a changé depuis la lecture" },
-        { "id": "c", "text": "If-Match, et le statut 200 signale toujours l'acceptation" },
-        { "id": "d", "text": "If-None-Match, et le statut 412 signale le conflit" }
-      ]
-    },
-    {
-      "id": "card-api-etag-precondition-001-edge",
-      "exerciseId": "api-etag-precondition-001",
-      "domain": "api",
-      "question": "Pourquoi refuser par 428 une écriture qui ne porte aucune condition If-Match ?",
-      "correctOptionId": "d",
-      "options": [
-        { "id": "a", "text": "La spécification interdit toute écriture sans en-tête conditionnel" },
-        { "id": "b", "text": "Une écriture sans condition est toujours une tentative d'attaque" },
-        { "id": "c", "text": "Le serveur ne peut pas calculer d'ETag sans condition reçue" },
-        { "id": "d", "text": "Sans condition, l'écriture s'applique à l'aveugle et peut écraser une modification concurrente" }
-      ]
-    },
-    {
-      "id": "card-api-token-bucket-001-rule",
-      "exerciseId": "api-token-bucket-001",
-      "domain": "api",
-      "question": "Sur quoi s'applique le plafond d'un seau de jetons, et que borne-t-il ?",
-      "correctOptionId": "a",
-      "options": [
-        { "id": "a", "text": "Sur la recharge : il borne la rafale, un seau inactif se remplissant jusqu'à la capacité sans la dépasser" },
-        { "id": "b", "text": "Sur le débit moyen, indépendamment de la capacité" },
-        { "id": "c", "text": "Sur le solde après consommation, pour éviter les négatifs" },
-        { "id": "d", "text": "Sur le nombre de clients simultanés" }
-      ]
-    },
-    {
-      "id": "card-api-token-bucket-001-edge",
-      "exerciseId": "api-token-bucket-001",
-      "domain": "api",
-      "question": "Que fait un seau vide face à un appel, et quel état reste interdit ?",
-      "correctOptionId": "b",
-      "options": [
-        { "id": "a", "text": "Il emprunte un jeton et rend le solde négatif jusqu'à la prochaine recharge" },
-        { "id": "b", "text": "Il refuse sans consommer, laissant le solde à zéro : le solde négatif fausserait la recharge et l'admission" },
-        { "id": "c", "text": "Il double sa capacité pour absorber la demande" },
-        { "id": "d", "text": "Il accepte l'appel mais journalise un dépassement" }
-      ]
-    },
-    {
-      "id": "card-api-retry-after-001-rule",
-      "exerciseId": "api-retry-after-001",
-      "domain": "api",
-      "question": "Jusqu'à quel instant court le Retry-After d'une fenêtre fixe pour un client limité ?",
-      "correctOptionId": "c",
-      "options": [
-        { "id": "a", "text": "Jusqu'à la fin de la fenêtre précédente" },
-        { "id": "b", "text": "Jusqu'à ce que le client cesse d'appeler" },
-        { "id": "c", "text": "Jusqu'au début de la fenêtre suivante : début de la fenêtre courante plus sa durée" },
-        { "id": "d", "text": "Jusqu'au milieu de la fenêtre courante" }
-      ]
-    },
-    {
-      "id": "card-api-retry-after-001-edge",
-      "exerciseId": "api-retry-after-001",
-      "domain": "api",
-      "question": "Que rendre comme Retry-After si l'instant courant a déjà dépassé la réinitialisation de la fenêtre ?",
-      "correctOptionId": "a",
-      "options": [
-        { "id": "a", "text": "Zéro : la fenêtre est passée, réessayer est permis, un délai négatif n'a pas de sens" },
-        { "id": "b", "text": "La durée entière de la fenêtre, par sécurité" },
-        { "id": "c", "text": "La valeur négative telle quelle, à charge du client" },
-        { "id": "d", "text": "Une erreur, l'état étant incohérent" }
-      ]
-    },
-    {
-      "id": "card-api-cache-directive-001-rule",
-      "exerciseId": "api-cache-directive-001",
-      "domain": "api",
-      "question": "Pourquoi la sensibilité se teste-t-elle en premier dans la composition d'une directive de cache ?",
-      "correctOptionId": "b",
-      "options": [
-        { "id": "a", "text": "Parce que c'est le cas le plus fréquent des réponses d'API" },
-        { "id": "b", "text": "Parce qu'une donnée sensible marquée publique par erreur est la pire issue : tester la sensibilité d'abord la rend impossible" },
-        { "id": "c", "text": "Parce que la sensibilité est la seule nature à porter une durée" },
-        { "id": "d", "text": "Parce que l'ordre des tests n'a en réalité aucune importance ici" }
-      ]
-    },
-    {
-      "id": "card-api-cache-directive-001-edge",
-      "exerciseId": "api-cache-directive-001",
-      "domain": "api",
-      "question": "Que rend une nature de réponse inconnue, et selon quel principe ?",
-      "correctOptionId": "c",
-      "options": [
-        { "id": "a", "text": "public, pour maximiser le bénéfice du cache" },
-        { "id": "b", "text": "private avec une durée par défaut" },
-        { "id": "c", "text": "no-store, par présomption de prudence : ce qu'on ne sait pas classer ne se met pas en cache" },
-        { "id": "d", "text": "Une exception, la nature étant obligatoire" }
-      ]
-    },
-    {
-      "id": "card-api-cache-storability-001-rule",
-      "exerciseId": "api-cache-storability-001",
-      "domain": "api",
-      "question": "Quelles deux conditions cumulatives rendent une réponse stockable en cache ?",
-      "correctOptionId": "d",
-      "options": [
-        { "id": "a", "text": "Un statut de succès et une taille inférieure à une limite" },
-        { "id": "b", "text": "Une méthode quelconque et un en-tête Cache-Control présent" },
-        { "id": "c", "text": "Une méthode d'écriture et un statut de redirection" },
-        { "id": "d", "text": "Une méthode de lecture sans effet — GET ou HEAD — et un statut figurant dans la liste stockable" }
-      ]
-    },
-    {
-      "id": "card-api-cache-storability-001-edge",
-      "exerciseId": "api-cache-storability-001",
-      "domain": "api",
-      "question": "Pourquoi la réponse d'un POST qui répond 200 n'est-elle pas stockable ?",
-      "correctOptionId": "a",
-      "options": [
-        { "id": "a", "text": "Resservir la réponse d'une action laisserait croire que l'action a eu lieu alors qu'aucune requête n'est partie" },
-        { "id": "b", "text": "Les réponses de POST dépassent toujours la taille cacheable" },
-        { "id": "c", "text": "Le statut 200 n'est jamais stockable, quelle que soit la méthode" },
-        { "id": "d", "text": "Les POST ne portent pas d'en-tête Cache-Control" }
-      ]
-    },
-    {
-      "id": "card-api-cors-origin-001-rule",
-      "exerciseId": "api-cors-origin-001",
-      "domain": "api",
-      "question": "Dans quel unique cas le joker d'origine est-il légitime ?",
-      "correctOptionId": "b",
-      "options": [
-        { "id": "a", "text": "Toujours, le joker étant plus simple à configurer" },
-        { "id": "b", "text": "Ressource ouverte à tous ET requête sans identifiants ; avec identifiants, il faut une origine nommée" },
-        { "id": "c", "text": "Uniquement pour les requêtes de préflight OPTIONS" },
-        { "id": "d", "text": "Uniquement quand la requête porte des identifiants" }
-      ]
-    },
-    {
-      "id": "card-api-cors-origin-001-edge",
-      "exerciseId": "api-cors-origin-001",
-      "domain": "api",
-      "question": "Pourquoi l'écho de l'origine reçue sans liste blanche est-il dangereux ?",
-      "correctOptionId": "c",
-      "options": [
-        { "id": "a", "text": "Il ralentit la réponse en recopiant une chaîne longue" },
-        { "id": "b", "text": "Il oblige le navigateur à un second préflight" },
-        { "id": "c", "text": "Il revient à autoriser toutes les origines, identifiants compris, contournant le verrou joker-identifiants" },
-        { "id": "d", "text": "Il expose l'origine dans les journaux du serveur" }
-      ]
-    },
-    {
-      "id": "card-api-cors-preflight-001-rule",
-      "exerciseId": "api-cors-preflight-001",
-      "domain": "api",
-      "question": "Dans quel sens joue l'inclusion des en-têtes lors d'un préflight ?",
-      "correctOptionId": "a",
-      "options": [
-        { "id": "a", "text": "Chaque en-tête demandé doit être autorisé ; la liste autorisée peut être plus large" },
-        { "id": "b", "text": "Chaque en-tête autorisé doit être demandé, sinon le préflight échoue" },
-        { "id": "c", "text": "Les deux listes doivent être exactement identiques" },
-        { "id": "d", "text": "Seul le premier en-tête demandé est vérifié" }
-      ]
-    },
-    {
-      "id": "card-api-cors-preflight-001-edge",
-      "exerciseId": "api-cors-preflight-001",
-      "domain": "api",
-      "question": "Un préflight sans aucun en-tête demandé : refus ou passage possible ?",
-      "correctOptionId": "b",
-      "options": [
-        { "id": "a", "text": "Refus systématique : un préflight doit toujours lister des en-têtes" },
-        { "id": "b", "text": "Passage possible : une liste d'en-têtes demandés vide est une absence d'exigence, la décision se fait sur la méthode" },
-        { "id": "c", "text": "Refus, sauf si la méthode est GET" },
-        { "id": "d", "text": "Passage seulement si les identifiants sont acceptés" }
-      ]
-    },
-    {
-      "id": "card-api-webhook-signature-001-rule",
-      "exerciseId": "api-webhook-signature-001",
-      "domain": "security",
-      "question": "Sur quelle chaîne se recalcule la signature d'un webhook, et pourquoi inclure l'horodatage ?",
-      "correctOptionId": "c",
-      "options": [
-        { "id": "a", "text": "Sur le corps seul, l'horodatage étant vérifié à part sans lien" },
-        { "id": "b", "text": "Sur le corps re-sérialisé, pour normaliser la forme" },
-        { "id": "c", "text": "Sur l'horodatage et le corps brut joints : lier l'horodatage empêche de recoller un vieux corps à un horodatage frais" },
-        { "id": "d", "text": "Sur l'en-tête de signature lui-même" }
-      ]
-    },
-    {
-      "id": "card-api-webhook-signature-001-edge",
-      "exerciseId": "api-webhook-signature-001",
-      "domain": "security",
-      "question": "Pourquoi vérifier la signature d'un webhook sur le corps brut plutôt que re-sérialisé ?",
-      "correctOptionId": "a",
-      "options": [
-        { "id": "a", "text": "La re-sérialisation réordonne les clés et normalise les espaces : le corps diffère de celui signé et la signature échoue" },
-        { "id": "b", "text": "Le corps brut est plus rapide à condenser" },
-        { "id": "c", "text": "La re-sérialisation est interdite par la norme des webhooks" },
-        { "id": "d", "text": "Le corps brut contient l'en-tête de signature nécessaire" }
-      ]
-    },
-    {
-      "id": "card-api-webhook-replay-001-rule",
-      "exerciseId": "api-webhook-replay-001",
-      "domain": "security",
-      "question": "Que protège la fenêtre d'horodatage d'un webhook que sa signature ne protège pas ?",
-      "correctOptionId": "b",
-      "options": [
-        { "id": "a", "text": "La confidentialité du corps, que la signature laisse en clair" },
-        { "id": "b", "text": "Le rejeu : un envoi authentique capturé et renvoyé reste valide sans elle" },
-        { "id": "c", "text": "L'intégrité du corps, que la signature ne couvre pas" },
-        { "id": "d", "text": "L'identité de l'émetteur, absente de la signature" }
-      ]
-    },
-    {
-      "id": "card-api-webhook-replay-001-edge",
-      "exerciseId": "api-webhook-replay-001",
-      "domain": "security",
-      "question": "Pourquoi la fenêtre anti-rejeu d'un webhook est-elle symétrique autour de l'instant courant ?",
-      "correctOptionId": "d",
-      "options": [
-        { "id": "a", "text": "Pour accepter les envois futurs programmés à l'avance" },
-        { "id": "b", "text": "Parce que la signature ne couvre pas le sens du temps" },
-        { "id": "c", "text": "Pour doubler la tolérance disponible" },
-        { "id": "d", "text": "L'horloge de l'émetteur peut être en avance : un envoi légèrement futur est aussi légitime qu'un envoi légèrement en retard" }
-      ]
-    },
-    {
-      "id": "card-front-state-reducer-001-rule",
-      "exerciseId": "front-state-reducer-001",
-      "domain": "csharp",
-      "question": "Pourquoi un réducteur doit-il construire un nouvel état plutôt que modifier celui qu'il reçoit ?",
-      "correctOptionId": "a",
-      "options": [
-        { "id": "a", "text": "Parce que modifier l'état reçu casse la comparaison par référence dont dépendent le rendu et l'annulation, et rend les transitions imprévisibles" },
-        { "id": "b", "text": "Parce que copier un dictionnaire est toujours plus rapide que le modifier en place" },
-        { "id": "c", "text": "Parce qu'un réducteur n'a pas le droit de lire l'état qu'il reçoit" },
-        { "id": "d", "text": "Parce que le langage interdit de modifier un dictionnaire existant" }
-      ]
-    },
-    {
-      "id": "card-front-state-reducer-001-edge",
-      "exerciseId": "front-state-reducer-001",
-      "domain": "csharp",
-      "question": "Que doit faire un incrément demandé sur une valeur qui n'est pas un entier valide ?",
-      "correctOptionId": "c",
-      "options": [
-        { "id": "a", "text": "Remettre la valeur à zéro puis l'incrémenter à un" },
-        { "id": "b", "text": "Lever une exception qui interrompt toute la réduction en cours" },
-        { "id": "c", "text": "Ignorer l'action et laisser la valeur inchangée, sans corrompre l'état" },
-        { "id": "d", "text": "Convertir la valeur en son code de caractère puis l'incrémenter" }
-      ]
-    },
-    {
-      "id": "card-front-form-field-state-001-rule",
-      "exerciseId": "front-form-field-state-001",
-      "domain": "csharp",
-      "question": "Pourquoi séparer l'état touché de l'état valide d'un champ de formulaire ?",
-      "correctOptionId": "a",
-      "options": [
-        { "id": "a", "text": "Parce que la validité mesure la valeur tandis que le contact mesure l'interaction : afficher une erreur avant tout contact punit l'utilisateur qui n'a encore rien saisi" },
-        { "id": "b", "text": "Parce qu'un champ touché est nécessairement invalide" },
-        { "id": "c", "text": "Parce que la validité ne peut être calculée qu'après un premier flou" },
-        { "id": "d", "text": "Parce que le serveur exige que les deux drapeaux soient transmis ensemble" }
-      ]
-    },
-    {
-      "id": "card-front-form-field-state-001-edge",
-      "exerciseId": "front-form-field-state-001",
-      "domain": "csharp",
-      "question": "Que doit remettre à son état initial un reset, au-delà de la valeur saisie ?",
-      "correctOptionId": "b",
-      "options": [
-        { "id": "a", "text": "Rien d'autre : seule la valeur revient à vide" },
-        { "id": "b", "text": "La salissure et le contact : le champ redevient intact et non touché" },
-        { "id": "c", "text": "Uniquement le drapeau de validité, recalculé à vide" },
-        { "id": "d", "text": "Le champ entier, qui est retiré du formulaire" }
-      ]
-    },
-    {
-      "id": "card-front-cache-decision-001-rule",
-      "exerciseId": "front-cache-decision-001",
-      "domain": "api",
-      "question": "Qu'apporte la fenêtre stale-revalidate entre les seuils de fraîcheur et d'expiration ?",
-      "correctOptionId": "a",
-      "options": [
-        { "id": "a", "text": "Elle sert la copie périmée immédiatement tout en déclenchant une revalidation en arrière-plan, évitant à la fois la latence et la donnée trop vieille" },
-        { "id": "b", "text": "Elle interdit toute lecture jusqu'à la prochaine écriture du serveur" },
-        { "id": "c", "text": "Elle double la durée de fraîcheur de l'entrée" },
-        { "id": "d", "text": "Elle force un aller-retour réseau bloquant à chaque lecture" }
-      ]
-    },
-    {
-      "id": "card-front-cache-decision-001-edge",
-      "exerciseId": "front-cache-decision-001",
-      "domain": "api",
-      "question": "Que vaut le verdict pour un âge exactement égal à staleAfter, puis exactement égal à expireAfter ?",
-      "correctOptionId": "b",
-      "options": [
-        { "id": "a", "text": "fresh, puis stale-revalidate" },
-        { "id": "b", "text": "stale-revalidate, puis expired" },
-        { "id": "c", "text": "fresh, puis expired" },
-        { "id": "d", "text": "expired dans les deux cas" }
-      ]
-    },
-    {
-      "id": "card-front-route-guard-001-rule",
-      "exerciseId": "front-route-guard-001",
-      "domain": "security",
-      "question": "Quelles sont les trois issues d'un garde de route, et à quel profil d'utilisateur correspond chacune ?",
-      "correctOptionId": "a",
-      "options": [
-        { "id": "a", "text": "Autoriser l'utilisateur au jeton valide portant la portée requise ; rediriger vers la connexion celui sans jeton valide ; interdire l'utilisateur authentifié mais dépourvu de la portée" },
-        { "id": "b", "text": "Autoriser, mettre en cache la réponse, puis journaliser l'accès" },
-        { "id": "c", "text": "Autoriser tout jeton présent ; rediriger tout jeton expiré ; interdire tout jeton daté du futur" },
-        { "id": "d", "text": "Autoriser, rafraîchir le jeton, puis déconnecter la session" }
-      ]
-    },
-    {
-      "id": "card-front-route-guard-001-edge",
-      "exerciseId": "front-route-guard-001",
-      "domain": "security",
-      "question": "Pourquoi comparer les portées par correspondance exacte plutôt que par préfixe ?",
-      "correctOptionId": "b",
-      "options": [
-        { "id": "a", "text": "Parce qu'un préfixe est plus lent à comparer qu'une chaîne entière" },
-        { "id": "b", "text": "Parce qu'une comparaison par préfixe accorderait par erreur orders.read à un jeton ne portant que orders.readonly" },
-        { "id": "c", "text": "Parce que les portées ne sont jamais séparées par des espaces" },
-        { "id": "d", "text": "Parce que la correspondance exacte est imposée par le format base64url" }
-      ]
-    },
-    {
-      "id": "card-senior-circuit-breaker-001-rule",
-      "exerciseId": "senior-circuit-breaker-001",
-      "domain": "architecture",
-      "question": "Qu'est-ce qui fait passer un disjoncteur de l'etat ferme a l'etat ouvert ?",
-      "correctOptionId": "b",
-      "options": [
-        { "id": "a", "text": "Un seul echec, pour couper au plus tot" },
-        { "id": "b", "text": "Un nombre d'echecs consecutifs atteignant le seuil, un succes remettant le compte a zero" },
-        { "id": "c", "text": "L'ecoulement d'un delai fixe, independamment des echecs" },
-        { "id": "d", "text": "La reception d'un tick de refroidissement" }
-      ]
-    },
-    {
-      "id": "card-senior-circuit-breaker-001-edge",
-      "exerciseId": "senior-circuit-breaker-001",
-      "domain": "architecture",
-      "question": "A quoi sert l'etat semi-ouvert d'un disjoncteur apres un refroidissement ?",
-      "correctOptionId": "c",
-      "options": [
-        { "id": "a", "text": "A rejeter tous les appels definitivement" },
-        { "id": "b", "text": "A remettre le compteur d'echecs a zero sans rien tester" },
-        { "id": "c", "text": "A laisser passer un appel d'essai : un succes referme, un echec rouvre" },
-        { "id": "d", "text": "A doubler le seuil d'echecs tolere" }
-      ]
-    },
-    {
-      "id": "card-senior-idempotency-key-001-rule",
-      "exerciseId": "senior-idempotency-key-001",
-      "domain": "api",
-      "question": "A quoi sert une cle d'idempotence sur un endpoint susceptible de recevoir plusieurs fois la meme requete ?",
-      "correctOptionId": "a",
-      "options": [
-        { "id": "a", "text": "A reconnaitre un rejeu et rendre le resultat deja calcule sans reexecuter l'effet" },
-        { "id": "b", "text": "A chiffrer le corps de la requete" },
-        { "id": "c", "text": "A garantir l'ordre d'arrivee des requetes" },
-        { "id": "d", "text": "A accelerer la premiere execution" }
-      ]
-    },
-    {
-      "id": "card-senior-idempotency-key-001-edge",
-      "exerciseId": "senior-idempotency-key-001",
-      "domain": "api",
-      "question": "Que doit rendre l'endpoint au deuxieme envoi d'une requete portant une cle deja vue ?",
-      "correctOptionId": "d",
-      "options": [
-        { "id": "a", "text": "Une erreur de conflit systematique" },
-        { "id": "b", "text": "Le meme effet metier, execute une seconde fois" },
-        { "id": "c", "text": "Un refus silencieux sans reponse" },
-        { "id": "d", "text": "Le resultat memorise du premier traitement, sans rejouer l'effet" }
-      ]
-    },
-    {
-      "id": "card-senior-consumer-decision-001-rule",
-      "exerciseId": "senior-consumer-decision-001",
-      "domain": "architecture",
-      "question": "Dans quel ordre un consommateur tranche-t-il entre traiter, acquitter un doublon et envoyer en lettres mortes ?",
-      "correctOptionId": "b",
-      "options": [
-        { "id": "a", "text": "Doublon d'abord, puis message empoisonne, puis traitement" },
-        { "id": "b", "text": "Message empoisonne d'abord, puis doublon deja traite, puis traitement" },
-        { "id": "c", "text": "Traitement d'abord, le reste ensuite" },
-        { "id": "d", "text": "L'ordre est indifferent" }
-      ]
-    },
-    {
-      "id": "card-senior-consumer-decision-001-edge",
-      "exerciseId": "senior-consumer-decision-001",
-      "domain": "architecture",
-      "question": "Pourquoi un message dont le nombre de tentatives depasse le seuil part-il en lettres mortes ?",
-      "correctOptionId": "a",
-      "options": [
-        { "id": "a", "text": "Pour ne pas bloquer la file ni boucler indefiniment sur un message empoisonne" },
-        { "id": "b", "text": "Parce qu'un doublon ne doit jamais etre acquitte" },
-        { "id": "c", "text": "Pour accelerer les messages suivants" },
-        { "id": "d", "text": "Parce que la file est pleine" }
-      ]
-    },
-    {
-      "id": "card-senior-compensation-001-rule",
-      "exerciseId": "senior-compensation-001",
-      "domain": "architecture",
-      "question": "Dans quel ordre execute-t-on les actions compensatoires d'une saga, et pourquoi ?",
-      "correctOptionId": "c",
-      "options": [
-        { "id": "a", "text": "Dans l'ordre direct des etapes, car c'est l'ordre naturel" },
-        { "id": "b", "text": "Dans un ordre indifferent, chaque compensation etant independante" },
-        { "id": "c", "text": "Dans l'ordre inverse des etapes reussies, car une etape tardive depend des precedentes" },
-        { "id": "d", "text": "Seulement pour la derniere etape, les autres se compensant seules" }
-      ]
-    },
-    {
-      "id": "card-senior-compensation-001-edge",
-      "exerciseId": "senior-compensation-001",
-      "domain": "architecture",
-      "question": "Que rend la compensation d'une saga dont aucune etape n'a reussi avant l'echec ?",
-      "correctOptionId": "b",
-      "options": [
-        { "id": "a", "text": "Une action d'annulation pour l'etape en echec" },
-        { "id": "b", "text": "Rien : aucune etape n'a produit d'effet a defaire" },
-        { "id": "c", "text": "Une remise a zero globale du systeme" },
-        { "id": "d", "text": "Une erreur, car une saga doit toujours avoir compense" }
-      ]
-    },
-    {
-      "id": "card-senior-decomposition-001-rule",
-      "exerciseId": "senior-decomposition-001",
-      "domain": "architecture",
-      "question": "Quelle est la decision par defaut face a une demande de decoupage, et quelles conditions la renversent ?",
-      "correctOptionId": "d",
-      "options": [
-        { "id": "a", "text": "Decouper par defaut, car les microservices sont plus modernes" },
-        { "id": "b", "text": "Decouper des qu'il y a plus d'une equipe" },
-        { "id": "c", "text": "Garder le monolithe sauf si une seule equipe le possede" },
-        { "id": "d", "text": "Garder le monolithe, sauf conjonction de plusieurs equipes, d'aucun deploiement couple et d'aucune table partagee" }
-      ]
-    },
-    {
-      "id": "card-senior-decomposition-001-edge",
-      "exerciseId": "senior-decomposition-001",
-      "domain": "architecture",
-      "question": "Pourquoi des tables partagees interdisent-elles l'extraction d'un service meme avec plusieurs equipes ?",
-      "correctOptionId": "a",
-      "options": [
-        { "id": "a", "text": "Parce que la frontiere passe alors au milieu des donnees et recouple les services par la base" },
-        { "id": "b", "text": "Parce qu'il faut d'abord ajouter une equipe" },
-        { "id": "c", "text": "Parce que les tables partagees accelerent les requetes" },
-        { "id": "d", "text": "Elles ne changent rien a la decision" }
-      ]
-    },
-    {
-      "id": "card-senior-error-budget-001-rule",
-      "exerciseId": "senior-error-budget-001",
-      "domain": "performance",
-      "question": "Comment obtient-on le nombre d'echecs autorises a partir d'un SLO exprime en points de base ?",
-      "correctOptionId": "c",
-      "options": [
-        { "id": "a", "text": "En prenant le SLO multiplie par le volume" },
-        { "id": "b", "text": "En autorisant zero echec, un SLO exigeant la perfection" },
-        { "id": "c", "text": "En appliquant la tolerance, 10000 moins le SLO, au volume, en division entiere" },
-        { "id": "d", "text": "En divisant le volume par le SLO" }
-      ]
-    },
-    {
-      "id": "card-senior-error-budget-001-edge",
-      "exerciseId": "senior-error-budget-001",
-      "domain": "performance",
-      "question": "Que decide-t-on quand les echecs observes egalent exactement le budget autorise ?",
-      "correctOptionId": "b",
-      "options": [
-        { "id": "a", "text": "On gele, l'egalite comptant comme un depassement" },
-        { "id": "b", "text": "On livre encore : l'epuisement exige un depassement strict" },
-        { "id": "c", "text": "On double le budget" },
-        { "id": "d", "text": "On ignore la fenetre" }
-      ]
-    },
-    {
-      "id": "card-senior-review-triage-001-rule",
-      "exerciseId": "senior-review-triage-001",
-      "domain": "architecture",
-      "question": "Quelles familles de constats de revue bloquent une fusion, et laquelle reste toujours un avis ?",
-      "correctOptionId": "a",
-      "options": [
-        { "id": "a", "text": "Correction, securite et concurrence bloquent ; le style ne bloque jamais" },
-        { "id": "b", "text": "Le style bloque, le reste est optionnel" },
-        { "id": "c", "text": "Tout constat bloque, par prudence" },
-        { "id": "d", "text": "Seule la securite bloque" }
-      ]
-    },
-    {
-      "id": "card-senior-review-triage-001-edge",
-      "exerciseId": "senior-review-triage-001",
-      "domain": "architecture",
-      "question": "Que coute un constat de style presente comme bloquant, et comment doit-il etre classe ?",
-      "correctOptionId": "c",
-      "options": [
-        { "id": "a", "text": "Rien ; c'est une bonne pratique de tout bloquer" },
-        { "id": "b", "text": "Il accelere la fusion et se classe blocking:style" },
-        { "id": "c", "text": "Il retarde des fusions saines et use la confiance ; il se classe minor:style" },
-        { "id": "d", "text": "Il se classe unknown" }
-      ]
-    },
-    {
-      "id": "card-senior-legacy-trace-001-rule",
-      "exerciseId": "senior-legacy-trace-001",
-      "domain": "debugging",
-      "question": "Dans le grand livre hérité, que fait exactement le mot void ?",
-      "correctOptionId": "b",
-      "options": [
-        { "id": "a", "text": "Il remet le solde a zero" },
-        { "id": "b", "text": "Il annule l'effet de la derniere entree appliquee en le retranchant du solde" },
-        { "id": "c", "text": "Il ignore l'entree suivante" },
-        { "id": "d", "text": "Il double le dernier montant" }
-      ]
-    },
-    {
-      "id": "card-senior-legacy-trace-001-edge",
-      "exerciseId": "senior-legacy-trace-001",
-      "domain": "debugging",
-      "question": "Que doit produire un void qui ne suit aucune entree appliquee ?",
-      "correctOptionId": "a",
-      "options": [
-        { "id": "a", "text": "Aucun effet : il n'y a rien a annuler" },
-        { "id": "b", "text": "Une exception, car void exige une entree precedente" },
-        { "id": "c", "text": "Une remise a zero du solde" },
-        { "id": "d", "text": "Un solde negatif" }
       ]
     }
   ],

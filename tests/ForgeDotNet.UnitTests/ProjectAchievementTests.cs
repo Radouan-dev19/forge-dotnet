@@ -33,6 +33,14 @@ public sealed class ProjectAchievementTests
         // déclare la clé code-review et porte des suites d'acceptation qui notent des défauts plantés.
         // C'est le premier producteur au-delà de la porte A.
         MasteryPolicyCatalog.CodeReview,
+
+        // project-orders-database-001 : le bac à sable embarque Microsoft.EntityFrameworkCore et
+        // Microsoft.Data.Sqlite parmi ses assemblies approuvées. Ses trois suites exécutent donc du
+        // vrai EF Core contre une vraie base — modèle traversé, requêtes comptées par un
+        // intercepteur, écriture relue depuis un contexte neuf. L'artefact que la clé nomme est
+        // exercé, pas raisonné : c'est la seule des quatorze clés « contenu manquant » dont le bac
+        // à sable permette une preuve honnête en l'état.
+        MasteryPolicyCatalog.EfCore,
     ];
 
     /// <summary>Ce qui manque à une exigence pour devenir produisible.</summary>
@@ -67,28 +75,35 @@ public sealed class ProjectAchievementTests
     /// que la politique refuse.
     /// </para>
     /// <para>
-    /// Conclusion de l'inventaire : vingt clés restent sans producteur — quatorze attendent un contenu
-    /// vérifiable, six exigent un jugement humain et ne descendront jamais par du code. La vingt-et-unième,
-    /// code-review, a désormais son producteur (project-code-review-001, piste senior S31).
+    /// Conclusion de l'inventaire : dix-neuf clés restent sans producteur — treize attendent un contenu
+    /// vérifiable, six exigent un jugement humain et ne descendront jamais par du code. Deux en sont
+    /// sorties : code-review (project-code-review-001, piste senior S31) et ef-core
+    /// (project-orders-database-001).
     /// </para>
     /// </remarks>
     private static readonly Unproduced[] UnproducedAchievements =
     [
         new(MasteryPolicyCatalog.ApiFunctional, Blocker.MissingContent,
-            "project-api-mini-erp-001 porte les jalons mais ni starter, ni suite d'acceptation, ni clé déclarée."),
-        new(MasteryPolicyCatalog.EfCore, Blocker.MissingContent,
-            "Les cinq scénarios ef-* sont hors d'atteinte : FileSystemSqlScenarioSource ne remonte que le mode « sql », "
-            + "et seuls ef-orders-tracking-001 et ef-orders-queryable-001 portent le dossier exam/ requis pour être tirés."),
+            "Le bac à sable démarre avec « --network none » et n'approuve aucune assembly d'hébergement HTTP : "
+            + "rien n'y sert de requête. Un projet ne pourrait faire décider que des règles — négociation, statut, "
+            + "pagination — c'est-à-dire raisonner sur HTTP sans en exercer une seule ligne."),
         new(MasteryPolicyCatalog.ValidationAndErrors, Blocker.MissingContent,
             "Même livrable que l'API : les exercices de validation décident d'une règle, ils ne câblent aucun pipeline."),
         new(MasteryPolicyCatalog.UnitTests, Blocker.MissingContent,
-            "project-testing-strategy-001 n'a pas de suite d'acceptation, et les exercices tests-* raisonnent sur un test sans en écrire un."),
+            "Le runner invoque une méthode statique nommée d'avance : il ne découvre ni n'exécute des tests écrits par "
+            + "l'apprenant. Le faire retourner un rapport d'assertions serait falsifiable — rien n'obligerait les "
+            + "assertions à porter sur du code réel — et les implémentations à éprouver seraient visibles dans la "
+            + "soumission, donc contournables par une réponse écrite en dur."),
         new(MasteryPolicyCatalog.IntegrationTests, Blocker.MissingContent,
-            "Même livrable que les tests unitaires, et aucune suite du parcours ne s'exécute contre une base de test."),
+            "Une base réelle est désormais atteignable — project-orders-database-001 le prouve — mais l'artefact que la "
+            + "clé nomme reste des tests écrits par l'apprenant, que le runner ne sait pas découvrir. Exercer une base "
+            + "n'est pas écrire un test d'intégration."),
         new(MasteryPolicyCatalog.Docker, Blocker.MissingContent,
-            "project-container-delivery-001 n'a pas de suite, et les trois exercices docker-* sont des fonctions pures sans conteneur."),
+            "La soumission est du code C# compilé dans un conteneur déjà construit : rien n'y bâtit ni n'y exécute "
+            + "d'image. Les exercices docker-* raisonnent sur des couches et des quotas sans en produire aucun."),
         new(MasteryPolicyCatalog.ContinuousIntegration, Blocker.MissingContent,
-            "Même livrable que Docker ; le workflow du laboratoire ci-delivery n'est rattaché à aucune preuve collectée."),
+            "Aucun pipeline ne s'exécute dans le bac à sable, et le workflow du laboratoire ci-delivery tourne hors "
+            + "produit : sa réussite n'est collectée par aucun canal que le serveur puisse vérifier."),
         new(MasteryPolicyCatalog.AuthenticationAuthorization, Blocker.MissingContent,
             "Les exercices security-jwt-* font valider un jeton à la main et le laboratoire api-jwt-bearer câble le "
             + "middleware, mais aucun ne produit l'accomplissement : la preuve d'exercice reste une preuve de pratique, "
@@ -100,9 +115,13 @@ public sealed class ProjectAchievementTests
         new(MasteryPolicyCatalog.SimulatedIncident, Blocker.MissingContent,
             "Le laboratoire azure-operations porte un script d'incident, mais aucun canal de vérification ne le relie au produit."),
         new(MasteryPolicyCatalog.Performance, Blocker.MissingContent,
-            "Aucun livrable ne mesure un avant et un après avec la même méthode et le même volume."),
+            "Piste ouverte, non empruntée : une base réelle permet de compter des allers-retours plutôt que de "
+            + "chronométrer, donc de mesurer une amélioration de façon déterministe. Il manque le livrable qui compare "
+            + "un avant documenté à un après, au même volume."),
         new(MasteryPolicyCatalog.Security, Blocker.MissingContent,
-            "Les exercices security-* décident d'une règle ; aucun livrable n'est éprouvé contre une tentative d'abus."),
+            "Les exercices security-* décident d'une règle sur une entrée fournie ; le livrable manquant devrait être "
+            + "éprouvé contre une tentative d'abus qu'il ne connaît pas d'avance. Une suite d'acceptation dont les "
+            + "attaques sont énumérées dans l'énoncé ne mesure que la lecture de l'énoncé."),
         new(MasteryPolicyCatalog.AutonomousFeature, Blocker.MissingContent,
             "Le projet final est un brief sans starter ni suite : rien n'y est vérifiable automatiquement."),
         new(MasteryPolicyCatalog.CleanGit, Blocker.HumanJudgement,
@@ -124,13 +143,17 @@ public sealed class ProjectAchievementTests
 
     /// <summary>Plafond de clés sans producteur. Il ne peut que descendre.</summary>
     /// <remarks>
-    /// Descendu à vingt : project-code-review-001 (piste senior S31) branche la clé code-review sur une
-    /// suite d'acceptation notant des défauts plantés — le premier producteur au-delà de la porte A. Les
-    /// vingt autres clés restent sans producteur ; un producteur qui ne peut jamais se déclencher ferait
-    /// descendre ce plafond sans rien débloquer, ce qui est exactement le faux signal que ce test existe
-    /// pour empêcher.
+    /// Descendu à dix-neuf. Le premier producteur au-delà de la porte A fut project-code-review-001
+    /// (piste senior S31), qui branche code-review sur une suite notant des défauts plantés ; le second
+    /// est project-orders-database-001, qui branche ef-core sur trois suites exécutant du vrai EF Core
+    /// contre une vraie base SQLite — le bac à sable embarque les deux assemblies.
+    ///
+    /// Ce plafond ne descend que d'autant de clés réellement produites. Un producteur qui ne peut jamais
+    /// se déclencher, ou qui se déclenche sur une preuve n'exerçant pas l'artefact que la clé nomme,
+    /// ferait descendre ce plafond sans rien débloquer : c'est exactement le faux signal que ce test
+    /// existe pour empêcher.
     /// </remarks>
-    private const int MaximumUnproducedKeys = 20;
+    private const int MaximumUnproducedKeys = 19;
 
     [Fact]
     public void EveryGateRequirementIsEitherProducedOrDeclaredUnproduced()
@@ -208,6 +231,11 @@ public sealed class ProjectAchievementTests
     /// La distinction n'est pas cosmétique : elle dit à une reprise future où son effort porte. Traiter
     /// les six exigences humaines comme une dette technique conduirait à fabriquer une preuve
     /// automatique de ce qui ne s'automatise pas — un entretien noté par une suite de tests.
+    ///
+    /// Ce qui existe pour elles est un protocole de revue par un tiers, <c>docs/HUMAN_REVIEW.md</c> :
+    /// une grille observable par exigence et une attestation qui vit hors du système de maîtrise. Il
+    /// n'ajoute aucun producteur, et ne peut pas en ajouter — <c>MasteryRules.IsEligible</c> refuse
+    /// <c>ManualDeclaration</c> sans condition. Ces six clés restent donc ici, définitivement.
     /// </remarks>
     [Fact]
     public void TheInventorySeparatesMissingContentFromHumanJudgement()
@@ -215,25 +243,28 @@ public sealed class ProjectAchievementTests
         int missingContent = UnproducedAchievements.Count(item => item.Blocker == Blocker.MissingContent);
         int humanJudgement = UnproducedAchievements.Count(item => item.Blocker == Blocker.HumanJudgement);
 
-        Assert.Equal(14, missingContent);
+        Assert.Equal(13, missingContent);
         Assert.Equal(6, humanJudgement);
         Assert.Equal(UnproducedAchievements.Length, missingContent + humanJudgement);
     }
 
     /// <summary>
-    /// Les portes B, C et D sont bloquées par des exigences dont aucune n'a de producteur.
+    /// Seules les clés nommément produites ont un producteur au-delà de la porte A.
     /// </summary>
     /// <remarks>
-    /// C'est l'énoncé exact du défaut, et il devient exécutable : le test échouera le jour où un
-    /// producteur apparaîtra sans que l'inventaire ne soit mis à jour, et il documente en attendant que
-    /// le blocage est total et non partiel. Un apprenant ne lit donc pas « Porte B — bloquée » par
-    /// accident de configuration, mais parce qu'aucune de ses sept exigences n'est satisfiable.
+    /// La forme d'origine — « aucune exigence au-delà de la porte A n'a de producteur » — a cessé
+    /// d'être vraie le jour où le premier producteur est apparu, et l'énoncer par une liste
+    /// d'exceptions à étendre à chaque fois manquait le point. La règle utile est le classement :
+    /// chaque exigence des portes B, C et D est soit produite, soit inventoriée avec son diagnostic,
+    /// jamais les deux et jamais ni l'une ni l'autre. Une clé qui gagne un producteur doit donc
+    /// quitter l'inventaire dans le même incrément — c'est ce qui empêche un producteur muet, ajouté
+    /// sans contenu qui le déclenche, de faire croire qu'une porte s'est ouverte.
     /// </remarks>
     [Theory]
     [InlineData(MasteryGate.B)]
     [InlineData(MasteryGate.C)]
     [InlineData(MasteryGate.D)]
-    public void NoAchievementRequirementBeyondGateAHasAProducer(MasteryGate gate)
+    public void EveryRequirementBeyondGateAIsClassifiedExactlyOnce(MasteryGate gate)
     {
         string[] keys = MasteryPolicyCatalog.Version1.Gates
             .Single(item => item.Gate == gate)
@@ -243,12 +274,60 @@ public sealed class ProjectAchievementTests
             .ToArray();
 
         Assert.NotEmpty(keys);
-        // La piste senior (S31) fournit le premier — et à ce jour unique — producteur au-delà de la
-        // porte A : project-code-review-001 produit code-review. Toutes les AUTRES exigences des
-        // portes B, C et D restent sans producteur, ce que ce test continue de figer.
-        Assert.All(
-            keys.Where(key => !string.Equals(key, MasteryPolicyCatalog.CodeReview, StringComparison.Ordinal)),
-            key => Assert.Contains(key, UnproducedAchievementKeys, StringComparer.Ordinal));
+
+        var unclassified = new List<string>();
+        var doubleClassified = new List<string>();
+
+        foreach (string key in keys)
+        {
+            bool produced = ProducedAchievementKeys.Contains(key, StringComparer.Ordinal);
+            bool unproduced = UnproducedAchievementKeys.Contains(key, StringComparer.Ordinal);
+
+            if (produced && unproduced)
+            {
+                doubleClassified.Add(key);
+            }
+            else if (!produced && !unproduced)
+            {
+                unclassified.Add(key);
+            }
+        }
+
+        Assert.True(
+            unclassified.Count == 0,
+            $"Porte {gate} : ni produites ni inventoriées — " + string.Join(", ", unclassified));
+        Assert.True(
+            doubleClassified.Count == 0,
+            $"Porte {gate} : produites ET inventoriées comme manquantes — "
+            + string.Join(", ", doubleClassified));
+    }
+
+    /// <summary>
+    /// Deux clés seulement ont un producteur au-delà de la porte A, et on les nomme.
+    /// </summary>
+    /// <remarks>
+    /// Le blocage des portes B, C et D reste l'état du produit : le figer par un compte nommé rend
+    /// visible chaque avancée réelle et interdit qu'elle passe inaperçue. Les deux producteurs
+    /// existants exercent l'artefact que leur clé nomme — une revue qui note des défauts plantés,
+    /// des requêtes exécutées contre une vraie base — ce qui est la condition d'admission.
+    /// </remarks>
+    [Fact]
+    public void OnlyTheNamedKeysHaveAProducerBeyondGateA()
+    {
+        string[] beyondGateA = MasteryPolicyCatalog.Version1.Gates
+            .Where(gate => gate.Gate != MasteryGate.A)
+            .SelectMany(gate => gate.Requirements)
+            .Where(requirement => requirement.AchievementKey is not null)
+            .Select(requirement => requirement.AchievementKey!)
+            .Distinct(StringComparer.Ordinal)
+            .ToArray();
+
+        string[] produced = beyondGateA
+            .Where(key => ProducedAchievementKeys.Contains(key, StringComparer.Ordinal))
+            .OrderBy(key => key, StringComparer.Ordinal)
+            .ToArray();
+
+        Assert.Equal([MasteryPolicyCatalog.CodeReview, MasteryPolicyCatalog.EfCore], produced);
     }
 
     /// <summary>

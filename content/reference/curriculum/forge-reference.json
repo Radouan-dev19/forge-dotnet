@@ -466,6 +466,11 @@
                                           "git-pull-requests-versions-001"
                                       ],
                         "exerciseIds":  [
+                                            "git-cherry-pick-risk-001",
+                                            "git-undo-strategy-001",
+                                            "git-tag-precedence-001",
+                                            "git-rebase-or-merge-001",
+                                            "git-branch-name-001",
                                             "git-commit-subject-001",
                                             "git-version-patch-001",
                                             "git-conflict-marker-001"
@@ -486,6 +491,8 @@
                                           "docker-compose-networks-volumes-001"
                                       ],
                         "exerciseIds":  [
+                                            "docker-layer-cache-001",
+                                            "docker-image-tag-001",
                                             "docker-memory-limit-001",
                                             "docker-health-window-001",
                                             "docker-hardening-policy-001"
@@ -553,6 +560,7 @@
                                           "performance-security-incident-001"
                                       ],
                         "exerciseIds":  [
+                                            "observability-sampling-decision-001",
                                             "azure-correlation-signal-001",
                                             "azure-cost-guardrail-001"
                                         ]
@@ -588,6 +596,8 @@
                                           "career-evidence-plan-001"
                                       ],
                         "exerciseIds":  [
+                                            "english-standup-order-001",
+                                            "english-review-comment-001",
                                             "azure-incident-brief-001"
                                         ]
                     },

@@ -1,3 +1,4 @@
+using System.Text.Json;
 using ForgeDotNet.Domain.Mastery;
 
 namespace ForgeDotNet.UnitTests;
@@ -52,6 +53,15 @@ public sealed class MasteryReachabilityTests
     /// <summary>
     /// Composantes qu'aucun producteur n'alimente. Ce nombre ne peut que descendre.
     /// </summary>
+    /// <remarks>
+    /// L'explication y restera, et ce n'est pas une dette : trois routes ont été cherchées puis
+    /// refusées — la carte à choix sur le « pourquoi » mesure la reconnaissance, l'explication
+    /// personnelle du protocole de pratique mesure l'effort et n'est atteignable qu'après une solution
+    /// consultée, la rubrique déterministe note une transcription ou une devinette selon qu'elle publie
+    /// ou non ses concepts obligatoires. Le raisonnement complet est dans <c>docs/MASTERY.md</c> ;
+    /// <c>MasteryRulesTests</c> le rend exécutable en refusant les moteurs qui prétendraient l'alimenter
+    /// et en montrant que le plafond de 90 qui en résulte franchit les deux seuils.
+    /// </remarks>
     private static readonly MasteryComponent[] UnproducedComponents = [MasteryComponent.Explanation];
 
     private const int MaximumUnproducedComponents = 1;
@@ -118,6 +128,88 @@ public sealed class MasteryReachabilityTests
             unreachable.Count == 0,
             "Des conditions de porte sont hors d'atteinte :" + Environment.NewLine
             + string.Join(Environment.NewLine, unreachable));
+    }
+
+    /// <summary>
+    /// Un domaine dont le score est atteignable doit aussi porter assez d'éléments distincts pour
+    /// être validé.
+    /// </summary>
+    /// <remarks>
+    /// Le plafond de score et la validation d'un domaine sont deux conditions différentes, et rien
+    /// ne le disait. La politique exige <c>MinimumDistinctItems</c> exercices autonomes distincts
+    /// pour valider un domaine : un domaine qui n'en publie que deux atteint quatre-vingt-dix en
+    /// score et reste invalidable à jamais, sans qu'aucun test ne s'en aperçoive.
+    ///
+    /// Les éléments sont comptés comme les producteurs les attribuent — la compétence de l'exercice
+    /// via <see cref="MasterySkillDomains"/>, le débogage par ses scénarios, SQL par les siens —
+    /// faute de quoi le compte décrirait un produit imaginaire.
+    /// </remarks>
+    [Fact]
+    public void EveryReachableDomainHasEnoughDistinctItemsToBeValidated()
+    {
+        MasteryPolicy policy = MasteryPolicyCatalog.Version1;
+        Dictionary<MasteryDomain, int> items = CountItemsByDomain();
+        var starved = new List<string>();
+
+        foreach (MasteryDomain domain in Enum.GetValues<MasteryDomain>())
+        {
+            if (Ceiling(policy, domain) <= 0m)
+            {
+                continue;
+            }
+
+            int count = items.GetValueOrDefault(domain);
+            if (count < policy.MinimumDistinctItems)
+            {
+                starved.Add(
+                    $"{domain} : {count} élément(s) pratiquable(s) pour {policy.MinimumDistinctItems} exigés.");
+            }
+        }
+
+        Assert.True(
+            starved.Count == 0,
+            $"{starved.Count} domaine(s) ne peuvent pas être validés faute d'éléments distincts :"
+            + Environment.NewLine + string.Join(Environment.NewLine, starved));
+    }
+
+    /// <summary>
+    /// Éléments pratiquables par domaine, lus dans le catalogue publié.
+    /// </summary>
+    private static Dictionary<MasteryDomain, int> CountItemsByDomain()
+    {
+        string root = FindRepositoryRoot();
+        var counts = new Dictionary<MasteryDomain, int>();
+
+        foreach (string manifest in Directory.EnumerateFiles(
+            Path.Combine(root, "content", "reference", "exercises"), "exercise.json", SearchOption.AllDirectories))
+        {
+            using JsonDocument document = JsonDocument.Parse(File.ReadAllText(manifest));
+            MasteryDomain domain = MasterySkillDomains.FromSkill(
+                document.RootElement.GetProperty("skills")[0].GetString()!);
+            counts[domain] = counts.GetValueOrDefault(domain) + 1;
+        }
+
+        // La pratique du débogage et celle de SQL passent par des scénarios, que AddDebugAsync et
+        // AddSqlAsync attribuent directement à leur domaine.
+        counts[MasteryDomain.Debugging] = counts.GetValueOrDefault(MasteryDomain.Debugging)
+            + Directory.GetDirectories(Path.Combine(root, "content", "reference", "debugging")).Length;
+        counts[MasteryDomain.Sql] = counts.GetValueOrDefault(MasteryDomain.Sql)
+            + Directory.GetFiles(Path.Combine(root, "content", "sql"), "scenario.json", SearchOption.AllDirectories).Length;
+
+        return counts;
+    }
+
+    private static string FindRepositoryRoot()
+    {
+        for (DirectoryInfo? directory = new(AppContext.BaseDirectory); directory is not null; directory = directory.Parent)
+        {
+            if (File.Exists(Path.Combine(directory.FullName, "ForgeDotNet.sln")))
+            {
+                return directory.FullName;
+            }
+        }
+
+        throw new InvalidOperationException("Racine du dépôt de test introuvable.");
     }
 
     [Fact]

@@ -5,7 +5,9 @@ Ce runbook couvre le monolithe Web, sa base SQLite locale, le CodeRunner Docker 
 ## Prérequis Windows
 
 - Git ;
-- Docker Desktop configuré pour les conteneurs Linux ;
+- Docker Desktop configuré pour les conteneurs Linux, **moteur 25.0 ou plus récent**
+  (`docker version --format '{{.Server.Version}}'`) : le bac à sable monte `/input` en lié non
+  récursif, et la forme antérieure de cette option a été supprimée du moteur ;
 - Docker Compose v2 (`docker compose version`) ;
 - port TCP local `5012` libre, ou un autre port choisi dans `.env`.
 - pour les tests SqlLab depuis l'hôte, port loopback `14333` libre ; SQL Server lui-même n'est jamais publié.
@@ -212,6 +214,9 @@ Ne jamais utiliser cette commande pour un simple arrêt.
 ## Incidents courants
 
 - **Moteur Docker indisponible** : démarrer Docker Desktop et vérifier `docker version`.
+- **« Docker a refusé la politique d'isolation »** : vérifier d'abord la version du moteur. Sous 25.0,
+  l'option de montage non récursif du bac à sable n'existe pas dans la forme employée, et aucun
+  conteneur d'exécution n'est créé. Le message ne distingue pas ce cas d'un refus de sécurité réel.
 - **Port occupé** : choisir un autre `FORGE_HTTP_PORT` dans `.env`, puis rejouer `docker compose config`.
 - **Health rouge** : consulter `docker compose logs forge-dotnet`, vérifier le volume et ne pas supprimer la base pour masquer l'erreur.
 - **Erreur de permission du volume** : contrôler l'utilisateur effectif avec `docker inspect`; le conteneur doit rester non-root.

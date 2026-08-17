@@ -76,13 +76,29 @@ les suites d’acceptation passent, réellement exécutées dans le bac à sable
 `AutomaticTests`. La clé satisfaite est déclarée par le contenu, dans le manifeste du projet, et non
 déduite du code.
 
+**Un producteur déclaré n’est pas un producteur qui fonctionne.** Le rejeu du 17 août 2026 a montré
+que le trajet de soumission était rompu en deux endroits — le contrat d’exécution rejetait la cible
+que le produit construit, et deux projets nommaient mal leur manifeste de suite — si bien qu’aucun de
+ces producteurs n’avait jamais pu se déclencher. Les tests hors ligne restaient verts. Depuis,
+`ProjectSubmissionDockerRunnerTests` exécute le trajet dans un conteneur réel, et
+`ProjectCorrectnessTests` fige la convention de nommage sans Docker. Un producteur inventorié comme
+tel doit désormais l’être de bout en bout.
+
 Une soumission faite en mode manuel n’est pas une réussite : le domaine refuse une réussite non
 vérifiée automatiquement, et `IsVerifiedAchievement` rejette de toute façon `ManualDeclaration`.
 `ProjectAchievementTests` tient l’inventaire : toute clé exigée par une porte figure soit parmi les
-clés produites, soit parmi les **vingt et une** clés déclarées sans producteur, et ce dernier nombre
-ne peut que descendre.
+clés produites, soit parmi les **dix-neuf** clés déclarées sans producteur, et ce dernier nombre ne
+peut que descendre.
 
-#### Diagnostic des vingt et une clés restantes
+Deux clés en sont sorties, toutes deux au-delà de la porte A. `code-review` : `project-code-review-001`
+(piste senior S31) fait noter des diffs à défauts plantés par des suites d’acceptation. `ef-core` :
+`project-orders-database-001` fait écrire trois méthodes qui interrogent et modifient une **vraie
+base** — le bac à sable embarque `Microsoft.EntityFrameworkCore` et `Microsoft.Data.Sqlite` parmi ses
+assemblies approuvées, ce qui rend l’exécution réelle et non simulée. Les trois suites vérifient
+respectivement la traversée du modèle, le nombre de requêtes SQL émises (compté par un intercepteur,
+non estimé) et la persistance d’une écriture relue depuis un contexte neuf.
+
+#### Diagnostic des dix-neuf clés restantes
 
 L’inventaire ne se contente plus de compter : chaque clé sans producteur porte **ce qui lui manque et
 pourquoi**, et le test refuse une justification trop courte pour être actionnable. Le classement suit
@@ -93,7 +109,7 @@ fabriquerait le faux signal que cette politique existe pour empêcher.
 
 | Blocage | Clés | Ce qu’il faut |
 |---|---:|---|
-| Contenu vérifiable manquant | **15** | un livrable exécuté et vérifié côté serveur |
+| Contenu vérifiable manquant | **13** | un livrable exécuté et vérifié côté serveur |
 | Jugement humain requis | **6** | rien de ce que du code peut produire |
 
 Les six clés du second groupe — Git propre, présentation de 10 minutes, entretien blanc, architecture
@@ -101,15 +117,42 @@ pragmatique, anglais, défense finale — ne descendront jamais par du code. Les
 technique conduirait à fabriquer une preuve automatique de ce qui ne s’automatise pas, par exemple un
 entretien noté par une suite de tests.
 
-**Une tentative écartée, et sa raison.** L’exigence « EF Core » paraissait branchable sur les
+Ce qui **peut** être fait pour elles est écrit dans [`HUMAN_REVIEW.md`](HUMAN_REVIEW.md) : une grille
+observable par exigence, le format de preuve accepté, et une procédure d’attestation qui vit
+**entièrement hors du système de maîtrise**. Aucune attestation n’entre dans la base, ne change un
+score ni n’ouvre une porte — `IsEligible` refuse `ManualDeclaration` sans condition, et c’est la
+garantie qui rend le protocole publiable sans risque de faux signal.
+
+**Une route écartée, une autre empruntée.** L’exigence « EF Core » paraissait branchable sur les
 validations du laboratoire SQL : cinq scénarios `ef-*` sont publiés, ils exécutent du vrai code EF Core
 et leur résultat est comparé côté serveur. La vérification a montré le contraire.
 `FileSystemSqlScenarioSource` n’expose que les scénarios dont le contrat déclare le mode `sql`, et les
 scénarios EF déclarent le mode `ef` : ils sont donc absents du laboratoire. Par ailleurs un scénario EF
-n’est tirable en examen que s’il porte un dossier `exam/`, et **trois des cinq n’en ont pas**. Aucun
-chemin du produit ne permet donc de valider les cinq, et l’exigence reste classée « contenu
-manquant ». `EfScenarioReachabilityTests` fige ce diagnostic pour que la prochaine tentative le trouve
-écrit au lieu de le redécouvrir.
+n’est tirable en examen que s’il porte un dossier `exam/`, et **trois des cinq n’en ont pas**. Cette
+route reste fermée, et `EfScenarioReachabilityTests` fige le diagnostic pour que la prochaine tentative
+le trouve écrit au lieu de le redécouvrir.
+
+La clé a finalement été produite par une autre route, qui satisfait la même exigence de preuve : un
+projet vérifiable dont les suites s’exécutent dans le bac à sable, où EF Core et SQLite sont des
+assemblies approuvées. Ce n’est pas un contournement du diagnostic ci-dessus mais son complément —
+le problème n’était pas que le produit ne sache pas exécuter EF Core, c’était qu’aucun **chemin
+vérifié** n’y menait.
+
+**Cinq clés examinées puis refusées.** Le même travail a cherché à brancher `api.functional`,
+`tests.unit`, `tests.integration`, `docker` et `ci` sur des projets vérifiables. Aucune ne passe la
+règle d’admission :
+
+| Clé | Pourquoi la preuve serait fausse |
+|---|---|
+| `api.functional` | le bac à sable démarre avec `--network none` et n’approuve aucune assembly d’hébergement HTTP : un projet ne pourrait faire décider que des règles, sans exercer une ligne de HTTP |
+| `tests.unit` | le runner invoque une méthode statique nommée d’avance ; il ne découvre pas des tests écrits par l’apprenant, et lui faire rendre un rapport d’assertions serait falsifiable |
+| `tests.integration` | une base réelle est atteignable, mais l’artefact nommé reste des tests écrits par l’apprenant — exercer une base n’est pas écrire un test d’intégration |
+| `docker` | la soumission est du C# compilé dans un conteneur déjà construit ; rien n’y bâtit ni n’y exécute d’image |
+| `ci` | aucun pipeline ne s’exécute dans le bac à sable, et le workflow du laboratoire tourne hors produit, sans preuve collectée par le serveur |
+
+Les cinq restent dans l’inventaire avec leur diagnostic. Leur produire un accomplissement sur un
+exercice qui *raisonne sur* le sujet aurait fait descendre le compteur sans rien débloquer : c’est
+exactement le faux signal que cet inventaire existe pour empêcher.
 
 | Porte | Conditions cumulatives |
 |---|---|
@@ -152,15 +195,64 @@ rétention, et le domaine replafonnerait sous son seuil.
 qu’un domaine plafonne **à** son seuil ou en dessous — un plafond égal au seuil n’est franchi qu’avec
 cent sur chaque composante produite, ce qui est un blocage déguisé en objectif.
 
-L’**explication reste sans producteur** : aucune preuve serveur honnête n’existe pour elle et une
-déclaration manuelle est refusée par la politique. Son poids de 10 % est donc perdu, ce qui fixe le
-plafond général à 90. C’est la seule composante encore inventoriée comme non produite.
+### L’explication : trois routes cherchées, trois routes refusées
 
-Les portes B, C et D restent fermées : leurs vingt et une exigences d’accomplissement n’ont aucun
-producteur, ce que `ProjectAchievementTests` consigne — et le blocage est **total**, pas partiel. Trois
-cas de test le prouvent porte par porte : aucune exigence d’accomplissement de B, C ou D ne figure
-parmi les clés produites. Un apprenant ne lit donc pas « Porte B — bloquée » par accident de
-configuration, mais parce qu’aucune de ses sept exigences n’est satisfiable en l’état.
+L’**explication reste sans producteur**, et cette section dit pourquoi au lieu de l’affirmer. Elle pèse
+10 %, son poids n’est jamais redistribué, et le plafond général est donc de **90**. C’est la seule
+composante inventoriée comme non produite.
+
+Une précision qui change la priorité : **90 est au-dessus des deux seuils** — 80 pour un domaine
+ordinaire, 85 pour un domaine critique. L’absence de producteur coûte un score qui n’atteint jamais
+cent ; elle ne ferme aucun domaine et aucune porte. `MasteryRulesTests` fige ce calcul, précisément
+pour qu’une reprise future ne justifie pas un producteur fabriqué en invoquant un blocage inexistant.
+
+Trois routes ont été examinées.
+
+**1. La carte à choix sur le « pourquoi ».** Attacher à un exercice résolu une carte dont la question
+porte sur la raison de la solution, corrigée côté serveur par comparaison à une réponse privée, puis la
+projeter en Explication. Le moteur est honnête — c’est celui de la rétention espacée. La projection ne
+l’est pas : **reconnaître la bonne réponse parmi quatre n’est pas produire un raisonnement**. C’est
+exactement l’acte que la composante Quiz mesure déjà, à 5 %. La reprojeter en Explication paierait deux
+fois le même geste ; et une carte attachée à un exercice déjà couvert alimenterait rétention *et*
+explication — 25 % du score pour un clic. La règle d’éligibilité refuse d’ailleurs cette route
+d’elle-même : seul `ServerRubric` admet une observation d’explication, jamais `ReviewEngine` ni
+`QuizEngine`.
+
+**2. L’explication personnelle du protocole de pratique.** Elle existe déjà, elle est stockée, et le
+serveur la contrôle : longueur minimale, et refus si elle recopie la solution ou la variante. Mais ce
+contrôle **mesure l’effort, pas la justesse** — il prouve que l’apprenant a écrit assez de mots
+distincts, jamais que ce qu’il a écrit est vrai. S’en servir comme preuve reviendrait à noter la
+longueur d’un texte. Second défaut, dirimant : cette étape n’est atteignable qu’**après consultation de
+la solution**, c’est-à-dire sur un exercice que la politique tient pour contaminé.
+
+**3. La rubrique déterministe.** `CONTENT_GUIDE.md` en décrit une depuis l’origine — concepts
+obligatoires, synonymes acceptés, contradictions, exemples attendus, score par critère — et c’est ce
+que `ServerRubric` attendait. Elle n’a jamais été construite, et l’examen montre qu’elle ne le sera pas
+honnêtement. Ou bien les concepts exigés sont publiés, et la rubrique note une transcription ; ou bien
+ils sont secrets, et elle note une devinette. Quant aux exigences structurelles — « au moins un lien
+causal » — un appariement déterministe ne peut les chercher que par connecteurs, et « X parce que Y »
+les satisfait avec n’importe quels X et Y. Le guide tranche lui-même le seul recours qui resterait :
+*« un LLM optionnel ne peut pas modifier seul la maîtrise »*.
+
+**Conclusion.** Expliquer, au sens où ce parcours emploie le mot, c’est **produire un compte rendu
+causal dans ses propres mots**. Tout substitut vérifiable par une machine mesure autre chose : la
+reconnaissance (choix), l’effort (longueur), ou la prédiction (« que rend ce code si je change ceci »).
+Les trois sont des signaux utiles — deux sont déjà mesurés ailleurs — mais aucun n’est le geste que la
+composante nomme. Ce qui juge la production d’un compte rendu, c’est un lecteur.
+
+L’explication rejoint donc, en nature, les six exigences classées « jugement humain » de
+`ProjectAchievementTests` : elle est la seule **composante** de cette classe. Elle porte à ce titre la
+septième grille de [`HUMAN_REVIEW.md`](HUMAN_REVIEW.md), dont le critère central — affirmer un lien
+causal que le relecteur vérifie en direct — est exactement ce qu’aucune correction automatique ne sait
+faire. Rien n’y est enregistré comme preuve automatique.
+
+### Portes B, C et D
+
+Elles restent fermées. Dix-neuf de leurs exigences d’accomplissement n’ont aucun producteur, ce que
+`ProjectAchievementTests` consigne clé par clé, avec le diagnostic de ce qui manque à chacune. Deux
+seulement sont satisfaites — `code-review` et `ef-core` — et un apprenant ne lit donc pas « Porte B —
+bloquée » par accident de configuration, mais parce que ses autres exigences ne sont pas satisfiables
+en l’état.
 
 **Limite du quiz, assumée** : seule une réussite est persistée, si bien qu’une réponse juste au
 cinquième essai vaut la première. À 5 % de poids et sous la règle « accumulation de quiz faciles →

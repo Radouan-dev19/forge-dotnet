@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "suiteId": "project-orders-database-001.chargement.v2",
+  "exerciseId": "project-orders-database-001.chargement",
+  "exerciseVersion": 2,
+  "typeName": "Submission",
+  "methodName": "LoadRoundTrips",
+  "parameterTypes": ["int"],
+  "returnType": "int"
+}

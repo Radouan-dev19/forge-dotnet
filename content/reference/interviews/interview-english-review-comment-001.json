@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "id": "interview-english-review-comment-001",
+  "version": 1,
+  "title": "Étiqueter un commentaire de revue",
+  "level": "junior",
+  "durationMinutes": 6,
+  "skills": ["english.review"],
+  "question": "Vous laissez vingt remarques sur une demande de fusion et l'auteur ne sait pas lesquelles bloquent. Comment lèveriez-vous l'ambiguïté, et quelle catégorie donneriez-vous à une remarque sans étiquette ?",
+  "observableCriteria": [
+    "L'étiquetage de tête est proposé comme convention explicite, avec la distinction entre correction exigée et préférence",
+    "Le choix de la catégorie par défaut est justifié par le coût de l'erreur, non par une habitude",
+    "L'effet d'un défaut bloquant sur la lecture de la revue est nommé"
+  ],
+  "modelAnswer": "Je préfixe chaque remarque d'un mot qui dit ce qu'elle engage : une correction avant fusion, une préférence que l'auteur arbitre, ou une demande d'explication. Le coût de la revue tombe immédiatement parce que l'auteur trie sans deviner. Pour une remarque sans étiquette, je retiens la catégorie la plus faible : si le défaut était bloquant, la moindre phrase — y compris un compliment — arrêterait une fusion, et l'équipe finirait par contourner la revue. Quand un défaut doit être choisi, je prends celui dont l'erreur coûte le moins, et je lis l'étiquette en tête seulement, sinon un « I must admit » deviendrait bloquant.",
+  "commonMistakes": [
+    "Retenir la catégorie la plus forte par prudence, ce qui fige la revue",
+    "Chercher le mot-clé n'importe où dans le commentaire"
+  ],
+  "variants": [
+    "Demander comment introduire cette convention dans une équipe qui ne l'utilise pas.",
+    "Demander quelle quatrième étiquette serait utile et ce qu'elle changerait."
+  ],
+  "license": "CC-BY-4.0"
+}

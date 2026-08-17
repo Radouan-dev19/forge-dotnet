@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "suiteId": "project-code-review-001-triage-faux-positifs.v1",
-  "exerciseId": "project-code-review-001",
+  "suiteId": "project-code-review-001.triage-faux-positifs.v1",
+  "exerciseId": "project-code-review-001.triage-faux-positifs",
   "exerciseVersion": 1,
   "typeName": "Submission",
   "methodName": "ClassifyFinding",

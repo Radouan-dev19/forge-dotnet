@@ -1,0 +1,54 @@
+{
+  "schemaVersion": 1,
+  "cases": [
+    {
+      "name": "Hidden_ZeroCommitsIsRejected",
+      "message": "Annuler zéro commit n'est pas une demande sans effet, c'est un appel fautif.",
+      "arguments": [0, false, true],
+      "expectedException": "ArgumentOutOfRangeException",
+      "argumentsUnchanged": false
+    },
+    {
+      "name": "Hidden_NegativeCommitsIsRejected",
+      "message": "Un compte négatif ne désigne aucun commit à remonter.",
+      "arguments": [-3, true, false],
+      "expectedException": "ArgumentOutOfRangeException",
+      "argumentsUnchanged": false
+    },
+    {
+      "name": "Hidden_PublishedIgnoresTheWishToKeepChanges",
+      "message": "Le souhait de conserver le travail ne rouvre pas la réécriture d'un commit publié.",
+      "arguments": [1, true, true],
+      "expected": "revert",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_PublishedSeriesStaysARevert",
+      "message": "Le nombre de commits ne change pas la contrainte de publication.",
+      "arguments": [5, true, true],
+      "expected": "revert",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_LargeLocalSeriesKeepingWork",
+      "message": "Une longue série locale suit la même règle qu'un seul commit.",
+      "arguments": [12, false, true],
+      "expected": "reset-soft",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_LargeLocalSeriesDiscardingWork",
+      "message": "Jeter douze commits locaux reste un retrait dur, avec le risque qui l'accompagne.",
+      "arguments": [12, false, false],
+      "expected": "reset-hard",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_SingleLocalCommitKeepingWork",
+      "message": "Le cas le plus courant : un commit local que l'on veut recommitter autrement.",
+      "arguments": [1, false, true],
+      "expected": "reset-soft",
+      "argumentsUnchanged": true
+    }
+  ]
+}

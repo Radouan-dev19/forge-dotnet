@@ -34,6 +34,7 @@ COPY content/diagnostic/ ./content/diagnostic/
 COPY content/planning/ ./content/planning/
 COPY content/exams/ ./content/exams/
 COPY content/sql/ ./content/sql/
+COPY content/labs/ ./content/labs/
 COPY src/ForgeDotNet.Web/docker-entrypoint.sh /usr/local/bin/forge-dotnet-entrypoint
 RUN chmod 0555 /usr/local/bin/forge-dotnet-entrypoint
 

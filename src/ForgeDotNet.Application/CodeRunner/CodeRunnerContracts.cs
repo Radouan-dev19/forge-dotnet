@@ -100,7 +100,27 @@ public static partial class CodeRunContract
     [GeneratedRegex("^[A-Za-z0-9][A-Za-z0-9_.-]*\\.cs$", RegexOptions.CultureInvariant)]
     private static partial Regex SourceFileNamePattern();
 
-    [GeneratedRegex("^[a-z0-9][a-z0-9-]{2,99}$", RegexOptions.CultureInvariant)]
+    /// <summary>
+    /// Cible d'exécution : un identifiant d'exercice ou de scénario, ou une suite d'acceptation de
+    /// projet de la forme <c>&lt;projet&gt;.&lt;jalon&gt;</c>.
+    /// </summary>
+    /// <remarks>
+    /// Le second segment a été omis lors de l'ajout des projets, alors que <c>SubmitProject</c>
+    /// construit exactement cette forme et que <c>FileSystemProjectSource.FindSuiteAsync</c> la
+    /// redécoupe sur son dernier point. Les deux moitiés de la fonctionnalité se contredisaient donc,
+    /// et aucune soumission de projet ne pouvait aboutir : la validation rejetait la requête avant
+    /// tout appel au bac à sable.
+    ///
+    /// La forme reste étroite plutôt que permissive. Un seul segment supplémentaire est admis, aucun
+    /// point n'est accepté à l'intérieur d'un segment, ni en tête, ni en queue : « .. » est donc
+    /// impossible par construction. Cela importe parce que l'identifiant d'un exercice sert aussi à
+    /// composer un chemin sous la racine du catalogue — protégé par ailleurs par un contrôle de
+    /// descendance et un refus des points de réanalyse, que cette forme ne remplace pas mais dont
+    /// elle évite d'éprouver les limites.
+    /// </remarks>
+    [GeneratedRegex(
+        "^[a-z0-9][a-z0-9-]{2,99}(\\.[a-z0-9][a-z0-9-]{0,49})?$",
+        RegexOptions.CultureInvariant)]
     private static partial Regex ExerciseIdPattern();
 
     [GeneratedRegex("^[A-Fa-f0-9]{64}$", RegexOptions.CultureInvariant)]

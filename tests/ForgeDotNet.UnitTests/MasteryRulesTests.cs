@@ -498,6 +498,179 @@ public sealed class MasteryRulesTests
                 "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"),
             Now);
 
+    /// <summary>
+    /// Aucune composante n'admet une déclaration manuelle, quelle qu'elle soit.
+    /// </summary>
+    /// <remarks>
+    /// C'est la garantie qui rend publiable le protocole de revue par un tiers
+    /// (<c>docs/HUMAN_REVIEW.md</c>). Six exigences de porte et la composante Explication ne peuvent
+    /// être attestées que par un humain ; le protocole décrit comment, et consigne le verdict dans un
+    /// fichier que l'apprenant conserve, hors du produit. Rien n'empêcherait un incrément futur de
+    /// vouloir « remonter » ces attestations dans la base — sauf ce test, qui vérifie composante par
+    /// composante qu'une déclaration ne pèse rien. Le protocole peut donc exister sans qu'aucun faux
+    /// signal ne devienne possible par simple ajout de code.
+    /// </remarks>
+    [Fact]
+    public void AManualDeclarationNeverFeedsAnyComponent()
+    {
+        var offenders = new List<string>();
+
+        foreach (MasteryComponent component in Enum.GetValues<MasteryComponent>())
+        {
+            Guid profileId = Guid.NewGuid();
+            MasterySnapshot snapshot = Calculate(
+                profileId,
+                [
+                    Observation(
+                        profileId,
+                        MasteryDomain.CSharp,
+                        component,
+                        $"declared-{component}",
+                        100m,
+                        verification: MasteryVerificationKind.ManualDeclaration),
+                ]);
+
+            MasteryComponentScore score = snapshot.Domains
+                .Single(domain => domain.Domain == MasteryDomain.CSharp)
+                .Components
+                .Single(item => item.Component == component);
+
+            if (score.HasEvidence || score.Score != 0m)
+            {
+                offenders.Add($"{component} : une déclaration manuelle y compte pour {score.Score}.");
+            }
+        }
+
+        Assert.True(offenders.Count == 0, string.Join('\n', offenders));
+    }
+
+    /// <summary>
+    /// Une exigence de jugement humain déclarée reste une exigence non satisfaite.
+    /// </summary>
+    /// <remarks>
+    /// Les six clés que <c>docs/HUMAN_REVIEW.md</c> couvre sont exactement celles qu'aucun producteur
+    /// ne peut émettre. Les déclarer réussies ne les satisfait pas : une porte ne s'ouvre que sur un
+    /// accomplissement vérifié automatiquement, par une rubrique serveur ou par le moteur d'examen.
+    /// Une attestation humaine, si quelqu'un la saisissait, tomberait dans le premier cas et ne
+    /// changerait rien — ce qui est la propriété que le protocole promet à son lecteur.
+    /// </remarks>
+    [Theory]
+    [InlineData(MasteryPolicyCatalog.CleanGit)]
+    [InlineData(MasteryPolicyCatalog.TenMinutePresentation)]
+    [InlineData(MasteryPolicyCatalog.MockInterview)]
+    [InlineData(MasteryPolicyCatalog.PragmaticArchitecture)]
+    [InlineData(MasteryPolicyCatalog.English)]
+    [InlineData(MasteryPolicyCatalog.FinalDefense)]
+    public void ADeclaredHumanJudgementAchievementLeavesItsGateBlocked(string key)
+    {
+        Guid profileId = Guid.NewGuid();
+        MasteryGatePolicy gatePolicy = MasteryPolicyCatalog.Version1.Gates
+            .Single(gate => gate.Requirements.Any(requirement =>
+                string.Equals(requirement.AchievementKey, key, StringComparison.Ordinal)));
+        string label = gatePolicy.Requirements
+            .Single(requirement => string.Equals(requirement.AchievementKey, key, StringComparison.Ordinal))
+            .Label;
+
+        MasterySnapshot snapshot = Calculate(
+            profileId,
+            [],
+            [
+                new MasteryAchievement(
+                    Guid.NewGuid(),
+                    profileId,
+                    key,
+                    MasteryVerificationKind.ManualDeclaration,
+                    Passed: true,
+                    DurationMinutes: 60,
+                    Now.AddDays(-1),
+                    "attestation:humaine"),
+            ]);
+
+        MasteryGateResult gate = snapshot.Gates.Single(item => item.Gate == gatePolicy.Gate);
+
+        Assert.False(gate.IsOpen);
+        Assert.Contains(label, gate.Blockers);
+    }
+
+    /// <summary>
+    /// Une carte de révision ou un quiz ne peuvent pas devenir une preuve d'explication.
+    /// </summary>
+    /// <remarks>
+    /// <para>
+    /// La composante Explication n'a aucun producteur, et la route la plus tentante pour lui en donner
+    /// un consiste à réutiliser un moteur qui corrige déjà côté serveur : une carte à choix dont la
+    /// question porte sur le <em>pourquoi</em> d'une solution, projetée en Explication plutôt qu'en
+    /// rétention. Le moteur est honnête ; la projection ne l'est pas. Reconnaître la bonne réponse
+    /// parmi quatre n'est pas produire un raisonnement — c'est l'acte que la composante Quiz mesure
+    /// déjà, à 5 %. La reprojeter en Explication paierait deux fois le même geste, à 10 % de plus, et
+    /// une carte attachée à un exercice déjà couvert alimenterait rétention <em>et</em> explication,
+    /// soit 25 % du score pour un seul clic.
+    /// </para>
+    /// <para>
+    /// La règle d'éligibilité refuse déjà ces deux routes : seul <c>ServerRubric</c> admet une
+    /// observation d'explication. Ce test rend ce refus explicite pour qu'un incrément futur ne
+    /// l'obtienne pas en élargissant la règle — l'élargir est possible, mais alors ce test tombe, et
+    /// sa suppression est un acte visible plutôt qu'un effet de bord.
+    /// </para>
+    /// </remarks>
+    [Theory]
+    [InlineData(MasteryVerificationKind.ReviewEngine, MasteryEvidenceSource.Review)]
+    [InlineData(MasteryVerificationKind.QuizEngine, MasteryEvidenceSource.Quiz)]
+    [InlineData(MasteryVerificationKind.AutomaticTests, MasteryEvidenceSource.Practice)]
+    [InlineData(MasteryVerificationKind.ManualDeclaration, MasteryEvidenceSource.Explanation)]
+    public void NoEngineOtherThanAServerRubricCanFeedTheExplanationComponent(
+        MasteryVerificationKind verification,
+        MasteryEvidenceSource source)
+    {
+        Guid profileId = Guid.NewGuid();
+        MasterySnapshot snapshot = Calculate(
+            profileId,
+            [
+                Observation(
+                    profileId,
+                    MasteryDomain.CSharp,
+                    MasteryComponent.Explanation,
+                    "csharp-why-card",
+                    100m,
+                    source: source,
+                    verification: verification),
+            ]);
+
+        MasteryComponentScore explanation = snapshot.Domains
+            .Single(domain => domain.Domain == MasteryDomain.CSharp)
+            .Components
+            .Single(component => component.Component == MasteryComponent.Explanation);
+
+        Assert.False(explanation.HasEvidence);
+        Assert.Equal(0m, explanation.Score);
+        Assert.Equal(0, explanation.EvidenceCount);
+    }
+
+    /// <summary>
+    /// L'explication sans producteur coûte dix points, et ces dix points ne bloquent rien.
+    /// </summary>
+    /// <remarks>
+    /// C'est le fait qui doit rester sous les yeux de toute reprise tentée de fabriquer un producteur :
+    /// le plafond de 90 qui en résulte reste au-dessus du seuil ordinaire (80) comme du seuil critique
+    /// (85). Aucun domaine, aucune porte n'est fermé par cette absence. Le prix payé est un score qui
+    /// n'atteint jamais cent — non un parcours bloqué — et il ne justifie donc pas d'admettre une
+    /// preuve qui mesurerait autre chose que ce que la composante nomme.
+    /// </remarks>
+    [Fact]
+    public void LosingTheExplanationWeightStillClearsBothThresholds()
+    {
+        MasteryPolicy policy = MasteryPolicyCatalog.Version1;
+        decimal explanationWeight = policy.Components
+            .Single(component => component.Component == MasteryComponent.Explanation)
+            .Weight;
+        decimal ceiling = 100m * (policy.Components.Sum(component => component.Weight) - explanationWeight);
+
+        Assert.Equal(0.10m, explanationWeight);
+        Assert.Equal(90m, ceiling);
+        Assert.True(ceiling > policy.CriticalModuleThreshold);
+        Assert.True(ceiling > policy.ModuleThreshold);
+    }
+
     private static MasteryObservation Observation(
         Guid profileId,
         MasteryDomain domain,

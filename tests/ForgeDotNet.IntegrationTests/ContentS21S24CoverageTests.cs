@@ -25,17 +25,22 @@ public sealed class ContentS21S24CoverageTests
         // La semaine 21 porte, en plus de son socle Azure, le lot OAuth/OIDC : trois leçons
         // et cinq exercices security-*, l'identité gérée étant un flux d'identifiants client.
         Assert.Equal([6, 3, 2, 2], finalModules.Select(module => module.GetProperty("lessonIds").GetArrayLength()));
-        Assert.Equal([7, 2, 1, 1], finalModules.Select(module => module.GetProperty("exerciseIds").GetArrayLength()));
+        Assert.Equal([7, 3, 1, 3], finalModules.Select(module => module.GetProperty("exerciseIds").GetArrayLength()));
+        // Les familles admises dans les semaines finales sont celles que ces semaines enseignent :
+        // Azure et sécurité en S21, l'observabilité en S22, l'anglais professionnel en S24. La règle
+        // existe pour empêcher qu'un exercice hors sujet s'y range, pas pour figer un préfixe.
         Assert.All(finalModules.SelectMany(module => module.GetProperty("exerciseIds").EnumerateArray()),
             id => Assert.True(
                 id.GetString()!.StartsWith("azure-", StringComparison.Ordinal)
-                    || id.GetString()!.StartsWith("security-", StringComparison.Ordinal),
+                    || id.GetString()!.StartsWith("security-", StringComparison.Ordinal)
+                    || id.GetString()!.StartsWith("observability-", StringComparison.Ordinal)
+                    || id.GetString()!.StartsWith("english-", StringComparison.Ordinal),
                 $"Exercice final hors familles attendues : {id.GetString()}"));
 
         Assert.Equal(96, Directory.GetFiles(Path.Combine(CatalogRoot, "curriculum", "lessons"), "lesson.json", SearchOption.AllDirectories).Length);
-        Assert.Equal(177, Directory.GetFiles(Path.Combine(CatalogRoot, "exercises"), "exercise.json", SearchOption.AllDirectories).Length);
+        Assert.Equal(187, Directory.GetFiles(Path.Combine(CatalogRoot, "exercises"), "exercise.json", SearchOption.AllDirectories).Length);
         Assert.Equal(29, Directory.GetFiles(Path.Combine(CatalogRoot, "debugging"), "scenario.json", SearchOption.AllDirectories).Length);
-        Assert.Equal(232, Directory.GetFiles(Path.Combine(CatalogRoot, "interviews"), "*.json", SearchOption.TopDirectoryOnly).Length);
+        Assert.Equal(242, Directory.GetFiles(Path.Combine(CatalogRoot, "interviews"), "*.json", SearchOption.TopDirectoryOnly).Length);
         Assert.Equal(51, Directory.GetFiles(Path.Combine(CatalogRoot, "english"), "*.json", SearchOption.TopDirectoryOnly).Length);
         // Un projet porte désormais un dossier, comme un exercice : son manifeste s'appelle
         // project.json et ses suites d'acceptation vivent à côté.
@@ -44,7 +49,9 @@ public sealed class ContentS21S24CoverageTests
         // La banque de cartes de révision ajoute un fichier au catalogue : c'est la seule source
         // de rétention espacée qui survive à l'expiration des preuves du bilan d'entrée.
         Assert.Single(Directory.GetFiles(Path.Combine(CatalogRoot, "reviews"), "*.json", SearchOption.TopDirectoryOnly));
-        Assert.Equal(2_582, Directory.GetFiles(CatalogRoot, "*", SearchOption.AllDirectories).Length);
+        // Instantané de volume, pas un plancher : project-orders-database-001 est passé d'un brief seul
+        // à un projet vérifiable (squelette, solution de référence, trois suites d'acceptation).
+        Assert.Equal(2_693, Directory.GetFiles(CatalogRoot, "*", SearchOption.AllDirectories).Length);
     }
 
     [Fact]
@@ -93,7 +100,7 @@ public sealed class ContentS21S24CoverageTests
     public void FinalWeekActivitiesHaveProgressiveAidPrivateProofsAndBuildableContracts()
     {
         string[] ids = S21S24ExerciseIds();
-        Assert.Equal(11, ids.Length);
+        Assert.Equal(14, ids.Length);
 
         foreach (string id in ids)
         {
@@ -107,7 +114,9 @@ public sealed class ContentS21S24CoverageTests
             string interviewId = root.GetProperty("interviewQuestionId").GetString()!;
             Assert.True(
                 interviewId.StartsWith("interview-azure-", StringComparison.Ordinal)
-                    || interviewId.StartsWith("interview-security-", StringComparison.Ordinal),
+                    || interviewId.StartsWith("interview-security-", StringComparison.Ordinal)
+                    || interviewId.StartsWith("interview-observability-", StringComparison.Ordinal)
+                    || interviewId.StartsWith("interview-english-", StringComparison.Ordinal),
                 $"{id} : fiche d'entretien hors familles attendues ({interviewId}).");
             // Contrat de CONTENT_AUTHORING_STANDARD : trois cas visibles et quatre cachés, sauf
             // lorsque tous les paramètres sont booléens — le domaine ne compte alors que deux
@@ -136,7 +145,7 @@ public sealed class ContentS21S24CoverageTests
     {
         JsonElement[] interviews = Directory.GetFiles(Path.Combine(CatalogRoot, "interviews"), "*.json")
             .Select(path => Read(path).RootElement.Clone()).ToArray();
-        Assert.Equal(126, interviews.Count(item => item.GetProperty("level").GetString() == "junior"));
+        Assert.Equal(136, interviews.Count(item => item.GetProperty("level").GetString() == "junior"));
         Assert.Equal(71, interviews.Count(item => item.GetProperty("level").GetString() == "intermediate"));
         Assert.Equal(35, interviews.Count(item => item.GetProperty("level").GetString() == "advanced"));
         JsonElement[] newInterviews = interviews.Where(item =>
@@ -203,7 +212,10 @@ public sealed class ContentS21S24CoverageTests
                 .Select(item => item.GetString()!).ToArray();
             Assert.Equal(8, exam.RootElement.GetProperty("drawCount").GetInt32());
             Assert.Equal(80m, exam.RootElement.GetProperty("passingScore").GetDecimal());
-            (int minCandidates, int maxCandidates) = directory == "final-readiness-v1" ? (20, 20) : (19, 19);
+            // Volumes figés des deux banques finales : la première accueille les deux exercices
+            // d'anglais professionnel de la semaine 24, la seconde l'exercice d'échantillonnage
+            // de la semaine 22.
+            (int minCandidates, int maxCandidates) = directory == "final-readiness-v1" ? (22, 22) : (27, 27);
             Assert.InRange(candidates.Length, minCandidates, maxCandidates);
             Assert.Equal(candidates.Length, candidates.Distinct(StringComparer.Ordinal).Count());
             Assert.All(candidates, id => Assert.Contains(id, exerciseIds));

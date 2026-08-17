@@ -1,4 +1,6 @@
 using System.Text.Json;
+using ForgeDotNet.Application.CodeRunner;
+using ForgeDotNet.Domain.Projects;
 
 namespace ForgeDotNet.IntegrationTests;
 
@@ -37,6 +39,51 @@ public sealed class ProjectCorrectnessTests
         }
 
         return data;
+    }
+
+    /// <summary>
+    /// Le manifeste d'une suite se nomme comme la requête que le produit émettra pour l'exécuter.
+    /// </summary>
+    /// <remarks>
+    /// <para>
+    /// Cette règle est née d'un défaut que toute cette classe laissait passer. Vérifier les cas d'une
+    /// suite ne dit rien de la façon dont le produit la <em>demande</em> : <c>SubmitProject</c> émet
+    /// une requête dont la cible est <c>&lt;projet&gt;.&lt;jalon&gt;</c>, et le résolveur refuse la
+    /// suite si son manifeste ne porte pas exactement cet identifiant. Deux projets sur six nommaient
+    /// leur manifeste d'après le seul identifiant de projet : leurs suites étaient franchissables ici,
+    /// et introuvables là-bas. Aucune soumission n'aboutissait, et l'accomplissement qu'ils portent —
+    /// dont <c>code-review</c> — était donc inatteignable.
+    /// </para>
+    /// <para>
+    /// La règle vérifie aussi que l'identifiant passe le contrat d'exécution, qui l'avait longtemps
+    /// rejeté faute d'admettre le second segment. Les deux vérifications tiennent ensemble : le
+    /// manifeste doit nommer une cible que le produit sait à la fois construire et valider.
+    /// </para>
+    /// </remarks>
+    [Theory]
+    [MemberData(nameof(PublishedSuites))]
+    public void SuiteManifestIsNamedAfterTheRunIdentifierTheProductWillEmit(string projectId, string suitePath)
+    {
+        string milestoneId = suitePath.Trim('/', '\\');
+        string runIdentifier = ProjectAcceptanceSuite.RunIdentifier(projectId, milestoneId);
+
+        using JsonDocument manifest = JsonDocument.Parse(
+            File.ReadAllText(Path.Combine(ProjectsRoot, projectId, suitePath, "tests", "runner.json")));
+        string? declared = manifest.RootElement.GetProperty("exerciseId").GetString();
+
+        Assert.True(
+            string.Equals(declared, runIdentifier, StringComparison.Ordinal),
+            $"{projectId}/{suitePath} : le manifeste déclare « {declared} » alors que le produit "
+            + $"demandera « {runIdentifier} ». La suite serait introuvable à la soumission.");
+
+        // Le contrat d'exécution doit accepter cette cible : sans quoi la requête est refusée avant
+        // même d'atteindre le bac à sable, et la suite n'est jamais exécutée.
+        CodeRunContract.ValidateRequest(new CodeRunRequest(
+            Guid.NewGuid(),
+            runIdentifier,
+            manifest.RootElement.GetProperty("exerciseVersion").GetInt32(),
+            new string('a', 64),
+            [new CodeRunSourceFile("Submission.cs", "public static class Submission { }")]));
     }
 
     [Theory]

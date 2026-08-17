@@ -38,18 +38,24 @@ public sealed class ContentS11S20CoverageTests
             incrementModules
                 .Where(module => module.GetProperty("weeks")[0].GetInt32() <= 17)
                 .Select(module => module.GetProperty("exerciseIds").GetArrayLength()));
-        Assert.All(incrementModules.Where(module => module.GetProperty("weeks")[0].GetInt32() >= 18),
-            module => Assert.Equal(3, module.GetProperty("exerciseIds").GetArrayLength()));
+        // Matrice figée du volume de pratique en S18–S20, ces trois semaines partant de trois
+        // exercices chacune. Le comptage exact — et non un plancher — garde la reprise visible
+        // semaine par semaine à mesure que la densité remonte.
+        Assert.Equal(
+            [8, 5, 3],
+            incrementModules
+                .Where(module => module.GetProperty("weeks")[0].GetInt32() >= 18)
+                .Select(module => module.GetProperty("exerciseIds").GetArrayLength()));
 
         string[] lessonIds = incrementModules.SelectMany(module => module.GetProperty("lessonIds").EnumerateArray())
             .Select(value => value.GetString()!).ToArray();
         string[] exerciseIds = incrementModules.SelectMany(module => module.GetProperty("exerciseIds").EnumerateArray())
             .Select(value => value.GetString()!).ToArray();
         Assert.Equal(38, lessonIds.Length);
-        Assert.Equal(69, exerciseIds.Length);
+        Assert.Equal(76, exerciseIds.Length);
         Assert.Equal(60, incrementModules.Where(module => module.GetProperty("weeks")[0].GetInt32() <= 17)
             .Sum(module => module.GetProperty("exerciseIds").GetArrayLength()));
-        Assert.Equal(9, incrementModules.Where(module => module.GetProperty("weeks")[0].GetInt32() >= 18)
+        Assert.Equal(16, incrementModules.Where(module => module.GetProperty("weeks")[0].GetInt32() >= 18)
             .Sum(module => module.GetProperty("exerciseIds").GetArrayLength()));
 
         foreach (JsonElement module in incrementModules)
@@ -60,13 +66,13 @@ public sealed class ContentS11S20CoverageTests
         }
 
         Assert.Equal(68, modules.Take(20).SelectMany(module => module.GetProperty("lessonIds").EnumerateArray()).Count());
-        Assert.Equal(157, modules.Take(20).SelectMany(module => module.GetProperty("exerciseIds").EnumerateArray()).Count());
+        Assert.Equal(164, modules.Take(20).SelectMany(module => module.GetProperty("exerciseIds").EnumerateArray()).Count());
         HashSet<string> finalExerciseIds = modules.Skip(20)
             .SelectMany(module => module.GetProperty("exerciseIds").EnumerateArray())
             .Select(value => value.GetString()!).ToHashSet(StringComparer.Ordinal);
         // La piste senior (senior-*) vit dans son propre parcours et n'entre pas dans ce releve du
         // socle junior : ses exercices sont exclus du compte des dossiers hors bassin final.
-        Assert.Equal(154, Directory.GetDirectories(Path.Combine(CatalogRoot, "exercises"))
+        Assert.Equal(161, Directory.GetDirectories(Path.Combine(CatalogRoot, "exercises"))
             .Select(Path.GetFileName)
             .Count(id => id is not null && !finalExerciseIds.Contains(id)
                 && !id.StartsWith("senior-", StringComparison.Ordinal)));
@@ -76,7 +82,7 @@ public sealed class ContentS11S20CoverageTests
     public void EveryNewExerciseHasProgressiveAidPrivateTestsAndARealVariant()
     {
         HashSet<string> ids = S11S20ExerciseIds();
-        Assert.Equal(69, ids.Count);
+        Assert.Equal(76, ids.Count);
         foreach (string id in ids)
         {
             string directory = Path.Combine(CatalogRoot, "exercises", id);

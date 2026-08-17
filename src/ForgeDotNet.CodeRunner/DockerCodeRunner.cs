@@ -184,10 +184,17 @@ public sealed partial class DockerCodeRunner : ICodeRunner, IDisposable
 
         if (!create.Succeeded)
         {
+            // Ce message couvrait indistinctement un refus de sécurité réel et un moteur trop ancien
+            // pour une option d'isolation. Le second cas s'est produit — l'option de montage non
+            // récursif a changé de forme entre versions du moteur — et le message envoyait chercher
+            // une faille là où il fallait lire un numéro de version. La cause probable est donc
+            // nommée, sans affaiblir le refus lui-même : l'exécution reste fermée.
             return Unavailable(
                 request,
                 startedAtUtc,
-                "Docker a refusé la politique d’isolation ; l’exécution est fermée par sécurité.");
+                "Docker a refusé la politique d’isolation ; l’exécution est fermée par sécurité. Vérifiez d’abord "
+                + "la version du moteur (25.0 minimum) : une option d’isolation exigée par le bac à sable n’existe "
+                + "pas sous cette version, et le refus est alors dû à l’environnement, non à la soumission.");
         }
 
         TimeSpan executionTimeout = _options.CompilationTimeout
@@ -466,7 +473,13 @@ public sealed partial class DockerCodeRunner : ICodeRunner, IDisposable
         string cpu = _options.CpuCount.ToString("0.###", CultureInfo.InvariantCulture);
         string memory = _options.MemoryBytes.ToString(CultureInfo.InvariantCulture);
         string workspaceBytes = _options.WorkspaceBytes.ToString(CultureInfo.InvariantCulture);
-        string mount = $"type=bind,src={workspacePath},dst=/input,readonly,bind-nonrecursive";
+        // « bind-recursive=disabled » remplace « bind-nonrecursive », déprécié depuis Docker 25 et
+        // supprimé dans Docker 29 : le moteur y refuse désormais la création du conteneur, ce qui
+        // rendait toute exécution impossible sur un poste à jour. Les deux formes produisent la même
+        // option de montage — l'inspection rend « BindOptions.NonRecursive = true » — et l'intention
+        // est inchangée : un montage lié non récursif n'expose pas au conteneur les points de montage
+        // imbriqués sous l'espace de travail.
+        string mount = $"type=bind,src={workspacePath},dst=/input,readonly,bind-recursive=disabled";
         string tmpfs = $"rw,nosuid,nodev,noexec,size={workspaceBytes},uid=1654,gid=1654,mode=0700";
         var arguments = new List<string>
         {

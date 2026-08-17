@@ -100,7 +100,7 @@ Le diagnostic peut permettre de raccourcir une leçon, jamais de supprimer son t
 
 ## Projets
 
-Mini-projets progressifs : import de commandes, bibliothèque de collections, analyseur de logs, moteur de promotions, base commandes, API mini-ERP, stratégie de tests, livraison conteneurisée. Le projet final assemble API, SQL Server, EF Core, règles, validation, auth, tests, Docker, CI, logs et déploiement ; la plateforme fournit jalons et grille, jamais la remise complète avant soumission.
+Mini-projets progressifs : import de commandes, bibliothèque de collections, analyseur de logs, moteur de promotions, base commandes, API mini-ERP, stratégie de tests, livraison conteneurisée. Six d'entre eux sont **vérifiables** — squelette, corrigé de référence, une suite d'acceptation par jalon exécutée dans le bac à sable — et deux produisent une exigence de porte au-delà de la porte A : la base commandes de S10 produit `ef-core`, la revue de code de S31 produit `code-review`. Le projet final assemble API, SQL Server, EF Core, règles, validation, auth, tests, Docker, CI, logs et déploiement ; la plateforme fournit jalons et grille, jamais la remise complète avant soumission.
 
 ## Anglais et carrière
 

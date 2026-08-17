@@ -1,5 +1,6 @@
 @page "/mastery"
 @inject MasteryService Mastery
+@inject CodeRunnerModeDescriptor RunnerMode
 
 <PageTitle>Maîtrise — Forge.NET</PageTitle>
 
@@ -15,6 +16,20 @@
         Cette page ne permet aucune modification de score. Une porte fermée reste fermée tant que chaque preuve
         obligatoire n’est pas vérifiée.
     </p>
+    @if (RunnerMode.IsManual)
+    {
+        @* Sans cet avertissement, la page affiche « fermée » sans distinguer deux situations très
+           différentes : un apprenant qui n’a pas encore travaillé, et une installation incapable de
+           produire la moindre preuve. La seconde ne se répare pas en travaillant davantage. *@
+        <p class="notice" role="alert">
+            <strong>Cette installation ne peut produire aucune preuve.</strong> Le mode manuel n’exécute ni ne teste
+            aucun code : toute soumission est enregistrée comme déclarée, et la politique refuse une déclaration comme
+            preuve. Aucun domaine ne peut donc se valider et aucune porte ne peut s’ouvrir, quel que soit le travail
+            fourni. Les scores ci-dessous mesurent une installation, pas votre niveau. Pour valider, construisez le bac
+            à sable avec <code>scripts/build-code-runner.ps1</code> puis démarrez en mode Docker — la procédure est dans
+            le README, section « Valider des exercices ».
+        </p>
+    }
 </section>
 
 @if (_error is not null)

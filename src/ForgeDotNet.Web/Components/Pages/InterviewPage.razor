@@ -1,0 +1,122 @@
+@page "/interviews/{InterviewId}"
+@using ForgeDotNet.Application.Preparation
+@using ForgeDotNet.Domain.Interviews
+@inject IInterviewSource Interviews
+
+<PageTitle>@(_sheet?.Title ?? "Entretien") — Forge.NET</PageTitle>
+
+@if (_error is not null)
+{
+    <p class="error-message" role="alert">@_error</p>
+}
+else if (_sheet is null)
+{
+    <p role="status">Chargement de la fiche…</p>
+}
+else
+{
+    <h1>@_sheet.Title</h1>
+    <p>
+        @InterviewLevels.Label(_sheet.Level) — @_sheet.DurationMinutes minutes —
+        @string.Join(", ", _sheet.Skills)
+    </p>
+
+    <section class="practice-panel" aria-labelledby="interview-question-title">
+        <h2 id="interview-question-title">La question</h2>
+        <p>@_sheet.Question</p>
+        @if (_sheet.RelatedExerciseId is not null)
+        {
+            <p>
+                Cette fiche prolonge l'exercice
+                <a href="@($"/practice/{_sheet.RelatedExerciseId}")">@_sheet.RelatedExerciseId</a>.
+            </p>
+        }
+    </section>
+
+    <section class="practice-panel" aria-labelledby="interview-method-title">
+        <h2 id="interview-method-title">Avant de révéler</h2>
+        <p>
+            Répondez à voix haute, en @_sheet.DurationMinutes minutes, sans notes. Ce qui compte n'est pas de retrouver
+            la réponse modèle mais d'énoncer vous-même les points observables — c'est exactement ce qu'un examinateur
+            écoute.
+        </p>
+        <p class="notice" role="status">
+            Cette fiche ne produit aucune preuve de maîtrise, et ne peut pas en produire : un entretien se juge sur des
+            relances contradictoires qu'aucun contenu ne simule. Le protocole de revue par un tiers est décrit dans
+            <code>docs/HUMAN_REVIEW.md</code>.
+        </p>
+        @if (!_revealed)
+        {
+            <button type="button" @onclick="Reveal">Révéler les critères et la réponse modèle</button>
+        }
+    </section>
+
+    @if (_revealed)
+    {
+        <section class="practice-panel" aria-labelledby="interview-criteria-title">
+            <h2 id="interview-criteria-title">Ce qui est observé</h2>
+            <ul>
+                @foreach (string criterion in _sheet.ObservableCriteria)
+                {
+                    <li>@criterion</li>
+                }
+            </ul>
+        </section>
+
+        <section class="practice-panel" aria-labelledby="interview-answer-title">
+            <h2 id="interview-answer-title">Réponse modèle</h2>
+            <p>@_sheet.ModelAnswer</p>
+        </section>
+
+        <section class="practice-panel" aria-labelledby="interview-mistakes-title">
+            <h2 id="interview-mistakes-title">Erreurs fréquentes</h2>
+            <ul>
+                @foreach (string mistake in _sheet.CommonMistakes)
+                {
+                    <li>@mistake</li>
+                }
+            </ul>
+        </section>
+
+        <section class="practice-panel" aria-labelledby="interview-variants-title">
+            <h2 id="interview-variants-title">Variantes</h2>
+            <ul>
+                @foreach (string variant in _sheet.Variants)
+                {
+                    <li>@variant</li>
+                }
+            </ul>
+        </section>
+    }
+
+    <p><a href="/interviews">Retour aux fiches d'entretien</a></p>
+}
+
+@code {
+    [Parameter]
+    public string InterviewId { get; set; } = string.Empty;
+
+    private InterviewSheet? _sheet;
+    private bool _revealed;
+    private string? _error;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        _revealed = false;
+        _error = null;
+        try
+        {
+            _sheet = await Interviews.GetAsync(InterviewId);
+            if (_sheet is null)
+            {
+                _error = "Fiche d'entretien introuvable.";
+            }
+        }
+        catch (Exception exception) when (exception is InvalidDataException or InvalidOperationException)
+        {
+            _error = exception.Message;
+        }
+    }
+
+    private void Reveal() => _revealed = true;
+}

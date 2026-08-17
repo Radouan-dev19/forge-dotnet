@@ -1,0 +1,167 @@
+@page "/english/{ActivityId}"
+@using ForgeDotNet.Application.Preparation
+@using ForgeDotNet.Domain.English
+@inject IEnglishActivitySource Activities
+
+<PageTitle>@(_card?.Title ?? "Anglais") — Forge.NET</PageTitle>
+
+@if (_error is not null)
+{
+    <p class="error-message" role="alert">@_error</p>
+}
+else if (_card is null)
+{
+    <p role="status">Chargement de la carte…</p>
+}
+else
+{
+    <h1>@_card.Title</h1>
+    <p>
+        @(_card.IsSpoken ? "Production orale" : "Production écrite") — niveau @_card.Level —
+        @_card.DurationMinutes minutes — @string.Join(", ", _card.Skills)
+    </p>
+
+    <section class="practice-panel" aria-labelledby="english-situation-title">
+        <h2 id="english-situation-title">Situation</h2>
+        <p>@_card.Situation</p>
+    </section>
+
+    <section class="practice-panel" aria-labelledby="english-instructions-title">
+        <h2 id="english-instructions-title">Ce qu'il faut produire</h2>
+        <ul>
+            @foreach (string instruction in _card.Instructions)
+            {
+                <li>@instruction</li>
+            }
+        </ul>
+    </section>
+
+    <section class="practice-panel" aria-labelledby="english-vocabulary-title">
+        <h2 id="english-vocabulary-title">Vocabulaire</h2>
+        <dl>
+            @foreach (EnglishTerm term in _card.Vocabulary)
+            {
+                <dt>@term.Term</dt>
+                <dd>@term.Meaning</dd>
+            }
+        </dl>
+    </section>
+
+    <section class="practice-panel" aria-labelledby="english-method-title">
+        <h2 id="english-method-title">Avant de révéler</h2>
+        <p>
+            @if (_card.IsSpoken)
+            {
+                <text>
+                    Produisez la réponse <strong>à voix haute</strong>, sans texte préparé. Lire un brouillon change ce
+                    qui est exercé : la difficulté de l'oral est de structurer en parlant, pas de réciter.
+                </text>
+            }
+            else
+            {
+                <text>
+                    Rédigez la réponse avant de révéler les éléments attendus. Les révéler d'abord transforme
+                    l'exercice en recopie.
+                </text>
+            }
+        </p>
+        <p class="notice" role="status">
+            Cette carte ne produit aucune preuve de maîtrise. Elle prépare la grille d'anglais du protocole de revue par
+            un tiers, décrite dans <code>docs/HUMAN_REVIEW.md</code>, qui demande une carte écrite et une carte orale
+            traitées devant un relecteur.
+        </p>
+        @if (!_revealed)
+        {
+            <button type="button" @onclick="Reveal">Révéler les éléments attendus et la réponse modèle</button>
+        }
+    </section>
+
+    @if (_revealed)
+    {
+        <section class="practice-panel" aria-labelledby="english-expected-title">
+            <h2 id="english-expected-title">Éléments attendus</h2>
+            <ul>
+                @foreach (string element in _card.ExpectedElements)
+                {
+                    <li>@element</li>
+                }
+            </ul>
+        </section>
+
+        <section class="practice-panel" aria-labelledby="english-answer-title">
+            <h2 id="english-answer-title">Réponse modèle</h2>
+            <p>@_card.ModelAnswer</p>
+            <p>
+                C'est un exemple de contenu suffisant, jamais une formulation à retrouver. Une réponse plus courte qui
+                porte les mêmes éléments vaut autant.
+            </p>
+        </section>
+
+        <section class="practice-panel" aria-labelledby="english-mistakes-title">
+            <h2 id="english-mistakes-title">Erreurs fréquentes</h2>
+            <ul>
+                @foreach (string mistake in _card.CommonMistakes)
+                {
+                    <li>@mistake</li>
+                }
+            </ul>
+        </section>
+
+        <section class="practice-panel" aria-labelledby="english-variants-title">
+            <h2 id="english-variants-title">Variantes</h2>
+            <ul>
+                @foreach (string variant in _card.Variants)
+                {
+                    <li>@variant</li>
+                }
+            </ul>
+        </section>
+    }
+
+    @if (_counterpart is not null)
+    {
+        <p>
+            Même situation dans l'autre format :
+            <a href="@($"/english/{_counterpart.Id}")">@(_counterpart.IsSpoken ? "version orale" : "version écrite")</a>.
+        </p>
+    }
+
+    <p><a href="/english">Retour aux cartes d'anglais</a></p>
+}
+
+@code {
+    [Parameter]
+    public string ActivityId { get; set; } = string.Empty;
+
+    private EnglishActivity? _card;
+    private EnglishActivity? _counterpart;
+    private bool _revealed;
+    private string? _error;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        _revealed = false;
+        _error = null;
+        _counterpart = null;
+        try
+        {
+            _card = await Activities.GetAsync(ActivityId);
+            if (_card is null)
+            {
+                _error = "Carte d'anglais introuvable.";
+                return;
+            }
+
+            IReadOnlyList<EnglishActivity> all = await Activities.ListAsync();
+            _counterpart = all.FirstOrDefault(item =>
+                string.Equals(item.PairKey, _card.PairKey, StringComparison.Ordinal)
+                && !string.Equals(item.Id, _card.Id, StringComparison.Ordinal));
+        }
+        catch (Exception exception) when (exception is InvalidDataException or InvalidOperationException)
+        {
+            _error = exception.Message;
+        }
+    }
+
+    private void Reveal() => _revealed = true;
+}

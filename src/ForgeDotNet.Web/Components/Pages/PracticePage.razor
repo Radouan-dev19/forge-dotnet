@@ -1,5 +1,7 @@
 @page "/practice/{ExerciseId}"
+@using ForgeDotNet.Application.Preparation
 @inject PracticeService Practice
+@inject IInterviewSource Interviews
 @inject RunExercise Runner
 @inject IManualCodeRunPackageExporter ManualExporter
 @inject IJSRuntime JavaScript
@@ -29,6 +31,15 @@ else
             Le code n’est jamais exécuté dans le processus Web. Un runner Docker configuré utilise un conteneur
             éphémère isolé ; sinon le mode manuel reste explicite et ne produit aucune validation automatique.
         </p>
+        @if (_interviewId is not null)
+        {
+            @* La fiche d'entretien appariée existait sans qu'aucun écran n'y mène : le lien la rend
+               atteignable là où elle sert, une fois l'exercice travaillé. Elle ne produit aucune preuve. *@
+            <p>
+                Une fiche d'entretien prolonge cet exercice :
+                <a href="@($"/interviews/{_interviewId}")">savoir en parler</a>.
+            </p>
+        }
     </header>
 
     @if (_status is not null)
@@ -321,6 +332,7 @@ else
     private bool _runnerBusy;
     private string? _status;
     private string? _error;
+    private string? _interviewId;
     private string? _runnerStatus;
     private string? _runnerError;
 
@@ -338,11 +350,13 @@ else
                 _attempt.SubmissionText = _activity.Starter;
             }
             CopyReflection();
+            _interviewId = (await Interviews.FindForExerciseAsync(ExerciseId))?.Id;
             _error = null;
         }
         catch (Exception exception)
         {
             _activity = null;
+            _interviewId = null;
             _error = exception.Message;
         }
         finally

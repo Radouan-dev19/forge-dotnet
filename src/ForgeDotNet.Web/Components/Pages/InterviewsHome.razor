@@ -1,0 +1,108 @@
+@page "/interviews"
+@using ForgeDotNet.Application.Preparation
+@using ForgeDotNet.Domain.Interviews
+@inject IInterviewSource Interviews
+
+<PageTitle>Entretiens — Forge.NET</PageTitle>
+
+<h1>Questions d'entretien</h1>
+
+<section class="practice-panel" aria-labelledby="interviews-intro-title">
+    <h2 id="interviews-intro-title">Ce que ces fiches sont, et ne sont pas</h2>
+    <p>
+        Chaque fiche porte une question, ce qu'un examinateur y observe, et une réponse modèle. La réponse modèle est
+        un exemple de contenu suffisant, jamais une formulation à retrouver mot pour mot.
+    </p>
+    <p class="notice" role="status">
+        <strong>Aucune de ces fiches ne produit de preuve de maîtrise.</strong> Un entretien suppose un interlocuteur
+        qui relance et conteste ; aucun contenu ne le remplace. Ces fiches préparent une revue par un tiers, dont le
+        protocole est décrit dans <code>docs/HUMAN_REVIEW.md</code>. Répondez d'abord, révélez ensuite.
+    </p>
+</section>
+
+@if (_error is not null)
+{
+    <p class="error-message" role="alert">@_error</p>
+}
+else if (_sheets is null)
+{
+    <p role="status">Chargement des fiches…</p>
+}
+else
+{
+    <section class="practice-panel" aria-labelledby="interviews-filter-title">
+        <h2 id="interviews-filter-title">Filtrer</h2>
+        <div>
+            <label for="interview-level">Niveau</label>
+            <select id="interview-level" @bind="_level" @bind:after="Apply">
+                <option value="">Tous les niveaux (@_sheets.Count)</option>
+                @foreach (InterviewLevel level in Enum.GetValues<InterviewLevel>())
+                {
+                    <option value="@level">@InterviewLevels.Label(level) (@_sheets.Count(sheet => sheet.Level == level))</option>
+                }
+            </select>
+        </div>
+        <div>
+            <label for="interview-search">Titre ou compétence</label>
+            <input id="interview-search" type="search" @bind="_search" @bind:after="Apply" />
+        </div>
+    </section>
+
+    <p role="status">@_visible.Count fiche(s) affichée(s) sur @_sheets.Count.</p>
+
+    <ul>
+        @foreach (InterviewSheet sheet in _visible)
+        {
+            <li>
+                <a href="@($"/interviews/{sheet.Id}")">@sheet.Title</a>
+                — @InterviewLevels.Label(sheet.Level), @sheet.DurationMinutes min
+                <span> — @string.Join(", ", sheet.Skills)</span>
+            </li>
+        }
+    </ul>
+}
+
+@code {
+    private IReadOnlyList<InterviewSheet>? _sheets;
+    private List<InterviewSheet> _visible = [];
+    private string _level = string.Empty;
+    private string _search = string.Empty;
+    private string? _error;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            _sheets = await Interviews.ListAsync();
+            Apply();
+        }
+        catch (Exception exception) when (exception is InvalidDataException or InvalidOperationException)
+        {
+            _error = exception.Message;
+        }
+    }
+
+    private void Apply()
+    {
+        if (_sheets is null)
+        {
+            return;
+        }
+
+        IEnumerable<InterviewSheet> query = _sheets;
+        if (!string.IsNullOrEmpty(_level) && Enum.TryParse(_level, out InterviewLevel level))
+        {
+            query = query.Where(sheet => sheet.Level == level);
+        }
+
+        if (!string.IsNullOrWhiteSpace(_search))
+        {
+            string term = _search.Trim();
+            query = query.Where(sheet =>
+                sheet.Title.Contains(term, StringComparison.OrdinalIgnoreCase)
+                || sheet.Skills.Any(skill => skill.Contains(term, StringComparison.OrdinalIgnoreCase)));
+        }
+
+        _visible = query.ToList();
+    }
+}

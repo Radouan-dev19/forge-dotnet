@@ -1,0 +1,78 @@
+@page "/english"
+@using ForgeDotNet.Application.Preparation
+@using ForgeDotNet.Domain.English
+@inject IEnglishActivitySource Activities
+
+<PageTitle>Anglais professionnel — Forge.NET</PageTitle>
+
+<h1>Anglais professionnel</h1>
+
+<section class="practice-panel" aria-labelledby="english-intro-title">
+    <h2 id="english-intro-title">Deux formats par situation</h2>
+    <p>
+        Chaque situation existe en deux cartes : une production <strong>écrite</strong> et une production
+        <strong>orale</strong>. C'est ce couple que demande la grille d'anglais du protocole de revue — les éléments
+        attendus doivent apparaître à l'écrit, puis être énoncés à l'oral sans lire un texte préparé.
+    </p>
+    <p class="notice" role="status">
+        <strong>Aucune de ces cartes ne produit de preuve de maîtrise.</strong> L'expression demande un lecteur, et
+        l'anglais professionnel figure parmi les exigences que la politique confie à un jugement humain. Voir
+        <code>docs/HUMAN_REVIEW.md</code>. Ce qui n'est pas évalué : l'accent, la vitesse, et les erreurs de grammaire
+        qui n'empêchent pas de comprendre.
+    </p>
+</section>
+
+@if (_error is not null)
+{
+    <p class="error-message" role="alert">@_error</p>
+}
+else if (_pairs is null)
+{
+    <p role="status">Chargement des cartes…</p>
+}
+else
+{
+    <p role="status">@_pairs.Count situation(s), @_total carte(s).</p>
+
+    <ul>
+        @foreach (IGrouping<string, EnglishActivity> pair in _pairs)
+        {
+            <li>
+                <strong>@pair.First().Title.Split('—')[0].Trim()</strong>
+                — niveau @pair.First().Level
+                <ul>
+                    @foreach (EnglishActivity card in pair.OrderBy(item => item.IsSpoken))
+                    {
+                        <li>
+                            <a href="@($"/english/{card.Id}")">@(card.IsSpoken ? "Oral" : "Écrit")</a>
+                            — @card.DurationMinutes min — @card.Title
+                        </li>
+                    }
+                </ul>
+            </li>
+        }
+    </ul>
+}
+
+@code {
+    private List<IGrouping<string, EnglishActivity>>? _pairs;
+    private int _total;
+    private string? _error;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            IReadOnlyList<EnglishActivity> cards = await Activities.ListAsync();
+            _total = cards.Count;
+            _pairs = cards
+                .GroupBy(card => card.PairKey, StringComparer.Ordinal)
+                .OrderBy(group => group.Key, StringComparer.Ordinal)
+                .ToList();
+        }
+        catch (Exception exception) when (exception is InvalidDataException or InvalidOperationException)
+        {
+            _error = exception.Message;
+        }
+    }
+}
