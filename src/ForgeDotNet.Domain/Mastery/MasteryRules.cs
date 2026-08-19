@@ -260,14 +260,22 @@ public static class MasteryRules
             && observation.Source == MasteryEvidenceSource.Review,
         MasteryVerificationKind.QuizEngine => observation.Component == MasteryComponent.Quiz
             && observation.Source == MasteryEvidenceSource.Quiz,
+        // L'explication est la seule composante à jugement humain : produire un compte rendu causal
+        // n'a pas de substitut machine, et c'est un lecteur qui l'atteste — jamais l'apprenant.
+        MasteryVerificationKind.HumanAttestation => observation.Component == MasteryComponent.Explanation
+            && observation.Source == MasteryEvidenceSource.Explanation,
         _ => false,
     };
 
     private static bool IsVerifiedAchievement(MasteryAchievement achievement) =>
         achievement.Passed
-        && achievement.Verification is MasteryVerificationKind.AutomaticTests
-            or MasteryVerificationKind.ServerRubric
-            or MasteryVerificationKind.ExamEngine;
+        && (achievement.Verification is MasteryVerificationKind.AutomaticTests
+                or MasteryVerificationKind.ServerRubric
+                or MasteryVerificationKind.ExamEngine
+            // Une attestation humaine ne vaut que pour les exigences qu'aucune machine ne peut
+            // juger : sur toute autre clé, elle remplacerait une preuve exécutée par une parole.
+            || (achievement.Verification == MasteryVerificationKind.HumanAttestation
+                && MasteryPolicyCatalog.HumanJudgementKeys.Contains(achievement.Key, StringComparer.Ordinal)));
 
     private static bool IsSolutionContaminated(
         MasteryObservation observation,

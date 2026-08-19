@@ -6,7 +6,7 @@
 
 @if (string.IsNullOrWhiteSpace(LessonId))
 {
-    <h1>Piste senior — S25 à S32</h1>
+    <h1>Piste senior — Senior S1 à S8</h1>
 
     <div class="notice" role="note">
         <p>
@@ -24,7 +24,7 @@
     else
     {
         <header class="reader-library-header">
-            <p class="eyebrow">Second parcours, distinct du socle des vingt-quatre semaines</p>
+            <p class="eyebrow">Second parcours, à suivre après le socle S1–S24 et le bloc front-end S25–S27</p>
             <h2>@_library.Title</h2>
             <p>@_library.Description</p>
         </header>
@@ -61,7 +61,7 @@ else
 {
     <article class="lesson-reader">
         <header class="lesson-header">
-            <p class="eyebrow">Semaine @_lesson.Week · @_lesson.EstimatedMinutes minutes · piste senior</p>
+            <p class="eyebrow">Senior S@(_lesson.Week - 24) · @_lesson.EstimatedMinutes minutes · piste senior</p>
             <h1>@_lesson.Title</h1>
             <p>@string.Join(" · ", _lesson.Skills)</p>
         </header>

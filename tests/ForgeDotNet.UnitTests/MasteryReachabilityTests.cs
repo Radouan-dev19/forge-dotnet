@@ -51,16 +51,22 @@ public sealed class MasteryReachabilityTests
     };
 
     /// <summary>
-    /// Composantes qu'aucun producteur n'alimente. Ce nombre ne peut que descendre.
+    /// Composantes qu'aucun producteur automatique n'alimente. Ce nombre ne peut que descendre.
     /// </summary>
     /// <remarks>
-    /// L'explication y restera, et ce n'est pas une dette : trois routes ont été cherchées puis
-    /// refusées — la carte à choix sur le « pourquoi » mesure la reconnaissance, l'explication
-    /// personnelle du protocole de pratique mesure l'effort et n'est atteignable qu'après une solution
-    /// consultée, la rubrique déterministe note une transcription ou une devinette selon qu'elle publie
-    /// ou non ses concepts obligatoires. Le raisonnement complet est dans <c>docs/MASTERY.md</c> ;
-    /// <c>MasteryRulesTests</c> le rend exécutable en refusant les moteurs qui prétendraient l'alimenter
-    /// et en montrant que le plafond de 90 qui en résulte franchit les deux seuils.
+    /// L'explication y restera, et ce n'est pas une dette : trois routes automatiques ont été
+    /// cherchées puis refusées — la carte à choix sur le « pourquoi » mesure la reconnaissance,
+    /// l'explication personnelle du protocole de pratique mesure l'effort et n'est atteignable
+    /// qu'après une solution consultée, la rubrique déterministe note une transcription ou une
+    /// devinette selon qu'elle publie ou non ses concepts obligatoires. Le raisonnement complet est
+    /// dans <c>docs/MASTERY.md</c> ; <c>MasteryRulesTests</c> le rend exécutable et montre que le
+    /// plafond de 90 qui en résulte franchit les deux seuils.
+    ///
+    /// Depuis le 18 août 2026, la septième grille de <c>docs/HUMAN_REVIEW.md</c> alimente cette
+    /// composante par une <see cref="MasteryVerificationKind.HumanAttestation"/> — un relecteur
+    /// humain nommé, jamais l'apprenant, jamais une machine. Le plafond de ce test reste celui d'un
+    /// profil <em>sans relecteur</em> : c'est ce que le produit seul sait produire, et c'est la
+    /// mesure honnête de son autosuffisance.
     /// </remarks>
     private static readonly MasteryComponent[] UnproducedComponents = [MasteryComponent.Explanation];
 

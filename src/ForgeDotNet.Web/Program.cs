@@ -7,6 +7,7 @@ using ForgeDotNet.Application.Curriculum;
 using ForgeDotNet.Application.DebugLab;
 using ForgeDotNet.Application.Diagnostic;
 using ForgeDotNet.Application.Exams;
+using ForgeDotNet.Application.HumanReview;
 using ForgeDotNet.Application.IdentityLocal;
 using ForgeDotNet.Application.Labs;
 using ForgeDotNet.Application.Mastery;
@@ -23,6 +24,7 @@ using ForgeDotNet.Infrastructure.Curriculum;
 using ForgeDotNet.Infrastructure.DebugLab;
 using ForgeDotNet.Infrastructure.Diagnostic;
 using ForgeDotNet.Infrastructure.Exams;
+using ForgeDotNet.Infrastructure.HumanReview;
 using ForgeDotNet.Infrastructure.Labs;
 using ForgeDotNet.Infrastructure.Persistence;
 using ForgeDotNet.Infrastructure.Practice;
@@ -170,6 +172,10 @@ builder.Services.AddSingleton(new LabCatalog(contentOptions, labDirectory));
 builder.Services.AddSingleton<ILabSource, FileSystemLabSource>();
 builder.Services.AddScoped<SqlLabService>();
 builder.Services.AddScoped<MasteryService>();
+// Le canal produit du protocole de revue par un tiers : enregistrement d'attestations humaines,
+// admises comme preuve exclusivement pour les exigences à jugement humain.
+builder.Services.AddScoped<IHumanAttestationStore, SqliteHumanAttestationStore>();
+builder.Services.AddScoped<HumanReviewService>();
 builder.Services.AddScoped<ReviewService>();
 builder.Services.AddScoped<DashboardService>();
 string examBankDirectory = ResolveConfiguredPath(

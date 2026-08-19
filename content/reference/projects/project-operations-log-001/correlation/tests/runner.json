@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "suiteId": "project-operations-log-001.correlation.v1",
+  "exerciseId": "project-operations-log-001.correlation",
+  "exerciseVersion": 1,
+  "typeName": "Submission",
+  "methodName": "CorrelatedJournal",
+  "parameterTypes": ["string", "string"],
+  "returnType": "string"
+}

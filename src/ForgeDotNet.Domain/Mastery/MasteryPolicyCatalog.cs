@@ -26,6 +26,24 @@ public static class MasteryPolicyCatalog
     public const string English = "english";
     public const string FinalDefense = "project.final-defense";
 
+    /// <summary>
+    /// Exigences qu'aucune preuve automatique ne peut satisfaire : juger un historique, une
+    /// présentation, un entretien, une note d'architecture, l'anglais ou une défense demande un
+    /// lecteur. Ce sont les seules clés pour lesquelles une attestation humaine
+    /// (<see cref="MasteryVerificationKind.HumanAttestation"/>) est admise comme preuve — l'admettre
+    /// pour une clé qui possède un producteur automatique possible remplacerait une preuve
+    /// exécutée par une parole, ce que la politique refuse.
+    /// </summary>
+    public static IReadOnlyList<string> HumanJudgementKeys { get; } = Array.AsReadOnly(
+    [
+        CleanGit,
+        TenMinutePresentation,
+        MockInterview,
+        PragmaticArchitecture,
+        English,
+        FinalDefense,
+    ]);
+
     public static MasteryPolicy Version1 { get; } = CreateVersion1();
 
     private static MasteryPolicy CreateVersion1() => new(

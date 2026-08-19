@@ -90,8 +90,47 @@ else
         }
     </section>
 
+    <section class="practice-panel" aria-labelledby="mastery-proofs-title">
+        <h2 id="mastery-proofs-title">Preuves d'accomplissement et leur nature</h2>
+        <p>
+            Trois natures de preuve existent et ne se confondent jamais : <strong>vérifiée par la
+            machine</strong> (tests exécutés, examen, rubrique serveur), <strong>attestée par un relecteur
+            humain</strong> — admise exclusivement pour les exigences qu'aucune machine ne peut juger, saisie
+            depuis la page Revue humaine — et <strong>déclarée</strong>, qui vaut zéro. Les portes ci-dessous
+            s'ouvrent sur ces preuves, dont la nature est affichée pour chacune.
+        </p>
+        @if (_view.Achievements.Count == 0)
+        {
+            <p role="status">Aucune preuve d'accomplissement pour l'instant.</p>
+        }
+        else
+        {
+            <table class="table">
+                <thead>
+                    <tr><th scope="col">Exigence</th><th scope="col">Nature de la preuve</th><th scope="col">Compte pour les portes</th><th scope="col">Date</th></tr>
+                </thead>
+                <tbody>
+                    @foreach (MasteryAchievementView achievement in _view.Achievements)
+                    {
+                        <tr>
+                            <td><code>@achievement.Key</code></td>
+                            <td>@achievement.NatureLabel</td>
+                            <td>@(achievement.CountsTowardGates ? "oui" : "non")</td>
+                            <td>@achievement.ObservedAtUtc.ToString("yyyy-MM-dd")</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+    </section>
+
     <section class="practice-panel" aria-labelledby="mastery-gates-title">
         <h2 id="mastery-gates-title">Portes A–D</h2>
+        <p>
+            Une porte ouverte l'est sur les preuves listées ci-dessus, chacune avec sa nature : aucune ne
+            s'ouvre sur une déclaration, et une attestation humaine n'y ouvre que les exigences à jugement
+            humain.
+        </p>
         @foreach (MasteryGateView gate in _view.Gates)
         {
             <article>

@@ -1,0 +1,78 @@
+{
+  "schemaVersion": 1,
+  "id": "project-abuse-hardening-001",
+  "version": 1,
+  "title": "Durcissement contre l'abus",
+  "difficulty": 4,
+  "weeks": [14],
+  "skills": ["security.token", "security.authentication"],
+  "prerequisites": ["security-jwt-validation-001"],
+  "estimatedHours": 12,
+  "briefPath": "brief.md",
+  "starterPath": "starter/",
+  "achievementKey": "security",
+  "maximumSourceFiles": 4,
+  "acceptanceSuites": [
+    { "milestoneId": "signature", "suitePath": "signature/" },
+    { "milestoneId": "chemin", "suitePath": "chemin/" },
+    { "milestoneId": "rejeu", "suitePath": "rejeu/" }
+  ],
+  "milestones": [
+    {
+      "id": "signature",
+      "title": "Vérifier une signature sans s'y tromper",
+      "evidence": "SignatureVerdict recalcule le HMAC-SHA256 du contenu, l'encode en Base64Url sans remplissage et compare en temps constant avec la signature présentée.",
+      "acceptanceCriteria": [
+        "Le verdict vient d'un recalcul cryptographique, jamais d'une comparaison de longueurs ou de préfixes",
+        "L'alphabet accepté est strictement Base64Url sans remplissage : la forme standard est un refus",
+        "La comparaison finale passe par une égalité en temps constant"
+      ]
+    },
+    {
+      "id": "chemin",
+      "title": "Canoniser un chemin avant de lui faire confiance",
+      "evidence": "SafePath décode une seule fois, normalise les séparateurs, puis refuse remontée, chemin absolu et caractère hors liste blanche avec un motif nommé.",
+      "acceptanceCriteria": [
+        "Le décodage pour-cent est appliqué exactement une fois : un encodage doublé laisse un caractère refusé",
+        "Toute présence du segment parent est un refus, jamais une résolution",
+        "Le motif du refus nomme la règle enfreinte, pas seulement l'échec"
+      ]
+    },
+    {
+      "id": "rejeu",
+      "title": "Fermer la fenêtre de rejeu",
+      "evidence": "AdmitVerdict borne la fraîcheur d'une requête par rapport au journal et refuse un nonce déjà vu dans la fenêtre, bornes incluses.",
+      "acceptanceCriteria": [
+        "L'horodatage est contrôlé avant le nonce, et chaque refus porte son motif",
+        "La borne exacte de la fenêtre est admise, pas seulement son intérieur",
+        "Un nonce revu après expiration de sa fenêtre redevient admissible"
+      ]
+    }
+  ],
+  "rubric": [
+    {
+      "criterion": "Le recalcul cryptographique est la seule source du verdict de signature",
+      "weight": 0.4,
+      "observableEvidence": "Changer un caractère du contenu ou de la clé inverse le verdict sans modifier la signature présentée."
+    },
+    {
+      "criterion": "La canonisation traite les encodages avant toute décision",
+      "weight": 0.3,
+      "observableEvidence": "Le même chemin hostile, encodé ou non, aboutit au même refus motivé."
+    },
+    {
+      "criterion": "La fenêtre anti-rejeu est exacte à la borne près",
+      "weight": 0.3,
+      "observableEvidence": "Une requête à la limite de la fenêtre est admise et la même une seconde plus tard est refusée."
+    }
+  ],
+  "solutionPolicy": "no-complete-solution-before-submission",
+  "commonMistakes": [
+    "Comparer la signature avec l'égalité de chaînes ordinaire, qui s'arrête au premier écart",
+    "Accepter l'alphabet Base64 standard ou le remplissage, ce qui crée deux formes valides du même jeton",
+    "Résoudre les segments parents au lieu de les refuser, en croyant la normalisation suffisante",
+    "Contrôler le nonce avant l'horodatage, ce qui transforme un rejeu périmé en faux motif"
+  ],
+  "variantIds": ["project-validation-pipeline-001"],
+  "license": "CC-BY-4.0"
+}

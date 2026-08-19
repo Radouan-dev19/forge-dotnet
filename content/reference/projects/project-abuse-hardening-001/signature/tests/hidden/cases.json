@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "cases": [
+    {
+      "name": "Hidden_SecondGenuinePairIsAccepted",
+      "message": "Le verdict vient du recalcul, pas d'une valeur apprise sur le premier couple.",
+      "arguments": ["montant=250&devise=EUR", "cle-de-test", "u6AVp2q-iZzUX-e7PW17xRYHGoVN3MLRkk_aNahuGtE"],
+      "expected": "authentique",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_WrongKeyIsRejected",
+      "message": "Une signature émise sous une autre clé ne couvre pas ce contenu-ci.",
+      "arguments": ["montant=100&devise=EUR", "autre-cle", "inNt9kI_PLYV_A3Sa0HGzUjvs5QQbRd16LrkLwTFqEI"],
+      "expected": "refus",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_LongSecretIsSupported",
+      "message": "La clé n'a pas de longueur privilégiée : le HMAC l'absorbe telle quelle.",
+      "arguments": ["action=export&cible=rapport", "phrase-longue-et-privee", "PTncvDV9-bVZKVqWHACRE4giAzfhlu3Fvy5TKqHZfq4"],
+      "expected": "authentique",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_EmptySignatureIsRejected",
+      "message": "L'absence de signature n'est pas une signature courte : c'est un refus.",
+      "arguments": ["montant=100&devise=EUR", "cle-de-test", ""],
+      "expected": "refus",
+      "argumentsUnchanged": true
+    }
+  ]
+}

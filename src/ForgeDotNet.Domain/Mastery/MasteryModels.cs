@@ -54,6 +54,13 @@ public enum MasteryVerificationKind
     ExamEngine,
     ReviewEngine,
     QuizEngine,
+
+    /// <summary>
+    /// Attestation d'un relecteur humain nommé, saisie selon le protocole de docs/HUMAN_REVIEW.md.
+    /// Ni une preuve machine, ni une déclaration de l'apprenant : un troisième type, admis
+    /// exclusivement pour les exigences que MasteryPolicyCatalog classe à jugement humain.
+    /// </summary>
+    HumanAttestation,
 }
 
 public enum MasteryGate

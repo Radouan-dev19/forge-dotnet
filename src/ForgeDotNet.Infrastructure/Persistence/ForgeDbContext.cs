@@ -40,6 +40,8 @@ public sealed class ForgeDbContext(DbContextOptions<ForgeDbContext> options) : D
 
     internal DbSet<MasteryProjectionRecord> MasteryProjections => Set<MasteryProjectionRecord>();
 
+    internal DbSet<HumanAttestationRecord> HumanAttestations => Set<HumanAttestationRecord>();
+
     internal DbSet<ReviewItemRecord> ReviewItems => Set<ReviewItemRecord>();
 
     internal DbSet<ReviewAttemptRecord> ReviewAttempts => Set<ReviewAttemptRecord>();
@@ -285,6 +287,22 @@ public sealed class ForgeDbContext(DbContextOptions<ForgeDbContext> options) : D
         masteryProjection.Property(item => item.FrozenPolicyJson).HasMaxLength(131_072).IsRequired();
         masteryProjection.Property(item => item.SnapshotJson).HasMaxLength(262_144).IsRequired();
         masteryProjection.Property(item => item.CreatedAtUtc).HasConversion<string>().HasMaxLength(48).IsRequired();
+
+        var humanAttestation = modelBuilder.Entity<HumanAttestationRecord>();
+        humanAttestation.ToTable("HumanAttestations");
+        humanAttestation.HasKey(item => item.Id);
+        humanAttestation.Property(item => item.Id).ValueGeneratedNever();
+        // Une même exigence, revue le même jour, ne s'enregistre qu'une fois : le rejeu n'ajoute rien.
+        humanAttestation.HasIndex(item => new { item.ProfileId, item.TargetKey, item.ReviewedOn }).IsUnique();
+        humanAttestation.Property(item => item.TargetKey).HasMaxLength(64).IsRequired();
+        humanAttestation.Property(item => item.ReviewerName).HasMaxLength(160).IsRequired();
+        humanAttestation.Property(item => item.ReviewerRelation).HasMaxLength(160).IsRequired();
+        humanAttestation.Property(item => item.ReviewedOn).HasConversion<string>().HasMaxLength(16).IsRequired();
+        humanAttestation.Property(item => item.ArtifactDescription).HasMaxLength(1_000).IsRequired();
+        humanAttestation.Property(item => item.NamedGap).HasMaxLength(2_000).IsRequired();
+        humanAttestation.Property(item => item.ExplainedExerciseId).HasMaxLength(100);
+        humanAttestation.Property(item => item.CriteriaJson).HasMaxLength(16_384).IsRequired();
+        humanAttestation.Property(item => item.RecordedAtUtc).HasConversion<string>().HasMaxLength(48).IsRequired();
 
         var reviewItem = modelBuilder.Entity<ReviewItemRecord>();
         reviewItem.ToTable("ReviewItems");

@@ -8,7 +8,7 @@
     "modules":  [
                     {
                         "id":  "week-1",
-                        "title":  "Semaine 1",
+                        "title":  "Semaine 1 — Types, conversions et contrôle de flux",
                         "weeks":  [
                                       1
                                   ],
@@ -35,7 +35,7 @@
                     },
                     {
                         "id":  "week-2",
-                        "title":  "Semaine 2",
+                        "title":  "Semaine 2 — Tableaux, collections, chaînes et dates",
                         "weeks":  [
                                       2
                                   ],
@@ -62,7 +62,7 @@
                     },
                     {
                         "id":  "week-3",
-                        "title":  "Semaine 3",
+                        "title":  "Semaine 3 — Classes, interfaces et exceptions",
                         "weeks":  [
                                       3
                                   ],
@@ -89,7 +89,7 @@
                     },
                     {
                         "id":  "week-4",
-                        "title":  "Semaine 4",
+                        "title":  "Semaine 4 — Génériques, LINQ, fichiers et JSON",
                         "weeks":  [
                                       4
                                   ],
@@ -120,7 +120,7 @@
                     },
                     {
                         "id":  "week-5",
-                        "title":  "Semaine 5",
+                        "title":  "Semaine 5 — Algorithmique : recherche et tris simples",
                         "weeks":  [
                                       5
                                   ],
@@ -151,7 +151,7 @@
                     },
                     {
                         "id":  "week-6",
-                        "title":  "Semaine 6",
+                        "title":  "Semaine 6 — Piles, files, dictionnaires et récursivité",
                         "weeks":  [
                                       6
                                   ],
@@ -183,7 +183,7 @@
                     },
                     {
                         "id":  "week-7",
-                        "title":  "Semaine 7",
+                        "title":  "Semaine 7 — Débogage méthodique et async simple",
                         "weeks":  [
                                       7
                                   ],
@@ -212,7 +212,7 @@
                     },
                     {
                         "id":  "week-8",
-                        "title":  "Semaine 8",
+                        "title":  "Semaine 8 — SQL : modèle relationnel, filtres et jointures (pratique au SqlLab)",
                         "weeks":  [
                                       8
                                   ],
@@ -225,12 +225,12 @@
                                           "sql-joins-001"
                                       ],
                         "exerciseIds":  [
-                                            "debug-safe-divide-001"
+                                            "algo-merge-sorted-001"
                                         ]
                     },
                     {
                         "id":  "week-9",
-                        "title":  "Semaine 9",
+                        "title":  "Semaine 9 — SQL : agrégations, CTE et transactions (pratique au SqlLab)",
                         "weeks":  [
                                       9
                                   ],
@@ -243,12 +243,12 @@
                                           "sql-isolation-001"
                                       ],
                         "exerciseIds":  [
-                                            "debug-safe-divide-001"
+                                            "algo-prefix-sums-001"
                                         ]
                     },
                     {
                         "id":  "week-10",
-                        "title":  "Semaine 10",
+                        "title":  "Semaine 10 — Index, pagination et EF Core (pratique au SqlLab)",
                         "weeks":  [
                                       10
                                   ],
@@ -261,12 +261,12 @@
                                           "ef-core-data-access-001"
                                       ],
                         "exerciseIds":  [
-                                            "debug-safe-divide-001"
+                                            "algo-unique-count-001"
                                         ]
                     },
                     {
                         "id":  "week-11",
-                        "title":  "Semaine 11",
+                        "title":  "Semaine 11 — HTTP, REST, routage et DTO",
                         "weeks":  [
                                       11
                                   ],
@@ -295,7 +295,7 @@
                     },
                     {
                         "id":  "week-12",
-                        "title":  "Semaine 12",
+                        "title":  "Semaine 12 — Validation, DI, configuration et erreurs",
                         "weeks":  [
                                       12
                                   ],
@@ -324,7 +324,7 @@
                     },
                     {
                         "id":  "week-13",
-                        "title":  "Semaine 13",
+                        "title":  "Semaine 13 — Async, annulation, pagination et OpenAPI",
                         "weeks":  [
                                       13
                                   ],
@@ -353,7 +353,7 @@
                     },
                     {
                         "id":  "week-14",
-                        "title":  "Semaine 14",
+                        "title":  "Semaine 14 — Authentification, jetons et sécurité d'API",
                         "weeks":  [
                                       14
                                   ],
@@ -384,7 +384,7 @@
                     },
                     {
                         "id":  "week-15",
-                        "title":  "Semaine 15",
+                        "title":  "Semaine 15 — Tests unitaires : xUnit, AAA et cas limites",
                         "weeks":  [
                                       15
                                   ],
@@ -407,7 +407,7 @@
                     },
                     {
                         "id":  "week-16",
-                        "title":  "Semaine 16",
+                        "title":  "Semaine 16 — Doubles de test et intégration",
                         "weeks":  [
                                       16
                                   ],
@@ -430,7 +430,7 @@
                     },
                     {
                         "id":  "week-17",
-                        "title":  "Semaine 17",
+                        "title":  "Semaine 17 — Non-régression, refactoring et revue",
                         "weeks":  [
                                       17
                                   ],
@@ -453,7 +453,7 @@
                     },
                     {
                         "id":  "week-18",
-                        "title":  "Semaine 18",
+                        "title":  "Semaine 18 — Git : branches, conflits et pull requests",
                         "weeks":  [
                                       18
                                   ],
@@ -478,7 +478,7 @@
                     },
                     {
                         "id":  "week-19",
-                        "title":  "Semaine 19",
+                        "title":  "Semaine 19 — Docker : images, volumes et Compose",
                         "weeks":  [
                                       19
                                   ],
@@ -500,7 +500,7 @@
                     },
                     {
                         "id":  "week-20",
-                        "title":  "Semaine 20",
+                        "title":  "Semaine 20 — Intégration continue et artefacts",
                         "weeks":  [
                                       20
                                   ],
@@ -520,7 +520,7 @@
                     },
                     {
                         "id":  "week-21",
-                        "title":  "Semaine 21",
+                        "title":  "Semaine 21 — Azure : hébergement, secrets et identité",
                         "weeks":  [
                                       21
                                   ],
@@ -547,7 +547,7 @@
                     },
                     {
                         "id":  "week-22",
-                        "title":  "Semaine 22",
+                        "title":  "Semaine 22 — Observabilité, incidents et performance",
                         "weeks":  [
                                       22
                                   ],
@@ -567,7 +567,7 @@
                     },
                     {
                         "id":  "week-23",
-                        "title":  "Semaine 23",
+                        "title":  "Semaine 23 — Projet final guidé",
                         "weeks":  [
                                       23
                                   ],
@@ -584,7 +584,7 @@
                     },
                     {
                         "id":  "week-24",
-                        "title":  "Semaine 24",
+                        "title":  "Semaine 24 — Défense, entretiens, anglais et carrière",
                         "weeks":  [
                                       24
                                   ],

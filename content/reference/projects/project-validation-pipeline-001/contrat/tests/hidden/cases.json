@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "cases": [
+    {
+      "name": "Hidden_TwoMembersAreJoinedInOrder",
+      "message": "Les membres fautifs sont triés par ordre ordinal, jamais par ordre de collecte.",
+      "arguments": ["Écran", 0, 0.00],
+      "expected": "422 Quantity=intervalle;UnitPrice=intervalle",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_ThreeMembersKeepTheContractStable",
+      "message": "Trois membres fautifs : même séparateurs, même tri, même statut.",
+      "arguments": ["A", 250, 1500.00],
+      "expected": "422 Name=longueur;Quantity=intervalle;UnitPrice=intervalle",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_LowerPriceBoundIsAccepted",
+      "message": "La borne basse du prix appartient à l'intervalle : le rapport est un succès.",
+      "arguments": ["Bureau réglable", 1, 0.01],
+      "expected": "200",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_MixedFailuresAcrossMembers",
+      "message": "Deux membres fautifs pour des raisons différentes coexistent dans le même rapport.",
+      "arguments": ["", 999, 4.50],
+      "expected": "422 Name=obligatoire;Quantity=intervalle",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_TwoCodesAreGroupedBehindTheirMember",
+      "message": "Présent, trop court et hors alphabet : les deux codes du membre sont groupés et triés.",
+      "arguments": ["*", 3, 25.00],
+      "expected": "422 Name=caracteres,longueur",
+      "argumentsUnchanged": true
+    }
+  ]
+}

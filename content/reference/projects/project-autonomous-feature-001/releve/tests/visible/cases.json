@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "cases": [
+    {
+      "name": "Visible_FullStatementWithBonusAndExpiry",
+      "message": "Actifs avec bonus, expirés sans bonus, niveau déduit des actifs.",
+      "arguments": ["2026-07-01:60.00;2026-07-15:45.00;2025-01-05:80.99", "2026-08-15"],
+      "expected": "actifs=125;expires=80;niveau=argent",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Visible_SmallActiveBalanceIsBronze",
+      "message": "Sous cent points actifs, le niveau reste bronze.",
+      "arguments": ["2026-08-01:20.00", "2026-08-15"],
+      "expected": "actifs=20;expires=0;niveau=bronze",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Visible_EmptyHistoryStatement",
+      "message": "L'historique vide rend le relevé zéro du contrat.",
+      "arguments": ["", "2026-08-15"],
+      "expected": "actifs=0;expires=0;niveau=bronze",
+      "argumentsUnchanged": true
+    }
+  ]
+}

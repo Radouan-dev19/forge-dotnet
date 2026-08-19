@@ -551,6 +551,11 @@ ailleurs, elle doit valoir ici aussi.
 
 ## PROMPT 9 — T7 + T8 + T9 : couverture d'examen, densité, exercices triviaux
 
+> **État remesuré le 18 août 2026.** T7 est clos : les 187 exercices publiés figurent tous dans au
+> moins une banque d'examen, zéro orphelin. T8 a progressé : S11–S14 sont à dix ou douze exercices,
+> restent S15–S17 à six, S19 à cinq, S20 à trois. T9 n'a pas été commencé : zéro exercice frère sur
+> douze. Les chiffres du prompt ci-dessous sont ceux du relevé d'origine, conservés comme trace.
+
 ```
 [SOCLE COMMUN]
 

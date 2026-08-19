@@ -9,9 +9,10 @@ namespace ForgeDotNet.UnitTests;
 /// </summary>
 /// <remarks>
 /// Le défaut d'origine n'était pas une règle fausse : c'était un chaînon absent, et surtout
-/// invisible. <c>MasteryPolicyCatalog</c> déclare vingt-trois clés d'accomplissement ; deux ont un
-/// producteur. Les portes B, C et D sont donc fermées définitivement, sans que rien dans le code ne le
-/// signale.
+/// invisible. <c>MasteryPolicyCatalog</c> déclare vingt-trois clés d'accomplissement ; longtemps,
+/// deux seulement avaient un producteur, et les portes B, C et D étaient fermées définitivement sans
+/// que rien dans le code ne le signale. Dix clés sont produites aujourd'hui ; treize restent
+/// inventoriées avec leur diagnostic.
 ///
 /// Ce test rend l'inventaire obligatoire : toute clé exigée par une porte doit figurer soit parmi les
 /// clés produites, soit parmi les clés déclarées sans producteur, avec ce qui lui manque et pourquoi.
@@ -38,9 +39,42 @@ public sealed class ProjectAchievementTests
         // Microsoft.Data.Sqlite parmi ses assemblies approuvées. Ses trois suites exécutent donc du
         // vrai EF Core contre une vraie base — modèle traversé, requêtes comptées par un
         // intercepteur, écriture relue depuis un contexte neuf. L'artefact que la clé nomme est
-        // exercé, pas raisonné : c'est la seule des quatorze clés « contenu manquant » dont le bac
-        // à sable permette une preuve honnête en l'état.
+        // exercé, pas raisonné.
         MasteryPolicyCatalog.EfCore,
+
+        // Six projets vérifiables livrés le 18 août 2026, chacun sur le modèle ci-dessus : la clé
+        // est déclarée par le manifeste, les suites s'exécutent dans le bac à sable, et chaque
+        // producteur est prouvé de bout en bout hors Docker par ProjectCorrectnessTests.
+
+        // project-validation-pipeline-001 : Validator.TryValidateObject traverse les attributs du
+        // vrai pipeline DataAnnotations — celui-là même qu'ASP.NET Core exécute —, l'apprenant
+        // l'étend par un attribut personnalisé et projette les manquements dans un contrat 200/422.
+        MasteryPolicyCatalog.ValidationAndErrors,
+
+        // project-operations-log-001 : les entrées passent par le vrai ILogger de
+        // Microsoft.Extensions.Logging — seuil, caviardage avant émission, corrélation par
+        // BeginScope — et le puits capturé est la seule source du résultat.
+        MasteryPolicyCatalog.Logs,
+
+        // project-incident-drill-001 : la clé nomme un incident SIMULÉ, et c'est ce que le projet
+        // exerce — un service simulé déterministe que l'apprenant détecte, atténue par la bonne
+        // action et vérifie rétabli sur les signaux relus, jamais sur l'action posée.
+        MasteryPolicyCatalog.SimulatedIncident,
+
+        // project-query-budget-001 : la piste « compter des allers-retours plutôt que chronométrer »
+        // est empruntée — le squelette fonctionne mais interroge élément par élément, et l'apprenant
+        // doit rendre le même résultat sous un budget de requêtes compté par un intercepteur.
+        MasteryPolicyCatalog.Performance,
+
+        // project-abuse-hardening-001 : HMAC recalculé et comparé en temps constant, canonisation
+        // de chemin, fenêtre anti-rejeu — éprouvés par des cas cachés d'abus que l'énoncé ne liste
+        // pas, ce que le diagnostic de la clé exigeait.
+        MasteryPolicyCatalog.Security,
+
+        // project-autonomous-feature-001 : une spécification contractuelle complète, aucun
+        // découpage, aucun harnais, aucun indice — la fonctionnalité se livre sur le seul contrat,
+        // ce qui est la définition du geste dans les limites déclarées du bac à sable.
+        MasteryPolicyCatalog.AutonomousFeature,
     ];
 
     /// <summary>Ce qui manque à une exigence pour devenir produisible.</summary>
@@ -75,10 +109,11 @@ public sealed class ProjectAchievementTests
     /// que la politique refuse.
     /// </para>
     /// <para>
-    /// Conclusion de l'inventaire : dix-neuf clés restent sans producteur — treize attendent un contenu
-    /// vérifiable, six exigent un jugement humain et ne descendront jamais par du code. Deux en sont
-    /// sorties : code-review (project-code-review-001, piste senior S31) et ef-core
-    /// (project-orders-database-001).
+    /// Conclusion de l'inventaire : treize clés restent sans producteur — sept attendent un contenu
+    /// vérifiable ou un canal de preuve qui n'existe pas encore, six exigent un jugement humain et ne
+    /// descendront jamais par du code. Huit en sont sorties : code-review et ef-core d'abord, puis le
+    /// 18 août 2026 validation-errors, logs, incident.simulated, performance, security et
+    /// feature.autonomous, chacune par un projet vérifiable dédié.
     /// </para>
     /// </remarks>
     private static readonly Unproduced[] UnproducedAchievements =
@@ -87,8 +122,6 @@ public sealed class ProjectAchievementTests
             "Le bac à sable démarre avec « --network none » et n'approuve aucune assembly d'hébergement HTTP : "
             + "rien n'y sert de requête. Un projet ne pourrait faire décider que des règles — négociation, statut, "
             + "pagination — c'est-à-dire raisonner sur HTTP sans en exercer une seule ligne."),
-        new(MasteryPolicyCatalog.ValidationAndErrors, Blocker.MissingContent,
-            "Même livrable que l'API : les exercices de validation décident d'une règle, ils ne câblent aucun pipeline."),
         new(MasteryPolicyCatalog.UnitTests, Blocker.MissingContent,
             "Le runner invoque une méthode statique nommée d'avance : il ne découvre ni n'exécute des tests écrits par "
             + "l'apprenant. Le faire retourner un rapport d'assertions serait falsifiable — rien n'obligerait les "
@@ -108,22 +141,8 @@ public sealed class ProjectAchievementTests
             "Les exercices security-jwt-* font valider un jeton à la main et le laboratoire api-jwt-bearer câble le "
             + "middleware, mais aucun ne produit l'accomplissement : la preuve d'exercice reste une preuve de pratique, "
             + "et le laboratoire s'exécute hors du bac à sable, sans preuve collectée par le serveur."),
-        new(MasteryPolicyCatalog.Logs, Blocker.MissingContent,
-            "Le livrable d'exploitation du projet final n'a ni starter ni suite d'acceptation."),
         new(MasteryPolicyCatalog.Deployment, Blocker.MissingContent,
             "Le mode Azure est simulé, et son laboratoire ne produit aucune preuve que le serveur collecte."),
-        new(MasteryPolicyCatalog.SimulatedIncident, Blocker.MissingContent,
-            "Le laboratoire azure-operations porte un script d'incident, mais aucun canal de vérification ne le relie au produit."),
-        new(MasteryPolicyCatalog.Performance, Blocker.MissingContent,
-            "Piste ouverte, non empruntée : une base réelle permet de compter des allers-retours plutôt que de "
-            + "chronométrer, donc de mesurer une amélioration de façon déterministe. Il manque le livrable qui compare "
-            + "un avant documenté à un après, au même volume."),
-        new(MasteryPolicyCatalog.Security, Blocker.MissingContent,
-            "Les exercices security-* décident d'une règle sur une entrée fournie ; le livrable manquant devrait être "
-            + "éprouvé contre une tentative d'abus qu'il ne connaît pas d'avance. Une suite d'acceptation dont les "
-            + "attaques sont énumérées dans l'énoncé ne mesure que la lecture de l'énoncé."),
-        new(MasteryPolicyCatalog.AutonomousFeature, Blocker.MissingContent,
-            "Le projet final est un brief sans starter ni suite : rien n'y est vérifiable automatiquement."),
         new(MasteryPolicyCatalog.CleanGit, Blocker.HumanJudgement,
             "Juger un historique exige de lire un dépôt réel, auquel le produit local n'a pas accès et ne doit pas en avoir."),
         new(MasteryPolicyCatalog.TenMinutePresentation, Blocker.HumanJudgement,
@@ -133,7 +152,8 @@ public sealed class ProjectAchievementTests
         new(MasteryPolicyCatalog.PragmaticArchitecture, Blocker.HumanJudgement,
             "La qualité d'une note de décision se juge sur son argumentation, pas sur un résultat calculable."),
         new(MasteryPolicyCatalog.English, Blocker.HumanJudgement,
-            "L'expression orale et écrite demande un lecteur ; les cinquante et une cartes d'anglais sont auto-évaluées."),
+            "L'expression orale et écrite demande un lecteur ; les cinquante cartes d'anglais, appariées écrit/oral "
+            + "et complétées d'un glossaire, sont auto-évaluées."),
         new(MasteryPolicyCatalog.FinalDefense, Blocker.HumanJudgement,
             "La défense finale est une performance orale devant un jury, par construction."),
     ];
@@ -143,17 +163,18 @@ public sealed class ProjectAchievementTests
 
     /// <summary>Plafond de clés sans producteur. Il ne peut que descendre.</summary>
     /// <remarks>
-    /// Descendu à dix-neuf. Le premier producteur au-delà de la porte A fut project-code-review-001
-    /// (piste senior S31), qui branche code-review sur une suite notant des défauts plantés ; le second
-    /// est project-orders-database-001, qui branche ef-core sur trois suites exécutant du vrai EF Core
-    /// contre une vraie base SQLite — le bac à sable embarque les deux assemblies.
+    /// Descendu à treize le 18 août 2026, par six projets vérifiables livrés dans le même incrément —
+    /// validation-errors, logs, incident.simulated, performance, security et feature.autonomous. Les
+    /// premiers producteurs au-delà de la porte A furent project-code-review-001 puis
+    /// project-orders-database-001 ; les six nouveaux suivent exactement leur modèle : clé déclarée
+    /// par le manifeste, suites exécutées dans le bac à sable, trajet prouvé hors Docker.
     ///
     /// Ce plafond ne descend que d'autant de clés réellement produites. Un producteur qui ne peut jamais
     /// se déclencher, ou qui se déclenche sur une preuve n'exerçant pas l'artefact que la clé nomme,
     /// ferait descendre ce plafond sans rien débloquer : c'est exactement le faux signal que ce test
     /// existe pour empêcher.
     /// </remarks>
-    private const int MaximumUnproducedKeys = 19;
+    private const int MaximumUnproducedKeys = 13;
 
     [Fact]
     public void EveryGateRequirementIsEitherProducedOrDeclaredUnproduced()
@@ -232,10 +253,13 @@ public sealed class ProjectAchievementTests
     /// les six exigences humaines comme une dette technique conduirait à fabriquer une preuve
     /// automatique de ce qui ne s'automatise pas — un entretien noté par une suite de tests.
     ///
-    /// Ce qui existe pour elles est un protocole de revue par un tiers, <c>docs/HUMAN_REVIEW.md</c> :
-    /// une grille observable par exigence et une attestation qui vit hors du système de maîtrise. Il
-    /// n'ajoute aucun producteur, et ne peut pas en ajouter — <c>MasteryRules.IsEligible</c> refuse
-    /// <c>ManualDeclaration</c> sans condition. Ces six clés restent donc ici, définitivement.
+    /// Ce qui existe pour elles est le protocole de revue par un tiers, <c>docs/HUMAN_REVIEW.md</c>,
+    /// branché au produit depuis le 18 août 2026 : la page /human-review enregistre l'attestation
+    /// d'un relecteur nommé sous <c>MasteryVerificationKind.HumanAttestation</c>, un troisième type
+    /// de preuve que les règles admettent exclusivement pour ces six clés. Elles restent dans cet
+    /// inventaire parce qu'il compte les producteurs <em>automatiques</em> : aucun code ne les
+    /// vérifiera jamais, et <c>ManualDeclaration</c> — la parole de l'apprenant seul — vaut toujours
+    /// zéro.
     /// </remarks>
     [Fact]
     public void TheInventorySeparatesMissingContentFromHumanJudgement()
@@ -243,7 +267,7 @@ public sealed class ProjectAchievementTests
         int missingContent = UnproducedAchievements.Count(item => item.Blocker == Blocker.MissingContent);
         int humanJudgement = UnproducedAchievements.Count(item => item.Blocker == Blocker.HumanJudgement);
 
-        Assert.Equal(13, missingContent);
+        Assert.Equal(7, missingContent);
         Assert.Equal(6, humanJudgement);
         Assert.Equal(UnproducedAchievements.Length, missingContent + humanJudgement);
     }
@@ -303,13 +327,14 @@ public sealed class ProjectAchievementTests
     }
 
     /// <summary>
-    /// Deux clés seulement ont un producteur au-delà de la porte A, et on les nomme.
+    /// Huit clés ont un producteur au-delà de la porte A, et on les nomme.
     /// </summary>
     /// <remarks>
-    /// Le blocage des portes B, C et D reste l'état du produit : le figer par un compte nommé rend
-    /// visible chaque avancée réelle et interdit qu'elle passe inaperçue. Les deux producteurs
-    /// existants exercent l'artefact que leur clé nomme — une revue qui note des défauts plantés,
-    /// des requêtes exécutées contre une vraie base — ce qui est la condition d'admission.
+    /// Figer ce compte nommé rend visible chaque avancée réelle et interdit qu'elle passe inaperçue.
+    /// Chaque producteur exerce l'artefact que sa clé nomme — une revue qui note des défauts plantés,
+    /// des requêtes exécutées contre une vraie base, un pipeline de validation traversé, un journal
+    /// capturé au puits, un incident simulé conduit, un budget de requêtes tenu, une défense éprouvée
+    /// par des abus non énumérés, une fonctionnalité livrée sur contrat — condition d'admission.
     /// </remarks>
     [Fact]
     public void OnlyTheNamedKeysHaveAProducerBeyondGateA()
@@ -327,7 +352,18 @@ public sealed class ProjectAchievementTests
             .OrderBy(key => key, StringComparer.Ordinal)
             .ToArray();
 
-        Assert.Equal([MasteryPolicyCatalog.CodeReview, MasteryPolicyCatalog.EfCore], produced);
+        Assert.Equal(
+            [
+                MasteryPolicyCatalog.CodeReview,
+                MasteryPolicyCatalog.EfCore,
+                MasteryPolicyCatalog.AutonomousFeature,
+                MasteryPolicyCatalog.SimulatedIncident,
+                MasteryPolicyCatalog.Logs,
+                MasteryPolicyCatalog.Performance,
+                MasteryPolicyCatalog.Security,
+                MasteryPolicyCatalog.ValidationAndErrors,
+            ],
+            produced);
     }
 
     /// <summary>

@@ -44,14 +44,16 @@ public sealed class ContentS21S24CoverageTests
         Assert.Equal(51, Directory.GetFiles(Path.Combine(CatalogRoot, "english"), "*.json", SearchOption.TopDirectoryOnly).Length);
         // Un projet porte désormais un dossier, comme un exercice : son manifeste s'appelle
         // project.json et ses suites d'acceptation vivent à côté.
-        Assert.Equal(10, Directory.GetDirectories(Path.Combine(CatalogRoot, "projects")).Length);
+        Assert.Equal(16, Directory.GetDirectories(Path.Combine(CatalogRoot, "projects")).Length);
         Assert.Equal(9, Directory.GetFiles(Path.Combine(ContentRoot, "exams"), "exam.json", SearchOption.AllDirectories).Length);
         // La banque de cartes de révision ajoute un fichier au catalogue : c'est la seule source
         // de rétention espacée qui survive à l'expiration des preuves du bilan d'entrée.
         Assert.Single(Directory.GetFiles(Path.Combine(CatalogRoot, "reviews"), "*.json", SearchOption.TopDirectoryOnly));
-        // Instantané de volume, pas un plancher : project-orders-database-001 est passé d'un brief seul
-        // à un projet vérifiable (squelette, solution de référence, trois suites d'acceptation).
-        Assert.Equal(2_693, Directory.GetFiles(CatalogRoot, "*", SearchOption.AllDirectories).Length);
+        // Instantané de volume, pas un plancher. Le 18 août 2026, six projets vérifiables — les
+        // producteurs des clés validation-errors, logs, incident.simulated, performance, security et
+        // feature.autonomous — ajoutent chacun treize fichiers : manifeste, brief, squelette,
+        // solution de référence et trois suites d'acceptation.
+        Assert.Equal(2_771, Directory.GetFiles(CatalogRoot, "*", SearchOption.AllDirectories).Length);
     }
 
     [Fact]

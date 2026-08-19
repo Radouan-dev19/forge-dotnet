@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "cases": [
+    {
+      "name": "Hidden_RollbackDoesNotFixALoadFault",
+      "message": "Le retour arrière est inopérant sur une panne de charge.",
+      "arguments": ["charge@5", "retour-arriere", 9],
+      "expected": "detecte=5;retabli=jamais",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_FaultBeyondTheWindowIsNotSeen",
+      "message": "Une panne postérieure à la dernière minute observée n'existe pas pour l'exercice.",
+      "arguments": ["deploiement@9", "retour-arriere", 6],
+      "expected": "aucun",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_FaultAtMinuteZeroIsHandled",
+      "message": "Une panne présente dès la première minute se détecte et se corrige normalement.",
+      "arguments": ["deploiement@0", "retour-arriere", 4],
+      "expected": "detecte=0;retabli=2",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_RecoveryAfterTheWindowIsNever",
+      "message": "Un rétablissement qui tomberait après la fenêtre observée n'est jamais constaté.",
+      "arguments": ["charge@6", "montee-en-charge", 7],
+      "expected": "detecte=6;retabli=jamais",
+      "argumentsUnchanged": true
+    }
+  ]
+}

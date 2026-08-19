@@ -25,10 +25,11 @@ public sealed class ProjectCorrectnessTests
         Path.Combine(FindRepositoryRoot(), "content", "reference", "projects");
 
     /// <summary>
-    /// Projets dont la réussite peut produire l'accomplissement « mini-projet console vérifié ».
-    /// Ce plancher ne peut que monter.
+    /// Projets vérifiables — starter, corrigé de référence et une suite d'acceptation par jalon.
+    /// Ce plancher ne peut que monter ; il est passé de quatre à douze le 18 août 2026 avec les six
+    /// producteurs d'accomplissement livrés pour les portes B, C et D.
     /// </summary>
-    private const int MinimumVerifiableProjects = 4;
+    private const int MinimumVerifiableProjects = 12;
 
     public static TheoryData<string, string> PublishedSuites()
     {

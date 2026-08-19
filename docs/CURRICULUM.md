@@ -45,21 +45,30 @@ Le catalogue final contient au moins 70 leçons, 80 exercices C#/algo, 25 labs d
 
 ### État courant du volume de pratique
 
-Le relevé ci-dessus est celui de lʼincrément 10 et nʼest pas réécrit. Depuis, la reprise de densité
-décrite dans `ROADMAP.md` porte le catalogue à **169 exercices** et **224 fiches dʼentretien**. La
-répartition par semaine reste inégale et cʼest la limite à connaître avant de sʼengager sur le
-parcours :
+Le relevé ci-dessus est celui de lʼincrément 10 et nʼest pas réécrit. Depuis, les reprises de densité
+décrites dans `ROADMAP.md` portent le catalogue à **187 exercices** et **242 fiches dʼentretien**
+(mesure du 18 août 2026 : compte des dossiers `content/reference/exercises/` et
+`content/reference/interviews/`). La répartition par semaine reste inégale et cʼest la limite à
+connaître avant de sʼengager sur le parcours :
 
-| Période | Exercices | Par semaine |
+| Période | Exercices référencés | Par semaine |
 |---|---:|---:|
 | S1–S10 | 88 | 8,8 |
-| S11–S17 | 42 | 6,0 |
-| S18–S20 | 9 | 3,0 |
-| S21–S24 | 6 | 1,5 |
+| S11–S14 | 42 | 10,5 |
+| S15–S17 | 18 | 6,0 |
+| S18–S20 | 16 | 5,3 |
+| S21–S24 | 14 | 3,5 |
 | S25–S27 (front-end) | 4 | 1,3 |
+| Piste senior (8 semaines) | 8 | 1,0 |
 
-La cible est de huit exercices par semaine sur S11–S17. Le comptage exact est figé par la matrice de
-`ContentS11S20CoverageTests`, qui refuse toute dérive dans un sens comme dans lʼautre.
+La pratique des semaines S8 à S10 vit dans les **40 scénarios SQL/EF du SqlLab**, pas dans les
+exercices C# : leur module nʼen référence quʼun, choisi comme complément algorithmique du thème.
+
+La cible de huit exercices par semaine est **atteinte sur S11–S14** (dix à douze chacune) ; restent
+**S15–S17, encore à six**. Le comptage exact est figé par la matrice de
+`ContentS11S20CoverageTests`, qui refuse toute dérive dans un sens comme dans lʼautre. Autre
+reliquat mesuré : les douze exercices à domaine dʼentrée booléen relevés par lʼaudit nʼont
+toujours pas dʼexercice frère à domaine ouvert.
 
 ## Bloc front-end (S25–S27)
 
@@ -100,30 +109,32 @@ Le diagnostic peut permettre de raccourcir une leçon, jamais de supprimer son t
 
 ## Projets
 
-Mini-projets progressifs : import de commandes, bibliothèque de collections, analyseur de logs, moteur de promotions, base commandes, API mini-ERP, stratégie de tests, livraison conteneurisée. Six d'entre eux sont **vérifiables** — squelette, corrigé de référence, une suite d'acceptation par jalon exécutée dans le bac à sable — et deux produisent une exigence de porte au-delà de la porte A : la base commandes de S10 produit `ef-core`, la revue de code de S31 produit `code-review`. Le projet final assemble API, SQL Server, EF Core, règles, validation, auth, tests, Docker, CI, logs et déploiement ; la plateforme fournit jalons et grille, jamais la remise complète avant soumission.
+Mini-projets progressifs : import de commandes, bibliothèque de collections, analyseur de logs, moteur de promotions, base commandes, API mini-ERP, stratégie de tests, livraison conteneurisée. Six d'entre eux sont **vérifiables** — squelette, corrigé de référence, une suite d'acceptation par jalon exécutée dans le bac à sable — et deux produisent une exigence de porte au-delà de la porte A : la base commandes de S10 produit `ef-core`, la revue de code de la piste senior (Senior S7) produit `code-review`. Le projet final assemble API, SQL Server, EF Core, règles, validation, auth, tests, Docker, CI, logs et déploiement ; la plateforme fournit jalons et grille, jamais la remise complète avant soumission.
 
 ## Anglais et carrière
 
 L'anglais est transversal : ticket, commit, PR, bug, architecture, clarification, désaccord, incident et entretiens de 5 puis 15 minutes. Les candidatures commencent après la Porte A ou au plus tard en S12. Les preuves restent honnêtes et attribuent l'assistance.
 
-## Piste senior (S25–S32)
+## Piste senior (Senior S1–S8)
 
 Les vingt-quatre semaines ne mènent pas au niveau senior, et cette page le déclarait déjà. Une **piste senior** distincte comble une partie de ce manque, dans un **second document de parcours**, `content/reference/curriculum/forge-senior-reference.json`, chargé et paginé à part (page `/learn-senior`) avec ses propres tests de couverture. Le parcours junior des vingt-quatre semaines n'est pas modifié : sa matrice reste le relevé du chemin junior vers confirmé.
+
+**Numérotation, arbitrée le 18 août 2026.** Les numéros 25 à 27 désignaient deux contenus à la fois : le bloc front-end du parcours junior et les premières semaines de la piste senior. La piste senior est un **semestre distinct** : ses semaines s'affichent désormais **Senior S1 à Senior S8**, dans le manifeste comme sur `/learn-senior`. Les identifiants de contenu (`senior-25` à `senior-32`, leçons et exercices `senior-*`) et les numéros de semaine internes (25 à 32, figés par `ContentSeniorCoverageTests`) restent inchangés : seul l'affichage change. L'ordre de lecture est : **S1–S24 → bloc front-end S25–S27 → piste senior Senior S1–S8**.
 
 L'objectif n'est pas d'apprendre à faire des microservices. C'est une thèse assumée : un junior qui découpe en microservices produit un système distribué qu'il ne sait pas exploiter. La piste vise les fondamentaux distribués qui rendent la conversation crédible en entretien senior, **y compris le refus argumenté de découper**.
 
 | Semaine | Thème | Livrable |
 |---|---|---|
-| S25 | résilience d'un appel : délai, réessai avec jitter, disjoncteur, cloisonnement | budget d'appel tenu sous panne injectée |
-| S26 | idempotence, rejeu, au-moins-une-fois contre exactement-une-fois | endpoint rejouable prouvé |
-| S27 | messagerie : consommateur idempotent, outbox, file de lettres mortes | décision de consommation |
-| S28 | cohérence éventuelle, compensation d'une saga | ordre de compensation |
-| S29 | découper ou non : coût d'un déployable, frontières, refus argumenté | décision de découpe |
-| S30 | observabilité distribuée : corrélation inter-service, budget d'erreur | décision de gel de livraison |
-| S31 | revue de code sur des diffs à défauts plantés | produit l'accomplissement `code-review` |
-| S32 | base de code existante, méthode en quatre temps | correctif + non-régression sur du legacy |
+| Senior S1 | résilience d'un appel : délai, réessai avec jitter, disjoncteur, cloisonnement | budget d'appel tenu sous panne injectée |
+| Senior S2 | idempotence, rejeu, au-moins-une-fois contre exactement-une-fois | endpoint rejouable prouvé |
+| Senior S3 | messagerie : consommateur idempotent, outbox, file de lettres mortes | décision de consommation |
+| Senior S4 | cohérence éventuelle, compensation d'une saga | ordre de compensation |
+| Senior S5 | découper ou non : coût d'un déployable, frontières, refus argumenté | décision de découpe |
+| Senior S6 | observabilité distribuée : corrélation inter-service, budget d'erreur | décision de gel de livraison |
+| Senior S7 | revue de code sur des diffs à défauts plantés | produit l'accomplissement `code-review` |
+| Senior S8 | base de code existante, méthode en quatre temps | correctif + non-régression sur du legacy |
 
-S31 est le premier producteur de l'accomplissement `code-review`, qui n'en avait aucun : un projet vérifiable note le classement de défauts plantés — correction, sécurité, concurrence, et un faux positif de style qui coûte s'il est présenté comme bloquant. S32 applique la méthode des DebugLabs à un défaut planté dans du code que l'apprenant n'a pas écrit.
+Senior S7 est le premier producteur de l'accomplissement `code-review`, qui n'en avait aucun : un projet vérifiable note le classement de défauts plantés — correction, sécurité, concurrence, et un faux positif de style qui coûte s'il est présenté comme bloquant. Senior S8 applique la méthode des DebugLabs à un défaut planté dans du code que l'apprenant n'a pas écrit.
 
 **Ce que la piste ne remplace pas, sans l'enjoliver.** Recevoir la revue d'un humain qui n'est pas d'accord, arbitrer sous pression, traverser un désaccord d'équipe : aucun contenu ne remplace ces situations. La piste entraîne le raisonnement distribué, le classement d'une revue et la navigation en terrain inconnu ; elle ne fabrique ni relecteur humain, ni interlocuteur qui conteste. Cette limite est écrite ici et sur la page de la piste, par la même discipline que le projet s'impose partout ailleurs.
 

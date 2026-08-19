@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "cases": [
+    {
+      "name": "Visible_ThreeItemShelfInOneQuery",
+      "message": "Le rayon le plus fourni se valorise juste, en une seule requête.",
+      "arguments": [1],
+      "expected": "33.00|1",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Visible_SingleItemShelfInOneQuery",
+      "message": "Le budget d'une requête ne dépend pas du nombre d'articles.",
+      "arguments": [3],
+      "expected": "89.90|1",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Visible_UnknownShelfIsRejected",
+      "message": "Un rayon absent est un appel fautif, pas une valeur nulle.",
+      "arguments": [99],
+      "expectedException": "ArgumentOutOfRangeException",
+      "argumentsUnchanged": false
+    }
+  ]
+}

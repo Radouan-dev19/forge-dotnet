@@ -27,6 +27,21 @@ public sealed record MasteryGateView(
     bool IsOpen,
     IReadOnlyList<string> Blockers);
 
+/// <summary>La nature d'une preuve d'accomplissement, affichée telle quelle et jamais confondue.</summary>
+public enum MasteryProofNature
+{
+    MachineVerified,
+    HumanAttested,
+    Declared,
+}
+
+public sealed record MasteryAchievementView(
+    string Key,
+    MasteryProofNature Nature,
+    string NatureLabel,
+    bool CountsTowardGates,
+    DateTimeOffset ObservedAtUtc);
+
 public sealed record MasteryDashboardView(
     string PolicyId,
     int PolicyVersion,
@@ -35,4 +50,5 @@ public sealed record MasteryDashboardView(
     DateTimeOffset CalculatedAtUtc,
     int ObservationCount,
     IReadOnlyList<MasteryDomainView> Domains,
-    IReadOnlyList<MasteryGateView> Gates);
+    IReadOnlyList<MasteryGateView> Gates,
+    IReadOnlyList<MasteryAchievementView> Achievements);

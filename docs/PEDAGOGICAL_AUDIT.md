@@ -375,7 +375,7 @@ seul motif du mini-projet » à « porte A ouverte », sans qu'aucun seuil ne bo
 plafond qui ne peut que descendre.
 
 Deux clés en sont sorties depuis, toutes deux au-delà de la porte A : `code-review`
-(`project-code-review-001`, S31) et `ef-core` (`project-orders-database-001`, dont les trois suites
+(`project-code-review-001`, piste senior Senior S7) et `ef-core` (`project-orders-database-001`, dont les trois suites
 exécutent du vrai EF Core contre une vraie base SQLite dans le bac à sable). Cinq autres clés —
 `api.functional`, `tests.unit`, `tests.integration`, `docker`, `ci` — ont été examinées lors du même
 travail et **refusées** : le bac à sable ne sert aucune requête HTTP, ne découvre aucun test écrit par
@@ -423,14 +423,31 @@ il échouait sur six domaines ; il est vert.
   substitut machine : ce qui le juge est un lecteur. L'explication rejoint donc en nature les six
   exigences « jugement humain », dont elle est la seule **composante**. `MasteryRulesTests` rend le
   refus exécutable ; le raisonnement est dans `docs/MASTERY.md`.
-- **Les portes B, C et D** : dix-neuf de leurs exigences n'ont aucun producteur. Elles sont
-  désormais visibles, comptées **et diagnostiquées**, mais toujours pas satisfaites.
+- **Les portes B, C et D** : treize de leurs exigences n'ont aucun producteur — dix-neuf avant la
+  reprise du 18 août 2026. Elles sont visibles, comptées **et diagnostiquées**, mais les trois
+  portes restent fermées.
 
-  L'inventaire de `ProjectAchievementTests` porte maintenant, pour chaque clé, ce qui lui manque :
-  **treize** attendent un livrable vérifié côté serveur, **six** exigent un jugement humain et ne
-  descendront jamais par du code — Git propre, présentation, entretien blanc, architecture pragmatique,
-  anglais, défense finale. Deux clés sont sorties de l'inventaire, `code-review` et `ef-core`, et cinq
-  autres ont été examinées puis refusées faute de preuve honnête possible dans le bac à sable.
+  L'inventaire de `ProjectAchievementTests` porte, pour chaque clé, ce qui lui manque :
+  **sept** attendent un livrable vérifié côté serveur ou un canal de preuve qui n'existe pas
+  encore, **six** exigent un jugement humain et ne descendront jamais par du code — Git propre,
+  présentation, entretien blanc, architecture pragmatique, anglais, défense finale. Huit clés sont
+  sorties de l'inventaire : `code-review` et `ef-core` d'abord, puis le 18 août 2026
+  `validation-errors`, `logs`, `incident.simulated`, `performance`, `security` et
+  `feature.autonomous` — six projets vérifiables dédiés, chacun exerçant l'artefact que sa clé
+  nomme, prouvés hors Docker par `ProjectCorrectnessTests` et au niveau des règles par
+  `MasteryRulesTests`. La porte D n'attend plus aucun contenu qui lui soit propre : elle attend la
+  porte C, dont `docker`, `ci`, `authn-authz` et `deployment` restent sans canal admis — deux
+  canaux sont conçus et documentés dans `docs/MASTERY.md`, aucun n'est implémenté. Cinq clés
+  avaient par ailleurs été examinées puis refusées faute de preuve honnête possible dans le bac à
+  sable ; ces refus tiennent.
+
+  Le 19 août 2026, les six exigences à jugement humain sont devenues **attestables** : la page
+  `/human-review` enregistre l'attestation d'un relecteur humain nommé selon les grilles de
+  `docs/HUMAN_REVIEW.md`, sous un troisième type de preuve que les règles admettent pour ces seules
+  clés et pour la composante Explication — affiché partout « attesté par un relecteur humain, non
+  vérifié par la machine », auto-attestation refusée, déclaration de l'apprenant toujours à zéro.
+  Un apprenant avec un relecteur réel peut donc satisfaire les exigences humaines de B, C et D ;
+  ce qui ferme encore B et C est exactement l'ensemble des clés vérifiables sans canal admis.
 
   La reprise a cherché quelle clé pouvait être branchée sur une preuve **déjà collectée**. Réponse
   mesurée : **aucune**. Le candidat le plus crédible, « EF Core », a été instrumenté puis retiré après
@@ -467,7 +484,7 @@ il échouait sur six domaines ; il est vert.
 - Forme des activités S19–S22 : les exercices `docker-*`, `ci-*` et `azure-*` sont des fonctions
   pures sur un domaine d'entrée de quelques valeurs. Ils entraînent la décision et non le geste, et un
   domaine aussi étroit se résout par une table de correspondance mémorisée. La pratique réelle de ces
-  sujets passe par les huit laboratoires de `content/labs/`, longtemps invisibles du parcours et
+  sujets passe par les onze laboratoires de `content/labs/`, longtemps invisibles du parcours et
   désormais servis par les pages `/labs` : chaque manifeste `lab.json` est validé au démarrage, chaque
   page annonce que la réussite est déclarée par l'apprenant, hors du bac à sable, et ne produit aucune
   preuve de maîtrise. Le rattachement rend les laboratoires trouvables ; il ne change pas la forme des
@@ -491,9 +508,12 @@ il échouait sur six domaines ; il est vert.
   auparavant qu'il ne fonctionnait pas : deux défauts l'empêchaient d'aboutir. Restent hors de portée
   d'un test l'éditeur du navigateur et l'affichage de l'accomplissement dans le tableau de
   progression.
-- 43 des 142 exercices ne figurent dans aucune banque d'examen : ils ne peuvent jamais être tirés. Ce
-  nombre n'a pas monté malgré sept exercices neufs, tous inscrits dans la banque de leur examen ; il
-  n'a pas baissé non plus, le reliquat portant sur des familles antérieures à la reprise.
+- ~~43 des 142 exercices ne figurent dans aucune banque d'examen : ils ne peuvent jamais être
+  tirés.~~ **Clos**, mesuré le 18 août 2026 : l'union des `eligibleExerciseIds` des neuf banques
+  d'examen couvre les **187 exercices publiés sur 187** — zéro orphelin, aucune référence pendante,
+  dix-sept exercices figurant dans deux banques ou plus. L'examen `sql-ef-core-v1` reste le cas
+  particulier assumé : il ne tire aucun exercice C# et embarque six items SQL inline plus deux
+  scénarios EF éligibles.
 
 ## Reprise du 17 août 2026 — avec un démon Docker
 

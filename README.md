@@ -73,14 +73,16 @@ Routes disponibles :
 - `/plan/{sessionId}` : proposition hebdomadaire, ajustement de charge et acceptation versionnée ;
 - `/practice` : exercices de pratique manuelle publiés ;
 - `/practice/{exerciseId}` : réflexion, indices, tentatives, solution protégée et historique ;
-- `/labs` et `/labs/{labId}` : les huit laboratoires — vrais projets exécutés sur le poste de l'apprenant, hors bac à sable, à réussite déclarée et sans preuve de maîtrise ;
+- `/projects` et `/projects/{projectId}` : les seize projets, dont douze vérifiables — squelette, jalons et suites d'acceptation exécutées dans le bac à sable, chacun produisant l'accomplissement de porte que son manifeste déclare ;
+- `/labs` et `/labs/{labId}` : les onze laboratoires — vrais projets exécutés sur le poste de l'apprenant, hors bac à sable, à réussite déclarée et sans preuve de maîtrise ;
 - `/debug-lab` et `/debug-lab/{scenarioId}` : méthode d'investigation, journal et scénarios de débogage ;
 - `/sql-lab` : choix d'un scénario SQL publié, session jetable provisionnée avec son jeu de données, exécution bornée, validation et reset ;
-- `/mastery` : preuves, scores versionnés et portes de maîtrise explicables ;
+- `/mastery` : preuves, scores versionnés, portes de maîtrise explicables et nature de chaque preuve — vérifiée machine, attestée humaine ou déclarée ;
+- `/human-review` : le protocole de revue par un tiers — les sept grilles de `docs/HUMAN_REVIEW.md`, l'état de chaque exigence et l'enregistrement d'une attestation humaine, admise uniquement pour les exigences qu'aucune machine ne peut juger ;
 - `/reviews` : file de révisions dues et cartes personnelles ;
 - `/exams` et `/exams/{attemptId}` : examens sans aide gouvernés par l'échéance serveur ;
 - `/interviews` et `/interviews/{id}` : les 242 fiches d'entretien, critères observables et réponse modèle révélés à la demande — aucune preuve de maîtrise ;
-- `/english` et `/english/{id}` : les 51 cartes d'anglais professionnel, appariées écrit/oral — aucune preuve de maîtrise ;
+- `/english` et `/english/{id}` : les 51 activités d'anglais professionnel — 50 cartes appariées écrit/oral et un glossaire — aucune preuve de maîtrise ;
 - `/health` : santé HTTP, intégrité SQLite et état des migrations.
 
 ## Lancement avec Docker Compose
@@ -128,7 +130,7 @@ Les échafaudeurs `scripts/New-S*Content.ps1` ne réécrivent jamais un fichier 
 dotnet test tests/ForgeDotNet.IntegrationTests --filter FullyQualifiedName~ExerciseCorrectnessTests
 ```
 
-Pour chacun des 142 exercices publiés, la solution est compilée en mémoire et doit passer tous ses cas visibles et cachés, tandis que le starter doit compiler et en échouer au moins un. La sémantique reproduit celle du conteneur. Ce contrôle ne remplace pas le bac à sable Docker pour une soumission d'apprenant : il rend seulement le contenu vérifiable sur un poste sans moteur Docker.
+Pour chacun des 187 exercices publiés, la solution est compilée en mémoire et doit passer tous ses cas visibles et cachés, tandis que le starter doit compiler et en échouer au moins un. La sémantique reproduit celle du conteneur. Ce contrôle ne remplace pas le bac à sable Docker pour une soumission d'apprenant : il rend seulement le contenu vérifiable sur un poste sans moteur Docker.
 
 Trois autres invariants sont vérifiés au passage : aucun exercice ne répète deux fois les mêmes arguments, chacun porte au moins 3 cas visibles et 4 cachés — sauf domaine booléen épuisé — et chaque cas déclare soit un résultat attendu, soit une exception attendue, jamais les deux.
 
@@ -235,9 +237,10 @@ Les analyseurs .NET utilisent le niveau `latest-recommended`. Les avertissements
 - Le CodeRunner automatique exige Docker et une image explicitement configurée par digest ; Compose conserve volontairement le mode `Manual`, qui ne constitue jamais une preuve automatique.
 - SqlLab est désactivé par défaut et exige le profil Docker dédié. SQL Server n'est jamais exposé directement sur le réseau hôte.
 - **La dette éditoriale est éteinte** : `content/authoring/content-debt.json` ne déclare plus aucun document, contre 376 au relevé initial. Les trois règles d'authenticité n'ont donc plus aucune exception, et `ContentAuthenticityTests` refuse désormais toute réapparition au lieu de borner un existant. L'audit pédagogique reste néanmoins **refusé** tant que les sept personas n'ont pas été rejoués avec un navigateur et Docker disponibles. Voir [`docs/PEDAGOGICAL_AUDIT.md`](docs/PEDAGOGICAL_AUDIT.md).
-- La densité de pratique se rapproche de la cible sur les semaines backend : 8,8 exercices par semaine en S1–S10 contre 5,4 en S11–S24. La reprise avance semaine par semaine et son état exact est figé par les matrices de `ContentS11S20CoverageTests` et `ContentS21S24CoverageTests` : S11 à S13 sont à dix exercices chacune depuis le lot REST, S14 à douze depuis le lot JWT, S15 à S17 à six, S18 à S20 à trois, S21 à sept depuis le lot OAuth/OIDC, S22 à S24 à un ou deux. La cible de huit par semaine est atteinte de S11 à S14 ; restent S15 à S17.
+- La densité de pratique se rapproche de la cible sur les semaines backend : 8,8 exercices par semaine en S1–S10 contre 6,4 en S11–S24 (mesure du 18 août 2026). La reprise avance semaine par semaine et son état exact est figé par les matrices de `ContentS11S20CoverageTests` et `ContentS21S24CoverageTests` : S11 à S13 sont à dix exercices chacune depuis le lot REST, S14 à douze depuis le lot JWT, S15 à S17 à six, S18 à huit, S19 à cinq, S20 à trois, S21 à sept depuis le lot OAuth/OIDC, S22 à trois, S23 à un, S24 à trois. La cible de huit par semaine est atteinte de S11 à S14 ; restent S15 à S17. La couverture d'examen, elle, est complète : les 187 exercices publiés figurent tous dans au moins une banque. Les douze exercices à domaine d'entrée booléen relevés par l'audit n'ont en revanche toujours pas d'exercice frère à domaine ouvert.
 - Les exercices des semaines S19 à S22 pratiquent Docker, l'intégration continue et Azure par des fonctions pures : ils entraînent la décision, pas le geste. La pratique réelle de ces sujets passe par les onze laboratoires de `content/labs/`, désormais servis par les pages `/labs`. Un laboratoire s'exécute sur le poste de l'apprenant, hors du bac à sable : sa réussite est déclarée et ne produit aucune preuve de maîtrise, ce que chaque page annonce avant le brief.
 - Le bloc front-end (S25–S27) suit une stratégie mixte : quatre exercices C# à domaine ouvert nourrissent le score de maîtrise, alors que le câblage réel passe par trois laboratoires. Le laboratoire `blazor-jwt-client` fait exception à la preuve déclarée — sa suite bUnit s'exécute dans la solution (`dotnet test`) et constitue une vraie preuve serveur au niveau de la suite de tests — sans pour autant ouvrir de porte de maîtrise, qu'aucun laboratoire ne produit. Les laboratoires `angular-orders-client` et `react-orders-client` exigent **une installation réseau `npm` initiale** : c'est le seul point du parcours qui rompt la promesse « aucune dépendance réseau obligatoire ». Leurs versions sont épinglées, leur `package-lock.json` est commité, `node_modules` n'est jamais versionné, et la commande exacte est `npm ci` puis `npm test`.
+- Les six exigences de porte à jugement humain et la composante d'explication s'attestent depuis `/human-review`, par un relecteur humain nommé. Le produit ne peut vérifier ni l'identité du relecteur ni ce qu'il a observé : l'attestation est affichée partout comme « attestée par un relecteur humain, non vérifiée par la machine », n'est admise pour aucune exigence vérifiable par un test, et l'auto-attestation est refusée par un contrôle contre le nom du profil — qui reste lui-même déclaratif.
 - Forge.NET reste un produit local mono-utilisateur avec SQLite ; il n'est pas conçu pour une exposition Internet ou un usage collaboratif.
 - La préférence de langue est enregistrée dans le profil de session, mais seule l'interface française est complète.
 

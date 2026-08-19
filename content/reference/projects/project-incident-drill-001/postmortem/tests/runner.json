@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "suiteId": "project-incident-drill-001.postmortem.v1",
+  "exerciseId": "project-incident-drill-001.postmortem",
+  "exerciseVersion": 1,
+  "typeName": "Submission",
+  "methodName": "Postmortem",
+  "parameterTypes": ["string", "string"],
+  "returnType": "string"
+}

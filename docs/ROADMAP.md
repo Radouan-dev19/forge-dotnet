@@ -122,7 +122,7 @@ Reprise du 10 août 2026, détaillée dans la section « Reprise » du rapport d
 | Domaines de maîtrise inatteignables | clos : deux composantes sans producteur et une attribution de domaine codée en dur plaçaient six domaines sous leur propre seuil — débogage 60 pour 80, Api et Tests 15 pour 85, cinq domaines à 0. La porte A était donc mathématiquement impossible. Attribution par la compétence, quiz de leçon projeté, banque portée à 350 cartes sur 175 éléments : tous les domaines plafonnent à 90. `MasteryReachabilityTests` calcule ce plafond et refuse qu'il repasse au niveau du seuil |
 
 Les dix projets portent désormais un dossier — `projects/<id>/project.json`, `brief.md`, et pour les
-**six** projets vérifiables — les quatre projets console, la revue de code de S31 et la base commandes
+**six** projets vérifiables — les quatre projets console, la revue de code de la piste senior (Senior S7) et la base commandes
 de S10 — un `starter/`, un corrigé de référence et une suite d'acceptation par jalon.
 La reprise de leurs briefs et de leurs jalons a par ailleurs sorti cinq documents du registre de
 dette, qui descend de 164 à **159**.
@@ -220,8 +220,19 @@ est la concurrence optimiste de `sql-isolation-001` et `ef-core-data-access-001`
 HTTP, et la vérification de signature des webhooks réutilise le HMAC du lot jetons. Ce lot fait
 franchir la cible de huit exercices à S11–S14, ce qui sert aussi la reprise de densité (T8).
 
-**Cible restante : huit exercices par semaine sur S11–S13 et S15–S17**, soit huit exercices de plus. Les
-sujets qu'un runner à méthode statique ne peut pas héberger réellement — écrire un vrai fichier de
-conteneur, une vraie définition de pipeline, un vrai déploiement — relèvent des laboratoires de
-`content/labs/`, pas des exercices : les décliner sur le modèle de `labs/api-mini-erp/` est un lot
-distinct de celui-ci.
+**Cible restante, remesurée le 18 août 2026 : huit exercices par semaine sur S15–S17**, encore à six
+chacune — S11 à S13 sont à dix et S14 à douze, la cible y est atteinte. Les densités mesurées
+ailleurs : S18 à huit, S19 à cinq, S20 à trois, S21 à sept, S22 à trois, S23 à un, S24 à trois,
+piste senior à un par semaine. Deux autres reliquats mesurés le même jour : les douze exercices à
+domaine d'entrée booléen relevés par l'audit n'ont toujours aucun frère à domaine ouvert (T9,
+zéro sur douze), tandis que la couverture d'examen est close — les 187 exercices publiés figurent
+tous dans au moins une banque (T7). Les sujets qu'un runner à méthode statique ne peut pas héberger
+réellement — écrire un vrai fichier de conteneur, une vraie définition de pipeline, un vrai
+déploiement — relèvent des laboratoires de `content/labs/`, pas des exercices : les décliner sur le
+modèle de `labs/api-mini-erp/` est un lot distinct de celui-ci.
+
+Limite de schéma constatée au passage : le schéma de curriculum v1 impose au moins un exercice par
+module et ne sait référencer ni scénario SQL, ni DebugLab, ni laboratoire. Les modules S8 à S10,
+dont la pratique vit dans le SqlLab, référencent donc chacun un exercice C# complémentaire du thème
+et l'annoncent dans leur titre. Donner aux modules des champs `scenarioIds`/`labIds` demanderait une
+version 2 du schéma, son chargeur et ses pages : à évaluer comme un lot propre, pas en correctif.

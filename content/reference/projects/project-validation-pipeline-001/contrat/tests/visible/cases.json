@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "cases": [
+    {
+      "name": "Visible_ConformingDraftIsOk",
+      "message": "Aucun manquement : le rapport se réduit au statut de succès.",
+      "arguments": ["Souris", 3, 25.00],
+      "expected": "200",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Visible_MissingNameYieldsItsSingleCode",
+      "message": "La présence manquante court-circuite les autres attributs : un seul code pour le membre.",
+      "arguments": ["", 3, 25.00],
+      "expected": "422 Name=obligatoire",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Visible_SingleMemberKeepsTheSameShape",
+      "message": "Le format du rapport ne change pas quand un seul membre manque.",
+      "arguments": ["Écran", 0, 25.00],
+      "expected": "422 Quantity=intervalle",
+      "argumentsUnchanged": true
+    }
+  ]
+}

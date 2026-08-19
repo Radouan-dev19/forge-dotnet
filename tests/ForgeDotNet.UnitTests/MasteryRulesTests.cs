@@ -360,6 +360,162 @@ public sealed class MasteryRulesTests
         Assert.False(Gate(missingDeployment, MasteryGate.D).IsOpen);
     }
 
+    /// <summary>
+    /// Chaque clé nouvellement produite ouvre réellement sa porte : la même projection privée de la
+    /// seule clé reste fermée, une déclaration manuelle ne la remplace pas, et l'accomplissement
+    /// vérifié l'ouvre.
+    /// </summary>
+    /// <remarks>
+    /// Six clés ont gagné un producteur le 18 août 2026 — six projets vérifiables dont les suites
+    /// s'exécutent dans le bac à sable, sur le modèle de project-orders-database-001. Ce test fige
+    /// le maillon suivant du trajet : l'accomplissement que produit une soumission dont toutes les
+    /// suites passent, enregistré en <c>AutomaticTests</c>, est bien celui que la porte attend.
+    /// Sans lui, le producteur pourrait exister sans que la porte ne le reconnaisse jamais.
+    /// </remarks>
+    [Theory]
+    [InlineData(MasteryPolicyCatalog.ValidationAndErrors, MasteryGate.B)]
+    [InlineData(MasteryPolicyCatalog.Logs, MasteryGate.C)]
+    [InlineData(MasteryPolicyCatalog.SimulatedIncident, MasteryGate.C)]
+    [InlineData(MasteryPolicyCatalog.Performance, MasteryGate.D)]
+    [InlineData(MasteryPolicyCatalog.Security, MasteryGate.D)]
+    [InlineData(MasteryPolicyCatalog.AutonomousFeature, MasteryGate.D)]
+    public void EachNewlyProducedKeyOpensItsGateOnlyOnceVerified(string key, MasteryGate gate)
+    {
+        Guid profileId = Guid.NewGuid();
+        var observations = new List<MasteryObservation>();
+        observations.AddRange(CompleteDomain(profileId, MasteryDomain.CSharp, 100m));
+        observations.AddRange(CompleteDomain(profileId, MasteryDomain.Debugging, 100m));
+        observations.AddRange(CompleteDomain(profileId, MasteryDomain.Sql, 100m));
+        observations.AddRange(ExtraUnassistedPractice(profileId, 10));
+        MasteryAchievement[] allButOne = AllAchievements(profileId)
+            .Where(item => item.Key != key)
+            .ToArray();
+
+        Assert.False(Gate(Calculate(profileId, observations, allButOne), gate).IsOpen);
+
+        MasteryGateResult declared = Gate(
+            Calculate(
+                profileId,
+                observations,
+                [.. allButOne, Achievement(profileId, key, verification: MasteryVerificationKind.ManualDeclaration)]),
+            gate);
+        Assert.False(declared.IsOpen);
+
+        MasteryGateResult verified = Gate(
+            Calculate(
+                profileId,
+                observations,
+                [.. allButOne, Achievement(profileId, key, verification: MasteryVerificationKind.AutomaticTests)]),
+            gate);
+        Assert.True(verified.IsOpen);
+    }
+
+    /// <summary>
+    /// Une attestation humaine satisfait exactement les exigences à jugement humain : la porte reste
+    /// fermée sans elle, une déclaration manuelle ne la remplace pas, et l'attestation l'ouvre.
+    /// </summary>
+    /// <remarks>
+    /// C'est la frontière d'honnêteté du canal des attestations : un apprenant qui a un relecteur
+    /// réel peut faire constater ce qu'aucune machine ne juge, et un apprenant seul lit exactement
+    /// ce qui lui manque. Le nom du relecteur reste invérifiable, ce que l'interface affiche partout.
+    /// </remarks>
+    [Theory]
+    [InlineData(MasteryPolicyCatalog.CleanGit, MasteryGate.B)]
+    [InlineData(MasteryPolicyCatalog.TenMinutePresentation, MasteryGate.B)]
+    [InlineData(MasteryPolicyCatalog.MockInterview, MasteryGate.C)]
+    [InlineData(MasteryPolicyCatalog.PragmaticArchitecture, MasteryGate.D)]
+    [InlineData(MasteryPolicyCatalog.English, MasteryGate.D)]
+    [InlineData(MasteryPolicyCatalog.FinalDefense, MasteryGate.D)]
+    public void AHumanAttestationOpensItsHumanJudgementRequirement(string key, MasteryGate gate)
+    {
+        Guid profileId = Guid.NewGuid();
+        var observations = new List<MasteryObservation>();
+        observations.AddRange(CompleteDomain(profileId, MasteryDomain.CSharp, 100m));
+        observations.AddRange(CompleteDomain(profileId, MasteryDomain.Debugging, 100m));
+        observations.AddRange(CompleteDomain(profileId, MasteryDomain.Sql, 100m));
+        observations.AddRange(ExtraUnassistedPractice(profileId, 10));
+        MasteryAchievement[] allButOne = AllAchievements(profileId)
+            .Where(item => item.Key != key)
+            .ToArray();
+        int duration = key == MasteryPolicyCatalog.TenMinutePresentation ? 10 : 60;
+
+        Assert.False(Gate(Calculate(profileId, observations, allButOne), gate).IsOpen);
+        Assert.False(Gate(
+            Calculate(
+                profileId,
+                observations,
+                [.. allButOne, Achievement(profileId, key, duration, MasteryVerificationKind.ManualDeclaration)]),
+            gate).IsOpen);
+        Assert.True(Gate(
+            Calculate(
+                profileId,
+                observations,
+                [.. allButOne, Achievement(profileId, key, duration, MasteryVerificationKind.HumanAttestation)]),
+            gate).IsOpen);
+    }
+
+    /// <summary>
+    /// Une attestation humaine sur une exigence vérifiable par la machine ne compte pour rien : la
+    /// parole ne remplace jamais une preuve exécutée.
+    /// </summary>
+    [Theory]
+    [InlineData(MasteryPolicyCatalog.Deployment, MasteryGate.C)]
+    [InlineData(MasteryPolicyCatalog.EfCore, MasteryGate.B)]
+    [InlineData(MasteryPolicyCatalog.Security, MasteryGate.D)]
+    public void AHumanAttestationOnAMachineProvableKeyCountsForNothing(string key, MasteryGate gate)
+    {
+        Guid profileId = Guid.NewGuid();
+        var observations = new List<MasteryObservation>();
+        observations.AddRange(CompleteDomain(profileId, MasteryDomain.CSharp, 100m));
+        observations.AddRange(CompleteDomain(profileId, MasteryDomain.Debugging, 100m));
+        observations.AddRange(CompleteDomain(profileId, MasteryDomain.Sql, 100m));
+        observations.AddRange(ExtraUnassistedPractice(profileId, 10));
+        MasteryAchievement[] achievements =
+        [
+            .. AllAchievements(profileId).Where(item => item.Key != key),
+            Achievement(profileId, key, 60, MasteryVerificationKind.HumanAttestation),
+        ];
+
+        Assert.False(Gate(Calculate(profileId, observations, achievements), gate).IsOpen);
+    }
+
+    /// <summary>
+    /// L'attestation d'explication alimente la composante ; sa répétition sur le même exercice ne
+    /// rapporte rien de plus, et une déclaration manuelle ne l'alimente pas.
+    /// </summary>
+    [Fact]
+    public void AnExplanationAttestationFeedsTheComponentWithoutStacking()
+    {
+        Guid profileId = Guid.NewGuid();
+        MasteryObservation attested = Observation(
+            profileId, MasteryDomain.CSharp, MasteryComponent.Explanation, "algo-binary-search-001", 100m,
+            source: MasteryEvidenceSource.Explanation,
+            verification: MasteryVerificationKind.HumanAttestation);
+        MasteryObservation replay = Observation(
+            profileId, MasteryDomain.CSharp, MasteryComponent.Explanation, "algo-binary-search-001", 100m,
+            source: MasteryEvidenceSource.Explanation,
+            verification: MasteryVerificationKind.HumanAttestation);
+        MasteryObservation declared = Observation(
+            profileId, MasteryDomain.CSharp, MasteryComponent.Explanation, "algo-gcd-001", 100m,
+            source: MasteryEvidenceSource.Explanation,
+            verification: MasteryVerificationKind.ManualDeclaration);
+
+        MasteryComponentScore one = Component(
+            Domain(Calculate(profileId, [attested]), MasteryDomain.CSharp), MasteryComponent.Explanation);
+        Assert.True(one.HasEvidence);
+        Assert.Equal(100m, one.Score);
+
+        MasteryComponentScore replayed = Component(
+            Domain(Calculate(profileId, [attested, replay]), MasteryDomain.CSharp), MasteryComponent.Explanation);
+        Assert.Equal(one.Score, replayed.Score);
+        Assert.Equal(1, replayed.DistinctItemCount);
+
+        MasteryComponentScore declaredOnly = Component(
+            Domain(Calculate(profileId, [declared]), MasteryDomain.CSharp), MasteryComponent.Explanation);
+        Assert.False(declaredOnly.HasEvidence);
+        Assert.Equal(0m, declaredOnly.Score);
+    }
+
     [Fact]
     public void BoundsRoundingReplayIdempotenceAndPolicyVersionAreStable()
     {

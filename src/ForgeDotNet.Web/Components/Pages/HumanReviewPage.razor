@@ -1,0 +1,265 @@
+@page "/human-review"
+@inject HumanReviewService HumanReview
+
+<PageTitle>Revue humaine — Forge.NET</PageTitle>
+
+<h1>Revue par un tiers</h1>
+
+<section class="practice-panel" aria-labelledby="human-review-nature-title">
+    <h2 id="human-review-nature-title">Ce qu'une attestation est, et n'est pas</h2>
+    <p>
+        Sept exigences du parcours ne sont pas vérifiables par une machine : juger un historique Git, une
+        présentation, un entretien, une note d'architecture, l'anglais, une défense ou une explication
+        demande un lecteur. Cette page enregistre l'attestation d'un <strong>relecteur humain nommé</strong>,
+        selon les grilles de <code>docs/HUMAN_REVIEW.md</code>.
+    </p>
+    <p class="notice" role="note">
+        Une attestation n'est <strong>pas une preuve vérifiée par la machine</strong> : le produit ne peut pas
+        contrôler l'identité du relecteur ni ce qu'il a réellement observé. Elle n'est pas non plus une
+        déclaration de l'apprenant, qui vaut zéro et le reste. C'est un troisième type de preuve, affiché
+        comme tel partout, et admis exclusivement pour les sept exigences ci-dessous — jamais pour une
+        exigence qu'un test peut vérifier. Un verdict non satisfait reste un document personnel : le produit
+        n'enregistre que les revues dont tous les critères obligatoires sont observés.
+    </p>
+</section>
+
+@if (_error is not null)
+{
+    <p class="error-message" role="alert">@_error</p>
+}
+else if (_overview is null)
+{
+    <p role="status">Chargement du protocole…</p>
+}
+else
+{
+    <section class="practice-panel" aria-labelledby="human-review-state-title">
+        <h2 id="human-review-state-title">Les sept exigences</h2>
+        @foreach (HumanReviewRequirementView requirement in _overview.Requirements)
+        {
+            <article class="practice-panel">
+                <h3>
+                    @requirement.Grid.Title —
+                    @(requirement.Attestations.Count > 0 ? "attestée" : "aucune attestation")
+                </h3>
+                <p><strong>Preuve acceptée :</strong> @requirement.Grid.AcceptedEvidence</p>
+                <p>
+                    Durée minimale de la séance : @requirement.Grid.MinimumDurationMinutes minutes ·
+                    cible <code>@requirement.Grid.TargetKey</code>
+                </p>
+                <table class="table">
+                    <caption>Grille à emporter en séance — chaque critère est binaire, sans compensation.</caption>
+                    <thead>
+                        <tr><th scope="col">#</th><th scope="col">Critère observable</th><th scope="col">Obligatoire</th></tr>
+                    </thead>
+                    <tbody>
+                        @foreach (HumanReviewCriterion criterion in requirement.Grid.Criteria)
+                        {
+                            <tr>
+                                <td>@criterion.Number</td>
+                                <td>@criterion.Label</td>
+                                <td>@(criterion.Mandatory ? "oui" : "non")</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                @if (requirement.Attestations.Count > 0)
+                {
+                    <h4>Attestations enregistrées</h4>
+                    <ul>
+                        @foreach (HumanAttestationEntry entry in requirement.Attestations)
+                        {
+                            <li>
+                                @entry.ReviewedOn.ToString("yyyy-MM-dd") — attesté par @entry.ReviewerName
+                                (@entry.ReviewerRelation), @entry.DurationMinutes min ·
+                                <em>attesté par un relecteur humain, non vérifié par la machine</em>
+                                @if (!string.IsNullOrWhiteSpace(entry.ExplainedExerciseId))
+                                {
+                                    <span> · exercice @entry.ExplainedExerciseId</span>
+                                }
+                                <br />
+                                Écart nommé : @entry.NamedGap
+                            </li>
+                        }
+                    </ul>
+                }
+            </article>
+        }
+    </section>
+
+    <section class="practice-panel" aria-labelledby="human-review-record-title">
+        <h2 id="human-review-record-title">Enregistrer une attestation</h2>
+        <p>
+            À remplir <strong>au retour de la séance</strong>, avec le relecteur ou depuis sa grille signée.
+            Le nom saisi est une déclaration libre : le produit ne peut pas le vérifier, et l'attestation
+            sera toujours affichée avec cette réserve. Le relecteur ne peut pas être vous-même.
+        </p>
+
+        <div class="form-field">
+            <label for="attestation-target">Exigence attestée</label>
+            <select id="attestation-target" value="@_targetKey" @onchange="OnTargetChanged">
+                @foreach (HumanReviewRequirementView requirement in _overview.Requirements)
+                {
+                    <option value="@requirement.Grid.TargetKey">@requirement.Grid.Title</option>
+                }
+            </select>
+        </div>
+
+        <div class="form-field">
+            <label for="reviewer-name">Relecteur — prénom et nom</label>
+            <input id="reviewer-name" @bind="_reviewerName" />
+        </div>
+
+        <div class="form-field">
+            <label for="reviewer-relation">Lien avec vous (collègue, ancien collègue, rencontre professionnelle, aucun…)</label>
+            <input id="reviewer-relation" @bind="_reviewerRelation" />
+        </div>
+
+        <div class="form-field">
+            <label for="reviewed-on">Date de la revue</label>
+            <input id="reviewed-on" type="date" @bind="_reviewedOn" />
+        </div>
+
+        <div class="form-field">
+            <label for="duration-minutes">Durée de la séance (minutes)</label>
+            <input id="duration-minutes" type="number" @bind="_durationMinutes" />
+        </div>
+
+        <div class="form-field">
+            <label for="artifact-description">Artefact examiné (dépôt et plage de commits, note, enregistrement…)</label>
+            <input id="artifact-description" @bind="_artifactDescription" />
+        </div>
+
+        @if (SelectedGrid is { IsExplanationComponent: true })
+        {
+            <div class="form-field">
+                <label for="explained-exercise">Identifiant de l'exercice expliqué, choisi par le relecteur</label>
+                <input id="explained-exercise" @bind="_explainedExerciseId" placeholder="algo-binary-search-001" />
+            </div>
+        }
+
+        @if (SelectedGrid is not null)
+        {
+            <fieldset>
+                <legend>Critères de la grille — observé ou non, avec ce qui l'a montré</legend>
+                @foreach (HumanReviewCriterion criterion in SelectedGrid.Criteria)
+                {
+                    <div class="form-field">
+                        <label class="checkbox-field" for="criterion-observed-@criterion.Number">
+                            <input id="criterion-observed-@criterion.Number" type="checkbox"
+                                   @bind="_criteriaObserved[criterion.Number]" />
+                            @criterion.Number. @criterion.Label @(criterion.Mandatory ? "(obligatoire)" : "(facultatif)")
+                        </label>
+                        <label for="criterion-evidence-@criterion.Number">Ce qui l'a montré</label>
+                        <input id="criterion-evidence-@criterion.Number" @bind="_criteriaEvidence[criterion.Number]" />
+                    </div>
+                }
+            </fieldset>
+        }
+
+        <div class="form-field">
+            <label for="named-gap">Écart nommé — un point concret à travailler, obligatoire même sur un verdict favorable</label>
+            <textarea id="named-gap" rows="3" @bind="_namedGap"></textarea>
+        </div>
+
+        <button class="btn btn-primary" type="button" @onclick="RecordAsync">Enregistrer l'attestation</button>
+
+        @if (_failures.Count > 0)
+        {
+            <ul class="error-message" role="alert">
+                @foreach (string failure in _failures)
+                {
+                    <li>@failure</li>
+                }
+            </ul>
+        }
+        @if (_statusMessage is not null)
+        {
+            <p class="success-message" role="status">@_statusMessage</p>
+        }
+    </section>
+}
+
+@code {
+    private HumanReviewOverview? _overview;
+    private string? _error;
+    private string _targetKey = string.Empty;
+    private string _reviewerName = string.Empty;
+    private string _reviewerRelation = string.Empty;
+    private DateTime _reviewedOn = DateTime.Today;
+    private int _durationMinutes;
+    private string _artifactDescription = string.Empty;
+    private string _explainedExerciseId = string.Empty;
+    private string _namedGap = string.Empty;
+    private readonly Dictionary<int, bool> _criteriaObserved = [];
+    private readonly Dictionary<int, string> _criteriaEvidence = [];
+    private IReadOnlyList<string> _failures = [];
+    private string? _statusMessage;
+
+    private HumanReviewGrid? SelectedGrid => HumanReviewCatalog.Find(_targetKey);
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            _overview = await HumanReview.GetAsync();
+            _targetKey = _overview.Requirements[0].Grid.TargetKey;
+            ResetCriteria();
+        }
+        catch (Exception exception)
+        {
+            _error = exception.Message;
+        }
+    }
+
+    private void OnTargetChanged(ChangeEventArgs args)
+    {
+        _targetKey = args.Value?.ToString() ?? string.Empty;
+        ResetCriteria();
+    }
+
+    private void ResetCriteria()
+    {
+        _criteriaObserved.Clear();
+        _criteriaEvidence.Clear();
+        if (SelectedGrid is null)
+        {
+            return;
+        }
+
+        foreach (HumanReviewCriterion criterion in SelectedGrid.Criteria)
+        {
+            _criteriaObserved[criterion.Number] = false;
+            _criteriaEvidence[criterion.Number] = string.Empty;
+        }
+    }
+
+    private async Task RecordAsync()
+    {
+        _statusMessage = null;
+        HumanAttestationCriterionEntry[] entries = _criteriaObserved.Keys
+            .OrderBy(number => number)
+            .Select(number => new HumanAttestationCriterionEntry(
+                number,
+                _criteriaObserved[number],
+                _criteriaEvidence.TryGetValue(number, out string? evidence) ? evidence : string.Empty))
+            .ToArray();
+        RecordHumanAttestationResult result = await HumanReview.RecordAsync(new RecordHumanAttestationCommand(
+            _targetKey,
+            _reviewerName,
+            _reviewerRelation,
+            DateOnly.FromDateTime(_reviewedOn),
+            _durationMinutes,
+            _artifactDescription,
+            _namedGap,
+            SelectedGrid is { IsExplanationComponent: true } ? _explainedExerciseId : null,
+            entries));
+        _failures = result.Failures;
+        if (result.Succeeded)
+        {
+            _statusMessage = "Attestation enregistrée. Elle apparaîtra dans la projection de maîtrise comme "
+                + "« attestée par un relecteur humain », jamais comme une preuve vérifiée par la machine.";
+            _overview = await HumanReview.GetAsync();
+        }
+    }
+}

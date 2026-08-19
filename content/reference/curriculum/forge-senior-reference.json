@@ -2,13 +2,13 @@
   "schemaVersion": 1,
   "id": "forge-senior-reference",
   "version": 1,
-  "title": "Forge.NET — piste senior S25 à S32",
-  "description": "Piste senior distincte du parcours junior : fondamentaux distribues, resilience, messagerie, coherence eventuelle, refus argumente du decoupage, observabilite, revue de code et base de code existante.",
+  "title": "Forge.NET — piste senior, Senior S1 à S8",
+  "description": "Piste senior distincte, a suivre apres le socle S1-S24 et le bloc front-end S25-S27 : fondamentaux distribues, resilience, messagerie, coherence eventuelle, refus argumente du decoupage, observabilite, revue de code et base de code existante.",
   "weeks": 32,
   "modules": [
     {
       "id": "senior-25",
-      "title": "Semaine 25 — Resilience d'un appel",
+      "title": "Senior S1 — Resilience d'un appel",
       "weeks": [25],
       "prerequisites": [],
       "lessonIds": ["senior-resilience-001"],
@@ -16,7 +16,7 @@
     },
     {
       "id": "senior-26",
-      "title": "Semaine 26 — Idempotence et rejeu",
+      "title": "Senior S2 — Idempotence et rejeu",
       "weeks": [26],
       "prerequisites": ["senior-25"],
       "lessonIds": ["senior-idempotency-001"],
@@ -24,7 +24,7 @@
     },
     {
       "id": "senior-27",
-      "title": "Semaine 27 — Messagerie",
+      "title": "Senior S3 — Messagerie",
       "weeks": [27],
       "prerequisites": ["senior-26"],
       "lessonIds": ["senior-messaging-001"],
@@ -32,7 +32,7 @@
     },
     {
       "id": "senior-28",
-      "title": "Semaine 28 — Coherence eventuelle et compensation",
+      "title": "Senior S4 — Coherence eventuelle et compensation",
       "weeks": [28],
       "prerequisites": ["senior-27"],
       "lessonIds": ["senior-consistency-001"],
@@ -40,7 +40,7 @@
     },
     {
       "id": "senior-29",
-      "title": "Semaine 29 — Decouper ou non : le refus argumente",
+      "title": "Senior S5 — Decouper ou non : le refus argumente",
       "weeks": [29],
       "prerequisites": ["senior-28"],
       "lessonIds": ["senior-boundaries-001"],
@@ -48,7 +48,7 @@
     },
     {
       "id": "senior-30",
-      "title": "Semaine 30 — Observabilite distribuee",
+      "title": "Senior S6 — Observabilite distribuee",
       "weeks": [30],
       "prerequisites": ["senior-29"],
       "lessonIds": ["senior-observability-001"],
@@ -56,7 +56,7 @@
     },
     {
       "id": "senior-31",
-      "title": "Semaine 31 — Revue de code",
+      "title": "Senior S7 — Revue de code",
       "weeks": [31],
       "prerequisites": ["senior-30"],
       "lessonIds": ["senior-code-review-001"],
@@ -64,7 +64,7 @@
     },
     {
       "id": "senior-32",
-      "title": "Semaine 32 — Base de code existante",
+      "title": "Senior S8 — Base de code existante",
       "weeks": [32],
       "prerequisites": ["senior-31"],
       "lessonIds": ["senior-legacy-001"],

@@ -1,22 +1,31 @@
 # Protocole de revue par un tiers
 
 Sept exigences du parcours ne sont pas vérifiables par une machine. Ce document dit comment un
-relecteur humain peut les observer, sur quelle preuve, et comment consigner son verdict **hors** du
-système de maîtrise.
+relecteur humain peut les observer, sur quelle preuve, et comment consigner son verdict — dans le
+produit, par la page `/human-review`, depuis le 18 août 2026.
 
-## Ce que ce protocole n'est pas
+## Ce qu'une attestation est, et n'est pas
 
-Il **n'ajoute aucun producteur d'accomplissement**. Une attestation rédigée selon ce protocole ne
-change aucun score, n'ouvre aucune porte, n'apparaît dans aucun tableau du produit. Cette limite est
-tenue par le code et non par la discipline : `MasteryRules.IsEligible` refuse
-`MasteryVerificationKind.ManualDeclaration` sans condition, et `IsVerifiedAchievement` n'admet que
-`AutomaticTests`, `ServerRubric` et `ExamEngine`. Saisir une attestation dans le produit — s'il existait
-un moyen de le faire — ne produirait rien.
+Une attestation enregistrée est un **troisième type de preuve**,
+`MasteryVerificationKind.HumanAttestation` — ni une preuve machine, ni une déclaration de
+l'apprenant. La frontière est tenue par le code et non par la discipline :
 
-Ce n'est pas non plus une certification. Un relecteur atteste de ce qu'il a vu, à une date, sur un
-artefact nommé. Il n'engage aucune institution, et l'attestation ne vaut rien face à un employeur qui
-ne connaît pas le relecteur. Ce qu'elle vaut est ailleurs : c'est une **répétition sous contrainte
-réelle**, faite avant l'entretien plutôt que pendant.
+- les règles ne l'admettent que pour les six clés de `MasteryPolicyCatalog.HumanJudgementKeys` et
+  pour la composante Explication — sur toute clé vérifiable par la machine, elle vaut zéro, parce
+  que la parole ne remplace jamais une preuve exécutée ;
+- `MasteryRules.IsEligible` refuse toujours `ManualDeclaration` sans condition : l'apprenant seul
+  ne peut rien attester, et le contrôle d'identité refuse un relecteur qui porte son nom ;
+- l'enregistrement refuse une grille incomplète, un critère obligatoire non observé, une durée
+  au-dessous du minimum de la grille, un écart non nommé, et le rejeu d'une même revue ;
+- partout où elle apparaît, l'attestation est étiquetée « attestée par un relecteur humain, non
+  vérifiée par la machine » — le produit ne peut vérifier ni l'identité du relecteur, ni ce qu'il
+  a réellement observé, et le dit.
+
+Ce n'est pas une certification. Un relecteur atteste de ce qu'il a vu, à une date, sur un artefact
+nommé. Il n'engage aucune institution, et l'attestation ne vaut rien face à un employeur qui ne
+connaît pas le relecteur. Ce qu'elle vaut est double : une **répétition sous contrainte réelle**,
+faite avant l'entretien plutôt que pendant — et, pour les portes C et D, la seule preuve possible
+des exigences qu'aucune machine ne jugera jamais.
 
 ## Pourquoi ces sept-là
 
@@ -32,7 +41,7 @@ la même nature : produire un compte rendu causal dans ses propres mots n'a pas 
 | `architecture.pragmatic` | D | la qualité d'une note de décision se juge sur son argumentation |
 | `english` | D | l'expression demande un lecteur ; les 51 cartes sont auto-évaluées |
 | `project.final-defense` | D | une défense est une performance devant un jury, par construction |
-| composante `Explanation` | — | 10 % du score, sans producteur, et sans substitut honnête |
+| composante `Explanation` | — | 10 % du score, sans producteur automatique, et sans substitut machine honnête |
 
 ## Le relecteur
 
@@ -204,14 +213,19 @@ automatique ne sait faire — d'où l'existence de cette grille.
 
 ---
 
-## Consigner le verdict, hors du produit
+## Consigner le verdict
 
-L'attestation est un fichier que **l'apprenant conserve**, pas une donnée du produit. Aucun chemin ne
-la fait entrer dans la base de maîtrise, et aucun ne doit être ajouté.
+Le verdict se consigne deux fois, et les deux copies n'ont pas le même rôle.
 
-**Emplacement** : hors du dépôt Forge.NET, dans le dossier personnel de l'apprenant — par exemple un
-dossier `attestations/` de son propre dépôt de travail. Ne pas la déposer sous `content/` : le
-validateur de contenu la refuserait, et sa présence y suggérerait un statut qu'elle n'a pas.
+**Dans le produit**, par la page `/human-review` : la grille est remplie critère par critère avec ce
+qui l'a montré, et l'attestation acceptée produit la preuve `HumanAttestation` décrite plus haut.
+Le produit n'enregistre que les revues **satisfaites** — tous les critères obligatoires observés :
+un verdict non satisfait reste un document personnel, et c'est voulu, parce qu'un refus est une
+information pour l'apprenant, pas une preuve pour une porte.
+
+**Dans le dossier personnel de l'apprenant**, le fichier ci-dessous — y compris pour les verdicts
+non satisfaits, qui sont souvent les plus utiles à relire. Ne pas le déposer sous `content/` : le
+validateur de contenu le refuserait, et sa présence y suggérerait un statut qu'il n'a pas.
 
 **Nom** : `<clé>-<AAAA-MM-JJ>.md`, par exemple `git.clean-2026-09-14.md`.
 
@@ -263,7 +277,12 @@ finale en dernier, et devant deux relecteurs : c'est la seule qui suppose que to
 
 ## Ce qui reste vrai après toutes les attestations
 
-Le tableau de maîtrise n'aura pas bougé, les portes B, C et D resteront fermées, et c'est le
-comportement voulu. Un employeur ne recrute pas sur une attestation qu'il n'a pas commandée. Ce que ces
-sept revues produisent est autre chose, et vaut probablement davantage : la liste des points où
+Le tableau de maîtrise distingue trois natures de preuve et ne les confondra jamais : une exigence
+attestée s'affiche « attestée par un relecteur humain, non vérifiée par la machine », pas « prouvée ».
+Les portes B, C et D peuvent désormais admettre ces attestations pour leurs seules exigences à
+jugement humain — leurs exigences vérifiables continuent d'exiger une preuve exécutée, et aucun
+seuil, aucun poids, aucun plafond d'aide n'a bougé.
+
+Un employeur ne recrute toujours pas sur une attestation qu'il n'a pas commandée. Ce que ces sept
+revues produisent vaut probablement davantage que la porte qu'elles ouvrent : la liste des points où
 quelqu'un de compétent vous a effectivement arrêté.

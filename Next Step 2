@@ -1,0 +1,620 @@
+BILAN DU 18 AOÛT 2026 — exécution complète et prompts de clôture
+
+Ce fichier remplace « Next Step ». Les neuf prompts du fichier précédent ont été exécutés en
+majorité ; ce bilan mesure ce qui est réellement fait, ce qui reste, et fournit les prompts
+manquants pour que le projet soit complet. Chaque affirmation ci-dessous a été vérifiée le
+18 août 2026 sur le dépôt (HEAD 5f35b0f) par exécution réelle, pas par lecture des documents.
+
+═══════════════════════════════════════════════════════════════════════════════════════════
+CE QUI A ÉTÉ EXÉCUTÉ ET PROUVÉ LE 18 AOÛT
+═══════════════════════════════════════════════════════════════════════════════════════════
+
+- dotnet restore + build : 0 erreur, 18 avertissements analyseurs (non bloquants, à examiner).
+- dotnet format --verify-no-changes : propre.
+- Validateur de contenu sur content/reference : 618 documents, 2 693 fichiers, 0 erreur.
+- Application lancée sur http://localhost:5012 : /health « Healthy », 22 routes sondées
+  toutes en 200 — accueil, learn, leçon, practice, exercice, labs (liste et 2 labs),
+  interviews, english, mastery, exams, reviews, debug-lab (liste et scénario), sql-lab,
+  diagnostic, dashboard, profile, settings, about.
+- Image du bac à sable reconstruite par scripts/build-code-runner.ps1 (référence sha256 émise).
+- SqlLab démarré par scripts/start-sql-lab.ps1 : conteneur sain, aucun secret affiché.
+- Suite de tests complète relancée avec Docker et SqlLab opérationnels — résultat en fin de
+  fichier, section « Vérification transverse ».
+
+═══════════════════════════════════════════════════════════════════════════════════════════
+CE QUI EST BIEN — état mesuré, pas déclaré
+═══════════════════════════════════════════════════════════════════════════════════════════
+
+1. Le socle produit est solide et honnête. Build propre, app auto-suffisante (installation
+   documentée, bannières d'honnêteté, mode Manual qui ne prétend jamais valider), sauvegarde/
+   restauration sérieuse, bac à sable durci et testé (18 contrôles d'isolation).
+
+2. Le contenu a atteint un volume et une qualité réels :
+   - 187 exercices, tous prouvés corrects hors Docker (solution passe tout, starter échoue),
+     tous à explication ≥ 350 mots et solution ≤ 120 caractères/ligne (plafonds à cliquet à 0) ;
+   - 96 leçons (88 junior + 8 senior), zéro leçon orpheline, zéro référence pendante ;
+   - 29 DebugLabs, 40 scénarios SQL/EF, 242 fiches d'entretien, 50 cartes d'anglais + glossaire,
+     454 cartes de révision, 10 projets dont 6 vérifiables, 11 laboratoires tous manifestés ;
+   - dette éditoriale : 376 → 0, et le cliquet interdit désormais toute réapparition.
+
+3. Des chantiers du fichier « Next Step » sont TERMINÉS et leurs traces documentaires sont
+   en retard sur la réalité :
+   - T7 clos : 187 exercices sur 187 figurent dans au moins une banque d'examen (0 orphelin,
+     contre 43 documentés) ; 9 banques d'examen dont senior-readiness-v1 ;
+   - prompts 2, 3, 4, 5, 6, 7 (labs, JWT, lisibilité, OAuth/OIDC, REST, front-end) : livrés ;
+   - prompt 8 : piste senior S25–S32 livrée structurellement (curriculum dédié, /learn-senior,
+     8 leçons, 8 exercices, examen, 4 scénarios de debug legacy/front) ;
+   - S11 à S14 dépassent la cible de 8 exercices (10, 10, 10, 12).
+
+4. La porte A est franchissable et prouvée par test ; 4 clés d'accomplissement sur 23 ont un
+   producteur ; l'inventaire des 19 restantes est diagnostiqué clé par clé, à plafond cliquet.
+
+═══════════════════════════════════════════════════════════════════════════════════════════
+CE QUI MANQUE — classé par gravité
+═══════════════════════════════════════════════════════════════════════════════════════════
+
+A. LES PORTES B, C, D SONT FERMÉES, DÉFINITIVEMENT EN L'ÉTAT. 19 clés sur 23 sans producteur :
+   13 attendent un livrable vérifiable côté serveur (api-functional, validation-and-errors,
+   unit-tests, integration-tests, docker, continuous-integration, authentication-authorization,
+   logs, deployment, simulated-incident, performance, security, autonomous-feature) et 6
+   exigent un jugement humain (clean-git, ten-minute-presentation, mock-interview,
+   pragmatic-architecture, english, final-defense). La composante Explanation (10 % du score)
+   n'a pas de producteur : plafond général à 90 pour tout le monde. Un apprenant qui suit tout
+   le parcours lit « Porte B — bloquée » le dernier jour comme le premier. → PROMPTS 2 et 3.
+
+B. L'AUDIT PÉDAGOGIQUE (INCRÉMENT 12) RESTE REFUSÉ, et ses deux conditions de levée ne sont
+   pas outillées : aucun pilotage de navigateur n'existe (les E2E sont des appels HTTP en
+   processus, aucun clic), et aucun panel humain n'a été réuni. → PROMPTS 8 et 9.
+
+C. DENSITÉ DE PRATIQUE INÉGALE. Mesure du 18 août sur forge-reference.json :
+   S15–S17 : 6 chacune (cible 8) ; S19 : 5 ; S20 : 3 ; S22 : 3 ; S23 : 1 ; S24 : 3 ;
+   S25–S27 front : 2/1/1 (choix assumé, labos porteurs) ; piste senior : 1 par semaine sur 8.
+   Défaut aggravant : S8, S9 et S10 affichent chacune UN exercice, et c'est LE MÊME —
+   debug-safe-divide-001, un exercice de débogage sans rapport avec SQL, référencé 4 fois dans
+   le curriculum (S7 à S10). C'est du remplissage que le validateur ne voit pas. → PROMPT 4.
+
+D. T9 JAMAIS TRAITÉ : 0 des 12 exercices à domaine booléen n'a reçu de frère à domaine ouvert ;
+   5 de leurs variantId pointent vers un AUTRE exercice booléen de la même liste (chaînes
+   booléennes fermées), aucune paire réciproque. → PROMPT 5.
+
+E. PISTE SENIOR À 1 EXERCICE/SEMAINE, et vocabulaire d'entretien absent : Polly, RabbitMQ,
+   Kafka, gRPC, OpenTelemetry, « circuit breaker », « bulkhead », « dead letter » : zéro
+   occurrence pédagogique (les concepts existent en français dans une leçon chacun). Un
+   entretien senior emploie ces noms. → PROMPT 6.
+
+F. KIT CARRIÈRE FANTÔME. content/reference/career/ = 8 trames d'une page (~5 Ko au total,
+   NEGOTIATION-GUIDE.md fait 1 paragraphe), aucune route, aucun ContentDocumentType, invisible
+   de ContentReachabilityWebTests — l'angle mort « 293 documents sans écran » n'a été fermé que
+   pour interviews et english. S24 promet CV, candidatures et négociation. → PROMPT 7.
+
+G. PROTOCOLE DE REVUE HUMAINE SANS PRODUIT. docs/HUMAN_REVIEW.md définit 7 grilles binaires,
+   mais aucun écran ne les expose, rien ne génère une grille, rien n'enregistre une attestation.
+   Même quand un humain réel fait la revue, le produit ne peut pas le constater. → PROMPT 3.
+
+H. HYGIÈNE DOCUMENTAIRE ET NUMÉROTATION. CURRICULUM.md annonce 169 exercices / 224 fiches
+   (réel : 187 / 242) ; PEDAGOGICAL_AUDIT.md affirme encore « 43 exercices hors banque »
+   (réel : 0) ; la dernière ligne de ROADMAP.md est périmée ; S25–S27 désignent deux contenus
+   différents (front-end junior ET piste senior) sans arbitrage écrit ; les modules S1–S24
+   s'intitulent « Semaine N » sans thème alors que les modules front sont titrés. → PROMPT 1.
+
+I. HORS PÉRIMÈTRE, À LAISSER DÉCLARÉ TEL QUEL (ne pas « corriger ») : le parcours distinct
+   12–24 mois (cache distribué, mentoring, estimation, anglais B2/C1, allemand), l'installation
+   npm réseau des labs Angular/React, l'interface française seule, le mode Compose non validant.
+   Ce sont des limites assumées et documentées, pas des défauts.
+
+═══════════════════════════════════════════════════════════════════════════════════════════
+PROMPT 0 — SOCLE COMMUN (à coller en tête de chaque prompt)
+═══════════════════════════════════════════════════════════════════════════════════════════
+
+Tu travailles sur Forge.NET, dépôt local à la racine du projet courant. Lis AGENTS.md et
+docs/CONTENT_AUTHORING_STANDARD.md avant toute chose.
+
+CONTRAINTES NON NÉGOCIABLES — les ignorer casse le build de façon non évidente :
+
+1. RUNNER. Le bac à sable exécute uniquement `public static <T> Méthode(<scalaires>)` sur une
+   classe `Submission`. Types autorisés, catalogue FERMÉ (src/ForgeDotNet.CodeRunner/Container/
+   RunnerSuiteContracts.cs) : bool, date (DateOnly), decimal, dictionary<string,int>, int,
+   int[], list<int>, string. Pas de Task, pas de long, pas de string[]. L'image référence la
+   BCL complète, EF Core, SQLite et Microsoft.Extensions.* — mais PAS Microsoft.AspNetCore.*.
+
+2. DETTE ÉDITORIALE À ZÉRO. content/authoring/content-debt.json est vide et
+   ContentAuthenticityTests plafonne à 0. Tout paragraphe de 12 mots ou plus partagé par plus
+   de TROIS documents d'un même lot fait échouer le build. N'écris jamais deux fois la même
+   phrase, y compris une phrase gabarit insérée au milieu d'un paragraphe.
+
+3. MARQUEURS INTERDITS dans tout contenu : `$mot`, `${`, `$(`, `{{`, T-O-D-O, F-I-X-M-E
+   (écrits sans tirets), « à venir », « change-me » ; et pour les fichiers d'exercice S11–S20 :
+   S21, S22, S23, S24, « Azure App Service », OpenTelemetry, Kubernetes. Ces refus sont testés.
+
+4. APOSTROPHES. Le contenu mélange U+2019 (’), U+02BC (ʼ) et ASCII ('). Tout remplacement par
+   script doit essayer les trois formes.
+
+5. ENCODAGE. UTF-8 SANS BOM, fins de ligne CRLF pour les .cs. Pas de `sed -i`. Vérifie avec
+   `dotnet format --verify-no-changes` à la fin.
+
+6. CONTRAT D'UN EXERCICE. Dossier content/reference/exercises/<id>/ : exercise.json,
+   statement.md, explanation.md (≥ 350 mots, pourquoi et pas seulement comment),
+   review-cards.md, starter/Submission.cs (avec NotImplementedException),
+   solution/Submission.cs (lisible, ≤ 120 caractères/ligne, une instruction par ligne, un
+   commentaire par décision non évidente), tests/runner.json, tests/visible/cases.json (≥ 3),
+   tests/hidden/cases.json (≥ 4). exercise.json : 4 indices propres 1..4 (aucun ne recopie une
+   ligne de solution), 4 erreurs fréquentes, complexity, variantId (même bloc de semaines),
+   reviewCards, interviewQuestionId, 6 reflectionFields dans l'ordre imposé. Chaque cas : un
+   `expected` OU un `expectedException`, jamais les deux ; aucun cas ne répète les arguments
+   d'un autre. Domaine d'entrée OUVERT — jamais deux booléens.
+
+7. CÂBLAGE OBLIGATOIRE d'un exercice neuf : forge-reference.json (module de sa semaine) ;
+   content/reference/reviews/exercise-review-cards.json (2 cartes, questions uniques dans la
+   banque — 454 cartes aujourd'hui) ; content/reference/interviews/interview-<id>.json ;
+   content/exams/<examen>/exam.json (eligibleExerciseIds, sinon jamais tiré) ; compteurs figés
+   à mettre à jour : ContentS11S20CoverageTests, ContentS21S24CoverageTests,
+   ContentSeniorCoverageTests (piste senior), ContentCatalogLoadingTests (Items.Count…),
+   ReviewCardQualityTests (MinimumCoveredExercises), ExerciseReadabilityTests (plafonds 0).
+
+8. VÉRIFICATION, à lancer avant de dire que c'est fini :
+   dotnet test tests/ForgeDotNet.IntegrationTests --filter FullyQualifiedName~ExerciseCorrectnessTests
+   powershell -ExecutionPolicy Bypass -File scripts/validate-content.ps1 content/reference
+   dotnet test --nologo
+   dotnet format --verify-no-changes
+   La référence acceptée est en fin de « Next Step 2 », section « Vérification transverse ».
+   Avec Docker et SqlLab actifs (scripts/build-code-runner.ps1 + scripts/start-sql-lab.ps1),
+   la suite complète doit être verte ; sans Docker, seuls les échecs des classes listées en
+   référence sont tolérés. Tout autre échec est une régression que tu dois corriger.
+
+9. HONNÊTETÉ. Ce projet refuse de prétendre avoir vérifié ce qu'il n'a pas exécuté. Une preuve
+   de maîtrise n'existe que vérifiée côté serveur ; une déclaration manuelle vaut zéro. Ne
+   relâche aucun seuil, aucun poids, aucun plafond. Les plafonds à cliquet ne descendent que.
+   Si tu ne peux pas prouver quelque chose, écris-le dans le rapport final.
+
+Ne commite pas. Termine par un rapport : fait, prouvé, resté ouvert.
+
+═══════════════════════════════════════════════════════════════════════════════════════════
+PROMPT 1 — Hygiène documentaire et arbitrage de la numérotation S25–S27
+═══════════════════════════════════════════════════════════════════════════════════════════
+
+[SOCLE COMMUN]
+
+OBJECTIF. Le moins coûteux des chantiers, à faire en premier : les documents de pilotage ont
+pris du retard sur la réalité, et tout agent qui les lira ensuite partira sur de fausses
+mesures. Trois dérives mesurées le 18 août 2026 :
+- docs/CURRICULUM.md annonce 169 exercices et 224 fiches d'entretien ; le disque en porte
+  187 et 242 ;
+- docs/PEDAGOGICAL_AUDIT.md affirme « 43 des 142 exercices ne figurent dans aucune banque
+  d'examen » ; la mesure réelle est 187/187 couverts, 0 orphelin (T7 est clos) ;
+- la dernière ligne de docs/ROADMAP.md (« restent S11–S13 et S15–S17 ») est périmée :
+  S11–S13 sont à 10 exercices, seuls S15–S17 restent à 6.
+
+TRAVAIL.
+1. Corrige les trois dérives ci-dessus, en datant chaque correction et en citant la mesure
+   (compte des dossiers exercises/, union des eligibleExerciseIds des 9 banques).
+2. Arbitre la COLLISION DE NUMÉROTATION : S25, S26, S27 désignent deux contenus différents
+   selon le curriculum chargé — bloc front-end de forge-reference.json ET premières semaines
+   de forge-senior-reference.json. Décision recommandée, à valider en la documentant : la
+   piste senior est un SEMESTRE DISTINCT, renuméroter ses semaines en « Senior S1 à S8 »
+   (identifiants de contenu STABLES — ne touche pas aux ids senior-*, seulement aux titres,
+   aux libellés weeks des manifestes et aux documents). Écris l'ordre de lecture dans
+   docs/CURRICULUM.md : S1–S24 → front-end S25–S27 → piste senior. Si tu retiens un autre
+   arbitrage, justifie-le au même endroit.
+3. Donne un TITRE THÉMATIQUE aux 24 modules junior de forge-reference.json, aujourd'hui tous
+   intitulés « Semaine N » alors que les modules front-end sont titrés. Les thèmes sont dans
+   docs/CURRICULUM.md (S1 bases C#, S8 SQL, S14 sécurité API…). Vérifie l'affichage sur /learn.
+4. Répare le REMPLISSAGE S8–S10 côté curriculum : debug-safe-divide-001 est référencé comme
+   unique exercice de S8, S9 ET S10 (en plus de S7, sa vraie place). Ne laisse pas un module
+   vide si le chargeur l'interdit : documente dans le module que la pratique de ces semaines
+   vit dans les 40 scénarios SQL du SqlLab, et si le schéma du curriculum ne sait pas
+   référencer un scénario SQL, dis-le dans le rapport — c'est l'objet du point 5.
+5. ÉVALUE (sans forcément l'implémenter) l'ajout d'un champ scenarioIds/labIds aux modules du
+   curriculum pour que la page /learn montre les scénarios SQL, DebugLabs et laboratoires de
+   la semaine à côté des leçons et exercices. Chiffre l'impact (schéma v1 → v2 ? chargeur,
+   pages, tests) et recommande.
+6. Corrige le commentaire de ProjectAchievementTests.cs qui parle de « cinquante et une cartes
+   d'anglais » : le compte réel est 50 cartes + 1 glossaire.
+7. Mets à jour README.md (« Limites actuelles ») et docs/ROADMAP.md pour reflèter l'état exact
+   mesuré : T7 clos, T9 non traité, densités réelles.
+
+CRITÈRE DE RÉUSSITE. Un agent qui ne lit QUE les documents de pilotage obtient les mêmes
+chiffres qu'un agent qui mesure le dépôt. Aucun test existant ne casse.
+
+═══════════════════════════════════════════════════════════════════════════════════════════
+PROMPT 2 — Les treize clés « contenu manquant » : ouvrir réellement les portes B, C, D
+═══════════════════════════════════════════════════════════════════════════════════════════
+
+[SOCLE COMMUN]
+
+OBJECTIF. Le défaut le plus grave restant. ProjectAchievementTests inventorie 19 clés sans
+producteur : 13 en Blocker.MissingContent, 6 en Blocker.HumanJudgement (traitées au prompt 3).
+Chaque clé MissingContent porte déjà son diagnostic écrit — lis-les tous avant de commencer
+(tests/ForgeDotNet.UnitTests/ProjectAchievementTests.cs, lignes 84–139). Cinq clés y ont déjà
+été examinées et REFUSÉES avec motif (api-functional, unit-tests, integration-tests, docker,
+ci) : ne les re-propose pas sous la même forme, le refus est argumenté et il est correct.
+
+PRINCIPE. Un accomplissement ne s'attribue que sur une preuve qui exerce l'artefact que son
+intitulé nomme, vérifiée côté serveur. Le produit dispose AUJOURD'HUI de trois canaux de
+preuve : le bac à sable Docker (méthodes statiques, EF Core + SQLite disponibles, pas
+d'ASP.NET Core), le SqlLab, et le moteur d'examen. La question de conception est : quels
+canaux NOUVEAUX peuvent être ouverts sans mentir ?
+
+TRAVAIL.
+1. PHASE DE CONCEPTION D'ABORD, dans docs/MASTERY.md. Pour chacune des 13 clés, choisis et
+   justifie exactement une voie :
+   (a) produisible par un LIVRABLE NOUVEAU sur les canaux existants — exemples déjà nommés
+       dans l'inventaire : `logs` (le livrable d'exploitation du projet final n'a ni starter
+       ni suite — fabrique-les), `autonomous-feature` (même chose pour le projet final),
+       `performance` (compter des allers-retours EF sur une base réelle, un avant documenté
+       contre un après, au même volume — piste déclarée « ouverte, non empruntée »),
+       `security` (livrable éprouvé contre une suite cachée d'abus NON énumérés dans
+       l'énoncé — le bac à sable sait déjà exécuter des cas cachés) ;
+   (b) produisible par un CANAL NOUVEAU à construire honnêtement. Deux pistes à instruire :
+       - un type de suite « hébergée » dans le bac à sable : l'image runner embarquerait
+         ASP.NET Core et un harnais WebApplicationFactory fourni par la suite (pas par
+         l'apprenant), la soumission resterait une classe de l'apprenant compilée dedans.
+         Ce canal ouvrirait api-functional, validation-and-errors et
+         authentication-authorization sur le geste réel. Chiffre le coût (taille d'image,
+         quotas, surface d'attaque, révision des 18 contrôles d'isolation) et NE L'IMPLÉMENTE
+         que si les garanties d'isolation restent démontrables une à une ;
+       - une vérification d'ARTEFACT LOCAL par le produit : en mode CLI, le produit a déjà
+         un client Docker ; il peut inspecter une image construite par l'apprenant
+         (utilisateur non-root, HEALTHCHECK, taille, absence de secret dans les couches) —
+         preuve réelle pour `docker`. Attention au rejeu : l'inspection doit lier l'image au
+         travail demandé (label imposé, contenu attendu), pas seulement à une image quelconque.
+   (c) NON produisible sans mentir — reclasse alors la clé en HumanJudgement avec motif, et
+       assume la conséquence sur la porte concernée (voir prompt 3).
+2. Implémente TOUTES les clés classées (a) — ce sont les moins chères et elles suffisent
+   peut-être à ouvrir la porte B. Chaque producteur : preuve AutomaticTests uniquement,
+   déclaration manuelle toujours à zéro, test qui prouve sur un profil fabriqué que la porte
+   correspondante devient franchissable par le travail (modèle : MasteryRulesTests porte A).
+3. Pour la voie (b), implémente UNIQUEMENT ce que la phase de conception a validé. Toute
+   extension de l'image runner passe par scripts/build-code-runner.ps1, une nouvelle
+   empreinte, et la re-exécution INTÉGRALE de DockerCodeRunnerSecurityTests.
+4. Descends MaximumUnproducedKeys au nombre réellement atteint. Mets à jour l'inventaire :
+   chaque clé restante porte sa catégorie et son diagnostic à jour.
+5. Mets à jour docs/MASTERY.md, docs/PEDAGOGICAL_AUDIT.md (« Ce qui reste ouvert ») et
+   README.md.
+
+CRITÈRE DE RÉUSSITE. La porte B devient franchissable par le travail, prouvée par test. Les
+clés restantes sont inventoriées avec un diagnostic que le prochain agent n'aura pas à refaire.
+INTERDIT : faire descendre le compteur par un producteur qui n'exerce pas le geste nommé.
+
+═══════════════════════════════════════════════════════════════════════════════════════════
+PROMPT 3 — Attestation humaine : brancher docs/HUMAN_REVIEW.md au produit
+═══════════════════════════════════════════════════════════════════════════════════════════
+
+[SOCLE COMMUN]
+
+OBJECTIF. Six clés (clean-git, ten-minute-presentation, mock-interview, pragmatic-architecture,
+english, final-defense) et la composante Explanation (10 % du score) exigent un jugement
+humain — c'est établi et ce prompt ne le conteste pas. Le défaut est ailleurs : quand un
+humain RÉEL exécute le protocole de docs/HUMAN_REVIEW.md (sept grilles binaires, format
+d'attestation imposé), le produit ne peut ni générer la grille, ni enregistrer l'attestation,
+ni la montrer. Le protocole est un document mort. Résultat : les portes C et D sont fermées
+même pour un apprenant qui a un mentor, un collègue ou un formateur sous la main.
+
+DÉCISION DE CONCEPTION À IMPLÉMENTER — la frontière d'honnêteté est la suivante :
+- une ATTESTATION HUMAINE n'est PAS une preuve automatique et ne le devient jamais ;
+- elle n'est PAS non plus une ManualDeclaration de l'apprenant (qui vaut zéro et le reste) :
+  c'est un TROISIÈME type d'évidence, `HumanAttestation`, porté par un tiers nommé ;
+- le produit la stocke, l'affiche, la distingue visuellement partout (« attesté par un
+  relecteur humain, non vérifié par la machine »), et les portes B/C/D peuvent l'admettre
+  UNIQUEMENT pour les clés classées HumanJudgement — jamais pour une clé qui a un producteur
+  automatique possible ;
+- une attestation est refusée si sa grille n'est pas intégralement remplie, si un critère
+  obligatoire est « non » ou si le relecteur est l'apprenant lui-même (champ d'identité
+  obligatoire, contrôle de non-égalité avec le profil).
+
+TRAVAIL.
+1. Modélise l'attestation : clé visée, relecteur (nom libre, jamais vérifiable — le dire),
+   date, grille remplie critère par critère (les grilles EXACTES de docs/HUMAN_REVIEW.md,
+   avec leurs critères obligatoires et éliminatoires), verdict binaire, commentaire.
+2. Page /human-review : liste des sept exigences, état de chacune (attestée ou non), grille
+   pré-remplie imprimable/exportable pour la session avec le relecteur, formulaire de saisie
+   au retour. Chaque écran répète ce qu'une attestation est et n'est pas.
+3. Politique : MasteryRules admet HumanAttestation exclusivement pour les six clés
+   HumanJudgement (+ celles que le prompt 2 y aurait reclassées). La composante Explanation
+   reste sans producteur automatique : si tu la branches sur l'attestation « Explanation »
+   du protocole, le plafond de 90 devient atteignable à 100 UNIQUEMENT pour un profil attesté
+   — documente ce choix dans docs/MASTERY.md et couvre-le par MasteryReachabilityTests.
+4. Tests de contournement, avant ou avec les règles : auto-attestation refusée, grille
+   incomplète refusée, critère obligatoire à « non » refusé, attestation sur une clé à
+   producteur automatique refusée, rejeu de la même attestation non cumulatif.
+5. Le dashboard et /mastery distinguent trois natures de preuve : vérifiée machine, attestée
+   humaine, déclarée (zéro). Aucune porte n'affiche « ouverte » sans préciser la nature des
+   preuves qui l'ouvrent.
+6. Mets à jour docs/HUMAN_REVIEW.md (le protocole gagne un canal produit), docs/MASTERY.md,
+   README.md, et la section « Ce qui reste ouvert » de docs/PEDAGOGICAL_AUDIT.md.
+
+CRITÈRE DE RÉUSSITE. Un apprenant AVEC un relecteur humain peut ouvrir les portes C et D sans
+qu'aucun seuil n'ait bougé ; un apprenant SANS relecteur voit exactement ce qui lui manque et
+pourquoi aucune machine ne le remplacera. Rien ne permet de s'auto-attester.
+
+═══════════════════════════════════════════════════════════════════════════════════════════
+PROMPT 4 — T8 reste : densité S15–S20 et S22–S24, et le remplissage S8–S10
+═══════════════════════════════════════════════════════════════════════════════════════════
+
+[SOCLE COMMUN]
+
+OBJECTIF. Mesure du 18 août : S15 6, S16 6, S17 6, S18 8, S19 5, S20 3, S21 7, S22 3, S23 1,
+S24 3. Cible : 8 sur S15–S17 et S19 ; 6 sur S20 et S22. S23 (projet final) et S24 (défense,
+carrière) ont une charge portée par le projet et les fiches — ne les gonfle pas artificiellement,
+mais justifie leur volume DANS le curriculum. Soit 6 + 3 + 3 + 3 = 15 exercices à créer environ.
+
+TRAVAIL.
+1. S15–S17 (tests et qualité) : +2 par semaine. Suis le modèle des exercices du lot 1
+   (tests-boundary-probe-001, tests-shared-state-leak-001, quality-unreachable-branch-001) :
+   domaine d'entrée ouvert, sémantique réelle. Sujets non couverts à privilégier : mutation
+   d'un test qui passe pour de mauvaises raisons, choix d'une assertion qui survit au
+   refactoring, détection d'un test qui dépend de l'ordre d'exécution, budget de couverture
+   qui pilote une décision, caractérisation d'un code legacy avant modification.
+2. S19–S20 (Docker, CI) : +3 et +3. Le runner ne peut pas héberger le geste réel — les labs
+   container-delivery et ci-delivery le portent. Les exercices doivent donc porter des NOYAUX
+   DÉCIDABLES à domaine ouvert : analyse d'une chaîne de contraintes de ressources et limite
+   effective avec raison du rabattement, ordre des couches et invalidation de cache à partir
+   d'une liste d'instructions décrite, politique de tag immuable contre étiquette flottante,
+   diagnostic d'un pipeline à partir de son journal textuel, calcul d'une fenêtre de retry de
+   job avec backoff. INTERDIT : toute signature à booléens.
+3. S22 (observabilité) : +3 sur le même principe — corrélation de traces à partir de journaux
+   textuels, budget d'erreur consommé sur une fenêtre, décision d'alerte contre bruit.
+4. S8–S10 : retire debug-safe-divide-001 des modules 8, 9 et 10 (il reste en S7). Si le
+   chargeur exige au moins un exercice par module, préfère UN exercice EF Core réel par
+   semaine (le runner a EF Core + SQLite : requête sur DbContext en mémoire de la même forme
+   que ef-orders-*) plutôt que le remplissage actuel. Sinon, documente que la pratique S8–S10
+   vit dans le SqlLab et laisse les modules sans exercice.
+5. Câblage complet de chaque exercice neuf (point 7 du socle), banques d'examen thématiques
+   (tests-quality-v1 pour S15–S17, azure-observability-v1 pour S22 ; propose une banque pour
+   S18–S20 si aucune ne convient — il n'en existe pas entre les examens 6 et 7).
+6. Mets à jour les matrices figées et la section densité de docs/ROADMAP.md et README.md.
+
+CRITÈRE DE RÉUSSITE. ExerciseCorrectnessTests vert sur tous les exercices (anciens + neufs),
+aucune semaine S11–S22 sous 6, S15–S19 à 8, validateur à 0, dette à 0.
+
+═══════════════════════════════════════════════════════════════════════════════════════════
+PROMPT 5 — T9 : les douze exercices à domaine booléen
+═══════════════════════════════════════════════════════════════════════════════════════════
+
+[SOCLE COMMUN]
+
+OBJECTIF. Chantier documenté dans « Next Step » et jamais commencé : 0/12 traité. Douze
+exercices ont un domaine d'entrée entièrement booléen (au plus 16 entrées possibles) — ils
+entraînent la lecture de l'énoncé, pas le geste annoncé. Pire : cinq de leurs variantId
+pointent vers un AUTRE exercice booléen de la même liste, formant des chaînes fermées
+(azure-release-evidence → azure-incident-brief → azure-hosting-decision → azure-secret-source ;
+docker-hardening-policy → ci-job-result ; ci-deploy-gate → api-http-status-map), et aucune
+paire réciproque n'existe.
+
+Les douze : api-di-lifetime-choice-001, api-http-status-map-001, azure-hosting-decision-001,
+azure-incident-brief-001, azure-release-evidence-001, azure-secret-source-001,
+ci-deploy-gate-001, ci-job-result-001, docker-hardening-policy-001,
+quality-review-severity-001, security-login-message-001, tests-double-choice-001.
+
+TRAVAIL.
+1. NE SUPPRIME AUCUN des douze : ils portent une décision qui a sa valeur. Ajoute à côté de
+   CHACUN un exercice frère à domaine OUVERT sur le MÊME sujet. Le procédé qui marche : passer
+   les propriétés en chaîne descriptive ou en liste à analyser, jamais en booléens. Exemples :
+   - api-di-lifetime-choice-001 → analyse d'une description de dépendance (état, coût de
+     construction, dépendances scoped) et cycle de vie recommandé avec raison ;
+   - api-http-status-map-001 → à partir d'une description de requête et de l'état de la
+     ressource, statut ET en-têtes obligatoires (Location, Allow, Retry-After…) ;
+   - azure-incident-brief-001 → à partir d'un journal d'incident textuel, brief structuré
+     (impact, début, atténuation, prochaine étape) ;
+   - docker-hardening-policy-001 → analyse d'une configuration de conteneur décrite et liste
+     des écarts au durcissement avec leur gravité ;
+   - tests-double-choice-001 → à partir de la description d'une dépendance dans un test,
+     type de double recommandé et ce que le test perdrait avec un autre choix.
+   Décline le même principe pour les sept autres.
+2. Fais pointer les variantId en PAIRES RÉCIPROQUES : chaque booléen pointe son frère ouvert,
+   chaque frère ouvert pointe son booléen. Les chaînes booléennes fermées disparaissent.
+3. Câblage complet des douze frères (point 7 du socle), banques d'examen thématiques.
+4. Ces douze frères comptent dans la densité : recroise avec le prompt 4 pour ne pas dépasser
+   inutilement la cible d'une semaine déjà pleine — si la semaine du booléen est pleine,
+   place le frère dans la même semaine quand même (la variante doit rester dans le bloc).
+
+CRITÈRE DE RÉUSSITE. Les douze paires réciproques existent et sont prouvées par un test de
+contenu qui refuse tout variantId d'exercice booléen pointant vers un autre exercice à
+domaine booléen. ExerciseCorrectnessTests vert partout.
+
+═══════════════════════════════════════════════════════════════════════════════════════════
+PROMPT 6 — Piste senior : densité et vocabulaire d'entretien
+═══════════════════════════════════════════════════════════════════════════════════════════
+
+[SOCLE COMMUN]
+
+OBJECTIF. La piste senior S25–S32 existe et sa structure est bonne (curriculum dédié,
+/learn-senior, examen senior-readiness-v1), mais elle porte 1 exercice par semaine — la
+densité la plus faible du dépôt, pour le public qui en a le plus besoin. Et son vocabulaire
+est exclusivement français : « disjoncteur », « lettres mortes », « cloisonnement » — zéro
+occurrence pédagogique de circuit breaker, bulkhead, dead letter queue, Polly, RabbitMQ,
+Kafka, gRPC, OpenTelemetry. Un entretien senior, même en France, emploie ces noms.
+
+TRAVAIL.
+1. +3 exercices par semaine senior (S25–S32), soit 24 exercices, domaines ouverts, sur les
+   noyaux décidables de chaque thème : budget de retry avec jitter à calculer, décision
+   d'ouverture/demi-ouverture d'un disjoncteur sur une fenêtre décrite, clé d'idempotence à
+   construire et collision à détecter, verdict de rejeu d'un message consommé, plan de
+   compensation à ordonner, décision de découpage argumentée sur une description de système,
+   triage de remarques de revue par gravité avec faux positif qui coûte, localisation d'un
+   défaut dans une trace multi-services textuelle.
+2. Dans chaque leçon senior, ajoute une sous-section « Le nom en entretien » : le terme
+   anglais exact, les outils que l'industrie associe (Polly pour la résilience .NET, RabbitMQ/
+   Kafka pour la messagerie, OpenTelemetry pour la corrélation, gRPC pour l'inter-service),
+   et UNE phrase par outil sur ce qu'il fait — sans en faire une dépendance, sans exercice
+   dessus : c'est du vocabulaire, et le dire explicitement. Vérifie que la règle des marqueurs
+   interdits (OpenTelemetry interdit dans les exercices S11–S20) ne s'applique pas aux leçons
+   senior — si elle s'applique par erreur, corrige la portée de la règle, pas le contenu.
+3. Fiches d'entretien : chaque exercice neuf porte la sienne, en incluant la question de
+   vocabulaire anglais correspondante.
+4. Étoffe S31 et S32, les deux réponses aux trous « aucune revue humaine » et « aucune base
+   existante » : au moins deux diffs défectueux supplémentaires pour project-code-review-001
+   (défauts de natures différentes : concurrence, sécurité, et un faux positif de style qui
+   coûte s'il est classé bloquant), et un second scénario legacy (senior-legacy-*-002) sur
+   une base plantée différente.
+5. Câblage complet, banque senior-readiness-v1 (drawCount à réviser en proportion),
+   ContentSeniorCoverageTests et tous les compteurs figés.
+
+CRITÈRE DE RÉUSSITE. 4 activités minimum par semaine senior, vocabulaire d'entretien présent
+dans les 8 leçons, ExerciseCorrectnessTests vert, dette à 0.
+
+═══════════════════════════════════════════════════════════════════════════════════════════
+PROMPT 7 — Kit carrière : du vrai contenu et une route produit
+═══════════════════════════════════════════════════════════════════════════════════════════
+
+[SOCLE COMMUN]
+
+OBJECTIF. La semaine 24 promet CV, candidatures et négociation. La réalité :
+content/reference/career/ contient 8 fichiers totalisant ~5 Ko — NEGOTIATION-GUIDE.md fait un
+paragraphe, POST-HIRE-PLAN.md déclare lui-même ne rien implémenter. Aucune route ne les sert :
+career n'est pas un ContentDocumentType, grep -rin "career" src/ rend zéro. C'est exactement
+l'angle mort « publié, validé, compté, illisible » que ContentReachabilityWebTests a fermé
+pour les fiches d'entretien — mais ce contenu-ci n'étant pas un type de document, la règle ne
+le voit pas.
+
+TRAVAIL.
+1. Étoffe les cinq documents en vrais guides actionnables, chacun autonome et sans ressource
+   externe obligatoire :
+   - CV-EVIDENCE : construire un CV de reconversion à partir des preuves que le produit
+     collecte réellement (portes, examens, projets vérifiés) — avec la règle d'honnêteté du
+     projet : ce qu'une preuve Forge.NET démontre et ne démontre pas à un recruteur ;
+   - STAR-WORKBOOK : méthode complète avec trois exemples STAR rédigés issus d'activités
+     réelles du parcours (un DebugLab, un projet console, un incident simulé) ;
+   - APPLICATION-TRACKER : protocole de prospection hebdomadaire, critères de tri d'offres,
+     rythme de relance — le suivi lui-même reste un fichier de l'apprenant, le dire ;
+   - NEGOTIATION-GUIDE : préparation chiffrée d'une négociation de reconversion (fourchette,
+     plancher, contreparties non salariales, scripts de réponse aux objections classiques) ;
+   - POST-HIRE-PLAN : plan 30/60/90 jours d'un premier poste .NET, avec les gestes de la
+     piste senior en ligne de mire.
+   Aucune promesse d'emploi ou de salaire, conformément à AGENTS.md. Aucune donnée personnelle
+   d'exemple réelle.
+2. Sers ce contenu : décide entre (a) un ContentDocumentType `CareerGuide` chargé et validé
+   comme les autres (recommandé : la règle de joignabilité le couvrira automatiquement), ou
+   (b) une page statique dédiée. Documente le choix. Route /career + lien depuis la S24 et le
+   dashboard quand la porte A est ouverte.
+3. ContentReachabilityWebTests couvre le nouveau type ; aucune preuve de maîtrise n'est
+   produite par ces pages, et chaque page l'annonce.
+4. Export-CareerEvidence.ps1 : garde-le, référence-le depuis la page, et vérifie qu'il refuse
+   toujours email et téléphone.
+5. Mets à jour docs/CURRICULUM.md (S24), README (routes), compteurs de chargement.
+
+CRITÈRE DE RÉUSSITE. /career sert les cinq guides, le validateur les contrôle, la règle de
+joignabilité les couvre, et aucun d'eux ne promet ce que le projet s'interdit de promettre.
+
+═══════════════════════════════════════════════════════════════════════════════════════════
+PROMPT 8 — Rejeu des sept personas : harnais navigateur
+═══════════════════════════════════════════════════════════════════════════════════════════
+
+[SOCLE COMMUN]
+
+OBJECTIF. Première des deux conditions de levée du verdict REFUSÉ de docs/PEDAGOGICAL_AUDIT.md.
+Les sept personas (P1 débutant fragile, P2 tricheur, P3 consommateur de solutions, P4 faible
+SQL, P5 fort quiz/faible pratique, P6 sans Docker, P7 retour après deux semaines) sont scriptés
+en prose dans le rapport d'audit et n'ont jamais été rejoués : le dépôt n'a AUCUN pilotage de
+navigateur — les 61 tests E2E sont des appels HTTP en processus qui ne chargent aucun circuit
+Blazor interactif. Or les personas portent précisément sur des trajets d'interface.
+
+TRAVAIL.
+1. Ajoute un projet tests/ForgeDotNet.PersonaTests avec Microsoft.Playwright (version épinglée
+   dans Directory.Packages.props). CONTRAINTE D'HONNÊTETÉ : l'installation des navigateurs
+   Playwright est un téléchargement réseau initial — déclare-le dans le README exactement
+   comme l'installation npm des labs front (versions épinglées, commande exacte, seul moment
+   réseau). Le projet est EXCLU de `dotnet test` par défaut (catégorie ou solution filter) :
+   il se lance explicitement, navigateur et Docker requis.
+2. Implémente les sept scripts de personas TELS QUE GELÉS dans docs/PEDAGOGICAL_AUDIT.md
+   (sections « Script » et « Preuves attendues » de chaque persona). Chaque persona :
+   - dossier de données SQLite dédié et jetable (LocalData__DirectoryPath vers un répertoire
+     temporaire), créé avant, supprimé après collecte ;
+   - application démarrée en processus enfant sur un port libre, mode CodeRunner adapté au
+     persona (Manual pour P6, Docker pour ceux qui valident) ;
+   - P7 exige l'avance d'horloge de quatorze jours : le produit doit-il exposer une horloge
+     de test ? S'il existe déjà une horloge déterministe côté tests, réutilise-la ; sinon
+     documente la limite au lieu de trafiquer l'horloge système.
+3. Chaque étape produit une PREUVE : capture d'écran horodatée + assertion sur l'état
+   persistant. Range-les sous un dossier d'artefacts non versionné, avec un registre Markdown
+   généré par persona.
+4. Les contournements se tentent AVANT les chemins nominaux, comme le protocole l'impose :
+   solution avant réflexion, déclaration manuelle, rejeu d'examen, requête SQL inter-base.
+5. À la fin : mets à jour docs/PEDAGOGICAL_AUDIT.md — résultat par persona, défauts trouvés
+   classés P0–P3, et le verdict SELON LES RÈGLES DU PROTOCOLE (les sept exécutés + P0/P1 clos
+   = condition 1 levée ; le panel humain reste la condition 2). N'écris JAMAIS « verdict
+   levé » si un persona n'a pas produit toutes ses preuves : la discipline du rapport vaut
+   plus que sa conclusion.
+6. Documente le lancement dans docs/RUNBOOK.md.
+
+CRITÈRE DE RÉUSSITE. Une commande documentée rejoue les sept personas et produit leur registre
+de preuves. Les défauts trouvés sont rapportés tels quels, corrigés seulement s'ils sont P0/P1,
+avec non-régression.
+
+═══════════════════════════════════════════════════════════════════════════════════════════
+PROMPT 9 — Panel humain (P2-02) : le matériel, pas le remplacement
+═══════════════════════════════════════════════════════════════════════════════════════════
+
+[SOCLE COMMUN]
+
+OBJECTIF. Seconde condition de levée du verdict, et la seule qui ne se code pas : aucun panel
+humain indépendant n'a été réuni. On ne fabrique pas un panel — mais on peut fabriquer tout ce
+qui fait qu'une session avec de vrais humains produit des preuves exploitables au lieu
+d'impressions. C'est aussi le complément direct du prompt 3 (attestations).
+
+TRAVAIL.
+1. Crée docs/HUMAN_PANEL_KIT.md :
+   - profils à recruter, alignés sur l'audit : au minimum un débutant fragile, un développeur
+     fort en quiz, un profil faible SQL (trois personas du protocole) ;
+   - script de session par profil : tâches à accomplir sans aide de l'animateur, durée cible,
+     ce que l'animateur note (temps par étape, reformulation sans aide, blocages, moments où
+     l'interface ment ou surprend) ;
+   - grille de restitution : par tâche, réussi/réussi avec friction/échoué, verbatims,
+     classement P0–P3 aligné sur l'échelle de l'audit ;
+   - consentement et données : sessions sur données fictives, aucun enregistrement conservé
+     au-delà de la restitution, aucune donnée personnelle dans le dépôt.
+2. Échantillonnage des contenus à faire relire, tiré au sort mais reproductible (graine
+   écrite) : 10 explications d'exercice, 5 leçons, 5 fiches d'entretien, 3 réponses modèles
+   d'anglais — les familles que l'audit désigne comme relevant du jugement humain.
+3. Relie le kit au produit : la page /human-review (prompt 3) référence le kit ; le rapport
+   d'audit gagne une section « Panel — protocole prêt, non exécuté » avec la liste exacte de
+   ce qui manque encore (des humains, du temps, rien d'autre).
+4. N'écris nulle part qu'un panel a eu lieu. Le kit prépare la condition 2 ; il ne la lève pas.
+
+CRITÈRE DE REUSSITE. Une personne extérieure peut animer une session de panel avec le seul
+kit, et ses conclusions rentrent telles quelles dans le registre de l'audit.
+
+═══════════════════════════════════════════════════════════════════════════════════════════
+ORDRE RECOMMANDÉ
+═══════════════════════════════════════════════════════════════════════════════════════════
+
+1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 → 9
+
+Justification. Le 1 est quasi gratuit et évite que tout agent suivant parte sur des mesures
+fausses. Le 2 est le plus gros déblocage pédagogique (la récompense du travail) et conditionne
+le 3, qui achève l'ouverture des portes pour les clés humaines. Les 4, 5 et 6 sont du contenu
+pur et bénéficient des banques et compteurs remis d'aplomb. Le 7 clôt la promesse de S24. Le 8
+vient tard parce qu'il fige un état : rejouer les personas avant la fin des chantiers de
+contenu documenterait des défauts déjà en cours de correction. Le 9 est indépendant mais gagne
+à suivre le 3 (attestations) et le 8 (protocole rodé).
+
+Après le 9, il ne reste AUCUN chantier codable : la levée du verdict dépend d'exécutions
+humaines (personas rejoués avec leurs preuves, panel réuni), pas de code nouveau.
+
+═══════════════════════════════════════════════════════════════════════════════════════════
+VÉRIFICATION TRANSVERSE
+═══════════════════════════════════════════════════════════════════════════════════════════
+
+Après chaque prompt, la même chaîne :
+
+  dotnet build --no-restore              → 0 erreur
+  dotnet test --nologo                   → référence ci-dessous
+  dotnet format --verify-no-changes      → propre
+  powershell -ExecutionPolicy Bypass -File scripts/validate-content.ps1 content/reference
+                                         → 0 erreur
+  registre content/authoring/content-debt.json → toujours vide
+
+Référence acceptée du 18 août 2026, mesurée avec Docker 29.6.1 et SqlLab actifs
+(scripts/build-code-runner.ps1 exécuté, scripts/start-sql-lab.ps1 sain) :
+
+  ForgeDotNet.UnitTests          170 réussis, 0 échec
+  ForgeBlazorJwtClient.Tests       3 réussis, 0 échec
+  ForgeDotNet.EndToEndTests       74 réussis, 0 échec
+  ForgeDotNet.IntegrationTests   641 réussis, 0 échec (11 m 34 s)
+  Total                          888 verts, 0 ignoré
+
+Sans Docker : les échecs tolérés sont exclusivement dans SqlEfContentTests,
+DockerCodeRunnerSecurityTests, InitialCSharpContentTests, SqlLabSecurityTests,
+ExamSqlEfContentTests, ExamEfDockerRunnerTests, DebugLabDockerRunnerTests,
+ProjectSubmissionDockerRunnerTests. Tout autre échec est une régression.
+
+Un seul écart à cette référence est une régression, pas un effet de bord acceptable.

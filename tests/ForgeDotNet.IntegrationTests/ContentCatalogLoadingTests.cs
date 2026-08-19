@@ -24,7 +24,7 @@ public sealed class ContentCatalogLoadingTests
         ContentCatalog catalog = Assert.IsType<ContentCatalog>(first.Catalog);
         ContentCatalog secondCatalog = Assert.IsType<ContentCatalog>(second.Catalog);
         // 597 documents pédagogiques, plus la banque de cartes de révision.
-        Assert.Equal(618, catalog.Items.Count);
+        Assert.Equal(624, catalog.Items.Count);
         Assert.Single(catalog.GetByType(ContentDocumentType.ReviewCardBank));
         Assert.Equal(187, catalog.GetByType(ContentDocumentType.Exercise).Count);
         Assert.Equal(242, catalog.GetByType(ContentDocumentType.InterviewQuestion).Count);
@@ -33,7 +33,7 @@ public sealed class ContentCatalogLoadingTests
         Assert.Equal(96, catalog.GetByType(ContentDocumentType.Lesson).Count);
         Assert.Equal(51, catalog.GetByType(ContentDocumentType.EnglishActivity).Count);
         Assert.Equal(29, catalog.GetByType(ContentDocumentType.DebugScenario).Count);
-        Assert.Equal(10, catalog.GetByType(ContentDocumentType.Project).Count);
+        Assert.Equal(16, catalog.GetByType(ContentDocumentType.Project).Count);
         Assert.Equal(catalog.Revision, secondCatalog.Revision);
         string[] csharpTypeIds = catalog.GetBySkill("csharp.types")
             .Select(item => item.Id)

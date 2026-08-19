@@ -36,15 +36,17 @@ domaine la borne. Une carte n’apparaît que pour un exercice réellement soumi
 empêche d’en récolter sur un exercice jamais ouvert. **Aucun poids ni seuil n’a été modifié** :
 `MasteryRulesTests` documente le blocage et prouve son ouverture par la seule addition d’une preuve.
 
-La banque compte **230 cartes pour 115 exercices**. Les quatre domaines critiques dont la pratique
-passe par des exercices — C#, débogage, API, tests — sont couverts intégralement, et deux règles de
-`ReviewCardQualityTests` le tiennent : tout exercice d’un de ces domaines porte ses cartes, et le
-domaine déclaré par une carte est celui déduit de la première compétence de son exercice. Une carte
-mal classée alimenterait la rétention d’un domaine que l’apprenant n’a pas travaillé.
+La banque compte **454 cartes pour 227 éléments pratiqués** — les 187 exercices publiés et les
+40 scénarios SQL/EF, deux cartes chacun (mesure du 18 août 2026). Les domaines critiques dont la
+pratique passe par des exercices — C#, débogage, API, tests — sont couverts intégralement, et deux
+règles de `ReviewCardQualityTests` le tiennent : tout exercice d’un de ces domaines porte ses
+cartes, et le domaine déclaré par une carte est celui déduit de la première compétence de son
+exercice. Une carte mal classée alimenterait la rétention d’un domaine que l’apprenant n’a pas
+travaillé.
 
-Le domaine SQL fait exception : sa pratique passe par des scénarios, non par des exercices, aucun
-exercice ne porte de compétence `sql.*`, et aucune carte ne l’alimente à ce jour. Le couvrir demande
-une clé de carte généralisée de l’exercice vers l’élément pratiqué, quel qu’il soit.
+Le domaine SQL, longtemps hors de portée parce que sa pratique passe par des scénarios et non par
+des exercices, est couvert depuis que la clé de carte a été généralisée de l’exercice vers
+l’élément pratiqué : les 40 scénarios SQL/EF portent 80 cartes qui alimentent sa rétention.
 
 Les plafonds d’assistance sont H1 90, H2 80, H3 70, H4 60 et solution 0. La consultation d’une solution contamine définitivement la pratique autonome du même exercice dans la politique v1, y compris si une réussite antérieure existe. Une reprise espacée peut produire une preuve distincte uniquement lorsqu’une carte diagnostique est vérifiée côté serveur.
 
@@ -60,6 +62,7 @@ Pour un même exercice, la tentative vérifiée la plus récente a un poids 1, l
 | Examen | item soumis d’un rapport terminé, résultat runner, tirage/durée et assistance figés | `ExamEngine` automatique et sans aide uniquement ; un faux examen ou une déclaration manuelle est refusé |
 | Révision | réponse d’une carte diagnostique à choix corrigée côté serveur | `ReviewEngine` uniquement ; autoévaluation et carte personnelle restent sans score |
 | Explication/quiz/livrable | preuve serveur typée attendue | la déclaration manuelle est refusée |
+| Revue humaine | attestation d’un relecteur nommé, grille complète, critères obligatoires observés | `HumanAttestation`, admise pour les six clés à jugement humain et la composante Explication uniquement ; affichée « non vérifiée par la machine » |
 
 Le code C# et la requête SQL ne sont jamais placés dans les tables d’observation. Les activités de pratique existantes conservent leurs propres données pédagogiques selon leur contrat ; la projection de maîtrise ne copie ni code, ni requête, ni sortie, ni solution.
 
@@ -87,18 +90,35 @@ tel doit désormais l’être de bout en bout.
 Une soumission faite en mode manuel n’est pas une réussite : le domaine refuse une réussite non
 vérifiée automatiquement, et `IsVerifiedAchievement` rejette de toute façon `ManualDeclaration`.
 `ProjectAchievementTests` tient l’inventaire : toute clé exigée par une porte figure soit parmi les
-clés produites, soit parmi les **dix-neuf** clés déclarées sans producteur, et ce dernier nombre ne
+clés produites, soit parmi les **treize** clés déclarées sans producteur, et ce dernier nombre ne
 peut que descendre.
 
-Deux clés en sont sorties, toutes deux au-delà de la porte A. `code-review` : `project-code-review-001`
-(piste senior S31) fait noter des diffs à défauts plantés par des suites d’acceptation. `ef-core` :
+Deux clés en sont d’abord sorties, toutes deux au-delà de la porte A. `code-review` : `project-code-review-001`
+(piste senior, Senior S7) fait noter des diffs à défauts plantés par des suites d’acceptation. `ef-core` :
 `project-orders-database-001` fait écrire trois méthodes qui interrogent et modifient une **vraie
 base** — le bac à sable embarque `Microsoft.EntityFrameworkCore` et `Microsoft.Data.Sqlite` parmi ses
 assemblies approuvées, ce qui rend l’exécution réelle et non simulée. Les trois suites vérifient
 respectivement la traversée du modèle, le nombre de requêtes SQL émises (compté par un intercepteur,
 non estimé) et la persistance d’une écriture relue depuis un contexte neuf.
 
-#### Diagnostic des dix-neuf clés restantes
+**Six autres clés en sont sorties le 18 août 2026**, chacune par un projet vérifiable qui suit
+exactement ce modèle — clé déclarée par le manifeste, suites exécutées dans le bac à sable, trajet
+prouvé hors Docker par `ProjectCorrectnessTests`, ouverture de porte prouvée par
+`MasteryRulesTests.EachNewlyProducedKeyOpensItsGateOnlyOnceVerified` :
+
+| Clé | Projet | L’artefact réellement exercé |
+|---|---|---|
+| `validation-errors` | `project-validation-pipeline-001` | `Validator.TryValidateObject` traverse les attributs du vrai pipeline DataAnnotations — celui qu’ASP.NET Core exécute —, un attribut personnalisé l’étend, et les manquements se projettent dans un contrat 200/422 stable |
+| `logs` | `project-operations-log-001` | le vrai `ILogger` de `Microsoft.Extensions.Logging` : niveaux et seuil du puits, caviardage avant émission, corrélation par `BeginScope` — le puits capturé est la seule source du résultat |
+| `incident.simulated` | `project-incident-drill-001` | un service simulé déterministe que le code détecte sur deux points soutenus, atténue par la bonne action et vérifie rétabli sur les signaux relus — la clé nomme un incident simulé, c’est ce qui est exercé |
+| `performance` | `project-query-budget-001` | le squelette fonctionne mais interroge élément par élément ; l’apprenant rend le même résultat sous un budget d’allers-retours compté par un intercepteur — un avant mesuré, un après au même volume |
+| `security` | `project-abuse-hardening-001` | HMAC recalculé et comparé en temps constant, canonisation de chemin, fenêtre anti-rejeu — éprouvés par des cas cachés d’abus que l’énoncé ne liste pas |
+| `feature.autonomous` | `project-autonomous-feature-001` | une spécification contractuelle complète, aucun découpage ni indice : la fonctionnalité se livre sur le seul contrat, dans les limites déclarées du bac à sable |
+
+Aucun de ces producteurs ne touche au projet final, qui reste guidé et sans corrigé par décision
+figée : chacun est un livrable dédié, borné, dont l’artefact est celui que sa clé nomme.
+
+#### Diagnostic des treize clés restantes
 
 L’inventaire ne se contente plus de compter : chaque clé sans producteur porte **ce qui lui manque et
 pourquoi**, et le test refuse une justification trop courte pour être actionnable. Le classement suit
@@ -109,7 +129,7 @@ fabriquerait le faux signal que cette politique existe pour empêcher.
 
 | Blocage | Clés | Ce qu’il faut |
 |---|---:|---|
-| Contenu vérifiable manquant | **13** | un livrable exécuté et vérifié côté serveur |
+| Contenu vérifiable manquant | **7** | un livrable exécuté et vérifié côté serveur, ou un canal de preuve qui n’existe pas encore |
 | Jugement humain requis | **6** | rien de ce que du code peut produire |
 
 Les six clés du second groupe — Git propre, présentation de 10 minutes, entretien blanc, architecture
@@ -117,11 +137,17 @@ pragmatique, anglais, défense finale — ne descendront jamais par du code. Les
 technique conduirait à fabriquer une preuve automatique de ce qui ne s’automatise pas, par exemple un
 entretien noté par une suite de tests.
 
-Ce qui **peut** être fait pour elles est écrit dans [`HUMAN_REVIEW.md`](HUMAN_REVIEW.md) : une grille
-observable par exigence, le format de preuve accepté, et une procédure d’attestation qui vit
-**entièrement hors du système de maîtrise**. Aucune attestation n’entre dans la base, ne change un
-score ni n’ouvre une porte — `IsEligible` refuse `ManualDeclaration` sans condition, et c’est la
-garantie qui rend le protocole publiable sans risque de faux signal.
+Ce qui existe pour elles est le protocole de [`HUMAN_REVIEW.md`](HUMAN_REVIEW.md), **branché au
+produit depuis le 18 août 2026** : la page `/human-review` enregistre l’attestation d’un relecteur
+humain nommé, sous un troisième type de preuve — `MasteryVerificationKind.HumanAttestation` — que
+les règles admettent **exclusivement** pour ces six clés et pour la composante Explication.
+`MasteryPolicyCatalog.HumanJudgementKeys` est la liste fermée ; sur toute autre clé, une attestation
+vaut zéro, exactement comme une déclaration. L’enregistrement refuse l’auto-attestation (contrôle
+d’identité contre le profil), la grille incomplète, le critère obligatoire non observé, la durée
+au-dessous du minimum de la grille et le rejeu d’une même revue. Partout, l’attestation s’affiche
+« attestée par un relecteur humain, non vérifiée par la machine » : le produit ne peut vérifier ni
+l’identité du relecteur ni ce qu’il a observé, et le dit au lieu de le laisser croire.
+`ManualDeclaration` — l’apprenant seul — reste refusée sans condition.
 
 **Une route écartée, une autre empruntée.** L’exigence « EF Core » paraissait branchable sur les
 validations du laboratoire SQL : cinq scénarios `ef-*` sont publiés, ils exécutent du vrai code EF Core
@@ -153,6 +179,38 @@ règle d’admission :
 Les cinq restent dans l’inventaire avec leur diagnostic. Leur produire un accomplissement sur un
 exercice qui *raisonne sur* le sujet aurait fait descendre le compteur sans rien débloquer : c’est
 exactement le faux signal que cet inventaire existe pour empêcher.
+
+#### Les sept clés restantes : deux canaux conçus, aucun encore admis
+
+La revue du 18 août 2026 a classé les sept clés « contenu manquant » qui subsistent. Aucune n’est
+produisible sur les canaux existants sans mentir — c’est ce que les refus ci-dessus établissent —
+mais deux **canaux nouveaux** ont été conçus, sans être implémentés, parce que leurs conditions
+d’admission ne sont pas encore démontrées :
+
+- **Le canal des suites hébergées**, pour `api.functional`, `authn-authz` et une partie de
+  `deployment`. L’image du bac à sable embarquerait ASP.NET Core et un harnais
+  `WebApplicationFactory` fourni par la suite — jamais par l’apprenant — dont le serveur de test
+  est en mémoire : `--network none` resterait vrai, aucun port ne s’ouvrirait. La soumission
+  resterait une classe de l’apprenant compilée avec le harnais. Conditions avant toute
+  implémentation : chiffrer la taille d’image et sa surface d’attaque, étendre la liste
+  d’assemblies approuvées, redémontrer une à une les garanties de
+  `DockerCodeRunnerSecurityTests`, et reconstruire l’empreinte épinglée. Tant que ces conditions
+  ne sont pas tenues, les clés restent inventoriées.
+- **Le canal des suites à mutants**, pour `tests.unit` et `tests.integration`. L’artefact que ces
+  clés nomment est un test écrit par l’apprenant ; le refus documenté tient au fait qu’un rapport
+  d’assertions rendu par la soumission serait falsifiable. Le canal conçu inverse la charge : la
+  soumission de l’apprenant est sa **suite de tests**, et le runner la compile successivement
+  contre une implémentation correcte cachée puis contre des mutants cachés — la suite est admise
+  si elle passe sur l’implémentation correcte et échoue sur chaque mutant. Rien n’y est
+  falsifiable par une valeur en dur, puisque les implémentations éprouvées sont secrètes.
+  Condition : un nouveau type de suite dans le contrat du conteneur, avec ses règles de quota.
+
+Trois clés n’ont pas de canal honnête identifié. `docker` garde une piste locale — le produit
+dispose d’un client Docker en mode CLI et pourrait inspecter une image construite par l’apprenant
+(utilisateur non root, HEALTHCHECK, absence de secret dans les couches), à condition de lier
+l’image au travail demandé pour fermer le rejeu — non instruite. `ci` et `deployment` restent
+au diagnostic d’origine : rien de ce que le serveur collecte ne prouve un pipeline ou un
+déploiement réels, et une preuve déclarée vaudrait zéro.
 
 | Porte | Conditions cumulatives |
 |---|---|
@@ -246,13 +304,43 @@ septième grille de [`HUMAN_REVIEW.md`](HUMAN_REVIEW.md), dont le critère centr
 causal que le relecteur vérifie en direct — est exactement ce qu’aucune correction automatique ne sait
 faire. Rien n’y est enregistré comme preuve automatique.
 
+**La quatrième route, empruntée le 18 août 2026 : le lecteur lui-même.** Puisque ce qui juge un
+compte rendu est un lecteur, c’est un lecteur qui l’atteste — la septième grille, saisie sur
+`/human-review`, produit une observation d’Explication sous `HumanAttestation`, portée par
+l’exercice que le relecteur a choisi dans l’historique et par son domaine. Le plafond de 100 n’est
+donc atteignable que pour un profil **attesté**, domaine par domaine ; un profil sans relecteur
+plafonne toujours à 90, ce que `MasteryReachabilityTests` continue de mesurer comme la limite du
+produit seul. Aucun poids, aucun seuil n’a bougé ; les trois routes automatiques restent refusées.
+
 ### Portes B, C et D
 
-Elles restent fermées. Dix-neuf de leurs exigences d’accomplissement n’ont aucun producteur, ce que
-`ProjectAchievementTests` consigne clé par clé, avec le diagnostic de ce qui manque à chacune. Deux
-seulement sont satisfaites — `code-review` et `ef-core` — et un apprenant ne lit donc pas « Porte B —
-bloquée » par accident de configuration, mais parce que ses autres exigences ne sont pas satisfiables
-en l’état.
+Elles restent fermées, mais plus pour les mêmes raisons, et l’écart est mesuré. Treize de leurs
+exigences n’ont aucun producteur, ce que `ProjectAchievementTests` consigne clé par clé avec le
+diagnostic de ce qui manque à chacune ; huit sont produites au-delà de la porte A. L’état exact au
+18 août 2026 :
+
+- **Porte B** : `ef-core` et `validation-errors` sont produites ; `api.functional`, `tests.unit` et
+  `tests.integration` attendent les canaux conçus ci-dessus ; `git.clean` et
+  `presentation.10-minutes` exigent un jugement humain — **attestables** depuis `/human-review`.
+- **Porte C** : `logs` et `incident.simulated` sont produites ; `docker`, `ci`, `authn-authz` et
+  `deployment` restent sans canal admis ; `interview.mock` exige un jugement humain — attestable.
+- **Porte D** : toutes ses exigences propres sont soit produites — `performance`, `security`,
+  `feature.autonomous`, `code-review` — soit humaines et attestables — `architecture.pragmatic`,
+  `english`, `project.final-defense`. La porte D n’attend plus aucun contenu qui lui soit propre :
+  elle attend la porte C.
+
+`MasteryRulesTests` prouve, clé par clé, que chaque exigence nouvellement produite ouvre réellement
+sa porte sur un profil fabriqué — fermée sans la clé, fermée sur déclaration manuelle, ouverte sur
+preuve `AutomaticTests` — sur le modèle de la preuve historique de la porte A. Il prouve de la même
+façon que chaque exigence humaine s’ouvre sur une `HumanAttestation` et sur elle seule, et qu’une
+attestation posée sur une clé vérifiable par la machine ne compte pour rien.
+
+Conséquence mesurée : un apprenant **avec un relecteur humain** peut désormais satisfaire toutes les
+exigences propres de la porte D et les exigences humaines de B et C ; ce qui ferme encore B et C est
+exactement l’ensemble des clés vérifiables sans canal admis — `api.functional`, `tests.unit`,
+`tests.integration`, `docker`, `ci`, `authn-authz`, `deployment`. Un apprenant **sans relecteur**
+lit sur `/mastery` et `/human-review` exactement ce qui lui manque, et pourquoi aucune machine ne le
+remplacera.
 
 **Limite du quiz, assumée** : seule une réussite est persistée, si bien qu’une réponse juste au
 cinquième essai vaut la première. À 5 % de poids et sous la règle « accumulation de quiz faciles →
@@ -278,6 +366,9 @@ La date UTC entre dans la révision de calcul afin que récence et expiration so
 | composante absente | zéro, sans redistribution |
 | faux examen ou faux livrable | type de vérification serveur obligatoire |
 | rejeu/modification d’observation | unicité, append-only et refus fermé |
+| auto-attestation | le relecteur ne peut pas porter le nom du profil ; un profil sans nom ne peut rien enregistrer |
+| attestation sur une clé vérifiable par la machine | grille inexistante au protocole, et clé hors de `HumanJudgementKeys` : vaut zéro |
+| rejeu d’une même attestation | unicité profil/exigence/date, et un doublon n’ajouterait rien aux portes |
 
 ## Vérifications manuelles
 

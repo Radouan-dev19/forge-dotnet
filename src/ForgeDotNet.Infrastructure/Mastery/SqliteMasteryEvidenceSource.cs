@@ -49,6 +49,7 @@ public sealed class SqliteMasteryEvidenceSource(
         await AddExamsAsync(context, profileId, observations, achievements, cancellationToken);
         await AddProjectsAsync(context, profileId, achievements, cancellationToken);
         await AddQuizAsync(context, profileId, observations, cancellationToken);
+        await AddHumanAttestationsAsync(context, profileId, observations, achievements, cancellationToken);
         MasteryObservation[] ordered = observations.OrderBy(item => item.Id).ToArray();
         MasteryAchievement[] orderedAchievements = achievements.OrderBy(item => item.Id).ToArray();
         string json = JsonSerializer.Serialize(new { ordered, orderedAchievements }, RevisionJsonOptions);
@@ -424,6 +425,68 @@ public sealed class SqliteMasteryEvidenceSource(
                 DurationMinutes: 0,
                 submission.ObservedAtUtc,
                 $"project:{submission.Id:N}"));
+        }
+    }
+
+    /// <summary>
+    /// Projette les attestations humaines enregistrées : accomplissement pour les six exigences à
+    /// jugement humain, observation d'explication pour la septième grille.
+    /// </summary>
+    /// <remarks>
+    /// Le type de vérification est toujours <see cref="MasteryVerificationKind.HumanAttestation"/> :
+    /// la projection ne décide pas de sa valeur, ce sont les règles qui l'admettent — exclusivement
+    /// pour les clés que <see cref="MasteryPolicyCatalog.HumanJudgementKeys"/> déclare, et pour la
+    /// composante Explication. Une attestation enregistrée sur toute autre clé resterait visible et
+    /// vaudrait zéro, exactement comme une déclaration manuelle.
+    /// </remarks>
+    private async Task AddHumanAttestationsAsync(
+        ForgeDbContext context,
+        Guid profileId,
+        List<MasteryObservation> observations,
+        List<MasteryAchievement> achievements,
+        CancellationToken cancellationToken)
+    {
+        HumanAttestationRecord[] attestations = await context.HumanAttestations.AsNoTracking()
+            .Where(item => item.ProfileId == profileId)
+            .ToArrayAsync(cancellationToken);
+        foreach (HumanAttestationRecord attestation in attestations)
+        {
+            DateTimeOffset observedAtUtc = new(
+                attestation.ReviewedOn.ToDateTime(TimeOnly.MinValue), TimeSpan.Zero);
+            if (string.Equals(attestation.TargetKey, HumanReviewCatalog.ExplanationTarget, StringComparison.Ordinal))
+            {
+                string exerciseId = attestation.ExplainedExerciseId ?? string.Empty;
+                if (exerciseId.Length == 0)
+                {
+                    continue;
+                }
+
+                observations.Add(new MasteryObservation(
+                    attestation.Id,
+                    profileId,
+                    await PracticeDomainAsync(exerciseId, cancellationToken),
+                    MasteryComponent.Explanation,
+                    MasteryEvidenceSource.Explanation,
+                    MasteryVerificationKind.HumanAttestation,
+                    exerciseId,
+                    ItemVersion: 1,
+                    ContentRevision: "human-review-v1",
+                    Score: 100m,
+                    MasteryAssistance.None,
+                    observedAtUtc,
+                    $"attestation:{attestation.Id:N}"));
+                continue;
+            }
+
+            achievements.Add(new MasteryAchievement(
+                attestation.Id,
+                profileId,
+                attestation.TargetKey,
+                MasteryVerificationKind.HumanAttestation,
+                Passed: true,
+                attestation.DurationMinutes,
+                observedAtUtc,
+                $"attestation:{attestation.Id:N}"));
         }
     }
 

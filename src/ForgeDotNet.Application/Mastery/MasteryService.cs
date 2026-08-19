@@ -31,7 +31,43 @@ public sealed class MasteryService(
             snapshot = await projectionRepository.AppendAsync(policy, calculated, cancellationToken);
         }
 
-        return Map(snapshot);
+        return Map(snapshot, evidence.Achievements);
+    }
+
+    /// <summary>
+    /// Nature d'une preuve d'accomplissement, telle que la page l'affiche : vérifiée machine,
+    /// attestée par un relecteur humain, ou déclarée — et une déclaration vaut zéro.
+    /// </summary>
+    private static MasteryAchievementView MapAchievement(MasteryAchievement achievement)
+    {
+        MasteryProofNature nature = achievement.Verification switch
+        {
+            MasteryVerificationKind.AutomaticTests
+                or MasteryVerificationKind.ServerRubric
+                or MasteryVerificationKind.ExamEngine
+                or MasteryVerificationKind.ReviewEngine
+                or MasteryVerificationKind.QuizEngine => MasteryProofNature.MachineVerified,
+            MasteryVerificationKind.HumanAttestation => MasteryProofNature.HumanAttested,
+            _ => MasteryProofNature.Declared,
+        };
+        bool counts = achievement.Passed && nature switch
+        {
+            MasteryProofNature.MachineVerified => true,
+            MasteryProofNature.HumanAttested =>
+                MasteryPolicyCatalog.HumanJudgementKeys.Contains(achievement.Key, StringComparer.Ordinal),
+            _ => false,
+        };
+        return new MasteryAchievementView(
+            achievement.Key,
+            nature,
+            nature switch
+            {
+                MasteryProofNature.MachineVerified => "vérifiée par la machine",
+                MasteryProofNature.HumanAttested => "attestée par un relecteur humain, non vérifiée par la machine",
+                _ => "déclarée — vaut zéro",
+            },
+            counts,
+            achievement.ObservedAtUtc);
     }
 
     private static string CalculateDailyRevision(
@@ -43,7 +79,9 @@ public sealed class MasteryService(
         return $"sha256:{Convert.ToHexStringLower(SHA256.HashData(Encoding.UTF8.GetBytes(input)))}";
     }
 
-    private static MasteryDashboardView Map(MasterySnapshot snapshot) => new(
+    private static MasteryDashboardView Map(
+        MasterySnapshot snapshot,
+        IReadOnlyList<MasteryAchievement> achievements) => new(
         snapshot.PolicyId,
         snapshot.PolicyVersion,
         snapshot.PolicyRevision,
@@ -55,7 +93,12 @@ public sealed class MasteryService(
             item.Gate,
             item.Label,
             item.IsOpen,
-            item.Blockers)).ToArray()));
+            item.Blockers)).ToArray()),
+        Array.AsReadOnly(achievements
+            .Select(MapAchievement)
+            .OrderBy(item => item.Key, StringComparer.Ordinal)
+            .ThenBy(item => item.ObservedAtUtc)
+            .ToArray()));
 
     private static MasteryDomainView Map(MasteryDomainScore score) => new(
         score.Domain,
