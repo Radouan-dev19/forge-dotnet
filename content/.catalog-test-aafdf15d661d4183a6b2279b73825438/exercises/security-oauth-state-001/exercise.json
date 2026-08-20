@@ -1,0 +1,83 @@
+{
+    "schemaVersion":  1,
+    "id":  "security-oauth-state-001",
+    "version":  1,
+    "title":  "Rendre un verdict sur le state de retour",
+    "kind":  "csharp",
+    "difficulty":  3,
+    "skills":  [
+                   "security.token",
+                   "security.authentication"
+               ],
+    "prerequisites":  [
+                          "oauth-pkce-001"
+                      ],
+    "estimatedMinutes":  35,
+    "statement":  "statement.md",
+    "constraints":  [
+                        "Conserver exactement la signature publique",
+                        "Le rejeu prime sur l'attente : un state présent dans les deux registres est un rejeu",
+                        "Les comparaisons d'identifiants sont ordinales et sensibles à la casse"
+                    ],
+    "examples":  [
+                     {
+                         "input":  "[\"st-aaa,st-bbb\", \"st-old\", \"st-bbb\"]",
+                         "output":  "\"accepted\""
+                     }
+                 ],
+    "reflectionFields":  [
+                             "reformulation",
+                             "inputs",
+                             "expectedOutput",
+                             "edgeCases",
+                             "hypothesis",
+                             "plan"
+                         ],
+    "starterPath":  "starter/",
+    "visibleTestsPath":  "tests/visible/",
+    "hiddenTestsPath":  "tests/hidden/",
+    "hints":  [
+                  {
+                      "level":  1,
+                      "kind":  "socratic",
+                      "content":  "Quatre verdicts existent : lequel raconte une attaque en cours, lequel raconte un lien recliqué, et pourquoi faut-il les distinguer dans les journaux ?"
+                  },
+                  {
+                      "level":  2,
+                      "kind":  "location",
+                      "content":  "Toute la décision est un classement du state de retour parmi trois ensembles — absent, déjà servi, en attente — et l'ordre de consultation des ensembles est le contrat."
+                  },
+                  {
+                      "level":  3,
+                      "kind":  "strategy",
+                      "content":  "Analysez d'abord les deux registres en ensembles de segments nettoyés, puis classez : l'absence avant tout, le registre des consommés avant celui des attentes, et l'inconnu en dernier verdict."
+                  },
+                  {
+                      "level":  4,
+                      "kind":  "partial-pseudocode",
+                      "content":  "rendre le verdict d'absence si le retour est vide ou blanc ; découper chaque registre sur la virgule en rognant les segments vides ; si le retour figure parmi les consommés, rendre le verdict de rejeu ; sinon s'il figure parmi les attentes, accepter ; sinon rendre le verdict de forgerie"
+                  }
+              ],
+    "solution":  {
+                     "path":  "solution/",
+                     "unlock":  {
+                                    "seriousAttempts":  2,
+                                    "minimumDelayMinutes":  10
+                                }
+                 },
+    "explanation":  "explanation.md",
+    "complexity":  "O(n) en temps, n étant la taille cumulée des deux registres",
+    "commonMistakes":  [
+                           "Vérifier l'appartenance aux attentes avant le registre des consommés et classer un rejeu comme accepté",
+                           "Confondre l'absence de state et le state inconnu, deux situations aux réponses opérationnelles différentes",
+                           "Comparer les states sans tenir compte de la casse et accepter une variante forgée",
+                           "Oublier de rogner les segments des registres et refuser des states légitimes espacés"
+                       ],
+    "variantId":  "security-oauth-flow-001",
+    "reviewCards":  [
+                        "card-security-oauth-state-001-rule",
+                        "card-security-oauth-state-001-edge"
+                    ],
+    "interviewQuestionId":  "interview-security-oauth-state-001",
+    "license":  "CC-BY-4.0"
+}

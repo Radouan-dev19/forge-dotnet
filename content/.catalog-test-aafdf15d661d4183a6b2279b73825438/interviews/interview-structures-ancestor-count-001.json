@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "id": "interview-structures-ancestor-count-001",
+  "version": 1,
+  "title": "Compter les ancêtres d’un nœud",
+  "level": "junior",
+  "durationMinutes": 5,
+  "skills": [
+    "structures.trees"
+  ],
+  "question": "Comment résoudriez-vous « Compter les ancêtres d’un nœud » et comment prouveriez-vous les bornes ?",
+  "observableCriteria": [
+    "Chaque parent est validé avant d'être suivi",
+    "La garde bornée est présentée comme la détection d'un cycle, non comme une limite arbitraire"
+  ],
+  "modelAnswer": "Valider chaque parent et borner le parcours pour détecter un cycle. Je prouve par une racine, un noeud profond, un parent invalide et une structure cyclique ; O(h) en temps et O(1) en espace.",
+  "commonMistakes": [
+    "Suivre les parents sans garde et boucler indéfiniment sur une structure cyclique"
+  ],
+  "variants": [
+    "Changer une borne ou le volume tout en conservant la même règle de compter les ancêtres d’un nœud."
+  ],
+  "license": "CC-BY-4.0"
+}

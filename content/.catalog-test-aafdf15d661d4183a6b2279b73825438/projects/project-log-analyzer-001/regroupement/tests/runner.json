@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "suiteId": "project-log-analyzer-001.regroupement.v2",
+  "exerciseId": "project-log-analyzer-001.regroupement",
+  "exerciseVersion": 2,
+  "typeName": "Submission",
+  "methodName": "GroupByMessage",
+  "parameterTypes": ["string"],
+  "returnType": "dictionary<string,int>"
+}

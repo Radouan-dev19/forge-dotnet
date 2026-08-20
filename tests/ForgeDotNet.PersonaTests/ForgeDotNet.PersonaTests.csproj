@@ -1,0 +1,35 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!-- Ce projet est volontairement ABSENT de ForgeDotNet.sln : `dotnet test` à la racine ne le
+       lance jamais. Il se lance explicitement (voir README.md), navigateur Playwright installé et,
+       pour les personas qui valident du code, moteur Docker actif. -->
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Data.Sqlite" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" />
+    <PackageReference Include="Microsoft.Playwright" />
+    <PackageReference Include="xunit" />
+    <PackageReference Include="xunit.runner.visualstudio" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Using Include="Xunit" />
+  </ItemGroup>
+
+  <!-- La référence garantit que l'application Web est compilée avant le rejeu : chaque persona la
+       démarre en processus enfant depuis son dossier de sortie, jamais en processus de test. -->
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\ForgeDotNet.Web\ForgeDotNet.Web.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="xunit.runner.json" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+
+</Project>

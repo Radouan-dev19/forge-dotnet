@@ -1,0 +1,36 @@
+{
+    "schemaVersion":  1,
+    "id":  "api-versioning-001",
+    "version":  1,
+    "title":  "Versionner une API : où porter le numéro, et comment mourir proprement",
+    "week":  11,
+    "skills":  [
+                   {
+                       "id":  "api.contracts",
+                       "weight":  1
+                   }
+               ],
+    "prerequisites":  [
+                          "api-http-semantics-001"
+                      ],
+    "estimatedMinutes":  60,
+    "objectives":  [
+                       "Choisir un emplacement de version, reconnaître un changement cassant et planifier le retrait d'une version"
+                   ],
+    "sections":  [
+                     "intuition",
+                     "explanation",
+                     "example",
+                     "counterExample",
+                     "check",
+                     "guided",
+                     "independent",
+                     "debugging",
+                     "interview",
+                     "summary",
+                     "reviewCards",
+                     "masteryTest"
+                 ],
+    "markdownPath":  "lesson.md",
+    "license":  "CC-BY-4.0"
+}

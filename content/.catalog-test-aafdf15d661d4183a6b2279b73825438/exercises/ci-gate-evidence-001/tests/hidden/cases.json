@@ -1,0 +1,54 @@
+{
+  "schemaVersion": 1,
+  "cases": [
+    {
+      "name": "Hidden_UnreportedEvidenceMeansWaiting",
+      "message": "La preuve de provenance n'apparaît nulle part : son contrôle n'a pas encore parlé.",
+      "arguments": ["tests=ok", "tests,provenance"],
+      "expected": "waiting|provenance",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_RefusalDominatesEarlierPending",
+      "message": "La couverture attend en première position, mais l'échec des tests condamne déjà le déploiement.",
+      "arguments": ["coverage=pending;tests=ko", "coverage,tests"],
+      "expected": "refused|tests",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_DuplicateCheckIsRefused",
+      "message": "Deux statuts pour le même contrôle : le rapport est corrompu, pas ambigu.",
+      "arguments": ["tests=ok;tests=ko", "tests"],
+      "expectedException": "ArgumentException",
+      "argumentsUnchanged": false
+    },
+    {
+      "name": "Hidden_UnknownStatusIsRefused",
+      "message": "Un statut hors des trois connus ne se devine pas.",
+      "arguments": ["tests=maybe", "tests"],
+      "expectedException": "ArgumentException",
+      "argumentsUnchanged": false
+    },
+    {
+      "name": "Hidden_AllGreenOpensTheGate",
+      "message": "Les trois preuves exigées sont vertes : la porte s'ouvre, dans n'importe quel ordre d'exigence.",
+      "arguments": ["tests=ok;coverage=ok;scan=ok", "scan,tests,coverage"],
+      "expected": "open",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_EmptyRequirementListIsRefused",
+      "message": "Une porte sans exigences n'est pas ouverte : elle est mal configurée.",
+      "arguments": ["tests=ok", ""],
+      "expectedException": "ArgumentException",
+      "argumentsUnchanged": false
+    },
+    {
+      "name": "Hidden_RequirementOrderNamesTheRefusal",
+      "message": "Les tests attendent, l'audit échoue : le refus nomme l'audit, deuxième dans la liste mais certain.",
+      "arguments": ["audit=ko;tests=pending", "tests,audit"],
+      "expected": "refused|audit",
+      "argumentsUnchanged": true
+    }
+  ]
+}

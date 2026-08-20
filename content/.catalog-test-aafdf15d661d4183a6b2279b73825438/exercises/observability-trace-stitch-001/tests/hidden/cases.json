@@ -1,0 +1,54 @@
+{
+  "schemaVersion": 1,
+  "cases": [
+    {
+      "name": "Hidden_EmptyJournalIsRefused",
+      "message": "Aucun segment reçu : il n'y a pas de propagation à mesurer.",
+      "arguments": [""],
+      "expectedException": "ArgumentException",
+      "argumentsUnchanged": false
+    },
+    {
+      "name": "Hidden_DuplicateSpanIdIsRefused",
+      "message": "Deux segments sous le même identifiant rendent chaque lien ambigu.",
+      "arguments": ["a1>-;a1>b2"],
+      "expectedException": "ArgumentException",
+      "argumentsUnchanged": false
+    },
+    {
+      "name": "Hidden_SelfParentIsAnOrphan",
+      "message": "Le segment se cite lui-même : l'identifiant existe mais ne raccroche à aucune cause.",
+      "arguments": ["loop>loop"],
+      "expected": 1,
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_MutualCycleEscapesThisCount",
+      "message": "Deux segments qui se citent mutuellement : chaque parent existe, le comptage d'orphelins n'y voit rien.",
+      "arguments": ["x9>y7;y7>x9"],
+      "expected": 0,
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_ChildBeforeParentIsNotAnOrphan",
+      "message": "L'enfant arrive avant sa racine dans le journal : le lien se juge après lecture complète.",
+      "arguments": ["m2>m1;m1>-;m3>m2;m4>mX"],
+      "expected": 1,
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_LoneRootIsComplete",
+      "message": "Une racine seule est une trace entière : rien à recoudre, rien d'orphelin.",
+      "arguments": ["n1>-"],
+      "expected": 0,
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_EmptyParentIsRefused",
+      "message": "Un parent vide n'est ni une racine ni un identifiant : le segment est illisible.",
+      "arguments": ["p1>-;q2>"],
+      "expectedException": "ArgumentException",
+      "argumentsUnchanged": false
+    }
+  ]
+}

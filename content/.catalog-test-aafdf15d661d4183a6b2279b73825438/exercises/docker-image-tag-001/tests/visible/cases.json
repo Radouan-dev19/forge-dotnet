@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "cases": [
+    {
+      "name": "Visible_ExplicitVersionInProduction",
+      "message": "Une version explicite désigne une image et une seule.",
+      "arguments": ["app:1.4.2", true],
+      "expected": "app:1.4.2",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Visible_MovingTagOutsideProduction",
+      "message": "Hors production, l'étiquette mouvante reste commode et n'est pas refusée.",
+      "arguments": ["app:latest", false],
+      "expected": "app:latest",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Visible_MovingTagInProductionIsRejected",
+      "message": "En production, elle ne garantit plus que deux serveurs exécutent le même code.",
+      "arguments": ["app:latest", true],
+      "expectedException": "ArgumentException",
+      "argumentsUnchanged": false
+    }
+  ]
+}

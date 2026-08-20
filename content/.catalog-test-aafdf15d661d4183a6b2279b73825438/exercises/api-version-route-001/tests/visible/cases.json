@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "cases": [
+    {
+      "name": "Visible_SupportedVersion",
+      "message": "Version prise en charge dans le chemin.",
+      "arguments": [
+        "/v2/orders/42",
+        "v1,v2,v3",
+        "v3"
+      ],
+      "expected": "v2",
+      "expectedException": null,
+      "argumentsUnchanged": false
+    },
+    {
+      "name": "Visible_NoVersion",
+      "message": "Pas de segment de version : défaut.",
+      "arguments": [
+        "/orders/42",
+        "v1,v2,v3",
+        "v3"
+      ],
+      "expected": "v3",
+      "expectedException": null,
+      "argumentsUnchanged": false
+    },
+    {
+      "name": "Visible_UnknownVersion",
+      "message": "Version demandée mais inconnue : refus.",
+      "arguments": [
+        "/v9/orders",
+        "v1,v2,v3",
+        "v3"
+      ],
+      "expected": "unsupported",
+      "expectedException": null,
+      "argumentsUnchanged": false
+    }
+  ]
+}

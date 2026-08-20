@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "suiteId": "quality-review-matrix-001.v1",
+  "exerciseId": "quality-review-matrix-001",
+  "exerciseVersion": 1,
+  "typeName": "Submission",
+  "methodName": "ReviewSeverity",
+  "parameterTypes": ["string"],
+  "returnType": "string"
+}

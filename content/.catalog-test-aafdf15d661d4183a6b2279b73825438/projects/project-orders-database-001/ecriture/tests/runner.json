@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "suiteId": "project-orders-database-001.ecriture.v2",
+  "exerciseId": "project-orders-database-001.ecriture",
+  "exerciseVersion": 2,
+  "typeName": "Submission",
+  "methodName": "ApplyDiscount",
+  "parameterTypes": ["int", "decimal"],
+  "returnType": "string"
+}

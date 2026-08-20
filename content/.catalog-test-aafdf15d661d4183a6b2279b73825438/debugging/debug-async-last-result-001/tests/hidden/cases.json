@@ -1,0 +1,30 @@
+{
+    "schemaVersion":  1,
+    "cases":  [
+                  {
+                      "name":  "Hidden_Case1",
+                      "message":  "Dernière tâche ignorée — cas 1.",
+                      "arguments":  [
+                                        [
+                                            5
+                                        ]
+                                    ],
+                      "expected":  5,
+                      "expectedException":  null,
+                      "argumentsUnchanged":  true
+                  },
+                  {
+                      "name":  "Hidden_Case2",
+                      "message":  "Dernière tâche ignorée — cas 2.",
+                      "arguments":  [
+                                        [
+                                            -1,
+                                            1
+                                        ]
+                                    ],
+                      "expected":  0,
+                      "expectedException":  null,
+                      "argumentsUnchanged":  true
+                  }
+              ]
+}

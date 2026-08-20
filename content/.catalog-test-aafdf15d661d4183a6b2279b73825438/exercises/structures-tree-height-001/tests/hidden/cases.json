@@ -1,0 +1,46 @@
+{
+    "schemaVersion":  1,
+    "cases":  [
+                  {
+                      "name":  "Hidden_Case1",
+                      "message":  "Calculer une hauteur depuis les parents — cas 1 hidden incorrect.",
+                      "arguments":  [
+                                        [
+                                            -1,
+                                            0,
+                                            1
+                                        ]
+                                    ],
+                      "expected":  3,
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_Case2",
+                      "message":  "Calculer une hauteur depuis les parents — cas 2 hidden incorrect.",
+                      "arguments":  [
+                                        [
+                                            1,
+                                            0
+                                        ]
+                                    ],
+                      "expected":  -1,
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_UnbalancedBranches",
+                      "message":  "Branches de longueurs différentes : c'est la plus longue qui décide.",
+                      "arguments":  [[-1,0,0,1]],
+                      "expected":  3,
+                      "argumentsUnchanged":  true
+                  },
+                  {
+                      "name":  "Hidden_LinearChain",
+                      "message":  "Arbre dégénéré en chaîne : la hauteur vaut le nombre de nœuds.",
+                      "arguments":  [[-1,0,1,2]],
+                      "expected":  4,
+                      "argumentsUnchanged":  true
+                  }
+              ]
+}

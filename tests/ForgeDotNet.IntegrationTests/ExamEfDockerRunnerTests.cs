@@ -35,11 +35,12 @@ public sealed class ExamEfDockerRunnerTests(DockerSecurityFixture dockerFixture)
         });
         ExamBlueprint exam = await bank.GetAsync("sql-ef-core-v1")
             ?? throw new InvalidDataException("Examen 4 absent.");
+        // Deux scénarios EF à dossier exam/ et trois exercices EF Core du catalogue.
         ExamCandidate[] candidates = exam.Candidates
             .Where(item => item.SubmissionKind == ExamSubmissionKind.CSharp)
             .OrderBy(item => item.ItemId, StringComparer.Ordinal)
             .ToArray();
-        Assert.Equal(2, candidates.Length);
+        Assert.Equal(5, candidates.Length);
 
         var specificationSource = new FileSystemDockerRunSpecificationSource(
             practiceSource,
@@ -74,13 +75,14 @@ public sealed class ExamEfDockerRunnerTests(DockerSecurityFixture dockerFixture)
             Assert.True(starter.Tests.HiddenFailuresRedacted);
             Assert.True(starter.Tests.HiddenFailureCount > 0);
 
-            string solution = await File.ReadAllTextAsync(Path.Combine(
-                contentRoot,
-                "sql",
-                candidate.ItemId,
-                "exam",
-                "solution",
-                "Submission.cs"));
+            // Corrigé du dossier exam/ pour un scénario EF, du dossier solution/ du catalogue sinon.
+            string scenarioSolutionPath = Path.Combine(
+                contentRoot, "sql", candidate.ItemId, "exam", "solution", "Submission.cs");
+            string solutionPath = File.Exists(scenarioSolutionPath)
+                ? scenarioSolutionPath
+                : Path.Combine(
+                    catalogRoot, "exercises", candidate.ItemId, "solution", "Submission.cs");
+            string solution = await File.ReadAllTextAsync(solutionPath);
             CodeRunResult repaired = await runner.RunAsync(Request(candidate, solution));
             Assert.True(
                 repaired.Status == CodeRunStatus.Succeeded,

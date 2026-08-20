@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "suiteId": "senior-hotspot-ranking-001.v1",
+  "exerciseId": "senior-hotspot-ranking-001",
+  "exerciseVersion": 1,
+  "typeName": "Submission",
+  "methodName": "TopHotspots",
+  "parameterTypes": ["string"],
+  "returnType": "string"
+}

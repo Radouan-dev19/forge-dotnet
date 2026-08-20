@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "cases": [
+    {
+      "name": "Visible_PublicValueStaysInConfiguration",
+      "message": "Une valeur non sensible vit en clair : la monter dans un canal de secret banaliserait le canal.",
+      "arguments": ["sensitivity=public;consumer=platform-hosted;rotation=static"],
+      "expected": "configuration|not-a-secret",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Visible_HostedSecretUsesAttestedIdentity",
+      "message": "La charge hébergée reçoit l'identité attestée : le secret stocké disparaît au lieu de se déplacer.",
+      "arguments": ["sensitivity=secret;consumer=platform-hosted;rotation=rotated"],
+      "expected": "managed-identity|no-stored-credential",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Visible_StaticLocalSecretUsesUserStore",
+      "message": "Sur le poste local, la valeur statique n'a besoin que de rester hors du dépôt.",
+      "arguments": ["sensitivity=secret;consumer=local-dev;rotation=static"],
+      "expected": "user-secrets|out-of-git",
+      "argumentsUnchanged": true
+    }
+  ]
+}

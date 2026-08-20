@@ -1,0 +1,83 @@
+{
+  "schemaVersion": 1,
+  "id": "ef-join-silent-customers-001",
+  "version": 1,
+  "title": "Retrouver les clients sans grosse commande sans perdre les clients sans commande",
+  "kind": "csharp",
+  "difficulty": 3,
+  "skills": ["sql.ef-joins"],
+  "prerequisites": ["sql-joins-001"],
+  "estimatedMinutes": 35,
+  "statement": "statement.md",
+  "constraints": [
+    "Conserver exactement la signature publique et le montage de la base fournie",
+    "La sélection passe par une requête sur le contexte, jamais par un filtrage en mémoire après chargement complet",
+    "Un client sans aucune commande appartient au résultat : la jointure interne est le piège",
+    "Les noms sont triés par la requête et joints par des virgules"
+  ],
+  "examples": [
+    {
+      "input": "100",
+      "output": "Grace,Linus,Margaret"
+    },
+    {
+      "input": "15",
+      "output": "Margaret"
+    }
+  ],
+  "reflectionFields": [
+    "reformulation",
+    "inputs",
+    "expectedOutput",
+    "edgeCases",
+    "hypothesis",
+    "plan"
+  ],
+  "starterPath": "starter/",
+  "visibleTestsPath": "tests/visible/",
+  "hiddenTestsPath": "tests/hidden/",
+  "hints": [
+    {
+      "level": 1,
+      "kind": "socratic",
+      "content": "Le service marketing veut relancer les clients qui n'ont jamais passé de grosse commande. Celui qui n'a jamais rien commandé du tout fait-il partie de la cible — et votre requête actuelle le voit-elle seulement ?"
+    },
+    {
+      "level": 2,
+      "kind": "location",
+      "content": "Partez de l'ensemble des clients, pas de celui des commandes : la question porte sur l'absence d'une commande qualifiante, et une absence ne se voit que depuis le côté qui existe toujours."
+    },
+    {
+      "level": 3,
+      "kind": "strategy",
+      "content": "La propriété de navigation vers les commandes permet d'exprimer « aucune commande n'atteint le seuil » comme la négation d'une existence, que le fournisseur traduit en sous-requête serveur. Le tri et la projection restent dans la requête."
+    },
+    {
+      "level": 4,
+      "kind": "partial-pseudocode",
+      "content": "refuser un seuil non strictement positif ; interroger l'ensemble des clients ; filtrer sur la négation de l'existence d'une commande dont le total atteint le seuil ; trier par nom dans la requête ; projeter les noms puis les joindre avec des virgules"
+    }
+  ],
+  "solution": {
+    "path": "solution/",
+    "unlock": {
+      "seriousAttempts": 2,
+      "minimumDelayMinutes": 10
+    }
+  },
+  "explanation": "explanation.md",
+  "complexity": "O(n) côté serveur pour n lignes parcourues par la sous-requête, résultat borné par le nombre de clients",
+  "commonMistakes": [
+    "Partir des commandes et perdre les clients qui n'en ont aucune",
+    "Charger toutes les entités en mémoire puis filtrer, en payant le transfert que la requête devait éviter",
+    "Inverser la négation et rendre les clients qui possèdent une grosse commande",
+    "Trier après la jointure des chaînes au lieu de laisser la requête ordonner les noms"
+  ],
+  "variantId": "ef-aggregate-status-counts-001",
+  "reviewCards": [
+    "card-ef-join-silent-customers-001-rule",
+    "card-ef-join-silent-customers-001-edge"
+  ],
+  "interviewQuestionId": "interview-ef-join-silent-customers-001",
+  "license": "CC-BY-4.0"
+}

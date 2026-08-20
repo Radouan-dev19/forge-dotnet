@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "id": "interview-s21-s24-005",
+  "version": 1,
+  "title": "Expliquer Managed Identity",
+  "level": "junior",
+  "durationMinutes": 6,
+  "skills": [
+    "azure.identity"
+  ],
+  "question": "Pourquoi Managed Identity réduit-elle le risque sans supprimer le besoin dʼautorisation ?",
+  "observableCriteria": [
+    "La distinction entre authentification et autorisation est explicite : l'identité ne donne aucun droit",
+    "Le rôle minimal est présenté comme restant à déclarer, borné et révocable"
+  ],
+  "modelAnswer": "Elle évite de distribuer un identifiant applicatif durable, mais ne donne aucun droit par elle-même. Le rôle minimal reste explicite, borné et révocable.",
+  "commonMistakes": [
+    "Présenter l'identité gérée comme réglant l'autorisation en plus du stockage du secret"
+  ],
+  "variants": [
+    "Changez une contrainte du scénario « Expliquer Managed Identity » et expliquez si la décision reste valide."
+  ],
+  "license": "CC-BY-4.0"
+}

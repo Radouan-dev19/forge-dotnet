@@ -1,0 +1,42 @@
+{
+    "schemaVersion":  1,
+    "id":  "debug-binary-boundary-001",
+    "version":  1,
+    "title":  "Référence présente en catalogue déclarée introuvable",
+    "difficulty":  3,
+    "skills":  [
+                   "debugging.breakpoints"
+               ],
+    "prerequisites":  [
+                          "algo-reformulation-complexity-001"
+                      ],
+    "estimatedMinutes":  40,
+    "brokenRepositoryPath":  "broken/",
+    "ticketPath":  "ticket.md",
+    "expectedBehavior":  "La recherche répond vrai pour toute référence présente dans le catalogue trié, y compris la première et la dernière, et faux sinon. Le catalogue reçu n'est jamais modifié.",
+    "logsPath":  "logs.txt",
+    "checklist":  [
+                      "Reproduire avec la dernière référence du catalogue",
+                      "Suivre au pas à pas les deux extrémités de l'intervalle examiné",
+                      "Noter l'intervalle restant au moment où la recherche abandonne",
+                      "Ajouter la première et la dernière référence au jeu de non-régression"
+                  ],
+    "observationQuestions":  [
+                                 "Que vaut l'intervalle examiné juste avant que la recherche abandonne ?",
+                                 "Une référence peut-elle rester non examinée alors que l'intervalle n'est pas vide ?",
+                                 "Quelles positions du catalogue sont systématiquement épargnées par le symptôme ?"
+                             ],
+    "correctionPath":  "correction/",
+    "regressionTestPath":  "regression-test.md",
+    "journalFields":  [
+                          "symptom",
+                          "context",
+                          "hypotheses",
+                          "evidence",
+                          "cause",
+                          "fix",
+                          "test",
+                          "prevention"
+                      ],
+    "license":  "CC-BY-4.0"
+}

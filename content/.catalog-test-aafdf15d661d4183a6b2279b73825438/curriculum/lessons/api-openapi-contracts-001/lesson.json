@@ -1,0 +1,36 @@
+{
+    "schemaVersion":  1,
+    "id":  "api-openapi-contracts-001",
+    "version":  1,
+    "title":  "Contrat OpenAPI vérifiable",
+    "week":  13,
+    "skills":  [
+                   {
+                       "id":  "api.openapi",
+                       "weight":  1
+                   }
+               ],
+    "prerequisites":  [
+                          "api-pagination-filtering-sorting-001"
+                      ],
+    "estimatedMinutes":  75,
+    "objectives":  [
+                       "Appliquer Contrat OpenAPI vérifiable et justifier une preuve observable sur un cas nouveau"
+                   ],
+    "sections":  [
+                     "intuition",
+                     "explanation",
+                     "example",
+                     "counterExample",
+                     "check",
+                     "guided",
+                     "independent",
+                     "debugging",
+                     "interview",
+                     "summary",
+                     "reviewCards",
+                     "masteryTest"
+                 ],
+    "markdownPath":  "lesson.md",
+    "license":  "CC-BY-4.0"
+}

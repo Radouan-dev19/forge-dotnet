@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "cases": [
+    {
+      "name": "Hidden_EveryOccurrenceIsCovered",
+      "message": "Le même secret répété deux fois disparaît deux fois.",
+      "arguments": ["cle=K7f9 puis rappel de cle=K7f9", "K7f9"],
+      "expected": "INF cle=*** puis rappel de cle=***",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_BearerFragmentIsRedacted",
+      "message": "Un fragment de jeton d'en-tête est un secret comme un autre.",
+      "arguments": ["en-tete Authorization: Bearer eyJhbGci et suite", "eyJhbGci"],
+      "expected": "INF en-tete Authorization: Bearer *** et suite",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_TwoSecretsAreBothRedacted",
+      "message": "Chaque secret de la liste est appliqué au message.",
+      "arguments": ["deux secrets: alpha-1 et beta-2 presents", "alpha-1;beta-2"],
+      "expected": "INF deux secrets: *** et *** presents",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_SubstringOccurrenceCounts",
+      "message": "L'occurrence en sous-chaîne d'un mot est caviardée aussi.",
+      "arguments": ["rapport du port 8080", "port"],
+      "expected": "INF rap*** du *** 8080",
+      "argumentsUnchanged": true
+    }
+  ]
+}

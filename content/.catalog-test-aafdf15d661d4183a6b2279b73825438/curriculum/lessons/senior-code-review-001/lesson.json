@@ -1,0 +1,14 @@
+{
+    "schemaVersion": 1,
+    "id": "senior-code-review-001",
+    "version": 1,
+    "title": "Revue de code : gravité, faux positifs et ton",
+    "week": 31,
+    "skills": [{ "id": "quality.review", "weight": 1 }],
+    "prerequisites": ["senior-observability-001"],
+    "estimatedMinutes": 75,
+    "objectives": ["Classer les constats d'une revue par gravité et catégorie, reconnaître un faux positif de style et formuler un blocage sur un fait"],
+    "sections": ["intuition", "explanation", "example", "counterExample", "check", "guided", "independent", "debugging", "interview", "summary", "reviewCards", "masteryTest"],
+    "markdownPath": "lesson.md",
+    "license": "CC-BY-4.0"
+}

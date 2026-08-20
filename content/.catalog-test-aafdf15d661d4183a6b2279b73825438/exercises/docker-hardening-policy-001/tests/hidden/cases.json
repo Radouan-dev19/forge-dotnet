@@ -1,0 +1,43 @@
+{
+    "schemaVersion":  1,
+    "cases":  [
+                  {
+                      "name":  "Hidden_Case1",
+                      "message":  "Vérifier un socle de durcissement — cas 1 incorrect.",
+                      "arguments":  [
+                                        true,
+                                        false,
+                                        true
+                                    ],
+                      "expected":  false,
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_Case2",
+                      "message":  "Vérifier un socle de durcissement — cas 2 incorrect.",
+                      "arguments":  [
+                                        true,
+                                        true,
+                                        false
+                                    ],
+                      "expected":  false,
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_NoNewPrivilegesOnly",
+                      "message":  "Interdiction d'élévation seule : insuffisante.",
+                      "arguments":  [false,false,true],
+                      "expected":  false,
+                      "argumentsUnchanged":  true
+                  },
+                  {
+                      "name":  "Hidden_ReadOnlyOnly",
+                      "message":  "Racine en lecture seule uniquement : insuffisante sans utilisateur non privilégié.",
+                      "arguments":  [false,true,false],
+                      "expected":  false,
+                      "argumentsUnchanged":  true
+                  }
+              ]
+}

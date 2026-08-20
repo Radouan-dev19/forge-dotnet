@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "id": "interview-date-business-days-001",
+  "version": 1,
+  "title": "Choisir un type de date",
+  "level": "junior",
+  "durationMinutes": 5,
+  "skills": ["csharp.dates", "logic.edge-cases"],
+  "question": "Pourquoi utiliser DateOnly pour compter des jours ouvrés et quels cas limites testerais-tu ?",
+  "observableCriteria": [
+    "L’absence d’heure et de zone dans le besoin est reliée au choix DateOnly",
+    "Les bornes, week-ends, plage vide et changement de mois sont testés"
+  ],
+  "modelAnswer": "DateOnly correspond à une date civile sans heure ni zone. Je parcours les dates incluses avec AddDays et j’exclus samedi et dimanche. Je teste une date seule ouvrée ou non, vendredi à lundi, une plage inversée et un changement de mois.",
+  "commonMistakes": ["Introduire un DateTime et des conversions de fuseau inutiles"],
+  "variants": ["Ajouter une collection explicite de jours fériés à exclure"],
+  "license": "CC-BY-4.0"
+}

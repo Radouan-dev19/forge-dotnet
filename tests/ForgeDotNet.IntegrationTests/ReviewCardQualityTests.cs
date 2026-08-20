@@ -24,7 +24,7 @@ public sealed class ReviewCardQualityTests
     /// Exercices couverts par la banque. Ce plancher ne peut que monter : le baisser exige de
     /// modifier ce fichier, ce qui reste visible en revue.
     /// </summary>
-    private const int MinimumCoveredExercises = 212;
+    private const int MinimumCoveredExercises = 278;
 
     /// <summary>
     /// Nom que le contenu donne à chaque domaine de maîtrise, tel que le schéma des cartes l'énumère.
@@ -55,9 +55,9 @@ public sealed class ReviewCardQualityTests
     /// Domaines à seuil critique dont la pratique passe par des exercices.
     /// </summary>
     /// <remarks>
-    /// SQL est absent, et cette absence est le fait à retenir : aucun exercice ne porte de
-    /// compétence <c>sql.*</c>, sa pratique passant par des scénarios de laboratoire. Sa rétention
-    /// demande donc une source distincte, qui n'existe pas encore.
+    /// SQL est absent de cette liste bien que des exercices <c>sql.*</c> existent désormais — les
+    /// requêtes EF Core des semaines huit à dix. Sa rétention principale vient des cartes de
+    /// scénarios de laboratoire, et son seuil de porte n'exige pas la couverture exhaustive ici.
     /// </remarks>
     private static readonly MasteryDomain[] CriticalExerciseDomains =
     [

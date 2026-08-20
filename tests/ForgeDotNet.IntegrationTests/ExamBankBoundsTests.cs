@@ -42,7 +42,7 @@ public sealed class ExamBankBoundsTests
         FileSystemExamBankSource bank = CreateBank(provider, contentRoot, contentRoot);
         IReadOnlyList<ExamBlueprint> blueprints = await bank.ListAsync();
 
-        Assert.Equal(9, blueprints.Count);
+        Assert.Equal(10, blueprints.Count);
         ExamBlueprint apiExam = Assert.Single(blueprints, item => item.Id == "api-security-v1");
         Assert.True(
             apiExam.Candidates.Count > 16,

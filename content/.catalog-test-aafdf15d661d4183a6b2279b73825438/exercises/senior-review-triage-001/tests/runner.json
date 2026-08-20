@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "suiteId": "senior-review-triage-001.v1",
+  "exerciseId": "senior-review-triage-001",
+  "exerciseVersion": 1,
+  "typeName": "Submission",
+  "methodName": "Triage",
+  "parameterTypes": ["string"],
+  "returnType": "string"
+}

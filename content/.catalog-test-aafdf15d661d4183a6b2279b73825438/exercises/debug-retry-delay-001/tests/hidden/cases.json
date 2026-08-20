@@ -1,0 +1,38 @@
+{
+    "schemaVersion":  1,
+    "cases":  [
+                  {
+                      "name":  "Hidden_Case1",
+                      "message":  "Borner un délai de retry — cas 1 hidden incorrect.",
+                      "arguments":  [
+                                        10
+                                    ],
+                      "expected":  3200,
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_Case2",
+                      "message":  "Borner un délai de retry — cas 2 hidden incorrect.",
+                      "arguments":  [
+                                        -1
+                                    ],
+                      "expectedException":  "ArgumentOutOfRangeException",
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_FirstRetry",
+                      "message":  "Première nouvelle tentative : le délai double une seule fois.",
+                      "arguments":  [1],
+                      "expected":  200,
+                      "argumentsUnchanged":  true
+                  },
+                  {
+                      "name":  "Hidden_LargeNegative",
+                      "message":  "Tentative très négative : refusée au même titre que moins un.",
+                      "arguments":  [-100],
+                      "expectedException":  "ArgumentOutOfRangeException",
+                      "argumentsUnchanged":  false
+                  }
+              ]
+}

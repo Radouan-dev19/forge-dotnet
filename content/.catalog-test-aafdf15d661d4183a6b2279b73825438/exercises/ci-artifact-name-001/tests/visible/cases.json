@@ -1,0 +1,34 @@
+{
+    "schemaVersion":  1,
+    "cases":  [
+                  {
+                      "name":  "Visible_Case1",
+                      "message":  "Nommer un artefact de façon stable — cas 1 incorrect.",
+                      "arguments":  [
+                                        "main",
+                                        42
+                                    ],
+                      "expected":  "tests-main-42",
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Visible_Case2",
+                      "message":  "Nommer un artefact de façon stable — cas 2 incorrect.",
+                      "arguments":  [
+                                        "feature/api",
+                                        7
+                                    ],
+                      "expected":  "tests-feature-api-7",
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Visible_NestedBranch",
+                      "message":  "Branche à plusieurs niveaux : chaque barre est remplacée.",
+                      "arguments":  ["a/b/c",1],
+                      "expected":  "tests-a-b-c-1",
+                      "argumentsUnchanged":  true
+                  }
+              ]
+}

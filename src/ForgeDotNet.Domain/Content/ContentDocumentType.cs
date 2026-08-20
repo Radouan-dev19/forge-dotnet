@@ -31,4 +31,32 @@ public enum ContentDocumentType
     /// une valeur constante, de sorte qu'un manifeste ne peut pas prétendre le contraire.
     /// </remarks>
     Lab,
+
+    /// <summary>
+    /// Guide de carrière de la semaine 24 : CV par preuves, entretien, prospection, négociation,
+    /// prise de poste.
+    /// </summary>
+    /// <remarks>
+    /// Ces guides existaient sous <c>content/reference/career</c> sans être un type de document :
+    /// ni chargés, ni validés, ni servis par aucune route — l'angle mort que la règle de
+    /// joignabilité ne pouvait pas voir, faute d'entrée dans cette énumération. Chaque guide porte
+    /// un manifeste plat qui référence son Markdown, ce qui place sa prose sous les règles
+    /// d'authenticité du validateur. Un guide se lit et s'applique hors du produit : il ne produit
+    /// aucune preuve de maîtrise, et chaque page l'annonce.
+    /// </remarks>
+    CareerGuide,
+
+    /// <summary>
+    /// Guide du chapitre IA : utiliser un assistant de code en professionnel — économie de tokens,
+    /// paramétrage, skills, agents et sous-agents, boucle de travail quotidienne.
+    /// </summary>
+    /// <remarks>
+    /// Chapitre volontairement <b>hors parcours</b> : aucun prérequis, aucune semaine, aucun ordre
+    /// imposé au-delà d'une suggestion de lecture — il se consulte selon les besoins. Aucun bac à
+    /// sable ne peut vérifier l'usage d'un assistant (le runner n'a pas de réseau, par conception) :
+    /// ces guides ne produisent aucune preuve de maîtrise et chaque page l'annonce. Ils tiennent la
+    /// ligne du contrat d'apprentissage : l'IA est un outil de métier à apprendre, jamais un moyen
+    /// de produire les preuves comptées du parcours.
+    /// </remarks>
+    AiGuide,
 }

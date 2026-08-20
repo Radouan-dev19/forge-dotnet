@@ -1,0 +1,40 @@
+{
+    "schemaVersion":  1,
+    "cases":  [
+                  {
+                      "name":  "Hidden_Case1",
+                      "message":  "Composer un total de ligne — cas 1 hidden incorrect.",
+                      "arguments":  [
+                                        1.005,
+                                        2
+                                    ],
+                      "expected":  2.01,
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_Case2",
+                      "message":  "Composer un total de ligne — cas 2 hidden incorrect.",
+                      "arguments":  [
+                                        2,
+                                        -1
+                                    ],
+                      "expectedException":  "ArgumentOutOfRangeException",
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_NegativeUnitPrice",
+                      "message":  "Prix unitaire négatif : refus, au même titre qu'une quantité négative.",
+                      "arguments":  [-1,2],
+                      "expectedException":  "ArgumentOutOfRangeException",
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_ExactMidpoint",
+                      "message":  "Résultat exactement à mi-chemin : l'arrondi s'éloigne de zéro.",
+                      "arguments":  [0.125,2],
+                      "expected":  0.25,
+                      "argumentsUnchanged":  true
+                  }
+              ]
+}

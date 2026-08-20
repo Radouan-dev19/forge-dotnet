@@ -1,0 +1,54 @@
+{
+  "schemaVersion": 1,
+  "cases": [
+    {
+      "name": "Hidden_EmptyRegistryIsRefused",
+      "message": "Sans drapeau, il n'y a pas de dette à auditer.",
+      "arguments": ["", 90],
+      "expectedException": "ArgumentException",
+      "argumentsUnchanged": false
+    },
+    {
+      "name": "Hidden_ZeroMinimumAgeIsRefused",
+      "message": "Un délai de rétractation nul n'en est plus un.",
+      "arguments": ["a:on-for-all:100", 0],
+      "expectedException": "ArgumentOutOfRangeException",
+      "argumentsUnchanged": false
+    },
+    {
+      "name": "Hidden_UnknownStateIsRefused",
+      "message": "Un état hors des trois connus ne se juge pas.",
+      "arguments": ["f:sometimes:100", 90],
+      "expectedException": "ArgumentException",
+      "argumentsUnchanged": false
+    },
+    {
+      "name": "Hidden_DuplicateFlagIsRefused",
+      "message": "Le même drapeau décrit deux fois signale un registre concaténé.",
+      "arguments": ["a:mixed:10;a:on-for-all:100", 90],
+      "expectedException": "ArgumentException",
+      "argumentsUnchanged": false
+    },
+    {
+      "name": "Hidden_ExactMinimumAgeRetires",
+      "message": "L'âge tombe pile sur le minimum : le seuil est une promesse, la frontière est inclusive.",
+      "arguments": ["edge:on-for-all:90", 90],
+      "expected": "edge=inline",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_AllMixedRegistryRetiresNothing",
+      "message": "Tout le registre pilote encore : la vacuité du rapport est elle-même l'information.",
+      "arguments": ["a:mixed:999;b:mixed:999", 1],
+      "expected": "",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_NegativeAgeIsRefused",
+      "message": "Un âge négatif ne date rien.",
+      "arguments": ["a:on-for-all:-5", 90],
+      "expectedException": "ArgumentException",
+      "argumentsUnchanged": false
+    }
+  ]
+}

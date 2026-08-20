@@ -1,0 +1,82 @@
+{
+    "schemaVersion":  1,
+    "id":  "api-cancellation-budget-001",
+    "version":  1,
+    "title":  "Borner un budget d’annulation",
+    "kind":  "csharp",
+    "difficulty":  2,
+    "skills":  [
+                   "api.async"
+               ],
+    "prerequisites":  [
+                          "api-async-cancellation-001"
+                      ],
+    "estimatedMinutes":  35,
+    "statement":  "statement.md",
+    "constraints":  [
+                        "Conserver exactement la signature publique",
+                        "Valider les durées puis retenir le budget le plus contraignant.",
+                        "Ne lire aucune horloge : les deux durées viennent des paramètres"
+                    ],
+    "examples":  [
+                     {
+                         "input":  "[5,30]",
+                         "output":  "5"
+                     }
+                 ],
+    "reflectionFields":  [
+                             "reformulation",
+                             "inputs",
+                             "expectedOutput",
+                             "edgeCases",
+                             "hypothesis",
+                             "plan"
+                         ],
+    "starterPath":  "starter/",
+    "visibleTestsPath":  "tests/visible/",
+    "hiddenTestsPath":  "tests/hidden/",
+    "hints":  [
+                  {
+                      "level":  1,
+                      "kind":  "socratic",
+                      "content":  "Quel comportement public de « Borner un budget d’annulation » change exactement à la frontière ?"
+                  },
+                  {
+                      "level":  2,
+                      "kind":  "location",
+                      "content":  "Concentrez la validation et la décision dans EffectiveTimeout, sans état global ni journal sensible."
+                  },
+                  {
+                      "level":  3,
+                      "kind":  "strategy",
+                      "content":  "Valider les durées puis retenir le budget le plus contraignant."
+                  },
+                  {
+                      "level":  4,
+                      "kind":  "partial-pseudocode",
+                      "content":  "refuser toute durée nulle ou négative, des deux côtés ; sinon retenir la plus petite des deux durées, qui est le budget effectivement applicable"
+                  }
+              ],
+    "solution":  {
+                     "path":  "solution/",
+                     "unlock":  {
+                                    "seriousAttempts":  2,
+                                    "minimumDelayMinutes":  10
+                                }
+                 },
+    "explanation":  "explanation.md",
+    "complexity":  "O(1) en temps et O(1) en espace",
+    "commonMistakes":  [
+                           "Retenir la durée demandée par l'appelant sans la confronter au plafond",
+                           "Accepter une durée nulle et produire une annulation immédiate",
+                           "Ramener silencieusement une durée invalide à une valeur par défaut au lieu de refuser",
+                           "Retenir la plus grande des deux durées et desserrer le budget"
+                       ],
+    "variantId":  "security-bearer-header-001",
+    "reviewCards":  [
+                        "card-api-cancellation-budget-001-rule",
+                        "card-api-cancellation-budget-001-security"
+                    ],
+    "interviewQuestionId":  "interview-api-cancellation-budget-001",
+    "license":  "CC-BY-4.0"
+}

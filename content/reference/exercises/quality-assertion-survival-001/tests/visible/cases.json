@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "cases": [
+    {
+      "name": "Visible_ContractAssertionsOutliveTheSpy",
+      "message": "La valeur rendue et l'état relisible survivent ; le comptage d'appels casse avec la mécanique.",
+      "arguments": ["result;calls;state"],
+      "expected": "result;state",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Visible_PureMechanicsLeavesNothing",
+      "message": "Une suite qui n'observe que l'ordre interne et la durée ne protège aucun comportement.",
+      "arguments": ["order;timing"],
+      "expected": "",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Visible_ErrorContractIsObservable",
+      "message": "Le type d'exception promis fait partie du contrat : l'assertion survit seule.",
+      "arguments": ["error-contract"],
+      "expected": "error-contract",
+      "argumentsUnchanged": true
+    }
+  ]
+}

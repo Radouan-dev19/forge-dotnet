@@ -495,11 +495,14 @@ il échouait sur six domaines ; il est vert.
   registre de dette à zéro. Ce qui reste ouvert sur ces fiches n'est plus la duplication mais leur
   nombre de critères — deux ou trois par fiche —, dont l'augmentation demanderait un panel humain
   pour juger de leur pertinence.
-- **P2-02** : aucun panel humain indépendant n'a été réuni.
-- Les sept personas n'ont pas été rejoués. Docker est désormais disponible — voir la reprise du
+- **P2-02** : aucun panel humain indépendant n'a été réuni. Depuis le 20 août 2026, son matériel
+  complet est prêt — voir la section « Panel — protocole prêt, non exécuté » et
+  `docs/HUMAN_PANEL_KIT.md`.
+- ~~Les sept personas n'ont pas été rejoués. Docker est désormais disponible — voir la reprise du
   17 août 2026 — mais aucun pilotage de navigateur n'existe dans le dépôt, et les tests de bout en
   bout s'exécutent en processus sur `WebApplicationFactory` sans circuit Blazor interactif. La
-  condition porte sur des trajets d'interface qu'aucun de ces tests ne traverse.
+  condition porte sur des trajets d'interface qu'aucun de ces tests ne traverse.~~ **Clos** le
+  20 août 2026 : voir la section « Rejeu du 20 août 2026 — harnais navigateur des sept personas ».
 - Les tests d'intégration dépendant de Docker **s'exécutent désormais** : les 76 échecs
   environnementaux sont tombés à zéro, et la suite complète est verte. Cette exécution a révélé trois
   défauts bloquants qu'aucun test hors Docker ne pouvait voir ; ils sont corrigés et couverts.
@@ -511,7 +514,9 @@ il échouait sur six domaines ; il est vert.
 - ~~43 des 142 exercices ne figurent dans aucune banque d'examen : ils ne peuvent jamais être
   tirés.~~ **Clos**, mesuré le 18 août 2026 : l'union des `eligibleExerciseIds` des neuf banques
   d'examen couvre les **187 exercices publiés sur 187** — zéro orphelin, aucune référence pendante,
-  dix-sept exercices figurant dans deux banques ou plus. L'examen `sql-ef-core-v1` reste le cas
+  dix-sept exercices figurant dans deux banques ou plus. Remesuré le 19 août 2026 après les lots de
+  densité T8 puis T9 : 214 sur 214, dix banques, la nouvelle banque `delivery-pipeline-v1` portant
+  S18–S20. L'examen `sql-ef-core-v1` reste le cas
   particulier assumé : il ne tire aucun exercice C# et embarque six items SQL inline plus deux
   scénarios EF éligibles.
 
@@ -653,6 +658,85 @@ suivant sa propre documentation, et servant l'intégralité du contenu qu'elle e
 ni poids, ni seuil, ni condition de porte, et n'ajoutent aucun producteur d'accomplissement. Les portes
 B, C et D restent fermées, les personas restent non rejoués, le panel humain reste à réunir.
 
+## Rejeu du 20 août 2026 — harnais navigateur des sept personas
+
+Le dépôt porte désormais un pilotage de navigateur réel : `tests/ForgeDotNet.PersonaTests`
+(Microsoft.Playwright 1.49.0 épinglé, Chromium), volontairement absent de `ForgeDotNet.sln` — la
+suite par défaut ne le lance jamais. Chaque persona démarre l'application en **processus enfant**
+sur un port libre, avec un dossier de données SQLite dédié créé avant l'essai et supprimé après
+collecte, dans le mode CodeRunner de son script (Manual pour P1 et P6, Docker pour les autres,
+SqlLab pour P4). Les contournements sont tentés avant les chemins nominaux. Chaque étape produit
+une capture d'écran horodatée et une assertion — sur l'état observé ou sur l'état persistant lu
+directement dans la base SQLite du persona — consignées dans un registre Markdown par persona sous
+`artifacts/personas/<horodatage>/` (non versionné). Lancement documenté dans `docs/RUNBOOK.md` et
+`tests/ForgeDotNet.PersonaTests/README.md`, qui déclare aussi le seul moment réseau : le
+téléchargement initial du navigateur, comme l'installation npm des laboratoires front.
+
+**Exécution de référence : `20260820-081149-complet` — les sept personas verts en une seule
+commande (`dotnet test tests/ForgeDotNet.PersonaTests`), 13 min 43 s, 60 captures et 7 registres.**
+P3 attend réellement le délai serveur de dix minutes avant la solution.
+
+### Résultat par persona
+
+| Persona | État | Preuves saillantes |
+|---|---|---|
+| P1 — Débutant fragile | **Exécuté intégralement** | Niveau « preuves insuffisantes »/prudent avec intervalle et rapport provisoire ; lacunes critiques non compensées ; 99 h refusées deux fois — par la validation native du champ, puis par le serveur après suppression adversariale de l'attribut `max` ; plan 5 h accepté, relu, contrôle conservé ; quiz raté sans progression puis réussi ; réflexion vague refusée avec les minima affichés. |
+| P2 — Tricheur | **Exécuté intégralement** | Trois réussites du même quiz : domaine à 5/100 ; déclaration manuelle sans effet mesuré (score identique avant/après) ; H1..H4 puis réussite Docker : pratique plafonnée à 60 ; trois exécutions du même exercice : « Variété insuffisante : 1/3 items distincts » ; solution inaccessible sans délai ; Practice répond « verrouillés pendant l'examen sans aide actif » depuis un second onglet pendant l'examen actif ; quatre portes fermées. Le rejeu divergent et le faux examen n'ont **aucun chemin d'interface** — c'est l'observation — et leurs règles serveur restent couvertes par les tests adversariaux. |
+| P3 — Consommateur de solutions | **Exécuté intégralement** | Ni indice ni solution avant réflexion (0/2) ; tentative courte « Proposition trop courte » ; doublon « Doublon substantiel détecté (100 % de similarité) » ; délai serveur tenu puis **attendu en temps réel dix minutes** ; « Solution consultée — activité non maîtrisée » avec carte de récupération annoncée, visible dans Reviews et persistée dans `ReviewItems` ; explication superficielle refusée puis reprise causale acceptée ; l'activité contaminée n'accepte plus de tentative — contamination définitive ; zéro `PracticeLearningAttempts` réussie. |
+| P4 — Faible SQL | **Exécuté intégralement** | SqlLab désactivé honnête (zéro preuve SQL en base) ; deux forces C# réelles constituées au runner Docker ; scénario publié choisi, session jetable provisionnée ; échec expliqué « Résultat non conforme » sans fuite de la référence ; `master.sys.databases` refusé sans lister les bases ; reset reprovisionné ; domaine SQL non validé et porte A fermée en nommant l'exigence SQL. |
+| P5 — Fort quiz, faible pratique | **Exécuté intégralement** | Leçon lue à 100 %, trois quiz réussis ; deux réussites Docker dont une assistée H1 ; examen et rétention « absente — 0 » ; « Variété insuffisante : 2/3 items distincts » ; aucun libellé « prêt » ; après vieillissement déterministe de 31 jours (translation des horodatages, application arrêtée) : « Aucune preuve récente, vérifiée et sans aide sur 30 jours », domaine toujours non validé, portes fermées. |
+| P6 — Sans Docker | **Exécuté intégralement** | Parcours consultatif complet ; exécution demandée : « Runner indisponible », « aucun code n'a été transmis à Docker », tracée `Status=Unavailable` avec zéro test — un enregistrement honnête, jamais une preuve ; ZIP exporté inspecté : aucune entrée `hidden` ni `solution` ; bannière « Cette installation ne peut produire aucune preuve » ; zéro observation runner/SQL/examen en base. |
+| P7 — Retour après deux semaines | **Exécuté intégralement** | Arrêt complet, translation déterministe de quatorze jours des horodatages persistés, redémarrage sur les mêmes données ; plan accepté, signet, note et historique de pratique restaurés ; « disponible depuis N jour(s), sans pénalité », aucune série ; carte ratée replanifiée **à J+1 du jour réel** (date vérifiée) ; carte réussie avancée à l'intervalle documenté ; observations conservées, récence honnête (14 < 30 jours). |
+
+### Techniques documentées, à la place de ce que le produit n'expose pas
+
+- **Horloge (P5, P7).** Le produit n'expose aucune horloge de test, et c'est un choix d'intégrité :
+  une horloge réglable serait un canal de falsification de récence. L'horloge système n'est jamais
+  touchée. L'avance est simulée par **translation uniforme des horodatages persistés, application
+  arrêtée** (`SqliteInspector.ShiftPersistedTimestamps`) — l'équivalent déterministe, déclaré dans
+  chaque registre. L'interface est observée avant et après la transition, comme la discipline
+  pré-enregistrée le demandait.
+- **Rejeu divergent et faux examen (P2).** Aucune interface ne les permet : l'absence de chemin est
+  l'observation du persona, et les règles serveur correspondantes restent prouvées par les 57 règles
+  adversariales unitaires déjà comptées dans ce rapport.
+
+### Défauts relevés par le rejeu
+
+Aucun P0, aucun P1. Deux P3 éditoriaux, non corrigés conformément au protocole :
+
+- **P3-05** — Dans la liste des blocages d'une porte du tableau de bord, le libellé d'exigence
+  « Porte A ouverte » (exigence de la porte B) peut se lire au premier regard comme un état
+  d'ouverture. Un libellé « exige : porte A ouverte » lèverait l'ambiguïté.
+- **P3-06** — La première section du diagnostic démarre sa minuterie à la création de la session,
+  alors que les sections suivantes annoncent « la minuterie ne démarre qu'après cette action
+  explicite ». Un lecteur lent perd quelques secondes de la section 1 sans l'avoir choisi.
+
+### Ce que ce rejeu change au verdict
+
+Les sept personas sont **exécutés intégralement**, chaque étape applicable ayant produit une preuve
+référencée dans un registre. Les quatre P1 historiques étaient clos avant ce rejeu, et le rejeu n'a
+révélé aucun P0/P1 nouveau. **La première condition de levée est donc satisfaite.** La seconde — le
+panel humain indépendant (P2-02) — reste ouverte et ne dépend d'aucun outillage : **le verdict reste
+REFUSÉ** tant qu'elle ne l'est pas. La discipline du rapport vaut plus que sa conclusion : rien ici
+ne déclare le verdict levé.
+
+## Panel — protocole prêt, non exécuté
+
+La seconde condition de levée (P2-02) ne se code pas, mais son matériel existe depuis le
+20 août 2026 : `docs/HUMAN_PANEL_KIT.md`. Le kit contient les trois profils à recruter alignés sur
+les personas de l'audit (débutant fragile, fort en quiz, faible SQL), un script de session par
+profil avec tâches sans aide et points de note pour l'animateur, une grille de restitution aux
+verdicts fermés classés P0–P3 sur l'échelle de ce rapport, les règles de consentement et de données
+(fictives, aucun enregistrement conservé, rien de personnel dans le dépôt), et un échantillon de
+relecture **reproductible** — graine `forge-panel-2026-08-20`, tri par SHA-256 — couvrant
+10 explications d'exercice, 5 leçons, 5 fiches d'entretien et 3 réponses modèles d'anglais. La page
+`/human-review` référence le kit.
+
+**Aucun panel n'a eu lieu.** Ce qui manque encore, exactement : trois participants conformes aux
+profils, un animateur indépendant, et trois créneaux de 75 minutes — des humains et du temps, rien
+d'autre. Les restitutions se colleront telles quelles dans cette section, qui portera alors la date
+d'exécution. Jusque-là, la condition 2 reste ouverte et le verdict inchangé.
+
 ## Réaudit
 
 Aucun réaudit favorable n'est possible tant que les quatre P1 restent ouverts. La reprise devra au minimum :
@@ -661,7 +745,8 @@ Aucun réaudit favorable n'est possible tant que les quatre P1 restent ouverts. 
 2. revoir les 69 leçons et 125 énoncés contre leurs objectifs, signatures et tests — *fait : 70 leçons réécrites, 135 exercices prouvés corrects hors Docker* ;
 3. intégrer les scénarios SQL/EF au parcours utilisateur avec isolation inchangée ;
 4. corriger les messages Practice et leurs tests E2E ;
-5. exécuter les sept scripts sur données séparées, avec navigateur et Docker disponibles ;
+5. exécuter les sept scripts sur données séparées, avec navigateur et Docker disponibles — *fait le
+   20 août 2026 : harnais Playwright, sept personas verts, registres de preuves par persona* ;
 6. rejouer `scripts/verify.ps1`, le validateur complet et les contrôles Git.
 
 ## Verdict
@@ -696,6 +781,14 @@ la duplication réelle était plus large que ce que le registre comptait, parce 
 sur des paragraphes et non sur des phrases. Un chiffre à zéro mesure donc l'absence de défaut
 détectable par ces trois règles, pas l'absence de contenu générique. Seul un panel humain peut
 prononcer la seconde.
+
+**Le verdict reste REFUSÉ après le rejeu navigateur des sept personas, mais sa première condition
+de levée est satisfaite.** Le 20 août 2026, les sept scripts gelés ont été exécutés intégralement
+dans un Chromium réel, sur des données jetables par persona, contournements avant chemins nominaux,
+avec un registre de preuves horodatées par persona — voir la section dédiée. Aucun P0/P1 nouveau
+n'a été trouvé ; deux P3 éditoriaux sont consignés sans correction. Ce qui sépare encore ce rapport
+d'un verdict favorable tient en une seule condition : le panel humain indépendant (P2-02), qu'aucun
+harnais ne peut remplacer.
 
 ## Backlog P2/P3 et risques résiduels
 

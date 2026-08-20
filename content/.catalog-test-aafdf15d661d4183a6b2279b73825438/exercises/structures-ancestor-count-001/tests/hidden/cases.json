@@ -1,0 +1,47 @@
+{
+    "schemaVersion":  1,
+    "cases":  [
+                  {
+                      "name":  "Hidden_Case1",
+                      "message":  "Compter les ancêtres d’un nœud — cas 1 hidden incorrect.",
+                      "arguments":  [
+                                        [
+                                            -1,
+                                            0
+                                        ],
+                                        3
+                                    ],
+                      "expected":  -1,
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_Case2",
+                      "message":  "Compter les ancêtres d’un nœud — cas 2 hidden incorrect.",
+                      "arguments":  [
+                                        [
+                                            1,
+                                            0
+                                        ],
+                                        0
+                                    ],
+                      "expected":  -1,
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_TwoChildrenOfRoot",
+                      "message":  "Deux enfants de la racine : la profondeur ne dépend pas de la fratrie.",
+                      "arguments":  [[-1,0,0],2],
+                      "expected":  1,
+                      "argumentsUnchanged":  true
+                  },
+                  {
+                      "name":  "Hidden_NegativeNode",
+                      "message":  "Indice négatif : réfute une garde qui ne contrôle que la borne haute.",
+                      "arguments":  [[-1,0,1],-1],
+                      "expected":  -1,
+                      "argumentsUnchanged":  true
+                  }
+              ]
+}

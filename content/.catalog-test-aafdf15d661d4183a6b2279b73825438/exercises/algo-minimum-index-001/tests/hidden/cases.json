@@ -1,0 +1,45 @@
+{
+    "schemaVersion":  1,
+    "cases":  [
+                  {
+                      "name":  "Hidden_Case1",
+                      "message":  "Trouver l’indice minimal — cas 1 hidden incorrect.",
+                      "arguments":  [
+                                        [
+                                            1,
+                                            1
+                                        ]
+                                    ],
+                      "expected":  0,
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_Case2",
+                      "message":  "Trouver l’indice minimal — cas 2 hidden incorrect.",
+                      "arguments":  [
+                                        [
+                                            -2,
+                                            -3
+                                        ]
+                                    ],
+                      "expected":  1,
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_MinimumLast",
+                      "message":  "Le minimum est en dernière position : réfute une boucle qui s'arrête avant la fin.",
+                      "arguments":  [[3,2,1]],
+                      "expected":  2,
+                      "argumentsUnchanged":  true
+                  },
+                  {
+                      "name":  "Hidden_SingleElement",
+                      "message":  "Un seul élément : l'indice attendu est zéro, pas moins un.",
+                      "arguments":  [[5]],
+                      "expected":  0,
+                      "argumentsUnchanged":  true
+                  }
+              ]
+}

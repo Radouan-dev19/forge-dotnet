@@ -1,0 +1,4 @@
+Event=TrialBannerRendered Scenario=trial-banner CorrelationId=f28b startDate=2026-03-01 today=2026-03-20 trialLengthDays=14 daysDisplayed=-5
+Event=UserReport Scenario=trial-banner CorrelationId=f28b message="le bandeau affiche un nombre de jours negatif" accountState=expired
+Event=TrialBannerRendered Scenario=trial-banner CorrelationId=c93d startDate=2026-03-01 today=2026-03-10 trialLengthDays=14 daysDisplayed=5
+Event=TrialBannerRendered Scenario=trial-banner CorrelationId=1a6e startDate=2026-03-01 today=2026-03-15 trialLengthDays=14 daysDisplayed=0

@@ -1,0 +1,25 @@
+{
+    "schemaVersion":  1,
+    "cases":  [
+                  {
+                      "name":  "Hidden_Case1",
+                      "message":  "Saisie non normalisée — cas 1.",
+                      "arguments":  [
+                                        "  "
+                                    ],
+                      "expected":  "",
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_Case2",
+                      "message":  "Saisie non normalisée — cas 2.",
+                      "arguments":  [
+                                        " x y "
+                                    ],
+                      "expected":  "x y",
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  }
+              ]
+}

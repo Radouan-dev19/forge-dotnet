@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "suiteId": "project-operations-log-001.caviardage.v1",
+  "exerciseId": "project-operations-log-001.caviardage",
+  "exerciseVersion": 1,
+  "typeName": "Submission",
+  "methodName": "SecureEntry",
+  "parameterTypes": ["string", "string"],
+  "returnType": "string"
+}

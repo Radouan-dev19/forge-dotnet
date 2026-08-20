@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "id": "interview-senior-flag-retirement-001",
+  "version": 1,
+  "title": "Assainir un parc de feature flags sans casser la production",
+  "level": "advanced",
+  "durationMinutes": 8,
+  "skills": ["debugging.legacy"],
+  "question": "Votre base de code compte quatre-vingts feature flags dont personne ne connaît plus l'histoire. Nommez cette dette en anglais, donnez les deux conditions qui rendent un flag retirable et l'action distincte pour chacune, et dites pourquoi l'ancienneté seule ne suffit jamais.",
+  "observableCriteria": [
+    "La dette est nommée : flag debt, chaque flag mort est une branche de code jamais testée",
+    "Les deux verdicts sont distingués : allumé partout et ancien → inline ; éteint partout et ancien → delete",
+    "L'ancienneté est défendue comme condition nécessaire mais jamais suffisante : l'état prime",
+    "Les cas mixtes et récents sont épargnés : un flag utilisé n'est pas de la dette"
+  ],
+  "modelAnswer": "Cette dette s'appelle la flag debt : chaque feature flag qui a cessé de servir laisse dans le code deux branches dont une n'est plus jamais exécutée — donc plus jamais testée — plus une condition qui obscurcit chaque lecture. L'assainissement repose sur deux conditions cumulatives, et elles répondent à deux questions différentes. L'état d'abord : un flag allumé dans tous les environnements a gagné — la fonctionnalité est adoptée — et son retrait est un inline : on garde la branche active, on supprime la condition et la branche morte. Un flag éteint partout a perdu — la fonctionnalité est abandonnée — et son retrait est un delete : la branche du flag part avec lui. Confondre les deux gestes est le seul accident grave possible ici : supprimer la branche d'un flag gagnant retire une fonctionnalité vivante de la production. L'ancienneté ensuite, et elle est nécessaire mais jamais suffisante : un flag uniforme depuis trois jours est peut-être en cours de déploiement progressif, et le figer maintenant casserait la manœuvre — le seuil d'âge, typiquement quelques semaines, garantit que l'uniformité est un état stable et non un instantané. Mais l'âge seul ne dit rien : un flag ancien et mixte — allumé en production, éteint ailleurs — est un flag en service, pas de la dette, et le retirer sur son âge serait retirer un interrupteur qu'on utilise. Le rapport final ne liste que les retirables avec leur geste ; les flags vivants n'y figurent pas, parce qu'un rapport d'assainissement qui mélange dette et outillage actif finit ignoré.",
+  "commonMistakes": [
+    "Retirer les flags sur l'âge seul et casser un déploiement progressif ou un interrupteur actif",
+    "Supprimer la branche d'un flag allumé partout au lieu de l'incruster et retirer une fonctionnalité vivante"
+  ],
+  "variants": [
+    "Demander quel processus empêche la dette de revenir : date d'expiration à la création du flag.",
+    "Un flag retirable est référencé dans douze fichiers : demander comment séquencer l'incrustation."
+  ],
+  "license": "CC-BY-4.0"
+}

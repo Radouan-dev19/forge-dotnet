@@ -1,0 +1,54 @@
+{
+  "schemaVersion": 1,
+  "cases": [
+    {
+      "name": "Hidden_EmptyIntervalIsRefused",
+      "message": "Aucune règle n'accepte un intervalle dont la borne basse dépasse la haute.",
+      "arguments": [[7], 10, 3],
+      "expectedException": "ArgumentException",
+      "argumentsUnchanged": false
+    },
+    {
+      "name": "Hidden_SingleValueIntervalKeepsFourMutants",
+      "message": "Deux bornes confondues gardent deux durcissements, tués par la même sonde, et deux élargissements.",
+      "arguments": [[5], 5, 5],
+      "expected": 2,
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_NeighboursAloneLetTheHardeningsLive",
+      "message": "Les voisines extérieures tuent les élargissements ; sans sonder la valeur acceptée, les durcissements survivent.",
+      "arguments": [[4, 6], 5, 5],
+      "expected": 2,
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_LowerTypeLimitMakesOneMutantEquivalent",
+      "message": "Élargir une borne posée sur la plus petite valeur du type ne crée aucune règle différente.",
+      "arguments": [[-2147483648, 10, 11], -2147483648, 10],
+      "expected": 0,
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_UpperTypeLimitStillLeavesRealSurvivors",
+      "message": "L'élargissement du haut est équivalent, mais les mutants réels non sondés comptent toujours.",
+      "arguments": [[0], 0, 2147483647],
+      "expected": 2,
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_EmptySuiteLetsEveryRealMutantLive",
+      "message": "Sans aucune sonde, tous les mutants exprimables survivent.",
+      "arguments": [[], 1, 3],
+      "expected": 4,
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_NegativeIntervalCountsTheSameWay",
+      "message": "Le comptage ne dépend pas du signe : quatre sondes bien placées suffisent aussi en négatif.",
+      "arguments": [[-4, -3, -1, 0], -3, -1],
+      "expected": 0,
+      "argumentsUnchanged": true
+    }
+  ]
+}

@@ -1,0 +1,54 @@
+{
+  "schemaVersion": 1,
+  "cases": [
+    {
+      "name": "Hidden_LastAttemptExhaustsTheBudget",
+      "message": "Cinquième tentative sur cinq : le budget est consommé, la file de relance se ferme.",
+      "arguments": ["payload=ok;error=transient;attempts=5;max=5"],
+      "expected": "dead-letter|budget-exhausted",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_SuccessfulProcessingAcks",
+      "message": "Charge lisible, aucune erreur : l'acquittement clôt le message.",
+      "arguments": ["payload=ok;error=none;attempts=1;max=5"],
+      "expected": "ack|processed",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_AttributeOrderIsFree",
+      "message": "Le même message décrit dans un autre ordre reçoit le même routage.",
+      "arguments": ["error=transient;max=3;payload=ok;attempts=2"],
+      "expected": "requeue|budget-remaining",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_AttemptsBeyondMaxAreRefused",
+      "message": "Six tentatives sur un budget de cinq : ce relevé ne décrit aucun message réel.",
+      "arguments": ["payload=ok;error=transient;attempts=6;max=5"],
+      "expectedException": "ArgumentException",
+      "argumentsUnchanged": false
+    },
+    {
+      "name": "Hidden_MissingAttributeIsRefused",
+      "message": "Sans le budget, la quatrième question du routage ne peut pas se poser.",
+      "arguments": ["payload=ok;error=transient;attempts=1"],
+      "expectedException": "ArgumentException",
+      "argumentsUnchanged": false
+    },
+    {
+      "name": "Hidden_UnknownErrorKindIsRefused",
+      "message": "Une issue hors vocabulaire ne se route pas par supposition.",
+      "arguments": ["payload=ok;error=weird;attempts=1;max=5"],
+      "expectedException": "ArgumentException",
+      "argumentsUnchanged": false
+    },
+    {
+      "name": "Hidden_MalformedBeatsDeclaredSuccess",
+      "message": "Un traitement ne peut pas avoir réussi sur ce qu'il n'a pas pu lire : la charge tranche.",
+      "arguments": ["payload=malformed;error=none;attempts=1;max=1"],
+      "expected": "dead-letter|malformed-payload",
+      "argumentsUnchanged": true
+    }
+  ]
+}

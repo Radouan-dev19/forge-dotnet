@@ -1,0 +1,49 @@
+{
+    "schemaVersion":  1,
+    "cases":  [
+                  {
+                      "name":  "Hidden_Case1",
+                      "message":  "Transformer avec un comportement injecté — cas 1 hidden incorrect.",
+                      "arguments":  [
+                                        [
+                                            -2,
+                                            0
+                                        ]
+                                    ],
+                      "expected":  [
+                                       -4,
+                                       0
+                                   ],
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_Case2",
+                      "message":  "Transformer avec un comportement injecté — cas 2 hidden incorrect.",
+                      "arguments":  [
+                                        [
+                                            7
+                                        ]
+                                    ],
+                      "expected":  [
+                                       14
+                                   ],
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_NullInput",
+                      "message":  "Référence absente : refus explicite.",
+                      "arguments":  [null],
+                      "expectedException":  "ArgumentNullException",
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_SymmetricValues",
+                      "message":  "Valeurs opposées : le signe est conservé, l'entrée reste intacte.",
+                      "arguments":  [[-3,3]],
+                      "expected":  [-6,6],
+                      "argumentsUnchanged":  true
+                  }
+              ]
+}

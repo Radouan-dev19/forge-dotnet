@@ -1,0 +1,40 @@
+{
+    "schemaVersion":  1,
+    "id":  "front-client-server-contract-001",
+    "version":  1,
+    "title":  "Le contrat client/serveur vu du client",
+    "week":  25,
+    "skills":  [
+                   {
+                       "id":  "api.contracts",
+                       "weight":  0.6
+                   },
+                   {
+                       "id":  "security.token",
+                       "weight":  0.4
+                   }
+               ],
+    "prerequisites":  [
+                          "front-state-unidirectional-001"
+                      ],
+    "estimatedMinutes":  60,
+    "objectives":  [
+                       "Traiter côté client les familles de statuts HTTP et les problem-details, annuler une requête en vol, attacher un jeton et le rafraîchir en silence, et décider fresh, stale-while-revalidate ou expiré"
+                   ],
+    "sections":  [
+                     "intuition",
+                     "explanation",
+                     "example",
+                     "counterExample",
+                     "check",
+                     "guided",
+                     "independent",
+                     "debugging",
+                     "interview",
+                     "summary",
+                     "reviewCards",
+                     "masteryTest"
+                 ],
+    "markdownPath":  "lesson.md",
+    "license":  "CC-BY-4.0"
+}

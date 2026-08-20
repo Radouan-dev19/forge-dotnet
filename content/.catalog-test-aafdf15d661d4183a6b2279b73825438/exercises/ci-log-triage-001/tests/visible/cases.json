@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "cases": [
+    {
+      "name": "Visible_FailureOutranksItsVictims",
+      "message": "L'annulation du test découle de l'échec de la construction : une seule piste à ouvrir.",
+      "arguments": ["restore=ok;build=failed;test=canceled;publish=skipped"],
+      "expected": "build|failed",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Visible_SuccessfulRetryErasesTheFailure",
+      "message": "La restauration a échoué puis réussi : son verdict final est vert, rien ne bloque.",
+      "arguments": ["restore=failed;restore=ok;build=ok;test=ok"],
+      "expected": "none",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Visible_LoneCancellationIsTheCause",
+      "message": "Aucun échec nulle part : l'annulation n'est victime de rien, c'est elle la cause du rouge.",
+      "arguments": ["restore=ok;build=ok;test=canceled"],
+      "expected": "test|canceled",
+      "argumentsUnchanged": true
+    }
+  ]
+}

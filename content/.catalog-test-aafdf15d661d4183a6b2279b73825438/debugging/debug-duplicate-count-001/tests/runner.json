@@ -1,0 +1,12 @@
+{
+    "schemaVersion":  1,
+    "suiteId":  "debug-duplicate-count-001",
+    "exerciseId":  "debug-duplicate-count-001",
+    "exerciseVersion":  1,
+    "typeName":  "Submission",
+    "methodName":  "UniqueCount",
+    "parameterTypes":  [
+                           "int[]"
+                       ],
+    "returnType":  "int"
+}

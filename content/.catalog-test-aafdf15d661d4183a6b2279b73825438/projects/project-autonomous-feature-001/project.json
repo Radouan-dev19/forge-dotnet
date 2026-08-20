@@ -1,0 +1,78 @@
+{
+  "schemaVersion": 1,
+  "id": "project-autonomous-feature-001",
+  "version": 1,
+  "title": "Fonctionnalité livrée sur spécification",
+  "difficulty": 4,
+  "weeks": [23],
+  "skills": ["csharp.collections", "csharp.dates"],
+  "prerequisites": ["final-project-architecture-001"],
+  "estimatedHours": 14,
+  "briefPath": "brief.md",
+  "starterPath": "starter/",
+  "achievementKey": "feature.autonomous",
+  "maximumSourceFiles": 4,
+  "acceptanceSuites": [
+    { "milestoneId": "calcul", "suitePath": "calcul/" },
+    { "milestoneId": "paliers", "suitePath": "paliers/" },
+    { "milestoneId": "releve", "suitePath": "releve/" }
+  ],
+  "milestones": [
+    {
+      "id": "calcul",
+      "title": "Les points actifs, à la règle près",
+      "evidence": "ActivePoints applique la règle des points de base et la fenêtre glissante de douze mois civils, sans indication de mise en œuvre.",
+      "acceptanceCriteria": [
+        "Chaque achat actif rapporte l'entier inférieur de son montant",
+        "La fenêtre des douze mois civils se terminant au mois de référence est exacte à la borne près",
+        "Un historique vide vaut zéro point, sans erreur"
+      ]
+    },
+    {
+      "id": "paliers",
+      "title": "Le bonus mensuel, au seuil exact",
+      "evidence": "MonthlyBonus attribue vingt points à chaque mois civil actif dont le total d'achats atteint le seuil, montants entiers ou non.",
+      "acceptanceCriteria": [
+        "Le seuil de cent se mesure sur les montants du mois, avant tout arrondi",
+        "Le seuil exactement atteint déclenche le bonus",
+        "Un mois expiré ne rapporte aucun bonus, quel que soit son total"
+      ]
+    },
+    {
+      "id": "releve",
+      "title": "Le relevé complet, conforme au contrat",
+      "evidence": "Statement assemble points actifs, points expirés et niveau dans le format contractuel exact, calculé et non concaténé au hasard des cas.",
+      "acceptanceCriteria": [
+        "Les points actifs du relevé incluent les bonus mensuels",
+        "Les points expirés comptent les achats hors fenêtre, sans bonus",
+        "Le niveau suit les bornes du contrat, la borne haute exclue"
+      ]
+    }
+  ],
+  "rubric": [
+    {
+      "criterion": "La spécification a suffi : la fonctionnalité est conforme sans qu'aucune étape n'ait été dictée",
+      "weight": 0.45,
+      "observableEvidence": "Les trois suites passent alors que le brief ne contient ni découpage, ni indice, ni ébauche."
+    },
+    {
+      "criterion": "Les bornes du contrat sont exactes, pas approchées",
+      "weight": 0.3,
+      "observableEvidence": "La limite de fenêtre, le seuil de bonus et les bornes de niveau basculent à la valeur près."
+    },
+    {
+      "criterion": "Le format de sortie est celui du contrat, stable sur toutes les entrées",
+      "weight": 0.25,
+      "observableEvidence": "Le relevé garde les mêmes clés, le même ordre et les mêmes séparateurs à chaque appel."
+    }
+  ],
+  "solutionPolicy": "no-complete-solution-before-submission",
+  "commonMistakes": [
+    "Mesurer la fenêtre en jours glissants alors que le contrat parle de mois civils",
+    "Arrondir les montants avant de tester le seuil du bonus mensuel",
+    "Attribuer un bonus aux mois expirés parce que leur total dépasse le seuil",
+    "Formater le relevé à la main différemment selon les valeurs, au lieu d'un format unique"
+  ],
+  "variantIds": ["project-query-budget-001"],
+  "license": "CC-BY-4.0"
+}

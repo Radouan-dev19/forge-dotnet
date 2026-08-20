@@ -16,6 +16,11 @@
     <PackageVersion Include="Microsoft.EntityFrameworkCore.Sqlite" Version="10.0.10" />
     <PackageVersion Include="Microsoft.EntityFrameworkCore.SqlServer" Version="10.0.10" />
     <PackageVersion Include="Microsoft.Data.SqlClient" Version="7.0.2" />
+    <!-- Rejeu navigateur des sept personas de l'audit : pilotage Chromium réel, hors de la suite
+         par défaut. L'installation du navigateur est un téléchargement réseau ponctuel documenté
+         dans tests/ForgeDotNet.PersonaTests/README.md, comme l'installation npm des labs front. -->
+    <PackageVersion Include="Microsoft.Playwright" Version="1.49.0" />
+    <PackageVersion Include="Microsoft.Data.Sqlite" Version="10.0.10" />
     <PackageVersion Include="SQLitePCLRaw.bundle_e_sqlite3" Version="3.0.4" />
     <PackageVersion Include="xunit" Version="2.9.3" />
     <PackageVersion Include="xunit.runner.visualstudio" Version="3.1.4" />

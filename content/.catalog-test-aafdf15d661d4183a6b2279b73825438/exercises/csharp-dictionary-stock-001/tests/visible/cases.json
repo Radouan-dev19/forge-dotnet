@@ -1,0 +1,8 @@
+{
+  "schemaVersion": 1,
+  "cases": [
+    { "name": "Visible_MergeAndNormalize", "message": "Les références équivalentes doivent être additionnées.", "arguments": [{"pen": 2}, {"PEN": 3, "book": 1}], "expected": {"pen": 5, "book": 1}, "argumentsUnchanged": true },
+    { "name": "Visible_EmptyStock", "message": "Une source vide doit laisser les entrées reçues.", "arguments": [{}, {"box": 4}], "expected": {"box": 4}, "argumentsUnchanged": true },
+    { "name": "Visible_EmptyIncoming", "message": "Un arrivage vide doit produire une copie normalisée.", "arguments": [{"Desk": 2}, {}], "expected": {"desk": 2}, "argumentsUnchanged": true }
+  ]
+}

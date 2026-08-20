@@ -1,6 +1,6 @@
 # Contenu SQL/EF initial
 
-Ce document décrit le lot initial livré par 06B puis étendu par 08. Il complète le contrat technique de `SQLLAB.md` sans modifier les garanties d’isolation du moteur 06A. Les 12 scénarios initiaux ci-dessous restent stables ; 28 scénarios SQL supplémentaires portent la banque à 40, selon la matrice détaillée `CONTENT_S1_S10.md`. Leurs contrats d'acceptation restent exclusivement côté serveur sous `tests/contract.json`. L’examen 4 réutilise une session SqlLab jetable pour six requêtes et exécute deux exercices EF Core dans le CodeRunner ; ses attentes et suites privées sont décrites dans `EXAMS_DASHBOARD.md`.
+Ce document décrit le lot initial livré par 06B puis étendu par 08. Il complète le contrat technique de `SQLLAB.md` sans modifier les garanties d’isolation du moteur 06A. Les 12 scénarios initiaux ci-dessous restent stables ; 28 scénarios SQL supplémentaires portent la banque à 40, selon la matrice détaillée `CONTENT_S1_S10.md`. Leurs contrats d'acceptation restent exclusivement côté serveur sous `tests/contract.json`. L’examen 4 réutilise une session SqlLab jetable pour six requêtes et exécute dans le CodeRunner ses candidats EF Core — deux scénarios à dossier `exam/` et, depuis le lot de densité, les trois exercices `ef-*` du catalogue ; ses attentes et suites privées sont décrites dans `EXAMS_DASHBOARD.md`.
 
 ## Matrice des scénarios
 

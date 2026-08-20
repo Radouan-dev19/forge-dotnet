@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "id": "interview-s21-s24-029",
+  "version": 1,
+  "title": "Cadrer le problème final",
+  "level": "intermediate",
+  "durationMinutes": 9,
+  "skills": [
+    "project.scope"
+  ],
+  "question": "Comment empêchez-vous le projet final de devenir une liste infinie de fonctionnalités ?",
+  "observableCriteria": [
+    "Un acteur et un parcours critique unique sont nommés, avec des exclusions explicites",
+    "Toute extension est conditionnée à une tranche verticale déjà verte"
+  ],
+  "modelAnswer": "Je définis un acteur, un parcours critique, trois exclusions et une preuve de valeur. Toute extension attend une tranche verticale verte et une décision de périmètre.",
+  "commonMistakes": [
+    "Accepter les extensions au fil de l'eau et découvrir le dépassement à la fin"
+  ],
+  "variants": [
+    "Changez une contrainte du scénario « Cadrer le problème final » et expliquez si la décision reste valide."
+  ],
+  "license": "CC-BY-4.0"
+}

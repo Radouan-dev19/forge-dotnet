@@ -1,0 +1,54 @@
+{
+  "schemaVersion": 1,
+  "cases": [
+    {
+      "name": "Hidden_SharedTransactionAloneVetoes",
+      "message": "Une transaction commune verrouille même sans données partagées : l'invariant vit dans la transaction.",
+      "arguments": ["transaction=shared;shared-data=none;team=same;cadence=same"],
+      "expected": "keep-together|shared-invariants",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_CadenceAloneIsReleasePressure",
+      "message": "Même équipe mais rythmes divergents : le module doit partir plus souvent que le reste.",
+      "arguments": ["shared-data=none;transaction=independent;team=same;cadence=different"],
+      "expected": "split|release-pressure",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_TeamAloneIsAutonomy",
+      "message": "Équipe distincte à cadence commune : la friction de propriété motive, moins fort que l'évolution.",
+      "arguments": ["shared-data=read-only;transaction=independent;team=different;cadence=same"],
+      "expected": "split|team-autonomy",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_MissingAttributeIsRefused",
+      "message": "Sans la transaction, l'interdit technique ne peut pas se vérifier.",
+      "arguments": ["shared-data=none;team=same;cadence=same"],
+      "expectedException": "ArgumentException",
+      "argumentsUnchanged": false
+    },
+    {
+      "name": "Hidden_UnknownValueIsRefused",
+      "message": "Un partage de données hors vocabulaire ne se classe pas.",
+      "arguments": ["shared-data=sometimes;transaction=independent;team=same;cadence=same"],
+      "expectedException": "ArgumentException",
+      "argumentsUnchanged": false
+    },
+    {
+      "name": "Hidden_RepeatedAttributeIsRefused",
+      "message": "Deux équipes déclarées pour un même module : le profil est corrompu.",
+      "arguments": ["shared-data=none;transaction=independent;team=same;team=different;cadence=same"],
+      "expectedException": "ArgumentException",
+      "argumentsUnchanged": false
+    },
+    {
+      "name": "Hidden_DoubleLockStaysTogether",
+      "message": "Écriture partagée et transaction commune : l'interdit est double, le verdict identique.",
+      "arguments": ["shared-data=read-write;transaction=shared;team=same;cadence=same"],
+      "expected": "keep-together|shared-invariants",
+      "argumentsUnchanged": true
+    }
+  ]
+}

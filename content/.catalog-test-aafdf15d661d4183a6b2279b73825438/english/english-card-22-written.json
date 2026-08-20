@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "id": "english-card-22-written",
+  "version": 1,
+  "title": "Milestone evidence — written update",
+  "level": "C1",
+  "durationMinutes": 12,
+  "skills": [
+    "english.written",
+    "project.milestone"
+  ],
+  "situation": "In a technical discussion, a milestone contains code but no verification record. You must write the decision accurately without overstating the evidence.",
+  "instructions": [
+    "Write four sentences on what evidence a milestone needs, what is currently missing, and how it would be produced."
+  ],
+  "vocabulary": [
+    {
+      "term": "reviewable increment",
+      "meaning": "a milestone another person can check without asking the author, because its evidence travels with it"
+    },
+    {
+      "term": "verification record",
+      "meaning": "the reproducible trace showing that a claim was checked, as opposed to a statement that it works"
+    }
+  ],
+  "expectedElements": [
+    "The distinction between written and verified is made",
+    "The missing artefact is named precisely",
+    "A reproducible way to produce it is described"
+  ],
+  "modelAnswer": "The milestone contains the code but not the evidence that closes it. What is missing is what a reviewer can check without asking the author: the command that runs, its output, and the assertion that would have failed before the change. As it stands the milestone is visible rather than reviewable. The tests already exist, so producing the record means attaching the run output and the specific test that proves the behaviour changed.",
+  "commonMistakes": [
+    "Treating written code as sufficient evidence that a milestone is complete",
+    "Offering a screenshot in place of a reproducible command and its output"
+  ],
+  "variants": [
+    "Rewrite the update as the evidence section attached to the milestone."
+  ],
+  "license": "CC-BY-4.0"
+}

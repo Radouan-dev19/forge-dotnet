@@ -1,0 +1,83 @@
+{
+  "schemaVersion": 1,
+  "id": "senior-merge-verdict-001",
+  "version": 1,
+  "title": "Décider la fusion d'une demande depuis l'état de ses revues",
+  "kind": "csharp",
+  "difficulty": 4,
+  "skills": ["quality.review"],
+  "prerequisites": [],
+  "estimatedMinutes": 40,
+  "statement": "statement.md",
+  "constraints": [
+    "Conserver exactement la signature publique",
+    "Une demande de changements bloque, quel que soit le nombre d'approbations à côté",
+    "Une approbation périmée ne compte pas : elle a validé un autre code",
+    "L'absence de revue est un état, pas une erreur : la demande attend ses approbations"
+  ],
+  "examples": [
+    {
+      "input": "alice=approved;bob=approved — 2 exigées",
+      "output": "merge"
+    },
+    {
+      "input": "alice=approved;bob=changes-requested — 2 exigées",
+      "output": "blocked|changes:bob"
+    }
+  ],
+  "reflectionFields": [
+    "reformulation",
+    "inputs",
+    "expectedOutput",
+    "edgeCases",
+    "hypothesis",
+    "plan"
+  ],
+  "starterPath": "starter/",
+  "visibleTestsPath": "tests/visible/",
+  "hiddenTestsPath": "tests/hidden/",
+  "hints": [
+    {
+      "level": 1,
+      "kind": "socratic",
+      "content": "Trois approbations datent d'avant votre dernier remaniement complet de la demande. Qu'ont validé ces trois personnes, exactement — et que vaut leur signature sur le code qui va réellement fusionner ?"
+    },
+    {
+      "level": 2,
+      "kind": "location",
+      "content": "Deux questions ordonnées : quelqu'un s'oppose-t-il — la demande de changements bloque tout — et sinon, combien d'approbations valides restent-elles face au seuil exigé. Les revues périmées ne participent à aucune des deux."
+    },
+    {
+      "level": 3,
+      "kind": "strategy",
+      "content": "Le blocage par changements nomme le premier opposant dans l'ordre du relevé — c'est lui qu'il faut aller voir — et le blocage par approbations chiffre l'écart, compte sur seuil, pour dire ce qui manque."
+    },
+    {
+      "level": 4,
+      "kind": "partial-pseudocode",
+      "content": "refuser un seuil non positif, une revue illisible, un état hors vocabulaire ou un relecteur en double ; rendre le blocage nommant le premier demandeur de changements ; compter les approbations non périmées ; rendre la fusion au seuil atteint, le blocage chiffré sinon"
+    }
+  ],
+  "solution": {
+    "path": "solution/",
+    "unlock": {
+      "seriousAttempts": 2,
+      "minimumDelayMinutes": 10
+    }
+  },
+  "explanation": "explanation.md",
+  "complexity": "O(n) en temps pour n revues et O(n) en espace pour le relevé validé",
+  "commonMistakes": [
+    "Laisser deux approbations compenser une demande de changements, qui ne se vote pas",
+    "Compter les approbations périmées et fusionner un code que personne n'a relu",
+    "Refuser la demande sans revue alors qu'elle attend simplement ses approbations",
+    "Nommer le dernier opposant au lieu du premier et envoyer l'auteur voir la mauvaise personne"
+  ],
+  "variantId": "senior-review-evidence-001",
+  "reviewCards": [
+    "card-senior-merge-verdict-001-rule",
+    "card-senior-merge-verdict-001-edge"
+  ],
+  "interviewQuestionId": "interview-senior-merge-verdict-001",
+  "license": "CC-BY-4.0"
+}

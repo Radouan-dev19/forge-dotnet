@@ -1,0 +1,83 @@
+{
+  "schemaVersion": 1,
+  "id": "senior-latency-percentile-001",
+  "version": 1,
+  "title": "Calculer un percentile de latence au rang le plus proche",
+  "kind": "csharp",
+  "difficulty": 4,
+  "skills": ["observability.distributed"],
+  "prerequisites": [],
+  "estimatedMinutes": 40,
+  "statement": "statement.md",
+  "constraints": [
+    "Conserver exactement la signature publique",
+    "Le percentile est une valeur réellement observée, jamais une interpolation",
+    "Le tableau reçu n'est jamais modifié : le tri travaille sur une copie",
+    "Le rang se calcule en plafond : le percentile couvre au moins la part demandée"
+  ],
+  "examples": [
+    {
+      "input": "[120, 80, 200, 150, 90], 50",
+      "output": "120"
+    },
+    {
+      "input": "[120, 80, 200, 150, 90], 99",
+      "output": "200"
+    }
+  ],
+  "reflectionFields": [
+    "reformulation",
+    "inputs",
+    "expectedOutput",
+    "edgeCases",
+    "hypothesis",
+    "plan"
+  ],
+  "starterPath": "starter/",
+  "visibleTestsPath": "tests/visible/",
+  "hiddenTestsPath": "tests/hidden/",
+  "hints": [
+    {
+      "level": 1,
+      "kind": "socratic",
+      "content": "La latence moyenne de votre service est excellente et un client sur cent vit un calvaire. Quel nombre unique raconte l'expérience de ce centième client — et pourquoi la moyenne ne le peut-elle pas ?"
+    },
+    {
+      "level": 2,
+      "kind": "location",
+      "content": "Deux gestes seulement : trier une copie croissante des mesures, puis viser le rang — le plafond du produit percentile fois effectif divisé par cent. La valeur à ce rang est la réponse, telle quelle."
+    },
+    {
+      "level": 3,
+      "kind": "strategy",
+      "content": "Le plafond du rang garantit la promesse du percentile — au moins la part demandée des mesures est sous la valeur rendue — et la méthode du rang rend toujours une latence réellement vécue, qu'aucune interpolation n'a inventée."
+    },
+    {
+      "level": 4,
+      "kind": "partial-pseudocode",
+      "content": "refuser un tableau vide, une latence négative, un percentile hors de un à cent ; trier une copie croissante ; calculer le rang en plafond du produit percentile fois effectif sur cent ; rendre la valeur au rang, indexé depuis un"
+    }
+  ],
+  "solution": {
+    "path": "solution/",
+    "unlock": {
+      "seriousAttempts": 2,
+      "minimumDelayMinutes": 10
+    }
+  },
+  "explanation": "explanation.md",
+  "complexity": "O(n log n) en temps pour n mesures — le tri domine — et O(n) en espace pour la copie",
+  "commonMistakes": [
+    "Trier le tableau reçu en place et corrompre les mesures de l'appelant",
+    "Arrondir le rang au plus proche et rendre un percentile qui couvre moins que la part demandée",
+    "Interpoler entre deux mesures et annoncer une latence que personne n'a vécue",
+    "Confondre l'indice base zéro et le rang base un, décalant tout le calcul d'une mesure"
+  ],
+  "variantId": "senior-burn-rate-001",
+  "reviewCards": [
+    "card-senior-latency-percentile-001-rule",
+    "card-senior-latency-percentile-001-edge"
+  ],
+  "interviewQuestionId": "interview-senior-latency-percentile-001",
+  "license": "CC-BY-4.0"
+}

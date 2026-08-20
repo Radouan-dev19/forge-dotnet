@@ -3,6 +3,8 @@ using System.Text;
 using System.Text.Json;
 using ForgeDotNet.Application.Content;
 using ForgeDotNet.Application.Preparation;
+using ForgeDotNet.Domain.Ai;
+using ForgeDotNet.Domain.Career;
 using ForgeDotNet.Domain.Content;
 using ForgeDotNet.Domain.English;
 using ForgeDotNet.Domain.Interviews;
@@ -211,4 +213,98 @@ public sealed class FileSystemEnglishActivitySource(
         root.GetProperty("modelAnswer").GetString()!,
         ReadStrings(root, "commonMistakes"),
         ReadStrings(root, "variants"));
+}
+
+public sealed class FileSystemCareerGuideSource(
+    ContentCatalogProvider catalogProvider,
+    PracticeContentOptions options)
+    : FileSystemPreparationSource<CareerGuide>(
+        catalogProvider,
+        options,
+        ContentDocumentType.CareerGuide,
+        "career"), ICareerGuideSource
+{
+    private const int MaximumBodyBytes = 65_536;
+    private static readonly UTF8Encoding StrictBodyUtf8 = new(false, true);
+
+    private readonly string _careerDirectory = Path.TrimEndingDirectorySeparator(Path.GetFullPath(
+        Path.Combine(options.CatalogDirectoryPath, "career")));
+
+    protected override string IdentifierOf(CareerGuide value) => value.Id;
+
+    protected override CareerGuide Read(ContentCatalogItem item, JsonElement root) => new(
+        item.Id,
+        item.Version,
+        root.GetProperty("title").GetString()!,
+        root.GetProperty("summary").GetString()!,
+        root.GetProperty("order").GetInt32(),
+        ReadBody(root.GetProperty("documentPath").GetString()!));
+
+    /// <summary>
+    /// Lit le Markdown du guide, dont le nom vient d'un manifeste validé par schéma : un simple nom
+    /// de fichier, sans séparateur. La garde de descendance reste appliquée par principe.
+    /// </summary>
+    private string ReadBody(string documentPath)
+    {
+        string resolved = Path.GetFullPath(Path.Combine(_careerDirectory, documentPath));
+        if (!resolved.StartsWith(_careerDirectory + Path.DirectorySeparatorChar, StringComparison.Ordinal))
+        {
+            throw new InvalidOperationException("Le document d'un guide de carrière sort de son dossier.");
+        }
+
+        var info = new FileInfo(resolved);
+        if (!info.Exists || info.Length == 0 || info.Length > MaximumBodyBytes)
+        {
+            throw new InvalidDataException($"Document de guide de carrière absent, vide ou trop volumineux : {documentPath}.");
+        }
+
+        return StrictBodyUtf8.GetString(File.ReadAllBytes(resolved));
+    }
+}
+
+public sealed class FileSystemAiGuideSource(
+    ContentCatalogProvider catalogProvider,
+    PracticeContentOptions options)
+    : FileSystemPreparationSource<AiGuide>(
+        catalogProvider,
+        options,
+        ContentDocumentType.AiGuide,
+        "ai"), IAiGuideSource
+{
+    private const int MaximumGuideBytes = 65_536;
+    private static readonly UTF8Encoding StrictGuideUtf8 = new(false, true);
+
+    private readonly string _aiDirectory = Path.TrimEndingDirectorySeparator(Path.GetFullPath(
+        Path.Combine(options.CatalogDirectoryPath, "ai")));
+
+    protected override string IdentifierOf(AiGuide value) => value.Id;
+
+    protected override AiGuide Read(ContentCatalogItem item, JsonElement root) => new(
+        item.Id,
+        item.Version,
+        root.GetProperty("title").GetString()!,
+        root.GetProperty("summary").GetString()!,
+        root.GetProperty("order").GetInt32(),
+        ReadBody(root.GetProperty("documentPath").GetString()!));
+
+    /// <summary>
+    /// Le nom du Markdown vient d'un manifeste validé par schéma ; la garde de descendance reste
+    /// appliquée par principe, comme pour chaque famille plate du catalogue.
+    /// </summary>
+    private string ReadBody(string documentPath)
+    {
+        string resolved = Path.GetFullPath(Path.Combine(_aiDirectory, documentPath));
+        if (!resolved.StartsWith(_aiDirectory + Path.DirectorySeparatorChar, StringComparison.Ordinal))
+        {
+            throw new InvalidOperationException("Le document d'un guide IA sort de son dossier.");
+        }
+
+        var info = new FileInfo(resolved);
+        if (!info.Exists || info.Length == 0 || info.Length > MaximumGuideBytes)
+        {
+            throw new InvalidDataException($"Document de guide IA absent, vide ou trop volumineux : {documentPath}.");
+        }
+
+        return StrictGuideUtf8.GetString(File.ReadAllBytes(resolved));
+    }
 }

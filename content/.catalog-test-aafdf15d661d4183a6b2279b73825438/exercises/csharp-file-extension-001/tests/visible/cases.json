@@ -1,0 +1,32 @@
+{
+    "schemaVersion":  1,
+    "cases":  [
+                  {
+                      "name":  "Visible_Case1",
+                      "message":  "Normaliser une extension locale — cas 1 visible incorrect.",
+                      "arguments":  [
+                                        "report.JSON"
+                                    ],
+                      "expected":  ".json",
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Visible_Case2",
+                      "message":  "Normaliser une extension locale — cas 2 visible incorrect.",
+                      "arguments":  [
+                                        "readme"
+                                    ],
+                      "expected":  "",
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Visible_UpperCaseExtension",
+                      "message":  "Extension en majuscules : le résultat est normalisé en minuscules.",
+                      "arguments":  ["a.TXT"],
+                      "expected":  ".txt",
+                      "argumentsUnchanged":  true
+                  }
+              ]
+}

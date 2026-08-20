@@ -1,0 +1,66 @@
+@page "/career"
+@using ForgeDotNet.Application.Preparation
+@using ForgeDotNet.Domain.Career
+@inject ICareerGuideSource Guides
+
+<PageTitle>Kit carrière — Forge.NET</PageTitle>
+
+<h1>Kit carrière</h1>
+
+<section class="practice-panel" aria-labelledby="career-intro-title">
+    <h2 id="career-intro-title">Cinq guides, des preuves, aucune promesse</h2>
+    <p>
+        Ces guides accompagnent la semaine 24 : bâtir un CV de reconversion sur les preuves que le produit
+        collecte, préparer les réponses d'entretien, organiser la prospection, chiffrer une négociation et
+        réussir les quatre-vingt-dix premiers jours. Chacun se lit seul, sans ressource externe obligatoire.
+    </p>
+    <p class="notice" role="status">
+        <strong>Aucun de ces guides ne produit de preuve de maîtrise.</strong> Un CV, une candidature ou une
+        négociation se jugent hors du produit, par des humains. Ces pages ne promettent ni emploi, ni entretien,
+        ni niveau de salaire.
+    </p>
+    <p>
+        Pour extraire une preuve en Markdown local, le script <code>content/reference/career/Export-CareerEvidence.ps1</code>
+        refuse tout champ qui ressemble à une adresse de courriel ou à un numéro de téléphone : les données de
+        candidature restent chez vous, dans des fichiers exclus de Git.
+    </p>
+</section>
+
+@if (_error is not null)
+{
+    <p class="error-message" role="alert">@_error</p>
+}
+else if (_guides is null)
+{
+    <p role="status">Chargement des guides…</p>
+}
+else
+{
+    <ul class="lesson-list">
+        @foreach (CareerGuide guide in _guides)
+        {
+            <li>
+                <a href="@($"/career/{guide.Id}")">@guide.Title</a>
+                <p>@guide.Summary</p>
+            </li>
+        }
+    </ul>
+}
+
+@code {
+    private List<CareerGuide>? _guides;
+    private string? _error;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            IReadOnlyList<CareerGuide> guides = await Guides.ListAsync();
+            _guides = guides.OrderBy(guide => guide.Order).ThenBy(guide => guide.Id, StringComparer.Ordinal).ToList();
+        }
+        catch (Exception exception) when (exception is InvalidDataException or InvalidOperationException)
+        {
+            _error = exception.Message;
+        }
+    }
+}

@@ -1,0 +1,9 @@
+{
+  "schemaVersion": 1,
+  "cases": [
+    { "name": "Hidden_NullStock", "message": "Un stock null doit être refusé.", "arguments": [null, {}], "expectedException": "ArgumentNullException" },
+    { "name": "Hidden_NegativeQuantity", "message": "Une quantité négative doit être refusée.", "arguments": [{"pen": 1}, {"book": -1}], "expectedException": "ArgumentOutOfRangeException" },
+    { "name": "Hidden_MultipleKeys", "message": "La fusion de plusieurs références est incorrecte.", "arguments": [{"A": 1, "b": 2}, {"a": 4, "C": 3}], "expected": {"a": 5, "b": 2, "c": 3}, "argumentsUnchanged": true },
+    { "name": "Hidden_Varied", "message": "La solution semble dépendre des exemples publics.", "arguments": [{"cable": 7}, {"CABLE": 2, "plug": 5}], "expected": {"cable": 9, "plug": 5}, "argumentsUnchanged": true }
+  ]
+}

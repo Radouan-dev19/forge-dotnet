@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "cases": [
+    {
+      "name": "Visible_TransientUnderBudgetRequeues",
+      "message": "Erreur passagère, première tentative sur cinq : la relance a encore un sens.",
+      "arguments": ["payload=ok;error=transient;attempts=1;max=5"],
+      "expected": "requeue|budget-remaining",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Visible_PermanentErrorNeverRetries",
+      "message": "Règle métier violée : la millième tentative échouerait pareil, la sortie est immédiate.",
+      "arguments": ["payload=ok;error=permanent;attempts=1;max=5"],
+      "expected": "dead-letter|non-retryable",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Visible_MalformedPayloadExitsAtOnce",
+      "message": "Charge illisible : la rejouer fabriquerait la boucle empoisonnée, elle sort budget intact.",
+      "arguments": ["payload=malformed;error=transient;attempts=1;max=5"],
+      "expected": "dead-letter|malformed-payload",
+      "argumentsUnchanged": true
+    }
+  ]
+}

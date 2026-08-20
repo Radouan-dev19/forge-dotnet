@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "cases": [
+    {
+      "name": "Hidden_PeakIsTheMaximumOfTheWindow",
+      "message": "Le pic rapporté est le maximum du signal dominant sur toute la fenêtre.",
+      "arguments": ["0:120:0;1:180:25;2:180:30;3:120:0", "retour-arriere"],
+      "expected": "debut=1;duree=2min;signal=erreurs;pic=30;action=retour-arriere",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_LatencyPeakGrowsDuringTheIncident",
+      "message": "La latence maximale de la fenêtre est celle du compte rendu.",
+      "arguments": ["0:120:0;1:950:0;2:990:0;3:990:0;4:120:0", "montee-en-charge"],
+      "expected": "debut=1;duree=3min;signal=latence;pic=990;action=montee-en-charge",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_LullInsideTheWindowStillCounts",
+      "message": "Une accalmie entre deux dépassements appartient à la fenêtre d'impact.",
+      "arguments": ["0:180:25;1:120:0;2:180:40;3:120:0", "retour-arriere"],
+      "expected": "debut=0;duree=3min;signal=erreurs;pic=40;action=retour-arriere",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_BelowThresholdErrorsAreHealthy",
+      "message": "Des erreurs sous le seuil ne constituent pas un dépassement.",
+      "arguments": ["0:120:0;1:120:5;2:120:19;3:120:0", "aucune"],
+      "expected": "aucun",
+      "argumentsUnchanged": true
+    }
+  ]
+}

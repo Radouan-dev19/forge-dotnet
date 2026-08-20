@@ -1,0 +1,54 @@
+{
+  "schemaVersion": 1,
+  "cases": [
+    {
+      "name": "Hidden_ZeroCapacityIsRefused",
+      "message": "Une capacité d'exécution nulle condamne le service par configuration.",
+      "arguments": [0, 0, 5, 0],
+      "expectedException": "ArgumentOutOfRangeException",
+      "argumentsUnchanged": false
+    },
+    {
+      "name": "Hidden_LeakedCounterIsRefused",
+      "message": "Onze exécutions sur dix emplacements : le compteur a fui, on ne décide pas dessus.",
+      "arguments": [10, 11, 20, 0],
+      "expectedException": "ArgumentException",
+      "argumentsUnchanged": false
+    },
+    {
+      "name": "Hidden_ZeroQueueIsTheStrictestBulkhead",
+      "message": "Une file nulle est légitime : emplacements pleins, refus immédiat, aucune attente.",
+      "arguments": [10, 10, 0, 0],
+      "expected": "reject|bulkhead-saturated",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_OverflowingQueueIsRefused",
+      "message": "Vingt et une requêtes dans une file de vingt : le relevé ne décrit aucun instant réel.",
+      "arguments": [10, 10, 20, 21],
+      "expectedException": "ArgumentException",
+      "argumentsUnchanged": false
+    },
+    {
+      "name": "Hidden_LastSlotStillExecutes",
+      "message": "Trois exécutions sur quatre emplacements : le dernier emplacement se prend, file ignorée.",
+      "arguments": [4, 3, 0, 0],
+      "expected": "execute|slot-available",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_ExactlyFullQueueTipsToReject",
+      "message": "Deux en file pour deux places : la frontière de la file est stricte, la suivante est rejetée.",
+      "arguments": [2, 2, 2, 2],
+      "expected": "reject|bulkhead-saturated",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_NegativeQueuedIsRefused",
+      "message": "Une occupation de file négative est un compteur cassé, pas un cas limite.",
+      "arguments": [10, 4, 20, -1],
+      "expectedException": "ArgumentException",
+      "argumentsUnchanged": false
+    }
+  ]
+}

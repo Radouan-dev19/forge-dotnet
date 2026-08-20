@@ -1,0 +1,14 @@
+{
+    "schemaVersion":  1,
+    "suiteId":  "csharp-clamp-value-001.v1",
+    "exerciseId":  "csharp-clamp-value-001",
+    "exerciseVersion":  1,
+    "typeName":  "Submission",
+    "methodName":  "Clamp",
+    "parameterTypes":  [
+                           "int",
+                           "int",
+                           "int"
+                       ],
+    "returnType":  "int"
+}

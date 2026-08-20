@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "id": "interview-senior-trace-critical-path-001",
+  "version": 1,
+  "title": "Lire une trace distribuée et désigner le vrai coupable",
+  "level": "advanced",
+  "durationMinutes": 9,
+  "skills": ["observability.distributed"],
+  "question": "Une requête met quatre secondes et la trace montre que le span racine dure... quatre secondes. L'équipe veut optimiser le service racine. Quel raisonnement corrige cette lecture, quelle grandeur calculez-vous span par span, et sous quels noms anglais tout cela circule-t-il ?",
+  "observableCriteria": [
+    "La lecture naïve est réfutée : la durée d'un span parent contient celle de ses enfants",
+    "Le self time est défini : durée du span moins la somme des durées de ses enfants directs",
+    "Le vocabulaire est en place : distributed tracing, span, self time, chemin critique",
+    "Les limites de la mesure sont connues : enfants parallèles, trous d'instrumentation"
+  ],
+  "modelAnswer": "Le span racine dure quatre secondes parce qu'il attend tout le monde : dans une trace de distributed tracing, chaque span parent englobe la durée de ses enfants, et lire les durées brutes désigne mécaniquement la racine — c'est l'erreur classique. La grandeur qui répartit honnêtement le temps est le self time : la durée du span moins la somme des durées de ses enfants directs — le temps que ce span a passé à travailler lui-même, et non à attendre. Recalculé sur toute la trace, il redistribue les quatre secondes : une racine à quatre secondes dont les enfants en couvrent trois virgule neuf a un self time de cent millisecondes, et le coupable est ailleurs — souvent une requête de base de données feuille, invisible dans la lecture naïve. Deux limites à connaître avant de conclure. Des enfants parallèles font mentir la soustraction — leurs durées se chevauchent, la somme dépasse le temps réellement couvert, et le self time du parent en sort sous-estimé, voire négatif : il faut alors fusionner les intervalles plutôt que sommer. Et un self time élevé peut cacher un trou d'instrumentation : un appel non tracé compte comme du travail local. Je vérifie aussi l'intégrité de la trace — un span orphelin, dont le parent n'existe pas, signale une trace tronquée qu'il ne faut pas interpréter. Le self time désigne où creuser ; le profileur dit ensuite quoi corriger.",
+  "commonMistakes": [
+    "Optimiser le span le plus long au lieu du self time le plus long et travailler sur de l'attente",
+    "Sommer des enfants parallèles qui se chevauchent et produire des self times faussés"
+  ],
+  "variants": [
+    "Demander comment l'échantillonnage des traces change ce qu'on peut conclure d'une seule trace lente.",
+    "Le coupable a un self time élevé mais aucun appel sortant tracé : demander la suite de l'enquête."
+  ],
+  "license": "CC-BY-4.0"
+}

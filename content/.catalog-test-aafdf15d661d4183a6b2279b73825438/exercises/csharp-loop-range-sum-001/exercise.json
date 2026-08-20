@@ -1,0 +1,46 @@
+{
+  "schemaVersion": 1,
+  "id": "csharp-loop-range-sum-001",
+  "version": 1,
+  "title": "Sommer une plage inclusive",
+  "kind": "csharp",
+  "difficulty": 1,
+  "skills": ["csharp.loops", "csharp.conditions", "logic.edge-cases"],
+  "prerequisites": ["csharp-shipping-decision-001"],
+  "estimatedMinutes": 25,
+  "statement": "statement.md",
+  "constraints": [
+    "Conserver exactement la signature publique demandée",
+    "Parcourir la plage avec une boucle",
+    "Inclure les deux bornes lorsque start est inférieur ou égal à end",
+    "Retourner zéro lorsque start est supérieur à end"
+  ],
+  "examples": [
+    { "input": "[3,6]", "output": "18" },
+    { "input": "5, 5", "output": "5" },
+    { "input": "4, 2", "output": "0" }
+  ],
+  "reflectionFields": ["reformulation", "inputs", "expectedOutput", "edgeCases", "hypothesis", "plan"],
+  "starterPath": "starter/",
+  "visibleTestsPath": "tests/visible/",
+  "hiddenTestsPath": "tests/hidden/",
+  "hints": [
+    { "level": 1, "kind": "socratic", "content": "Quelle valeur initiale convient à un accumulateur de somme, et quand la boucle doit-elle s’arrêter ?" },
+    { "level": 2, "kind": "location", "content": "Initialise le cumul avant la boucle et vérifie la condition qui inclut la borne end." },
+    { "level": 3, "kind": "strategy", "content": "Retourne tôt pour une plage vide, puis ajoute chaque entier de start à end inclus." },
+    { "level": 4, "kind": "partial-pseudocode", "content": "si start > end retourner 0 ; total = 0 ; pour valeur de start à end incluse, total += valeur ; retourner total" }
+  ],
+  "solution": { "path": "solution/", "unlock": { "seriousAttempts": 2, "minimumDelayMinutes": 10 } },
+  "explanation": "explanation.md",
+  "complexity": "O(n) en temps pour n valeurs et O(1) en espace",
+  "commonMistakes": [
+    "Utiliser une condition stricte et oublier la borne de fin",
+    "Initialiser le total avec start puis ajouter start une seconde fois",
+    "Ne pas définir le comportement d’une plage inversée",
+    "Supposer que toutes les bornes sont positives"
+  ],
+  "variantId": "csharp-method-multiples-001",
+  "reviewCards": ["card-loop-invariant-001", "card-loop-boundary-001"],
+  "interviewQuestionId": "interview-loop-range-sum-001",
+  "license": "CC-BY-4.0"
+}

@@ -1,0 +1,32 @@
+{
+    "schemaVersion":  1,
+    "cases":  [
+                  {
+                      "name":  "Visible_Case1",
+                      "message":  "Choisir une valeur de repli — cas 1 visible incorrect.",
+                      "arguments":  [
+                                        " ok "
+                                    ],
+                      "expected":  "ok",
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Visible_Case2",
+                      "message":  "Choisir une valeur de repli — cas 2 visible incorrect.",
+                      "arguments":  [
+                                        ""
+                                    ],
+                      "expected":  "n/a",
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Visible_NothingToTrim",
+                      "message":  "Valeur déjà propre : elle est reproduite à l'identique.",
+                      "arguments":  ["x"],
+                      "expected":  "x",
+                      "argumentsUnchanged":  true
+                  }
+              ]
+}

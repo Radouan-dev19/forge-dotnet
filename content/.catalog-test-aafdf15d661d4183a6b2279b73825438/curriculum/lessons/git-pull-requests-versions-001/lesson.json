@@ -1,0 +1,36 @@
+{
+    "schemaVersion":  1,
+    "id":  "git-pull-requests-versions-001",
+    "version":  1,
+    "title":  "Pull requests, revue et versions",
+    "week":  18,
+    "skills":  [
+                   {
+                       "id":  "git.pr",
+                       "weight":  1
+                   }
+               ],
+    "prerequisites":  [
+                          "git-branches-conflicts-001"
+                      ],
+    "estimatedMinutes":  75,
+    "objectives":  [
+                       "Appliquer Pull requests, revue et versions et justifier une preuve observable sur un cas nouveau"
+                   ],
+    "sections":  [
+                     "intuition",
+                     "explanation",
+                     "example",
+                     "counterExample",
+                     "check",
+                     "guided",
+                     "independent",
+                     "debugging",
+                     "interview",
+                     "summary",
+                     "reviewCards",
+                     "masteryTest"
+                 ],
+    "markdownPath":  "lesson.md",
+    "license":  "CC-BY-4.0"
+}

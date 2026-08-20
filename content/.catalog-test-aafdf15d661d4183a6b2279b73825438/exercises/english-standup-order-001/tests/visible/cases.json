@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "cases": [
+    {
+      "name": "Visible_ReordersTwoParts",
+      "message": "Ce qui est fait vient avant ce qui vient ensuite, quel que soit l'ordre d'écriture.",
+      "arguments": ["next: review the PR\ndone: fixed the import"],
+      "expected": "done: fixed the import\nnext: review the PR",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Visible_BlockerComesLast",
+      "message": "Le blocage ferme le point : il appelle une réponse, pas une mise en contexte.",
+      "arguments": ["blocker: waiting for credentials\ndone: shipped the fix\nnext: write the migration"],
+      "expected": "done: shipped the fix\nnext: write the migration\nblocker: waiting for credentials",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Visible_UnknownLabelIsDropped",
+      "message": "Une étiquette hors des trois attendues n'a pas sa place dans le point.",
+      "arguments": ["mood: tired"],
+      "expected": "",
+      "argumentsUnchanged": true
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "cases": [
+    {
+      "name": "Visible_SortedByFrequency",
+      "message": "La panne la plus fréquente ouvre le rapport.",
+      "arguments": ["t ERROR Timeout 1\nt ERROR Timeout 2\nt ERROR Disque plein"],
+      "expected": "2 x Timeout #\n1 x Disque plein",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Visible_NoErrorGivesEmptyReport",
+      "message": "Un journal sans erreur rend un rapport vide.",
+      "arguments": ["t INFO Demarrage\nt WARN Cache froid"],
+      "expected": "",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Visible_SingleError",
+      "message": "Une seule panne, avec son identifiant normalisé.",
+      "arguments": ["t ERROR Panne 7"],
+      "expected": "1 x Panne #",
+      "argumentsUnchanged": true
+    }
+  ]
+}

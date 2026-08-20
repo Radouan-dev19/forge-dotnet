@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "id": "interview-structures-parenthesis-depth-001",
+  "version": 1,
+  "title": "Mesurer une profondeur maximale",
+  "level": "junior",
+  "durationMinutes": 5,
+  "skills": [
+    "structures.stack"
+  ],
+  "question": "Comment résoudriez-vous « Mesurer une profondeur maximale » et comment prouveriez-vous les bornes ?",
+  "observableCriteria": [
+    "La valeur de retour d'un déséquilibre est distinguée d'une profondeur légitime",
+    "Le déséquilibre est détecté dans les deux sens, excès d'ouverture comme de fermeture"
+  ],
+  "modelAnswer": "Retourner moins un pour toute structure déséquilibrée, sinon la profondeur maximale. Je prouve par une imbrication profonde, une fermeture excédentaire, une ouverture non fermée et une chaîne vide ; O(n) en temps et O(1) en espace.",
+  "commonMistakes": [
+    "Rendre zéro pour un déséquilibre et le confondre avec une chaîne sans parenthèse"
+  ],
+  "variants": [
+    "Changer une borne ou le volume tout en conservant la même règle de mesurer une profondeur maximale."
+  ],
+  "license": "CC-BY-4.0"
+}

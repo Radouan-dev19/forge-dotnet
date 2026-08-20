@@ -1,0 +1,82 @@
+{
+    "schemaVersion":  1,
+    "id":  "algo-gcd-001",
+    "version":  1,
+    "title":  "Calculer un PGCD itératif",
+    "kind":  "algorithm",
+    "difficulty":  2,
+    "skills":  [
+                   "algorithm.complexity"
+               ],
+    "prerequisites":  [
+                          "algo-reformulation-complexity-001"
+                      ],
+    "estimatedMinutes":  30,
+    "statement":  "statement.md",
+    "constraints":  [
+                        "Conserver exactement la signature publique",
+                        "Réduire strictement le couple par le reste et normaliser les signes.",
+                        "Ne pas modifier les entrées reçues sauf mention explicite"
+                    ],
+    "examples":  [
+                     {
+                         "input":  "[18,12]",
+                         "output":  "6"
+                     }
+                 ],
+    "reflectionFields":  [
+                             "reformulation",
+                             "inputs",
+                             "expectedOutput",
+                             "edgeCases",
+                             "hypothesis",
+                             "plan"
+                         ],
+    "starterPath":  "starter/",
+    "visibleTestsPath":  "tests/visible/",
+    "hiddenTestsPath":  "tests/hidden/",
+    "hints":  [
+                  {
+                      "level":  1,
+                      "kind":  "socratic",
+                      "content":  "Quel invariant de « Calculer un PGCD itératif » doit rester vrai pour les cas limites ?"
+                  },
+                  {
+                      "level":  2,
+                      "kind":  "location",
+                      "content":  "Concentrez la décision dans la méthode GreatestCommonDivisor, sans état global."
+                  },
+                  {
+                      "level":  3,
+                      "kind":  "strategy",
+                      "content":  "Réduire strictement le couple par le reste et normaliser les signes."
+                  },
+                  {
+                      "level":  4,
+                      "kind":  "partial-pseudocode",
+                      "content":  "ramener les deux valeurs à leur valeur absolue ; tant que la seconde n'est pas nulle, remplacer le couple par la seconde valeur et par le reste de la division de la première par la seconde ; retourner la première quand la seconde s'annule"
+                  }
+              ],
+    "solution":  {
+                     "path":  "solution/",
+                     "unlock":  {
+                                    "seriousAttempts":  2,
+                                    "minimumDelayMinutes":  10
+                                }
+                 },
+    "explanation":  "explanation.md",
+    "complexity":  "O(log min(a,b)) en temps et O(1) en espace",
+    "commonMistakes":  [
+                           "Oublier de normaliser les signes et retourner un diviseur négatif",
+                           "Diviser par la seconde valeur sans avoir vérifié qu'elle n'est pas nulle",
+                           "Écraser une des deux valeurs avant de l'avoir utilisée pour le tour suivant",
+                           "Réduire par soustractions répétées, ce qui reste correct mais devient très lent"
+                       ],
+    "variantId":  "algo-halving-steps-001",
+    "reviewCards":  [
+                        "card-algo-gcd-001-rule",
+                        "card-algo-gcd-001-edge"
+                    ],
+    "interviewQuestionId":  "interview-algo-gcd-001",
+    "license":  "CC-BY-4.0"
+}

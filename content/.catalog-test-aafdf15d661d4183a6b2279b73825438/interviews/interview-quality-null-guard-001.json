@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "id": "interview-quality-null-guard-001",
+  "version": 1,
+  "title": "Rendre une garde nullable explicite",
+  "level": "junior",
+  "durationMinutes": 6,
+  "skills": [
+    "quality.analysis"
+  ],
+  "question": "Comment implémenteriez-vous « Rendre une garde nullable explicite » et quelles preuves réfutent les contournements ?",
+  "observableCriteria": [
+    "L'absence et le blanc sont traités avant toute déréférence",
+    "L'opérateur de suppression d'avertissement est explicitement écarté, avec la raison"
+  ],
+  "modelAnswer": "Traiter absence et blanc avant toute déréférence, sans opérateur de suppression. Je teste une valeur absente, une chaîne vide, une chaîne de blancs et une valeur normale, les trois premières devant suivre le même chemin. O(n) en temps et O(n) en espace.",
+  "commonMistakes": [
+    "Faire taire l'avertissement du compilateur au lieu de traiter le cas qu'il signale"
+  ],
+  "variants": [
+    "Changer la frontière ou le droit tout en conservant la règle de rendre une garde nullable explicite."
+  ],
+  "license": "CC-BY-4.0"
+}

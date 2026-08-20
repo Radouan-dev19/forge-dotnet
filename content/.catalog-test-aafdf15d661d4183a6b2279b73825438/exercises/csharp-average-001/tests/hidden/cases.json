@@ -1,0 +1,45 @@
+{
+    "schemaVersion":  1,
+    "cases":  [
+                  {
+                      "name":  "Hidden_Case1",
+                      "message":  "Calculer une moyenne décimale — cas 1 hidden incorrect.",
+                      "arguments":  [
+                                        [
+                                            -1,
+                                            1
+                                        ]
+                                    ],
+                      "expected":  0,
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_Case2",
+                      "message":  "Calculer une moyenne décimale — cas 2 hidden incorrect.",
+                      "arguments":  [
+                                        [
+                                            1,
+                                            2
+                                        ]
+                                    ],
+                      "expected":  1.5,
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_FractionalResult",
+                      "message":  "Moyenne non entière : réfute une division entière qui tronquerait.",
+                      "arguments":  [[1,2,3,4]],
+                      "expected":  2.5,
+                      "argumentsUnchanged":  true
+                  },
+                  {
+                      "name":  "Hidden_AllNegative",
+                      "message":  "Toutes les mesures sont négatives : la moyenne l'est aussi.",
+                      "arguments":  [[-3,-3]],
+                      "expected":  -3,
+                      "argumentsUnchanged":  true
+                  }
+              ]
+}

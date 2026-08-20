@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "suiteId": "azure-secret-channel-001.v1",
+  "exerciseId": "azure-secret-channel-001",
+  "exerciseVersion": 1,
+  "typeName": "Submission",
+  "methodName": "SecretChannel",
+  "parameterTypes": ["string"],
+  "returnType": "string"
+}

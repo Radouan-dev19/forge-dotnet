@@ -16,7 +16,7 @@ public sealed class ContentS21S24CoverageTests
         JsonElement[] modules = curriculum.RootElement.GetProperty("modules").EnumerateArray().ToArray();
 
         Assert.Equal(27, curriculum.RootElement.GetProperty("weeks").GetInt32());
-        Assert.Equal(5, curriculum.RootElement.GetProperty("version").GetInt32());
+        Assert.Equal(7, curriculum.RootElement.GetProperty("version").GetInt32());
         Assert.Equal(Enumerable.Range(1, 27), modules.Select(Week));
         Assert.All(modules.Skip(1), module =>
             Assert.Equal($"week-{Week(module) - 1}", Assert.Single(module.GetProperty("prerequisites").EnumerateArray()).GetString()));
@@ -25,7 +25,11 @@ public sealed class ContentS21S24CoverageTests
         // La semaine 21 porte, en plus de son socle Azure, le lot OAuth/OIDC : trois leçons
         // et cinq exercices security-*, l'identité gérée étant un flux d'identifiants client.
         Assert.Equal([6, 3, 2, 2], finalModules.Select(module => module.GetProperty("lessonIds").GetArrayLength()));
-        Assert.Equal([7, 3, 1, 3], finalModules.Select(module => module.GetProperty("exerciseIds").GetArrayLength()));
+        // La semaine 22 est passée de trois à six exercices avec le lot observabilité, puis les
+        // frères ouverts des exercices booléens (T9) ont porté S21 à neuf, S23 à deux et S24 à
+        // quatre — la variante restant dans le bloc. S23 et S24 demeurent volontairement légères :
+        // leur charge vit dans le projet final et les fiches de défense et carrière.
+        Assert.Equal([9, 6, 2, 4], finalModules.Select(module => module.GetProperty("exerciseIds").GetArrayLength()));
         // Les familles admises dans les semaines finales sont celles que ces semaines enseignent :
         // Azure et sécurité en S21, l'observabilité en S22, l'anglais professionnel en S24. La règle
         // existe pour empêcher qu'un exercice hors sujet s'y range, pas pour figer un préfixe.
@@ -38,22 +42,25 @@ public sealed class ContentS21S24CoverageTests
                 $"Exercice final hors familles attendues : {id.GetString()}"));
 
         Assert.Equal(96, Directory.GetFiles(Path.Combine(CatalogRoot, "curriculum", "lessons"), "lesson.json", SearchOption.AllDirectories).Length);
-        Assert.Equal(187, Directory.GetFiles(Path.Combine(CatalogRoot, "exercises"), "exercise.json", SearchOption.AllDirectories).Length);
-        Assert.Equal(29, Directory.GetFiles(Path.Combine(CatalogRoot, "debugging"), "scenario.json", SearchOption.AllDirectories).Length);
-        Assert.Equal(242, Directory.GetFiles(Path.Combine(CatalogRoot, "interviews"), "*.json", SearchOption.TopDirectoryOnly).Length);
+        Assert.Equal(238, Directory.GetFiles(Path.Combine(CatalogRoot, "exercises"), "exercise.json", SearchOption.AllDirectories).Length);
+        Assert.Equal(30, Directory.GetFiles(Path.Combine(CatalogRoot, "debugging"), "scenario.json", SearchOption.AllDirectories).Length);
+        Assert.Equal(293, Directory.GetFiles(Path.Combine(CatalogRoot, "interviews"), "*.json", SearchOption.TopDirectoryOnly).Length);
         Assert.Equal(51, Directory.GetFiles(Path.Combine(CatalogRoot, "english"), "*.json", SearchOption.TopDirectoryOnly).Length);
         // Un projet porte désormais un dossier, comme un exercice : son manifeste s'appelle
         // project.json et ses suites d'acceptation vivent à côté.
         Assert.Equal(16, Directory.GetDirectories(Path.Combine(CatalogRoot, "projects")).Length);
-        Assert.Equal(9, Directory.GetFiles(Path.Combine(ContentRoot, "exams"), "exam.json", SearchOption.AllDirectories).Length);
+        Assert.Equal(10, Directory.GetFiles(Path.Combine(ContentRoot, "exams"), "exam.json", SearchOption.AllDirectories).Length);
         // La banque de cartes de révision ajoute un fichier au catalogue : c'est la seule source
         // de rétention espacée qui survive à l'expiration des preuves du bilan d'entrée.
         Assert.Single(Directory.GetFiles(Path.Combine(CatalogRoot, "reviews"), "*.json", SearchOption.TopDirectoryOnly));
         // Instantané de volume, pas un plancher. Le 18 août 2026, six projets vérifiables — les
         // producteurs des clés validation-errors, logs, incident.simulated, performance, security et
         // feature.autonomous — ajoutent chacun treize fichiers : manifeste, brief, squelette,
-        // solution de référence et trois suites d'acceptation.
-        Assert.Equal(2_771, Directory.GetFiles(CatalogRoot, "*", SearchOption.AllDirectories).Length);
+        // solution de référence et trois suites d'acceptation. Le 19 août 2026, la densité senior
+        // ajoute vingt-quatre exercices, leurs fiches et un second laboratoire hérité. Le 20 août
+        // 2026, les cinq guides de carrière gagnent chacun un manifeste CareerGuide, puis le
+        // chapitre IA hors parcours ajoute six guides AiGuide (manifeste plus Markdown chacun).
+        Assert.Equal(3_308, Directory.GetFiles(CatalogRoot, "*", SearchOption.AllDirectories).Length);
     }
 
     [Fact]
@@ -102,7 +109,7 @@ public sealed class ContentS21S24CoverageTests
     public void FinalWeekActivitiesHaveProgressiveAidPrivateProofsAndBuildableContracts()
     {
         string[] ids = S21S24ExerciseIds();
-        Assert.Equal(14, ids.Length);
+        Assert.Equal(21, ids.Length);
 
         foreach (string id in ids)
         {
@@ -147,14 +154,14 @@ public sealed class ContentS21S24CoverageTests
     {
         JsonElement[] interviews = Directory.GetFiles(Path.Combine(CatalogRoot, "interviews"), "*.json")
             .Select(path => Read(path).RootElement.Clone()).ToArray();
-        Assert.Equal(136, interviews.Count(item => item.GetProperty("level").GetString() == "junior"));
-        Assert.Equal(71, interviews.Count(item => item.GetProperty("level").GetString() == "intermediate"));
-        Assert.Equal(35, interviews.Count(item => item.GetProperty("level").GetString() == "advanced"));
+        Assert.Equal(147, interviews.Count(item => item.GetProperty("level").GetString() == "junior"));
+        Assert.Equal(86, interviews.Count(item => item.GetProperty("level").GetString() == "intermediate"));
+        Assert.Equal(60, interviews.Count(item => item.GetProperty("level").GetString() == "advanced"));
         JsonElement[] newInterviews = interviews.Where(item =>
             item.GetProperty("id").GetString()!.StartsWith("interview-s21-s24-", StringComparison.Ordinal)
             || item.GetProperty("id").GetString()!.StartsWith("interview-azure-", StringComparison.Ordinal)).ToArray();
-        Assert.Equal(62, newInterviews.Length);
-        Assert.Equal(62, newInterviews.Select(item => item.GetProperty("question").GetString()).Distinct(StringComparer.Ordinal).Count());
+        Assert.Equal(66, newInterviews.Length);
+        Assert.Equal(66, newInterviews.Select(item => item.GetProperty("question").GetString()).Distinct(StringComparer.Ordinal).Count());
         Assert.All(newInterviews, item => Assert.True(item.GetProperty("observableCriteria").GetArrayLength() >= 2));
 
         JsonElement[] cards = Directory.GetFiles(Path.Combine(CatalogRoot, "english"), "english-card-*.json")
@@ -201,7 +208,7 @@ public sealed class ContentS21S24CoverageTests
     }
 
     [Fact]
-    public void ExamsSevenAndEightUseExistingExercisesAndKeepPrivateAnswersOutsideBanks()
+    public void ExamsEightAndNineUseExistingExercisesAndKeepPrivateAnswersOutsideBanks()
     {
         string[] directories = ["azure-observability-v1", "final-readiness-v1"];
         HashSet<string> exerciseIds = Directory.GetDirectories(Path.Combine(CatalogRoot, "exercises"))
@@ -214,10 +221,10 @@ public sealed class ContentS21S24CoverageTests
                 .Select(item => item.GetString()!).ToArray();
             Assert.Equal(8, exam.RootElement.GetProperty("drawCount").GetInt32());
             Assert.Equal(80m, exam.RootElement.GetProperty("passingScore").GetDecimal());
-            // Volumes figés des deux banques finales : la première accueille les deux exercices
-            // d'anglais professionnel de la semaine 24, la seconde l'exercice d'échantillonnage
-            // de la semaine 22.
-            (int minCandidates, int maxCandidates) = directory == "final-readiness-v1" ? (22, 22) : (27, 27);
+            // Volumes figés des deux banques finales. La banque Azure-observabilité couvre les
+            // semaines 21 et 22 — dix-sept candidats depuis les frères ouverts T9 — et la banque
+            // finale tire aussi les deux frères ouverts des semaines 23 et 24.
+            (int minCandidates, int maxCandidates) = directory == "final-readiness-v1" ? (24, 24) : (17, 17);
             Assert.InRange(candidates.Length, minCandidates, maxCandidates);
             Assert.Equal(candidates.Length, candidates.Distinct(StringComparer.Ordinal).Count());
             Assert.All(candidates, id => Assert.Contains(id, exerciseIds));
@@ -264,14 +271,26 @@ public sealed class ContentS21S24CoverageTests
         Assert.Contains("aucune ressource Azure créée", inspected, StringComparison.OrdinalIgnoreCase);
 
         string career = Path.Combine(CatalogRoot, "career");
-        foreach (string file in new[] { "CV-EVIDENCE.md", "STAR-WORKBOOK.md", "APPLICATION-TRACKER.md", "NEGOTIATION-GUIDE.md", "POST-HIRE-PLAN.md", "Export-CareerEvidence.ps1" })
+        foreach (string file in new[]
+        {
+            "CV-EVIDENCE.md", "STAR-WORKBOOK.md", "APPLICATION-TRACKER.md", "NEGOTIATION-GUIDE.md",
+            "POST-HIRE-PLAN.md", "Export-CareerEvidence.ps1",
+            // Depuis le 20 août 2026, chaque guide porte un manifeste CareerGuide : chargé, validé
+            // par career.schema.json et servi sur /career — l'ère du kit invisible est close.
+            "career-cv-evidence-001.json", "career-star-workbook-001.json",
+            "career-application-tracker-001.json", "career-negotiation-guide-001.json",
+            "career-post-hire-plan-001.json",
+        })
         {
             Assert.True(File.Exists(Path.Combine(career, file)), $"Support carrière absent : {file}");
         }
         string careerText = string.Join('\n', Directory.GetFiles(career).Select(File.ReadAllText));
         Assert.Contains("données personnelles", careerText, StringComparison.OrdinalIgnoreCase);
         Assert.Contains("ne promet", careerText, StringComparison.OrdinalIgnoreCase);
-        Assert.Contains("nʼimplémente pas un parcours post-embauche", careerText, StringComparison.OrdinalIgnoreCase);
+        // Le plan post-embauche fut longtemps un paragraphe qui déclarait lui-même ne rien
+        // implémenter ; ce constat d'inachèvement ne doit pas réapparaître dans le kit servi.
+        Assert.DoesNotContain("implémente pas un parcours post-embauche", careerText, StringComparison.OrdinalIgnoreCase);
+        Assert.Contains("preuve de maîtrise", careerText, StringComparison.OrdinalIgnoreCase);
     }
 
     private static int Week(JsonElement module) => module.GetProperty("weeks")[0].GetInt32();

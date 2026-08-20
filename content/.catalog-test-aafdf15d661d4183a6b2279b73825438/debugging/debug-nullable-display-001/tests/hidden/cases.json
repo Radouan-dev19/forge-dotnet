@@ -1,0 +1,25 @@
+{
+    "schemaVersion":  1,
+    "cases":  [
+                  {
+                      "name":  "Hidden_Case1",
+                      "message":  "Nom absent déréférencé — cas 1.",
+                      "arguments":  [
+                                        "   "
+                                    ],
+                      "expected":  "(inconnu)",
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_Case2",
+                      "message":  "Nom absent déréférencé — cas 2.",
+                      "arguments":  [
+                                        "Zoë"
+                                    ],
+                      "expected":  "ZOË",
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  }
+              ]
+}

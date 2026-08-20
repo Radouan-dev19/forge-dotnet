@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "suiteId": "senior-merge-verdict-001.v1",
+  "exerciseId": "senior-merge-verdict-001",
+  "exerciseVersion": 1,
+  "typeName": "Submission",
+  "methodName": "MergeVerdict",
+  "parameterTypes": ["string", "int"],
+  "returnType": "string"
+}

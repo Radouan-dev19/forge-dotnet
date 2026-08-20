@@ -1,0 +1,44 @@
+{
+    "schemaVersion":  1,
+    "cases":  [
+                  {
+                      "name":  "Hidden_Case1",
+                      "message":  "Calculer le maximum signé — cas 1 hidden incorrect.",
+                      "arguments":  [
+                                        [
+                                            -5,
+                                            -2
+                                        ]
+                                    ],
+                      "expected":  -2,
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_Case2",
+                      "message":  "Calculer le maximum signé — cas 2 hidden incorrect.",
+                      "arguments":  [
+                                        [
+                                            7
+                                        ]
+                                    ],
+                      "expected":  7,
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_DuplicatedMaximum",
+                      "message":  "Le maximum apparaît deux fois : réfute une comparaison stricte mal orientée.",
+                      "arguments":  [[3,3,1]],
+                      "expected":  3,
+                      "argumentsUnchanged":  true
+                  },
+                  {
+                      "name":  "Hidden_AllNegative",
+                      "message":  "Toutes les valeurs sont négatives : réfute une initialisation à zéro.",
+                      "arguments":  [[-1,-1]],
+                      "expected":  -1,
+                      "argumentsUnchanged":  true
+                  }
+              ]
+}

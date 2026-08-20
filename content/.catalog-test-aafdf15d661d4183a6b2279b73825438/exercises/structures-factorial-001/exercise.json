@@ -1,0 +1,82 @@
+{
+    "schemaVersion":  1,
+    "id":  "structures-factorial-001",
+    "version":  1,
+    "title":  "Définir un cas de base récursif",
+    "kind":  "algorithm",
+    "difficulty":  2,
+    "skills":  [
+                   "structures.recursion"
+               ],
+    "prerequisites":  [
+                          "structures-stacks-queues-001"
+                      ],
+    "estimatedMinutes":  30,
+    "statement":  "statement.md",
+    "constraints":  [
+                        "Conserver exactement la signature publique",
+                        "Le cas de base couvre zéro et chaque appel réduit strictement la valeur.",
+                        "Ne pas modifier les entrées reçues sauf mention explicite"
+                    ],
+    "examples":  [
+                     {
+                         "input":  "[0]",
+                         "output":  "1"
+                     }
+                 ],
+    "reflectionFields":  [
+                             "reformulation",
+                             "inputs",
+                             "expectedOutput",
+                             "edgeCases",
+                             "hypothesis",
+                             "plan"
+                         ],
+    "starterPath":  "starter/",
+    "visibleTestsPath":  "tests/visible/",
+    "hiddenTestsPath":  "tests/hidden/",
+    "hints":  [
+                  {
+                      "level":  1,
+                      "kind":  "socratic",
+                      "content":  "Quel invariant de « Définir un cas de base récursif » doit rester vrai pour les cas limites ?"
+                  },
+                  {
+                      "level":  2,
+                      "kind":  "location",
+                      "content":  "Concentrez la décision dans la méthode Factorial, sans état global."
+                  },
+                  {
+                      "level":  3,
+                      "kind":  "strategy",
+                      "content":  "Le cas de base couvre zéro et chaque appel réduit strictement la valeur."
+                  },
+                  {
+                      "level":  4,
+                      "kind":  "partial-pseudocode",
+                      "content":  "refuser les valeurs négatives et celles au-delà de douze, qui déborderaient ; le cas de base couvre zéro et un et vaut un ; sinon multiplier la valeur par le résultat de l'appel sur la valeur diminuée de un, la multiplication étant vérifiée"
+                  }
+              ],
+    "solution":  {
+                     "path":  "solution/",
+                     "unlock":  {
+                                    "seriousAttempts":  2,
+                                    "minimumDelayMinutes":  10
+                                }
+                 },
+    "explanation":  "explanation.md",
+    "complexity":  "O(n) en temps et O(n) en pile",
+    "commonMistakes":  [
+                           "Ne traiter que un comme cas de base et descendre indéfiniment sur zéro",
+                           "Omettre la borne supérieure et déborder silencieusement au-delà de douze",
+                           "Retourner zéro pour la factorielle de zéro",
+                           "Écrire un appel récursif qui ne réduit pas strictement la valeur"
+                       ],
+    "variantId":  "structures-recursive-sum-001",
+    "reviewCards":  [
+                        "card-structures-factorial-001-rule",
+                        "card-structures-factorial-001-edge"
+                    ],
+    "interviewQuestionId":  "interview-structures-factorial-001",
+    "license":  "CC-BY-4.0"
+}

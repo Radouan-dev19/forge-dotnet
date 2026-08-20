@@ -1,0 +1,25 @@
+{
+    "schemaVersion":  1,
+    "cases":  [
+                  {
+                      "name":  "Hidden_Case1",
+                      "message":  "Comptage JSON décalé — cas 1.",
+                      "arguments":  [
+                                        "[1]"
+                                    ],
+                      "expected":  1,
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_Case2",
+                      "message":  "Comptage JSON décalé — cas 2.",
+                      "arguments":  [
+                                        "[1,2,3]"
+                                    ],
+                      "expected":  3,
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  }
+              ]
+}

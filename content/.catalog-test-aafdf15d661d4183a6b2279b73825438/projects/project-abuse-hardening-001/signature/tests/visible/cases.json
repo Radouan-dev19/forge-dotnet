@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "cases": [
+    {
+      "name": "Visible_GenuineSignatureIsAccepted",
+      "message": "Le condensat recalculé sur le contenu et la clé correspond à la signature présentée.",
+      "arguments": ["montant=100&devise=EUR", "cle-de-test", "inNt9kI_PLYV_A3Sa0HGzUjvs5QQbRd16LrkLwTFqEI"],
+      "expected": "authentique",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Visible_TamperedPayloadIsRejected",
+      "message": "Le contenu a changé : la signature d'origine ne le couvre plus.",
+      "arguments": ["montant=999&devise=EUR", "cle-de-test", "inNt9kI_PLYV_A3Sa0HGzUjvs5QQbRd16LrkLwTFqEI"],
+      "expected": "refus",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Visible_StandardBase64FormIsRejected",
+      "message": "Le même condensat en alphabet standard avec remplissage n'est pas la forme émise.",
+      "arguments": ["montant=100&devise=EUR", "cle-de-test", "inNt9kI/PLYV/A3Sa0HGzUjvs5QQbRd16LrkLwTFqEI="],
+      "expected": "refus",
+      "argumentsUnchanged": true
+    }
+  ]
+}

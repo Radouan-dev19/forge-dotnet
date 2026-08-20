@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "id": "interview-azure-release-audit-001",
+  "version": 1,
+  "title": "Dater les preuves d'un jalon avant de le déclarer prêt",
+  "level": "intermediate",
+  "durationMinutes": 8,
+  "skills": ["azure.release"],
+  "question": "Un jalon arrive en revue avec tests verts, revue de sécurité approuvée et plan de retour arrière — tout est là. Qu'est-ce qui peut encore rendre ce dossier trompeur, et comment votre audit le détecte-t-il ?",
+  "observableCriteria": [
+    "La fraîcheur est posée : une preuve se date par rapport au dernier changement du code",
+    "La distinction périmé-manquant est expliquée par la différence de correction",
+    "Le verdict complet et ordonné est défendu contre l'arrêt au premier défaut"
+  ],
+  "modelAnswer": "Ce qui rend ce dossier trompeur, c'est le temps : chaque pièce est une photographie du code à l'instant où elle a été produite. Si un correctif « d'une ligne » est parti après les tests, les tests verts décrivent un code qui n'est plus celui qui va partir — le dossier a l'air complet et ne prouve rien sur la livraison réelle. Mon audit date donc chaque pièce par rapport au dernier changement : fraîche, périmée ou manquante, et seule la fraîcheur passe. Je garde périmé et manquant distincts parce que la correction diffère : une revue périmée se rejoue — le protocole existe, il faut une passe de plus — quand une revue absente se construit de zéro. Un « bloqué » générique obligerait à rouvrir le dossier pour savoir quel travail lancer. Le verdict liste toutes les pièces fautives, dans l'ordre du référentiel et non du dossier : complet, parce que corriger en un lot vaut mieux que découvrir un manque à chaque relance ; ordonné, parce que deux audits du même jalon doivent se comparer au caractère près pour suivre le jalon dans le temps. Et je refuse les pièces hors référentiel : le dossier gonflé de vingt annexes est une technique de soutenance, pas une preuve.",
+  "commonMistakes": [
+    "Compter des preuves d'avant le dernier correctif comme valides parce qu'elles sont vertes",
+    "Rendre un blocage générique qui ne dit pas s'il faut rejouer ou produire la preuve"
+  ],
+  "variants": [
+    "Demander comment automatiser la datation des preuves par rapport au dernier commit livré.",
+    "Une preuve exige un humain indisponible : demander ce que le verdict doit dire et ne pas dire."
+  ],
+  "license": "CC-BY-4.0"
+}

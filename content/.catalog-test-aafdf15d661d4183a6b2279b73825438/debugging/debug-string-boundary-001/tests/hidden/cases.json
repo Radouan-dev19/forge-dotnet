@@ -1,0 +1,25 @@
+{
+    "schemaVersion":  1,
+    "cases":  [
+                  {
+                      "name":  "Hidden_Case1",
+                      "message":  "Dernier caractère hors limite — cas 1.",
+                      "arguments":  [
+                                        "x"
+                                    ],
+                      "expected":  "x",
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_Case2",
+                      "message":  "Dernier caractère hors limite — cas 2.",
+                      "arguments":  [
+                                        "a b"
+                                    ],
+                      "expected":  "b",
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  }
+              ]
+}

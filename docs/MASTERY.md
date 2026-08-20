@@ -36,8 +36,8 @@ domaine la borne. Une carte n’apparaît que pour un exercice réellement soumi
 empêche d’en récolter sur un exercice jamais ouvert. **Aucun poids ni seuil n’a été modifié** :
 `MasteryRulesTests` documente le blocage et prouve son ouverture par la seule addition d’une preuve.
 
-La banque compte **454 cartes pour 227 éléments pratiqués** — les 187 exercices publiés et les
-40 scénarios SQL/EF, deux cartes chacun (mesure du 18 août 2026). Les domaines critiques dont la
+La banque compte **508 cartes pour 254 éléments pratiqués** — les 214 exercices publiés et les
+40 scénarios SQL/EF, deux cartes chacun (mesure du 19 août 2026). Les domaines critiques dont la
 pratique passe par des exercices — C#, débogage, API, tests — sont couverts intégralement, et deux
 règles de `ReviewCardQualityTests` le tiennent : tout exercice d’un de ces domaines porte ses
 cartes, et le domaine déclaré par une carte est celui déduit de la première compétence de son

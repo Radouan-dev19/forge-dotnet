@@ -1,0 +1,39 @@
+{
+    "schemaVersion":  1,
+    "cases":  [
+                  {
+                      "name":  "Hidden_Case1",
+                      "message":  "Normaliser une extension locale — cas 1 hidden incorrect.",
+                      "arguments":  [
+                                        "archive.tar.gz"
+                                    ],
+                      "expected":  ".gz",
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_Case2",
+                      "message":  "Normaliser une extension locale — cas 2 hidden incorrect.",
+                      "arguments":  [
+                                        " "
+                                    ],
+                      "expected":  "",
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_EmptyPath",
+                      "message":  "Chemin vide : réponse vide, distincte d'un refus.",
+                      "arguments":  [""],
+                      "expected":  "",
+                      "argumentsUnchanged":  true
+                  },
+                  {
+                      "name":  "Hidden_WithDirectory",
+                      "message":  "Chemin comportant un dossier : seule l'extension du fichier compte.",
+                      "arguments":  ["dir/file.MD"],
+                      "expected":  ".md",
+                      "argumentsUnchanged":  true
+                  }
+              ]
+}

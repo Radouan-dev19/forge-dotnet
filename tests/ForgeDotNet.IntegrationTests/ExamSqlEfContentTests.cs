@@ -25,10 +25,12 @@ public sealed class ExamSqlEfContentTests
         ExamBlueprint exam = await environment.Bank.GetAsync("sql-ef-core-v1")
             ?? throw new InvalidDataException("Examen 4 absent.");
 
+        // Onze candidats : six requêtes SQL inline, deux scénarios EF à dossier exam/, et les trois
+        // exercices EF Core du catalogue (semaines huit à dix), tous rattachés au domaine SQL.
         Assert.Equal(8, exam.DrawCount);
-        Assert.Equal(8, exam.Candidates.Count);
+        Assert.Equal(11, exam.Candidates.Count);
         Assert.Equal(6, exam.Candidates.Count(item => item.SubmissionKind == ExamSubmissionKind.Sql));
-        Assert.Equal(2, exam.Candidates.Count(item => item.SubmissionKind == ExamSubmissionKind.CSharp));
+        Assert.Equal(5, exam.Candidates.Count(item => item.SubmissionKind == ExamSubmissionKind.CSharp));
         Assert.All(exam.Candidates, item => Assert.Equal(ForgeDotNet.Domain.Mastery.MasteryDomain.Sql, item.Domain));
 
         string publicProjection = JsonSerializer.Serialize(exam);
@@ -45,13 +47,24 @@ public sealed class ExamSqlEfContentTests
 
         foreach (ExamCandidate efCandidate in exam.Candidates.Where(item => item.SubmissionKind == ExamSubmissionKind.CSharp))
         {
-            string solutionPath = Path.Combine(
+            // Le corrigé d'un scénario EF vit dans son dossier exam/ sous content/sql ; celui d'un
+            // exercice du catalogue vit dans son dossier solution/ sous content/reference.
+            string scenarioSolutionPath = Path.Combine(
                 environment.ContentRoot,
                 "sql",
                 efCandidate.ItemId,
                 "exam",
                 "solution",
                 "Submission.cs");
+            string solutionPath = File.Exists(scenarioSolutionPath)
+                ? scenarioSolutionPath
+                : Path.Combine(
+                    environment.ContentRoot,
+                    "reference",
+                    "exercises",
+                    efCandidate.ItemId,
+                    "solution",
+                    "Submission.cs");
             string solution = await File.ReadAllTextAsync(solutionPath);
             var request = new CodeRunRequest(
                 Guid.NewGuid(),

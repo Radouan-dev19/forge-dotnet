@@ -1,0 +1,39 @@
+{
+    "schemaVersion":  1,
+    "cases":  [
+                  {
+                      "name":  "Hidden_Case1",
+                      "message":  "Compter les groupes consécutifs — cas 1 hidden incorrect.",
+                      "arguments":  [
+                                        "abc"
+                                    ],
+                      "expected":  3,
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_Case2",
+                      "message":  "Compter les groupes consécutifs — cas 2 hidden incorrect.",
+                      "arguments":  [
+                                        "aaaa"
+                                    ],
+                      "expected":  1,
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_RepeatedGroup",
+                      "message":  "Une lettre revient après une autre plage : réfute un comptage de caractères distincts.",
+                      "arguments":  ["aabbaa"],
+                      "expected":  3,
+                      "argumentsUnchanged":  true
+                  },
+                  {
+                      "name":  "Hidden_AlternatingCharacters",
+                      "message":  "Alternance stricte : chaque caractère ouvre sa propre plage.",
+                      "arguments":  ["ababab"],
+                      "expected":  6,
+                      "argumentsUnchanged":  true
+                  }
+              ]
+}

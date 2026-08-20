@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "id": "interview-senior-review-triage-001",
+  "version": 1,
+  "title": "Trier les constats d'une revue de code",
+  "level": "intermediate",
+  "durationMinutes": 9,
+  "skills": ["quality.review"],
+  "question": "En revue, comment decidez-vous quels constats bloquent une fusion et lesquels restent des suggestions, et pourquoi cette distinction compte-t-elle ?",
+  "observableCriteria": [
+    "Separe la gravite de la categorie et cite les familles bloquantes : correction, securite, concurrence",
+    "Pose que le style ne bloque jamais et nomme le cout d'un faux positif de style",
+    "Admet le doute : un constat non classable se signale sans etre transforme en veto arbitraire"
+  ],
+  "modelAnswer": "Je classe chaque constat sur deux axes : sa gravite, bloquant ou mineur, et sa categorie. Bloquent les fautes qui menacent le comportement, la surete ou la correction sous concurrence : un bug de correction, une faille de securite, un acces partage non synchronise. Le style ne bloque jamais ; une preference de nommage est un avis. Presenter du style comme bloquant est un faux positif qui coute : il retarde des fusions saines, noie les vrais bloquants et use la confiance, au point que mes remarques serieuses finissent ignorees. Quand je ne sais pas classer un constat, je le dis plutot que de trancher au hasard. Le ton compte autant que le classement : je formule un blocage sur un fait verifiable, pas sur une opinion.",
+  "commonMistakes": [
+    "Bloquer une fusion sur une preference de style et brouiller le signal de la revue",
+    "Confondre gravite et categorie, ou trancher un constat inconnu au lieu d'admettre le doute"
+  ],
+  "variants": [
+    "Comment formulez-vous un constat bloquant sans braquer l'auteur ?",
+    "Un collegue bloque systematiquement sur du style : comment abordez-vous le sujet ?"
+  ],
+  "license": "CC-BY-4.0"
+}

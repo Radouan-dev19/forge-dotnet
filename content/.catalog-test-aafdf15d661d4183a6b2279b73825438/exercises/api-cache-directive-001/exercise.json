@@ -1,0 +1,82 @@
+{
+    "schemaVersion":  1,
+    "id":  "api-cache-directive-001",
+    "version":  1,
+    "title":  "Composer une directive de cache",
+    "kind":  "csharp",
+    "difficulty":  3,
+    "skills":  [
+                   "api.contracts"
+               ],
+    "prerequisites":  [
+                          "api-cache-control-001"
+                      ],
+    "estimatedMinutes":  30,
+    "statement":  "statement.md",
+    "constraints":  [
+                        "Conserver exactement la signature publique",
+                        "La sensibilité prime : une réponse sensible reçoit no-store, quel que soit le reste",
+                        "Une réponse personnelle n'est jamais publique : elle est private"
+                    ],
+    "examples":  [
+                     {
+                         "input":  "[\"public\", 3600]",
+                         "output":  "\"public, max-age=3600\""
+                     }
+                 ],
+    "reflectionFields":  [
+                             "reformulation",
+                             "inputs",
+                             "expectedOutput",
+                             "edgeCases",
+                             "hypothesis",
+                             "plan"
+                         ],
+    "starterPath":  "starter/",
+    "visibleTestsPath":  "tests/visible/",
+    "hiddenTestsPath":  "tests/hidden/",
+    "hints":  [
+                  {
+                      "level":  1,
+                      "kind":  "socratic",
+                      "content":  "Parmi sensible, personnel et public, laquelle des trois natures ne doit jamais laisser une seule autre la contredire ?"
+                  },
+                  {
+                      "level":  2,
+                      "kind":  "location",
+                      "content":  "L'ordre des branches encode une priorité : la sensibilité se teste en premier, car une donnée sensible marquée publique par erreur est la pire des issues."
+                  },
+                  {
+                      "level":  3,
+                      "kind":  "strategy",
+                      "content":  "La durée de fraîcheur n'a de sens que là où le cache est permis : ne l'insérez pas dans une directive qui interdit le stockage, et refusez une durée négative."
+                  },
+                  {
+                      "level":  4,
+                      "kind":  "partial-pseudocode",
+                      "content":  "normaliser la nature ; refuser une durée négative ; si la nature est sensible, rendre l'interdiction de stockage ; si elle est personnelle, rendre la directive privée avec la durée ; sinon rendre la directive publique avec la durée ; refuser toute nature inconnue"
+                  }
+              ],
+    "solution":  {
+                     "path":  "solution/",
+                     "unlock":  {
+                                    "seriousAttempts":  2,
+                                    "minimumDelayMinutes":  10
+                                }
+                 },
+    "explanation":  "explanation.md",
+    "complexity":  "O(1) en temps et en espace",
+    "commonMistakes":  [
+                           "Marquer public une réponse personnelle, qu'un cache partagé servira à un autre utilisateur",
+                           "Insérer une durée de fraîcheur dans une directive qui interdit le stockage",
+                           "Tester la nature personnelle avant la sensibilité et laisser passer une donnée sensible cacheable",
+                           "Accepter une durée de fraîcheur négative"
+                       ],
+    "variantId":  "api-cache-storability-001",
+    "reviewCards":  [
+                        "card-api-cache-directive-001-rule",
+                        "card-api-cache-directive-001-edge"
+                    ],
+    "interviewQuestionId":  "interview-api-cache-directive-001",
+    "license":  "CC-BY-4.0"
+}

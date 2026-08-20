@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "id": "interview-csharp-dictionary-default-001",
+  "version": 1,
+  "title": "Lire un stock absent",
+  "level": "junior",
+  "durationMinutes": 5,
+  "skills": [
+    "csharp.dictionaries"
+  ],
+  "question": "Comment résoudriez-vous « Lire un stock absent » et comment prouveriez-vous les bornes ?",
+  "observableCriteria": [
+    "La clé absente est distinguée d'une exception, et la valeur de repli est nommée",
+    "L'absence de mutation du dictionnaire est affirmée : la lecture n'insère rien"
+  ],
+  "modelAnswer": "Distinguer une clé absente d’une exception et ne jamais muter le dictionnaire. Je prouve par une clé présente, une clé absente, puis en vérifiant que le dictionnaire n'a pas grossi ; O(1) amorti en temps et O(1) en espace.",
+  "commonMistakes": [
+    "Lire par indexeur et lever une exception là où une valeur de repli était attendue"
+  ],
+  "variants": [
+    "Changer une borne ou le volume tout en conservant la même règle de lire un stock absent."
+  ],
+  "license": "CC-BY-4.0"
+}

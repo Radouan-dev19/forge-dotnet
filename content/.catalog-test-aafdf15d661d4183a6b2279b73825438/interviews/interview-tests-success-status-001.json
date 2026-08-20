@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "id": "interview-tests-success-status-001",
+  "version": 1,
+  "title": "Tester une famille de statuts",
+  "level": "junior",
+  "durationMinutes": 6,
+  "skills": [
+    "tests.api"
+  ],
+  "question": "Comment implémenteriez-vous « Tester une famille de statuts » et quelles preuves réfutent les contournements ?",
+  "observableCriteria": [
+    "Les frontières de la famille sont testées, pas un statut représentatif",
+    "La borne haute est identifiée comme l'endroit où la famille suivante commence"
+  ],
+  "modelAnswer": "Tester les frontières de la famille 2xx plutôt qu’un seul statut nominal. Je teste les deux bornes de la famille, un statut intérieur et le premier statut de la famille suivante. O(1) en temps et O(1) en espace.",
+  "commonMistakes": [
+    "Tester un seul statut nominal et laisser passer une borne haute décalée"
+  ],
+  "variants": [
+    "Changer la frontière ou le droit tout en conservant la règle de tester une famille de statuts."
+  ],
+  "license": "CC-BY-4.0"
+}

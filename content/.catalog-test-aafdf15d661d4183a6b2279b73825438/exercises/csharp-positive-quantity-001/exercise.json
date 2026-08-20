@@ -1,0 +1,82 @@
+{
+    "schemaVersion":  1,
+    "id":  "csharp-positive-quantity-001",
+    "version":  1,
+    "title":  "Refuser une quantité négative",
+    "kind":  "csharp",
+    "difficulty":  2,
+    "skills":  [
+                   "csharp.exceptions"
+               ],
+    "prerequisites":  [
+                          "oop-encapsulation-001"
+                      ],
+    "estimatedMinutes":  30,
+    "statement":  "statement.md",
+    "constraints":  [
+                        "Conserver exactement la signature publique",
+                        "Lever une exception de contrat seulement pour une valeur négative.",
+                        "Ne pas modifier les entrées reçues sauf mention explicite"
+                    ],
+    "examples":  [
+                     {
+                         "input":  "[3]",
+                         "output":  "3"
+                     }
+                 ],
+    "reflectionFields":  [
+                             "reformulation",
+                             "inputs",
+                             "expectedOutput",
+                             "edgeCases",
+                             "hypothesis",
+                             "plan"
+                         ],
+    "starterPath":  "starter/",
+    "visibleTestsPath":  "tests/visible/",
+    "hiddenTestsPath":  "tests/hidden/",
+    "hints":  [
+                  {
+                      "level":  1,
+                      "kind":  "socratic",
+                      "content":  "Quel invariant de « Refuser une quantité négative » doit rester vrai pour les cas limites ?"
+                  },
+                  {
+                      "level":  2,
+                      "kind":  "location",
+                      "content":  "Concentrez la décision dans la méthode RequireQuantity, sans état global."
+                  },
+                  {
+                      "level":  3,
+                      "kind":  "strategy",
+                      "content":  "Lever une exception de contrat seulement pour une valeur négative."
+                  },
+                  {
+                      "level":  4,
+                      "kind":  "partial-pseudocode",
+                      "content":  "si value est strictement négative lever une erreur d'argument hors plage en nommant le paramètre ; sinon retourner la valeur inchangée"
+                  }
+              ],
+    "solution":  {
+                     "path":  "solution/",
+                     "unlock":  {
+                                    "seriousAttempts":  2,
+                                    "minimumDelayMinutes":  10
+                                }
+                 },
+    "explanation":  "explanation.md",
+    "complexity":  "O(1) en temps et O(1) en espace",
+    "commonMistakes":  [
+                           "Refuser zéro alors que seule une valeur négative viole le contrat",
+                           "Retourner zéro au lieu de lever et masquer l'entrée fautive",
+                           "Lever une exception générique qui ne nomme pas le paramètre en cause",
+                           "Corriger la valeur en prenant sa valeur absolue"
+                       ],
+    "variantId":  "csharp-nullable-fallback-001",
+    "reviewCards":  [
+                        "card-csharp-positive-quantity-001-rule",
+                        "card-csharp-positive-quantity-001-edge"
+                    ],
+    "interviewQuestionId":  "interview-csharp-positive-quantity-001",
+    "license":  "CC-BY-4.0"
+}

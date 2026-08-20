@@ -1,0 +1,37 @@
+{
+    "schemaVersion":  1,
+    "cases":  [
+                  {
+                      "name":  "Visible_Case1",
+                      "message":  "Construire un histogramme de mots — cas 1 visible incorrect.",
+                      "arguments":  [
+                                        "chat chien chat"
+                                    ],
+                      "expected":  {
+                                       "chat":  2,
+                                       "chien":  1
+                                   },
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Visible_Case2",
+                      "message":  "Construire un histogramme de mots — cas 2 visible incorrect.",
+                      "arguments":  [
+                                        ""
+                                    ],
+                      "expected":  {
+
+                                   },
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Visible_TwoDistinctWords",
+                      "message":  "Deux mots distincts : une entrée chacun.",
+                      "arguments":  ["un deux"],
+                      "expected":  {"un":1,"deux":1},
+                      "argumentsUnchanged":  true
+                  }
+              ]
+}

@@ -1,0 +1,24 @@
+{
+    "schemaVersion":  1,
+    "id":  "reference-interview-001",
+    "version":  2,
+    "title":  "Choisir et calculer un montant",
+    "level":  "junior",
+    "durationMinutes":  5,
+    "skills":  [
+                   "csharp.types"
+               ],
+    "question":  "Pourquoi decimal et un arrondi explicite sont-ils adaptés à un total financier en C# ?",
+    "observableCriteria":  [
+                               "La représentation décimale et le moment de l’arrondi sont distingués",
+                               "Un cas de demi-centime et une méthode de test sont proposés"
+                           ],
+    "modelAnswer":  "Decimal évite l’approximation binaire des fractions décimales usuelles. Je valide les bornes, calcule sans arrondi intermédiaire injustifié, puis applique le mode métier au point annoncé et le vérifie avec un demi-centime.",
+    "commonMistakes":  [
+                           "Dire seulement que decimal est plus précis sans parler de règle métier"
+                       ],
+    "variants":  [
+                     "Comparer l’arrondi par ligne à l’arrondi unique du total de facture"
+                 ],
+    "license":  "CC-BY-4.0"
+}

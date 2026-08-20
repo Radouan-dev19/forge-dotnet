@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "id": "interview-algo-bubble-sort-001",
+  "version": 1,
+  "title": "Trier par bulles",
+  "level": "junior",
+  "durationMinutes": 5,
+  "skills": [
+    "algorithm.sorting"
+  ],
+  "question": "Comment résoudriez-vous « Trier par bulles » et comment prouveriez-vous les bornes ?",
+  "observableCriteria": [
+    "La copie de l'entrée est justifiée par la non-mutation de l'appelant",
+    "Le raccourcissement du passage suivant est rattaché à ce qu'un passage garantit"
+  ],
+  "modelAnswer": "Copier l’entrée puis pousser le maximum vers la fin à chaque passage. Je prouve par un tableau déjà trié, un tableau inversé et un tableau à doublons ; O(n²) en temps et O(n) en espace pour la copie.",
+  "commonMistakes": [
+    "Trier en place et modifier le tableau de l'appelant sans l'avoir annoncé"
+  ],
+  "variants": [
+    "Changer une borne ou le volume tout en conservant la même règle de trier par bulles."
+  ],
+  "license": "CC-BY-4.0"
+}

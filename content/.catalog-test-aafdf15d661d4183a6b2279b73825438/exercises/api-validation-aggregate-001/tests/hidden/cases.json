@@ -1,0 +1,61 @@
+{
+  "schemaVersion": 1,
+  "cases": [
+    {
+      "name": "Hidden_MissingPayloadIsRejected",
+      "message": "Un corps absent est un appel fautif, pas un corps vide.",
+      "arguments": [null],
+      "expectedException": "ArgumentNullException",
+      "argumentsUnchanged": false
+    },
+    {
+      "name": "Hidden_EmptyPayloadReportsEveryRequirement",
+      "message": "Un corps vide rend les trois exigences, dans l'ordre de déclaration.",
+      "arguments": [""],
+      "expected": "quantity:required,email:required,reference:required",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_RepeatedFieldIsNotValidated",
+      "message": "Un champ répété est un défaut de forme : sa valeur n'est pas contrôlée ensuite.",
+      "arguments": ["quantity=5;quantity=6;email=agent@forge.fr;reference=AB12CD34"],
+      "expected": "quantity:duplicate",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_EveryDefectOfTheSameCallIsReported",
+      "message": "Trois valeurs fautives et un nom inattendu tiennent dans un seul rapport.",
+      "arguments": ["quantity=101;email=agent-forge;reference=ab12cd34;colour=red"],
+      "expected": "quantity:invalid,email:invalid,reference:invalid,colour:unknown",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_PayloadOrderDoesNotChangeTheVerdict",
+      "message": "Les champs présentés dans le désordre restent valides : l'ordre du corps ne décide de rien.",
+      "arguments": ["  reference=AB12CD34 ; EMAIL=agent@forge.fr ;quantity=1"],
+      "expected": "",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_UnknownNamesKeepPayloadOrder",
+      "message": "Les noms inattendus suivent l'ordre du corps, jamais l'ordre alphabétique.",
+      "arguments": ["quantity=100;email=a@b.c;reference=12345678;zulu=1;alpha=2"],
+      "expected": "zulu:unknown,alpha:unknown",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_SegmentWithoutSeparatorCarriesAnEmptyValue",
+      "message": "Un segment sans signe égal porte une valeur vide : le champ existe et il est invalide.",
+      "arguments": ["quantity;email=agent@forge.fr;reference=AB12CD34"],
+      "expected": "quantity:invalid",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_SignedQuantityIsRefused",
+      "message": "Une quantité signée n'est pas un entier simple, même quand sa valeur tient dans les bornes.",
+      "arguments": ["quantity=+5;email=agent@forge.fr;reference=AB12CD34"],
+      "expected": "quantity:invalid",
+      "argumentsUnchanged": true
+    }
+  ]
+}

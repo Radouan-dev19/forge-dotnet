@@ -1,0 +1,83 @@
+{
+  "schemaVersion": 1,
+  "id": "senior-boundary-score-001",
+  "version": 1,
+  "title": "Argumenter le découpage d'un module depuis son profil de couplage",
+  "kind": "csharp",
+  "difficulty": 4,
+  "skills": ["quality.boundaries"],
+  "prerequisites": [],
+  "estimatedMinutes": 45,
+  "statement": "statement.md",
+  "constraints": [
+    "Conserver exactement la signature publique",
+    "Les invariants partagés interdisent le découpage avant tout autre critère",
+    "Aucun critère organisationnel ne rachète une transaction partagée",
+    "La recommandation nomme toujours sa raison, séparée par une barre verticale"
+  ],
+  "examples": [
+    {
+      "input": "shared-data=none;transaction=independent;team=different;cadence=different",
+      "output": "split|independent-evolution"
+    },
+    {
+      "input": "shared-data=read-write;transaction=independent;team=different;cadence=different",
+      "output": "keep-together|shared-invariants"
+    }
+  ],
+  "reflectionFields": [
+    "reformulation",
+    "inputs",
+    "expectedOutput",
+    "edgeCases",
+    "hypothesis",
+    "plan"
+  ],
+  "starterPath": "starter/",
+  "visibleTestsPath": "tests/visible/",
+  "hiddenTestsPath": "tests/hidden/",
+  "hints": [
+    {
+      "level": 1,
+      "kind": "socratic",
+      "content": "Deux modules écrivent les mêmes lignes et vous les séparez en deux services. Que devient la transaction qui les protégeait — et qui vient d'hériter du problème le plus dur de l'informatique distribuée ?"
+    },
+    {
+      "level": 2,
+      "kind": "location",
+      "content": "Le profil se lit en deux familles : les critères techniques — données partagées, transaction — qui peuvent interdire, et les critères organisationnels — équipe, cadence — qui peuvent motiver. L'interdiction se vérifie toujours en premier."
+    },
+    {
+      "level": 3,
+      "kind": "strategy",
+      "content": "Après l'interdit technique, la motivation se gradue : équipe et cadence différentes ensemble portent la raison la plus forte, la cadence seule vient ensuite, l'équipe seule après ; sans aucune force motrice, on ne découpe pas — le monolithe modulaire n'est pas un échec."
+    },
+    {
+      "level": 4,
+      "kind": "partial-pseudocode",
+      "content": "analyser les quatre attributs en refusant l'illisible, le répété, le manquant et le hors vocabulaire ; rendre le maintien pour données partagées en écriture ou transaction partagée ; rendre le découpage pour évolution indépendante quand équipe et cadence diffèrent, pour pression de livraison quand la cadence seule diffère, pour autonomie d'équipe quand l'équipe seule diffère ; rendre le maintien sans force motrice sinon"
+    }
+  ],
+  "solution": {
+    "path": "solution/",
+    "unlock": {
+      "seriousAttempts": 2,
+      "minimumDelayMinutes": 10
+    }
+  },
+  "explanation": "explanation.md",
+  "complexity": "O(1) en temps et en espace : quatre attributs analysés puis une cascade de critères",
+  "commonMistakes": [
+    "Découper sur la motivation organisationnelle sans vérifier d'abord l'interdit des invariants partagés",
+    "Traiter la lecture seule de données partagées comme l'écriture, alors qu'elle se réplique sans transaction",
+    "Découper sans force motrice au motif que le découpage est l'état de l'art",
+    "Rendre la décision sans sa raison, la rendant impossible à réviser quand le profil change"
+  ],
+  "variantId": "senior-decomposition-001",
+  "reviewCards": [
+    "card-senior-boundary-score-001-rule",
+    "card-senior-boundary-score-001-edge"
+  ],
+  "interviewQuestionId": "interview-senior-boundary-score-001",
+  "license": "CC-BY-4.0"
+}

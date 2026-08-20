@@ -1,0 +1,66 @@
+{
+    "schemaVersion": 1,
+    "id": "senior-review-triage-001",
+    "version": 1,
+    "title": "Classer un constat de revue par gravite",
+    "kind": "csharp",
+    "difficulty": 3,
+    "skills": ["quality.review"],
+    "prerequisites": [],
+    "estimatedMinutes": 40,
+    "statement": "statement.md",
+    "constraints": [
+        "Conserver exactement la signature publique",
+        "Rendre severite:categorie ; correction, securite et concurrence sont bloquants",
+        "Un constat de style est mineur, jamais bloquant",
+        "Un identifiant inconnu rend unknown ; un identifiant nul leve ArgumentNullException"
+    ],
+    "examples": [
+        {
+            "input": "[\"sql-injection\"]",
+            "output": "\"blocking:security\""
+        }
+    ],
+    "reflectionFields": ["reformulation", "inputs", "expectedOutput", "edgeCases", "hypothesis", "plan"],
+    "starterPath": "starter/",
+    "visibleTestsPath": "tests/visible/",
+    "hiddenTestsPath": "tests/hidden/",
+    "hints": [
+        {
+            "level": 1,
+            "kind": "socratic",
+            "content": "Une revue qui bloque une fusion sur une preference de nommage coute cher : elle brouille le signal et use la confiance. Quelles familles de constats meritent vraiment de bloquer, et lesquelles restent des avis ?"
+        },
+        {
+            "level": 2,
+            "kind": "location",
+            "content": "Deux decisions par constat : sa gravite, bloquant ou mineur, et sa categorie. Une correspondance directe entre l'identifiant du constat et le couple severite:categorie suffit."
+        },
+        {
+            "level": 3,
+            "kind": "strategy",
+            "content": "Rangez sous blocking les fautes de correction, de securite et de concurrence ; rangez sous minor les remarques de style. Tout identifiant hors de cette table connue rend unknown, et un identifiant nul est une faute d'appel."
+        },
+        {
+            "level": 4,
+            "kind": "partial-pseudocode",
+            "content": "refuser un findingId nul ; selon findingId, correction et off-by-one donnent blocking:correctness, injection et secret en dur donnent blocking:security, acces concurrent non synchronise donne blocking:concurrency, nommage et commentaire manquant donnent minor:style, tout autre donne unknown"
+        }
+    ],
+    "solution": {
+        "path": "solution/",
+        "unlock": { "seriousAttempts": 2, "minimumDelayMinutes": 10 }
+    },
+    "explanation": "explanation.md",
+    "complexity": "O(1) en temps : une correspondance directe sur l'identifiant du constat",
+    "commonMistakes": [
+        "Classer une remarque de style comme bloquante, ce qui use la confiance et brouille le signal",
+        "Fusionner gravite et categorie en une seule etiquette au lieu du couple severite:categorie",
+        "Traiter un identifiant inconnu comme une faute au lieu de rendre unknown",
+        "Rendre unknown ou une etiquette pour un identifiant nul au lieu de lever une exception d'argument"
+    ],
+    "variantId": "senior-legacy-trace-001",
+    "reviewCards": ["card-senior-review-triage-001-rule", "card-senior-review-triage-001-edge"],
+    "interviewQuestionId": "interview-senior-review-triage-001",
+    "license": "CC-BY-4.0"
+}

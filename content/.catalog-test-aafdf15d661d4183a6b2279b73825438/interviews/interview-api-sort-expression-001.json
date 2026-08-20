@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "id": "interview-api-sort-expression-001",
+  "version": 1,
+  "title": "Normaliser une expression de tri en ordre total",
+  "level": "intermediate",
+  "durationMinutes": 10,
+  "skills": ["api.pagination"],
+  "question": "Un utilisateur signale qu'une même commande apparaît sur deux pages consécutives de votre liste triée par montant, alors que rien n'a été modifié entre les deux appels. Quelle est la cause, et que faites-vous par ailleurs du champ de tri que le client envoie ?",
+  "observableCriteria": [
+    "L'absence d'ordre total est nommée comme cause, et non une erreur de calcul de décalage",
+    "Le départage unique en fin d'ordre est proposé comme correction",
+    "La liste blanche est présentée comme une frontière de sécurité, et le refus comme préférable au silence"
+  ],
+  "modelAnswer": "Le tri porte sur un champ non unique : deux montants égaux n'ont pas d'ordre relatif défini, et le moteur est libre de le changer d'une requête à l'autre. La pagination découpe donc deux fois un ordre différent, ce qui fait réapparaître une ligne ou en perdre une, sans aucune modification de données. Je corrige en ajoutant un départage unique en dernière position, ce qui rend l'ordre total et la pagination reproductible. Sur le champ envoyé par le client, je ne concatène jamais son texte dans la clause d'ordre : je le résous contre une liste blanche et je rends l'orthographe déclarée par le serveur. Un champ absent de cette liste est refusé explicitement, pas ignoré, sinon le client pagine sur un ordre qu'il croit appliqué.",
+  "commonMistakes": [
+    "Chercher la cause dans le calcul du décalage plutôt que dans l'absence d'ordre total",
+    "Considérer la liste blanche comme une validation d'ergonomie et non comme une frontière d'injection"
+  ],
+  "variants": [
+    "Demander ce qui change si la pagination passe du décalage numérique à un curseur.",
+    "Ajouter un champ dont les valeurs peuvent être absentes et demander où se rangent ces lignes."
+  ],
+  "license": "CC-BY-4.0"
+}

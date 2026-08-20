@@ -25,6 +25,11 @@ public static class MasterySkillDomains
         ["logic"] = MasteryDomain.CSharp,
 
         ["debugging"] = MasteryDomain.Debugging,
+
+        // Les exercices EF Core des semaines SQL pratiquent le relationnel à travers le traducteur
+        // de requêtes : leur travail alimente le domaine SQL, aux côtés des scénarios de laboratoire.
+        ["sql"] = MasteryDomain.Sql,
+
         ["api"] = MasteryDomain.Api,
         ["tests"] = MasteryDomain.Tests,
         ["security"] = MasteryDomain.Security,

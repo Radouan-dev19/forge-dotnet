@@ -1,0 +1,83 @@
+{
+  "schemaVersion": 1,
+  "id": "senior-compensation-plan-001",
+  "version": 1,
+  "title": "Ordonner le plan de compensation d'une saga interrompue",
+  "kind": "csharp",
+  "difficulty": 4,
+  "skills": ["quality.consistency"],
+  "prerequisites": [],
+  "estimatedMinutes": 40,
+  "statement": "statement.md",
+  "constraints": [
+    "Conserver exactement la signature publique",
+    "La compensation défait dans l'ordre inverse de l'exécution, sans exception",
+    "Chaque étape a son compensateur attitré : aucun ne se devine",
+    "Une étape hors catalogue ou exécutée deux fois est un journal corrompu"
+  ],
+  "examples": [
+    {
+      "input": "reserve-stock,charge-card,book-carrier",
+      "output": "cancel-carrier,refund-card,release-stock"
+    },
+    {
+      "input": "create-order",
+      "output": "void-order"
+    }
+  ],
+  "reflectionFields": [
+    "reformulation",
+    "inputs",
+    "expectedOutput",
+    "edgeCases",
+    "hypothesis",
+    "plan"
+  ],
+  "starterPath": "starter/",
+  "visibleTestsPath": "tests/visible/",
+  "hiddenTestsPath": "tests/hidden/",
+  "hints": [
+    {
+      "level": 1,
+      "kind": "socratic",
+      "content": "La réservation de stock a eu lieu avant le débit de la carte. Si vous remboursez avant de libérer le stock, quel état intermédiaire le client et l'entrepôt observent-ils — et lequel des deux ordres laisse le moins de dégâts si la compensation s'interrompt elle-même ?"
+    },
+    {
+      "level": 2,
+      "kind": "location",
+      "content": "Deux ingrédients seulement : la table qui associe chaque étape à son geste inverse, et l'ordre du journal d'exécution — parcouru à rebours, jamais dans le sens de lecture."
+    },
+    {
+      "level": 3,
+      "kind": "strategy",
+      "content": "Validez chaque étape au fil de la lecture — connue du catalogue, jamais répétée — puis produisez les gestes inverses en remontant le journal : la dernière étape exécutée se défait la première."
+    },
+    {
+      "level": 4,
+      "kind": "partial-pseudocode",
+      "content": "refuser un journal vide ; parcourir les étapes en refusant l'inconnue et la répétée ; empiler chaque étape validée ; dépiler en produisant le compensateur de chacune ; joindre les gestes par des virgules"
+    }
+  ],
+  "solution": {
+    "path": "solution/",
+    "unlock": {
+      "seriousAttempts": 2,
+      "minimumDelayMinutes": 10
+    }
+  },
+  "explanation": "explanation.md",
+  "complexity": "O(n) en temps pour n étapes exécutées et O(n) en espace pour la pile",
+  "commonMistakes": [
+    "Compenser dans l'ordre d'exécution et défaire la fondation avant ce qui repose dessus",
+    "Deviner un compensateur par symétrie de nom au lieu de refuser l'étape hors catalogue",
+    "Accepter une étape exécutée deux fois et produire deux remboursements pour un débit",
+    "Compenser aussi l'étape qui a échoué, alors qu'elle n'a rien produit à défaire"
+  ],
+  "variantId": "senior-compensation-001",
+  "reviewCards": [
+    "card-senior-compensation-plan-001-rule",
+    "card-senior-compensation-plan-001-edge"
+  ],
+  "interviewQuestionId": "interview-senior-compensation-plan-001",
+  "license": "CC-BY-4.0"
+}

@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "id": "interview-git-cherry-pick-risk-001",
+  "version": 1,
+  "title": "Évaluer le risque d'un report de commit",
+  "level": "junior",
+  "durationMinutes": 6,
+  "skills": ["git.conflicts"],
+  "question": "On vous demande de reporter un correctif sur une branche de maintenance qui a divergé de deux cents commits. Comment jugez-vous le risque, et que vérifiez-vous quand le report passe sans conflit ?",
+  "observableCriteria": [
+    "Le partage de fichiers est présenté comme le critère dominant, l'écart n'ayant de sens qu'à l'intérieur",
+    "Le cas du commit de fusion et de son parent ambigu est identifié",
+    "L'absence de conflit est distinguée de la correction sémantique"
+  ],
+  "modelAnswer": "Je regarde d'abord si le commit touche des fichiers que la branche cible a modifiés. Deux cents commits d'écart sans fichier commun ne créent aucune interférence, alors que trois commits sur la même fonction peuvent avoir déplacé les lignes que je veux modifier : l'écart ne mesure quelque chose que sur les fichiers concernés. Je refuse d'emblée si le commit est une fusion, parce qu'il a deux parents et que ses modifications ne sont définies que par rapport à l'un d'eux — sans le désigner, le report n'a pas de résultat unique. Et quand le report passe sans conflit, je ne considère rien comme acquis : le conflit est un signal syntaxique, pas sémantique. Le correctif peut s'appliquer proprement et dépendre d'un comportement qui a changé sur la cible, donc j'exécute la suite de tests de la branche d'arrivée avant de conclure.",
+  "commonMistakes": [
+    "Juger le risque au seul nombre de commits de divergence",
+    "Conclure qu'un report sans conflit est un report correct"
+  ],
+  "variants": [
+    "Demander comment reporter une série de commits liés plutôt qu'un seul.",
+    "Demander ce qui change si la branche cible est une version de maintenance ancienne."
+  ],
+  "license": "CC-BY-4.0"
+}

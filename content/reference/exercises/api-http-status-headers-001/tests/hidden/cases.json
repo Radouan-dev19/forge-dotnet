@@ -1,0 +1,61 @@
+{
+  "schemaVersion": 1,
+  "cases": [
+    {
+      "name": "Hidden_AttributeOrderIsFree",
+      "message": "La même requête décrite dans un autre ordre garde son contrat : redirection historique pour une lecture.",
+      "arguments": ["state=moved;method=get;load=normal"],
+      "expected": "301|Location",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_MovedWritePreservesTheMethod",
+      "message": "Une écriture redirigée exige la redirection qui préserve la méthode, sinon elle dégénère en lecture.",
+      "arguments": ["method=put;state=moved;load=normal"],
+      "expected": "308|Location",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_GoneIsNotAbsent",
+      "message": "La pierre tombale répond à toute méthode : n'insistez plus, purgez vos références.",
+      "arguments": ["method=delete;state=gone;load=normal"],
+      "expected": "410",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_PostOnExistingRepresentationConflicts",
+      "message": "Créer ce qui existe déjà n'est pas un succès : le conflit dit la vérité sur l'état du monde.",
+      "arguments": ["method=post;state=present;load=normal"],
+      "expected": "409",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_CreativePutCarriesTheAddressToo",
+      "message": "Le remplacement qui crée rend le même contrat de création, adresse comprise.",
+      "arguments": ["method=put;state=absent;load=normal"],
+      "expected": "201|Location",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_MissingLoadIsRefused",
+      "message": "Sans attribut de charge, le premier étage de la décision ne peut pas se prononcer.",
+      "arguments": ["method=get;state=present"],
+      "expectedException": "ArgumentException",
+      "argumentsUnchanged": false
+    },
+    {
+      "name": "Hidden_UnknownMethodIsRefused",
+      "message": "Une méthode hors vocabulaire ne se devine pas : le contrat serait faux avec assurance.",
+      "arguments": ["method=patch;state=present;load=normal"],
+      "expectedException": "ArgumentException",
+      "argumentsUnchanged": false
+    },
+    {
+      "name": "Hidden_DeleteOnAbsentIsNotFound",
+      "message": "Supprimer ce qui n'existe pas signale l'absence : le client saura que sa référence était périmée.",
+      "arguments": ["method=delete;state=absent;load=normal"],
+      "expected": "404",
+      "argumentsUnchanged": true
+    }
+  ]
+}

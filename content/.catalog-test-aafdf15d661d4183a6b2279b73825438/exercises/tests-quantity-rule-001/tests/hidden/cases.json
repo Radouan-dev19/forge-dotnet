@@ -1,0 +1,39 @@
+{
+    "schemaVersion":  1,
+    "cases":  [
+                  {
+                      "name":  "Hidden_Case1",
+                      "message":  "Tester une règle de quantité — cas 1 incorrect.",
+                      "arguments":  [
+                                        100
+                                    ],
+                      "expected":  true,
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_Case2",
+                      "message":  "Tester une règle de quantité — cas 2 incorrect.",
+                      "arguments":  [
+                                        101
+                                    ],
+                      "expected":  false,
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_Negative",
+                      "message":  "Valeur négative : refusée au même titre que zéro.",
+                      "arguments":  [-1],
+                      "expected":  false,
+                      "argumentsUnchanged":  true
+                  },
+                  {
+                      "name":  "Hidden_MaximumInteger",
+                      "message":  "Valeur entière maximale : très au-dessus de la borne haute.",
+                      "arguments":  [2147483647],
+                      "expected":  false,
+                      "argumentsUnchanged":  true
+                  }
+              ]
+}

@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "id": "english-card-13-spoken",
+  "version": 1,
+  "title": "Actionable alert — spoken follow-up",
+  "level": "B2",
+  "durationMinutes": 10,
+  "skills": [
+    "english.spoken",
+    "observability.alerts"
+  ],
+  "situation": "In a technical discussion, an alert has no owner or runbook. You must answer aloud accurately without overstating the evidence.",
+  "instructions": [
+    "Say aloud what is missing from an alert that has no owner and no runbook, and what you would add first."
+  ],
+  "vocabulary": [
+    {
+      "term": "alert design",
+      "meaning": "the discipline of firing only on conditions someone can act on, since an alert nobody acts on trains the team to ignore alerts"
+    },
+    {
+      "term": "runbook",
+      "meaning": "the short procedure attached to an alert, telling the person woken up what to check and what to do first"
+    }
+  ],
+  "expectedElements": [
+    "The absence of an owner is treated as a defect",
+    "The cost of unactionable alerts is named",
+    "One concrete first addition is proposed"
+  ],
+  "modelAnswer": "This alert is missing the two things that make an alert usable: an owner and a runbook. Without an owner it fires into a shared channel and everyone assumes someone else is looking. Without a runbook the person who does look has to rediscover what to check, at the worst possible moment. The cost is not just the wasted minutes: an alert nobody can act on trains the team to ignore alerts, including the ones that matter. What I would add first is the runbook, even three lines, because it turns the alert into an action and gives the responder something to check as evidence. Who should own this one?",
+  "commonMistakes": [
+    "Treating the missing owner as an administrative detail",
+    "Proposing to tune the threshold instead of making the alert actionable"
+  ],
+  "variants": [
+    "Answer again when the team proposes deleting the alert instead."
+  ],
+  "license": "CC-BY-4.0"
+}

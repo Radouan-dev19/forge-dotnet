@@ -1,0 +1,8 @@
+{
+  "schemaVersion": 1,
+  "cases": [
+    { "name": "Visible_CaseAndPunctuation", "message": "La casse et la ponctuation doivent être normalisées.", "arguments": ["Chat, chat ! chien."], "expected": {"chat": 2, "chien": 1} },
+    { "name": "Visible_Whitespace", "message": "Une chaîne blanche doit produire un dictionnaire vide.", "arguments": ["   \t"], "expected": {} },
+    { "name": "Visible_LastWord", "message": "Le dernier mot sans séparateur final doit être compté.", "arguments": ["un deux deux"], "expected": {"un": 1, "deux": 2} }
+  ]
+}

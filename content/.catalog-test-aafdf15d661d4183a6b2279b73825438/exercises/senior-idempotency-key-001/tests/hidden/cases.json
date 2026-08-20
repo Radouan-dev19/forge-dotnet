@@ -1,0 +1,54 @@
+{
+  "schemaVersion": 1,
+  "cases": [
+    {
+      "name": "Hidden_InterleavedKeys",
+      "message": "Trois cles distinctes puis rejeu des deux premieres.",
+      "arguments": [
+        "a;b;c;a;b"
+      ],
+      "expected": "processed;processed;processed;replayed;replayed",
+      "expectedException": null,
+      "argumentsUnchanged": false
+    },
+    {
+      "name": "Hidden_EmptyInput",
+      "message": "Entree vide : sortie vide.",
+      "arguments": [
+        ""
+      ],
+      "expected": "",
+      "expectedException": null,
+      "argumentsUnchanged": false
+    },
+    {
+      "name": "Hidden_KeyRepeatedOnce",
+      "message": "Une cle repetee une fois : un traitement puis un rejeu.",
+      "arguments": [
+        "k;k"
+      ],
+      "expected": "processed;replayed",
+      "expectedException": null,
+      "argumentsUnchanged": false
+    },
+    {
+      "name": "Hidden_ReplayThenNewKey",
+      "message": "Rejeux entrelaces suivis d'une cle inedite.",
+      "arguments": [
+        "p;q;p;q;r"
+      ],
+      "expected": "processed;processed;replayed;replayed;processed",
+      "expectedException": null,
+      "argumentsUnchanged": false
+    },
+    {
+      "name": "Hidden_NullInputThrows",
+      "message": "Une entree nulle leve ArgumentNullException.",
+      "arguments": [
+        null
+      ],
+      "expectedException": "ArgumentNullException",
+      "argumentsUnchanged": false
+    }
+  ]
+}

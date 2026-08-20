@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "id": "interview-security-jwt-order-001",
+  "version": 1,
+  "title": "Enchaîner la validation dans l'ordre imposé",
+  "level": "advanced",
+  "durationMinutes": 10,
+  "skills": [
+    "security.token",
+    "security.authentication"
+  ],
+  "question": "Déroulez l'ordre complet de validation d'un jeton JWT et justifiez chaque position : qu'est-ce qui casserait si deux contrôles étaient permutés ?",
+  "observableCriteria": [
+    "L'ordre forme, algorithme, signature puis revendications est donné avec la ligne de partage qui le fonde",
+    "La permutation signature-expiration est analysée : verdict rendu sur une donnée forgée et information offerte à l'attaquant",
+    "L'ordre entre revendications est présenté comme contractuel, nécessaire à la testabilité du verdict"
+  ],
+  "modelAnswer": "Forme d'abord : trois segments décodables — sans cela, rien d'autre n'a de sens. Algorithme ensuite, confronté à la décision du serveur, pour ne pas laisser l'entrée choisir son juge. Signature après, car c'est elle qui donne valeur probante au reste. Revendications enfin — expiration, émetteur, audience — dans un ordre fixé par contrat. Permuter signature et expiration ferait rendre un verdict d'expiration lu dans une charge utile potentiellement forgée : on déciderait sur les données de l'attaquant et on lui confirmerait qu'elles sont lues. Entre revendications, aucune nécessité cryptographique, mais un verdict qui dépend de l'implémentation est intestable ; je fixe l'ordre et je l'éprouve par un cas où deux revendications sont fausses à la fois.",
+  "commonMistakes": [
+    "Décoder et consulter la charge utile avant la preuve de signature pour préparer les contrôles suivants",
+    "Laisser l'ordre des contrôles de revendications à l'implémentation et rendre un verdict imprévisible"
+  ],
+  "variants": [
+    "Ajouter une tolérance d'horloge à la chaîne et dire où elle se configure sans changer le mécanisme.",
+    "Traduire chaque verdict en réponse HTTP d'un middleware et justifier les codes choisis."
+  ],
+  "license": "CC-BY-4.0"
+}

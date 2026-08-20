@@ -1,0 +1,82 @@
+{
+    "schemaVersion":  1,
+    "id":  "csharp-temperature-band-001",
+    "version":  1,
+    "title":  "Classer une température",
+    "kind":  "csharp",
+    "difficulty":  1,
+    "skills":  [
+                   "csharp.control"
+               ],
+    "prerequisites":  [
+                          "reference-types-001"
+                      ],
+    "estimatedMinutes":  30,
+    "statement":  "statement.md",
+    "constraints":  [
+                        "Conserver exactement la signature publique",
+                        "Traiter les bornes zéro et vingt comme des décisions explicites.",
+                        "Ne pas modifier les entrées reçues sauf mention explicite"
+                    ],
+    "examples":  [
+                     {
+                         "input":  "[-1]",
+                         "output":  "\"gel\""
+                     }
+                 ],
+    "reflectionFields":  [
+                             "reformulation",
+                             "inputs",
+                             "expectedOutput",
+                             "edgeCases",
+                             "hypothesis",
+                             "plan"
+                         ],
+    "starterPath":  "starter/",
+    "visibleTestsPath":  "tests/visible/",
+    "hiddenTestsPath":  "tests/hidden/",
+    "hints":  [
+                  {
+                      "level":  1,
+                      "kind":  "socratic",
+                      "content":  "Quel invariant de « Classer une température » doit rester vrai pour les cas limites ?"
+                  },
+                  {
+                      "level":  2,
+                      "kind":  "location",
+                      "content":  "Concentrez la décision dans la méthode TemperatureBand, sans état global."
+                  },
+                  {
+                      "level":  3,
+                      "kind":  "strategy",
+                      "content":  "Traiter les bornes zéro et vingt comme des décisions explicites."
+                  },
+                  {
+                      "level":  4,
+                      "kind":  "partial-pseudocode",
+                      "content":  "comparer celsius à zéro puis à vingt, avec des inégalités strictes ; chaque branche suppose que la précédente a échoué, de sorte que la dernière ne teste plus rien"
+                  }
+              ],
+    "solution":  {
+                     "path":  "solution/",
+                     "unlock":  {
+                                    "seriousAttempts":  2,
+                                    "minimumDelayMinutes":  10
+                                }
+                 },
+    "explanation":  "explanation.md",
+    "complexity":  "O(1) en temps et O(1) en espace",
+    "commonMistakes":  [
+                           "Employer une comparaison large et déplacer une bande d'un degré",
+                           "Tester les bandes du plus grand au plus petit et rendre une branche inatteignable",
+                           "Classer zéro dans la bande de gel alors qu'il appartient à la suivante",
+                           "Retourner une étiquette dont la casse diffère du contrat"
+                       ],
+    "variantId":  "csharp-input-normalize-001",
+    "reviewCards":  [
+                        "card-csharp-temperature-band-001-rule",
+                        "card-csharp-temperature-band-001-edge"
+                    ],
+    "interviewQuestionId":  "interview-csharp-temperature-band-001",
+    "license":  "CC-BY-4.0"
+}

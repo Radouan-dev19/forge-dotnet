@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "id": "interview-git-undo-strategy-001",
+  "version": 1,
+  "title": "Choisir comment annuler un commit",
+  "level": "junior",
+  "durationMinutes": 6,
+  "skills": ["git.commits"],
+  "question": "Vous avez poussé un commit qui casse la production. Un collègue vous conseille un retrait suivi d'une poussée forcée. Que faites-vous, et pourquoi son conseil est-il dangereux ?",
+  "observableCriteria": [
+    "L'annulation par commit inverse est présentée comme la seule opération qui n'efface rien",
+    "Le danger de la réécriture publiée est décrit par la divergence chez les autres, pas par une règle abstraite",
+    "La distinction entre retrait doux et dur est reliée à ce qu'il advient du contenu"
+  ],
+  "modelAnswer": "Je crée un commit inverse. C'est la seule opération qui ajoute au lieu de retirer : le commit fautif reste dans l'historique et personne n'a rien à démêler. Le conseil de mon collègue réécrit une histoire déjà publiée : mon retrait n'efface pas les commits chez ceux qui les ont récupérés, il crée une divergence, et la poussée forcée qui suit écrase leur travail. Que l'erreur reste visible n'est pas un défaut, c'est ce qui rend l'opération sûre. En local, la question serait différente : je choisirais entre un retrait doux, qui ramène le contenu dans ma copie pour le recommitter autrement, et un retrait dur, qui le jette sans filet — et je ne prends le dur que si je sais que le travail est perdu et que je le veux.",
+  "commonMistakes": [
+    "Réécrire puis pousser en force sur une branche partagée",
+    "Croire qu'un commit inverse supprime le commit d'origine de l'historique"
+  ],
+  "variants": [
+    "Demander ce qui change si le commit fautif est le seul de la branche.",
+    "Demander comment annuler une fusion plutôt qu'un commit simple."
+  ],
+  "license": "CC-BY-4.0"
+}

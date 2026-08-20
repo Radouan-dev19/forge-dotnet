@@ -1,0 +1,82 @@
+{
+    "schemaVersion":  1,
+    "id":  "api-order-validation-001",
+    "version":  1,
+    "title":  "Valider une quantité de commande",
+    "kind":  "csharp",
+    "difficulty":  2,
+    "skills":  [
+                   "api.validation"
+               ],
+    "prerequisites":  [
+                          "api-validation-problem-details-001"
+                      ],
+    "estimatedMinutes":  35,
+    "statement":  "statement.md",
+    "constraints":  [
+                        "Conserver exactement la signature publique",
+                        "Distinguer absence conventionnelle, plage invalide et valeur acceptée.",
+                        "Ne consulter aucun stock ni aucun catalogue : seule la quantité décide"
+                    ],
+    "examples":  [
+                     {
+                         "input":  "[1]",
+                         "output":  "\"valid\""
+                     }
+                 ],
+    "reflectionFields":  [
+                             "reformulation",
+                             "inputs",
+                             "expectedOutput",
+                             "edgeCases",
+                             "hypothesis",
+                             "plan"
+                         ],
+    "starterPath":  "starter/",
+    "visibleTestsPath":  "tests/visible/",
+    "hiddenTestsPath":  "tests/hidden/",
+    "hints":  [
+                  {
+                      "level":  1,
+                      "kind":  "socratic",
+                      "content":  "Quel comportement public de « Valider une quantité de commande » change exactement à la frontière ?"
+                  },
+                  {
+                      "level":  2,
+                      "kind":  "location",
+                      "content":  "Concentrez la validation et la décision dans QuantityState, sans état global ni journal sensible."
+                  },
+                  {
+                      "level":  3,
+                      "kind":  "strategy",
+                      "content":  "Distinguer absence conventionnelle, plage invalide et valeur acceptée."
+                  },
+                  {
+                      "level":  4,
+                      "kind":  "partial-pseudocode",
+                      "content":  "traiter d'abord la valeur conventionnelle d'absence, qui a son propre état ; ensuite refuser toute valeur hors de la plage acceptée ; le reste est valide"
+                  }
+              ],
+    "solution":  {
+                     "path":  "solution/",
+                     "unlock":  {
+                                    "seriousAttempts":  2,
+                                    "minimumDelayMinutes":  10
+                                }
+                 },
+    "explanation":  "explanation.md",
+    "complexity":  "O(1) en temps et O(1) en espace",
+    "commonMistakes":  [
+                           "Confondre l'absence et la valeur hors plage, qui ne se corrigent pas de la même façon",
+                           "Tester la plage avant l'absence et rendre l'état d'absence inatteignable",
+                           "Employer des comparaisons larges et décaler l'une des deux bornes",
+                           "Retourner un état valide pour une valeur négative"
+                       ],
+    "variantId":  "api-di-lifetime-choice-001",
+    "reviewCards":  [
+                        "card-api-order-validation-001-rule",
+                        "card-api-order-validation-001-security"
+                    ],
+    "interviewQuestionId":  "interview-api-order-validation-001",
+    "license":  "CC-BY-4.0"
+}

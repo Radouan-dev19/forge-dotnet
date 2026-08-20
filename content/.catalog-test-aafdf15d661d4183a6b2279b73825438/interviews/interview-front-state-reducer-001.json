@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "id": "interview-front-state-reducer-001",
+  "version": 1,
+  "title": "Réduire un état immuable à partir d'une suite d'actions",
+  "level": "intermediate",
+  "durationMinutes": 8,
+  "skills": [
+    "csharp.immutability"
+  ],
+  "question": "Pourquoi un réducteur d'état renvoie-t-il une nouvelle valeur plutôt que de modifier l'état reçu, et qu'est-ce que cela change au débogage d'une interface ?",
+  "observableCriteria": [
+    "Explique qu'une référence partagée mutée fait changer un état ailleurs sans intention explicite",
+    "Relie l'immuabilité à la testabilité : comparaison entrée-sortie et rejeu à l'identique",
+    "Cite un traitement qui doit échouer proprement, comme un incrément sur une valeur non entière, sans corrompre la donnée"
+  ],
+  "modelAnswer": "Un réducteur reçoit l'état courant et une intention, et rend un état neuf sans jamais abîmer l'ancien. La raison est concrète : dans une interface, plusieurs vues peuvent détenir une référence vers la même table. Si je la mute, elles voient toutes le changement sans l'avoir demandé, et un rendu affiche un état que personne n'a produit localement. Ce genre de bogue ne se reproduit pas de façon fiable et coûte cher à isoler. En construisant une valeur neuve, l'ancienne reste figée, comparable à la nouvelle, et le réducteur devient une fonction pure que je teste par simple confrontation entrée-sortie et que je rejoue à l'identique. Sur les actions mal formées, comme un incrément demandé sur une valeur textuelle, je préfère abandonner l'action et préserver la donnée plutôt que d'écrire un zéro ou de lever une erreur : je n'invente pas une valeur que l'utilisateur n'a pas fournie.",
+  "commonMistakes": [
+    "Muter la structure reçue et voir un état changer dans une vue qui n'a rien demandé",
+    "Convertir de force une valeur non entière au lieu d'ignorer l'action, perdant la donnée d'origine"
+  ],
+  "variants": [
+    "Comment testeriez-vous un réducteur pour être sûr qu'il ne mute pas son entrée ?",
+    "Comment composeriez-vous plusieurs réducteurs sans qu'ils interfèrent entre eux ?"
+  ],
+  "license": "CC-BY-4.0"
+}

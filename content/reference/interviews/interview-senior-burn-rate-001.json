@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "id": "interview-senior-burn-rate-001",
+  "version": 1,
+  "title": "Calculer un burn rate et décider s'il faut réveiller quelqu'un",
+  "level": "advanced",
+  "durationMinutes": 8,
+  "skills": ["observability.distributed"],
+  "question": "Votre service promet 99,9 % de réussite et affiche 0,4 % d'échecs sur la dernière heure. Faut-il réveiller l'astreinte ? Donnez le calcul qui répond, son nom anglais, et expliquez pourquoi alerter sur le taux d'erreur brut produit soit du bruit, soit du silence.",
+  "observableCriteria": [
+    "Le burn rate est calculé : taux d'échec observé divisé par le taux toléré par l'objectif",
+    "L'interprétation est graduée : 1 consomme exactement le budget, 4 sur une heure justifie l'alerte",
+    "Le vocabulaire est en place : error budget, burn rate, SLO",
+    "Le défaut du taux brut est expliqué : un seuil fixe ignore l'objectif et se règle mal"
+  ],
+  "modelAnswer": "Le calcul s'appelle le burn rate : le taux d'échec observé divisé par le taux que l'objectif tolère. Un SLO de 99,9 % tolère 0,1 % d'échecs ; observer 0,4 %, c'est un burn rate de 4 — le service consomme son error budget quatre fois plus vite que prévu, et à ce rythme le budget du mois part en une semaine. Oui, cela vaut une alerte : la convention courante déclenche l'urgence autour d'un burn rate de 14 sur l'heure et une alerte de suivi vers 4 à 6 tenus plusieurs heures — 4 sur une heure entre dans la seconde catégorie, à confirmer sur la fenêtre suivante plutôt qu'à réveiller immédiatement. La force de cette grandeur est son échelle universelle : 1 signifie « exactement le budget », quel que soit l'objectif — le même seuil d'alerte sert au service à trois neufs et à celui à deux. Alerter sur le taux d'erreur brut n'a pas cette propriété : un seuil fixe à 1 % laisse un service à 99,9 % brûler dix fois son budget en silence, et le même seuil sur un service à 99 % sonne pour rien — soit du silence, soit du bruit, selon l'objectif que le seuil ignore. Deux soins au passage : le calcul se fait en exact, pas en flottant — ces taux sont minuscules et les arrondis binaires mentent — et j'arrondis le résultat vers le bas, pour ne jamais dramatiser un chiffre que je présente à trois heures du matin.",
+  "commonMistakes": [
+    "Alerter sur un taux d'erreur fixe qui ignore l'objectif et sonne trop ou pas assez selon le service",
+    "Calculer le rapport en flottant binaire et rendre des burn rates faussés sur des taux minuscules"
+  ],
+  "variants": [
+    "Demander pourquoi les alertes de burn rate se posent sur plusieurs fenêtres à la fois.",
+    "Le trafic est de dix requêtes sur l'heure : demander ce que vaut le burn rate calculé dessus."
+  ],
+  "license": "CC-BY-4.0"
+}

@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "suiteId": "project-autonomous-feature-001.calcul.v1",
+  "exerciseId": "project-autonomous-feature-001.calcul",
+  "exerciseVersion": 1,
+  "typeName": "Submission",
+  "methodName": "ActivePoints",
+  "parameterTypes": ["string", "string"],
+  "returnType": "int"
+}

@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "id": "interview-csharp-linq-top-three-001",
+  "version": 1,
+  "title": "Sélectionner les trois plus grands",
+  "level": "intermediate",
+  "durationMinutes": 5,
+  "skills": [
+    "csharp.linq"
+  ],
+  "question": "Comment résoudriez-vous « Sélectionner les trois plus grands » et comment prouveriez-vous les bornes ?",
+  "observableCriteria": [
+    "Les doublons sont conservés, ce qui est affirmé comme voulu",
+    "La borne s'applique après l'ordre, et le comportement sur moins de trois éléments est défini"
+  ],
+  "modelAnswer": "Ordonner de façon descendante puis borner sans supprimer les doublons. Je prouve par une séquence de deux éléments, une séquence à trois valeurs égales et une séquence vide ; O(n log n) en temps et O(n) en espace.",
+  "commonMistakes": [
+    "Dédupliquer avant de borner et rendre trois valeurs distinctes au lieu des trois plus grandes"
+  ],
+  "variants": [
+    "Changer une borne ou le volume tout en conservant la même règle de sélectionner les trois plus grands."
+  ],
+  "license": "CC-BY-4.0"
+}

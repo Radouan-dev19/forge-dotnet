@@ -54,10 +54,18 @@ Un déploiement réel, sʼil est décidé hors Forge.NET, reste manuel, facultat
 
 `project-final-service-operations-001` fournit cinq jalons et une grille à six critères totalisant exactement 100 %. Le brief impose monolithe modulaire, parcours critique, persistance reproductible, tests, sécurité, incident simulé et défense. Il ne contient ni squelette métier, ni modèle final, ni code de remise, ni solution complète. Le mode Azure simulé satisfait entièrement le jalon dʼexploitation.
 
-- Examen 7 : `azure-observability-v1`, 15 candidats, tirage de 8, 120 minutes, seuil 80 %.
-- Examen 8 : `final-readiness-v1`, 16 candidats répartis de S1 à S24, tirage de 8, 150 minutes, seuil 80 %.
+- Examen 8 : `azure-observability-v1`, 17 candidats S21–S22, tirage de 8, 120 minutes, seuil 80 %.
+- Examen 9 : `final-readiness-v1`, 24 candidats répartis de S1 à S24, tirage de 8, 150 minutes, seuil 80 %.
 
-Les banques ne contiennent que leur manifeste et des identifiants dʼexercices existants. Solutions, réponses dʼentretien et tests cachés restent dans les sources privées existantes. Lʼexamen 8 est la partie technique automatisée ; la défense du projet reste une preuve manuelle annoncée comme telle.
+Ces deux banques ont été livrées comme examens 7 et 8 ; la création de `delivery-pipeline-v1`
+(examen 7, S18–S20) les a décalées dʼun rang et a rendu à la banque Azure-observabilité son périmètre
+thématique — les exercices Git, Docker et CI quʼelle hébergeait faute de mieux vivent désormais dans
+la banque de livraison. Les banques ne contiennent que leur manifeste et des identifiants dʼexercices
+existants. Solutions, réponses dʼentretien et tests cachés restent dans les sources privées
+existantes. Lʼexamen 9 est la partie technique automatisée ; la défense du projet reste une preuve
+manuelle annoncée comme telle. Les semaines S23 et S24 restent volontairement légères en exercices —
+un et trois — parce que leur charge réelle est le projet final, sa défense et les preuves de
+carrière : ce volume est un choix de curriculum, pas un manque.
 
 ## Carrière et confidentialité
 

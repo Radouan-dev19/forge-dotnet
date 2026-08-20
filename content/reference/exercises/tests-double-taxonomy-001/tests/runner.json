@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "suiteId": "tests-double-taxonomy-001.v1",
+  "exerciseId": "tests-double-taxonomy-001",
+  "exerciseVersion": 1,
+  "typeName": "Submission",
+  "methodName": "DoublesFor",
+  "parameterTypes": ["string"],
+  "returnType": "string"
+}

@@ -1,0 +1,44 @@
+{
+    "schemaVersion":  1,
+    "cases":  [
+                  {
+                      "name":  "Hidden_Case1",
+                      "message":  "Sommer récursivement un tableau — cas 1 hidden incorrect.",
+                      "arguments":  [
+                                        [
+                                            -1,
+                                            1
+                                        ]
+                                    ],
+                      "expected":  0,
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_Case2",
+                      "message":  "Sommer récursivement un tableau — cas 2 hidden incorrect.",
+                      "arguments":  [
+                                        [
+                                            7
+                                        ]
+                                    ],
+                      "expected":  7,
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_AllNegative",
+                      "message":  "Toutes les valeurs sont négatives : réfute un cumul de valeurs absolues.",
+                      "arguments":  [[-1,-2,-3]],
+                      "expected":  -6,
+                      "argumentsUnchanged":  true
+                  },
+                  {
+                      "name":  "Hidden_AllZero",
+                      "message":  "Que des zéros : réfute un cas de base qui retournerait la longueur.",
+                      "arguments":  [[0,0,0]],
+                      "expected":  0,
+                      "argumentsUnchanged":  true
+                  }
+              ]
+}

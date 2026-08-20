@@ -52,7 +52,7 @@ public sealed class LocalProfilePersistenceTests
         var applied = (await context.Database.GetAppliedMigrationsAsync()).ToArray();
         var pending = (await context.Database.GetPendingMigrationsAsync()).ToArray();
 
-        Assert.Equal(12, applied.Length);
+        Assert.Equal(13, applied.Length);
         Assert.EndsWith("_InitialLocalProfile", applied[0], StringComparison.Ordinal);
         Assert.EndsWith("_LessonReaderState", applied[1], StringComparison.Ordinal);
         Assert.EndsWith("_DiagnosticSessions", applied[2], StringComparison.Ordinal);
@@ -64,6 +64,8 @@ public sealed class LocalProfilePersistenceTests
         Assert.EndsWith("_PracticeLearningObservations", applied[8], StringComparison.Ordinal);
         Assert.EndsWith("_ReviewScheduling", applied[9], StringComparison.Ordinal);
         Assert.EndsWith("_ExamsDashboard", applied[10], StringComparison.Ordinal);
+        Assert.EndsWith("_ProjectSubmissions", applied[11], StringComparison.Ordinal);
+        Assert.EndsWith("_HumanAttestations", applied[12], StringComparison.Ordinal);
         Assert.Empty(pending);
     }
 

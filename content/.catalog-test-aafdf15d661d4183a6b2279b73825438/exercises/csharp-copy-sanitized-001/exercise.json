@@ -1,0 +1,82 @@
+{
+    "schemaVersion":  1,
+    "id":  "csharp-copy-sanitized-001",
+    "version":  1,
+    "title":  "Copier sans exposer la mutation",
+    "kind":  "csharp",
+    "difficulty":  2,
+    "skills":  [
+                   "csharp.encapsulation"
+               ],
+    "prerequisites":  [
+                          "oop-encapsulation-001"
+                      ],
+    "estimatedMinutes":  30,
+    "statement":  "statement.md",
+    "constraints":  [
+                        "Conserver exactement la signature publique",
+                        "Retourner une nouvelle collection et préserver strictement l’entrée.",
+                        "Ne pas modifier les entrées reçues sauf mention explicite"
+                    ],
+    "examples":  [
+                     {
+                         "input":  "[[-1,2]]",
+                         "output":  "[0,2]"
+                     }
+                 ],
+    "reflectionFields":  [
+                             "reformulation",
+                             "inputs",
+                             "expectedOutput",
+                             "edgeCases",
+                             "hypothesis",
+                             "plan"
+                         ],
+    "starterPath":  "starter/",
+    "visibleTestsPath":  "tests/visible/",
+    "hiddenTestsPath":  "tests/hidden/",
+    "hints":  [
+                  {
+                      "level":  1,
+                      "kind":  "socratic",
+                      "content":  "Quel invariant de « Copier sans exposer la mutation » doit rester vrai pour les cas limites ?"
+                  },
+                  {
+                      "level":  2,
+                      "kind":  "location",
+                      "content":  "Concentrez la décision dans la méthode SanitizeCopy, sans état global."
+                  },
+                  {
+                      "level":  3,
+                      "kind":  "strategy",
+                      "content":  "Retourner une nouvelle collection et préserver strictement l’entrée."
+                  },
+                  {
+                      "level":  4,
+                      "kind":  "partial-pseudocode",
+                      "content":  "si values est null lever ArgumentNullException ; allouer un tableau de la même longueur ; pour chaque index, y écrire le plus grand entre zéro et l'élément lu ; retourner la copie"
+                  }
+              ],
+    "solution":  {
+                     "path":  "solution/",
+                     "unlock":  {
+                                    "seriousAttempts":  2,
+                                    "minimumDelayMinutes":  10
+                                }
+                 },
+    "explanation":  "explanation.md",
+    "complexity":  "O(n) en temps et O(n) en espace",
+    "commonMistakes":  [
+                           "Assainir en place et rendre la mutation visible par l'appelant",
+                           "Retourner la référence reçue quand aucune valeur n'est négative",
+                           "Filtrer les valeurs négatives au lieu de les ramener à zéro, ce qui change la longueur",
+                           "Traiter un tableau vide comme une entrée invalide"
+                       ],
+    "variantId":  "csharp-age-group-001",
+    "reviewCards":  [
+                        "card-csharp-copy-sanitized-001-rule",
+                        "card-csharp-copy-sanitized-001-edge"
+                    ],
+    "interviewQuestionId":  "interview-csharp-copy-sanitized-001",
+    "license":  "CC-BY-4.0"
+}

@@ -51,6 +51,9 @@
                                 "api-retry-after-001",
                                 "api-skip-count-001",
                                 "api-version-route-001",
-                                "api-webhook-replay-001"
+                                "api-webhook-replay-001",
+                                "api-http-status-headers-001",
+                                "api-di-lifetime-analysis-001",
+                                "security-login-feedback-001"
                             ]
 }

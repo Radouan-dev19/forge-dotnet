@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "cases": [
+    {
+      "name": "Visible_VolumeBeatsTheOthers",
+      "message": "Trois règles applicables : c'est la plus avantageuse qui sort, pas leur somme.",
+      "arguments": [200.00, 10, true],
+      "expected": 30.00,
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Visible_NoRuleGivesZero",
+      "message": "Aucune règle applicable : zéro, sans exception.",
+      "arguments": [50.00, 2, false],
+      "expected": 0.00,
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Visible_BasketFixedAmount",
+      "message": "La règle de panier rend un montant fixe, indépendant du total.",
+      "arguments": [150.00, 2, false],
+      "expected": 12.00,
+      "argumentsUnchanged": true
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "suiteId": "ci-gate-evidence-001.v1",
+  "exerciseId": "ci-gate-evidence-001",
+  "exerciseVersion": 1,
+  "typeName": "Submission",
+  "methodName": "GateDecision",
+  "parameterTypes": ["string", "string"],
+  "returnType": "string"
+}

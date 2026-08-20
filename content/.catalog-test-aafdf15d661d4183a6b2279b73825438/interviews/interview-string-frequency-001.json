@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "id": "interview-string-frequency-001",
+  "version": 1,
+  "title": "Tokeniser une chaîne simplement",
+  "level": "junior",
+  "durationMinutes": 7,
+  "skills": ["csharp.strings", "csharp.dictionaries"],
+  "question": "Comment compterais-tu les mots sans oublier ponctuation, casse et dernier élément ?",
+  "observableCriteria": [
+    "La règle de reconnaissance des caractères est explicite et indépendante des séparateurs",
+    "Le dernier mot, le vide, null, la casse et les accents sont testés"
+  ],
+  "modelAnswer": "Je parcours chaque caractère, j’accumule lettres et chiffres normalisés, puis je finalise le mot sur tout séparateur et après la boucle. Une fonction unique met à jour le dictionnaire. Je refuse null et teste ponctuation, accents et fin sans séparateur.",
+  "commonMistakes": ["Utiliser Split uniquement sur un espace"],
+  "variants": ["Conserver aussi la position de la première occurrence"],
+  "license": "CC-BY-4.0"
+}

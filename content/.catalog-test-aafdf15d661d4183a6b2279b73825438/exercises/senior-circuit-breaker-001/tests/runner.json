@@ -1,0 +1,12 @@
+{
+  "schemaVersion": 1,
+  "suiteId": "senior-circuit-breaker-001.v1",
+  "exerciseId": "senior-circuit-breaker-001",
+  "exerciseVersion": 1,
+  "typeName": "Submission",
+  "methodName": "CircuitState",
+  "parameterTypes": [
+    "string"
+  ],
+  "returnType": "string"
+}

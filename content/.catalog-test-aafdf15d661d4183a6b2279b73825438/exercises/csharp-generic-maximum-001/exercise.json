@@ -1,0 +1,82 @@
+{
+    "schemaVersion":  1,
+    "id":  "csharp-generic-maximum-001",
+    "version":  1,
+    "title":  "Trouver un maximum générique illustré",
+    "kind":  "csharp",
+    "difficulty":  2,
+    "skills":  [
+                   "csharp.generics"
+               ],
+    "prerequisites":  [
+                          "generics-delegates-001"
+                      ],
+    "estimatedMinutes":  30,
+    "statement":  "statement.md",
+    "constraints":  [
+                        "Conserver exactement la signature publique",
+                        "Initialiser depuis une donnée réelle et définir explicitement le cas vide.",
+                        "Ne pas modifier les entrées reçues sauf mention explicite"
+                    ],
+    "examples":  [
+                     {
+                         "input":  "[[1,5,2]]",
+                         "output":  "5"
+                     }
+                 ],
+    "reflectionFields":  [
+                             "reformulation",
+                             "inputs",
+                             "expectedOutput",
+                             "edgeCases",
+                             "hypothesis",
+                             "plan"
+                         ],
+    "starterPath":  "starter/",
+    "visibleTestsPath":  "tests/visible/",
+    "hiddenTestsPath":  "tests/hidden/",
+    "hints":  [
+                  {
+                      "level":  1,
+                      "kind":  "socratic",
+                      "content":  "Quel invariant de « Trouver un maximum générique illustré » doit rester vrai pour les cas limites ?"
+                  },
+                  {
+                      "level":  2,
+                      "kind":  "location",
+                      "content":  "Concentrez la décision dans la méthode MaximumOrZero, sans état global."
+                  },
+                  {
+                      "level":  3,
+                      "kind":  "strategy",
+                      "content":  "Initialiser depuis une donnée réelle et définir explicitement le cas vide."
+                  },
+                  {
+                      "level":  4,
+                      "kind":  "partial-pseudocode",
+                      "content":  "si values est absent ou vide retourner zéro ; sinon initialiser le maximum avec le premier élément, puis le remplacer dès qu'une valeur lue est strictement plus grande"
+                  }
+              ],
+    "solution":  {
+                     "path":  "solution/",
+                     "unlock":  {
+                                    "seriousAttempts":  2,
+                                    "minimumDelayMinutes":  10
+                                }
+                 },
+    "explanation":  "explanation.md",
+    "complexity":  "O(n) en temps et O(1) en espace",
+    "commonMistakes":  [
+                           "Initialiser le maximum à zéro et se tromper sur un tableau entièrement négatif",
+                           "Initialiser à la plus petite valeur du type et masquer le cas vide",
+                           "Lever sur une collection vide alors que le contrat annonce zéro",
+                           "Remplacer sur une comparaison large et écrire sans changer le résultat"
+                       ],
+    "variantId":  "csharp-delegate-double-001",
+    "reviewCards":  [
+                        "card-csharp-generic-maximum-001-rule",
+                        "card-csharp-generic-maximum-001-edge"
+                    ],
+    "interviewQuestionId":  "interview-csharp-generic-maximum-001",
+    "license":  "CC-BY-4.0"
+}

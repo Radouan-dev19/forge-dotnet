@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "id": "interview-azure-hosting-profile-001",
+  "version": 1,
+  "title": "Choisir un hébergement géré par le profil de la charge",
+  "level": "intermediate",
+  "durationMinutes": 8,
+  "skills": ["azure.hosting"],
+  "question": "Trois charges arrivent : une interface continue livrée en deux versions actives, un traitement réveillé par des messages, un conteneur interne à version unique. Comment structurez-vous le choix d'hébergement pour ne pas décider à l'habitude ?",
+  "observableCriteria": [
+    "Le rythme est posé comme première question, avec la facturation comme conséquence la plus dure à corriger",
+    "Le mode de livraison départage les rythmes continus : révisions à trafic réparti ou emplacements d'échange",
+    "Chaque recommandation est motivée, et la raison indique quelle évolution du profil rouvre la décision"
+  ],
+  "modelAnswer": "Je pose les questions dans un ordre fixe, parce que chacune a des conséquences plus difficiles à corriger que la suivante. Le rythme d'abord : il détermine le modèle de facturation. Le traitement réveillé par des messages dort la plupart du temps — sur une instance permanente, il paierait ses nuits ; il va vers la facturation à l'événement s'il est livré en code, vers la mise à zéro entre deux réveils s'il est conteneurisé. Pour les charges continues, la question suivante est la livraison : l'interface à deux versions actives avec bascule de trafic a besoin d'un mécanisme de révisions — répartition de trafic pour un conteneur, emplacements d'échange pour du code. Le conteneur interne à version unique n'a besoin de rien de tout cela : l'exécution gérée l'héberge sans la complexité des révisions. Deux disciplines complètent la grille. Chaque recommandation porte sa raison, parce que la raison dit quelle évolution rouvre la décision — une raison de facturation se réexamine quand le rythme change, pas quand l'équipe change d'avis. Et je me méfie du dimensionnement « pour plus tard » : payer aujourd'hui la complexité d'une capacité hypothétique est presque toujours un plus mauvais échange que migrer le jour du vrai besoin, qui est un chantier borné.",
+  "commonMistakes": [
+    "Héberger toutes les charges sur le service que l'équipe connaît, quel que soit leur profil",
+    "Dimensionner pour une capacité future hypothétique et payer sa complexité dès aujourd'hui"
+  ],
+  "variants": [
+    "Ajouter une contrainte de résidence des données et demander où elle entre dans la grille.",
+    "Demander quels signaux de facturation surveiller pour détecter un profil mal classé."
+  ],
+  "license": "CC-BY-4.0"
+}

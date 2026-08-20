@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "id": "interview-security-oauth-flow-001",
+  "version": 1,
+  "title": "Choisir le flux depuis un profil de client",
+  "level": "intermediate",
+  "durationMinutes": 7,
+  "skills": [
+    "security.authentication",
+    "security.token"
+  ],
+  "question": "Un nouveau client doit s'intégrer à votre guichet : quelles questions posez-vous pour choisir son flux, et quels flux refusez-vous d'office ?",
+  "observableCriteria": [
+    "Les deux axes sont posés dans l'ordre : présence d'un utilisateur, puis capacité à garder un secret",
+    "Le code avec preuve est recommandé pour tout client avec utilisateur, confidentiel compris",
+    "Les flux implicite et mot de passe sont refusés avec leur raison respective, pas par simple autorité"
+  ],
+  "modelAnswer": "Deux questions dans l'ordre : un humain est-il dans la boucle, et le client peut-il garder un secret ? Avec un utilisateur, code d'autorisation avec preuve d'échange, pour tous les clients — la preuve ne coûte rien au confidentiel et protège le public. Sans utilisateur, identifiants client si le client est confidentiel ; s'il ne l'est pas, aucun flux légitime n'existe et la réponse est une identité gérée par la plateforme. Je refuse d'office l'implicite — jetons exposés dans l'adresse, pas d'authentification à l'échange — et le mot de passe, qui fait transiter le secret de l'utilisateur par le client et casse la délégation comme le multifacteur.",
+  "commonMistakes": [
+    "Choisir les identifiants client pour une application serveur avec utilisateurs, au motif qu'elle est confidentielle",
+    "Accepter un profil de client incomplet en devinant l'axe manquant"
+  ],
+  "variants": [
+    "Relier l'identité gérée d'une plateforme d'hébergement au flux d'identifiants client qu'elle implémente.",
+    "Planifier la migration d'un client historique en flux mot de passe vers le code avec preuve."
+  ],
+  "license": "CC-BY-4.0"
+}

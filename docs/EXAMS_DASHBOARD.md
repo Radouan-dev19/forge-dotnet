@@ -2,7 +2,7 @@
 
 ## Portée
 
-Lʼincrément 07C livre le moteur dʼexamen local, son rapport auditable et un dashboard calculé exclusivement depuis les données déjà persistées. Les incréments 08 à 10 fournissent huit banques complètes : trois banques C# pour S1–S7, une banque mixte SQL/EF Core pour S8–S10, une banque API/sécurité S11–S14, une banque tests/qualité S15–S17, une banque Azure/observabilité S21–S22 et une synthèse technique S1–S24. Le type de soumission est figé avec chaque item et impose le runner autorisé ; SQL nʼest jamais simulé par un exercice C# et la défense manuelle du projet final nʼest jamais présentée comme automatiquement notée.
+Lʼincrément 07C livre le moteur dʼexamen local, son rapport auditable et un dashboard calculé exclusivement depuis les données déjà persistées. Les incréments 08 à 10 puis les lots de densité fournissent neuf banques du socle (plus la banque senior) : trois banques C# pour S1–S7, une banque mixte SQL/EF Core pour S8–S10 — qui tire aussi les trois exercices EF Core `ef-*` du catalogue —, une banque API/sécurité S11–S14, une banque tests/qualité S15–S17, une banque livraison S18–S20 (`delivery-pipeline-v1`), une banque Azure/observabilité S21–S22 et une synthèse technique S1–S24. Le type de soumission est figé avec chaque item et impose le runner autorisé ; SQL nʼest jamais simulé par un exercice C# et la défense manuelle du projet final nʼest jamais présentée comme automatiquement notée.
 
 ## États, tirage et temps
 
@@ -26,7 +26,7 @@ La finalisation est transactionnelle et versionnée : statut, instant de fin et 
 
 ## Examen 4 SQL/EF Core
 
-La banque `sql-ef-core-v1` dure 120 minutes et tire ses huit candidats : six requêtes SQL et deux exercices EF Core. `FileSystemExamBankSource` fige pour chaque item identité, version, révision SHA-256, domaine et `ExamSubmissionKind`. Un snapshot absent, obsolète ou possédant un type inconnu est refusé à la lecture.
+La banque `sql-ef-core-v1` dure 120 minutes et tire huit items parmi onze candidats : six requêtes SQL, deux scénarios EF Core à dossier `exam/` et les trois exercices EF Core du catalogue (S8–S10). `FileSystemExamBankSource` fige pour chaque item identité, version, révision SHA-256, domaine et `ExamSubmissionKind`. Un snapshot absent, obsolète ou possédant un type inconnu est refusé à la lecture.
 
 - Une soumission `Sql` est confiée exclusivement à `SqlLabExamRunner`. Celui-ci recharge l’attente privée par identité/version/révision, crée une session SqlLab jetable, exécute la requête avec le login minimal et l’attente structurée, puis détruit la session même après refus, timeout ou annulation. Une absence de preuve de nettoyage refuse le résultat.
 - Une soumission EF Core reste du C# et passe par `ICodeRunner`. Les deux starters et solutions utilisent réellement EF Core avec SQLite en mémoire dans le conteneur éphémère : aucune base de progression, aucun réseau, fichier hôte ou secret n’est accessible.
@@ -65,7 +65,7 @@ Les événements d’activité proviennent des leçons, diagnostics, tentatives 
 
 ## Vérifications automatiques
 
-La catégorie `ExamIntegrity` couvre tirage et seed, échéance et reprise, rapport différé, redaction des tests cachés, verrouillage des aides, fin concurrente, abandon, timeout, redémarrage, routage SQL sans appel au runner C#, échec vers révision/maîtrise, activité avec inactivité, métriques absentes, réussite avant solution et non-compensation dʼune porte critique. `ContentS1S10`, `SqlLabExam` et `ContentS1S10Docker` contrôlent respectivement les quatre premières banques, les six solutions SQL jetables et les deux starters/solutions EF isolés. `ContentS11S20` vérifie les banques 5–6 et `ContentS21S24` vérifie les banques 7–8, leurs références et lʼabsence de solution publique. Le test E2E publie les huit banques sans solution.
+La catégorie `ExamIntegrity` couvre tirage et seed, échéance et reprise, rapport différé, redaction des tests cachés, verrouillage des aides, fin concurrente, abandon, timeout, redémarrage, routage SQL sans appel au runner C#, échec vers révision/maîtrise, activité avec inactivité, métriques absentes, réussite avant solution et non-compensation dʼune porte critique. `ContentS1S10`, `SqlLabExam` et `ContentS1S10Docker` contrôlent respectivement les quatre premières banques, les six solutions SQL jetables et les deux starters/solutions EF isolés. `ContentS11S20` vérifie les banques 5–6 et `ContentS21S24` vérifie les banques 8–9, leurs références et lʼabsence de solution publique. Le test E2E publie les banques sans solution.
 
 ```powershell
 dotnet build ForgeDotNet.sln --no-restore --disable-build-servers
@@ -89,7 +89,7 @@ Ce parcours a été rejoué le 29 juillet 2026 sur une base temporaire : réussi
 
 ## Limites assumées
 
-- La banque `reference-csharp-foundations-v1` contient 16 candidats S1–S2, en tire huit et dure 90 minutes. Les banques `csharp-modern-v1` et `algorithm-debug-v1` couvrent respectivement S3–S4 et S5–S7 avec 16 candidats chacune. La banque `sql-ef-core-v1` contient six soumissions SQL réelles et deux soumissions EF Core réelles, toutes imposées par son tirage de huit items. `api-security-v1` contient 16 candidats et `tests-quality-v1` en contient 15 ; chacune tire huit items, dure 120 minutes et exige 80 %. `azure-observability-v1` contient 15 candidats, tire huit items et dure 120 minutes ; `final-readiness-v1` contient 16 candidats, tire huit items et dure 150 minutes. Leur seuil reste 80 %.
+- La banque `reference-csharp-foundations-v1` contient 16 candidats S1–S2, en tire huit et dure 90 minutes. Les banques `csharp-modern-v1` et `algorithm-debug-v1` couvrent respectivement S3–S4 et S5–S7 avec 16 candidats chacune. La banque `sql-ef-core-v1` contient six soumissions SQL réelles et deux soumissions EF Core réelles, toutes imposées par son tirage de huit items. `api-security-v1` contient 48 candidats et `tests-quality-v1` en contient 25 ; chacune tire huit items, dure 120 minutes et exige 80 %. `delivery-pipeline-v1` contient les 23 exercices S18–S20, tire huit items et dure 120 minutes. `azure-observability-v1` contient 17 candidats S21–S22, tire huit items et dure 120 minutes ; `final-readiness-v1` contient 24 candidats, tire huit items et dure 150 minutes ; `senior-readiness-v1` contient les 32 exercices de la piste senior, tire huit items et dure 120 minutes. Leur seuil reste 80 %.
 - Le mode runner configuré détermine si une validation automatique est disponible. Un runner indisponible ne crée ni réussite ni preuve.
 - Un utilisateur maître de sa machine locale peut employer une aide extérieure ; la déclaration, le temps, le tirage, les tests cachés et les réévaluations renforcent la crédibilité sans promettre une inviolabilité.
 - Le temps actif est une estimation transparente fondée sur des événements, pas un suivi continu ni une mesure de productivité.

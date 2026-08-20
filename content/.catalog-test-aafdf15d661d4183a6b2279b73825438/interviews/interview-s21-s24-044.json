@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "id": "interview-s21-s24-044",
+  "version": 1,
+  "title": "Construire une réponse STAR",
+  "level": "advanced",
+  "durationMinutes": 12,
+  "skills": [
+    "career.star"
+  ],
+  "question": "Que rend une réponse STAR vérifiable ?",
+  "observableCriteria": [
+    "La contribution personnelle est isolée de celle de l'équipe dans la partie action",
+    "Le résultat cite une observation réelle, et la rétrospective nomme une amélioration"
+  ],
+  "modelAnswer": "La situation et la tâche restent brèves, lʼaction précise ma contribution personnelle, le résultat cite une observation réelle et la rétrospective nomme une amélioration.",
+  "commonMistakes": [
+    "Étendre la situation et la tâche au détriment de l'action réellement personnelle"
+  ],
+  "variants": [
+    "Changez une contrainte du scénario « Construire une réponse STAR » et expliquez si la décision reste valide."
+  ],
+  "license": "CC-BY-4.0"
+}

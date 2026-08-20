@@ -1,0 +1,66 @@
+{
+    "schemaVersion": 1,
+    "id": "senior-compensation-001",
+    "version": 1,
+    "title": "Ordonner la compensation d'une saga",
+    "kind": "csharp",
+    "difficulty": 3,
+    "skills": ["quality.consistency"],
+    "prerequisites": [],
+    "estimatedMinutes": 40,
+    "statement": "statement.md",
+    "constraints": [
+        "Conserver exactement la signature publique",
+        "Compenser dans l'ordre strictement inverse des etapes reussies",
+        "Une etape reussie s devient l'action compensatoire undo-s",
+        "Un corps absent leve ArgumentNullException"
+    ],
+    "examples": [
+        {
+            "input": "[\"reserve;charge;ship\"]",
+            "output": "\"undo-ship;undo-charge;undo-reserve\""
+        }
+    ],
+    "reflectionFields": ["reformulation", "inputs", "expectedOutput", "edgeCases", "hypothesis", "plan"],
+    "starterPath": "starter/",
+    "visibleTestsPath": "tests/visible/",
+    "hiddenTestsPath": "tests/hidden/",
+    "hints": [
+        {
+            "level": 1,
+            "kind": "socratic",
+            "content": "Une transaction locale annule tout d'un coup. Ici chaque etape a deja produit un effet visible ailleurs. Dans quel ordre defaire pour ne pas annuler une etape dont une autre depend encore ?"
+        },
+        {
+            "level": 2,
+            "kind": "location",
+            "content": "Separez la lecture des etapes reussies de leur annulation. La liste des etapes appliquees se parcourt une premiere fois pour la construire, une seconde fois a l'envers pour la compenser."
+        },
+        {
+            "level": 3,
+            "kind": "strategy",
+            "content": "Rassemblez les etapes non vides dans l'ordre recu, puis parcourez-les du dernier indice vers le premier en prefixant chaque nom par undo-. Le resultat vide correspond a une saga sans etape reussie."
+        },
+        {
+            "level": 4,
+            "kind": "partial-pseudocode",
+            "content": "refuser un completedSteps nul ; decouper sur point-virgule et ignorer les segments vides pour former la liste appliquee ; pour index de dernier a premier, ajouter undo- suivi de l'etape ; joindre par point-virgule"
+        }
+    ],
+    "solution": {
+        "path": "solution/",
+        "unlock": { "seriousAttempts": 2, "minimumDelayMinutes": 10 }
+    },
+    "explanation": "explanation.md",
+    "complexity": "O(n) en temps et en espace, n etant le nombre d'etapes reussies",
+    "commonMistakes": [
+        "Compenser dans l'ordre direct, ce qui defait une etape avant celles qui en dependent",
+        "Oublier de prefixer par undo- et rendre les etapes elles-memes au lieu de leurs annulations",
+        "Compter l'etape en echec parmi les etapes a compenser alors qu'elle n'a rien produit",
+        "Renvoyer une chaine non vide pour une saga sans etape reussie au lieu d'une chaine vide"
+    ],
+    "variantId": "senior-idempotency-key-001",
+    "reviewCards": ["card-senior-compensation-001-rule", "card-senior-compensation-001-edge"],
+    "interviewQuestionId": "interview-senior-compensation-001",
+    "license": "CC-BY-4.0"
+}

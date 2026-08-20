@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "cases": [
+    {
+      "name": "Visible_PlainReadNeedsNoHeader",
+      "message": "Une lecture d'une ressource présente se suffit du statut : aucun en-tête obligatoire.",
+      "arguments": ["method=get;state=present;load=normal"],
+      "expected": "200",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Visible_CreationCarriesItsAddress",
+      "message": "La création annonce une ressource nouvelle : l'adresse de ce qui vient d'être créé l'accompagne.",
+      "arguments": ["method=post;state=absent;load=normal"],
+      "expected": "201|Location",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Visible_ThrottlingOverridesEverything",
+      "message": "La charge court-circuite méthode et état, et le refus dit quand revenir.",
+      "arguments": ["method=get;state=absent;load=throttled"],
+      "expected": "429|Retry-After",
+      "argumentsUnchanged": true
+    }
+  ]
+}

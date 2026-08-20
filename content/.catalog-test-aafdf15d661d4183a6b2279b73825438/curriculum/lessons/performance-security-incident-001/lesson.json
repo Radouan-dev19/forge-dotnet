@@ -1,0 +1,36 @@
+{
+    "schemaVersion":  1,
+    "id":  "performance-security-incident-001",
+    "version":  1,
+    "title":  "Diagnostiquer performance et sécurité sans masquer la cause",
+    "week":  22,
+    "skills":  [
+                   {
+                       "id":  "observability.incident",
+                       "weight":  1
+                   }
+               ],
+    "prerequisites":  [
+                          "observability-alerts-costs-001"
+                      ],
+    "estimatedMinutes":  80,
+    "objectives":  [
+                       "Appliquer Diagnostiquer performance et sécurité sans masquer la cause à un cas nouveau et défendre la preuve observable associée"
+                   ],
+    "sections":  [
+                     "intuition",
+                     "explanation",
+                     "example",
+                     "counterExample",
+                     "check",
+                     "guided",
+                     "independent",
+                     "debugging",
+                     "interview",
+                     "summary",
+                     "reviewCards",
+                     "masteryTest"
+                 ],
+    "markdownPath":  "lesson.md",
+    "license":  "CC-BY-4.0"
+}

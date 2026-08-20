@@ -1,0 +1,82 @@
+{
+    "schemaVersion":  1,
+    "id":  "api-version-change-001",
+    "version":  1,
+    "title":  "Décider si un changement d'API est cassant",
+    "kind":  "csharp",
+    "difficulty":  3,
+    "skills":  [
+                   "api.contracts"
+               ],
+    "prerequisites":  [
+                          "api-versioning-001"
+                      ],
+    "estimatedMinutes":  30,
+    "statement":  "statement.md",
+    "constraints":  [
+                        "Conserver exactement la signature publique",
+                        "L'étiquette se normalise avant décision : rognée, casse aplanie en invariant",
+                        "Présomption de danger : tout changement non listé comme sûr est cassant"
+                    ],
+    "examples":  [
+                     {
+                         "input":  "[\"add-optional-input\"]",
+                         "output":  "false"
+                     }
+                 ],
+    "reflectionFields":  [
+                             "reformulation",
+                             "inputs",
+                             "expectedOutput",
+                             "edgeCases",
+                             "hypothesis",
+                             "plan"
+                         ],
+    "starterPath":  "starter/",
+    "visibleTestsPath":  "tests/visible/",
+    "hiddenTestsPath":  "tests/hidden/",
+    "hints":  [
+                  {
+                      "level":  1,
+                      "kind":  "socratic",
+                      "content":  "Quelle opération — ajouter, retirer, restreindre — laisse intacts tous les appels déjà en place chez des consommateurs qu'on ne contrôle pas ?"
+                  },
+                  {
+                      "level":  2,
+                      "kind":  "location",
+                      "content":  "La décision tient dans une correspondance sur l'étiquette normalisée : une liste fermée des cas sûrs, et un défaut qui présume le danger."
+                  },
+                  {
+                      "level":  3,
+                      "kind":  "strategy",
+                      "content":  "N'inscrivez dans les cas sûrs que les additions strictes ; un changement inconnu doit tomber du côté cassant, jamais l'inverse."
+                  },
+                  {
+                      "level":  4,
+                      "kind":  "partial-pseudocode",
+                      "content":  "rogner et aplanir la casse de l'étiquette ; la confronter à la liste fermée des changements sûrs — ajout d'entrée facultative, ajout de champ de sortie, ajout de point d'accès — et rendre faux ; pour tout le reste, y compris l'inconnu, rendre vrai"
+                  }
+              ],
+    "solution":  {
+                     "path":  "solution/",
+                     "unlock":  {
+                                    "seriousAttempts":  2,
+                                    "minimumDelayMinutes":  10
+                                }
+                 },
+    "explanation":  "explanation.md",
+    "complexity":  "O(1) en temps et en espace après normalisation de l'étiquette",
+    "commonMistakes":  [
+                           "Présumer un changement compatible par défaut et laisser passer une régression silencieuse",
+                           "Classer sûr le renommage d'un champ, qui est à la fois un retrait et un ajout",
+                           "Oublier de normaliser l'étiquette et refuser un cas sûr écrit en majuscules",
+                           "Considérer l'ajout d'un champ d'entrée obligatoire comme non cassant"
+                       ],
+    "variantId":  "api-version-route-001",
+    "reviewCards":  [
+                        "card-api-version-change-001-rule",
+                        "card-api-version-change-001-edge"
+                    ],
+    "interviewQuestionId":  "interview-api-version-change-001",
+    "license":  "CC-BY-4.0"
+}

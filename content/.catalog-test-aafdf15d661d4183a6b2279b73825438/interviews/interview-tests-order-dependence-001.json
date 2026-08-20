@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "id": "interview-tests-order-dependence-001",
+  "version": 1,
+  "title": "Diagnostiquer les tests couplés par l'ordre",
+  "level": "intermediate",
+  "durationMinutes": 8,
+  "skills": ["tests.isolation"],
+  "question": "Un test échoue sur la chaîne d'intégration et passe sur votre machine, sans différence de code. Comment prouvez-vous qu'il s'agit d'un couplage par l'ordre d'exécution, et comment le distinguez-vous d'un test simplement cassé ?",
+  "observableCriteria": [
+    "La méthode de preuve est expérimentale : rejouer la suite dans des ordres différents et comparer les verdicts par test",
+    "La distinction entre test instable — verdicts divergents — et test cassé — verdict stable rouge — est nette",
+    "Au moins une cause racine typique est nommée : état statique, base non remise à zéro, ressource partagée"
+  ],
+  "modelAnswer": "Je ne commence pas par lire le code : je fais rejouer la suite plusieurs fois en mélangeant l'ordre des tests, et je compare les verdicts test par test. Un test dont le verdict change entre les exécutions — sur le même code — est couplé par l'ordre : la place qu'il occupe est la seule variable qui a bougé. Un test qui échoue dans tous les ordres est simplement cassé, ce qui est un problème plus sain : son verdict est stable et informatif. La distinction commande la suite du travail : le cassé se répare en corrigeant le code ou l'assertion, l'instable se répare en cherchant l'état partagé — un champ statique, une base que personne ne remet à zéro, un cache de processus, une horloge. Je fais aussi attention à comparer des campagnes comparables : si une exécution a filtré des tests, un absent n'a pas un verdict différent, il n'a pas de verdict, et le compter fabrique de faux instables. Une fois le coupable isolé, je reproduis en local en exécutant juste le test pollueur puis la victime, dans cet ordre.",
+  "commonMistakes": [
+    "Relancer la chaîne jusqu'au vert et fusionner sans diagnostic, ce qui apprend à l'équipe à ignorer le rouge",
+    "Classer instable un test qui échoue partout, et chercher un état partagé là où l'assertion est fausse"
+  ],
+  "variants": [
+    "Demander comment reproduire localement un couplage détecté sur la chaîne quand l'ordre y est aléatoire.",
+    "Étendre au parallélisme : deux tests corrects en séquence qui échouent en concurrence."
+  ],
+  "license": "CC-BY-4.0"
+}

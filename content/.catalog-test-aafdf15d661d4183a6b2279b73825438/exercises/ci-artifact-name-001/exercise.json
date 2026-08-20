@@ -1,0 +1,82 @@
+{
+    "schemaVersion":  1,
+    "id":  "ci-artifact-name-001",
+    "version":  1,
+    "title":  "Nommer un artefact de façon stable",
+    "kind":  "csharp",
+    "difficulty":  2,
+    "skills":  [
+                   "ci.artifacts"
+               ],
+    "prerequisites":  [
+                          "ci-pipeline-build-test-001"
+                      ],
+    "estimatedMinutes":  35,
+    "statement":  "statement.md",
+    "constraints":  [
+                        "Conserver exactement la signature publique",
+                        "Normaliser la branche, remplacer le séparateur et exiger un numéro positif.",
+                        "N'interroger aucun système de construction : la branche et le numéro sont fournis"
+                    ],
+    "examples":  [
+                     {
+                         "input":  "[\"main\",42]",
+                         "output":  "\"tests-main-42\""
+                     }
+                 ],
+    "reflectionFields":  [
+                             "reformulation",
+                             "inputs",
+                             "expectedOutput",
+                             "edgeCases",
+                             "hypothesis",
+                             "plan"
+                         ],
+    "starterPath":  "starter/",
+    "visibleTestsPath":  "tests/visible/",
+    "hiddenTestsPath":  "tests/hidden/",
+    "hints":  [
+                  {
+                      "level":  1,
+                      "kind":  "socratic",
+                      "content":  "Quel comportement public de « Nommer un artefact de façon stable » change exactement à la frontière ?"
+                  },
+                  {
+                      "level":  2,
+                      "kind":  "location",
+                      "content":  "Concentrez la validation et la décision dans ArtifactName, sans état global ni journal sensible."
+                  },
+                  {
+                      "level":  3,
+                      "kind":  "strategy",
+                      "content":  "Normaliser la branche, remplacer le séparateur et exiger un numéro positif."
+                  },
+                  {
+                      "level":  4,
+                      "kind":  "partial-pseudocode",
+                      "content":  "refuser une branche absente ou composée de blancs, ainsi qu'un numéro d'exécution nul ou négatif ; sinon retirer les blancs de bordure, uniformiser la casse, remplacer le séparateur de chemin, et composer le nom avec le préfixe et le numéro"
+                  }
+              ],
+    "solution":  {
+                     "path":  "solution/",
+                     "unlock":  {
+                                    "seriousAttempts":  2,
+                                    "minimumDelayMinutes":  10
+                                }
+                 },
+    "explanation":  "explanation.md",
+    "complexity":  "O(n) en temps et O(n) en espace",
+    "commonMistakes":  [
+                           "Laisser le séparateur de chemin dans le nom et casser le stockage de l'artefact",
+                           "Accepter un numéro d'exécution nul ou négatif",
+                           "Composer le nom sans uniformiser la casse et produire deux artefacts pour une même branche",
+                           "Reconstruire l'artefact au lieu de promouvoir celui déjà nommé"
+                       ],
+    "variantId":  "ci-deploy-gate-001",
+    "reviewCards":  [
+                        "card-ci-artifact-name-001-rule",
+                        "card-ci-artifact-name-001-security"
+                    ],
+    "interviewQuestionId":  "interview-ci-artifact-name-001",
+    "license":  "CC-BY-4.0"
+}

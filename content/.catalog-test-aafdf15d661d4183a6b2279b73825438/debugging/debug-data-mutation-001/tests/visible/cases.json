@@ -1,0 +1,35 @@
+{
+    "schemaVersion":  1,
+    "cases":  [
+                  {
+                      "name":  "Visible_Case1",
+                      "message":  "Observation qui trie les données — cas 1.",
+                      "arguments":  [
+                                        [
+                                            3,
+                                            1
+                                        ]
+                                    ],
+                      "expected":  [
+                                       1,
+                                       3
+                                   ],
+                      "expectedException":  null,
+                      "argumentsUnchanged":  true
+                  },
+                  {
+                      "name":  "Visible_Case2",
+                      "message":  "Observation qui trie les données — cas 2.",
+                      "arguments":  [
+                                        [
+
+                                        ]
+                                    ],
+                      "expected":  [
+
+                                   ],
+                      "expectedException":  null,
+                      "argumentsUnchanged":  true
+                  }
+              ]
+}

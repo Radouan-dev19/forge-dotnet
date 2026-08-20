@@ -1,0 +1,48 @@
+{
+    "schemaVersion":  1,
+    "cases":  [
+                  {
+                      "name":  "Hidden_Case1",
+                      "message":  "Indexer des fréquences entières — cas 1 hidden incorrect.",
+                      "arguments":  [
+                                        [
+                                            -1,
+                                            -1
+                                        ]
+                                    ],
+                      "expected":  {
+                                       "-1":  2
+                                   },
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_Case2",
+                      "message":  "Indexer des fréquences entières — cas 2 hidden incorrect.",
+                      "arguments":  [
+                                        [
+                                            0
+                                        ]
+                                    ],
+                      "expected":  {
+                                       "0":  1
+                                   },
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_AllDistinct",
+                      "message":  "Toutes les valeurs sont distinctes : autant d'entrées que d'éléments.",
+                      "arguments":  [[1,2,3]],
+                      "expected":  {"1":1,"2":1,"3":1},
+                      "argumentsUnchanged":  true
+                  },
+                  {
+                      "name":  "Hidden_OppositeSigns",
+                      "message":  "Valeurs opposées : réfute une clé construite sur la valeur absolue.",
+                      "arguments":  [[-5,5]],
+                      "expected":  {"-5":1,"5":1},
+                      "argumentsUnchanged":  true
+                  }
+              ]
+}

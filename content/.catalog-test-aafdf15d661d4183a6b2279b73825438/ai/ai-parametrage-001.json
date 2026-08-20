@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "id": "ai-parametrage-001",
+  "version": 1,
+  "title": "Paramétrer son assistant, couche par couche",
+  "summary": "Cinq couches de réglage, de la plus durable à la plus ponctuelle : consignes de dépôt versionnées, choix du modèle et de l'effort de raisonnement, sorties structurées par schéma, permissions d'outils au moindre privilège, et la requête elle-même.",
+  "order": 3,
+  "documentPath": "parametrage.md",
+  "license": "CC-BY-4.0"
+}

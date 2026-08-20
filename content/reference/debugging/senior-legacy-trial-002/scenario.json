@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "id": "senior-legacy-trial-002",
+  "version": 1,
+  "title": "Le bandeau d'essai annonce des jours negatifs",
+  "difficulty": 3,
+  "skills": ["debugging.legacy", "debugging.data"],
+  "prerequisites": ["csharp-date-expiry-001"],
+  "estimatedMinutes": 45,
+  "brokenRepositoryPath": "broken/",
+  "ticketPath": "ticket.md",
+  "expectedBehavior": "RemainingTrialDays rend le nombre de jours d'essai restants : la longueur d'essai moins les jours ecoules depuis le debut, sans jamais descendre sous zero. Une longueur d'essai inferieure a 1 est refusee par ArgumentException, une date du jour anterieure au debut l'est aussi.",
+  "logsPath": "logs.txt",
+  "checklist": [
+    "Reproduire avec une date du jour posterieure a la fin de l'essai",
+    "Suivre la valeur du reste calcule avant l'instruction de retour",
+    "Verifier ce que rend la fonction le jour exact ou l'essai expire",
+    "Figer un cas de non-regression sur un essai deja expire"
+  ],
+  "observationQuestions": [
+    "Quelle valeur rend la fonction pour un essai de 14 jours commence le 1er mars, consulte le 20 mars ?",
+    "A partir de quelle date du jour la valeur rendue cesse-t-elle d'etre affichable ?",
+    "Que vaut le reste calcule le jour exact de l'expiration, et ce jour est-il bien rendu comme zero ?",
+    "Quel ecart separe le nombre de jours ecoules de la longueur d'essai dans le cas signale par le support ?"
+  ],
+  "correctionPath": "correction/",
+  "regressionTestPath": "regression-test.md",
+  "journalFields": ["symptom", "context", "hypotheses", "evidence", "cause", "fix", "test", "prevention"],
+  "license": "CC-BY-4.0"
+}

@@ -1,0 +1,42 @@
+{
+    "schemaVersion":  1,
+    "id":  "debug-data-mutation-001",
+    "version":  1,
+    "title":  "Ordre d'arrivée perdu après consultation d'un rapport",
+    "difficulty":  3,
+    "skills":  [
+                   "debugging.data"
+               ],
+    "prerequisites":  [
+                          "debug-stacktraces-breakpoints-001"
+                      ],
+    "estimatedMinutes":  40,
+    "brokenRepositoryPath":  "broken/",
+    "ticketPath":  "ticket.md",
+    "expectedBehavior":  "Le rapport retourne une nouvelle collection classée, de même longueur et de même contenu que le lot reçu. Le lot d'origine conserve son ordre d'arrivée après l'appel.",
+    "logsPath":  "logs.txt",
+    "checklist":  [
+                      "Relever l'ordre du lot avant l'appel",
+                      "Consulter le rapport, puis relever de nouveau l'ordre du lot",
+                      "Comparer les deux relevés",
+                      "Ajouter au jeu de non-régression la vérification que le lot est intact"
+                  ],
+    "observationQuestions":  [
+                                 "Le lot reçu est-il le même objet que le rapport retourné ?",
+                                 "Quelle opération s'applique au lot plutôt qu'à un résultat séparé ?",
+                                 "Pourquoi le symptôme n'apparaît-il qu'après consultation du rapport ?"
+                             ],
+    "correctionPath":  "correction/",
+    "regressionTestPath":  "regression-test.md",
+    "journalFields":  [
+                          "symptom",
+                          "context",
+                          "hypotheses",
+                          "evidence",
+                          "cause",
+                          "fix",
+                          "test",
+                          "prevention"
+                      ],
+    "license":  "CC-BY-4.0"
+}

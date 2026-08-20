@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "id": "interview-api-webhook-replay-001",
+  "version": 1,
+  "title": "Fermer la fenêtre de rejeu d'un webhook",
+  "level": "intermediate",
+  "durationMinutes": 6,
+  "skills": [
+    "security.token",
+    "api.contracts"
+  ],
+  "question": "La signature d'un webhook est valide : pourquoi cela ne suffit-il pas, et qu'ajoutez-vous ?",
+  "observableCriteria": [
+    "Le rejeu est nommé comme la menace que la signature seule laisse entière",
+    "L'horodatage signé confronté à une fenêtre étroite est la parade",
+    "La fenêtre est symétrique pour absorber la dérive d'horloge dans les deux sens"
+  ],
+  "modelAnswer": "La signature prouve l'origine et l'intégrité, mais pas la fraîcheur : un envoi authentique capturé — dans un journal, un intermédiaire — peut être renvoyé tel quel, signature comprise, et resterait valide indéfiniment. J'ajoute donc un horodatage signé, que je confronte à une fenêtre étroite autour de l'instant courant : un envoi trop vieux est rejeté même si sa signature est parfaite. La fenêtre est symétrique, car l'horloge de l'émetteur peut être légèrement en avance — un envoi dans un futur proche est aussi légitime qu'un envoi en léger retard. Quelques minutes de tolérance suffisent ; plus large, je rouvre le rejeu. En renfort, un identifiant d'envoi unique mémorisé le temps de la fenêtre ferme même le rejeu immédiat.",
+  "commonMistakes": [
+    "Ne vérifier que le passé et rejeter un envoi légèrement en avance dû à une horloge rapide",
+    "Choisir une fenêtre trop large, qui laisse le temps d'un rejeu à froid"
+  ],
+  "variants": [
+    "Dimensionner la tolérance et la défendre en revue.",
+    "Décrire le rôle de l'identifiant d'envoi unique en complément de l'horodatage."
+  ],
+  "license": "CC-BY-4.0"
+}

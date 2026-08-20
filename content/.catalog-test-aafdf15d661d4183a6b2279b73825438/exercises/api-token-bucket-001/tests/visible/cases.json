@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "cases": [
+    {
+      "name": "Visible_PartialBucket",
+      "message": "Seau partiel : recharge puis consommation.",
+      "arguments": [
+        2,
+        5,
+        1
+      ],
+      "expected": 2,
+      "expectedException": null,
+      "argumentsUnchanged": false
+    },
+    {
+      "name": "Visible_FullBucketCapped",
+      "message": "Seau plein : recharge plafonnée, puis consommation.",
+      "arguments": [
+        5,
+        5,
+        3
+      ],
+      "expected": 4,
+      "expectedException": null,
+      "argumentsUnchanged": false
+    },
+    {
+      "name": "Visible_EmptyRefused",
+      "message": "Seau vide sans recharge : refus sans consommation.",
+      "arguments": [
+        0,
+        5,
+        0
+      ],
+      "expected": 0,
+      "expectedException": null,
+      "argumentsUnchanged": false
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "id": "interview-senior-review-owners-001",
+  "version": 1,
+  "title": "Expliquer la résolution des code owners sur un changement",
+  "level": "advanced",
+  "durationMinutes": 8,
+  "skills": ["quality.review"],
+  "question": "Un fichier de paiement est couvert à la fois par une règle sur son répertoire et par une règle exacte sur son chemin, avec des propriétaires différents. Qui doit relire, par quelle règle de résolution, et que doit faire l'outillage d'un fichier qu'aucune règle ne couvre ?",
+  "observableCriteria": [
+    "La résolution est nommée : le préfixe le plus long l'emporte, la règle exacte bat la règle de répertoire",
+    "Le vocabulaire est en place : code owners, longest prefix match, required reviewers",
+    "Le fichier non couvert est traité comme un refus de l'outillage, pas comme un fichier libre",
+    "La sortie est dédupliquée : un propriétaire touché par plusieurs fichiers n'est sollicité qu'une fois"
+  ],
+  "modelAnswer": "C'est le propriétaire de la règle exacte qui relit, par la règle du longest prefix match : quand plusieurs règles de code owners couvrent un même fichier, la plus spécifique — celle dont le motif partage le plus long préfixe avec le chemin — l'emporte, et une règle exacte sur le fichier bat toujours la règle sur son répertoire. La logique est celle de l'exception assumée : la règle de répertoire dit « l'équipe possède ce coin du dépôt », la règle exacte dit « sauf ce fichier-ci, qui a son spécialiste » — résoudre autrement, par la première règle écrite ou par l'union des deux, rendrait les exceptions impossibles ou noierait le spécialiste sous des co-signataires non concernés. Les required reviewers d'un changement sont alors l'union dédupliquée des gagnants fichier par fichier : un propriétaire que trois fichiers désignent n'est sollicité qu'une fois — l'outillage sollicite des personnes, pas des correspondances. Reste le fichier qu'aucune règle ne couvre, et c'est la décision la plus importante des trois : l'outillage doit refuser, pas laisser passer. Un fichier sans propriétaire qui se fusionne sans relecture obligatoire est précisément le trou par lequel les changements sensibles passent — un chemin de paiement renommé échappe à sa règle exacte et devient orphelin en silence. Le refus bruyant transforme chaque renommage en mise à jour du fichier de propriété, et c'est le but : la carte des propriétaires ne se périme jamais sans que quelqu'un le voie.",
+  "commonMistakes": [
+    "Appliquer la première règle qui correspond au lieu de la plus spécifique et court-circuiter les exceptions",
+    "Ignorer silencieusement les fichiers sans propriétaire et laisser les chemins renommés sans relecture"
+  ],
+  "variants": [
+    "Deux règles de même longueur couvrent le fichier : demander ce que la syntaxe doit interdire.",
+    "Demander le coût humain d'un propriétaire unique très sollicité et comment le répartir."
+  ],
+  "license": "CC-BY-4.0"
+}

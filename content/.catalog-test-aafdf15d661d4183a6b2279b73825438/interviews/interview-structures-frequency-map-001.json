@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "id": "interview-structures-frequency-map-001",
+  "version": 1,
+  "title": "Indexer des fréquences entières",
+  "level": "junior",
+  "durationMinutes": 5,
+  "skills": [
+    "structures.dictionary"
+  ],
+  "question": "Comment résoudriez-vous « Indexer des fréquences entières » et comment prouveriez-vous les bornes ?",
+  "observableCriteria": [
+    "La conversion des clés utilise une culture invariante, ce qui est justifié par la reproductibilité",
+    "Une seule entrée est incrémentée par valeur, sans double comptage"
+  ],
+  "modelAnswer": "Convertir les clés avec la culture invariante et incrémenter une seule entrée. Je prouve par des valeurs répétées, une valeur négative et un tableau vide ; O(n) attendu en temps et O(k) en espace.",
+  "commonMistakes": [
+    "Convertir avec la culture courante et produire des clés différentes selon la machine"
+  ],
+  "variants": [
+    "Changer une borne ou le volume tout en conservant la même règle de indexer des fréquences entières."
+  ],
+  "license": "CC-BY-4.0"
+}

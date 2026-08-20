@@ -1,0 +1,36 @@
+{
+    "schemaVersion":  1,
+    "id":  "sql-isolation-001",
+    "version":  1,
+    "title":  "Isolation et anomalies observables",
+    "week":  9,
+    "skills":  [
+                   {
+                       "id":  "sql.isolation",
+                       "weight":  1
+                   }
+               ],
+    "prerequisites":  [
+                          "sql-cte-transactions-001"
+                      ],
+    "estimatedMinutes":  70,
+    "objectives":  [
+                       "Expliquer puis appliquer Isolation et anomalies observables sur un cas métier borné"
+                   ],
+    "sections":  [
+                     "intuition",
+                     "explanation",
+                     "example",
+                     "counterExample",
+                     "check",
+                     "guided",
+                     "independent",
+                     "debugging",
+                     "interview",
+                     "summary",
+                     "reviewCards",
+                     "masteryTest"
+                 ],
+    "markdownPath":  "lesson.md",
+    "license":  "CC-BY-4.0"
+}

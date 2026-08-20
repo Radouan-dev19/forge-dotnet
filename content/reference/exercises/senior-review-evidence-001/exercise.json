@@ -1,0 +1,83 @@
+{
+  "schemaVersion": 1,
+  "id": "senior-review-evidence-001",
+  "version": 1,
+  "title": "Retrier les remarques de revue selon la force de leur preuve",
+  "kind": "csharp",
+  "difficulty": 4,
+  "skills": ["quality.review"],
+  "prerequisites": [],
+  "estimatedMinutes": 40,
+  "statement": "statement.md",
+  "constraints": [
+    "Conserver exactement la signature publique",
+    "Une préférence personnelle plafonne à mineure, quelle que soit la sévérité revendiquée",
+    "Une remarque théorique ne bloque jamais seule : le blocage exige la reproduction",
+    "Les verdicts sortent dans l'ordre du descriptif, une remarque chacun"
+  ],
+  "examples": [
+    {
+      "input": "null-deref:blocker:reproduces",
+      "output": "null-deref=blocker"
+    },
+    {
+      "input": "naming:blocker:preference",
+      "output": "naming=minor"
+    }
+  ],
+  "reflectionFields": [
+    "reformulation",
+    "inputs",
+    "expectedOutput",
+    "edgeCases",
+    "hypothesis",
+    "plan"
+  ],
+  "starterPath": "starter/",
+  "visibleTestsPath": "tests/visible/",
+  "hiddenTestsPath": "tests/hidden/",
+  "hints": [
+    {
+      "level": 1,
+      "kind": "socratic",
+      "content": "Un relecteur marque « bloquant » une remarque de nommage et la fusion attend deux jours. Qu'a coûté ce classement — et qu'aurait coûté l'erreur inverse sur le déréférencement nul reproduit ?"
+    },
+    {
+      "level": 2,
+      "kind": "location",
+      "content": "Chaque remarque porte deux informations indépendantes : la sévérité que le relecteur revendique et la force de sa preuve. Le triage confronte la première à la seconde, remarque par remarque."
+    },
+    {
+      "level": 3,
+      "kind": "strategy",
+      "content": "Trois niveaux de preuve, trois effets : la reproduction honore la revendication telle quelle, le théorique plafonne le bloquant à majeur, la préférence ramène tout à mineur — le faux positif classique est la préférence en capitales."
+    },
+    {
+      "level": 4,
+      "kind": "partial-pseudocode",
+      "content": "refuser un descriptif vide, une remarque sans ses trois champs, une valeur hors vocabulaire ou un nom répété ; pour chaque remarque appliquer l'effet de sa preuve à la sévérité revendiquée ; joindre les verdicts nom égale sévérité dans l'ordre d'entrée"
+    }
+  ],
+  "solution": {
+    "path": "solution/",
+    "unlock": {
+      "seriousAttempts": 2,
+      "minimumDelayMinutes": 10
+    }
+  },
+  "explanation": "explanation.md",
+  "complexity": "O(n) en temps pour n remarques et O(n) en espace pour les verdicts",
+  "commonMistakes": [
+    "Honorer la sévérité revendiquée sans regarder la preuve, et laisser une préférence geler la fusion",
+    "Plafonner aussi le majeur théorique alors que seul le blocage exige la reproduction",
+    "Promouvoir une remarque reproduite au-delà de sa revendication, que personne n'a demandée",
+    "Trier les verdicts par sévérité et perdre la correspondance avec le fil de revue"
+  ],
+  "variantId": "senior-review-triage-001",
+  "reviewCards": [
+    "card-senior-review-evidence-001-rule",
+    "card-senior-review-evidence-001-edge"
+  ],
+  "interviewQuestionId": "interview-senior-review-evidence-001",
+  "license": "CC-BY-4.0"
+}

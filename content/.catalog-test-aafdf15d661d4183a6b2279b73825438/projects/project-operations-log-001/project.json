@@ -1,0 +1,78 @@
+{
+  "schemaVersion": 1,
+  "id": "project-operations-log-001",
+  "version": 1,
+  "title": "Journal d'exploitation exploitable",
+  "difficulty": 3,
+  "weeks": [22],
+  "skills": ["observability.signals"],
+  "prerequisites": ["observability-correlation-001"],
+  "estimatedHours": 10,
+  "briefPath": "brief.md",
+  "starterPath": "starter/",
+  "achievementKey": "logs",
+  "maximumSourceFiles": 4,
+  "acceptanceSuites": [
+    { "milestoneId": "niveaux", "suitePath": "niveaux/" },
+    { "milestoneId": "caviardage", "suitePath": "caviardage/" },
+    { "milestoneId": "correlation", "suitePath": "correlation/" }
+  ],
+  "milestones": [
+    {
+      "id": "niveaux",
+      "title": "Choisir le niveau, respecter le seuil",
+      "evidence": "JournalRun émet chaque étape au niveau que sa nature impose, à travers le vrai ILogger, et le puits fourni prouve que le seuil minimal filtre réellement.",
+      "acceptanceCriteria": [
+        "Chaque entrée passe par ILogger : le puits fourni est la seule source du texte rendu",
+        "Le niveau vient de la nature de l'étape, jamais d'un choix décoratif",
+        "Une étape sous le seuil configuré n'apparaît nulle part"
+      ]
+    },
+    {
+      "id": "caviardage",
+      "title": "Caviarder avant d'émettre",
+      "evidence": "SecureEntry remplace chaque occurrence de chaque secret avant l'appel au journal : le puits ne voit jamais la valeur sensible.",
+      "acceptanceCriteria": [
+        "Le remplacement se fait avant l'émission, pas sur le texte déjà journalisé",
+        "Toutes les occurrences sont couvertes, y compris en sous-chaîne d'un mot",
+        "Une liste de secrets vide laisse le message intact"
+      ]
+    },
+    {
+      "id": "correlation",
+      "title": "Corréler par la portée, pas par le texte",
+      "evidence": "CorrelatedJournal ouvre la portée de corrélation par BeginScope, si bien que chaque entrée porte l'identifiant sans qu'aucun message ne le répète.",
+      "acceptanceCriteria": [
+        "L'identifiant de corrélation vient de la portée ouverte, jamais du message",
+        "Une sous-étape ouvre une portée imbriquée refermée avant l'étape suivante",
+        "L'ordre des entrées est l'ordre d'exécution des étapes"
+      ]
+    }
+  ],
+  "rubric": [
+    {
+      "criterion": "Le journal passe par l'infrastructure réelle, pas par une concaténation maison",
+      "weight": 0.4,
+      "observableEvidence": "Abaisser le seuil du puits fait apparaître des entrées sans changer le code de soumission."
+    },
+    {
+      "criterion": "Aucun secret n'atteint le puits",
+      "weight": 0.35,
+      "observableEvidence": "La valeur sensible est introuvable dans les entrées capturées, sous toutes ses occurrences."
+    },
+    {
+      "criterion": "La corrélation traverse les portées imbriquées",
+      "weight": 0.25,
+      "observableEvidence": "Les entrées d'une sous-étape portent la chaîne des portées, de la requête au groupe."
+    }
+  ],
+  "solutionPolicy": "no-complete-solution-before-submission",
+  "commonMistakes": [
+    "Construire le texte final à la main et n'utiliser le journal que comme un tampon de chaînes",
+    "Journaliser d'abord puis caviarder la copie rendue, en laissant le secret dans le puits",
+    "Répéter l'identifiant de corrélation dans chaque message au lieu d'ouvrir une portée",
+    "Oublier de refermer la portée imbriquée, ce qui contamine les étapes suivantes"
+  ],
+  "variantIds": ["project-incident-drill-001"],
+  "license": "CC-BY-4.0"
+}

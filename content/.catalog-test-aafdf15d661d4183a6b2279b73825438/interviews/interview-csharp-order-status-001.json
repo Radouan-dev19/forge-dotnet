@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "id": "interview-csharp-order-status-001",
+  "version": 1,
+  "title": "Traduire un état de commande",
+  "level": "junior",
+  "durationMinutes": 5,
+  "skills": [
+    "csharp.encapsulation"
+  ],
+  "question": "Comment résoudriez-vous « Traduire un état de commande » et comment prouveriez-vous les bornes ?",
+  "observableCriteria": [
+    "Le cas inconnu est rendu explicite au lieu d'être rabattu sur un état valide",
+    "La comparaison des libellés est définie quant à la casse"
+  ],
+  "modelAnswer": "Rendre le cas inconnu explicite au lieu d’inventer un état valide. Je prouve par chaque état connu, un état inconnu et un libellé de casse différente ; O(1) en temps et O(1) en espace.",
+  "commonMistakes": [
+    "Rabattre un état inconnu sur le premier état valide et masquer une donnée corrompue"
+  ],
+  "variants": [
+    "Changer une borne ou le volume tout en conservant la même règle de traduire un état de commande."
+  ],
+  "license": "CC-BY-4.0"
+}

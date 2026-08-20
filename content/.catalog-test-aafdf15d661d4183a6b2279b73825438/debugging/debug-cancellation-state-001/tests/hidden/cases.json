@@ -1,0 +1,25 @@
+{
+    "schemaVersion":  1,
+    "cases":  [
+                  {
+                      "name":  "Hidden_Case1",
+                      "message":  "État annulé présenté comme réussi — cas 1.",
+                      "arguments":  [
+                                        -1
+                                    ],
+                      "expected":  "failed",
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_Case2",
+                      "message":  "État annulé présenté comme réussi — cas 2.",
+                      "arguments":  [
+                                        2
+                                    ],
+                      "expected":  "failed",
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  }
+              ]
+}

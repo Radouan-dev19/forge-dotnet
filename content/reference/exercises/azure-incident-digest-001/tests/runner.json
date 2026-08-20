@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "suiteId": "azure-incident-digest-001.v1",
+  "exerciseId": "azure-incident-digest-001",
+  "exerciseVersion": 1,
+  "typeName": "Submission",
+  "methodName": "IncidentDigest",
+  "parameterTypes": ["string"],
+  "returnType": "string"
+}

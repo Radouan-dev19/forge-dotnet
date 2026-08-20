@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "id": "interview-docker-hardening-audit-001",
+  "version": 1,
+  "title": "Auditer le durcissement d'un conteneur avec gravités",
+  "level": "intermediate",
+  "durationMinutes": 8,
+  "skills": ["docker.hardening"],
+  "question": "On vous demande d'auditer les conteneurs d'une équipe. Quels réglages vérifiez-vous, comment graduez-vous les écarts, et pourquoi votre relevé doit-il être complet et stable plutôt que de s'arrêter au premier problème ?",
+  "observableCriteria": [
+    "Le socle vérifié est énuméré : identité non-root, élévation bloquée, réseau isolé, capacités abandonnées, système de fichiers en lecture seule",
+    "La graduation est justifiée par ce que chaque écart donne à un attaquant déjà entré",
+    "Le relevé complet et ordonné est défendu comme plan de correction et outil de suivi"
+  ],
+  "modelAnswer": "Je vérifie cinq réglages : l'identité du processus, l'interdiction d'élévation de privilèges, l'isolement réseau, l'abandon des capacités et la lecture seule du système de fichiers. Je gradue par ce que chaque écart donne à un attaquant qui a déjà un pied dans le conteneur. Critiques : l'identité racine — plus d'étape à franchir après la compromission du processus — et l'élévation autorisée, qui permet de s'en fabriquer une. Hauts : la pile réseau de l'hôte et les capacités par défaut, qui élargissent la surface sans donner directement les clés. Moyen : le système de fichiers inscriptible, qui facilite la persistance d'un intrus mais n'aide pas à entrer. Le relevé est complet parce qu'il sert de plan : s'arrêter au premier écart condamne à un cycle corriger-relancer-découvrir, et l'équipe qui doit vivre une semaine avec un écart doit pouvoir choisir lequel. Il est stable — même ordre quelle que soit la description d'entrée — parce qu'un relevé se suit dans le temps : le différentiel d'une semaine à l'autre révèle les régressions. Et je refuse d'auditer une description incomplète : un réglage absent signifie presque toujours la valeur par défaut de la plateforme, celle que le durcissement corrige — présumer la conformité de ce qu'on n'a pas vu, c'est signer un relevé faux.",
+  "commonMistakes": [
+    "Rendre un verdict binaire qui ne dit pas quoi corriger en premier",
+    "Présumer durci tout réglage absent de la configuration décrite"
+  ],
+  "variants": [
+    "Demander comment intégrer cet audit dans la porte de livraison sans bloquer sur les écarts moyens.",
+    "Ajouter les limites de ressources au socle et demander leur gravité argumentée."
+  ],
+  "license": "CC-BY-4.0"
+}

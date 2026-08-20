@@ -1,0 +1,36 @@
+{
+    "schemaVersion":  1,
+    "id":  "sql-pagination-001",
+    "version":  1,
+    "title":  "Pagination stable et bornée",
+    "week":  10,
+    "skills":  [
+                   {
+                       "id":  "sql.pagination",
+                       "weight":  1
+                   }
+               ],
+    "prerequisites":  [
+                          "sql-index-plans-001"
+                      ],
+    "estimatedMinutes":  70,
+    "objectives":  [
+                       "Expliquer puis appliquer Pagination stable et bornée sur un cas métier borné"
+                   ],
+    "sections":  [
+                     "intuition",
+                     "explanation",
+                     "example",
+                     "counterExample",
+                     "check",
+                     "guided",
+                     "independent",
+                     "debugging",
+                     "interview",
+                     "summary",
+                     "reviewCards",
+                     "masteryTest"
+                 ],
+    "markdownPath":  "lesson.md",
+    "license":  "CC-BY-4.0"
+}

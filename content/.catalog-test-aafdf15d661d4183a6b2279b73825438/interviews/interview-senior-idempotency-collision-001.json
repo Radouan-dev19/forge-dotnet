@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "id": "interview-senior-idempotency-collision-001",
+  "version": 1,
+  "title": "Expliquer la collision de clés d'idempotence et sa parade",
+  "level": "advanced",
+  "durationMinutes": 9,
+  "skills": ["quality.idempotency"],
+  "question": "Un marchand vous signale des paiements qui « disparaissent » sans erreur. Son intégration envoie une idempotency key avec chaque requête. Quelle hypothèse examinez-vous en premier, comment la vérifiez-vous, et que doit faire votre serveur pour que cette famille de bogues devienne bruyante ?",
+  "observableCriteria": [
+    "L'hypothèse de la collision est posée : une clé recyclée pour une opération différente, rejouée en silence",
+    "La vérification passe par le rapprochement des empreintes de charge sous une même clé",
+    "La parade serveur est décrite : mémoriser l'empreinte avec la réponse et refuser la divergence en conflit explicite",
+    "La distinction relance légitime contre collision est nette : même clé même charge contre même clé charge différente"
+  ],
+  "modelAnswer": "Un paiement qui disparaît sans erreur porte la signature de la collision d'idempotency key : le client a réutilisé une clé pour une opération différente — générateur fondé sur l'horodatage à la seconde, compteur remis à zéro — et mon serveur, reconnaissant la clé, a rejoué la réponse de la première opération. Le second paiement n'a jamais existé, et les deux côtés ont reçu des réponses polies. Je vérifie par le rapprochement des empreintes : sous chaque clé du journal, combien de charges utiles distinctes ? Une clé, une empreinte : relance légitime — c'est l'usage nominal. Une clé, deux empreintes : collision, et le journal me dit depuis quand et à quelle fréquence. La parade durable est côté serveur : mémoriser l'empreinte de la charge avec la réponse, et répondre à toute divergence par un conflit explicite — un 409 ou équivalent — plutôt que par le rejeu. La collision devient alors bruyante à la première occurrence, chez le client qui peut la corriger, au lieu de silencieuse chez le marchand qui la subit. C'est la moitié oubliée du contrat d'idempotence : la clé promet une opération, et le serveur doit vérifier la promesse.",
+  "commonMistakes": [
+    "Chercher le paiement perdu dans les journaux de transport alors qu'il a été avalé par le rejeu",
+    "Rejouer la réponse sur toute clé connue sans comparer la charge, et entériner la collision"
+  ],
+  "variants": [
+    "Demander quelle durée de rétention donner au magasin clé-réponse et ce que la purge risque.",
+    "Le client ne peut pas changer son générateur : demander les options côté serveur."
+  ],
+  "license": "CC-BY-4.0"
+}

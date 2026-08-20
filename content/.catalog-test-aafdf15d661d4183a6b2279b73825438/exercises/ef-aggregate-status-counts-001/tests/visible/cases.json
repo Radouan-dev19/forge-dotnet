@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "cases": [
+    {
+      "name": "Visible_FloorOfTwoDropsTheLoner",
+      "message": "Le statut annulé n'a qu'une occurrence : le filtre de groupe l'élimine côté serveur.",
+      "arguments": [2],
+      "expected": { "pending": 2, "shipped": 3 },
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Visible_FloorOfOneKeepsEveryStatus",
+      "message": "Tout statut atteint un plancher de un : le dictionnaire complet sort de la requête.",
+      "arguments": [1],
+      "expected": { "canceled": 1, "pending": 2, "shipped": 3 },
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Visible_FloorOfThreeKeepsTheLeader",
+      "message": "Seul le statut expédié atteint trois occurrences.",
+      "arguments": [3],
+      "expected": { "shipped": 3 },
+      "argumentsUnchanged": true
+    }
+  ]
+}

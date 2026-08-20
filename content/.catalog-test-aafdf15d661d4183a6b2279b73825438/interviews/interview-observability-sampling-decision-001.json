@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "id": "interview-observability-sampling-decision-001",
+  "version": 1,
+  "title": "Décider d'échantillonner une trace",
+  "level": "junior",
+  "durationMinutes": 7,
+  "skills": ["observability.sampling"],
+  "question": "Votre service trace une requête sur cent. Un incident survient et la trace qui l'expliquait a été jetée. Qu'auriez-vous dû décider autrement, et comment garantissez-vous que deux services traversés prennent la même décision ?",
+  "observableCriteria": [
+    "La conservation inconditionnelle des traces en erreur est justifiée par la différence entre mesurer et comprendre",
+    "La reproductibilité de la décision est reliée à la dérivation depuis l'identifiant plutôt qu'à un tirage",
+    "Le signe du reste de division entière est identifié comme piège sur une empreinte négative"
+  ],
+  "modelAnswer": "Une trace ordinaire sert à mesurer et vaut n'importe quelle autre ; une trace en erreur sert à comprendre et n'a pas d'équivalent. Je conserve donc les erreurs sans condition, avant tout calcul de taux. Pour la fraction restante, je dérive la décision de l'empreinte de l'identifiant de trace plutôt que d'un tirage : deux services qui voient la même trace concluent pareil, sans se coordonner, et la trace distribuée reste entière. Le piège d'implémentation est le signe du reste, qui suit le dividende : une empreinte négative donne un seau négatif, systématiquement inférieur au taux, donc conservé à tort — le volume réel dépasse alors le taux demandé sans qu'aucun test positif ne le montre.",
+  "commonMistakes": [
+    "Échantillonner les erreurs au même taux que le reste",
+    "Tirer un nombre au hasard, ce qui troue les traces distribuées"
+  ],
+  "variants": [
+    "Demander comment le taux devrait varier selon la charge du service.",
+    "Demander ce qui change si la décision est prise en fin de trace plutôt qu'à son début."
+  ],
+  "license": "CC-BY-4.0"
+}

@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "cases": [
+    {
+      "name": "Visible_FreeSlotExecutesImmediately",
+      "message": "Quatre exécutions sur dix emplacements : la requête passe sans toucher la file.",
+      "arguments": [10, 4, 20, 0],
+      "expected": "execute|slot-available",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Visible_FullSlotsQueueTheRequest",
+      "message": "Les emplacements sont pleins mais la file absorbe la pointe.",
+      "arguments": [10, 10, 20, 5],
+      "expected": "enqueue|slots-full",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Visible_SaturationRejectsFast",
+      "message": "Exécution et file pleines : le rejet rapide rend la main au lieu de retenir un fil.",
+      "arguments": [10, 10, 20, 20],
+      "expected": "reject|bulkhead-saturated",
+      "argumentsUnchanged": true
+    }
+  ]
+}

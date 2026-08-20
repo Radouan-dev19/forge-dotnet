@@ -1,0 +1,32 @@
+{
+    "schemaVersion":  1,
+    "cases":  [
+                  {
+                      "name":  "Visible_Case1",
+                      "message":  "Borner une mémoire de conteneur — cas 1 incorrect.",
+                      "arguments":  [
+                                        512
+                                    ],
+                      "expected":  512,
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Visible_Case2",
+                      "message":  "Borner une mémoire de conteneur — cas 2 incorrect.",
+                      "arguments":  [
+                                        0
+                                    ],
+                      "expected":  256,
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Visible_AtLowerBound",
+                      "message":  "Demande exactement à la borne basse : conservée.",
+                      "arguments":  [128],
+                      "expected":  128,
+                      "argumentsUnchanged":  true
+                  }
+              ]
+}

@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "id": "interview-senior-hotspot-ranking-001",
+  "version": 1,
+  "title": "Prioriser un refactoring par analyse des points chauds",
+  "level": "advanced",
+  "durationMinutes": 8,
+  "skills": ["debugging.legacy"],
+  "question": "On vous donne trois mois pour « réduire la dette » d'un dépôt de deux mille fichiers hérités. Par quelle mesure croisée choisissez-vous les cibles, sous quel nom anglais cette pratique circule-t-elle, et pourquoi ni la complexité seule ni l'historique seul ne suffisent-ils ?",
+  "observableCriteria": [
+    "La mesure est un produit : churn multiplié par complexité, tiré de l'historique de versions",
+    "Le vocabulaire est en place : hotspot analysis, churn, complexité",
+    "Les deux mesures seules sont réfutées : le complexe stable ne coûte rien, le simple remué se relit vite",
+    "La discipline du classement est tenue : un petit nombre de cibles, départage déterministe"
+  ],
+  "modelAnswer": "La pratique s'appelle hotspot analysis, et sa mesure est un produit : le churn — combien de fois un fichier a changé, lu dans l'historique de versions — multiplié par sa complexité. Le produit repose sur un raisonnement de coût : la dette d'un fichier ne coûte que quand on le visite, et elle coûte d'autant plus cher que la visite est difficile. La complexité seule désigne les mauvaises cibles : un module affreux mais stable — le parseur écrit il y a huit ans que personne ne touche — ne fait payer sa laideur à personne, et le refactorer est un risque pris sans gain. Le churn seul se trompe aussi : un fichier de configuration remué chaque semaine mais trivial à relire ne fait perdre de temps à personne. C'est le croisement qui désigne les vrais gouffres — remués souvent ET difficiles à chaque fois — et sur deux mille fichiers, il en isole typiquement une poignée qui concentre l'essentiel du coût. D'où la discipline du classement : un top réduit, trois cibles pour trois mois, parce qu'un classement de deux mille lignes est une liste de courses que personne n'exécute. Le départage doit être déterministe — à produit égal, l'ordre alphabétique — pour que deux exécutions rendent le même plan et que la priorisation soit défendable en comité. Je calcule le produit en large : churn et complexité à quelques dizaines de milliers débordent un entier de trente-deux bits, et un débordement silencieux inverserait le classement.",
+  "commonMistakes": [
+    "Refactorer les fichiers les plus complexes sans regarder s'ils changent encore",
+    "Rendre un classement exhaustif au lieu d'un top réduit et ne rien exécuter du tout"
+  ],
+  "variants": [
+    "Demander comment extraire le churn d'un dépôt git en une commande et ses pièges (renommages).",
+    "Le point chaud numéro un appartient à une équipe hostile au refactoring : demander la suite."
+  ],
+  "license": "CC-BY-4.0"
+}

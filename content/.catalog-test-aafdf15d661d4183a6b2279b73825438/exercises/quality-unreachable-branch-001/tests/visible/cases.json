@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "cases": [
+    {
+      "name": "Visible_ComplementaryConditionsAreBothReachable",
+      "message": "Deux conditions qui se partagent le domaine sans se recouvrir sont toutes deux atteignables.",
+      "arguments": ["<0|>=0"],
+      "expected": 0,
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Visible_NarrowerConditionAfterAWiderOneIsDead",
+      "message": "Une condition incluse dans une condition antérieure ne sera jamais évaluée à vrai.",
+      "arguments": ["<10|<5"],
+      "expected": 2,
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Visible_EqualityCoveredByTwoEarlierRanges",
+      "message": "Deux conditions qui couvrent tout le domaine rendent morte toute condition suivante.",
+      "arguments": ["<0|>=0|==5"],
+      "expected": 3,
+      "argumentsUnchanged": true
+    }
+  ]
+}

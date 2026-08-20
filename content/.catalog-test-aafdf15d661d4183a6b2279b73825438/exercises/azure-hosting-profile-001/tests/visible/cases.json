@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "cases": [
+    {
+      "name": "Visible_ContainerWithRevisionsGetsRevisionHosting",
+      "message": "Un conteneur livré en plusieurs révisions actives va vers l'hébergement à répartition de trafic.",
+      "arguments": ["artifact=container;scale=steady;delivery=multi-revision"],
+      "expected": "container-apps|revision-traffic",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Visible_PlainCodeGetsManagedRuntime",
+      "message": "Du code continu à version unique : la plateforme d'exécution gérée suffit.",
+      "arguments": ["artifact=code;scale=steady;delivery=single-revision"],
+      "expected": "app-service|managed-runtime",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Visible_EventDrivenCodeBillsPerEvent",
+      "message": "Une charge qui dort épouse la facturation à l'événement, quel que soit son mode de livraison.",
+      "arguments": ["artifact=code;scale=event-driven;delivery=single-revision"],
+      "expected": "functions|per-event-billing",
+      "argumentsUnchanged": true
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "suiteId": "senior-chain-availability-001.v1",
+  "exerciseId": "senior-chain-availability-001",
+  "exerciseVersion": 1,
+  "typeName": "Submission",
+  "methodName": "ChainAvailability",
+  "parameterTypes": ["string"],
+  "returnType": "decimal"
+}

@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "id": "english-card-06-written",
+  "version": 1,
+  "title": "Optional cloud lab — written update",
+  "level": "B1",
+  "durationMinutes": 12,
+  "skills": [
+    "english.written",
+    "azure.local"
+  ],
+  "situation": "In a technical discussion, a learner has no Azure subscription. You must write the decision accurately without overstating the evidence.",
+  "instructions": [
+    "Write four sentences stating what the simulation covers, what it cannot cover, and what would be needed to close the gap."
+  ],
+  "vocabulary": [
+    {
+      "term": "simulation scope",
+      "meaning": "the exact set of behaviours a local stand-in reproduces, outside of which its results say nothing"
+    },
+    {
+      "term": "unproven step",
+      "meaning": "a part of a procedure that was never executed, and which an honest report names instead of implying"
+    }
+  ],
+  "expectedElements": [
+    "What the simulation proves is bounded explicitly",
+    "At least one unproven step is named",
+    "What would close the gap is stated concretely"
+  ],
+  "modelAnswer": "The exercise runs against a local simulation rather than a real subscription. This proves that the deployment definition parses and that our scripts execute in order, which is the evidence the review required. It does not prove that the provider accepts the definition, that quotas permit it, or that network rules behave as written. Closing that gap requires one real run against a temporary subscription, which I estimate at one day.",
+  "commonMistakes": [
+    "Letting the audience assume a simulated run is a deployment",
+    "Naming the gap without saying what would close it"
+  ],
+  "variants": [
+    "Rewrite the update as a request for a temporary subscription."
+  ],
+  "license": "CC-BY-4.0"
+}

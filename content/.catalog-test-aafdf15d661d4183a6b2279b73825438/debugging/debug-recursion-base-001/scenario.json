@@ -1,0 +1,42 @@
+{
+    "schemaVersion":  1,
+    "id":  "debug-recursion-base-001",
+    "version":  1,
+    "title":  "Calcul de coefficient qui fait tomber le service",
+    "difficulty":  3,
+    "skills":  [
+                   "debugging.stacktrace"
+               ],
+    "prerequisites":  [
+                          "structures-stacks-queues-001"
+                      ],
+    "estimatedMinutes":  40,
+    "brokenRepositoryPath":  "broken/",
+    "ticketPath":  "ticket.md",
+    "expectedBehavior":  "Le coefficient vaut un pour zéro et pour un, et le produit décroissant au-delà. Une valeur négative ou trop grande pour la plage supportée est refusée explicitement plutôt que calculée.",
+    "logsPath":  "logs.txt",
+    "checklist":  [
+                      "Reproduire avec la valeur zéro",
+                      "Lire la trace et repérer l'appel qui se répète",
+                      "Suivre la valeur passée à chaque appel successif",
+                      "Décider du comportement attendu pour une valeur négative"
+                  ],
+    "observationQuestions":  [
+                                 "Quelle valeur arrête effectivement la suite d'appels, et laquelle devrait l'arrêter ?",
+                                 "Que devient la valeur passée après avoir dépassé la condition d'arrêt ?",
+                                 "La plage supportée est-elle bornée quelque part ?"
+                             ],
+    "correctionPath":  "correction/",
+    "regressionTestPath":  "regression-test.md",
+    "journalFields":  [
+                          "symptom",
+                          "context",
+                          "hypotheses",
+                          "evidence",
+                          "cause",
+                          "fix",
+                          "test",
+                          "prevention"
+                      ],
+    "license":  "CC-BY-4.0"
+}

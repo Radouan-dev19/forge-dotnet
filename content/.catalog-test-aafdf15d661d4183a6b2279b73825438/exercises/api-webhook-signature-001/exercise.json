@@ -1,0 +1,84 @@
+{
+    "schemaVersion":  1,
+    "id":  "api-webhook-signature-001",
+    "version":  1,
+    "title":  "Vérifier la signature HMAC d'un webhook",
+    "kind":  "csharp",
+    "difficulty":  4,
+    "skills":  [
+                   "security.token",
+                   "api.contracts"
+               ],
+    "prerequisites":  [
+                          "api-webhooks-001",
+                          "security-jwt-signature-001"
+                      ],
+    "estimatedMinutes":  40,
+    "statement":  "statement.md",
+    "constraints":  [
+                        "Conserver exactement la signature publique",
+                        "La signature couvre l'horodatage et le corps joints, dans cet ordre exact",
+                        "Le corps se vérifie tel qu'il est reçu, jamais re-sérialisé, et la comparaison est en temps constant"
+                    ],
+    "examples":  [
+                     {
+                         "input":  "[1749990000, \"{\\\"event\\\":\\\"paid\\\"}\", \"forge-fake-webhook-secret\", \"<signature hexadécimale>\"]",
+                         "output":  "true"
+                     }
+                 ],
+    "reflectionFields":  [
+                             "reformulation",
+                             "inputs",
+                             "expectedOutput",
+                             "edgeCases",
+                             "hypothesis",
+                             "plan"
+                         ],
+    "starterPath":  "starter/",
+    "visibleTestsPath":  "tests/visible/",
+    "hiddenTestsPath":  "tests/hidden/",
+    "hints":  [
+                  {
+                      "level":  1,
+                      "kind":  "socratic",
+                      "content":  "Sur quelle chaîne exacte l'émetteur a-t-il calculé sa signature — le corps seul, ou quelque chose qui lie aussi l'horodatage ?"
+                  },
+                  {
+                      "level":  2,
+                      "kind":  "location",
+                      "content":  "Reconstituez d'abord la chaîne signée, recalculez le condensat, puis comparez en temps constant ; le décodage de la signature présentée peut échouer et vaut alors refus."
+                  },
+                  {
+                      "level":  3,
+                      "kind":  "strategy",
+                      "content":  "Le corps se compare tel qu'il est reçu : toute re-sérialisation en changerait la forme et ferait échouer une signature pourtant authentique."
+                  },
+                  {
+                      "level":  4,
+                      "kind":  "partial-pseudocode",
+                      "content":  "joindre l'horodatage et le corps par le séparateur convenu ; calculer le condensat HMAC sur cette chaîne avec le secret ; décoder la signature hexadécimale présentée, refuser si le décodage échoue ou si les longueurs diffèrent ; comparer les deux condensats en temps constant"
+                  }
+              ],
+    "solution":  {
+                     "path":  "solution/",
+                     "unlock":  {
+                                    "seriousAttempts":  2,
+                                    "minimumDelayMinutes":  10
+                                }
+                 },
+    "explanation":  "explanation.md",
+    "complexity":  "O(n) en temps, n étant la longueur du corps",
+    "commonMistakes":  [
+                           "Signer le corps seul en oubliant l'horodatage que l'émetteur inclut dans la chaîne signée",
+                           "Re-sérialiser le corps avant de vérifier, ce qui rompt toute signature authentique",
+                           "Comparer les condensats par égalité de chaînes plutôt qu'en temps constant",
+                           "Laisser une exception de décodage remonter au lieu de traduire une signature malformée en refus"
+                       ],
+    "variantId":  "api-webhook-replay-001",
+    "reviewCards":  [
+                        "card-api-webhook-signature-001-rule",
+                        "card-api-webhook-signature-001-edge"
+                    ],
+    "interviewQuestionId":  "interview-api-webhook-signature-001",
+    "license":  "CC-BY-4.0"
+}

@@ -90,6 +90,14 @@ else
             </article>
         }
         <p>Aucune moyenne ne compense une compétence critique ou un livrable absent.</p>
+        @if (_dashboard.Gates.Any(gate => gate.Gate == MasteryGate.A && gate.IsOpen))
+        {
+            <p class="notice">
+                La porte A est ouverte : les candidatures peuvent commencer. Le <a href="/career">kit
+                carrière</a> transforme les preuves collectées en CV, réponses d'entretien et plan de
+                négociation.
+            </p>
+        }
     </section>
 }
 

@@ -1,0 +1,39 @@
+{
+    "schemaVersion":  1,
+    "cases":  [
+                  {
+                      "name":  "Hidden_Case1",
+                      "message":  "Borner la complexité structurelle — cas 1 incorrect.",
+                      "arguments":  [
+                                        4
+                                    ],
+                      "expected":  false,
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_Case2",
+                      "message":  "Borner la complexité structurelle — cas 2 incorrect.",
+                      "arguments":  [
+                                        -1
+                                    ],
+                      "expected":  false,
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_FarAboveBudget",
+                      "message":  "Profondeur très supérieure : refusée comme quatre.",
+                      "arguments":  [100],
+                      "expected":  false,
+                      "argumentsUnchanged":  true
+                  },
+                  {
+                      "name":  "Hidden_FarBelowZero",
+                      "message":  "Profondeur très négative : refusée, elle n'a pas de sens.",
+                      "arguments":  [-100],
+                      "expected":  false,
+                      "argumentsUnchanged":  true
+                  }
+              ]
+}

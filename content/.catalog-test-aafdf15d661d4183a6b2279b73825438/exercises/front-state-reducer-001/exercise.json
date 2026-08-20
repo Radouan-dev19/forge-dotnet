@@ -1,0 +1,80 @@
+{
+    "schemaVersion": 1,
+    "id": "front-state-reducer-001",
+    "version": 1,
+    "title": "Réduire un état immuable à partir d'une suite d'actions",
+    "kind": "csharp",
+    "difficulty": 3,
+    "skills": [
+        "csharp.immutability"
+    ],
+    "prerequisites": [],
+    "estimatedMinutes": 35,
+    "statement": "statement.md",
+    "constraints": [
+        "Conserver exactement la signature publique",
+        "Ne jamais muter l'état reçu : construire un nouveau dictionnaire",
+        "Une action inconnue ou mal formée est ignorée, jamais une erreur"
+    ],
+    "examples": [
+        {
+            "input": "[\"x=9;y=8\", \"del:x;set:z=7\"]",
+            "output": "\"y=8;z=7\""
+        }
+    ],
+    "reflectionFields": [
+        "reformulation",
+        "inputs",
+        "expectedOutput",
+        "edgeCases",
+        "hypothesis",
+        "plan"
+    ],
+    "starterPath": "starter/",
+    "visibleTestsPath": "tests/visible/",
+    "hiddenTestsPath": "tests/hidden/",
+    "hints": [
+        {
+            "level": 1,
+            "kind": "socratic",
+            "content": "Si vous modifiez directement la structure reçue, qui d'autre dans l'interface tient encore une référence vers l'ancien état et le verra changer sous ses pieds ?"
+        },
+        {
+            "level": 2,
+            "kind": "location",
+            "content": "Le traitement se joue en deux temps distincts : lire state en une table clé vers valeur, puis rejouer chaque verbe de actions sur une copie ; c'est la phase d'écriture qui doit viser une nouvelle table."
+        },
+        {
+            "level": 3,
+            "kind": "strategy",
+            "content": "Traitez inc comme une lecture suivie d'une écriture : valeur absente vaut zéro, valeur non entière fait abandonner l'action sans toucher à la table, valeur entière donne l'incrément. Le tri final porte sur les clés."
+        },
+        {
+            "level": 4,
+            "kind": "partial-pseudocode",
+            "content": "copier state dans une table ordinale ; pour chaque segment de actions coupé sur le premier deux-points en verb et args : set exige un égal dans args sinon on ignore ; del retire la clé args ; inc lit args, absent vaut 0, non entier abandonne, sinon plus un ; enfin trier les clés en ordinal et joindre par point-virgule"
+        }
+    ],
+    "solution": {
+        "path": "solution/",
+        "unlock": {
+            "seriousAttempts": 2,
+            "minimumDelayMinutes": 10
+        }
+    },
+    "explanation": "explanation.md",
+    "complexity": "O(n log n) en temps, n étant le nombre de clés à trier à la sortie",
+    "commonMistakes": [
+        "Muter la table reçue au lieu d'en construire une nouvelle, exposant l'ancien état à un changement inattendu",
+        "Incrémenter une valeur non entière au lieu d'ignorer l'action, transformant du texte en nombre",
+        "Faire échouer l'ensemble sur un verbe inconnu au lieu de l'ignorer segment par segment",
+        "Trier la sortie autrement qu'en ordinal, rendant le résultat dépendant de la culture courante"
+    ],
+    "variantId": "front-form-field-state-001",
+    "reviewCards": [
+        "card-front-state-reducer-001-rule",
+        "card-front-state-reducer-001-edge"
+    ],
+    "interviewQuestionId": "interview-front-state-reducer-001",
+    "license": "CC-BY-4.0"
+}

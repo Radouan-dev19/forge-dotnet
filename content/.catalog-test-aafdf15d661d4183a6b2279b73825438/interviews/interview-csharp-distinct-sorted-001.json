@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "id": "interview-csharp-distinct-sorted-001",
+  "version": 1,
+  "title": "Figer des valeurs distinctes triées",
+  "level": "junior",
+  "durationMinutes": 5,
+  "skills": [
+    "csharp.linq"
+  ],
+  "question": "Comment résoudriez-vous « Figer des valeurs distinctes triées » et comment prouveriez-vous les bornes ?",
+  "observableCriteria": [
+    "La déduplication précède le tri, et l'ordre des deux opérations est justifié par le coût",
+    "La matérialisation a lieu exactement une fois, ce qui est dit explicitement"
+  ],
+  "modelAnswer": "Dédupliquer avant de trier et matérialiser exactement une fois. Je prouve par une séquence tout en doublons, une séquence déjà triée et une séquence vide ; O(n log n) en temps et O(n) en espace.",
+  "commonMistakes": [
+    "Trier avant de dédupliquer et payer le tri sur des valeurs qui vont disparaître"
+  ],
+  "variants": [
+    "Changer une borne ou le volume tout en conservant la même règle de figer des valeurs distinctes triées."
+  ],
+  "license": "CC-BY-4.0"
+}

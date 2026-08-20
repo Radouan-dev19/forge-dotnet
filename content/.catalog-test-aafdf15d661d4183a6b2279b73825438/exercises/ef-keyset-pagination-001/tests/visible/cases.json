@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "cases": [
+    {
+      "name": "Visible_FirstPageFromTheStartCursor",
+      "message": "Le curseur zéro ouvre le parcours : trois identifiants en ordre croissant malgré l'insertion en désordre.",
+      "arguments": [0, 3],
+      "expected": [3, 8, 11],
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Visible_MiddlePageAfterAnExistingId",
+      "message": "Le curseur posé sur onze, déjà lu, n'est pas resservi : la page commence strictement après.",
+      "arguments": [11, 3],
+      "expected": [14, 21, 27],
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Visible_LastPageIsShorterThanRequested",
+      "message": "La fin du parcours rend moins que la taille demandée sans que ce soit une erreur.",
+      "arguments": [27, 10],
+      "expected": [35],
+      "argumentsUnchanged": true
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "suiteId": "csharp-loop-range-sum-001.v1",
+  "exerciseId": "csharp-loop-range-sum-001",
+  "exerciseVersion": 1,
+  "typeName": "Submission",
+  "methodName": "SumInclusive",
+  "parameterTypes": ["int", "int"],
+  "returnType": "int"
+}

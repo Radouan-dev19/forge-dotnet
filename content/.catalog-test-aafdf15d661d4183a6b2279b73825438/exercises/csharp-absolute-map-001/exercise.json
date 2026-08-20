@@ -1,0 +1,82 @@
+{
+    "schemaVersion":  1,
+    "id":  "csharp-absolute-map-001",
+    "version":  1,
+    "title":  "Projeter des valeurs absolues",
+    "kind":  "csharp",
+    "difficulty":  2,
+    "skills":  [
+                   "csharp.lambdas"
+               ],
+    "prerequisites":  [
+                          "generics-delegates-001"
+                      ],
+    "estimatedMinutes":  30,
+    "statement":  "statement.md",
+    "constraints":  [
+                        "Conserver exactement la signature publique",
+                        "Projeter vers un nouveau tableau et ne pas muter la source.",
+                        "Ne pas modifier les entrées reçues sauf mention explicite"
+                    ],
+    "examples":  [
+                     {
+                         "input":  "[[-2,0,3]]",
+                         "output":  "[2,0,3]"
+                     }
+                 ],
+    "reflectionFields":  [
+                             "reformulation",
+                             "inputs",
+                             "expectedOutput",
+                             "edgeCases",
+                             "hypothesis",
+                             "plan"
+                         ],
+    "starterPath":  "starter/",
+    "visibleTestsPath":  "tests/visible/",
+    "hiddenTestsPath":  "tests/hidden/",
+    "hints":  [
+                  {
+                      "level":  1,
+                      "kind":  "socratic",
+                      "content":  "Quel invariant de « Projeter des valeurs absolues » doit rester vrai pour les cas limites ?"
+                  },
+                  {
+                      "level":  2,
+                      "kind":  "location",
+                      "content":  "Concentrez la décision dans la méthode AbsoluteAll, sans état global."
+                  },
+                  {
+                      "level":  3,
+                      "kind":  "strategy",
+                      "content":  "Projeter vers un nouveau tableau et ne pas muter la source."
+                  },
+                  {
+                      "level":  4,
+                      "kind":  "partial-pseudocode",
+                      "content":  "si values est null lever ArgumentNullException ; allouer un tableau de la même longueur ; pour chaque index, y écrire la valeur absolue de l'élément lu ; retourner le nouveau tableau sans avoir touché l'entrée"
+                  }
+              ],
+    "solution":  {
+                     "path":  "solution/",
+                     "unlock":  {
+                                    "seriousAttempts":  2,
+                                    "minimumDelayMinutes":  10
+                                }
+                 },
+    "explanation":  "explanation.md",
+    "complexity":  "O(n) en temps et O(n) en espace",
+    "commonMistakes":  [
+                           "Écrire les valeurs absolues dans le tableau reçu au lieu d'en allouer un nouveau",
+                           "Retourner la référence d'entrée quand aucune valeur n'est négative",
+                           "Oublier que l'opposé de la plus petite valeur entière signée n'est pas représentable",
+                           "Traiter un tableau vide comme une entrée invalide"
+                       ],
+    "variantId":  "csharp-word-histogram-001",
+    "reviewCards":  [
+                        "card-csharp-absolute-map-001-rule",
+                        "card-csharp-absolute-map-001-edge"
+                    ],
+    "interviewQuestionId":  "interview-csharp-absolute-map-001",
+    "license":  "CC-BY-4.0"
+}

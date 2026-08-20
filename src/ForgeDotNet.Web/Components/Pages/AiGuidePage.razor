@@ -1,0 +1,52 @@
+@page "/ai/{GuideId}"
+@using ForgeDotNet.Application.Preparation
+@using ForgeDotNet.Domain.Ai
+@inject IAiGuideSource Guides
+
+<PageTitle>@(_guide?.Title ?? "Guide IA") — Forge.NET</PageTitle>
+
+@if (_error is not null)
+{
+    <p class="error-message" role="alert">@_error</p>
+}
+else if (_guide is null)
+{
+    <p role="status">Chargement du guide…</p>
+}
+else
+{
+    <h1>@_guide.Title</h1>
+    <p>@_guide.Summary</p>
+    <p class="notice" role="status">
+        Ce guide ne produit aucune preuve de maîtrise. Il outille votre pratique d'assistant hors des
+        preuves du parcours : exercices comptés et examens restent des séances sans IA.
+    </p>
+
+    <section class="practice-panel" aria-labelledby="ai-guide-body-title">
+        <h2 id="ai-guide-body-title">Guide</h2>
+        <pre class="runner-output">@_guide.Body</pre>
+    </section>
+
+    <p><a href="/ai">Retour au chapitre IA</a></p>
+}
+
+@code {
+    [Parameter]
+    public string GuideId { get; set; } = string.Empty;
+
+    private AiGuide? _guide;
+    private string? _error;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        try
+        {
+            _guide = await Guides.GetAsync(GuideId);
+            _error = _guide is null ? "Guide IA introuvable." : null;
+        }
+        catch (Exception exception) when (exception is InvalidDataException or InvalidOperationException)
+        {
+            _error = exception.Message;
+        }
+    }
+}

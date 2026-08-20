@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "id": "interview-senior-boundary-score-001",
+  "version": 1,
+  "title": "Trancher une frontière de service avec des critères observables",
+  "level": "advanced",
+  "durationMinutes": 9,
+  "skills": ["quality.boundaries"],
+  "question": "Deux modules d'un monolithe sont candidats à la séparation. L'architecte dit « ça se sent », vous devez le dire avec des critères. Lesquels regardez-vous, dans quel ordre de priorité, et sous quels noms anglais la littérature les range-t-elle ?",
+  "observableCriteria": [
+    "Les critères sont observables : données partagées en écriture, transaction commune, équipes, cadences de livraison",
+    "La priorité est défendue : les invariants partagés opposent un veto avant tout argument organisationnel",
+    "Le vocabulaire est en place : bounded context, coupling, distributed monolith",
+    "Le cas sans signal est tranché : sans force qui pousse, on ne coupe pas"
+  ],
+  "modelAnswer": "Je remplace le « ça se sent » par quatre observations, et leur ordre est le cœur de la réponse. D'abord les invariants : si les deux modules écrivent les mêmes données ou participent à la même transaction, ils forment un seul bounded context — les séparer ne crée pas deux services mais un distributed monolith, deux processus soudés par le couplage le plus coûteux qui soit, celui des données. Ce critère oppose un veto : aucun argument d'équipe ne le renverse, parce qu'un invariant qui traverse un réseau devient une saga, et qu'on n'achète pas ce prix pour du confort organisationnel. Le veto levé, les arguments positifs se pèsent : deux équipes distinctes ET deux cadences de livraison différentes, c'est le signal le plus fort — chaque déploiement de l'un gèle l'autre, et la frontière rend l'évolution indépendante ; une cadence divergente seule le suit — c'est la pression de livraison qui coûte chaque semaine ; deux équipes sur une même cadence justifient encore l'autonomie, plus faiblement. Et sans aucun signal, la réponse senior est de ne pas couper : une frontière se paie en latence, en versionnement de contrats et en observabilité distribuée — sans force qui pousse, ce prix n'achète rien. Le coupling ne disparaît jamais ; on choisit seulement où il fait le moins mal.",
+  "commonMistakes": [
+    "Couper sur l'argument d'équipe sans vérifier les écritures partagées et livrer un monolithe distribué",
+    "Traiter la séparation comme un progrès en soi et couper sans force qui pousse"
+  ],
+  "variants": [
+    "Les données partagées sont en lecture seule d'un côté : demander ce que change ce détail.",
+    "Demander quel plan de migration suit la décision de couper : quelle donnée bouge en premier."
+  ],
+  "license": "CC-BY-4.0"
+}

@@ -1,0 +1,83 @@
+{
+  "schemaVersion": 1,
+  "id": "api-validation-aggregate-001",
+  "version": 1,
+  "title": "Rapporter toutes les violations d'un seul appel",
+  "kind": "csharp",
+  "difficulty": 3,
+  "skills": ["api.validation"],
+  "prerequisites": ["api-validation-problem-details-001"],
+  "estimatedMinutes": 45,
+  "statement": "statement.md",
+  "constraints": [
+    "Conserver exactement la signature publique",
+    "Rapporter chaque violation du même appel, sans jamais s'arrêter à la première",
+    "L'ordre du rapport vient de la déclaration des champs, jamais de l'ordre du corps reçu",
+    "Un champ répété est un défaut de forme et sa valeur n'est pas contrôlée ensuite"
+  ],
+  "examples": [
+    {
+      "input": "[\"quantity=5;email=agent@forge.fr;reference=AB12CD34\"]",
+      "output": "(chaîne vide)"
+    },
+    {
+      "input": "[\"email=agent@forge.fr\"]",
+      "output": "quantity:required,reference:required"
+    }
+  ],
+  "reflectionFields": [
+    "reformulation",
+    "inputs",
+    "expectedOutput",
+    "edgeCases",
+    "hypothesis",
+    "plan"
+  ],
+  "starterPath": "starter/",
+  "visibleTestsPath": "tests/visible/",
+  "hiddenTestsPath": "tests/hidden/",
+  "hints": [
+    {
+      "level": 1,
+      "kind": "socratic",
+      "content": "Un client corrige le défaut qu'on lui a signalé, renvoie sa demande, et en découvre un deuxième. Combien d'allers-retours lui avez-vous imposés pour trois champs fautifs ?"
+    },
+    {
+      "level": 2,
+      "kind": "location",
+      "content": "Séparez la lecture du corps, qui produit des couples nom et valeur, du contrôle, qui parcourt les champs attendus. Sans cette séparation, l'ordre du rapport suivra l'ordre de réception."
+    },
+    {
+      "level": 3,
+      "kind": "strategy",
+      "content": "Parcourez les champs attendus dans leur ordre de déclaration et comptez d'abord les occurrences de chacun : le compte décide entre doublon, exigence et contrôle de valeur, dans cet ordre."
+    },
+    {
+      "level": 4,
+      "kind": "partial-pseudocode",
+      "content": "pour chaque champ attendu, dans l'ordre : plus d'une occurrence donne un doublon et arrête là ; aucune occurrence donne une exigence ; sinon appliquer la règle propre au champ ; puis, en seconde passe, ajouter les noms qu'aucun champ n'attend, dans l'ordre du corps"
+    }
+  ],
+  "solution": {
+    "path": "solution/",
+    "unlock": {
+      "seriousAttempts": 2,
+      "minimumDelayMinutes": 10
+    }
+  },
+  "explanation": "explanation.md",
+  "complexity": "O(n × k) en temps et O(n) en espace, pour n segments reçus et k champs attendus",
+  "commonMistakes": [
+    "S'arrêter à la première violation, ce qui impose au client un aller-retour par défaut à corriger",
+    "Classer le rapport selon l'ordre du corps reçu, ce qui rend deux appels équivalents incomparables",
+    "Traiter un champ répété comme un champ simple en ne retenant que sa dernière valeur",
+    "Signaler un nom inattendu et taire, au même appel, les champs attendus qui manquent"
+  ],
+  "variantId": "api-order-validation-001",
+  "reviewCards": [
+    "card-api-validation-aggregate-001-rule",
+    "card-api-validation-aggregate-001-order"
+  ],
+  "interviewQuestionId": "interview-api-validation-aggregate-001",
+  "license": "CC-BY-4.0"
+}

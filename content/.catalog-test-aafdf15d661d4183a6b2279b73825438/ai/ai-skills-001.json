@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "id": "ai-skills-001",
+  "version": 1,
+  "title": "Skills et commandes : encapsuler vos procédures",
+  "summary": "Transformer une explication répétée en procédure nommée et versionnée : anatomie en cinq parties, trois skills rentables pour un poste de développeur, l'arbitrage skill contre prompt contre consignes de dépôt, et l'entretien qui décide de tout.",
+  "order": 4,
+  "documentPath": "skills.md",
+  "license": "CC-BY-4.0"
+}

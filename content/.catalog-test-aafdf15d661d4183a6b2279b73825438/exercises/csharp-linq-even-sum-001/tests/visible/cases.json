@@ -1,0 +1,38 @@
+{
+    "schemaVersion":  1,
+    "cases":  [
+                  {
+                      "name":  "Visible_Case1",
+                      "message":  "Agréger les pairs avec LINQ — cas 1 visible incorrect.",
+                      "arguments":  [
+                                        [
+                                            1,
+                                            2,
+                                            4
+                                        ]
+                                    ],
+                      "expected":  6,
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Visible_Case2",
+                      "message":  "Agréger les pairs avec LINQ — cas 2 visible incorrect.",
+                      "arguments":  [
+                                        [
+
+                                        ]
+                                    ],
+                      "expected":  0,
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Visible_OnlyEvens",
+                      "message":  "Que des pairs : tous contribuent.",
+                      "arguments":  [[2,4]],
+                      "expected":  6,
+                      "argumentsUnchanged":  true
+                  }
+              ]
+}

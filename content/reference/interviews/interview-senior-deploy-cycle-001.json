@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "id": "interview-senior-deploy-cycle-001",
+  "version": 1,
+  "title": "Détecter les cycles de dépendances entre services et en dire le coût",
+  "level": "advanced",
+  "durationMinutes": 9,
+  "skills": ["quality.boundaries"],
+  "question": "Votre plateforme compte trente services et personne ne sait plus dans quel ordre les déployer « proprement ». Quel graphe construisez-vous, qu'est-ce qui rend un ordre impossible, comment le détectez-vous mécaniquement, et que faites-vous des services fautifs ?",
+  "observableCriteria": [
+    "Le graphe est posé : services en nœuds, dépendances d'appel en arêtes orientées",
+    "Le diagnostic est structurel : un cycle rend tout ordre de déploiement impossible, ce n'est pas une question de discipline",
+    "La détection est mécanique : un service est en cycle s'il s'atteint lui-même en suivant les arêtes",
+    "La sortie de cycle est architecturale : inversion de dépendance, événement asynchrone — pas un déploiement simultané"
+  ],
+  "modelAnswer": "Je construis le graphe orienté des dépendances : un nœud par service, une arête de A vers B quand A appelle B, donc quand B doit être en place avant A. Un ordre de déploiement propre existe exactement quand ce graphe est sans cycle — c'est un tri topologique. Dès qu'un cycle apparaît — commandes appelle facturation qui rappelle commandes —, aucun ordre n'existe : chacun exige l'autre d'abord, et ce n'est pas un manque de discipline d'équipe mais une impossibilité structurelle, qu'aucune convention de calendrier ne contourne. La détection est mécanique et c'est sa force en réunion d'architecture : un service est en cycle si et seulement si, en suivant les arêtes depuis ses successeurs, on le retrouve lui-même. Un parcours en profondeur par service suffit à trente nœuds, et la liste sortie — triée, exhaustive, y compris les cycles sur soi-même qu'un auto-appel révèle — remplace les soupçons par des noms. Pour les fautifs, le déploiement simultané n'est pas une réponse : il synchronise les équipes à chaque livraison, précisément le couplage qu'une frontière devait éviter. Les vraies sorties cassent une arête du cycle : inverser la dépendance — facturation expose un contrat que commandes implémente —, ou remplacer l'appel retour par un événement asynchrone, qui ne contraint plus l'ordre de déploiement. Le graphe se recalcule ensuite en continu, à chaque nouvelle dépendance déclarée.",
+  "commonMistakes": [
+    "Traiter le cycle comme un problème de coordination et imposer un déploiement simultané permanent",
+    "Ne chercher que les cycles à deux services et manquer les boucles longues ou les auto-appels"
+  ],
+  "variants": [
+    "Demander où trouver les arêtes sans les déclarer à la main : traces, manifestes, contrats.",
+    "Un cycle traverse trois équipes : demander laquelle casse son arête et sur quel critère."
+  ],
+  "license": "CC-BY-4.0"
+}

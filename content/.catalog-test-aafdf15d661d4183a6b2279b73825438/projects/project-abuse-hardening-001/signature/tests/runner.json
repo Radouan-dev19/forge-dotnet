@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "suiteId": "project-abuse-hardening-001.signature.v1",
+  "exerciseId": "project-abuse-hardening-001.signature",
+  "exerciseVersion": 1,
+  "typeName": "Submission",
+  "methodName": "SignatureVerdict",
+  "parameterTypes": ["string", "string", "string"],
+  "returnType": "string"
+}

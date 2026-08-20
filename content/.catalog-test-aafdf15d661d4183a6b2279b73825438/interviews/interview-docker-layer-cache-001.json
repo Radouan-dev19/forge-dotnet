@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "id": "interview-docker-layer-cache-001",
+  "version": 1,
+  "title": "Compter les couches reconstruites",
+  "level": "junior",
+  "durationMinutes": 6,
+  "skills": ["docker.images"],
+  "question": "Votre construction d'image prend six minutes à chaque commit, alors que seule une ligne de code a changé. Où regardez-vous, et que réorganisez-vous ?",
+  "observableCriteria": [
+    "L'invalidation transitive des couches suivantes est expliquée par la dépendance à l'état précédent",
+    "L'ordre des étapes est relié au taux de changement de ce qu'elles copient",
+    "Le fait que le cache compare une empreinte et non un sens est mentionné"
+  ],
+  "modelAnswer": "Je regarde l'ordre des étapes du fichier de construction. Chaque couche part de l'état laissé par la précédente : si une étape change, son résultat change, donc les suivantes ne partent plus du même point et sont toutes refaites. Six minutes pour une ligne de code signifie presque toujours que la copie des sources précède la restauration des dépendances — la copie change à chaque commit, donc la restauration est invalidée et rejouée alors que les dépendances n'ont pas bougé. Je copie d'abord les seuls fichiers de dépendances, je restaure, puis je copie le code : la construction ordinaire se limite alors à ce qui a réellement changé. Le principe général est que le cache compare une empreinte, pas un sens — modifier un commentaire invalide autant que réécrire la commande — donc ce qui change rarement se place en haut.",
+  "commonMistakes": [
+    "Copier tout le code avant de restaurer les dépendances",
+    "Croire que seules les étapes liées au fichier modifié sont invalidées"
+  ],
+  "variants": [
+    "Demander ce que change une construction à plusieurs étapes.",
+    "Demander comment mesurer le gain avant et après réorganisation."
+  ],
+  "license": "CC-BY-4.0"
+}

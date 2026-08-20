@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "id": "english-card-19-written",
+  "version": 1,
+  "title": "Project scope — written update",
+  "level": "C1",
+  "durationMinutes": 12,
+  "skills": [
+    "english.written",
+    "project.scope"
+  ],
+  "situation": "In a technical discussion, a stakeholder asks for five more features before the first milestone. You must write the decision accurately without overstating the evidence.",
+  "instructions": [
+    "Write four sentences acknowledging the request, stating the trade-off, and proposing what moves out if something moves in."
+  ],
+  "vocabulary": [
+    {
+      "term": "scope control",
+      "meaning": "keeping the committed content of a milestone fixed by naming what leaves whenever something enters"
+    },
+    {
+      "term": "explicit trade-off",
+      "meaning": "an exchange stated out loud, which turns an unbounded request into a decision someone can take"
+    }
+  ],
+  "expectedElements": [
+    "The request is acknowledged rather than dismissed",
+    "The trade-off is stated in concrete terms",
+    "A decision is handed back to the requester"
+  ],
+  "modelAnswer": "The five requests are reasonable individually, but they cannot be added while the milestone date holds, because the milestone is already sized to the time available. The exchange is therefore explicit: name which of the five matters most and what leaves the milestone to make room. If nothing leaves, the date moves, and it is better to say so now than in three weeks. I will send the current contents with estimates this afternoon so the decision rests on evidence rather than impressions.",
+  "commonMistakes": [
+    "Refusing the request outright instead of stating the exchange",
+    "Accepting the additions and letting the date slip silently"
+  ],
+  "variants": [
+    "Rewrite the update listing the milestone contents and what you propose to drop."
+  ],
+  "license": "CC-BY-4.0"
+}

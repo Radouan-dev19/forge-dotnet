@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "id": "interview-s21-s24-021",
+  "version": 1,
+  "title": "Éviter la haute cardinalité",
+  "level": "intermediate",
+  "durationMinutes": 9,
+  "skills": [
+    "observability.metrics"
+  ],
+  "question": "Pourquoi un identifiant utilisateur est-il un mauvais label de métrique ?",
+  "observableCriteria": [
+    "Le mécanisme est expliqué : chaque valeur distincte crée une série stockée",
+    "La conséquence dépasse la métrique concernée et touche l'ensemble du stockage"
+  ],
+  "modelAnswer": "Il crée une série par valeur, augmente coût et complexité et expose potentiellement une donnée personnelle. Je conserve des dimensions bornées et non personnelles.",
+  "commonMistakes": [
+    "Énoncer la règle sans donner l'ordre de grandeur qui la rend inévitable"
+  ],
+  "variants": [
+    "Changez une contrainte du scénario « Éviter la haute cardinalité » et expliquez si la décision reste valide."
+  ],
+  "license": "CC-BY-4.0"
+}

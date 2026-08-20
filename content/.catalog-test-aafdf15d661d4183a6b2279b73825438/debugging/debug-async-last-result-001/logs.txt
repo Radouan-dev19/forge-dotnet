@@ -1,0 +1,3 @@
+Event=BatchTotalMismatch Level=Warning Items=[1,2,3] Expected=6 Actual=3 Gap=3 CorrelationId=dbg-async-last-result-001
+Event=BatchTotalMismatch Level=Warning Items=[4,5] Expected=9 Actual=4 Gap=5 CorrelationId=dbg-async-last-result-001
+Event=BatchTotal Level=Information Items=[] Expected=0 Actual=0 CorrelationId=dbg-async-last-result-001

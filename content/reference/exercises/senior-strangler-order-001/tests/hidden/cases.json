@@ -1,0 +1,47 @@
+{
+  "schemaVersion": 1,
+  "cases": [
+    {
+      "name": "Hidden_EmptyDescriptionIsRefused",
+      "message": "Sans module, il n'y a pas de migration à planifier.",
+      "arguments": [""],
+      "expectedException": "ArgumentException",
+      "argumentsUnchanged": false
+    },
+    {
+      "name": "Hidden_ModuleWithoutCountsIsRefused",
+      "message": "Sans ses deux comptes, un module ne se place pas dans le plan.",
+      "arguments": ["billing:3"],
+      "expectedException": "ArgumentException",
+      "argumentsUnchanged": false
+    },
+    {
+      "name": "Hidden_DuplicateModuleIsRefused",
+      "message": "Un module décrit deux fois signale une analyse concaténée.",
+      "arguments": ["a:1:1;a:2:2"],
+      "expectedException": "ArgumentException",
+      "argumentsUnchanged": false
+    },
+    {
+      "name": "Hidden_NegativeCountIsRefused",
+      "message": "Un compte de dépendances négatif ne mesure rien.",
+      "arguments": ["a:-1:2"],
+      "expectedException": "ArgumentException",
+      "argumentsUnchanged": false
+    },
+    {
+      "name": "Hidden_FullTieBreaksOnName",
+      "message": "Mêmes entrantes, mêmes sortantes : l'ordre des noms fige le plan.",
+      "arguments": ["x:2:3;y:2:3"],
+      "expected": "x;y",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_TwoFreeModulesThenTheCore",
+      "message": "Deux modules sans appelant : le plus autonome ouvre le plan, le cœur appelé ferme.",
+      "arguments": ["gateway:0:9;ledger:0:2;jobs:3:0"],
+      "expected": "ledger;gateway;jobs",
+      "argumentsUnchanged": true
+    }
+  ]
+}

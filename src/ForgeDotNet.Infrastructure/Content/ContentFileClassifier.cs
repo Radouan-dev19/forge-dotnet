@@ -88,6 +88,16 @@ internal static class ContentFileClassifier
             return ContentDocumentType.EnglishActivity;
         }
 
+        if (normalized.Contains("/career/", StringComparison.OrdinalIgnoreCase))
+        {
+            return ContentDocumentType.CareerGuide;
+        }
+
+        if (normalized.Contains("/ai/", StringComparison.OrdinalIgnoreCase))
+        {
+            return ContentDocumentType.AiGuide;
+        }
+
         if (normalized.Contains("/projects/", StringComparison.OrdinalIgnoreCase))
         {
             return ContentDocumentType.Project;
@@ -113,6 +123,8 @@ internal static class ContentFileClassifier
         ContentDocumentType.Project => "project.schema.json",
         ContentDocumentType.ReviewCardBank => "review.schema.json",
         ContentDocumentType.Lab => "lab.schema.json",
+        ContentDocumentType.CareerGuide => "career.schema.json",
+        ContentDocumentType.AiGuide => "ai.schema.json",
         _ => throw new ArgumentOutOfRangeException(nameof(documentType)),
     };
 

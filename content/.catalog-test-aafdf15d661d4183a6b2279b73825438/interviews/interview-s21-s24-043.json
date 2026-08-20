@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "id": "interview-s21-s24-043",
+  "version": 1,
+  "title": "Minimiser les données du CV",
+  "level": "advanced",
+  "durationMinutes": 12,
+  "skills": [
+    "career.privacy"
+  ],
+  "question": "Quelles données retirez-vous dʼun export pédagogique de CV ?",
+  "observableCriteria": [
+    "Les catégories retirées sont énumérées, y compris les noms de tiers",
+    "Les métadonnées et l'historique du fichier sont vérifiés au même titre que son contenu"
+  ],
+  "modelAnswer": "Adresse complète, date de naissance, identifiants privés, noms de tiers et liens non destinés au public. Je vérifie aussi métadonnées et historique du fichier.",
+  "commonMistakes": [
+    "Nettoyer le texte visible du document en laissant ses métadonnées d'auteur"
+  ],
+  "variants": [
+    "Changez une contrainte du scénario « Minimiser les données du CV » et expliquez si la décision reste valide."
+  ],
+  "license": "CC-BY-4.0"
+}

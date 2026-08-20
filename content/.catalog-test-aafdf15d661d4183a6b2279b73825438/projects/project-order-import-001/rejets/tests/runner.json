@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "suiteId": "project-order-import-001.rejets.v2",
+  "exerciseId": "project-order-import-001.rejets",
+  "exerciseVersion": 2,
+  "typeName": "Submission",
+  "methodName": "RejectionReport",
+  "parameterTypes": ["string"],
+  "returnType": "string"
+}

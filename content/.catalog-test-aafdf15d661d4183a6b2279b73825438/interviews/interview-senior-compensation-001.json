@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "id": "interview-senior-compensation-001",
+  "version": 1,
+  "title": "Compenser une saga distribuee",
+  "level": "advanced",
+  "durationMinutes": 10,
+  "skills": ["quality.consistency"],
+  "question": "Une operation traverse trois services et l'un d'eux echoue apres que les deux premiers ont valide. Comment ramenez-vous le systeme a un etat coherent, et dans quel ordre ?",
+  "observableCriteria": [
+    "Explique qu'aucune transaction unique ne couvre les trois services et que le rollback local ne suffit pas",
+    "Nomme la compensation : une action metier qui defait l'effet deja visible de chaque etape reussie",
+    "Justifie l'ordre inverse par les dependances entre etapes et exclut l'etape en echec de la compensation"
+  ],
+  "modelAnswer": "Sans transaction distribuee, chaque etape a valide son effet localement, donc on ne peut pas annuler l'ensemble d'un coup. On execute une action compensatoire par etape reussie, dans l'ordre strictement inverse de leur application, parce qu'une etape tardive s'appuie souvent sur les precedentes : defaire l'expedition, puis le paiement, puis la reservation. L'etape en echec n'a rien produit et ne se compense pas. La compensation est idempotente et journalisee, car elle peut elle-meme etre rejouee. Une compensation dans le mauvais ordre laisse un etat partiellement defait que les tests locaux ne voient pas, chaque service restant coherent isolement.",
+  "commonMistakes": [
+    "Croire qu'un rollback de base de donnees suffit alors que les effets vivent dans d'autres services",
+    "Compenser dans l'ordre direct et liberer une ressource encore necessaire a une annulation ulterieure"
+  ],
+  "variants": [
+    "Que se passe-t-il si une action compensatoire echoue elle-meme, et comment la rendre rejouable ?",
+    "En quoi une cle d'idempotence protege-t-elle la compensation d'un double envoi ?"
+  ],
+  "license": "CC-BY-4.0"
+}

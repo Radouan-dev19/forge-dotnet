@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "suiteId": "senior-saga-state-001.v1",
+  "exerciseId": "senior-saga-state-001",
+  "exerciseVersion": 1,
+  "typeName": "Submission",
+  "methodName": "SagaVerdict",
+  "parameterTypes": ["string"],
+  "returnType": "string"
+}

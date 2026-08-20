@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "suiteId": "security-login-feedback-001.v1",
+  "exerciseId": "security-login-feedback-001",
+  "exerciseVersion": 1,
+  "typeName": "Submission",
+  "methodName": "LoginResponse",
+  "parameterTypes": ["string"],
+  "returnType": "string"
+}

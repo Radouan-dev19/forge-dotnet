@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "id": "interview-observability-error-budget-001",
+  "version": 1,
+  "title": "Gouverner les livraisons par le budget d'erreur",
+  "level": "intermediate",
+  "durationMinutes": 8,
+  "skills": ["observability.slo"],
+  "question": "Votre objectif de niveau de service promet trois neufs. Comment transformez-vous ce pourcentage en décisions concrètes de livraison, et quels détails de calcul peuvent discréditer tout le dispositif ?",
+  "observableCriteria": [
+    "Le budget d'erreur est défini comme le complément de l'objectif converti en nombre d'échecs dépensables",
+    "L'arrondi plancher est exigé avec sa justification sur les petites fenêtres",
+    "Le budget négatif est défendu comme signal de gouvernance plutôt qu'écrêté à zéro"
+  ],
+  "modelAnswer": "Je convertis le pourcentage en monnaie : sur la fenêtre de mesure, le complément de l'objectif appliqué au volume donne un nombre d'échecs dépensables — le budget d'erreur. Tant qu'il en reste, l'équipe dépense : déploiements, expérimentations, maintenance risquée ; quand il s'épuise, les livraisons non essentielles gèlent et l'effort bascule sur la fiabilité. C'est ce qui réconcilie livrer vite et ne rien casser : les deux camps lisent le même chiffre. Deux détails de calcul peuvent discréditer le dispositif. L'arrondi d'abord : l'allocation se plancher, jamais au plus proche — sur 999 requêtes à trois neufs, la part tolérée vaut moins d'un échec entier, et l'arrondir à un offrirait ce que l'objectif ne concède pas, précisément sur les petites fenêtres des alertes rapides. La représentation ensuite : les objectifs comme 99,9 n'existent pas exactement en flottant binaire, et l'erreur vit là où le plancher tranche — le calcul se fait en décimal. Enfin je ne masque jamais le dépassement : un budget à moins deux et un budget à moins deux cents appellent des réponses différentes, et l'écrêtage à zéro détruit cette information au moment où elle gouverne.",
+  "commonMistakes": [
+    "Afficher le taux de réussite en pourcentage au lieu du budget en échecs, et perdre la décision",
+    "Écrêter le budget négatif à zéro et cacher l'ampleur du dépassement à la gouvernance"
+  ],
+  "variants": [
+    "Demander comment choisir la fenêtre — glissante ou calendaire — et ce que chaque choix change aux gels.",
+    "Le trafic décuple pendant les soldes : demander ce que devient le budget et pourquoi c'est voulu."
+  ],
+  "license": "CC-BY-4.0"
+}

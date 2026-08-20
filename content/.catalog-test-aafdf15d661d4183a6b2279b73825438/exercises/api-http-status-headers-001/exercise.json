@@ -1,0 +1,83 @@
+{
+  "schemaVersion": 1,
+  "id": "api-http-status-headers-001",
+  "version": 1,
+  "title": "Composer le statut et les en-têtes obligatoires d'une réponse",
+  "kind": "csharp",
+  "difficulty": 3,
+  "skills": ["api.http"],
+  "prerequisites": ["api-http-semantics-001"],
+  "estimatedMinutes": 35,
+  "statement": "statement.md",
+  "constraints": [
+    "Conserver exactement la signature publique",
+    "L'étranglement prime sur toute autre considération, méthode et état compris",
+    "Un statut qui exige un en-tête ne sort jamais sans lui",
+    "Les trois attributs de la requête arrivent dans un ordre quelconque"
+  ],
+  "examples": [
+    {
+      "input": "method=get;state=present;load=normal",
+      "output": "200"
+    },
+    {
+      "input": "method=post;state=absent;load=normal",
+      "output": "201|Location"
+    }
+  ],
+  "reflectionFields": [
+    "reformulation",
+    "inputs",
+    "expectedOutput",
+    "edgeCases",
+    "hypothesis",
+    "plan"
+  ],
+  "starterPath": "starter/",
+  "visibleTestsPath": "tests/visible/",
+  "hiddenTestsPath": "tests/hidden/",
+  "hints": [
+    {
+      "level": 1,
+      "kind": "socratic",
+      "content": "Un client reçoit un statut de création sans l'adresse de ce qui vient d'être créé, ou un refus d'étranglement sans délai de retour. Que peut-il faire de chacune de ces deux réponses, concrètement ?"
+    },
+    {
+      "level": 2,
+      "kind": "location",
+      "content": "La décision se prend en trois étages successifs : la charge d'abord — elle court-circuite tout —, puis l'état de la ressource pour les cas qui redirigent ou qui n'existent plus, enfin le croisement méthode-état pour le reste."
+    },
+    {
+      "level": 3,
+      "kind": "strategy",
+      "content": "Chaque case du tableau méthode-état a une réponse fixe, et certaines emportent un en-tête inséparable : l'adresse pour une création ou une redirection, le délai pour un étranglement. Assemblez la chaîne à partir de la case, jamais l'inverse."
+    },
+    {
+      "level": 4,
+      "kind": "partial-pseudocode",
+      "content": "analyser les trois paires clé-valeur en refusant doublon, clé absente et valeur hors vocabulaire ; rendre le refus d'étranglement avec son en-tête de délai quand la charge le dit ; traiter l'état déplacé selon la méthode — redirection historique en lecture, redirection préservant la méthode sinon ; croiser méthode et état pour la case restante et joindre l'en-tête exigé par le statut"
+    }
+  ],
+  "solution": {
+    "path": "solution/",
+    "unlock": {
+      "seriousAttempts": 2,
+      "minimumDelayMinutes": 10
+    }
+  },
+  "explanation": "explanation.md",
+  "complexity": "O(1) en temps et en espace : trois attributs analysés puis une case de tableau",
+  "commonMistakes": [
+    "Rendre un statut de création sans l'adresse de la ressource créée",
+    "Laisser la méthode ou l'état décider avant l'étranglement, qui prime sur tout",
+    "Employer la redirection historique pour une écriture et laisser le client changer de méthode en route",
+    "Confondre la ressource disparue définitivement avec la ressource simplement absente"
+  ],
+  "variantId": "api-http-status-map-001",
+  "reviewCards": [
+    "card-api-http-status-headers-001-rule",
+    "card-api-http-status-headers-001-edge"
+  ],
+  "interviewQuestionId": "interview-api-http-status-headers-001",
+  "license": "CC-BY-4.0"
+}

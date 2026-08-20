@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "id": "career-post-hire-plan-001",
+  "version": 1,
+  "title": "Plan 30/60/90 d'un premier poste .NET",
+  "summary": "Des gestes concrets pour les trois premiers mois d'un premier poste — comprendre, élargir, livrer — avec les réflexes de la piste senior en ligne de mire et les attentes de l'équipe comme règle prioritaire.",
+  "order": 5,
+  "documentPath": "POST-HIRE-PLAN.md",
+  "license": "CC-BY-4.0"
+}

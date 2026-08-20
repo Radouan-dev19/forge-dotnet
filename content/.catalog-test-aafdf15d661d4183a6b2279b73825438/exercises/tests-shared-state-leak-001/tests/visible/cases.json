@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "cases": [
+    {
+      "name": "Visible_SecondTestReadsWhatTheFirstLeft",
+      "message": "Le test qui lit sans avoir inséré doit son résultat au voisin qui n'a pas nettoyé.",
+      "arguments": ["createsOrder:+order1,?order1|readsOrder:?order1"],
+      "expected": "readsOrder",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Visible_EachTestCleansUpAfterItself",
+      "message": "Deux tests qui nettoient leurs propres données ne dépendent d'aucun ordre.",
+      "arguments": ["createsOrder:+order1,?order1,-order1|recreatesOrder:+order1,?order1,-order1"],
+      "expected": "",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Visible_ReadingAnAbsentKeyIsNotALeak",
+      "message": "Lire une clé absente échoue de façon visible : ce n'est pas la fuite qu'on cherche.",
+      "arguments": ["createsOrder:+order1|readsInvoice:?invoice1"],
+      "expected": "",
+      "argumentsUnchanged": true
+    }
+  ]
+}

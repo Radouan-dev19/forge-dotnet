@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "suiteId": "tests-order-dependence-001.v1",
+  "exerciseId": "tests-order-dependence-001",
+  "exerciseVersion": 1,
+  "typeName": "Submission",
+  "methodName": "OrderDependentTests",
+  "parameterTypes": ["string"],
+  "returnType": "string"
+}

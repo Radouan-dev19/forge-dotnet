@@ -1,0 +1,32 @@
+{
+    "schemaVersion":  1,
+    "cases":  [
+                  {
+                      "name":  "Visible_Case1",
+                      "message":  "Compter des nombres JSON simples — cas 1 visible incorrect.",
+                      "arguments":  [
+                                        "[1,2,\"x\"]"
+                                    ],
+                      "expected":  2,
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Visible_Case2",
+                      "message":  "Compter des nombres JSON simples — cas 2 visible incorrect.",
+                      "arguments":  [
+                                        "[]"
+                                    ],
+                      "expected":  0,
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Visible_SingleNumber",
+                      "message":  "Un seul nombre : réfute un comptage des séparateurs.",
+                      "arguments":  ["[1]"],
+                      "expected":  1,
+                      "argumentsUnchanged":  true
+                  }
+              ]
+}

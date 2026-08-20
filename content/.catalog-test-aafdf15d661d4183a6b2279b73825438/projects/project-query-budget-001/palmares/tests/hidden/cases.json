@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "cases": [
+    {
+      "name": "Hidden_FullRankingInOneQuery",
+      "message": "Les trois rayons classés par activité, égalités départagées par le nom.",
+      "arguments": [3],
+      "expected": "Papeterie,Informatique,Mobilier|1",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_OversizedTakeReturnsEverything",
+      "message": "Demander plus de rayons qu'il n'en existe rend le classement complet.",
+      "arguments": [5],
+      "expected": "Papeterie,Informatique,Mobilier|1",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_NegativeTakeIsRejected",
+      "message": "Une taille négative est un appel fautif, refusé avant toute requête.",
+      "arguments": [-2],
+      "expectedException": "ArgumentOutOfRangeException",
+      "argumentsUnchanged": false
+    },
+    {
+      "name": "Hidden_ExactCountTakeMatchesTheFullRanking",
+      "message": "La taille exacte du jeu de données rend le même classement que la taille excédentaire.",
+      "arguments": [4],
+      "expected": "Papeterie,Informatique,Mobilier|1",
+      "argumentsUnchanged": true
+    }
+  ]
+}

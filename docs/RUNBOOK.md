@@ -211,6 +211,31 @@ docker compose down --volumes --remove-orphans
 
 Ne jamais utiliser cette commande pour un simple arrêt.
 
+## Rejeu navigateur des sept personas
+
+Le projet `tests/ForgeDotNet.PersonaTests` rejoue les sept scripts gelés de
+`docs/PEDAGOGICAL_AUDIT.md` dans un Chromium réel piloté par Playwright. Il est absent de
+`ForgeDotNet.sln` : la suite par défaut ne le lance jamais, il se lance explicitement.
+
+```powershell
+# Une seule fois, téléchargement réseau ponctuel du navigateur (versions épinglées) :
+dotnet build tests/ForgeDotNet.PersonaTests
+pwsh tests/ForgeDotNet.PersonaTests/bin/Debug/net10.0/playwright.ps1 install chromium
+
+# Prérequis des personas qui valident du code :
+powershell -ExecutionPolicy Bypass -File scripts/build-code-runner.ps1
+powershell -ExecutionPolicy Bypass -File scripts/start-sql-lab.ps1
+
+# Les sept personas (P3 attend réellement le délai serveur de dix minutes) :
+dotnet test tests/ForgeDotNet.PersonaTests
+```
+
+Chaque persona démarre l'application en processus enfant sur un port libre, avec un dossier de
+données SQLite jetable supprimé après collecte, et écrit son registre de preuves — captures
+horodatées et assertions persistantes — sous `artifacts/personas/<horodatage>/` (non versionné).
+Le détail par persona, dont la simulation d'avance d'horloge par translation des horodatages, est
+dans `tests/ForgeDotNet.PersonaTests/README.md`.
+
 ## Incidents courants
 
 - **Moteur Docker indisponible** : démarrer Docker Desktop et vérifier `docker version`.

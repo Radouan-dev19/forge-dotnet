@@ -1,0 +1,82 @@
+{
+    "schemaVersion":  1,
+    "id":  "structures-parenthesis-depth-001",
+    "version":  1,
+    "title":  "Mesurer une profondeur maximale",
+    "kind":  "algorithm",
+    "difficulty":  2,
+    "skills":  [
+                   "structures.stack"
+               ],
+    "prerequisites":  [
+                          "structures-stacks-queues-001"
+                      ],
+    "estimatedMinutes":  30,
+    "statement":  "statement.md",
+    "constraints":  [
+                        "Conserver exactement la signature publique",
+                        "Retourner moins un pour toute structure déséquilibrée, sinon la profondeur maximale.",
+                        "Ne pas modifier les entrées reçues sauf mention explicite"
+                    ],
+    "examples":  [
+                     {
+                         "input":  "[\"(a(b))\"]",
+                         "output":  "2"
+                     }
+                 ],
+    "reflectionFields":  [
+                             "reformulation",
+                             "inputs",
+                             "expectedOutput",
+                             "edgeCases",
+                             "hypothesis",
+                             "plan"
+                         ],
+    "starterPath":  "starter/",
+    "visibleTestsPath":  "tests/visible/",
+    "hiddenTestsPath":  "tests/hidden/",
+    "hints":  [
+                  {
+                      "level":  1,
+                      "kind":  "socratic",
+                      "content":  "Quel invariant de « Mesurer une profondeur maximale » doit rester vrai pour les cas limites ?"
+                  },
+                  {
+                      "level":  2,
+                      "kind":  "location",
+                      "content":  "Concentrez la décision dans la méthode MaximumDepth, sans état global."
+                  },
+                  {
+                      "level":  3,
+                      "kind":  "strategy",
+                      "content":  "Retourner moins un pour toute structure déséquilibrée, sinon la profondeur maximale."
+                  },
+                  {
+                      "level":  4,
+                      "kind":  "partial-pseudocode",
+                      "content":  "profondeur et maximum à zéro ; à chaque ouverture incrémenter la profondeur puis remonter le maximum si nécessaire ; à chaque fermeture décrémenter et retourner le code d'erreur si la profondeur passe sous zéro ; à la fin, retourner le maximum seulement si la profondeur est revenue à zéro"
+                  }
+              ],
+    "solution":  {
+                     "path":  "solution/",
+                     "unlock":  {
+                                    "seriousAttempts":  2,
+                                    "minimumDelayMinutes":  10
+                                }
+                 },
+    "explanation":  "explanation.md",
+    "complexity":  "O(n) en temps et O(1) en espace",
+    "commonMistakes":  [
+                           "Retourner le maximum sans vérifier que la structure se referme",
+                           "Remonter le maximum après la fermeture au lieu de l'ouverture",
+                           "Confondre une profondeur nulle et une structure déséquilibrée, qui n'ont pas le même code",
+                           "Retourner le code d'erreur pour une chaîne vide, dont la profondeur est nulle"
+                       ],
+    "variantId":  "structures-first-unique-001",
+    "reviewCards":  [
+                        "card-structures-parenthesis-depth-001-rule",
+                        "card-structures-parenthesis-depth-001-edge"
+                    ],
+    "interviewQuestionId":  "interview-structures-parenthesis-depth-001",
+    "license":  "CC-BY-4.0"
+}

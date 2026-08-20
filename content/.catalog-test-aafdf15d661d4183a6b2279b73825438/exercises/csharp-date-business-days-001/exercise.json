@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "id": "csharp-date-business-days-001",
+  "version": 1,
+  "title": "Compter les jours ouvrés",
+  "kind": "csharp",
+  "difficulty": 3,
+  "skills": ["csharp.dates", "csharp.loops", "logic.edge-cases"],
+  "prerequisites": ["csharp-list-distinct-001"],
+  "estimatedMinutes": 40,
+  "statement": "statement.md",
+  "constraints": [
+    "Conserver exactement la signature publique demandée",
+    "Inclure start et end dans le comptage",
+    "Considérer lundi à vendredi comme ouvrés et ignorer les jours fériés",
+    "Retourner zéro lorsque start est après end"
+  ],
+  "examples": [
+    { "input": "[\"2026-07-20\",\"2026-07-24\"]", "output": "5" },
+    { "input": "2026-07-25, 2026-07-26", "output": "0" }
+  ],
+  "reflectionFields": ["reformulation", "inputs", "expectedOutput", "edgeCases", "hypothesis", "plan"],
+  "starterPath": "starter/",
+  "visibleTestsPath": "tests/visible/",
+  "hiddenTestsPath": "tests/hidden/",
+  "hints": [
+    { "level": 1, "kind": "socratic", "content": "Quelles valeurs de DayOfWeek doivent augmenter le compteur, et comment avancer d’un jour ?" },
+    { "level": 2, "kind": "location", "content": "Parcours un DateOnly courant de start à end inclus et examine sa propriété DayOfWeek." },
+    { "level": 3, "kind": "strategy", "content": "Incrémente sauf pour Saturday et Sunday, puis avance avec AddDays(1)." },
+    { "level": 4, "kind": "partial-pseudocode", "content": "compteur = 0 ; pour date de start à end incluse : si ni samedi ni dimanche compteur++ ; date = date.AddDays(1)" }
+  ],
+  "solution": { "path": "solution/", "unlock": { "seriousAttempts": 2, "minimumDelayMinutes": 10 } },
+  "explanation": "explanation.md",
+  "complexity": "O(d) en temps pour d jours et O(1) en espace",
+  "commonMistakes": [
+    "Exclure une des deux bornes",
+    "Comparer des chaînes de date au lieu de DateOnly",
+    "Confondre samedi et dimanche avec des numéros dépendants d’une culture",
+    "Boucler sans avancer la date courante"
+  ],
+  "variantId": "csharp-date-expiry-001",
+  "reviewCards": ["card-dateonly-purpose-001", "card-business-boundary-001"],
+  "interviewQuestionId": "interview-date-business-days-001",
+  "license": "CC-BY-4.0"
+}

@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "id": "interview-csharp-word-histogram-001",
+  "version": 1,
+  "title": "Construire un histogramme de mots",
+  "level": "intermediate",
+  "durationMinutes": 5,
+  "skills": [
+    "csharp.dictionaries"
+  ],
+  "question": "Comment résoudriez-vous « Construire un histogramme de mots » et comment prouveriez-vous les bornes ?",
+  "observableCriteria": [
+    "L'insensibilité à la casse est annoncée comme une décision, pas un effet de la comparaison choisie",
+    "Les séparateurs consécutifs ne produisent pas d'entrée vide"
+  ],
+  "modelAnswer": "Compter sans sensibilité à la casse et ignorer les séparateurs vides. Je prouve par des séparateurs consécutifs, une casse mixte du même mot et une chaîne vide ; O(n) en temps et O(k) en espace.",
+  "commonMistakes": [
+    "Découper sans écarter les segments vides et compter un mot vide"
+  ],
+  "variants": [
+    "Changer une borne ou le volume tout en conservant la même règle de construire un histogramme de mots."
+  ],
+  "license": "CC-BY-4.0"
+}

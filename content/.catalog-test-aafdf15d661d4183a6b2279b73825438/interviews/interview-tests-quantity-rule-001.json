@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "id": "interview-tests-quantity-rule-001",
+  "version": 1,
+  "title": "Tester une règle de quantité",
+  "level": "junior",
+  "durationMinutes": 6,
+  "skills": [
+    "tests.domain"
+  ],
+  "question": "Comment implémenteriez-vous « Tester une règle de quantité » et quelles preuves réfutent les contournements ?",
+  "observableCriteria": [
+    "La plage inclusive est exprimée directement, ce qui rend ses quatre frontières visibles",
+    "Les quatre frontières sont énumérées comme les valeurs à tester"
+  ],
+  "modelAnswer": "Exprimer directement la plage inclusive pour rendre ses quatre frontières testables. Je teste les deux bornes acceptées et les deux valeurs immédiatement extérieures, soit exactement les quatre frontières de la plage. O(1) en temps et O(1) en espace.",
+  "commonMistakes": [
+    "Exprimer la règle par une négation composée et perdre la lisibilité de ses frontières"
+  ],
+  "variants": [
+    "Changer la frontière ou le droit tout en conservant la règle de tester une règle de quantité."
+  ],
+  "license": "CC-BY-4.0"
+}

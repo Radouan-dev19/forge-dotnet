@@ -1,0 +1,54 @@
+{
+  "schemaVersion": 1,
+  "cases": [
+    {
+      "name": "Hidden_AttributeOrderIsFree",
+      "message": "Le même constat écrit dans un autre ordre garde ses six points : la sécurité sur une ligne ne bloque pas d'office.",
+      "arguments": ["reachable=always;category=security;blast=line"],
+      "expected": "major",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_FlaggedPerformanceAtSystemScale",
+      "message": "Deux, un et deux font cinq points : le drapeau de fonctionnalité retient le constat sous le blocage.",
+      "arguments": ["category=performance;reachable=feature-flag;blast=system"],
+      "expected": "major",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_ActiveSystemWideCorrectnessBlocks",
+      "message": "Trois, deux et deux font sept points : la justesse peut bloquer sans règle spéciale.",
+      "arguments": ["category=correctness;reachable=always;blast=system"],
+      "expected": "blocker",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_MissingAttributeIsRefused",
+      "message": "Sans atteignabilité déclarée, toute sévérité rendue serait devinée.",
+      "arguments": ["category=correctness;blast=module"],
+      "expectedException": "ArgumentException",
+      "argumentsUnchanged": false
+    },
+    {
+      "name": "Hidden_RepeatedKeyIsRefused",
+      "message": "Deux natures pour un même constat : le verdict dépendrait de l'ordre d'écriture.",
+      "arguments": ["category=style;category=security;reachable=always;blast=line"],
+      "expectedException": "ArgumentException",
+      "argumentsUnchanged": false
+    },
+    {
+      "name": "Hidden_UnknownValueIsRefused",
+      "message": "Une nature hors vocabulaire n'a pas de points : l'accepter inventerait une catégorie.",
+      "arguments": ["category=magic;reachable=always;blast=line"],
+      "expectedException": "ArgumentException",
+      "argumentsUnchanged": false
+    },
+    {
+      "name": "Hidden_DeadPerformanceLineIsANit",
+      "message": "Deux points au total : le rayon nul et le code mort ramènent la performance au bas de l'échelle.",
+      "arguments": ["category=performance;reachable=dead-code;blast=line"],
+      "expected": "nit",
+      "argumentsUnchanged": true
+    }
+  ]
+}

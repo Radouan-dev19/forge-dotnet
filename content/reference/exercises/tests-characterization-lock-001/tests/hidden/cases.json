@@ -1,0 +1,54 @@
+{
+  "schemaVersion": 1,
+  "cases": [
+    {
+      "name": "Hidden_NinthItemCostsFourSurcharges",
+      "message": "Neuf articles : seuls les quatre au-delà du cinquième portent le supplément unitaire.",
+      "arguments": [30.00, 9],
+      "expected": 6.90,
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_ZeroSubtotalIsAValidBasket",
+      "message": "Un sous-total nul est observé en production — bons de réduction intégraux — et paie le socle.",
+      "arguments": [0.00, 1],
+      "expected": 4.90,
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_NegativeSubtotalIsRefused",
+      "message": "Le système historique refuse un sous-total négatif ; la caractérisation reproduit ce refus.",
+      "arguments": [-0.01, 2],
+      "expectedException": "ArgumentException",
+      "argumentsUnchanged": false
+    },
+    {
+      "name": "Hidden_EmptyBasketIsRefused",
+      "message": "Aucune observation ne montre de frais pour un panier sans article : le refus fait partie du contrat.",
+      "arguments": [45.50, 0],
+      "expectedException": "ArgumentException",
+      "argumentsUnchanged": false
+    },
+    {
+      "name": "Hidden_FifthItemCarriesNoSurcharge",
+      "message": "Cinq articles exactement : l'excédent est nul et le socle seul s'applique.",
+      "arguments": [99.99, 5],
+      "expected": 4.90,
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_SixthItemAddsOneSurcharge",
+      "message": "Le sixième article déclenche un seul supplément, pas six.",
+      "arguments": [75.00, 6],
+      "expected": 5.40,
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_FreeShippingKeepsTwoDecimals",
+      "message": "La gratuité s'affiche avec l'échelle de la facturation, deux décimales comprises.",
+      "arguments": [250.00, 1],
+      "expected": 0.00,
+      "argumentsUnchanged": true
+    }
+  ]
+}

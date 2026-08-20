@@ -43,3 +43,6 @@ Thumbs.db
 *.nupkg
 *.snupkg
 packages/
+
+# Preuves du rejeu des sept personas (captures, registres) : artefacts locaux, jamais versionnes.
+artifacts/

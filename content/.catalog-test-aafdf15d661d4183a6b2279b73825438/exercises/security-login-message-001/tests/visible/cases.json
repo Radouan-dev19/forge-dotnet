@@ -1,0 +1,27 @@
+{
+    "schemaVersion":  1,
+    "cases":  [
+                  {
+                      "name":  "Visible_Case1",
+                      "message":  "Uniformiser un échec de connexion — cas 1 incorrect.",
+                      "arguments":  [
+                                        true,
+                                        false
+                                    ],
+                      "expected":  "Identifiants invalides.",
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Visible_Case2",
+                      "message":  "Uniformiser un échec de connexion — cas 2 incorrect.",
+                      "arguments":  [
+                                        false,
+                                        false
+                                    ],
+                      "expected":  "Identifiants invalides.",
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  }
+              ]
+}

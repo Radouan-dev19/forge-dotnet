@@ -1,0 +1,61 @@
+{
+  "schemaVersion": 1,
+  "cases": [
+    {
+      "name": "Hidden_NoFailureBurnsNothing",
+      "message": "Aucun échec : la vitesse est nulle, quel que soit l'objectif.",
+      "arguments": [1000, 0, 99.9],
+      "expected": 0,
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_RepeatingDecimalFloorsCleanly",
+      "message": "Un échec sur trois cents donne un rapport périodique : le plancher au centième le fige à 3,33.",
+      "arguments": [300, 1, 99.9],
+      "expected": 3.33,
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_TotalFailureUnderLooseObjective",
+      "message": "Tout échoue sous un objectif de quatre-vingts : cinq fois le rythme toléré.",
+      "arguments": [100, 100, 80],
+      "expected": 5,
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_PerfectObjectiveIsRefused",
+      "message": "Cent pour cent ne tolère rien : la vitesse serait une division par zéro, le budget restant gouverne.",
+      "arguments": [100, 2, 100],
+      "expectedException": "ArgumentOutOfRangeException",
+      "argumentsUnchanged": false
+    },
+    {
+      "name": "Hidden_EmptyWindowIsRefused",
+      "message": "Un taux sur zéro requête n'existe pas.",
+      "arguments": [0, 0, 99],
+      "expectedException": "ArgumentOutOfRangeException",
+      "argumentsUnchanged": false
+    },
+    {
+      "name": "Hidden_MoreFailuresThanRequestsIsRefused",
+      "message": "Une fenêtre où les échecs dépassent le volume ne décrit rien.",
+      "arguments": [100, 101, 99],
+      "expectedException": "ArgumentException",
+      "argumentsUnchanged": false
+    },
+    {
+      "name": "Hidden_ZeroObjectiveIsRefused",
+      "message": "Un objectif nul ne promet rien : il n'y a pas de rythme toléré à rapporter.",
+      "arguments": [100, 2, 0],
+      "expectedException": "ArgumentOutOfRangeException",
+      "argumentsUnchanged": false
+    },
+    {
+      "name": "Hidden_TripleBurnOnAFineObjective",
+      "message": "Trois échecs sur deux mille sous 99,95 : trois fois le rythme toléré, exactement.",
+      "arguments": [2000, 3, 99.95],
+      "expected": 3,
+      "argumentsUnchanged": true
+    }
+  ]
+}

@@ -434,6 +434,12 @@ public sealed class FileSystemContentCatalogLoader : IContentCatalogLoader
         // par la recherche, ce qui reproduirait à l'échelle du catalogue le défaut qu'on corrige.
         ContentDocumentType.Lab => string.Join(' ', root.GetProperty("objectives").EnumerateArray().Select(objective =>
             $"{objective.GetProperty("goal").GetString()} {objective.GetProperty("observableProof").GetString()}")),
+
+        // Un guide de carrière déclare son résumé : c'est lui qui alimente la recherche et l'index.
+        ContentDocumentType.CareerGuide => root.GetProperty("summary").GetString()!,
+
+        // Même contrat pour un guide du chapitre IA : le résumé déclaré nourrit l'index.
+        ContentDocumentType.AiGuide => root.GetProperty("summary").GetString()!,
         _ => string.Empty,
     };
 

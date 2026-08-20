@@ -1,0 +1,83 @@
+{
+  "schemaVersion": 1,
+  "id": "ef-keyset-pagination-001",
+  "version": 1,
+  "title": "Paginer par jeu de clés depuis un curseur d'identifiant",
+  "kind": "csharp",
+  "difficulty": 3,
+  "skills": ["sql.ef-pagination"],
+  "prerequisites": ["ef-core-data-access-001"],
+  "estimatedMinutes": 35,
+  "statement": "statement.md",
+  "constraints": [
+    "Conserver exactement la signature publique et le montage de la base fournie",
+    "Le filtre par curseur est strict : la ligne du curseur ne réapparaît jamais",
+    "Le tri par identifiant précède la limitation, dans la requête",
+    "Une page vide est la fin légitime du parcours, pas une erreur"
+  ],
+  "examples": [
+    {
+      "input": "0, 3",
+      "output": "[3, 8, 11]"
+    },
+    {
+      "input": "11, 3",
+      "output": "[14, 21, 27]"
+    }
+  ],
+  "reflectionFields": [
+    "reformulation",
+    "inputs",
+    "expectedOutput",
+    "edgeCases",
+    "hypothesis",
+    "plan"
+  ],
+  "starterPath": "starter/",
+  "visibleTestsPath": "tests/visible/",
+  "hiddenTestsPath": "tests/hidden/",
+  "hints": [
+    {
+      "level": 1,
+      "kind": "socratic",
+      "content": "Un lecteur parcourt la liste pendant qu'une insertion arrive en tête. Avec un décalage numérique de page, que voit-il en haut de sa page suivante — et que voit-il avec un curseur sur le dernier identifiant lu ?"
+    },
+    {
+      "level": 2,
+      "kind": "location",
+      "content": "La page suivante se décrit en trois clauses dans la requête, dans cet ordre : ne garder que les identifiants strictement au-delà du curseur, ordonner par identifiant, limiter à la taille de page."
+    },
+    {
+      "level": 3,
+      "kind": "strategy",
+      "content": "Le curseur est le dernier identifiant déjà lu, pas le premier à lire : la comparaison est stricte. Et l'ordre doit être posé par la requête elle-même — sans lui, la limitation tronque un ordre que rien ne garantit."
+    },
+    {
+      "level": 4,
+      "kind": "partial-pseudocode",
+      "content": "refuser un curseur négatif et une taille de page hors bornes ; interroger les commandes au-delà strict du curseur ; ordonner par identifiant croissant ; limiter à la taille de page ; projeter les identifiants en tableau"
+    }
+  ],
+  "solution": {
+    "path": "solution/",
+    "unlock": {
+      "seriousAttempts": 2,
+      "minimumDelayMinutes": 10
+    }
+  },
+  "explanation": "explanation.md",
+  "complexity": "O(log n + p) côté serveur avec un index sur la clé, pour une page de p lignes",
+  "commonMistakes": [
+    "Comparer largement au curseur et servir deux fois la dernière ligne déjà lue",
+    "Limiter avant d'ordonner et tronquer un ordre d'arrivée que rien ne garantit",
+    "Traduire le curseur en décalage numérique et retrouver les doublons que le jeu de clés élimine",
+    "Refuser la page vide alors qu'elle est le signal normal de fin de parcours"
+  ],
+  "variantId": "ef-join-silent-customers-001",
+  "reviewCards": [
+    "card-ef-keyset-pagination-001-rule",
+    "card-ef-keyset-pagination-001-edge"
+  ],
+  "interviewQuestionId": "interview-ef-keyset-pagination-001",
+  "license": "CC-BY-4.0"
+}

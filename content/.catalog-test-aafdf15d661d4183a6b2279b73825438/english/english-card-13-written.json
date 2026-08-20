@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "id": "english-card-13-written",
+  "version": 1,
+  "title": "Actionable alert — written update",
+  "level": "B2",
+  "durationMinutes": 12,
+  "skills": [
+    "english.written",
+    "observability.alerts"
+  ],
+  "situation": "In a technical discussion, an alert has no owner or runbook. You must write the decision accurately without overstating the evidence.",
+  "instructions": [
+    "Write four sentences on what makes an alert actionable, what this one lacks, and the first thing you would add."
+  ],
+  "vocabulary": [
+    {
+      "term": "alert design",
+      "meaning": "the discipline of firing only on conditions someone can act on, since an alert nobody acts on trains the team to ignore alerts"
+    },
+    {
+      "term": "runbook",
+      "meaning": "the short procedure attached to an alert, telling the person woken up what to check and what to do first"
+    }
+  ],
+  "expectedElements": [
+    "The absence of an owner is treated as a defect",
+    "The cost of unactionable alerts is named",
+    "One concrete first addition is proposed"
+  ],
+  "modelAnswer": "The alert lacks an owner and a runbook, which are the two conditions that make it actionable. Without an owner it fires into a shared channel and responsibility diffuses; without a runbook whoever responds has to rediscover what to check under time pressure. The real cost is cumulative: alerts nobody can act on train the team to ignore alerts generally, including the ones that matter. I would add a three-line runbook first, since it converts the signal into an action and tells the responder which evidence to collect.",
+  "commonMistakes": [
+    "Treating the missing owner as an administrative detail",
+    "Proposing to tune the threshold instead of making the alert actionable"
+  ],
+  "variants": [
+    "Rewrite the update as the three-line runbook itself."
+  ],
+  "license": "CC-BY-4.0"
+}

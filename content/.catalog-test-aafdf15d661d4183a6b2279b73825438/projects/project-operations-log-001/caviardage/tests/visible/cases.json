@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "cases": [
+    {
+      "name": "Visible_TokenInUrlIsRedacted",
+      "message": "Le jeton disparaît de l'URL avant que l'entrée n'atteigne le puits.",
+      "arguments": ["appel vers https://api.exemple/commande?jeton=abc123", "abc123"],
+      "expected": "INF appel vers https://api.exemple/commande?jeton=***",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Visible_PasswordIsRedacted",
+      "message": "Le mot de passe est remplacé, le reste du message est conservé tel quel.",
+      "arguments": ["connexion de service-batch avec mdp=Hiver2026", "Hiver2026"],
+      "expected": "INF connexion de service-batch avec mdp=***",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Visible_EmptySecretListLeavesTheMessage",
+      "message": "Sans secret déclaré, le message est émis intact.",
+      "arguments": ["export termine sans identifiant", ""],
+      "expected": "INF export termine sans identifiant",
+      "argumentsUnchanged": true
+    }
+  ]
+}

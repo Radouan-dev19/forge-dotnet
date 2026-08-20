@@ -1,0 +1,32 @@
+{
+    "schemaVersion":  1,
+    "cases":  [
+                  {
+                      "name":  "Visible_Case1",
+                      "message":  "Normaliser un segment de route — cas 1 incorrect.",
+                      "arguments":  [
+                                        " /Orders/ "
+                                    ],
+                      "expected":  "orders",
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Visible_Case2",
+                      "message":  "Normaliser un segment de route — cas 2 incorrect.",
+                      "arguments":  [
+                                        "customers"
+                                    ],
+                      "expected":  "customers",
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Visible_TrailingSlashOnly",
+                      "message":  "Barre oblique finale seule : elle est retirée.",
+                      "arguments":  ["Orders/"],
+                      "expected":  "orders",
+                      "argumentsUnchanged":  true
+                  }
+              ]
+}

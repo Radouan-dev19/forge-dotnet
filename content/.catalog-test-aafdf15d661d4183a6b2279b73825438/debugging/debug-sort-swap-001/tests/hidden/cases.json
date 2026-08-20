@@ -1,0 +1,39 @@
+{
+    "schemaVersion":  1,
+    "cases":  [
+                  {
+                      "name":  "Hidden_Case1",
+                      "message":  "Tri dans le mauvais sens — cas 1.",
+                      "arguments":  [
+                                        [
+                                            2,
+                                            1
+                                        ]
+                                    ],
+                      "expected":  [
+                                       1,
+                                       2
+                                   ],
+                      "expectedException":  null,
+                      "argumentsUnchanged":  true
+                  },
+                  {
+                      "name":  "Hidden_Case2",
+                      "message":  "Tri dans le mauvais sens — cas 2.",
+                      "arguments":  [
+                                        [
+                                            -1,
+                                            2,
+                                            0
+                                        ]
+                                    ],
+                      "expected":  [
+                                       -1,
+                                       0,
+                                       2
+                                   ],
+                      "expectedException":  null,
+                      "argumentsUnchanged":  true
+                  }
+              ]
+}

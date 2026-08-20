@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "id": "interview-s21-s24-011",
+  "version": 1,
+  "title": "Protéger une chaîne de connexion",
+  "level": "junior",
+  "durationMinutes": 6,
+  "skills": [
+    "azure.security"
+  ],
+  "question": "Une application utilise Azure SQL. Comment évitez-vous de versionner une chaîne sensible ?",
+  "observableCriteria": [
+    "Le chemin en environnement hébergé et le chemin local sont traités séparément",
+    "L'absence de la valeur dans les messages d'erreur et les captures est explicitement contrôlée"
+  ],
+  "modelAnswer": "En Azure, je privilégie lʼidentité gérée et un fournisseur adapté ; en local, une valeur factice reste hors Git. Les erreurs et captures ne contiennent jamais la valeur.",
+  "commonMistakes": [
+    "Sécuriser la chaîne en production et laisser une valeur réelle dans le chemin local"
+  ],
+  "variants": [
+    "Changez une contrainte du scénario « Protéger une chaîne de connexion » et expliquez si la décision reste valide."
+  ],
+  "license": "CC-BY-4.0"
+}

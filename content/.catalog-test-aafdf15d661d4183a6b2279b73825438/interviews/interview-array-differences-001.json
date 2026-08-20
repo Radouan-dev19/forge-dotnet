@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "id": "interview-array-differences-001",
+  "version": 1,
+  "title": "Transformer des valeurs adjacentes",
+  "level": "junior",
+  "durationMinutes": 5,
+  "skills": ["csharp.arrays", "logic.edge-cases"],
+  "question": "Comment déterminerais-tu la taille et les bornes de boucle d’un tableau d’écarts successifs ?",
+  "observableCriteria": [
+    "La relation entre n valeurs et n moins un écarts est expliquée",
+    "Les entrées null, vide, unitaire et l’immutabilité sont testées"
+  ],
+  "modelAnswer": "Pour n valeurs, il existe max(0, n-1) paires adjacentes. J’alloue cette taille et je boucle sur les index du résultat, qui garantissent que i+1 reste valide. Je refuse null et je vérifie que l’entrée n’a pas changé.",
+  "commonMistakes": ["Boucler jusqu’à la longueur de l’entrée et lire hors limites"],
+  "variants": ["Retourner les rapports successifs lorsque le diviseur n’est pas nul"],
+  "license": "CC-BY-4.0"
+}

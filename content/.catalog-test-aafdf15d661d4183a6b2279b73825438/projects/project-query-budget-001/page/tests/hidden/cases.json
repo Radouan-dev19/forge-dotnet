@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "cases": [
+    {
+      "name": "Hidden_LastPartialPageCostsOneQuery",
+      "message": "La dernière page, même incomplète, tient dans l'unique requête.",
+      "arguments": [3, 2],
+      "expected": "5,6|1",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_LargePageSizeStillCostsOne",
+      "message": "Le budget ne dépend pas de la taille de page demandée.",
+      "arguments": [2, 4],
+      "expected": "5,6|1",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_PageBeyondTheDataIsEmpty",
+      "message": "Une page au-delà des données rend le mot aucun, toujours en une requête.",
+      "arguments": [4, 2],
+      "expected": "aucun|1",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_NegativeSizeIsRejected",
+      "message": "Une taille négative est refusée avant d'émettre la moindre requête.",
+      "arguments": [1, -1],
+      "expectedException": "ArgumentOutOfRangeException",
+      "argumentsUnchanged": false
+    }
+  ]
+}

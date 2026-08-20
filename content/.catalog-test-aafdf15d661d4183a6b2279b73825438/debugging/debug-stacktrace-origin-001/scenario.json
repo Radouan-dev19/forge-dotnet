@@ -1,0 +1,42 @@
+{
+    "schemaVersion":  1,
+    "id":  "debug-stacktrace-origin-001",
+    "version":  1,
+    "title":  "Diagnostic orienté vers le mauvais composant",
+    "difficulty":  3,
+    "skills":  [
+                   "debugging.stacktrace"
+               ],
+    "prerequisites":  [
+                          "debug-stacktraces-breakpoints-001"
+                      ],
+    "estimatedMinutes":  40,
+    "brokenRepositoryPath":  "broken/",
+    "ticketPath":  "ticket.md",
+    "expectedBehavior":  "L'outil retient la première ligne de la trace qui appartient au code de l'application, en parcourant du point de levée vers l'appelant. Une trace vide ou dépourvue de ligne applicative donne une chaîne vide.",
+    "logsPath":  "logs.txt",
+    "checklist":  [
+                      "Reproduire avec une trace mêlant cadres de plateforme et cadres applicatifs",
+                      "Numéroter les lignes de la trace et repérer celle qui est retenue",
+                      "Comparer cette ligne à celle qu'un développeur retiendrait",
+                      "Ajouter au jeu de non-régression une trace sans aucune ligne applicative"
+                  ],
+    "observationQuestions":  [
+                                 "Dans quel sens la trace se lit-elle, du point de levée vers l'appelant ou l'inverse ?",
+                                 "La ligne retenue est-elle sélectionnée par sa position ou par son contenu ?",
+                                 "Que doit-il se passer quand aucune ligne n'appartient à l'application ?"
+                             ],
+    "correctionPath":  "correction/",
+    "regressionTestPath":  "regression-test.md",
+    "journalFields":  [
+                          "symptom",
+                          "context",
+                          "hypotheses",
+                          "evidence",
+                          "cause",
+                          "fix",
+                          "test",
+                          "prevention"
+                      ],
+    "license":  "CC-BY-4.0"
+}

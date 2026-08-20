@@ -184,6 +184,7 @@ par semaine, et la matrice figée de `ContentS11S20CoverageTests` la rend visibl
 | Lot 1 | S12 à S17 | 6 | 5,3 → 6,0 |
 | Lot JWT | S14 | 6 — `security-jwt-*` | 6,0 → 6,9 |
 | Lot REST | S11 à S13 | 12 — versionnage, ETag, débit, cache, CORS, webhooks | 6,9 → **8,6** |
+| Lot tests-qualité | S15 à S17 | 6 — mutation, couverture, ordre, caractérisation, assertions, sévérité | 8,6 → **9,4** |
 
 Le lot 1 ajoute `api-validation-aggregate-001` (S12), `api-sort-expression-001` (S13),
 `security-scope-grant-001` (S14), `tests-boundary-probe-001` (S15),
@@ -220,19 +221,65 @@ est la concurrence optimiste de `sql-isolation-001` et `ef-core-data-access-001`
 HTTP, et la vérification de signature des webhooks réutilise le HMAC du lot jetons. Ce lot fait
 franchir la cible de huit exercices à S11–S14, ce qui sert aussi la reprise de densité (T8).
 
-**Cible restante, remesurée le 18 août 2026 : huit exercices par semaine sur S15–S17**, encore à six
-chacune — S11 à S13 sont à dix et S14 à douze, la cible y est atteinte. Les densités mesurées
-ailleurs : S18 à huit, S19 à cinq, S20 à trois, S21 à sept, S22 à trois, S23 à un, S24 à trois,
-piste senior à un par semaine. Deux autres reliquats mesurés le même jour : les douze exercices à
-domaine d'entrée booléen relevés par l'audit n'ont toujours aucun frère à domaine ouvert (T9,
-zéro sur douze), tandis que la couverture d'examen est close — les 187 exercices publiés figurent
-tous dans au moins une banque (T7). Les sujets qu'un runner à méthode statique ne peut pas héberger
-réellement — écrire un vrai fichier de conteneur, une vraie définition de pipeline, un vrai
-déploiement — relèvent des laboratoires de `content/labs/`, pas des exercices : les décliner sur le
-modèle de `labs/api-mini-erp/` est un lot distinct de celui-ci.
+**Cible T8 atteinte le 19 août 2026.** S15 à S17 passent de six à huit exercices chacune avec le
+lot tests-qualité — score de mutation, plancher de couverture, dépendance à l'ordre d'exécution,
+caractérisation d'un code hérité, assertions robustes au remaniement, matrice de sévérité de revue.
+S19 passe de cinq à huit et S20 de trois à six avec le lot livraison, sur des noyaux décidables à
+domaine ouvert : limite mémoire effective d'une chaîne de contraintes, invalidation de cache par
+liste d'instructions, politique d'empreinte contre étiquette flottante, tri d'un journal de pipeline,
+fenêtre de recul exponentiel, porte de déploiement sur pièces. S22 passe de trois à six avec le lot
+observabilité : segments de trace orphelins, budget d'erreur restant, alerte de persistance.
+Densités mesurées après les lots T8 et T9 : S11 et S12 à onze, S13 à dix, S14 à treize, S15 et S17
+à huit, S16 et S19 à neuf, S18 à huit, S20 et S22 à six, S21 à neuf, S23 à deux, S24 à quatre. S23 et S24 restent volontairement à un et trois exercices : la charge de ces
+semaines vit dans le projet final `project-final-service-operations-001` — cinq jalons, grille
+complète — et dans les fiches de défense, d'anglais et de carrière ; les gonfler d'exercices
+détournerait le temps de la soutenance qu'elles préparent. La couverture d'examen reste close : tous
+les exercices publiés figurent dans au moins une banque, la nouvelle banque `delivery-pipeline-v1`
+(examen 7) portant les exercices S18–S20 que l'examen Azur-observabilité hébergeait faute de mieux.
+Les sujets qu'un runner à méthode statique ne peut pas héberger réellement — écrire un vrai fichier
+de conteneur, une vraie définition de pipeline, un vrai déploiement — relèvent toujours des
+laboratoires de `content/labs/`.
 
-Limite de schéma constatée au passage : le schéma de curriculum v1 impose au moins un exercice par
-module et ne sait référencer ni scénario SQL, ni DebugLab, ni laboratoire. Les modules S8 à S10,
-dont la pratique vit dans le SqlLab, référencent donc chacun un exercice C# complémentaire du thème
-et l'annoncent dans leur titre. Donner aux modules des champs `scenarioIds`/`labIds` demanderait une
+**T9 clos le 19 août 2026.** Les douze exercices à domaine d'entrée entièrement booléen relevés par
+l'audit — qui formaient entre eux des chaînes de variantes fermées — ont chacun leur frère à domaine
+ouvert sur le même sujet, en paire réciproque de `variantId` : contrat statut-en-têtes pour la table
+de statuts, analyse de profil pour la durée de vie d'injection, faces publique et journal pour le
+message de connexion, taxonomie flux-contrat pour le choix de double, relevé gradué pour le socle de
+durcissement, journal de pipeline consolidé pour le résultat de travail, porte sur pièces pour la
+porte de déploiement, barème additif pour la sévérité de revue, grille rythme-artefact-livraison
+pour l'hébergement, cascade sensibilité-consommateur-rotation pour la source de valeur sensible,
+dossier de preuves daté pour le jalon, brief extrait du journal pour l'incident. Un treizième
+booléen hors liste, `git-rebase-or-merge-001`, a été apparié à `git-branch-name-001`. Le test
+`EveryBooleanDomainExerciseVariesIntoAReciprocalOpenDomainSibling` refuse désormais tout `variantId`
+d'exercice booléen pointant vers un autre booléen et exige la réciprocité de la paire : les chaînes
+fermées ne peuvent pas réapparaître. Note d'exactitude : la mention antérieure de
+`docker-memory-limit-001` parmi les douze était une erreur de ce document — cet exercice n'est pas à
+domaine booléen ; son frère `docker-memory-effective-001` reste une transposition légitime.
+
+**T10 clos le 19 août 2026 : densité et vocabulaire de la piste senior.** Chaque semaine senior
+passe dʼun à quatre exercices — vingt-quatre ajouts à noyau décidable et domaine ouvert : calendrier
+de réessai avec jitter plafonné, transition de disjoncteur motivée, verdict de cloisonnement,
+collisions de clés dʼidempotence, verdict de rejeu contre registre, fenêtre de déduplication,
+lettres mortes avec budget, drainage dʼarriéré, clés multi-partitions, plan de compensation
+inversé, état final dʼune saga, régression de lectures monotones, verdict de découpe, disponibilité
+dʼune chaîne, cycles de déploiement, chemin critique dʼune trace, taux de combustion, percentile au
+rang le plus proche, tri de revue par preuve, verdict de fusion protégée, propriétaires requis,
+points chauds churn-complexité, ordre dʼétranglement, retrait de drapeaux. Chacun porte sa fiche
+dʼentretien de niveau avancé avec la question de vocabulaire anglais, et chaque leçon senior gagne
+la sous-section « Le nom en entretien » — termes anglais exacts et outils du marché (Polly,
+RabbitMQ, Kafka, OpenTelemetry, gRPC) cités en une phrase chacun, vocabulaire et non dépendance.
+Le projet de revue Senior S7 monte à quatre diffs (concurrence et sécurité plantées deux fois, plus
+un second faux positif de style qui coûte sʼil bloque) ; Senior S8 gagne un second laboratoire
+hérité, `senior-legacy-trial-002`, sur une base cassée différente — un reste de période dʼessai
+sans plancher. La banque `senior-readiness-v1` élargit son vivier de 8 à 32 candidats et son tirage
+de 5 à 8 : le tirage suit lʼélargissement du vivier — une pioche de plus par grand bloc de thèmes —
+sans quadrupler la durée de lʼépreuve.
+
+Limite de schéma levée pour S8–S10 : le schéma de curriculum v1 impose au moins un exercice par
+module, et ces modules portaient des exercices algorithmiques recopiés de S5. Le runner embarquant
+EF Core et SQLite, chacun porte désormais un exercice EF Core réel de son thème —
+`ef-join-silent-customers-001` (jointures, S8), `ef-aggregate-status-counts-001` (agrégations, S9),
+`ef-keyset-pagination-001` (pagination, S10) — de la même forme que les variantes d'examen
+`ef-orders-*`, tirables par la banque `sql-ef-core-v1`. Le gros de la pratique SQL de ces semaines
+vit toujours dans le SqlLab. Donner aux modules des champs `scenarioIds`/`labIds` demanderait une
 version 2 du schéma, son chargeur et ses pages : à évaluer comme un lot propre, pas en correctif.

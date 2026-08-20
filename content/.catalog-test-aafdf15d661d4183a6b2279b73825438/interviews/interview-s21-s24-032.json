@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "id": "interview-s21-s24-032",
+  "version": 1,
+  "title": "Définir un jalon vertical",
+  "level": "intermediate",
+  "durationMinutes": 9,
+  "skills": [
+    "project.milestone"
+  ],
+  "question": "À quoi reconnaissez-vous un premier jalon utile ?",
+  "observableCriteria": [
+    "Le jalon traverse toutes les couches pour un comportement étroit, et non une couche entière",
+    "La migration reproductible et l'erreur visible sont citées comme partie du jalon"
+  ],
+  "modelAnswer": "Il traverse interface, cas dʼusage, domaine et persistance pour un comportement étroit, avec test, migration reproductible, erreur visible et revue de sécurité.",
+  "commonMistakes": [
+    "Livrer une couche complète et appeler cela un jalon, sans comportement de bout en bout"
+  ],
+  "variants": [
+    "Changez une contrainte du scénario « Définir un jalon vertical » et expliquez si la décision reste valide."
+  ],
+  "license": "CC-BY-4.0"
+}

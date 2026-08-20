@@ -1,0 +1,1 @@
+Event=RenderAudit Level=Warning ParameterUpdates=6 StaleRenders=5 LastValue=30 FirstValue=10 CorrelationId=dbg-front-blazor-001

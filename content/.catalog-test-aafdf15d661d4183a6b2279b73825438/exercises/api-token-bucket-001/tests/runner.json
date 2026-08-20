@@ -1,0 +1,14 @@
+{
+    "schemaVersion":  1,
+    "suiteId":  "api-token-bucket-001.v1",
+    "exerciseId":  "api-token-bucket-001",
+    "exerciseVersion":  1,
+    "typeName":  "Submission",
+    "methodName":  "TokensAfterRequest",
+    "parameterTypes":  [
+                           "int",
+                           "int",
+                           "int"
+                       ],
+    "returnType":  "int"
+}

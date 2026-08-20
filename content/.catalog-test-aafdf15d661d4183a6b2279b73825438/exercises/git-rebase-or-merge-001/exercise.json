@@ -1,0 +1,82 @@
+{
+  "schemaVersion": 1,
+  "id": "git-rebase-or-merge-001",
+  "version": 1,
+  "title": "Choisir entre rebase et fusion",
+  "kind": "csharp",
+  "difficulty": 3,
+  "skills": ["git.branches"],
+  "prerequisites": ["git-branch-name-001"],
+  "estimatedMinutes": 35,
+  "statement": "statement.md",
+  "constraints": [
+    "Conserver exactement la signature publique",
+    "Une branche partagée n'est jamais réécrite, quelle que soit la propreté de son histoire",
+    "Les quatre stratégies sont mutuellement exclusives et décidées dans un ordre fixe"
+  ],
+  "examples": [
+    {
+      "input": "[true, true, true]",
+      "output": "merge"
+    },
+    {
+      "input": "[false, false, false]",
+      "output": "fast-forward"
+    }
+  ],
+  "reflectionFields": [
+    "reformulation",
+    "inputs",
+    "expectedOutput",
+    "edgeCases",
+    "hypothesis",
+    "plan"
+  ],
+  "starterPath": "starter/",
+  "visibleTestsPath": "tests/visible/",
+  "hiddenTestsPath": "tests/hidden/",
+  "hints": [
+    {
+      "level": 1,
+      "kind": "socratic",
+      "content": "Un collègue a déjà récupéré votre branche. Que se passe-t-il chez lui si vous en réécrivez l'histoire ?"
+    },
+    {
+      "level": 2,
+      "kind": "location",
+      "content": "Une seule méthode, quatre retours anticipés dans l'ordre qui rend les branches suivantes inutiles à protéger."
+    },
+    {
+      "level": 3,
+      "kind": "strategy",
+      "content": "Le partage décide en premier ; il interdit toute réécriture. Le reste se départage sur la propreté puis sur l'avancée de la cible."
+    },
+    {
+      "level": 4,
+      "kind": "partial-pseudocode",
+      "content": "si la branche est partagée retourner la fusion ; sinon si son histoire est bruitée retourner l'écrasement ; sinon si la cible a avancé retourner le rebasage ; sinon retourner l'avance rapide"
+    }
+  ],
+  "solution": {
+    "path": "solution/",
+    "unlock": {
+      "seriousAttempts": 2,
+      "minimumDelayMinutes": 10
+    }
+  },
+  "explanation": "explanation.md",
+  "complexity": "O(1) en temps et O(1) en espace",
+  "commonMistakes": [
+    "Rebaser une branche déjà récupérée par un collègue, dont les commits deviennent alors des doublons",
+    "Écraser une histoire dont chaque commit racontait une étape de raisonnement utile",
+    "Fusionner systématiquement, ce qui remplit l'historique de commits de fusion sans contenu",
+    "Décider sur la propreté avant de vérifier le partage, ce qui autorise une réécriture interdite"
+  ],
+  "variantId": "git-branch-name-001",
+  "reviewCards": [
+    "card-git-rebase-or-merge-001-rule",
+    "card-git-rebase-or-merge-001-edge"
+  ],
+  "interviewQuestionId": "interview-git-rebase-or-merge-001",
+  "license": "CC-BY-4.0"
+}

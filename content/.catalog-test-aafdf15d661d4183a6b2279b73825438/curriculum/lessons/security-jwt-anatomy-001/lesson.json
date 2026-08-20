@@ -1,0 +1,36 @@
+{
+    "schemaVersion":  1,
+    "id":  "security-jwt-anatomy-001",
+    "version":  1,
+    "title":  "Anatomie d'un jeton JWT : lisible par tous, signé par un seul",
+    "week":  14,
+    "skills":  [
+                   {
+                       "id":  "security.token",
+                       "weight":  1
+                   }
+               ],
+    "prerequisites":  [
+                          "security-authentication-001"
+                      ],
+    "estimatedMinutes":  60,
+    "objectives":  [
+                       "Découper un jeton JWT à la main, décoder sa charge utile et expliquer pourquoi elle n'est pas confidentielle"
+                   ],
+    "sections":  [
+                     "intuition",
+                     "explanation",
+                     "example",
+                     "counterExample",
+                     "check",
+                     "guided",
+                     "independent",
+                     "debugging",
+                     "interview",
+                     "summary",
+                     "reviewCards",
+                     "masteryTest"
+                 ],
+    "markdownPath":  "lesson.md",
+    "license":  "CC-BY-4.0"
+}

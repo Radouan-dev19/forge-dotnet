@@ -1,0 +1,54 @@
+{
+  "schemaVersion": 1,
+  "cases": [
+    {
+      "name": "Hidden_EmptyTraceIsRefused",
+      "message": "Sans segment, il n'y a pas de chemin critique.",
+      "arguments": [""],
+      "expectedException": "ArgumentException",
+      "argumentsUnchanged": false
+    },
+    {
+      "name": "Hidden_EndBeforeStartIsRefused",
+      "message": "Une fin avant le début ne mesure aucune durée.",
+      "arguments": ["x:5:3:-"],
+      "expectedException": "ArgumentException",
+      "argumentsUnchanged": false
+    },
+    {
+      "name": "Hidden_UnknownParentIsRefused",
+      "message": "Un lien cassé attribuerait le temps d'un enfant à personne : la trace se répare d'abord.",
+      "arguments": ["r:0:10:-;c:0:5:ghost"],
+      "expectedException": "ArgumentException",
+      "argumentsUnchanged": false
+    },
+    {
+      "name": "Hidden_DuplicateSpanNameIsRefused",
+      "message": "Deux segments sous le même nom rendent la soustraction ambiguë.",
+      "arguments": ["r:0:10:-;r:2:4:r"],
+      "expectedException": "ArgumentException",
+      "argumentsUnchanged": false
+    },
+    {
+      "name": "Hidden_SameStartTieBreaksOnName",
+      "message": "Deux enfants au même travail propre et au même début : l'ordre des noms conclut.",
+      "arguments": ["root:0:100:-;p:0:40:root;q:0:40:root"],
+      "expected": "p|40",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_ZeroDurationSpanIsLegitimate",
+      "message": "Un segment instantané a zéro milliseconde de travail propre — et c'est le seul.",
+      "arguments": ["svc:0:0:-"],
+      "expected": "svc|0",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_DeepChainPointsAtTheLeafWorker",
+      "message": "Trois niveaux d'attente : c'est la requête SQL, tout en bas, qui travaille cent soixante-dix millisecondes.",
+      "arguments": ["edge:0:300:-;cache:20:60:edge;svc:60:280:edge;sql:100:270:svc"],
+      "expected": "sql|170",
+      "argumentsUnchanged": true
+    }
+  ]
+}

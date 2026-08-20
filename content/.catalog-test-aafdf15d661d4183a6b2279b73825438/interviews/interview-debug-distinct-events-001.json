@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "id": "interview-debug-distinct-events-001",
+  "version": 1,
+  "title": "Dédupliquer des événements",
+  "level": "junior",
+  "durationMinutes": 5,
+  "skills": [
+    "debugging.data"
+  ],
+  "question": "Comment résoudriez-vous « Dédupliquer des événements » et comment prouveriez-vous les bornes ?",
+  "observableCriteria": [
+    "La règle de casse est décidée explicitement plutôt que héritée de la comparaison par défaut",
+    "Les segments vides sont ignorés sans inventer d'autre normalisation"
+  ],
+  "modelAnswer": "Définir la casse et ignorer les segments vides sans inventer de normalisation. Je prouve par deux événements ne différant que par la casse, un segment vide et une liste sans doublon ; O(n) attendu en temps et O(n) en espace.",
+  "commonMistakes": [
+    "Ajouter une normalisation non annoncée et fusionner deux événements réellement distincts"
+  ],
+  "variants": [
+    "Changer une borne ou le volume tout en conservant la même règle de dédupliquer des événements."
+  ],
+  "license": "CC-BY-4.0"
+}

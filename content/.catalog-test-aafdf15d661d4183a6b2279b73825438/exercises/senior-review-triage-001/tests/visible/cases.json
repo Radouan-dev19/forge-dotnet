@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "cases": [
+    {
+      "name": "Visible_Injection",
+      "message": "Injection SQL : bloquant, securite.",
+      "arguments": ["sql-injection"],
+      "expected": "blocking:security",
+      "expectedException": null,
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Visible_NullNonVerifie",
+      "message": "Absence de verification de nullite : bloquant, correction.",
+      "arguments": ["missing-null-check"],
+      "expected": "blocking:correctness",
+      "expectedException": null,
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Visible_Nommage",
+      "message": "Preference de nommage : mineur, style, jamais bloquant.",
+      "arguments": ["variable-naming"],
+      "expected": "minor:style",
+      "expectedException": null,
+      "argumentsUnchanged": true
+    }
+  ]
+}

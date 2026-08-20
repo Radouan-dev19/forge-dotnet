@@ -1,0 +1,12 @@
+{
+    "schemaVersion":  1,
+    "suiteId":  "algo-minimum-index-001.v1",
+    "exerciseId":  "algo-minimum-index-001",
+    "exerciseVersion":  1,
+    "typeName":  "Submission",
+    "methodName":  "MinimumIndex",
+    "parameterTypes":  [
+                           "int[]"
+                       ],
+    "returnType":  "int"
+}

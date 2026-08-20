@@ -6,6 +6,11 @@
   "durationMinutes": 120,
   "drawCount": 8,
   "passingScore": 80,
+  "eligibleExerciseIds": [
+    "ef-join-silent-customers-001",
+    "ef-aggregate-status-counts-001",
+    "ef-keyset-pagination-001"
+  ],
   "eligibleEfScenarioIds": [
     "ef-orders-tracking-001",
     "ef-orders-queryable-001"

@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "cases": [
+    {
+      "name": "Hidden_UnreachableBarTargetsEveryone",
+      "message": "Aucune commande n'atteint ce seuil : les quatre clients sont cibles, en ordre de nom.",
+      "arguments": [120.51],
+      "expected": "Ada,Grace,Linus,Margaret",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_ExactSeventyFiveExcludesGrace",
+      "message": "Le seuil posé exactement sur la commande de Grace la qualifie : la frontière est inclusive.",
+      "arguments": [75],
+      "expected": "Linus,Margaret",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_AdaEscapesOnHerLargestOrder",
+      "message": "La plus grosse commande d'Ada tombe pile sur le seuil : elle sort de la cible de justesse.",
+      "arguments": [120.50],
+      "expected": "Grace,Linus,Margaret",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_ZeroThresholdIsRefused",
+      "message": "Un seuil nul viderait la question : toute commande le franchirait.",
+      "arguments": [0],
+      "expectedException": "ArgumentOutOfRangeException",
+      "argumentsUnchanged": false
+    }
+  ]
+}

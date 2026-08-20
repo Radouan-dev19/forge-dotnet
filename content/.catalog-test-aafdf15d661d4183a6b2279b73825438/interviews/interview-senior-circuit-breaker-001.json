@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "id": "interview-senior-circuit-breaker-001",
+  "version": 1,
+  "title": "Faire avancer l'automate d'un disjoncteur",
+  "level": "advanced",
+  "durationMinutes": 10,
+  "skills": [
+    "quality.resilience"
+  ],
+  "question": "Comment concevez-vous les etats d'un disjoncteur, et pourquoi un echec en half-open doit-il rouvrir le circuit immediatement plutot que d'attendre le seuil ?",
+  "observableCriteria": [
+    "Les trois etats closed, open et half-open sont distingues par ce qu'ils autorisent en trafic reel",
+    "L'etat half-open est decrit comme un essai probatoire unique, non comme un retour au regime nominal",
+    "Le seuil d'echecs consecutifs est justifie par la volonte de ne pas reagir a un echec isole"
+  ],
+  "modelAnswer": "Le disjoncteur protege un appel distant par trois etats. En closed le trafic passe et je compte les echecs consecutifs ; un succes efface ce compteur, car un echec isole n'est pas une panne. Au seuil, je passe en open et je coupe le trafic pour cesser de marteler un service a terre et rendre la main tout de suite. En open aucun appel n'est emis : seul l'ecoulement du temps me fait passer en half-open, ou je laisse passer un unique essai. La subtilite est la : cet essai est un test, pas un retour au regime nominal. Un succes prouve le retablissement et referme ; un echec signifie que la reparation supposee a echoue, donc je rouvre aussitot, sans attendre un nouveau seuil, sinon je relancerais le trafic sur un service encore casse. Je remets le compteur a zero a chaque changement d'etat pour ne pas contaminer une vie du circuit par la precedente.",
+  "commonMistakes": [
+    "Traiter l'echec probatoire comme un echec ordinaire qui se contente d'incrementer le compteur",
+    "Laisser l'etat open reagir aux resultats d'appels alors qu'aucun appel n'y est emis"
+  ],
+  "variants": [
+    "Expliquer comment vous choisiriez le seuil et le delai d'ouverture pour un service donne.",
+    "Decrire ce qu'un disjoncteur partage et ne partage pas avec une simple politique de reessai."
+  ],
+  "license": "CC-BY-4.0"
+}

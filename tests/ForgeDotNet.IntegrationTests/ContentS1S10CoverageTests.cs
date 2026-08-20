@@ -104,16 +104,16 @@ public sealed class ContentS1S10CoverageTests
             .ToArray();
         string[] exams = Directory.GetFiles(Path.Combine(root, "exams"), "exam.json", SearchOption.AllDirectories)
             .Where(path => Read(path).RootElement.GetProperty("id").GetString() is not
-                ("api-security-v1" or "tests-quality-v1" or "azure-observability-v1" or "final-readiness-v1"
-                    or "senior-readiness-v1"))
+                ("api-security-v1" or "tests-quality-v1" or "delivery-pipeline-v1" or "azure-observability-v1"
+                    or "final-readiness-v1" or "senior-readiness-v1"))
             .ToArray();
 
         Assert.Equal(30, lessons.Length);
-        Assert.Equal(85, exercises.Length);
+        Assert.Equal(88, exercises.Length);
         Assert.Equal(25, debug.Length);
         Assert.Equal(40, sql.Length);
         Assert.Equal(5, projects.Length);
-        Assert.Equal(84, interviews.Length);
+        Assert.Equal(87, interviews.Length);
         Assert.Equal(4, exams.Length);
 
         int[] lessonWeeks = lessons.Select(path => Read(path).RootElement.GetProperty("week").GetInt32()).ToArray();
@@ -209,7 +209,11 @@ public sealed class ContentS1S10CoverageTests
                 || (skill.GetString() ?? string.Empty).StartsWith("quality.", StringComparison.Ordinal)
                 || (skill.GetString() ?? string.Empty).StartsWith("git.", StringComparison.Ordinal)
                 || (skill.GetString() ?? string.Empty).StartsWith("docker.", StringComparison.Ordinal)
-                || (skill.GetString() ?? string.Empty).StartsWith("ci.", StringComparison.Ordinal)))
+                || (skill.GetString() ?? string.Empty).StartsWith("ci.", StringComparison.Ordinal)
+                // Les familles des semaines finales parlent légitimement d'authentification et de
+                // livraison : elles relèvent de S21-S24, pas du socle S1-S10 inspecté ici.
+                || (skill.GetString() ?? string.Empty).StartsWith("azure.", StringComparison.Ordinal)
+                || (skill.GetString() ?? string.Empty).StartsWith("observability.", StringComparison.Ordinal)))
             .Where(path =>
             {
                 string exerciseId = Path.GetFileName(Path.GetDirectoryName(path)!);

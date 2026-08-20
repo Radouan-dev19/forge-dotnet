@@ -1,0 +1,39 @@
+{
+    "schemaVersion":  1,
+    "cases":  [
+                  {
+                      "name":  "Hidden_Case1",
+                      "message":  "Refuser une redirection externe — cas 1 incorrect.",
+                      "arguments":  [
+                                        "//evil.example"
+                                    ],
+                      "expected":  false,
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_Case2",
+                      "message":  "Refuser une redirection externe — cas 2 incorrect.",
+                      "arguments":  [
+                                        "/\\evil"
+                                    ],
+                      "expected":  false,
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_NullValue",
+                      "message":  "Valeur absente : refusée sans exception.",
+                      "arguments":  [null],
+                      "expected":  false,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_RelativeWithoutSlash",
+                      "message":  "Chemin relatif sans barre initiale : refusé, il pourrait être réinterprété.",
+                      "arguments":  ["orders/1"],
+                      "expected":  false,
+                      "argumentsUnchanged":  true
+                  }
+              ]
+}

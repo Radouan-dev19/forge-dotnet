@@ -1,0 +1,82 @@
+{
+    "schemaVersion":  1,
+    "id":  "api-error-status-001",
+    "version":  1,
+    "title":  "Mapper une erreur publique",
+    "kind":  "csharp",
+    "difficulty":  2,
+    "skills":  [
+                   "api.errors"
+               ],
+    "prerequisites":  [
+                          "api-validation-problem-details-001"
+                      ],
+    "estimatedMinutes":  35,
+    "statement":  "statement.md",
+    "constraints":  [
+                        "Conserver exactement la signature publique",
+                        "Mettre les erreurs connues sur liste fermée et rabattre le reste vers l'erreur interne.",
+                        "Ne lire aucun message d'exception : seule la catégorie déclarée décide"
+                    ],
+    "examples":  [
+                     {
+                         "input":  "[\"validation\"]",
+                         "output":  "400"
+                     }
+                 ],
+    "reflectionFields":  [
+                             "reformulation",
+                             "inputs",
+                             "expectedOutput",
+                             "edgeCases",
+                             "hypothesis",
+                             "plan"
+                         ],
+    "starterPath":  "starter/",
+    "visibleTestsPath":  "tests/visible/",
+    "hiddenTestsPath":  "tests/hidden/",
+    "hints":  [
+                  {
+                      "level":  1,
+                      "kind":  "socratic",
+                      "content":  "Quel comportement public de « Mapper une erreur publique » change exactement à la frontière ?"
+                  },
+                  {
+                      "level":  2,
+                      "kind":  "location",
+                      "content":  "Concentrez la validation et la décision dans ErrorStatus, sans état global ni journal sensible."
+                  },
+                  {
+                      "level":  3,
+                      "kind":  "strategy",
+                      "content":  "Mettre les erreurs connues sur liste blanche et rabattre les détails internes vers 500."
+                  },
+                  {
+                      "level":  4,
+                      "kind":  "partial-pseudocode",
+                      "content":  "normaliser la catégorie reçue en retirant les blancs et en uniformisant la casse ; la comparer à la liste fermée des catégories connues et retourner le statut associé ; pour toute autre valeur, retourner le statut d'erreur interne"
+                  }
+              ],
+    "solution":  {
+                     "path":  "solution/",
+                     "unlock":  {
+                                    "seriousAttempts":  2,
+                                    "minimumDelayMinutes":  10
+                                }
+                 },
+    "explanation":  "explanation.md",
+    "complexity":  "O(n) en temps et O(n) en espace",
+    "commonMistakes":  [
+                           "Retourner un statut de succès pour une catégorie inconnue",
+                           "Déduire le statut d'un message d'exception plutôt que d'une catégorie déclarée",
+                           "Comparer sans normaliser et manquer une catégorie écrite dans une autre casse",
+                           "Divulguer la nature du défaut interne par un statut trop précis"
+                       ],
+    "variantId":  "api-page-size-001",
+    "reviewCards":  [
+                        "card-api-error-status-001-rule",
+                        "card-api-error-status-001-security"
+                    ],
+    "interviewQuestionId":  "interview-api-error-status-001",
+    "license":  "CC-BY-4.0"
+}

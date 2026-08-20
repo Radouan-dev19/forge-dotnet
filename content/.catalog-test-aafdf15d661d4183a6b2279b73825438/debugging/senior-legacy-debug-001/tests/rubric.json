@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "scenarioId": "senior-legacy-debug-001",
+  "criteria": [
+    {
+      "id": "cause-arrondi",
+      "label": "Cause : arrondi de la division entiere",
+      "journalField": "cause",
+      "requiredTerms": ["division", "arrondi", "page partielle"],
+      "minimumMatches": 2
+    },
+    {
+      "id": "preuve-non-multiple",
+      "label": "Preuve : total non multiple de la taille de page",
+      "journalField": "evidence",
+      "requiredTerms": ["multiple", "attendu", "10"],
+      "minimumMatches": 2
+    },
+    {
+      "id": "test-derniere-page",
+      "label": "Test : non-regression sur une derniere page partielle",
+      "journalField": "test",
+      "requiredTerms": ["derniere page", "non-regression", "partielle"],
+      "minimumMatches": 1
+    },
+    {
+      "id": "prevention-bornes",
+      "label": "Prevention : bornes et arrondi superieur",
+      "journalField": "prevention",
+      "requiredTerms": ["bornes", "caracterisation", "arrondi superieur"],
+      "minimumMatches": 1
+    }
+  ]
+}

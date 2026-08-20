@@ -1,0 +1,39 @@
+{
+    "schemaVersion":  1,
+    "cases":  [
+                  {
+                      "name":  "Hidden_Case1",
+                      "message":  "Valider des parenthèses — cas 1 hidden incorrect.",
+                      "arguments":  [
+                                        ")("
+                                    ],
+                      "expected":  false,
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_Case2",
+                      "message":  "Valider des parenthèses — cas 2 hidden incorrect.",
+                      "arguments":  [
+                                        "text"
+                                    ],
+                      "expected":  true,
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_DeepNesting",
+                      "message":  "Imbrication profonde : réfute un simple comptage sur un seul niveau.",
+                      "arguments":  ["((()))"],
+                      "expected":  true,
+                      "argumentsUnchanged":  true
+                  },
+                  {
+                      "name":  "Hidden_ClosesTooEarly",
+                      "message":  "Une fermeture arrive avant son ouverture : réfute un comptage global qui s'équilibrerait.",
+                      "arguments":  ["())("],
+                      "expected":  false,
+                      "argumentsUnchanged":  true
+                  }
+              ]
+}

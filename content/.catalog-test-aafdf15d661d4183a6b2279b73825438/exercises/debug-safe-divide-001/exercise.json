@@ -1,0 +1,82 @@
+{
+    "schemaVersion":  1,
+    "id":  "debug-safe-divide-001",
+    "version":  1,
+    "title":  "Prévenir une division invalide",
+    "kind":  "csharp",
+    "difficulty":  1,
+    "skills":  [
+                   "debugging.data"
+               ],
+    "prerequisites":  [
+                          "debug-stacktraces-breakpoints-001"
+                      ],
+    "estimatedMinutes":  30,
+    "statement":  "statement.md",
+    "constraints":  [
+                        "Conserver exactement la signature publique",
+                        "Traiter le diviseur nul et conserver la division entière annoncée.",
+                        "Ne changer ni le type ni la sémantique de la division annoncée"
+                    ],
+    "examples":  [
+                     {
+                         "input":  "[8,2]",
+                         "output":  "4"
+                     }
+                 ],
+    "reflectionFields":  [
+                             "reformulation",
+                             "inputs",
+                             "expectedOutput",
+                             "edgeCases",
+                             "hypothesis",
+                             "plan"
+                         ],
+    "starterPath":  "starter/",
+    "visibleTestsPath":  "tests/visible/",
+    "hiddenTestsPath":  "tests/hidden/",
+    "hints":  [
+                  {
+                      "level":  1,
+                      "kind":  "socratic",
+                      "content":  "Quel invariant de « Prévenir une division invalide » doit rester vrai pour les cas limites ?"
+                  },
+                  {
+                      "level":  2,
+                      "kind":  "location",
+                      "content":  "Concentrez la décision dans la méthode SafeDivide, sans état global."
+                  },
+                  {
+                      "level":  3,
+                      "kind":  "strategy",
+                      "content":  "Traiter le diviseur nul et conserver la division entière annoncée."
+                  },
+                  {
+                      "level":  4,
+                      "kind":  "partial-pseudocode",
+                      "content":  "traiter le diviseur nul en premier, en retournant la valeur convenue plutôt qu'en levant ; sinon effectuer la division entière annoncée"
+                  }
+              ],
+    "solution":  {
+                     "path":  "solution/",
+                     "unlock":  {
+                                    "seriousAttempts":  2,
+                                    "minimumDelayMinutes":  10
+                                }
+                 },
+    "explanation":  "explanation.md",
+    "complexity":  "O(1) en temps et O(1) en espace",
+    "commonMistakes":  [
+                           "Diviser avant d'avoir vérifié le diviseur",
+                           "Lever une exception alors que le contrat prévoit une valeur de repli",
+                           "Passer en division flottante et changer le type de résultat annoncé",
+                           "Oublier que diviser la plus petite valeur signée par moins un déborde"
+                       ],
+    "variantId":  "structures-run-length-001",
+    "reviewCards":  [
+                        "card-debug-safe-divide-001-rule",
+                        "card-debug-safe-divide-001-edge"
+                    ],
+    "interviewQuestionId":  "interview-debug-safe-divide-001",
+    "license":  "CC-BY-4.0"
+}

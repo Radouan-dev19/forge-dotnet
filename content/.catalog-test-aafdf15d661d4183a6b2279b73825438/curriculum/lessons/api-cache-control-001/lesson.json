@@ -1,0 +1,37 @@
+{
+    "schemaVersion":  1,
+    "id":  "api-cache-control-001",
+    "version":  1,
+    "title":  "Cache-Control : qui peut garder quoi, combien de temps, et jamais",
+    "week":  12,
+    "skills":  [
+                   {
+                       "id":  "api.contracts",
+                       "weight":  1
+                   }
+               ],
+    "prerequisites":  [
+                          "api-http-semantics-001",
+                          "api-etag-concurrency-001"
+                      ],
+    "estimatedMinutes":  55,
+    "objectives":  [
+                       "Composer une directive de cache selon la sensibilité et la fraîcheur, et nommer ce qui ne doit jamais être mis en cache"
+                   ],
+    "sections":  [
+                     "intuition",
+                     "explanation",
+                     "example",
+                     "counterExample",
+                     "check",
+                     "guided",
+                     "independent",
+                     "debugging",
+                     "interview",
+                     "summary",
+                     "reviewCards",
+                     "masteryTest"
+                 ],
+    "markdownPath":  "lesson.md",
+    "license":  "CC-BY-4.0"
+}

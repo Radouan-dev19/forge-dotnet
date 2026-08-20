@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "id": "interview-date-expiry-001",
+  "version": 1,
+  "title": "Tester une borne temporelle",
+  "level": "junior",
+  "durationMinutes": 5,
+  "skills": ["csharp.dates", "csharp.conditions"],
+  "question": "Comment éviter une erreur d’un jour dans une règle d’expiration avec délai de grâce ?",
+  "observableCriteria": [
+    "La dernière date valide est nommée et son inclusion est explicitée",
+    "Les cas avant, à et après la borne ainsi qu’une grâce invalide sont testés"
+  ],
+  "modelAnswer": "Je transforme la règle en lastValidDate = dueDate plus graceDays, je décide qu’elle est incluse, puis j’utilise today strictement supérieur. Je teste juste avant, exactement dessus, juste après et une grâce négative.",
+  "commonMistakes": ["Utiliser supérieur ou égal sans vérifier le sens métier"],
+  "variants": ["Calculer l’expiration avec uniquement des jours ouvrés"],
+  "license": "CC-BY-4.0"
+}

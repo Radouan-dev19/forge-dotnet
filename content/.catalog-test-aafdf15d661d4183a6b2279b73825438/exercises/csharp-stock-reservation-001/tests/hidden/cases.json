@@ -1,0 +1,41 @@
+{
+    "schemaVersion":  1,
+    "cases":  [
+                  {
+                      "name":  "Hidden_Case1",
+                      "message":  "Vérifier une réservation de stock — cas 1 hidden incorrect.",
+                      "arguments":  [
+                                        0,
+                                        0
+                                    ],
+                      "expected":  true,
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_Case2",
+                      "message":  "Vérifier une réservation de stock — cas 2 hidden incorrect.",
+                      "arguments":  [
+                                        -1,
+                                        0
+                                    ],
+                      "expected":  false,
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_EmptyStock",
+                      "message":  "Stock vide et demande non nulle : refus.",
+                      "arguments":  [0,1],
+                      "expected":  false,
+                      "argumentsUnchanged":  true
+                  },
+                  {
+                      "name":  "Hidden_NegativeRequest",
+                      "message":  "Demande négative : refusée, elle n'a pas de sens métier.",
+                      "arguments":  [5,-1],
+                      "expected":  false,
+                      "argumentsUnchanged":  true
+                  }
+              ]
+}

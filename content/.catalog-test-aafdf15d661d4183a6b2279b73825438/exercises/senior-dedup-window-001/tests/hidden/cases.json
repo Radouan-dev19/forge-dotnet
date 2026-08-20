@@ -1,0 +1,54 @@
+{
+  "schemaVersion": 1,
+  "cases": [
+    {
+      "name": "Hidden_BackwardsClockIsRefused",
+      "message": "Une chronologie qui recule rend tous les écarts insensés.",
+      "arguments": ["5:a;3:b", 4],
+      "expectedException": "ArgumentException",
+      "argumentsUnchanged": false
+    },
+    {
+      "name": "Hidden_ZeroWindowIsRefused",
+      "message": "Une fenêtre nulle n'est pas une politique de déduplication, c'est son absence.",
+      "arguments": ["1:a", 0],
+      "expectedException": "ArgumentOutOfRangeException",
+      "argumentsUnchanged": false
+    },
+    {
+      "name": "Hidden_EmptyJournalIsRefused",
+      "message": "Sans livraison, il n'y a aucun risque à mesurer.",
+      "arguments": ["", 5],
+      "expectedException": "ArgumentException",
+      "argumentsUnchanged": false
+    },
+    {
+      "name": "Hidden_SameMinuteDuplicateIsCaught",
+      "message": "Écart nul : le doublon immédiat est le cas facile que toute fenêtre attrape.",
+      "arguments": ["2:a;2:a", 1],
+      "expected": 0,
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_EveryGapBeyondTheWindowCounts",
+      "message": "Quatre livraisons espacées de deux minutes sous une fenêtre d'une : trois réapplications.",
+      "arguments": ["1:a;3:a;5:a;7:a", 1],
+      "expected": 3,
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_NonNumericMinuteIsRefused",
+      "message": "Une minute illisible casse la chronologie entière.",
+      "arguments": ["x:a", 5],
+      "expectedException": "ArgumentException",
+      "argumentsUnchanged": false
+    },
+    {
+      "name": "Hidden_DistinctIdsNeverCount",
+      "message": "Trois identifiants distincts : aucun doublon, quel que soit l'espacement.",
+      "arguments": ["1:a;2:b;3:c", 10],
+      "expected": 0,
+      "argumentsUnchanged": true
+    }
+  ]
+}

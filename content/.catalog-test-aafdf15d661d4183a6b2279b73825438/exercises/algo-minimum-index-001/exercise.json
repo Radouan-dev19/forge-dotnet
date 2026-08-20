@@ -1,0 +1,82 @@
+{
+    "schemaVersion":  1,
+    "id":  "algo-minimum-index-001",
+    "version":  1,
+    "title":  "Trouver l’indice minimal",
+    "kind":  "algorithm",
+    "difficulty":  1,
+    "skills":  [
+                   "algorithm.search"
+               ],
+    "prerequisites":  [
+                          "algo-reformulation-complexity-001"
+                      ],
+    "estimatedMinutes":  30,
+    "statement":  "statement.md",
+    "constraints":  [
+                        "Conserver exactement la signature publique",
+                        "Conserver le premier minimum et définir le tableau vide.",
+                        "Ne pas modifier les entrées reçues sauf mention explicite"
+                    ],
+    "examples":  [
+                     {
+                         "input":  "[[3,1,2]]",
+                         "output":  "1"
+                     }
+                 ],
+    "reflectionFields":  [
+                             "reformulation",
+                             "inputs",
+                             "expectedOutput",
+                             "edgeCases",
+                             "hypothesis",
+                             "plan"
+                         ],
+    "starterPath":  "starter/",
+    "visibleTestsPath":  "tests/visible/",
+    "hiddenTestsPath":  "tests/hidden/",
+    "hints":  [
+                  {
+                      "level":  1,
+                      "kind":  "socratic",
+                      "content":  "Quel invariant de « Trouver l’indice minimal » doit rester vrai pour les cas limites ?"
+                  },
+                  {
+                      "level":  2,
+                      "kind":  "location",
+                      "content":  "Concentrez la décision dans la méthode MinimumIndex, sans état global."
+                  },
+                  {
+                      "level":  3,
+                      "kind":  "strategy",
+                      "content":  "Conserver le premier minimum et définir le tableau vide."
+                  },
+                  {
+                      "level":  4,
+                      "kind":  "partial-pseudocode",
+                      "content":  "si values est absent ou vide retourner le code d'absence ; sinon retenir l'indice zéro, parcourir à partir du deuxième élément, et remplacer l'indice retenu seulement lorsqu'une valeur est strictement plus petite"
+                  }
+              ],
+    "solution":  {
+                     "path":  "solution/",
+                     "unlock":  {
+                                    "seriousAttempts":  2,
+                                    "minimumDelayMinutes":  10
+                                }
+                 },
+    "explanation":  "explanation.md",
+    "complexity":  "O(n) en temps et O(1) en espace",
+    "commonMistakes":  [
+                           "Remplacer sur une comparaison large et retourner le dernier minimum au lieu du premier",
+                           "Retourner la valeur minimale au lieu de son indice",
+                           "Retourner zéro pour un tableau vide, alors que zéro est un indice valide",
+                           "Initialiser l'indice retenu à une valeur hors du tableau"
+                       ],
+    "variantId":  "algo-insertion-sort-001",
+    "reviewCards":  [
+                        "card-algo-minimum-index-001-rule",
+                        "card-algo-minimum-index-001-edge"
+                    ],
+    "interviewQuestionId":  "interview-algo-minimum-index-001",
+    "license":  "CC-BY-4.0"
+}

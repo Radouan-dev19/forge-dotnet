@@ -2,7 +2,7 @@
     "schemaVersion":  1,
     "id":  "final-readiness-v1",
     "version":  1,
-    "title":  "Examen 8 — synthèse et défense S1–S24",
+    "title":  "Examen 9 — synthèse et défense S1–S24",
     "durationMinutes":  150,
     "drawCount":  8,
     "passingScore":  80,
@@ -28,6 +28,8 @@
                                 "front-state-reducer-001",
                                 "front-form-field-state-001",
                                 "front-cache-decision-001",
-                                "front-route-guard-001"
+                                "front-route-guard-001",
+                                "azure-release-audit-001",
+                                "azure-incident-digest-001"
                             ]
 }

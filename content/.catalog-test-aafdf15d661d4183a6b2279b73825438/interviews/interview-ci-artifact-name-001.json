@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "id": "interview-ci-artifact-name-001",
+  "version": 1,
+  "title": "Nommer un artefact de façon stable",
+  "level": "junior",
+  "durationMinutes": 6,
+  "skills": [
+    "ci.artifacts"
+  ],
+  "question": "Comment implémenteriez-vous « Nommer un artefact de façon stable » et quelles preuves réfutent les contournements ?",
+  "observableCriteria": [
+    "La normalisation de la branche est décrite, y compris le sort du séparateur de chemin",
+    "L'exigence d'un numéro positif est justifiée par l'unicité du nom produit"
+  ],
+  "modelAnswer": "Normaliser la branche, remplacer le séparateur et exiger un numéro positif. Je teste une branche simple, une branche avec un séparateur, un numéro nul et un numéro négatif. O(n) en temps et O(n) en espace.",
+  "commonMistakes": [
+    "Laisser un séparateur de chemin dans le nom et produire un artefact inaccessible"
+  ],
+  "variants": [
+    "Changer la frontière ou le droit tout en conservant la règle de nommer un artefact de façon stable."
+  ],
+  "license": "CC-BY-4.0"
+}

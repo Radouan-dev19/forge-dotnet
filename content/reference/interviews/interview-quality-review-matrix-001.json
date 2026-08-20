@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "id": "interview-quality-review-matrix-001",
+  "version": 1,
+  "title": "Graduer la sévérité d'un constat de revue",
+  "level": "intermediate",
+  "durationMinutes": 7,
+  "skills": ["quality.review"],
+  "question": "Deux relecteurs s'opposent sur le même constat : bloquant pour l'un, anodin pour l'autre. Comment sortez-vous l'équipe de ce désaccord de façon durable, et pourquoi refuseriez-vous la règle « la sécurité bloque toujours » ?",
+  "observableCriteria": [
+    "Un barème écrit et additif est proposé pour déplacer le débat des constats vers les pondérations",
+    "Le refus des règles spéciales codées en dur est argumenté par la confiance dans le chiffre",
+    "L'exemple d'un constat de sécurité à faible rayon est gradué sans automatisme"
+  ],
+  "modelAnswer": "Je remplace le ressenti par un barème écrit : chaque constat se décrit par sa nature, son atteignabilité et son rayon d'impact, chaque valeur rapporte des points, et la somme se lit dans une échelle de tranches. L'intérêt n'est pas que le chiffre soit objectif — les pondérations restent un choix — mais qu'il déplace le désaccord au bon endroit : on débat une fois des poids en réunion, au calme, au lieu de renégocier chaque constat sous la pression d'une livraison. Je refuse la règle « la sécurité bloque toujours » pour deux raisons. D'abord elle ignore ce que le barème pondère : un défaut de sécurité dans du code mort mérite un ticket, pas un gel de livraison. Ensuite elle produit un effet pervers documenté : les équipes requalifient les constats en « robustesse » pour passer, et la catégorie se met à mentir. La première exception codée en dur réintroduit l'arbitraire que le barème devait éliminer — et elle le fait en silence, là où personne ne relit. Si l'échelle donne des résultats absurdes, on amende les poids, publiquement.",
+  "commonMistakes": [
+    "Ajouter des exceptions au code du barème au lieu d'amender ses pondérations en équipe",
+    "Compléter un attribut manquant par une valeur par défaut et rendre une sévérité que personne n'a déclarée"
+  ],
+  "variants": [
+    "Transposer le barème au tri des incidents de production et demander quels attributs changent.",
+    "Demander comment auditer après coup que le barème est appliqué tel qu'écrit."
+  ],
+  "license": "CC-BY-4.0"
+}

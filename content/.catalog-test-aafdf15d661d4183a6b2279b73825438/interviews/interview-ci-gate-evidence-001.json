@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "id": "interview-ci-gate-evidence-001",
+  "version": 1,
+  "title": "Concevoir une porte de déploiement qui décide sur pièces",
+  "level": "intermediate",
+  "durationMinutes": 8,
+  "skills": ["ci.gates"],
+  "question": "Votre porte de déploiement doit décider à partir des contrôles rapportés. Que fait-elle d'une preuve exigée dont le contrôle n'a jamais rien rapporté, et pourquoi ce choix est-il le plus lourd de toute la conception ?",
+  "observableCriteria": [
+    "Le silence d'un contrôle est classé attente : ni refus transitoire, ni autorisation tacite",
+    "Le danger de la porte qui s'ouvre quand son instrument tombe est explicitement nommé",
+    "La séparation entre liste d'exigences — la politique — et tableau de bord — les faits — est posée"
+  ],
+  "modelAnswer": "Une preuve exigée jamais rapportée vaut attente, et ce choix est effectivement le plus lourd. Le classer refus produirait des fermetures transitoires qui s'inversent toutes seules — le contrôle finit par parler — et les équipes apprennent vite à relancer la porte « pour voir », puis à ne plus la croire. Le classer autorisation serait pire : la porte s'ouvrirait précisément quand son instrument de mesure tombe, et chaque panne du contrôle deviendrait un déploiement tacitement approuvé — la version la plus dangereuse d'une porte est celle qui confond silence et absolution. L'attente indéfinie est le seul état honnête : elle rend la panne du contrôle visible et bloquante, ce qui force à la réparer. Autour de ce choix, je pose deux règles : le refus domine l'attente — un échec certain part avant les incertitudes, l'équipe corrige pendant que le reste tourne — et seule la liste d'exigences décide : un contrôle en échec non exigé n'influence rien, sinon tout contrôle expérimental ajouté au tableau de bord gèlerait les livraisons sans décision d'équipe. La liste est la politique ; le rapport n'est qu'une source de faits.",
+  "commonMistakes": [
+    "Ouvrir la porte après un délai d'attente et transformer les pannes de contrôle en autorisations",
+    "Laisser tout contrôle rouge du tableau de bord fermer une porte qui ne l'exige pas"
+  ],
+  "variants": [
+    "Ajouter des preuves à validité limitée dans le temps et demander ce que devient la décision.",
+    "Demander qui a le droit de modifier la liste d'exigences et comment ce changement s'audite."
+  ],
+  "license": "CC-BY-4.0"
+}

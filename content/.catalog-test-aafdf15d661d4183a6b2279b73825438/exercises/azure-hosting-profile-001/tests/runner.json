@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "suiteId": "azure-hosting-profile-001.v1",
+  "exerciseId": "azure-hosting-profile-001",
+  "exerciseVersion": 1,
+  "typeName": "Submission",
+  "methodName": "HostingRecommendation",
+  "parameterTypes": ["string"],
+  "returnType": "string"
+}

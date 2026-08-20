@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "id": "interview-s21-s24-001",
+  "version": 1,
+  "title": "Définir une frontière App Service",
+  "level": "junior",
+  "durationMinutes": 6,
+  "skills": [
+    "azure.hosting"
+  ],
+  "question": "Une application web monolithique nʼa pas de besoin de révision de conteneur. Que choisissez-vous et quelle limite annoncez-vous ?",
+  "observableCriteria": [
+    "Le modèle d'hébergement est nommé, et la charge d'exploitation qu'il retire est chiffrée ou décrite",
+    "La condition qui ferait revenir sur le choix — révisions pondérées ou image portable — est énoncée d'emblée"
+  ],
+  "modelAnswer": "Je choisis App Service pour réduire lʼexploitation. Je documente que ce choix serait revu si une image portable ou des révisions pondérées devenaient une contrainte vérifiée.",
+  "commonMistakes": [
+    "Défendre la plateforme par sa popularité au lieu du travail d'exploitation qu'elle supprime"
+  ],
+  "variants": [
+    "Changez une contrainte du scénario « Définir une frontière App Service » et expliquez si la décision reste valide."
+  ],
+  "license": "CC-BY-4.0"
+}

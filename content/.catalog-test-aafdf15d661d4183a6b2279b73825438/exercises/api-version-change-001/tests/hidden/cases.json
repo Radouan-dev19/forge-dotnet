@@ -1,0 +1,55 @@
+{
+  "schemaVersion": 1,
+  "cases": [
+    {
+      "name": "Hidden_AddOutputField",
+      "message": "Ajout d'un champ de sortie : sûr.",
+      "arguments": [
+        "add-output-field"
+      ],
+      "expected": false,
+      "expectedException": null,
+      "argumentsUnchanged": false
+    },
+    {
+      "name": "Hidden_MakeRequired",
+      "message": "Champ d'entrée rendu obligatoire : cassant.",
+      "arguments": [
+        "make-input-required"
+      ],
+      "expected": true,
+      "expectedException": null,
+      "argumentsUnchanged": false
+    },
+    {
+      "name": "Hidden_MixedCase",
+      "message": "Casse et bords : normalisation avant décision.",
+      "arguments": [
+        "  Add-Endpoint  "
+      ],
+      "expected": false,
+      "expectedException": null,
+      "argumentsUnchanged": false
+    },
+    {
+      "name": "Hidden_UnknownChange",
+      "message": "Étiquette inconnue : présumée cassante.",
+      "arguments": [
+        "reshuffle-fields"
+      ],
+      "expected": true,
+      "expectedException": null,
+      "argumentsUnchanged": false
+    },
+    {
+      "name": "Hidden_Blank",
+      "message": "Étiquette blanche : cassante par défaut.",
+      "arguments": [
+        "   "
+      ],
+      "expected": true,
+      "expectedException": null,
+      "argumentsUnchanged": false
+    }
+  ]
+}

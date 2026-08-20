@@ -1,0 +1,39 @@
+{
+    "schemaVersion":  1,
+    "cases":  [
+                  {
+                      "name":  "Hidden_Case1",
+                      "message":  "Mapper une erreur publique — cas 1 incorrect.",
+                      "arguments":  [
+                                        " NotFound "
+                                    ],
+                      "expected":  404,
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_Case2",
+                      "message":  "Mapper une erreur publique — cas 2 incorrect.",
+                      "arguments":  [
+                                        "database-details"
+                                    ],
+                      "expected":  500,
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_Forbidden",
+                      "message":  "Droits insuffisants : code distinct de l'authentification manquante.",
+                      "arguments":  ["FORBIDDEN"],
+                      "expected":  403,
+                      "argumentsUnchanged":  true
+                  },
+                  {
+                      "name":  "Hidden_NullFallsBackToServerError",
+                      "message":  "Catégorie absente : rabattue sur l'erreur serveur, sans exception ni fuite.",
+                      "arguments":  [null],
+                      "expected":  500,
+                      "argumentsUnchanged":  false
+                  }
+              ]
+}

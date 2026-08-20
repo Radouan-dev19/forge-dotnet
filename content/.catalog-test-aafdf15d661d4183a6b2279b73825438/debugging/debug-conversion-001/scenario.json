@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "id": "debug-conversion-001",
+  "version": 1,
+  "title": "Sécuriser une conversion utilisateur",
+  "difficulty": 2,
+  "skills": ["debugging.conversion", "csharp.parsing"],
+  "prerequisites": ["reference-types-001"],
+  "estimatedMinutes": 40,
+  "brokenRepositoryPath": "broken/",
+  "ticketPath": "ticket.md",
+  "expectedBehavior": "Une quantité entière positive est retournée ; une saisie vide, invalide, négative ou hors plage produit zéro sans exception.",
+  "logsPath": "logs.txt",
+  "checklist": ["Reproduire avec du texte non numérique", "Observer l'exception et l'entrée", "Définir le contrat des valeurs négatives", "Tester un dépassement d'entier"],
+  "observationQuestions": ["La conversion échoue-t-elle avant la règle métier ?", "Quelle API sépare échec attendu et exception ?", "Quels cas limites doivent produire zéro ?"],
+  "correctionPath": "correction/",
+  "regressionTestPath": "regression-test.md",
+  "journalFields": ["symptom", "context", "hypotheses", "evidence", "cause", "fix", "test", "prevention"],
+  "license": "CC-BY-4.0"
+}

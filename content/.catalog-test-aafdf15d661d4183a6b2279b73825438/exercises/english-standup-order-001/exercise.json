@@ -1,0 +1,82 @@
+{
+  "schemaVersion": 1,
+  "id": "english-standup-order-001",
+  "version": 1,
+  "title": "Remettre un point quotidien dans l'ordre",
+  "kind": "csharp",
+  "difficulty": 2,
+  "skills": ["english.standup"],
+  "prerequisites": ["azure-incident-brief-001"],
+  "estimatedMinutes": 35,
+  "statement": "statement.md",
+  "constraints": [
+    "Conserver exactement la signature publique",
+    "Rendre les parties dans l'ordre fait, prochain, blocage, quel que soit l'ordre d'écriture",
+    "Écarter toute ligne dont l'étiquette n'appartient pas aux trois attendues"
+  ],
+  "examples": [
+    {
+      "input": "[\"next: review the PR\\ndone: fixed the import\"]",
+      "output": "done: fixed the import\\nnext: review the PR"
+    },
+    {
+      "input": "[\"mood: tired\"]",
+      "output": "(chaîne vide)"
+    }
+  ],
+  "reflectionFields": [
+    "reformulation",
+    "inputs",
+    "expectedOutput",
+    "edgeCases",
+    "hypothesis",
+    "plan"
+  ],
+  "starterPath": "starter/",
+  "visibleTestsPath": "tests/visible/",
+  "hiddenTestsPath": "tests/hidden/",
+  "hints": [
+    {
+      "level": 1,
+      "kind": "socratic",
+      "content": "Trois collègues attendent votre point. Qu'ont-ils besoin d'entendre en premier, et qu'est-ce qui les fait décrocher ?"
+    },
+    {
+      "level": 2,
+      "kind": "location",
+      "content": "Séparez la lecture d'une ligne, qui en extrait une étiquette et un texte, du rendu, qui suit l'ordre canonique."
+    },
+    {
+      "level": 3,
+      "kind": "strategy",
+      "content": "Rangez les lignes retenues par étiquette, puis parcourez les trois étiquettes dans leur ordre canonique."
+    },
+    {
+      "level": 4,
+      "kind": "partial-pseudocode",
+      "content": "pour chaque ligne, couper au premier deux-points, comparer l'étiquette sans casse aux trois attendues, ignorer si inconnue ou si le texte est vide ; puis, pour chaque étiquette dans l'ordre fait, prochain, blocage, écrire ses lignes dans l'ordre où elles sont arrivées"
+    }
+  ],
+  "solution": {
+    "path": "solution/",
+    "unlock": {
+      "seriousAttempts": 2,
+      "minimumDelayMinutes": 10
+    }
+  },
+  "explanation": "explanation.md",
+  "complexity": "O(n) en temps et O(n) en espace, pour n lignes reçues",
+  "commonMistakes": [
+    "Rendre les lignes dans l'ordre d'écriture, ce qui laisse le blocage passer inaperçu",
+    "Conserver une étiquette inconnue au lieu de l'écarter",
+    "Trier les lignes d'une même étiquette, ce qui casse la chronologie que l'auteur a voulue",
+    "Garder une étiquette sans texte, qui occupe une ligne sans rien dire"
+  ],
+  "variantId": "english-review-comment-001",
+  "reviewCards": [
+    "card-english-standup-order-001-rule",
+    "card-english-standup-order-001-edge"
+  ],
+  "interviewQuestionId": "interview-english-standup-order-001",
+  "license": "CC-BY-4.0"
+}

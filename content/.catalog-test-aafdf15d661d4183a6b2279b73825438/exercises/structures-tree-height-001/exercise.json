@@ -1,0 +1,82 @@
+{
+    "schemaVersion":  1,
+    "id":  "structures-tree-height-001",
+    "version":  1,
+    "title":  "Calculer une hauteur depuis les parents",
+    "kind":  "algorithm",
+    "difficulty":  3,
+    "skills":  [
+                   "structures.trees"
+               ],
+    "prerequisites":  [
+                          "structures-stacks-queues-001"
+                      ],
+    "estimatedMinutes":  30,
+    "statement":  "statement.md",
+    "constraints":  [
+                        "Conserver exactement la signature publique",
+                        "Suivre les parents jusqu’à la racine et refuser un cycle par une garde bornée.",
+                        "Ne pas modifier les entrées reçues sauf mention explicite"
+                    ],
+    "examples":  [
+                     {
+                         "input":  "[[-1,0,0]]",
+                         "output":  "2"
+                     }
+                 ],
+    "reflectionFields":  [
+                             "reformulation",
+                             "inputs",
+                             "expectedOutput",
+                             "edgeCases",
+                             "hypothesis",
+                             "plan"
+                         ],
+    "starterPath":  "starter/",
+    "visibleTestsPath":  "tests/visible/",
+    "hiddenTestsPath":  "tests/hidden/",
+    "hints":  [
+                  {
+                      "level":  1,
+                      "kind":  "socratic",
+                      "content":  "Quel invariant de « Calculer une hauteur depuis les parents » doit rester vrai pour les cas limites ?"
+                  },
+                  {
+                      "level":  2,
+                      "kind":  "location",
+                      "content":  "Concentrez la décision dans la méthode TreeHeight, sans état global."
+                  },
+                  {
+                      "level":  3,
+                      "kind":  "strategy",
+                      "content":  "Suivre les parents jusqu’à la racine et refuser un cycle par une garde bornée."
+                  },
+                  {
+                      "level":  4,
+                      "kind":  "partial-pseudocode",
+                      "content":  "pour chaque nœud, remonter les parents jusqu'à la racine en comptant les niveaux traversés ; refuser par le code d'erreur si le nombre de sauts dépasse le nombre de nœuds ; conserver la plus grande profondeur rencontrée"
+                  }
+              ],
+    "solution":  {
+                     "path":  "solution/",
+                     "unlock":  {
+                                    "seriousAttempts":  2,
+                                    "minimumDelayMinutes":  10
+                                }
+                 },
+    "explanation":  "explanation.md",
+    "complexity":  "O(n²) au pire et O(1) en espace",
+    "commonMistakes":  [
+                           "Boucler indéfiniment sur un tableau qui contient un cycle",
+                           "Compter les arêtes au lieu des niveaux et retourner une hauteur inférieure de un",
+                           "Ne remonter que depuis le premier nœud au lieu de tous",
+                           "Retourner zéro pour un arbre réduit à sa racine"
+                       ],
+    "variantId":  "structures-tree-node-count-001",
+    "reviewCards":  [
+                        "card-structures-tree-height-001-rule",
+                        "card-structures-tree-height-001-edge"
+                    ],
+    "interviewQuestionId":  "interview-structures-tree-height-001",
+    "license":  "CC-BY-4.0"
+}

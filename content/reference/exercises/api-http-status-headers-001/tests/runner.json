@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "suiteId": "api-http-status-headers-001.v1",
+  "exerciseId": "api-http-status-headers-001",
+  "exerciseVersion": 1,
+  "typeName": "Submission",
+  "methodName": "ResponseContract",
+  "parameterTypes": ["string"],
+  "returnType": "string"
+}

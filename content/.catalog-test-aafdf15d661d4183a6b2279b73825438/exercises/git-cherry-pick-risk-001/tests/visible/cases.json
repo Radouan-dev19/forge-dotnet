@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "cases": [
+    {
+      "name": "Visible_SharedFilesCloseBranches",
+      "message": "Fichiers communs et branches proches : le contexte a peu bougé.",
+      "arguments": [3, true, false],
+      "expected": "medium",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Visible_LargeGapWithoutSharedFiles",
+      "message": "Deux cents commits d'écart ne pèsent rien si le commit ne touche aucun fichier commun.",
+      "arguments": [200, false, false],
+      "expected": "low",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Visible_MergeCommitIsRefused",
+      "message": "Deux parents, aucune référence désignée : le report n'a pas de sens unique.",
+      "arguments": [1, true, true],
+      "expected": "refuse",
+      "argumentsUnchanged": true
+    }
+  ]
+}

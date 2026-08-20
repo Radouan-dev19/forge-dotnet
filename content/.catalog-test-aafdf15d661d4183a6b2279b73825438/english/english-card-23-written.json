@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "id": "english-card-23-written",
+  "version": 1,
+  "title": "Project limitation — written update",
+  "level": "C1",
+  "durationMinutes": 12,
+  "skills": [
+    "english.written",
+    "project.communication"
+  ],
+  "situation": "In a technical discussion, a cloud deployment was not executed. You must write the decision accurately without overstating the evidence.",
+  "instructions": [
+    "Write four sentences stating what was done, what was not executed, what remains unproven, and the next experiment."
+  ],
+  "vocabulary": [
+    {
+      "term": "honest limitation",
+      "meaning": "a boundary of your own work stated before anyone asks, which makes the rest of the report credible"
+    },
+    {
+      "term": "next experiment",
+      "meaning": "the specific action that would remove a limitation, which turns an admission into a plan"
+    }
+  ],
+  "expectedElements": [
+    "The unexecuted step is stated plainly and early",
+    "What remains unproven is bounded, not vague",
+    "A next experiment is proposed"
+  ],
+  "modelAnswer": "The cloud deployment was not executed, and I want to state that before anything else in this report. It leaves three specific things unproven: whether the provider accepts our definition, whether quotas permit the requested shape, and whether the network rules behave as written. Everything else in the report was run and recorded, and that evidence stands. The next experiment is a single run against a temporary subscription, which would settle all three within a day.",
+  "commonMistakes": [
+    "Placing the limitation at the end where it reads as an afterthought",
+    "Stating the limitation vaguely so the reader cannot tell what is unproven"
+  ],
+  "variants": [
+    "Rewrite the update as the limitations section of the final report."
+  ],
+  "license": "CC-BY-4.0"
+}

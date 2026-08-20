@@ -23,7 +23,7 @@ public sealed class ContentSeniorCoverageTests
     ];
 
     [Fact]
-    public void SeniorTrackCoversEightWeeksWithOneLessonAndOneExerciseEach()
+    public void SeniorTrackCoversEightWeeksWithOneLessonAndFourExercisesEach()
     {
         using JsonDocument curriculum = Read(Path.Combine(CatalogRoot, "curriculum", "forge-senior-reference.json"));
         JsonElement root = curriculum.RootElement;
@@ -34,7 +34,7 @@ public sealed class ContentSeniorCoverageTests
         Assert.Equal(8, modules.Length);
         Assert.Equal(Enumerable.Range(25, 8), modules.Select(module => module.GetProperty("weeks")[0].GetInt32()));
         Assert.All(modules, module => Assert.Equal(1, module.GetProperty("lessonIds").GetArrayLength()));
-        Assert.All(modules, module => Assert.Equal(1, module.GetProperty("exerciseIds").GetArrayLength()));
+        Assert.All(modules, module => Assert.Equal(4, module.GetProperty("exerciseIds").GetArrayLength()));
 
         // La premiere semaine senior n'a pas de prerequis dans ce parcours ; les suivantes chainent.
         Assert.Empty(modules[0].GetProperty("prerequisites").EnumerateArray());
@@ -65,6 +65,9 @@ public sealed class ContentSeniorCoverageTests
             }
 
             Assert.Contains(":::quiz", markdown, StringComparison.Ordinal);
+
+            // Chaque lecon senior nomme son vocabulaire d'entretien en anglais.
+            Assert.Contains("### Le nom en entretien", markdown, StringComparison.Ordinal);
         }
 
         foreach (string exerciseId in exerciseIds)
@@ -98,17 +101,20 @@ public sealed class ContentSeniorCoverageTests
         Assert.True(File.Exists(Path.Combine(CatalogRoot, "projects", "project-code-review-001", "starter", "Submission.cs")));
         Assert.True(File.Exists(Path.Combine(CatalogRoot, "projects", "project-code-review-001", "solution", "Submission.cs")));
 
-        // S32 : le laboratoire de debogage sur base existante.
-        using JsonDocument scenario = Read(
-            Path.Combine(CatalogRoot, "debugging", "senior-legacy-debug-001", "scenario.json"));
-        Assert.Equal("senior-legacy-debug-001", scenario.RootElement.GetProperty("id").GetString());
-        Assert.True(File.Exists(Path.Combine(CatalogRoot, "debugging", "senior-legacy-debug-001", "broken", "Submission.cs")));
-        Assert.True(File.Exists(Path.Combine(CatalogRoot, "debugging", "senior-legacy-debug-001", "correction", "Submission.cs")));
+        // S32 : les deux laboratoires de debogage sur base existante, chacun sur sa base cassee.
+        foreach (string scenarioId in new[] { "senior-legacy-debug-001", "senior-legacy-trial-002" })
+        {
+            using JsonDocument scenario = Read(
+                Path.Combine(CatalogRoot, "debugging", scenarioId, "scenario.json"));
+            Assert.Equal(scenarioId, scenario.RootElement.GetProperty("id").GetString());
+            Assert.True(File.Exists(Path.Combine(CatalogRoot, "debugging", scenarioId, "broken", "Submission.cs")));
+            Assert.True(File.Exists(Path.Combine(CatalogRoot, "debugging", scenarioId, "correction", "Submission.cs")));
+        }
 
-        // Les huit exercices senior sont tirables par l'examen senior.
+        // Les trente-deux exercices senior sont tirables par l'examen senior.
         using JsonDocument exam = Read(Path.Combine(ContentRoot, "exams", "senior-readiness-v1", "exam.json"));
         JsonElement eligible = exam.RootElement.GetProperty("eligibleExerciseIds");
-        Assert.Equal(8, eligible.GetArrayLength());
+        Assert.Equal(32, eligible.GetArrayLength());
         Assert.All(eligible.EnumerateArray(), id => Assert.StartsWith("senior-", id.GetString()!));
     }
 

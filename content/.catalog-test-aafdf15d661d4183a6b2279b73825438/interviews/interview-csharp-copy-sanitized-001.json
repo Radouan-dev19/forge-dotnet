@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "id": "interview-csharp-copy-sanitized-001",
+  "version": 1,
+  "title": "Copier sans exposer la mutation",
+  "level": "junior",
+  "durationMinutes": 5,
+  "skills": [
+    "csharp.encapsulation"
+  ],
+  "question": "Comment résoudriez-vous « Copier sans exposer la mutation » et comment prouveriez-vous les bornes ?",
+  "observableCriteria": [
+    "La collection rendue est nouvelle, et la mutation ultérieure de l'une n'affecte pas l'autre",
+    "La préservation stricte de l'entrée est vérifiée après appel"
+  ],
+  "modelAnswer": "Retourner une nouvelle collection et préserver strictement l’entrée. Je prouve en modifiant le résultat après appel et en vérifiant que l'entrée est inchangée ; O(n) en temps et O(n) en espace.",
+  "commonMistakes": [
+    "Rendre la même référence et laisser l'appelant modifier l'état interne"
+  ],
+  "variants": [
+    "Changer une borne ou le volume tout en conservant la même règle de copier sans exposer la mutation."
+  ],
+  "license": "CC-BY-4.0"
+}

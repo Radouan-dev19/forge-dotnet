@@ -1,0 +1,7 @@
+# Détecter un palindrome simple
+
+Implémentez Submission.IsPalindrome avec la signature fournie dans starter/Submission.cs.
+
+Comparer les caractères symétriques après une normalisation annoncée. Le résultat doit être déterministe, hors ligne et ne doit pas modifier les entrées. Avant de coder, écrivez le cas nominal, une borne et un cas qui réfute une réponse codée en dur.
+
+Exemple : entrée `["radar"]`, sortie `true`.

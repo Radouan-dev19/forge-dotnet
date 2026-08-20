@@ -1,0 +1,60 @@
+{
+  "schemaVersion": 1,
+  "cases": [
+    {
+      "name": "Hidden_NotFoundStorable",
+      "message": "Absence durable : stockable.",
+      "arguments": [
+        "GET",
+        404
+      ],
+      "expected": true,
+      "expectedException": null,
+      "argumentsUnchanged": false
+    },
+    {
+      "name": "Hidden_PermanentRedirect",
+      "message": "Redirection permanente : stockable.",
+      "arguments": [
+        "GET",
+        301
+      ],
+      "expected": true,
+      "expectedException": null,
+      "argumentsUnchanged": false
+    },
+    {
+      "name": "Hidden_HeadLowercase",
+      "message": "HEAD en minuscules : normalisée et stockable.",
+      "arguments": [
+        "head",
+        200
+      ],
+      "expected": true,
+      "expectedException": null,
+      "argumentsUnchanged": false
+    },
+    {
+      "name": "Hidden_UnknownMethod",
+      "message": "Méthode inconnue : non stockable.",
+      "arguments": [
+        "PURGE",
+        200
+      ],
+      "expected": false,
+      "expectedException": null,
+      "argumentsUnchanged": false
+    },
+    {
+      "name": "Hidden_NotModifiedExcluded",
+      "message": "Réponse conditionnelle : hors liste, non stockable.",
+      "arguments": [
+        "GET",
+        304
+      ],
+      "expected": false,
+      "expectedException": null,
+      "argumentsUnchanged": false
+    }
+  ]
+}

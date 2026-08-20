@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "id": "interview-docker-tag-policy-001",
+  "version": 1,
+  "title": "Défendre une politique d'images épinglées par empreinte",
+  "level": "intermediate",
+  "durationMinutes": 8,
+  "skills": ["docker.supply"],
+  "question": "Votre équipe déploie ses images par étiquette de version complète et trouve cela suffisant. Quel risque cette pratique laisse-t-elle ouvert, et que proposez-vous à la place sans sacrifier la lisibilité des manifestes ?",
+  "observableCriteria": [
+    "La mutabilité des étiquettes est expliquée : le registre n'impose aucune immuabilité, même aux versions complètes",
+    "L'épinglage par empreinte de contenu est proposé, avec l'étiquette conservée en accompagnement lisible",
+    "Au moins un scénario concret est nommé : republication d'un correctif sous le même numéro ou compromission du registre"
+  ],
+  "modelAnswer": "Une étiquette — même une version à trois nombres — est un pointeur mutable dans le registre : quiconque a le droit d'écrire peut la déplacer, volontairement quand on republie un correctif sous le même numéro, ou non quand la chaîne de livraison est compromise. Le manifeste dit alors « déployer la version un point quatre » sans garantir que mardi tire le même contenu que lundi. Je propose d'épingler par empreinte : la référence porte le condensat du contenu, qui ne peut désigner que ce qu'il désigne — c'est la différence entre citer un document par son titre et par sa somme de contrôle. La lisibilité ne se sacrifie pas : la grammaire des références accepte l'étiquette et l'empreinte ensemble, l'étiquette pour les humains, l'empreinte pour la machine. Je fais appliquer la politique par un contrôle automatique du manifeste, avec des raisons distinctes — référence nue, étiquette sans empreinte, empreinte mal formée — parce que chacune appelle un geste de correction différent. Et je fais attention au piège du port de registre : le deux-points d'un port n'est pas celui d'une étiquette.",
+  "commonMistakes": [
+    "Croire qu'une version complète est immuable parce que l'équipe s'interdit de la republier",
+    "Interdire les étiquettes au lieu de les accompagner d'une empreinte, et perdre la lisibilité"
+  ],
+  "variants": [
+    "Transposer aux dépendances de paquets et aux actions de la chaîne d'intégration.",
+    "Demander comment gérer la rotation des empreintes quand l'image de base est reconstruite chaque semaine."
+  ],
+  "license": "CC-BY-4.0"
+}

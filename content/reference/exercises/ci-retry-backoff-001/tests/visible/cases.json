@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "cases": [
+    {
+      "name": "Visible_PureDoublingUnderTheCap",
+      "message": "Cinq tentatives, quatre attentes qui doublent sans toucher le plafond.",
+      "arguments": [5, 2, 60],
+      "expected": 30,
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Visible_CapFlattensTheTail",
+      "message": "La deuxième attente atteint déjà le plafond : la suite devient une droite.",
+      "arguments": [4, 10, 15],
+      "expected": 40,
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Visible_SingleAttemptNeverWaits",
+      "message": "Une seule tentative : aucune relance, donc aucune fenêtre.",
+      "arguments": [1, 30, 60],
+      "expected": 0,
+      "argumentsUnchanged": true
+    }
+  ]
+}

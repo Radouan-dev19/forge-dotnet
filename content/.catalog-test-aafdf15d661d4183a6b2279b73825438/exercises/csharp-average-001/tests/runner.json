@@ -1,0 +1,12 @@
+{
+    "schemaVersion":  1,
+    "suiteId":  "csharp-average-001.v1",
+    "exerciseId":  "csharp-average-001",
+    "exerciseVersion":  1,
+    "typeName":  "Submission",
+    "methodName":  "AverageOrZero",
+    "parameterTypes":  [
+                           "int[]"
+                       ],
+    "returnType":  "decimal"
+}

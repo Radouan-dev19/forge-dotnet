@@ -1,0 +1,82 @@
+{
+    "schemaVersion":  1,
+    "id":  "tests-shipping-theory-001",
+    "version":  1,
+    "title":  "Paramétrer une règle de livraison",
+    "kind":  "csharp",
+    "difficulty":  2,
+    "skills":  [
+                   "tests.xunit"
+               ],
+    "prerequisites":  [
+                          "tests-xunit-aaa-001"
+                      ],
+    "estimatedMinutes":  35,
+    "statement":  "statement.md",
+    "constraints":  [
+                        "Conserver exactement la signature publique",
+                        "Faire varier la frontière de gratuité et le mode express dans une même théorie.",
+                        "Ne consulter aucun transporteur : le montant et le mode sont fournis"
+                    ],
+    "examples":  [
+                     {
+                         "input":  "[49.99,false]",
+                         "output":  "4.9"
+                     }
+                 ],
+    "reflectionFields":  [
+                             "reformulation",
+                             "inputs",
+                             "expectedOutput",
+                             "edgeCases",
+                             "hypothesis",
+                             "plan"
+                         ],
+    "starterPath":  "starter/",
+    "visibleTestsPath":  "tests/visible/",
+    "hiddenTestsPath":  "tests/hidden/",
+    "hints":  [
+                  {
+                      "level":  1,
+                      "kind":  "socratic",
+                      "content":  "Quel comportement public de « Paramétrer une règle de livraison » change exactement à la frontière ?"
+                  },
+                  {
+                      "level":  2,
+                      "kind":  "location",
+                      "content":  "Concentrez la validation et la décision dans ShippingCost, sans état global ni journal sensible."
+                  },
+                  {
+                      "level":  3,
+                      "kind":  "strategy",
+                      "content":  "Faire varier la frontière de gratuité et le mode express dans une même théorie."
+                  },
+                  {
+                      "level":  4,
+                      "kind":  "partial-pseudocode",
+                      "content":  "refuser un total négatif ; traiter d'abord le mode express, dont le tarif ne dépend pas du montant ; sinon appliquer la gratuité à partir du seuil, avec une comparaison large, et le tarif normal en dessous"
+                  }
+              ],
+    "solution":  {
+                     "path":  "solution/",
+                     "unlock":  {
+                                    "seriousAttempts":  2,
+                                    "minimumDelayMinutes":  10
+                                }
+                 },
+    "explanation":  "explanation.md",
+    "complexity":  "O(1) en temps et O(1) en espace",
+    "commonMistakes":  [
+                           "Rendre la livraison express gratuite au-delà du seuil de gratuité",
+                           "Employer une comparaison stricte et faire payer le montant exactement égal au seuil",
+                           "Évaluer le seuil avant le mode et rendre la branche express inatteignable",
+                           "Accepter un total négatif et produire des frais sur un montant qui n'existe pas"
+                       ],
+    "variantId":  "tests-discount-rule-001",
+    "reviewCards":  [
+                        "card-tests-shipping-theory-001-rule",
+                        "card-tests-shipping-theory-001-security"
+                    ],
+    "interviewQuestionId":  "interview-tests-shipping-theory-001",
+    "license":  "CC-BY-4.0"
+}

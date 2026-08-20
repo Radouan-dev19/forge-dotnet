@@ -1,3 +1,5 @@
+using System.Text.Json;
+
 namespace ForgeDotNet.IntegrationTests;
 
 /// <summary>
@@ -152,6 +154,64 @@ public sealed class ExerciseCorrectnessTests
             underCovered.Count <= UnderCoveredCeiling,
             $"{underCovered.Count} exercices sous-couverts pour un plafond de {UnderCoveredCeiling}."
             + Environment.NewLine + string.Join(Environment.NewLine, underCovered.Take(10)));
+    }
+
+    /// <summary>
+    /// Un exercice à domaine d'entrée entièrement booléen doit pointer, par sa variante, vers un
+    /// exercice à domaine ouvert — et ce frère doit pointer en retour.
+    /// </summary>
+    /// <remarks>
+    /// Douze exercices booléens formaient des chaînes de variantes fermées entre eux : la variante,
+    /// censée offrir une transposition, renvoyait vers une autre table de vérité mémorisable. La
+    /// paire réciproque booléen-ouvert garantit que chaque décision compacte a son exercice
+    /// d'analyse sur le même sujet, et qu'aucun ajout futur ne recrée une chaîne fermée.
+    /// </remarks>
+    [Fact]
+    public void EveryBooleanDomainExerciseVariesIntoAReciprocalOpenDomainSibling()
+    {
+        var offenders = new List<string>();
+        foreach (string directory in Directory.GetDirectories(CatalogRoot).OrderBy(path => path, StringComparer.Ordinal))
+        {
+            string id = Path.GetFileName(directory);
+            if (!HasBooleanOnlyDomain(id))
+            {
+                continue;
+            }
+
+            string variantId = VariantOf(id);
+            if (HasBooleanOnlyDomain(variantId))
+            {
+                offenders.Add($"{id} : sa variante « {variantId} » est aussi à domaine booléen.");
+                continue;
+            }
+
+            if (!string.Equals(VariantOf(variantId), id, StringComparison.Ordinal))
+            {
+                offenders.Add($"{id} : son frère ouvert « {variantId} » ne pointe pas en retour.");
+            }
+        }
+
+        Assert.True(
+            offenders.Count == 0,
+            "Des exercices booléens n'ont pas leur paire réciproque à domaine ouvert :"
+            + Environment.NewLine + string.Join(Environment.NewLine, offenders));
+    }
+
+    private static bool HasBooleanOnlyDomain(string exerciseId)
+    {
+        using JsonDocument runner = JsonDocument.Parse(File.ReadAllText(
+            Path.Combine(CatalogRoot, exerciseId, "tests", "runner.json")));
+        string[] parameterTypes = runner.RootElement.GetProperty("parameterTypes").EnumerateArray()
+            .Select(item => item.GetString()!).ToArray();
+        return parameterTypes.Length > 0
+            && parameterTypes.All(type => string.Equals(type, "bool", StringComparison.Ordinal));
+    }
+
+    private static string VariantOf(string exerciseId)
+    {
+        using JsonDocument manifest = JsonDocument.Parse(File.ReadAllText(
+            Path.Combine(CatalogRoot, exerciseId, "exercise.json")));
+        return manifest.RootElement.GetProperty("variantId").GetString()!;
     }
 
     /// <summary>

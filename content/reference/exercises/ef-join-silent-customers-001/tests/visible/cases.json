@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "cases": [
+    {
+      "name": "Visible_HighBarKeepsThreeTargets",
+      "message": "Seule Ada atteint cent : les trois autres, dont la cliente sans commande, sont à relancer.",
+      "arguments": [100],
+      "expected": "Grace,Linus,Margaret",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Visible_GraceEscapesAtSeventy",
+      "message": "À soixante-dix, la commande de Grace qualifie : la cible se réduit.",
+      "arguments": [70],
+      "expected": "Linus,Margaret",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Visible_ExactThresholdQualifies",
+      "message": "Quinze tout rond atteint le seuil : Linus sort de la cible, Margaret y reste seule.",
+      "arguments": [15],
+      "expected": "Margaret",
+      "argumentsUnchanged": true
+    }
+  ]
+}

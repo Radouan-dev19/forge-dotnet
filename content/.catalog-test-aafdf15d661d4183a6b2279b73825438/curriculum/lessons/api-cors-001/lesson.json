@@ -1,0 +1,36 @@
+{
+    "schemaVersion":  1,
+    "id":  "api-cors-001",
+    "version":  1,
+    "title":  "CORS : le préflight, ce qu'un en-tête autorise, et le joker interdit",
+    "week":  13,
+    "skills":  [
+                   {
+                       "id":  "api.contracts",
+                       "weight":  1
+                   }
+               ],
+    "prerequisites":  [
+                          "api-http-semantics-001"
+                      ],
+    "estimatedMinutes":  60,
+    "objectives":  [
+                       "Décrire le préflight, dire ce qu'un en-tête CORS autorise réellement et pourquoi un joker avec identifiants est refusé"
+                   ],
+    "sections":  [
+                     "intuition",
+                     "explanation",
+                     "example",
+                     "counterExample",
+                     "check",
+                     "guided",
+                     "independent",
+                     "debugging",
+                     "interview",
+                     "summary",
+                     "reviewCards",
+                     "masteryTest"
+                 ],
+    "markdownPath":  "lesson.md",
+    "license":  "CC-BY-4.0"
+}

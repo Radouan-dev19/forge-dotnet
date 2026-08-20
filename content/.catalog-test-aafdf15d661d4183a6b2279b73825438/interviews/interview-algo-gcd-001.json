@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "id": "interview-algo-gcd-001",
+  "version": 1,
+  "title": "Calculer un PGCD itératif",
+  "level": "junior",
+  "durationMinutes": 5,
+  "skills": [
+    "algorithm.complexity"
+  ],
+  "question": "Comment résoudriez-vous « Calculer un PGCD itératif » et comment prouveriez-vous les bornes ?",
+  "observableCriteria": [
+    "La décroissance stricte du couple est présentée comme la garantie de terminaison",
+    "Le traitement des signes et du zéro est explicite"
+  ],
+  "modelAnswer": "Réduire strictement le couple par le reste et normaliser les signes. Je prouve par deux nombres premiers entre eux, un multiple exact, un zéro et un négatif ; O(log min(a,b)) en temps et O(1) en espace.",
+  "commonMistakes": [
+    "Oublier le cas où l'un des deux nombres est nul et boucler indéfiniment"
+  ],
+  "variants": [
+    "Changer une borne ou le volume tout en conservant la même règle de calculer un pgcd itératif."
+  ],
+  "license": "CC-BY-4.0"
+}

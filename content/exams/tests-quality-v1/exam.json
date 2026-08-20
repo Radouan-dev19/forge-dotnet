@@ -24,6 +24,13 @@
                                 "quality-regression-bounds-001",
                                 "quality-review-severity-001",
                                 "quality-complexity-budget-001",
-                                "quality-diff-risk-001"
+                                "quality-diff-risk-001",
+                                "tests-mutation-score-001",
+                                "tests-coverage-floor-001",
+                                "tests-order-dependence-001",
+                                "tests-characterization-lock-001",
+                                "quality-assertion-survival-001",
+                                "quality-review-matrix-001",
+                                "tests-double-taxonomy-001"
                             ]
 }

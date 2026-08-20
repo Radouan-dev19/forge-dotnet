@@ -84,14 +84,19 @@ central de cette période : 5,1 activités par semaine contre 8,8 en S1–S10, p
 semaines qui décident d'une embauche backend.
 
 La reprise avance par lots et son état courant est figé, semaine par semaine, par la matrice de
-`ContentS11S20CoverageTests`. Après le lot 1, S11 à S17 portent six activités chacune, soit 42 au lieu
-de 36. Le détail des lots, le choix de conception qui les gouverne et la cible restante figurent dans
-`ROADMAP.md`.
+`ContentS11S20CoverageTests`. Après le lot 1, S11 à S17 portaient six activités chacune ; les lots
+JWT et REST ont porté S11 à S14 entre dix et douze ; le lot tests-qualité porte S15 à S17 à huit —
+score de mutation, plancher de couverture, dépendance à l'ordre, caractérisation, assertions robustes
+au remaniement, matrice de sévérité — et le lot livraison porte S19 à huit et S20 à six, avec sa
+banque d'examen dédiée `delivery-pipeline-v1` (examen 7). Le détail des lots et le choix de
+conception qui les gouverne figurent dans `ROADMAP.md`.
 
-Deux limites de cette période restent ouvertes et ne sont pas comblées par du volume :
+Les limites relevées à l'époque ont évolué sans se refermer entièrement :
 
-- les activités S19 et S20 — et leurs équivalents Azure en S21–S22 — sont des fonctions pures sur un
-  domaine d'entrée de quelques valeurs, donc mémorisables ; elles entraînent la décision, pas le
-  geste ;
+- le défaut des fonctions pures à domaine minuscule est clos : chaque exercice à domaine booléen
+  forme une paire réciproque de `variantId` avec un frère à domaine ouvert sur le même sujet —
+  chaîne de contraintes, journal de pipeline, porte sur pièces, relevé de durcissement — et un test
+  refuse tout `variantId` booléen vers booléen ; le geste réel, lui, reste porté par les
+  laboratoires `container-delivery` et `ci-delivery`, jamais par le runner ;
 - les cinq laboratoires de cette période portent la seule pratique réelle de Docker, de la chaîne de
-  livraison et d'une API complète, et ils ne sont rattachés à aucune page du parcours public.
+  livraison et d'une API complète.

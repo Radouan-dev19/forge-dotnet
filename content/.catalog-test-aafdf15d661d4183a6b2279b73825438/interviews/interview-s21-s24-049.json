@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "id": "interview-s21-s24-049",
+  "version": 1,
+  "title": "Protéger des preuves publiques",
+  "level": "advanced",
+  "durationMinutes": 12,
+  "skills": [
+    "career.privacy"
+  ],
+  "question": "Que vérifiez-vous avant de publier un dépôt comme preuve ?",
+  "observableCriteria": [
+    "L'inspection couvre branches, tickets et données de démonstration, pas seulement le code",
+    "Une valeur réelle exposée est révoquée hors du dépôt, en plus d'être retirée"
+  ],
+  "modelAnswer": "Historique, branches, issues, captures, données de démonstration, licences et configuration. Toute valeur exposée est retirée et, si réelle, révoquée hors du dépôt.",
+  "commonMistakes": [
+    "Publier un dépôt en n'ayant relu que sa branche principale"
+  ],
+  "variants": [
+    "Changez une contrainte du scénario « Protéger des preuves publiques » et expliquez si la décision reste valide."
+  ],
+  "license": "CC-BY-4.0"
+}

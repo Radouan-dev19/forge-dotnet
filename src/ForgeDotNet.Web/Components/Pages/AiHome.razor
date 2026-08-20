@@ -1,0 +1,65 @@
+@page "/ai"
+@using ForgeDotNet.Application.Preparation
+@using ForgeDotNet.Domain.Ai
+@inject IAiGuideSource Guides
+
+<PageTitle>Chapitre IA — Forge.NET</PageTitle>
+
+<h1>Chapitre IA</h1>
+
+<section class="practice-panel" aria-labelledby="ai-intro-title">
+    <h2 id="ai-intro-title">Un outillage de métier, en libre accès</h2>
+    <p>
+        Ces guides apprennent à utiliser un assistant de code comme un professionnel : économiser les
+        tokens, paramétrer modèles et instructions, encapsuler des procédures en skills, déléguer à des
+        agents et sous-agents, et tenir une boucle de travail quotidienne fiable. Le chapitre est
+        <strong>hors parcours</strong> : aucun prérequis, aucune semaine — l'ordre proposé n'est qu'une
+        suggestion, lisez selon vos besoins du moment.
+    </p>
+    <p class="notice" role="status">
+        <strong>Aucun de ces guides ne produit de preuve de maîtrise</strong> : le bac à sable n'a pas de
+        réseau, par conception, et ne peut vérifier aucun usage d'assistant. Surtout, le contrat
+        d'apprentissage tient : les exercices comptés, les examens et toute preuve du parcours se font
+        <strong>sans IA</strong>. L'assistant est une compétence de métier à construire à côté — jamais un
+        moyen de fabriquer vos preuves.
+    </p>
+</section>
+
+@if (_error is not null)
+{
+    <p class="error-message" role="alert">@_error</p>
+}
+else if (_guides is null)
+{
+    <p role="status">Chargement des guides…</p>
+}
+else
+{
+    <ul class="lesson-list">
+        @foreach (AiGuide guide in _guides)
+        {
+            <li>
+                <a href="@($"/ai/{guide.Id}")">@guide.Title</a>
+                <p>@guide.Summary</p>
+            </li>
+        }
+    </ul>
+}
+
+@code {
+    private List<AiGuide>? _guides;
+    private string? _error;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            IReadOnlyList<AiGuide> guides = await Guides.ListAsync();
+            _guides = guides.OrderBy(guide => guide.Order).ThenBy(guide => guide.Id, StringComparer.Ordinal).ToList();
+        }
+        catch (Exception exception) when (exception is InvalidDataException or InvalidOperationException)
+        {
+            _error = exception.Message;
+        }
+    }
+}

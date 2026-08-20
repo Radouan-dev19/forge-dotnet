@@ -1,0 +1,82 @@
+{
+    "schemaVersion":  1,
+    "id":  "structures-postfix-001",
+    "version":  1,
+    "title":  "Évaluer une expression postfixée",
+    "kind":  "algorithm",
+    "difficulty":  3,
+    "skills":  [
+                   "structures.stack"
+               ],
+    "prerequisites":  [
+                          "structures-stacks-queues-001"
+                      ],
+    "estimatedMinutes":  30,
+    "statement":  "statement.md",
+    "constraints":  [
+                        "Conserver exactement la signature publique",
+                        "Dépiler droite puis gauche et limiter ce contrat pédagogique à plus et multiplication.",
+                        "Ne pas modifier les entrées reçues sauf mention explicite"
+                    ],
+    "examples":  [
+                     {
+                         "input":  "[\"2 3 \\u002B\"]",
+                         "output":  "5"
+                     }
+                 ],
+    "reflectionFields":  [
+                             "reformulation",
+                             "inputs",
+                             "expectedOutput",
+                             "edgeCases",
+                             "hypothesis",
+                             "plan"
+                         ],
+    "starterPath":  "starter/",
+    "visibleTestsPath":  "tests/visible/",
+    "hiddenTestsPath":  "tests/hidden/",
+    "hints":  [
+                  {
+                      "level":  1,
+                      "kind":  "socratic",
+                      "content":  "Quel invariant de « Évaluer une expression postfixée » doit rester vrai pour les cas limites ?"
+                  },
+                  {
+                      "level":  2,
+                      "kind":  "location",
+                      "content":  "Concentrez la décision dans la méthode EvaluatePostfix, sans état global."
+                  },
+                  {
+                      "level":  3,
+                      "kind":  "strategy",
+                      "content":  "Dépiler droite puis gauche et limiter ce contrat pédagogique à plus et multiplication."
+                  },
+                  {
+                      "level":  4,
+                      "kind":  "partial-pseudocode",
+                      "content":  "découper l'expression sur les espaces en retirant les segments vides ; empiler tout jeton qui est un entier ; pour un opérateur, dépiler d'abord l'opérande de droite puis celui de gauche, appliquer l'opération et empiler le résultat ; retourner le sommet à la fin"
+                  }
+              ],
+    "solution":  {
+                     "path":  "solution/",
+                     "unlock":  {
+                                    "seriousAttempts":  2,
+                                    "minimumDelayMinutes":  10
+                                }
+                 },
+    "explanation":  "explanation.md",
+    "complexity":  "O(n) en temps et O(n) en espace",
+    "commonMistakes":  [
+                           "Dépiler la gauche avant la droite et inverser les opérandes",
+                           "Étendre le contrat à la soustraction ou à la division, hors du périmètre annoncé",
+                           "Supposer que chaque jeton tient en un seul caractère",
+                           "Oublier de retirer les segments vides produits par des espaces répétés"
+                       ],
+    "variantId":  "structures-ancestor-count-001",
+    "reviewCards":  [
+                        "card-structures-postfix-001-rule",
+                        "card-structures-postfix-001-edge"
+                    ],
+    "interviewQuestionId":  "interview-structures-postfix-001",
+    "license":  "CC-BY-4.0"
+}

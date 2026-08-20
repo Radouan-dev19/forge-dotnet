@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "cases": [
+    {
+      "name": "Visible_ProductBeatsBothSingleMeasures",
+      "message": "L'utilitaire au churn énorme et le cœur complexe s'inclinent devant la facturation, chaude aux deux mesures.",
+      "arguments": ["billing.cs:40:12;utils.cs:90:2;core.cs:15:30"],
+      "expected": "billing.cs;core.cs;utils.cs",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Visible_TwoFilesMakeAShortPodium",
+      "message": "Moins de trois fichiers au relevé : le podium rend ce qui existe.",
+      "arguments": ["a.cs:10:10;b.cs:1:1"],
+      "expected": "a.cs;b.cs",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Visible_TiedScoresBreakOnName",
+      "message": "Deux fichiers à vingt-quatre : l'ordre des noms garde le rapport comparable.",
+      "arguments": ["x.cs:6:4;y.cs:4:6;z.cs:2:2"],
+      "expected": "x.cs;y.cs;z.cs",
+      "argumentsUnchanged": true
+    }
+  ]
+}

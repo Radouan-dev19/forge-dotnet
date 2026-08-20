@@ -1,0 +1,54 @@
+{
+  "schemaVersion": 1,
+  "cases": [
+    {
+      "name": "Hidden_NoArrivalsUsesFullThroughput",
+      "message": "Producteurs à l'arrêt : la consommation entière résorbe, arrondie vers le haut.",
+      "arguments": [100, 0, 7],
+      "expected": 15,
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_TinyBacklogStillTakesAMinute",
+      "message": "Un message dans la file : la minute entamée se paie entière.",
+      "arguments": [1, 0, 1000],
+      "expected": 1,
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_NegativeBacklogIsRefused",
+      "message": "Un arriéré négatif ne mesure rien.",
+      "arguments": [-5, 0, 1],
+      "expectedException": "ArgumentOutOfRangeException",
+      "argumentsUnchanged": false
+    },
+    {
+      "name": "Hidden_StoppedConsumerIsAVerdictNotAnError",
+      "message": "Consommation nulle sous des arrivées : l'impossibilité se dit, elle ne se lève pas.",
+      "arguments": [100, 50, 0],
+      "expected": -1,
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_HugeBacklogNeedsWideMath",
+      "message": "Deux milliards de messages pour un net de un : la formule du plafond doit s'élargir.",
+      "arguments": [2000000000, 1999999999, 2000000000],
+      "expected": 2000000000,
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_NetOfOneIsSlowButFinite",
+      "message": "Un net d'un message par minute draine quand même : cent minutes pour cent messages.",
+      "arguments": [100, 30, 31],
+      "expected": 100,
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_CeilingRoundsThePartialMinute",
+      "message": "Sept messages pour un net de trois : deux minutes pleines et une entamée, donc trois.",
+      "arguments": [7, 2, 5],
+      "expected": 3,
+      "argumentsUnchanged": true
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "cases": [
+    {
+      "name": "Visible_SharedBranchIsNeverRewritten",
+      "message": "Partagée : la fusion l'emporte, même sur une histoire bruitée et une cible avancée.",
+      "arguments": [true, true, true],
+      "expected": "merge",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Visible_NoisyPrivateBranchIsSquashed",
+      "message": "Privée et bruitée : l'écrasement garde le résultat et jette le cheminement.",
+      "arguments": [false, true, false],
+      "expected": "squash",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Visible_NothingToReconcile",
+      "message": "Privée, propre, cible immobile : aucun commit de fusion n'est nécessaire.",
+      "arguments": [false, false, false],
+      "expected": "fast-forward",
+      "argumentsUnchanged": true
+    }
+  ]
+}

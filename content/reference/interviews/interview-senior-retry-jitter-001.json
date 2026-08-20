@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "id": "interview-senior-retry-jitter-001",
+  "version": 1,
+  "title": "Défendre un échéancier de relances à jitter, avec ses noms anglais",
+  "level": "advanced",
+  "durationMinutes": 9,
+  "skills": ["quality.resilience"],
+  "question": "Mille clients perdent le même serveur au même instant. Décrivez la politique de relance que vous configurez, nommez-la comme un entretien anglophone l'attend, et dites quel outil .NET la fournit sans que vous l'écriviez.",
+  "observableCriteria": [
+    "Le troupeau tonnant est décrit : le recul exponentiel nu synchronise les vagues de relance",
+    "La politique du jitter égal est expliquée : moitié de fenêtre en plancher, moitié en dispersion",
+    "Les noms anglais sont donnés — retry with exponential backoff and jitter, thundering herd — et Polly est cité en une phrase",
+    "Le déterminisme testable est défendu : l'aléa sépare les clients, pas les exécutions"
+  ],
+  "modelAnswer": "Le danger n'est pas la relance, c'est la synchronisation : mille clients tombés ensemble relancent ensemble, et le serveur convalescent reçoit des vagues — le thundering herd, le troupeau tonnant. Je configure un retry with exponential backoff and jitter : la fenêtre double à chaque attente, écrêtée à un plafond, et chaque attente se tire dans la moitié haute de sa fenêtre — la politique dite equal jitter, dont le plancher garantit le repos du serveur pendant que la moitié haute désynchronise les clients. Je garde le calcul déterministe par graine : l'aléa dont le jitter a besoin sépare les clients entre eux, pas les exécutions d'un même client — sans quoi ni les tests ni les incidents ne se rejouent. En .NET, l'outil que l'industrie associe à tout cela est Polly : la bibliothèque de résilience qui fournit ces politiques composables — relance, disjoncteur, cloison — avec une source d'aléa injectable, précisément pour rester testable. La valeur en entretien n'est pas de recoder Polly : c'est d'expliquer pourquoi le plancher à mi-fenêtre existe.",
+  "commonMistakes": [
+    "Décrire le recul exponentiel sans le jitter et laisser les vagues synchronisées intactes",
+    "Tirer le jitter de zéro à la fenêtre entière et autoriser des relances quasi immédiates"
+  ],
+  "variants": [
+    "Demander ce que la gigue change aux files d'attente côté serveur pendant la reprise.",
+    "Comparer equal jitter et decorrelated jitter : ce que chacun échange contre l'autre."
+  ],
+  "license": "CC-BY-4.0"
+}

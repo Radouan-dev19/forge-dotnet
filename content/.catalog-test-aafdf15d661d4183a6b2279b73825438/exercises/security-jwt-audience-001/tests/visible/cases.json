@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "cases": [
+    {
+      "name": "Visible_SingleMatch",
+      "message": "Audience chaîne correspondant au service attendu.",
+      "arguments": [
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJmb3JnZS1hcGkiLCJzdWIiOiJ1c2VyLTE5In0.ucy-gByrRLIpa3P9TdlH1v1JA2JD_u2wChOGIPoZEsg",
+        "forge-api"
+      ],
+      "expected": true,
+      "expectedException": null,
+      "argumentsUnchanged": false
+    },
+    {
+      "name": "Visible_SingleMismatch",
+      "message": "Audience chaîne d'un autre service : refus.",
+      "arguments": [
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJmb3JnZS1hcGkiLCJzdWIiOiJ1c2VyLTE5In0.ucy-gByrRLIpa3P9TdlH1v1JA2JD_u2wChOGIPoZEsg",
+        "forge-admin"
+      ],
+      "expected": false,
+      "expectedException": null,
+      "argumentsUnchanged": false
+    },
+    {
+      "name": "Visible_ArrayMatch",
+      "message": "Audience tableau contenant le service attendu.",
+      "arguments": [
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOlsiZm9yZ2UtYXBpIiwiZm9yZ2UtcmVwb3J0aW5nIl0sInN1YiI6InVzZXItMzMifQ.l1MBj85Hl-_Y1NceFv2n62jHyirpTzaKx3SAAhST8vM",
+        "forge-reporting"
+      ],
+      "expected": true,
+      "expectedException": null,
+      "argumentsUnchanged": false
+    }
+  ]
+}

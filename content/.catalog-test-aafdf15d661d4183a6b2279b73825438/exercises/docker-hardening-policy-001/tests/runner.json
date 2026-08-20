@@ -1,0 +1,14 @@
+{
+    "schemaVersion":  1,
+    "suiteId":  "docker-hardening-policy-001.v1",
+    "exerciseId":  "docker-hardening-policy-001",
+    "exerciseVersion":  1,
+    "typeName":  "Submission",
+    "methodName":  "IsHardened",
+    "parameterTypes":  [
+                           "bool",
+                           "bool",
+                           "bool"
+                       ],
+    "returnType":  "bool"
+}

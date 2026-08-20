@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "id": "english-card-18-spoken",
+  "version": 1,
+  "title": "Security under load — spoken follow-up",
+  "level": "B2",
+  "durationMinutes": 10,
+  "skills": [
+    "english.spoken",
+    "performance.security"
+  ],
+  "situation": "In a technical discussion, someone proposes bypassing authorization in a benchmark. You must answer aloud accurately without overstating the evidence.",
+  "instructions": [
+    "Say aloud why disabling authorization for a benchmark invalidates its result, without making the proposer defensive."
+  ],
+  "vocabulary": [
+    {
+      "term": "representative testing",
+      "meaning": "measuring the system in the configuration it actually runs in, since removing a layer measures a system nobody deploys"
+    },
+    {
+      "term": "omitted layer",
+      "meaning": "a component left out of a measurement, whose own cost then disappears from the reported figure"
+    }
+  ],
+  "expectedElements": [
+    "What the shortcut actually measures is stated",
+    "The omitted layer is identified as a real cost",
+    "A workable alternative protocol is proposed"
+  ],
+  "modelAnswer": "I understand why it is tempting, and I do not think the proposal is careless: authorization adds noise to a measurement. But disabling it measures a system we never deploy. Every request in production passes through that check, and the check itself costs something, sometimes a token validation and a lookup. Removing it moves that cost out of the number we then quote. So the figure would be real evidence for a question nobody asked. What I would run instead is the same benchmark with a pre-issued token, which keeps the layer in place and removes the variability you were trying to avoid. Would that work for your timeline?",
+  "commonMistakes": [
+    "Rejecting the shortcut without acknowledging the noise it was meant to remove",
+    "Failing to name the omitted layer as a real cost in the reported figure"
+  ],
+  "variants": [
+    "Answer again when the deadline leaves time for only one benchmark run."
+  ],
+  "license": "CC-BY-4.0"
+}

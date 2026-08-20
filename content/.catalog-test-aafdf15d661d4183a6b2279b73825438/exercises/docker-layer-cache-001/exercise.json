@@ -1,0 +1,82 @@
+{
+  "schemaVersion": 1,
+  "id": "docker-layer-cache-001",
+  "version": 1,
+  "title": "Compter les couches reconstruites",
+  "kind": "csharp",
+  "difficulty": 2,
+  "skills": ["docker.images"],
+  "prerequisites": ["docker-images-layers-001"],
+  "estimatedMinutes": 30,
+  "statement": "statement.md",
+  "constraints": [
+    "Conserver exactement la signature publique",
+    "Une couche modifiée invalide toutes celles qui la suivent, sans exception",
+    "Le rang de l'étape modifiée doit désigner une étape existante"
+  ],
+  "examples": [
+    {
+      "input": "[10, 8]",
+      "output": "3"
+    },
+    {
+      "input": "[10, 1]",
+      "output": "10"
+    }
+  ],
+  "reflectionFields": [
+    "reformulation",
+    "inputs",
+    "expectedOutput",
+    "edgeCases",
+    "hypothesis",
+    "plan"
+  ],
+  "starterPath": "starter/",
+  "visibleTestsPath": "tests/visible/",
+  "hiddenTestsPath": "tests/hidden/",
+  "hints": [
+    {
+      "level": 1,
+      "kind": "socratic",
+      "content": "Une couche est construite à partir de celle d'avant. Que devient la suivante si celle d'avant change ?"
+    },
+    {
+      "level": 2,
+      "kind": "location",
+      "content": "Une garde sur le rang de l'étape, puis une seule soustraction : il n'y a pas de boucle à écrire."
+    },
+    {
+      "level": 3,
+      "kind": "strategy",
+      "content": "Comptez de l'étape modifiée jusqu'à la dernière, celle-ci incluse."
+    },
+    {
+      "level": 4,
+      "kind": "partial-pseudocode",
+      "content": "refuser un rang inférieur à un ou supérieur au nombre d'étapes ; retourner le nombre total d'étapes diminué du rang modifié, augmenté de un"
+    }
+  ],
+  "solution": {
+    "path": "solution/",
+    "unlock": {
+      "seriousAttempts": 2,
+      "minimumDelayMinutes": 10
+    }
+  },
+  "explanation": "explanation.md",
+  "complexity": "O(1) en temps et O(1) en espace",
+  "commonMistakes": [
+    "Oublier que l'étape modifiée est elle-même reconstruite, ce qui décale le compte d'une unité",
+    "Croire que seules les étapes dépendantes du fichier changé sont invalidées",
+    "Placer la copie des sources avant la restauration des dépendances, ce qui annule le cache à chaque modification",
+    "Accepter un rang hors des étapes existantes et rendre un compte négatif"
+  ],
+  "variantId": "docker-image-tag-001",
+  "reviewCards": [
+    "card-docker-layer-cache-001-rule",
+    "card-docker-layer-cache-001-edge"
+  ],
+  "interviewQuestionId": "interview-docker-layer-cache-001",
+  "license": "CC-BY-4.0"
+}

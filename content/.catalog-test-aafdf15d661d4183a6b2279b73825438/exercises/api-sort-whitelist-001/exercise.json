@@ -1,0 +1,82 @@
+{
+    "schemaVersion":  1,
+    "id":  "api-sort-whitelist-001",
+    "version":  1,
+    "title":  "Appliquer une liste blanche de tri",
+    "kind":  "csharp",
+    "difficulty":  2,
+    "skills":  [
+                   "api.pagination"
+               ],
+    "prerequisites":  [
+                          "api-async-cancellation-001"
+                      ],
+    "estimatedMinutes":  35,
+    "statement":  "statement.md",
+    "constraints":  [
+                        "Conserver exactement la signature publique",
+                        "Ne retenir qu'une clé publique autorisée et choisir la valeur par défaut sinon.",
+                        "Ne construire aucune requête : seule la clé normalisée est retournée"
+                    ],
+    "examples":  [
+                     {
+                         "input":  "[\"date\"]",
+                         "output":  "\"date\""
+                     }
+                 ],
+    "reflectionFields":  [
+                             "reformulation",
+                             "inputs",
+                             "expectedOutput",
+                             "edgeCases",
+                             "hypothesis",
+                             "plan"
+                         ],
+    "starterPath":  "starter/",
+    "visibleTestsPath":  "tests/visible/",
+    "hiddenTestsPath":  "tests/hidden/",
+    "hints":  [
+                  {
+                      "level":  1,
+                      "kind":  "socratic",
+                      "content":  "Quel comportement public de « Appliquer une liste blanche de tri » change exactement à la frontière ?"
+                  },
+                  {
+                      "level":  2,
+                      "kind":  "location",
+                      "content":  "Concentrez la validation et la décision dans NormalizeSort, sans état global ni journal sensible."
+                  },
+                  {
+                      "level":  3,
+                      "kind":  "strategy",
+                      "content":  "Retourner seulement une clé publique autorisée et choisir id par défaut."
+                  },
+                  {
+                      "level":  4,
+                      "kind":  "partial-pseudocode",
+                      "content":  "normaliser la valeur reçue en retirant les blancs et en uniformisant la casse, l'absence donnant une chaîne vide ; ne la retenir que si elle figure dans la liste fermée des clés autorisées ; sinon retourner la clé de tri par défaut"
+                  }
+              ],
+    "solution":  {
+                     "path":  "solution/",
+                     "unlock":  {
+                                    "seriousAttempts":  2,
+                                    "minimumDelayMinutes":  10
+                                }
+                 },
+    "explanation":  "explanation.md",
+    "complexity":  "O(n) en temps et O(n) en espace",
+    "commonMistakes":  [
+                           "Passer la valeur reçue à la requête sans la confronter à une liste fermée",
+                           "Refuser par une erreur une clé inconnue au lieu de retomber sur le tri par défaut",
+                           "Comparer sans normaliser et rejeter une clé écrite dans une autre casse",
+                           "Croire qu'une requête paramétrée protège aussi le nom de colonne"
+                       ],
+    "variantId":  "api-filter-term-001",
+    "reviewCards":  [
+                        "card-api-sort-whitelist-001-rule",
+                        "card-api-sort-whitelist-001-security"
+                    ],
+    "interviewQuestionId":  "interview-api-sort-whitelist-001",
+    "license":  "CC-BY-4.0"
+}

@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "cases": [
+    {
+      "name": "Hidden_TwelfthMonthBackIsStillActive",
+      "message": "Le douzième mois civil en arrière appartient encore à la fenêtre.",
+      "arguments": ["2025-09-01:60.40", "2026-08-15"],
+      "expected": 60,
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_ThirteenthMonthBackIsExpired",
+      "message": "Le treizième mois civil en arrière est sorti de la fenêtre.",
+      "arguments": ["2025-08-31:60.40", "2026-08-15"],
+      "expected": 0,
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_SubUnitAmountFloorsToZero",
+      "message": "Un montant sous l'unité rapporte zéro point de base.",
+      "arguments": ["2026-08-01:0.99", "2026-08-15"],
+      "expected": 0,
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_SeveralActiveMonthsAddUp",
+      "message": "Les points de base s'additionnent à travers les mois actifs.",
+      "arguments": ["2026-02-14:19.99;2026-02-20:20.01;2026-03-05:5.00", "2026-08-15"],
+      "expected": 44,
+      "argumentsUnchanged": true
+    }
+  ]
+}

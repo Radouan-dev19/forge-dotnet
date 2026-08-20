@@ -1,0 +1,82 @@
+{
+    "schemaVersion":  1,
+    "id":  "git-version-patch-001",
+    "version":  1,
+    "title":  "Incrémenter une version patch",
+    "kind":  "csharp",
+    "difficulty":  3,
+    "skills":  [
+                   "git.versions"
+               ],
+    "prerequisites":  [
+                          "git-commits-history-001"
+                      ],
+    "estimatedMinutes":  35,
+    "statement":  "statement.md",
+    "constraints":  [
+                        "Conserver exactement la signature publique",
+                        "Valider trois entiers non négatifs et incrémenter seulement le composant de correction.",
+                        "N'interroger aucun dépôt : la version courante est fournie"
+                    ],
+    "examples":  [
+                     {
+                         "input":  "[\"1.2.3\"]",
+                         "output":  "\"1.2.4\""
+                     }
+                 ],
+    "reflectionFields":  [
+                             "reformulation",
+                             "inputs",
+                             "expectedOutput",
+                             "edgeCases",
+                             "hypothesis",
+                             "plan"
+                         ],
+    "starterPath":  "starter/",
+    "visibleTestsPath":  "tests/visible/",
+    "hiddenTestsPath":  "tests/hidden/",
+    "hints":  [
+                  {
+                      "level":  1,
+                      "kind":  "socratic",
+                      "content":  "Quel comportement public de « Incrémenter une version patch » change exactement à la frontière ?"
+                  },
+                  {
+                      "level":  2,
+                      "kind":  "location",
+                      "content":  "Concentrez la validation et la décision dans NextPatch, sans état global ni journal sensible."
+                  },
+                  {
+                      "level":  3,
+                      "kind":  "strategy",
+                      "content":  "Valider trois entiers non négatifs et incrémenter seulement le composant patch."
+                  },
+                  {
+                      "level":  4,
+                      "kind":  "partial-pseudocode",
+                      "content":  "refuser toute valeur qui ne se décompose pas en exactement trois composants entiers non négatifs ; sinon recomposer la version en n'augmentant que le troisième composant, l'incrément étant vérifié"
+                  }
+              ],
+    "solution":  {
+                     "path":  "solution/",
+                     "unlock":  {
+                                    "seriousAttempts":  2,
+                                    "minimumDelayMinutes":  10
+                                }
+                 },
+    "explanation":  "explanation.md",
+    "complexity":  "O(n) en temps et O(n) en espace",
+    "commonMistakes":  [
+                           "Incrémenter le composant de gauche ou celui du milieu",
+                           "Accepter une version à deux ou quatre composants",
+                           "Accepter un composant négatif ou non numérique",
+                           "Remettre à zéro les composants de gauche lors d'une simple correction"
+                       ],
+    "variantId":  "git-conflict-marker-001",
+    "reviewCards":  [
+                        "card-git-version-patch-001-rule",
+                        "card-git-version-patch-001-security"
+                    ],
+    "interviewQuestionId":  "interview-git-version-patch-001",
+    "license":  "CC-BY-4.0"
+}

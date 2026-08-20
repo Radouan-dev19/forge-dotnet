@@ -1,0 +1,83 @@
+{
+  "schemaVersion": 1,
+  "id": "ci-retry-backoff-001",
+  "version": 1,
+  "title": "Chiffrer la fenêtre d'attente d'un travail relancé avec recul exponentiel",
+  "kind": "csharp",
+  "difficulty": 3,
+  "skills": ["ci.resilience"],
+  "prerequisites": ["ci-artifacts-variables-secrets-001"],
+  "estimatedMinutes": 30,
+  "statement": "statement.md",
+  "constraints": [
+    "Conserver exactement la signature publique",
+    "Aucune attente ne suit la dernière tentative : n tentatives produisent n moins une attentes",
+    "Chaque attente double la précédente jusqu'au plafond, qui l'écrête sans jamais la dépasser",
+    "Les bornes opérationnelles sont refusées avant tout calcul"
+  ],
+  "examples": [
+    {
+      "input": "5, 2, 60",
+      "output": "30"
+    },
+    {
+      "input": "4, 10, 15",
+      "output": "40"
+    }
+  ],
+  "reflectionFields": [
+    "reformulation",
+    "inputs",
+    "expectedOutput",
+    "edgeCases",
+    "hypothesis",
+    "plan"
+  ],
+  "starterPath": "starter/",
+  "visibleTestsPath": "tests/visible/",
+  "hiddenTestsPath": "tests/hidden/",
+  "hints": [
+    {
+      "level": 1,
+      "kind": "socratic",
+      "content": "Votre travail échoue systématiquement pendant une panne d'une heure du dépôt de paquets. Combien de temps vos relances vont-elles occuper un exécuteur, et à partir de quelle tentative ce temps cesse-t-il de croître ?"
+    },
+    {
+      "level": 2,
+      "kind": "location",
+      "content": "Distinguez le nombre de tentatives du nombre d'attentes : la première tentative part sans délai, et personne n'attend après la dernière. La somme porte sur ce qui sépare les tentatives, pas sur les tentatives elles-mêmes."
+    },
+    {
+      "level": 3,
+      "kind": "strategy",
+      "content": "Faites évoluer l'attente courante au fil de la boucle : elle démarre au délai de base, s'ajoute au total, puis double — en s'arrêtant net au plafond. Comparer avant de doubler évite tout dépassement de capacité."
+    },
+    {
+      "level": 4,
+      "kind": "partial-pseudocode",
+      "content": "refuser les tentatives hors bornes, le délai de base non positif, le plafond plus petit que la base ou au-delà d'une journée ; initialiser l'attente au délai de base et le total à zéro ; répéter pour chaque intervalle entre tentatives : ajouter l'attente au total puis la doubler en l'écrêtant au plafond ; rendre le total"
+    }
+  ],
+  "solution": {
+    "path": "solution/",
+    "unlock": {
+      "seriousAttempts": 2,
+      "minimumDelayMinutes": 10
+    }
+  },
+  "explanation": "explanation.md",
+  "complexity": "O(n) en temps pour n tentatives et O(1) en espace",
+  "commonMistakes": [
+    "Compter une attente par tentative et facturer un délai après la dernière relance",
+    "Doubler avant d'écrêter et laisser le calcul dépasser le plafond d'un intervalle",
+    "Calculer la puissance de deux d'un coup et déborder au lieu de doubler pas à pas sous plafond",
+    "Accepter un plafond inférieur au délai de base, qui rendrait la première attente déjà hors contrat"
+  ],
+  "variantId": "ci-log-triage-001",
+  "reviewCards": [
+    "card-ci-retry-backoff-001-rule",
+    "card-ci-retry-backoff-001-edge"
+  ],
+  "interviewQuestionId": "interview-ci-retry-backoff-001",
+  "license": "CC-BY-4.0"
+}

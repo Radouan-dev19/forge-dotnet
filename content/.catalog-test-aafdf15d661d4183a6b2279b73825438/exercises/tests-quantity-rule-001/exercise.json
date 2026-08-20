@@ -1,0 +1,82 @@
+{
+    "schemaVersion":  1,
+    "id":  "tests-quantity-rule-001",
+    "version":  1,
+    "title":  "Tester une règle de quantité",
+    "kind":  "csharp",
+    "difficulty":  2,
+    "skills":  [
+                   "tests.domain"
+               ],
+    "prerequisites":  [
+                          "tests-xunit-aaa-001"
+                      ],
+    "estimatedMinutes":  35,
+    "statement":  "statement.md",
+    "constraints":  [
+                        "Conserver exactement la signature publique",
+                        "Exprimer directement la plage inclusive pour rendre ses quatre frontières testables.",
+                        "Ne consulter aucun stock : seule la quantité demandée décide"
+                    ],
+    "examples":  [
+                     {
+                         "input":  "[1]",
+                         "output":  "true"
+                     }
+                 ],
+    "reflectionFields":  [
+                             "reformulation",
+                             "inputs",
+                             "expectedOutput",
+                             "edgeCases",
+                             "hypothesis",
+                             "plan"
+                         ],
+    "starterPath":  "starter/",
+    "visibleTestsPath":  "tests/visible/",
+    "hiddenTestsPath":  "tests/hidden/",
+    "hints":  [
+                  {
+                      "level":  1,
+                      "kind":  "socratic",
+                      "content":  "Quel comportement public de « Tester une règle de quantité » change exactement à la frontière ?"
+                  },
+                  {
+                      "level":  2,
+                      "kind":  "location",
+                      "content":  "Concentrez la validation et la décision dans IsValidQuantity, sans état global ni journal sensible."
+                  },
+                  {
+                      "level":  3,
+                      "kind":  "strategy",
+                      "content":  "Exprimer directement la plage inclusive pour rendre ses quatre frontières testables."
+                  },
+                  {
+                      "level":  4,
+                      "kind":  "partial-pseudocode",
+                      "content":  "exprimer directement la plage inclusive : la quantité est acceptée lorsqu'elle est supérieure ou égale au minimum et inférieure ou égale au maximum"
+                  }
+              ],
+    "solution":  {
+                     "path":  "solution/",
+                     "unlock":  {
+                                    "seriousAttempts":  2,
+                                    "minimumDelayMinutes":  10
+                                }
+                 },
+    "explanation":  "explanation.md",
+    "complexity":  "O(1) en temps et O(1) en espace",
+    "commonMistakes":  [
+                           "Employer une comparaison stricte et exclure l'une des deux bornes",
+                           "Refuser la quantité minimale, qui est pourtant valide",
+                           "Accepter une quantité nulle ou négative",
+                           "Écrire deux conditions séparées dont l'une devient inatteignable"
+                       ],
+    "variantId":  "tests-shipping-theory-001",
+    "reviewCards":  [
+                        "card-tests-quantity-rule-001-rule",
+                        "card-tests-quantity-rule-001-security"
+                    ],
+    "interviewQuestionId":  "interview-tests-quantity-rule-001",
+    "license":  "CC-BY-4.0"
+}

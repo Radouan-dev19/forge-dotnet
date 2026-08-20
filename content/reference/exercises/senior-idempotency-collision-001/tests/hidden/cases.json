@@ -1,0 +1,54 @@
+{
+  "schemaVersion": 1,
+  "cases": [
+    {
+      "name": "Hidden_EmptyJournalIsRefused",
+      "message": "Aucune requête : il n'y a rien à auditer.",
+      "arguments": [""],
+      "expectedException": "ArgumentException",
+      "argumentsUnchanged": false
+    },
+    {
+      "name": "Hidden_CollisionAfterLegitimateRetries",
+      "message": "Deux relances légitimes puis une charge différente : la référence reste la première empreinte.",
+      "arguments": ["ord-1:a1;ord-1:a1;ord-1:zz"],
+      "expected": "ord-1",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_EntryWithoutHashIsRefused",
+      "message": "Une requête sans empreinte ne se juge pas, elle se répare en amont.",
+      "arguments": ["ord-1"],
+      "expectedException": "ArgumentException",
+      "argumentsUnchanged": false
+    },
+    {
+      "name": "Hidden_SharedHashAcrossKeysIsNotACollision",
+      "message": "Deux clés différentes pour la même empreinte : deux opérations identiques, chacune sous sa clé.",
+      "arguments": ["k1:h1;k2:h1"],
+      "expected": "",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_ReportUsesOrdinalOrderNotArrival",
+      "message": "Les deux clés fautives arrivent en désordre : le rapport les rend en ordre ordinal.",
+      "arguments": ["b:2;a:1;b:3;a:9"],
+      "expected": "a,b",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_EmptyHashFieldIsRefused",
+      "message": "Un champ vide n'est ni une clé ni une empreinte.",
+      "arguments": ["x:"],
+      "expectedException": "ArgumentException",
+      "argumentsUnchanged": false
+    },
+    {
+      "name": "Hidden_TripleCollisionReportsOnce",
+      "message": "Trois empreintes sous la même clé : une seule ligne au rapport, la clé.",
+      "arguments": ["req-5:h1;req-5:h2;req-5:h3"],
+      "expected": "req-5",
+      "argumentsUnchanged": true
+    }
+  ]
+}

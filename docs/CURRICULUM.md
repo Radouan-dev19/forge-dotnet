@@ -46,29 +46,32 @@ Le catalogue final contient au moins 70 leçons, 80 exercices C#/algo, 25 labs d
 ### État courant du volume de pratique
 
 Le relevé ci-dessus est celui de lʼincrément 10 et nʼest pas réécrit. Depuis, les reprises de densité
-décrites dans `ROADMAP.md` portent le catalogue à **187 exercices** et **242 fiches dʼentretien**
-(mesure du 18 août 2026 : compte des dossiers `content/reference/exercises/` et
-`content/reference/interviews/`). La répartition par semaine reste inégale et cʼest la limite à
-connaître avant de sʼengager sur le parcours :
+décrites dans `ROADMAP.md` portent le catalogue à **238 exercices** et **293 fiches dʼentretien**
+(mesure du 19 août 2026 : compte des dossiers `content/reference/exercises/` et
+`content/reference/interviews/`). La répartition par semaine :
 
 | Période | Exercices référencés | Par semaine |
 |---|---:|---:|
 | S1–S10 | 88 | 8,8 |
-| S11–S14 | 42 | 10,5 |
-| S15–S17 | 18 | 6,0 |
-| S18–S20 | 16 | 5,3 |
-| S21–S24 | 14 | 3,5 |
+| S11–S14 | 45 | 11,3 |
+| S15–S17 | 25 | 8,3 |
+| S18–S20 | 23 | 7,7 |
+| S21–S24 | 21 | 5,3 |
 | S25–S27 (front-end) | 4 | 1,3 |
-| Piste senior (8 semaines) | 8 | 1,0 |
+| Piste senior (8 semaines) | 32 | 4,0 |
 
-La pratique des semaines S8 à S10 vit dans les **40 scénarios SQL/EF du SqlLab**, pas dans les
-exercices C# : leur module nʼen référence quʼun, choisi comme complément algorithmique du thème.
+La pratique des semaines S8 à S10 vit dʼabord dans les **40 scénarios SQL/EF du SqlLab** ; leur
+module référence en plus un exercice EF Core réel du thème — jointure en creux, agrégation avec
+filtre de groupe, pagination par jeu de clés — exécuté par le runner comme les variantes dʼexamen
+`ef-orders-*`.
 
-La cible de huit exercices par semaine est **atteinte sur S11–S14** (dix à douze chacune) ; restent
-**S15–S17, encore à six**. Le comptage exact est figé par la matrice de
-`ContentS11S20CoverageTests`, qui refuse toute dérive dans un sens comme dans lʼautre. Autre
-reliquat mesuré : les douze exercices à domaine dʼentrée booléen relevés par lʼaudit nʼont
-toujours pas dʼexercice frère à domaine ouvert.
+La cible de huit exercices par semaine est **atteinte sur S11–S19** (huit à treize chacune), S20 et
+S22 sont à six, et S23–S24 restent volontairement légères — leur charge vit dans le projet final et
+les preuves de défense et de carrière. Le comptage exact est figé par les matrices de
+`ContentS11S20CoverageTests` et `ContentS21S24CoverageTests`, qui refusent toute dérive dans un sens
+comme dans lʼautre. Le reliquat T9 est clos : chaque exercice à domaine dʼentrée booléen forme une
+paire réciproque de `variantId` avec un frère à domaine ouvert sur le même sujet, et un test refuse
+tout `variantId` booléen pointant vers un autre booléen.
 
 ## Bloc front-end (S25–S27)
 
@@ -80,7 +83,7 @@ Sa stratégie est mixte et assumée :
 - Le câblage réel passe par trois laboratoires branchés sur l'API du laboratoire `api-jwt-bearer` : `angular-orders-client`, `react-orders-client` et `blazor-jwt-client`.
 - Seul `blazor-jwt-client` produit une preuve automatique : sa suite bUnit s'exécute dans la solution même (`dotnet test`), sans navigateur ni conteneur. Les clients Angular et React exigent une installation réseau `npm` unique — le seul point du parcours dans ce cas — et leur réussite reste **déclarée**, jamais collectée par le serveur.
 
-Trois activités de débogage « base existante » (une par framework) entraînent la navigation en terrain inconnu par la méthode en quatre temps des DebugLabs, en réduisant le défaut planté à son noyau décidable en C#. L'examen 8 (`final-readiness-v1`) tire désormais aussi les quatre exercices front-end.
+Trois activités de débogage « base existante » (une par framework) entraînent la navigation en terrain inconnu par la méthode en quatre temps des DebugLabs, en réduisant le défaut planté à son noyau décidable en C#. L'examen 9 (`final-readiness-v1`) tire désormais aussi les quatre exercices front-end.
 
 ## Structure d'une semaine
 
@@ -115,6 +118,8 @@ Mini-projets progressifs : import de commandes, bibliothèque de collections, an
 
 L'anglais est transversal : ticket, commit, PR, bug, architecture, clarification, désaccord, incident et entretiens de 5 puis 15 minutes. Les candidatures commencent après la Porte A ou au plus tard en S12. Les preuves restent honnêtes et attribuent l'assistance.
 
+**Kit carrière (S24), servi depuis le 20 août 2026.** La promesse de la semaine 24 — CV, candidatures, négociation — est portée par cinq guides publiés sous le type de document `CareerGuide` et servis sur `/career` : le CV par preuves, le carnet STAR (trois récits rédigés issus d'un DebugLab, d'un projet console et de l'incident simulé), le protocole de prospection (le fichier de suivi reste local à l'apprenant), la négociation chiffrée et le plan 30/60/90. Les guides passent le validateur comme tout document du catalogue, la règle de joignabilité les couvre, la page S24 de `/learn` et le tableau de bord (porte A ouverte) y renvoient. Aucun guide ne produit de preuve de maîtrise et aucun ne promet emploi ou salaire — chaque page l'annonce.
+
 ## Piste senior (Senior S1–S8)
 
 Les vingt-quatre semaines ne mènent pas au niveau senior, et cette page le déclarait déjà. Une **piste senior** distincte comble une partie de ce manque, dans un **second document de parcours**, `content/reference/curriculum/forge-senior-reference.json`, chargé et paginé à part (page `/learn-senior`) avec ses propres tests de couverture. Le parcours junior des vingt-quatre semaines n'est pas modifié : sa matrice reste le relevé du chemin junior vers confirmé.
@@ -134,11 +139,24 @@ L'objectif n'est pas d'apprendre à faire des microservices. C'est une thèse as
 | Senior S7 | revue de code sur des diffs à défauts plantés | produit l'accomplissement `code-review` |
 | Senior S8 | base de code existante, méthode en quatre temps | correctif + non-régression sur du legacy |
 
-Senior S7 est le premier producteur de l'accomplissement `code-review`, qui n'en avait aucun : un projet vérifiable note le classement de défauts plantés — correction, sécurité, concurrence, et un faux positif de style qui coûte s'il est présenté comme bloquant. Senior S8 applique la méthode des DebugLabs à un défaut planté dans du code que l'apprenant n'a pas écrit.
+Senior S7 est le premier producteur de l'accomplissement `code-review`, qui n'en avait aucun : un projet vérifiable note le classement de défauts plantés sur **quatre diffs** — correction, sécurité, concurrence, et deux faux positifs de style qui coûtent s'ils sont présentés comme bloquants. Senior S8 applique la méthode des DebugLabs à un défaut planté dans du code que l'apprenant n'a pas écrit, sur **deux bases cassées distinctes** (pagination et période d'essai).
+
+**Densité de la piste, reprise du 19 août 2026.** Chaque semaine senior porte désormais **quatre exercices** à noyau décidable — budget de réessai, verdict de disjoncteur, collision de clés, verdict de rejeu, plan de compensation, décision de découpe, tri de revue par preuve, localisation dans une trace — plus sa leçon, sa fiche dʼentretien par exercice et, en S7/S8, le projet de revue et les deux laboratoires hérités : au moins **quatre activités par semaine senior**. Chaque leçon senior nomme en outre son vocabulaire dʼentretien en anglais (sous-section « Le nom en entretien »), outils du marché cités pour le vocabulaire, pas comme dépendances.
 
 **Ce que la piste ne remplace pas, sans l'enjoliver.** Recevoir la revue d'un humain qui n'est pas d'accord, arbitrer sous pression, traverser un désaccord d'équipe : aucun contenu ne remplace ces situations. La piste entraîne le raisonnement distribué, le classement d'une revue et la navigation en terrain inconnu ; elle ne fabrique ni relecteur humain, ni interlocuteur qui conteste. Cette limite est écrite ici et sur la page de la piste, par la même discipline que le projet s'impose partout ailleurs.
 
-Le catalogue compte désormais **neuf examens** : le huitième reste la synthèse S1–S24, le neuvième (`senior-readiness-v1`) tire les exercices distribués de la piste senior.
+Le catalogue compte désormais **neuf examens** : le huitième reste la synthèse S1–S24, le neuvième (`senior-readiness-v1`) tire **8 exercices parmi les 32** de la piste senior — le tirage a suivi la densité pour rester proportionnel au vivier.
+
+## Chapitre IA (hors parcours, libre accès)
+
+Depuis le 20 août 2026, six guides `AiGuide` servis sur `/ai` couvrent l'usage professionnel d'un
+assistant de code : modèle mental (contexte, tokens, coût), économie de tokens, paramétrage par
+couches, skills, agents et sous-agents, boucle quotidienne. Le chapitre est volontairement **sans
+semaine, sans prérequis et sans ordre imposé** : il se lit selon les besoins et les disponibilités.
+Il ne produit aucune preuve de maîtrise — le bac à sable, sans réseau par conception, ne peut
+vérifier aucun usage d'assistant — et chaque guide rappelle la frontière du contrat d'apprentissage :
+l'IA outille la production du développeur, jamais les preuves mesurées du parcours (exercices
+comptés, examens, réflexions, explications, journaux de débogage).
 
 ## Après les 24 semaines
 

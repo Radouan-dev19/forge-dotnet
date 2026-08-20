@@ -1,0 +1,82 @@
+{
+    "schemaVersion":  1,
+    "id":  "structures-run-length-001",
+    "version":  1,
+    "title":  "Compter les groupes consécutifs",
+    "kind":  "algorithm",
+    "difficulty":  2,
+    "skills":  [
+                   "structures.linear"
+               ],
+    "prerequisites":  [
+                          "structures-stacks-queues-001"
+                      ],
+    "estimatedMinutes":  30,
+    "statement":  "statement.md",
+    "constraints":  [
+                        "Conserver exactement la signature publique",
+                        "Incrémenter seulement lors d’un changement par rapport au caractère précédent.",
+                        "Ne pas modifier les entrées reçues sauf mention explicite"
+                    ],
+    "examples":  [
+                     {
+                         "input":  "[\"aaabb\"]",
+                         "output":  "2"
+                     }
+                 ],
+    "reflectionFields":  [
+                             "reformulation",
+                             "inputs",
+                             "expectedOutput",
+                             "edgeCases",
+                             "hypothesis",
+                             "plan"
+                         ],
+    "starterPath":  "starter/",
+    "visibleTestsPath":  "tests/visible/",
+    "hiddenTestsPath":  "tests/hidden/",
+    "hints":  [
+                  {
+                      "level":  1,
+                      "kind":  "socratic",
+                      "content":  "Quel invariant de « Compter les groupes consécutifs » doit rester vrai pour les cas limites ?"
+                  },
+                  {
+                      "level":  2,
+                      "kind":  "location",
+                      "content":  "Concentrez la décision dans la méthode RunCount, sans état global."
+                  },
+                  {
+                      "level":  3,
+                      "kind":  "strategy",
+                      "content":  "Incrémenter seulement lors d’un changement par rapport au caractère précédent."
+                  },
+                  {
+                      "level":  4,
+                      "kind":  "partial-pseudocode",
+                      "content":  "si le texte est vide retourner zéro ; sinon partir d'un groupe, puis parcourir à partir du deuxième caractère et incrémenter à chaque différence avec le précédent"
+                  }
+              ],
+    "solution":  {
+                     "path":  "solution/",
+                     "unlock":  {
+                                    "seriousAttempts":  2,
+                                    "minimumDelayMinutes":  10
+                                }
+                 },
+    "explanation":  "explanation.md",
+    "complexity":  "O(n) en temps et O(1) en espace",
+    "commonMistakes":  [
+                           "Partir de zéro groupe et oublier le premier",
+                           "Compter les caractères identiques au lieu des changements",
+                           "Commencer le parcours au premier caractère et lire un indice négatif",
+                           "Retourner un groupe pour une chaîne vide"
+                       ],
+    "variantId":  "debug-safe-divide-001",
+    "reviewCards":  [
+                        "card-structures-run-length-001-rule",
+                        "card-structures-run-length-001-edge"
+                    ],
+    "interviewQuestionId":  "interview-structures-run-length-001",
+    "license":  "CC-BY-4.0"
+}

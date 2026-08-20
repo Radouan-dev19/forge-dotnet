@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "id": "interview-git-tag-precedence-001",
+  "version": 1,
+  "title": "Ordonner deux versions publiées",
+  "level": "junior",
+  "durationMinutes": 6,
+  "skills": ["git.versions"],
+  "question": "Votre pipeline déploie « la dernière version » et il vient de sortir la 1.2.9 alors que la 1.2.10 existe. Que s'est-il passé, et pourquoi le défaut est-il resté invisible neuf versions durant ?",
+  "observableCriteria": [
+    "Le tri alphabétique est identifié comme cause, avec le mécanisme caractère par caractère",
+    "L'invisibilité du défaut avant la dizaine est expliquée, pas seulement constatée",
+    "La comparaison numérique segment par segment avec arrêt au premier écart est proposée"
+  ],
+  "modelAnswer": "Le pipeline trie les étiquettes comme du texte. Caractère par caractère, le « 1 » de dix précède le « 9 » de neuf, donc 1.2.10 se range avant 1.2.9 et la neuvième passe pour la plus récente. Tant que les correctifs restent à un chiffre, l'ordre du dictionnaire coïncide avec l'ordre numérique : le défaut n'existe pas encore, ce qui explique neuf versions sans incident et la difficulté à le soupçonner. Je compare donc segment par segment, chaque segment converti en nombre, en m'arrêtant au premier écart — un majeur supérieur signifie une rupture et l'emporte quelles que soient les valeurs suivantes. Et je refuse un format qui n'a pas exactement trois segments entiers, plutôt que de compléter par un zéro implicite que l'appelant n'a pas demandé.",
+  "commonMistakes": [
+    "Trier les étiquettes de version comme des chaînes",
+    "Compléter silencieusement une version incomplète"
+  ],
+  "variants": [
+    "Demander comment intégrer les suffixes de pré-publication.",
+    "Demander où ce tri devrait vivre pour être testable hors du pipeline."
+  ],
+  "license": "CC-BY-4.0"
+}

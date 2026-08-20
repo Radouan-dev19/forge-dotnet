@@ -4,6 +4,10 @@ Sept exigences du parcours ne sont pas vérifiables par une machine. Ce document
 relecteur humain peut les observer, sur quelle preuve, et comment consigner son verdict — dans le
 produit, par la page `/human-review`, depuis le 18 août 2026.
 
+Distinct mais complémentaire : `docs/HUMAN_PANEL_KIT.md` outille le **panel humain** de l'audit
+(P2-02), qui juge le produit et son contenu avec des participants recrutés — pas le travail d'un
+apprenant. La revue atteste une personne ; le panel évalue Forge.NET.
+
 ## Ce qu'une attestation est, et n'est pas
 
 Une attestation enregistrée est un **troisième type de preuve**,

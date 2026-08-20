@@ -1,0 +1,82 @@
+{
+    "schemaVersion":  1,
+    "id":  "structures-tree-node-count-001",
+    "version":  1,
+    "title":  "Compter des nœuds présents",
+    "kind":  "algorithm",
+    "difficulty":  1,
+    "skills":  [
+                   "structures.trees"
+               ],
+    "prerequisites":  [
+                          "structures-stacks-queues-001"
+                      ],
+    "estimatedMinutes":  30,
+    "statement":  "statement.md",
+    "constraints":  [
+                        "Conserver exactement la signature publique",
+                        "Dans cette représentation pédagogique, zéro signifie explicitement nœud absent.",
+                        "Ne pas modifier les entrées reçues sauf mention explicite"
+                    ],
+    "examples":  [
+                     {
+                         "input":  "[[1,2,3]]",
+                         "output":  "3"
+                     }
+                 ],
+    "reflectionFields":  [
+                             "reformulation",
+                             "inputs",
+                             "expectedOutput",
+                             "edgeCases",
+                             "hypothesis",
+                             "plan"
+                         ],
+    "starterPath":  "starter/",
+    "visibleTestsPath":  "tests/visible/",
+    "hiddenTestsPath":  "tests/hidden/",
+    "hints":  [
+                  {
+                      "level":  1,
+                      "kind":  "socratic",
+                      "content":  "Quel invariant de « Compter des nœuds présents » doit rester vrai pour les cas limites ?"
+                  },
+                  {
+                      "level":  2,
+                      "kind":  "location",
+                      "content":  "Concentrez la décision dans la méthode NodeCount, sans état global."
+                  },
+                  {
+                      "level":  3,
+                      "kind":  "strategy",
+                      "content":  "Dans cette représentation pédagogique, zéro signifie explicitement nœud absent."
+                  },
+                  {
+                      "level":  4,
+                      "kind":  "partial-pseudocode",
+                      "content":  "compteur à zéro ; parcourir toute la représentation et incrémenter pour chaque case dont la valeur n'est pas la valeur convenue d'absence ; retourner le compteur"
+                  }
+              ],
+    "solution":  {
+                     "path":  "solution/",
+                     "unlock":  {
+                                    "seriousAttempts":  2,
+                                    "minimumDelayMinutes":  10
+                                }
+                 },
+    "explanation":  "explanation.md",
+    "complexity":  "O(n) en temps et O(1) en espace",
+    "commonMistakes":  [
+                           "Compter la longueur du tableau au lieu des nœuds réellement présents",
+                           "Traiter une valeur négative comme une absence alors que seule la valeur convenue la signale",
+                           "S'arrêter à la première case absente, alors qu'un nœud peut suivre",
+                           "Retourner un nœud pour une représentation vide"
+                       ],
+    "variantId":  "structures-tree-height-001",
+    "reviewCards":  [
+                        "card-structures-tree-node-count-001-rule",
+                        "card-structures-tree-node-count-001-edge"
+                    ],
+    "interviewQuestionId":  "interview-structures-tree-node-count-001",
+    "license":  "CC-BY-4.0"
+}

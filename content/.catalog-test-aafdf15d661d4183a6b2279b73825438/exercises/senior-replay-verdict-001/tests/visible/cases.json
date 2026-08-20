@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "cases": [
+    {
+      "name": "Visible_UnknownIdGetsProcessed",
+      "message": "L'identifiant n'est pas au registre : première livraison, traitement normal.",
+      "arguments": ["m1:h1:done", "m2:h2"],
+      "expected": "process|first-delivery",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Visible_AppliedDuplicateIsSkipped",
+      "message": "Même identifiant, même charge, traitement réussi : le doublon se saute sans effet.",
+      "arguments": ["m1:h1:done", "m1:h1"],
+      "expected": "skip|already-applied",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Visible_PreviousFailureGetsRetried",
+      "message": "Le traitement précédent a échoué : la relivraison est la seconde chance du message.",
+      "arguments": ["m1:h1:failed", "m1:h1"],
+      "expected": "retry|previous-failure",
+      "argumentsUnchanged": true
+    }
+  ]
+}

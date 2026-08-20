@@ -1,0 +1,83 @@
+{
+  "schemaVersion": 1,
+  "id": "observability-alert-noise-001",
+  "version": 1,
+  "title": "Déclencher l'alerte sur la persistance, pas sur le pic",
+  "kind": "csharp",
+  "difficulty": 3,
+  "skills": ["observability.alerting"],
+  "prerequisites": ["observability-alerts-costs-001"],
+  "estimatedMinutes": 30,
+  "statement": "statement.md",
+  "constraints": [
+    "Conserver exactement la signature publique",
+    "L'alerte se déclenche à l'échantillon qui complète la première série exigée, pas à celui qui la commence",
+    "Un échantillon sous le seuil remet la série à zéro, quel que soit l'historique",
+    "Le tableau d'échantillons reçu n'est jamais modifié"
+  ],
+  "examples": [
+    {
+      "input": "[0, 9, 2, 8, 7, 9, 1], 5, 3",
+      "output": "5"
+    },
+    {
+      "input": "[12, 0, 15, 0, 20], 10, 2",
+      "output": "-1"
+    }
+  ],
+  "reflectionFields": [
+    "reformulation",
+    "inputs",
+    "expectedOutput",
+    "edgeCases",
+    "hypothesis",
+    "plan"
+  ],
+  "starterPath": "starter/",
+  "visibleTestsPath": "tests/visible/",
+  "hiddenTestsPath": "tests/hidden/",
+  "hints": [
+    {
+      "level": 1,
+      "kind": "socratic",
+      "content": "Votre équipe reçoit quarante alertes par nuit et les acquitte sans les lire ; la panne réelle du samedi est passée avec les autres. Qu'est-ce qui distingue, dans les mesures elles-mêmes, la panne des trente-neuf pics sans lendemain ?"
+    },
+    {
+      "level": 2,
+      "kind": "location",
+      "content": "Une seule variable d'état suffit : la longueur de la série en cours d'échantillons au niveau ou au-dessus du seuil. Tout le problème est de savoir quand elle grandit, quand elle retombe, et quand elle suffit."
+    },
+    {
+      "level": 3,
+      "kind": "strategy",
+      "content": "Parcourez les échantillons dans l'ordre en faisant vivre la série : un échantillon au seuil ou au-dessus l'allonge, un échantillon en dessous la remet à zéro, et l'alerte part à l'instant précis où la longueur atteint l'exigence."
+    },
+    {
+      "level": 4,
+      "kind": "partial-pseudocode",
+      "content": "refuser une exigence de série non positive, un seuil négatif ou un échantillon négatif ; initialiser la série à zéro ; pour chaque échantillon dans l'ordre : allonger la série s'il atteint le seuil, sinon la remettre à zéro ; rendre l'indice courant dès que la série atteint l'exigence ; rendre moins un si la fin arrive avant"
+    }
+  ],
+  "solution": {
+    "path": "solution/",
+    "unlock": {
+      "seriousAttempts": 2,
+      "minimumDelayMinutes": 10
+    }
+  },
+  "explanation": "explanation.md",
+  "complexity": "O(n) en temps pour n échantillons et O(1) en espace",
+  "commonMistakes": [
+    "Rendre l'indice du premier échantillon de la série au lieu de celui qui la complète",
+    "Oublier de remettre la série à zéro sur un échantillon sous le seuil et compter des pics disjoints",
+    "Exclure le seuil exact de la série alors que le contrat dit au niveau ou au-dessus",
+    "Refuser le tableau vide alors qu'il décrit une fenêtre sans mesure, qui n'alerte pas"
+  ],
+  "variantId": "observability-sampling-decision-001",
+  "reviewCards": [
+    "card-observability-alert-noise-001-rule",
+    "card-observability-alert-noise-001-edge"
+  ],
+  "interviewQuestionId": "interview-observability-alert-noise-001",
+  "license": "CC-BY-4.0"
+}

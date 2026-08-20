@@ -1,0 +1,79 @@
+{
+  "schemaVersion": 1,
+  "id": "project-validation-pipeline-001",
+  "version": 1,
+  "title": "Pipeline de validation et contrat d'erreurs",
+  "difficulty": 3,
+  "weeks": [12],
+  "skills": ["api.validation"],
+  "prerequisites": ["api-validation-problem-details-001"],
+  "estimatedHours": 10,
+  "briefPath": "brief.md",
+  "starterPath": "starter/",
+  "achievementKey": "validation-errors",
+  "maximumSourceFiles": 4,
+  "acceptanceSuites": [
+    { "milestoneId": "execution", "suitePath": "execution/" },
+    { "milestoneId": "attribut", "suitePath": "attribut/" },
+    { "milestoneId": "contrat", "suitePath": "contrat/" }
+  ],
+  "milestones": [
+    {
+      "id": "execution",
+      "title": "Faire tourner le vrai pipeline d'attributs",
+      "evidence": "Violations exécute Validator.TryValidateObject sur le modèle annoté et rend chaque manquement sous la forme membre:code, trié et reproductible.",
+      "acceptanceCriteria": [
+        "La validation traverse les attributs déclarés sur le modèle, elle ne réécrit pas leurs règles à la main",
+        "Un objet conforme rend exactement le mot valide, sans espace ni ponctuation",
+        "Deux manquements sur le même membre apparaissent tous les deux, jamais fusionnés",
+        "Une présence manquante court-circuite les autres attributs du membre, comme le vrai pipeline"
+      ]
+    },
+    {
+      "id": "attribut",
+      "title": "Étendre le pipeline par un attribut personnalisé",
+      "evidence": "SkuAttribute implémente IsValid et le verdict de SkuVerdict provient du pipeline qui l'exécute, pas d'un test de chaîne posé à côté.",
+      "acceptanceCriteria": [
+        "L'attribut accepte une référence absente : l'obligation de présence est un autre attribut, pas le sien",
+        "Le format exigé est deux lettres ASCII majuscules, un tiret, quatre chiffres, sans tolérance",
+        "Une lettre accentuée est refusée : majuscule ne veut pas dire ASCII"
+      ]
+    },
+    {
+      "id": "contrat",
+      "title": "Projeter les manquements dans un contrat d'erreurs stable",
+      "evidence": "ProblemReport rend 200 quand l'objet est conforme, sinon 422 suivi des membres et de leurs codes groupés, dans un ordre indépendant de l'exécution.",
+      "acceptanceCriteria": [
+        "Le statut ne dépend que de la présence d'au moins un manquement",
+        "Les membres sont triés par ordre ordinal et les codes d'un même membre aussi",
+        "Le format du rapport ne change pas quand le nombre de manquements varie"
+      ]
+    }
+  ],
+  "rubric": [
+    {
+      "criterion": "La validation exécutée est celle des attributs, pas une réécriture parallèle",
+      "weight": 0.4,
+      "observableEvidence": "Modifier une borne d'attribut dans le modèle change le verdict sans toucher au code de soumission."
+    },
+    {
+      "criterion": "L'attribut personnalisé respecte la convention du pipeline sur la valeur absente",
+      "weight": 0.35,
+      "observableEvidence": "Une valeur nulle traverse SkuAttribute sans erreur, et seul un attribut de présence la refuserait."
+    },
+    {
+      "criterion": "Le contrat d'erreurs est stable et exploitable par un client",
+      "weight": 0.25,
+      "observableEvidence": "Deux exécutions sur le même objet rendent exactement la même chaîne, membres et codes triés."
+    }
+  ],
+  "solutionPolicy": "no-complete-solution-before-submission",
+  "commonMistakes": [
+    "Réécrire les règles à la main dans la méthode, si bien qu'une borne changée dans l'attribut n'a plus aucun effet",
+    "Oublier validateAllProperties et ne collecter que les attributs de niveau objet",
+    "Refuser la valeur nulle dans l'attribut personnalisé, ce qui rend l'attribut de présence impossible à composer",
+    "Restituer les manquements dans l'ordre de collecte du pipeline, qui n'est pas contractuel"
+  ],
+  "variantIds": ["project-abuse-hardening-001"],
+  "license": "CC-BY-4.0"
+}

@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "scenarioId": "debug-array-empty-001",
+  "criteria": [
+    {
+      "id": "cause-division",
+      "label": "La cause relie l'interruption au diviseur employé.",
+      "journalField": "cause",
+      "requiredTerms": [
+        "division",
+        "diviseur",
+        "nombre d'éléments",
+        "longueur"
+      ],
+      "minimumMatches": 2
+    },
+    {
+      "id": "evidence-empty",
+      "label": "La preuve cite l'entrée vide, l'attendu et le constaté.",
+      "journalField": "evidence",
+      "requiredTerms": [
+        "vide",
+        "zéro",
+        "attendu"
+      ],
+      "minimumMatches": 2
+    },
+    {
+      "id": "test-empty",
+      "label": "Le test de non-régression cible l'historique vide.",
+      "journalField": "test",
+      "requiredTerms": [
+        "vide",
+        "échoue",
+        "réussit"
+      ],
+      "minimumMatches": 2
+    }
+  ]
+}

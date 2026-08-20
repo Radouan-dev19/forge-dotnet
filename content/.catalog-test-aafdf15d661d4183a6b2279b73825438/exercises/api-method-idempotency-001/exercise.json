@@ -1,0 +1,82 @@
+{
+    "schemaVersion":  1,
+    "id":  "api-method-idempotency-001",
+    "version":  1,
+    "title":  "Reconnaître une méthode idempotente",
+    "kind":  "csharp",
+    "difficulty":  2,
+    "skills":  [
+                   "api.http"
+               ],
+    "prerequisites":  [
+                          "api-http-semantics-001"
+                      ],
+    "estimatedMinutes":  35,
+    "statement":  "statement.md",
+    "constraints":  [
+                        "Conserver exactement la signature publique",
+                        "Comparer une méthode normalisée à la liste explicite des méthodes idempotentes.",
+                        "N'émettre aucune requête : la classification se fait sur le seul nom de méthode"
+                    ],
+    "examples":  [
+                     {
+                         "input":  "[\"GET\"]",
+                         "output":  "true"
+                     }
+                 ],
+    "reflectionFields":  [
+                             "reformulation",
+                             "inputs",
+                             "expectedOutput",
+                             "edgeCases",
+                             "hypothesis",
+                             "plan"
+                         ],
+    "starterPath":  "starter/",
+    "visibleTestsPath":  "tests/visible/",
+    "hiddenTestsPath":  "tests/hidden/",
+    "hints":  [
+                  {
+                      "level":  1,
+                      "kind":  "socratic",
+                      "content":  "Quel comportement public de « Reconnaître une méthode idempotente » change exactement à la frontière ?"
+                  },
+                  {
+                      "level":  2,
+                      "kind":  "location",
+                      "content":  "Concentrez la validation et la décision dans IsIdempotent, sans état global ni journal sensible."
+                  },
+                  {
+                      "level":  3,
+                      "kind":  "strategy",
+                      "content":  "Comparer une méthode normalisée à la liste explicite des méthodes idempotentes."
+                  },
+                  {
+                      "level":  4,
+                      "kind":  "partial-pseudocode",
+                      "content":  "si la méthode est absente ou composée de blancs retourner faux ; sinon retirer les blancs de bordure, uniformiser la casse avec la culture invariante, et comparer à la liste fermée des méthodes idempotentes"
+                  }
+              ],
+    "solution":  {
+                     "path":  "solution/",
+                     "unlock":  {
+                                    "seriousAttempts":  2,
+                                    "minimumDelayMinutes":  10
+                                }
+                 },
+    "explanation":  "explanation.md",
+    "complexity":  "O(n) en temps et O(n) en espace",
+    "commonMistakes":  [
+                           "Classer la méthode de création parmi les idempotentes",
+                           "Oublier que la suppression est idempotente même si le second appel ne trouve plus rien",
+                           "Comparer sans uniformiser la casse et refuser une méthode écrite en minuscules",
+                           "Confondre idempotent et sûr : une méthode peut modifier l'état et rester idempotente"
+                       ],
+    "variantId":  "api-location-header-001",
+    "reviewCards":  [
+                        "card-api-method-idempotency-001-rule",
+                        "card-api-method-idempotency-001-security"
+                    ],
+    "interviewQuestionId":  "interview-api-method-idempotency-001",
+    "license":  "CC-BY-4.0"
+}

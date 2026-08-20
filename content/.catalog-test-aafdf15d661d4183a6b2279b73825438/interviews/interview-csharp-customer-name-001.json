@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "id": "interview-csharp-customer-name-001",
+  "version": 1,
+  "title": "Normaliser un nom client",
+  "level": "junior",
+  "durationMinutes": 5,
+  "skills": [
+    "csharp.nullable"
+  ],
+  "question": "Comment résoudriez-vous « Normaliser un nom client » et comment prouveriez-vous les bornes ?",
+  "observableCriteria": [
+    "L'absence et la chaîne de blancs sont traitées avant toute déréférence",
+    "La normalisation appliquée est nommée, et son effet sur les blancs internes est dit"
+  ],
+  "modelAnswer": "Traiter absence et blanc avant toute déréférence ou conversion. Je prouve par une absence, une chaîne vide, une chaîne de blancs et un nom déjà propre ; O(n) en temps et O(n) en espace.",
+  "commonMistakes": [
+    "Traiter l'absence après avoir déjà appelé une méthode sur la valeur"
+  ],
+  "variants": [
+    "Changer une borne ou le volume tout en conservant la même règle de normaliser un nom client."
+  ],
+  "license": "CC-BY-4.0"
+}

@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "id": "english-card-15-spoken",
+  "version": 1,
+  "title": "Incident opening — spoken follow-up",
+  "level": "B2",
+  "durationMinutes": 10,
+  "skills": [
+    "english.spoken",
+    "observability.incident"
+  ],
+  "situation": "In a technical discussion, the team has just observed an error spike. You must answer aloud accurately without overstating the evidence.",
+  "instructions": [
+    "Say aloud the opening statement of an incident: what is observed, what is not yet known, and when you will speak again."
+  ],
+  "vocabulary": [
+    {
+      "term": "incident status",
+      "meaning": "a statement of what is currently observed and what is not yet known, published before the cause is understood"
+    },
+    {
+      "term": "next update time",
+      "meaning": "the commitment that ends an incident message, which prevents the audience from asking and lets the responders work"
+    }
+  ],
+  "expectedElements": [
+    "The observation is separated from the interpretation",
+    "The current impact is stated in user terms",
+    "A next update time is committed to"
+  ],
+  "modelAnswer": "Here is what we know. Since fourteen ten, the error rate on checkout has risen from under one percent to about twelve percent. Users see a failure when they confirm an order; existing orders are unaffected. We do not yet know the cause, and I will not name one until the evidence separates the two candidates, because they would lead to different actions. Three of us are investigating now. I will send the next update at fourteen forty, whether or not we have the cause by then. Is there anyone who needs to be told before that?",
+  "commonMistakes": [
+    "Naming a cause in the opening message before it is established",
+    "Ending the message without committing to a next update time"
+  ],
+  "variants": [
+    "Answer again thirty minutes later, still without a cause."
+  ],
+  "license": "CC-BY-4.0"
+}

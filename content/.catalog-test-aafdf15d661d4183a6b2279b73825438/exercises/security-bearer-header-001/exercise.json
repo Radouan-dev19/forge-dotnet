@@ -1,0 +1,82 @@
+{
+    "schemaVersion":  1,
+    "id":  "security-bearer-header-001",
+    "version":  1,
+    "title":  "Valider le schéma Bearer",
+    "kind":  "csharp",
+    "difficulty":  3,
+    "skills":  [
+                   "security.authentication"
+               ],
+    "prerequisites":  [
+                          "security-authentication-001"
+                      ],
+    "estimatedMinutes":  35,
+    "statement":  "statement.md",
+    "constraints":  [
+                        "Conserver exactement la signature publique",
+                        "Vérifier le schéma et la présence d'une preuve sans jamais retourner sa valeur.",
+                        "Ne retourner ni journaliser la valeur de la preuve, seulement un verdict"
+                    ],
+    "examples":  [
+                     {
+                         "input":  "[\"Bearer fake-token\"]",
+                         "output":  "true"
+                     }
+                 ],
+    "reflectionFields":  [
+                             "reformulation",
+                             "inputs",
+                             "expectedOutput",
+                             "edgeCases",
+                             "hypothesis",
+                             "plan"
+                         ],
+    "starterPath":  "starter/",
+    "visibleTestsPath":  "tests/visible/",
+    "hiddenTestsPath":  "tests/hidden/",
+    "hints":  [
+                  {
+                      "level":  1,
+                      "kind":  "socratic",
+                      "content":  "Quel comportement public de « Valider le schéma Bearer » change exactement à la frontière ?"
+                  },
+                  {
+                      "level":  2,
+                      "kind":  "location",
+                      "content":  "Concentrez la validation et la décision dans HasBearerToken, sans état global ni journal sensible."
+                  },
+                  {
+                      "level":  3,
+                      "kind":  "strategy",
+                      "content":  "Vérifier le schéma et la présence d’une preuve sans jamais retourner sa valeur."
+                  },
+                  {
+                      "level":  4,
+                      "kind":  "partial-pseudocode",
+                      "content":  "si l'en-tête est absent ou composé de blancs retourner faux ; vérifier ensuite que le schéma attendu est en tête, sans distinction de casse ; conclure en vérifiant que ce qui suit le schéma n'est ni vide ni composé de blancs"
+                  }
+              ],
+    "solution":  {
+                     "path":  "solution/",
+                     "unlock":  {
+                                    "seriousAttempts":  2,
+                                    "minimumDelayMinutes":  10
+                                }
+                 },
+    "explanation":  "explanation.md",
+    "complexity":  "O(n) en temps et O(1) en espace",
+    "commonMistakes":  [
+                           "Retourner ou journaliser la valeur de la preuve au lieu d'un simple verdict",
+                           "Accepter le schéma seul, sans preuve à sa suite",
+                           "Comparer le schéma avec distinction de casse et refuser un en-tête valide",
+                           "Considérer la présence du schéma comme une preuve d'identité valide"
+                       ],
+    "variantId":  "security-role-check-001",
+    "reviewCards":  [
+                        "card-security-bearer-header-001-rule",
+                        "card-security-bearer-header-001-security"
+                    ],
+    "interviewQuestionId":  "interview-security-bearer-header-001",
+    "license":  "CC-BY-4.0"
+}

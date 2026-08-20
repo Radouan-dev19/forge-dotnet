@@ -1,0 +1,13 @@
+{
+    "schemaVersion":  1,
+    "suiteId":  "csharp-vip-discount-001.v1",
+    "exerciseId":  "csharp-vip-discount-001",
+    "exerciseVersion":  1,
+    "typeName":  "Submission",
+    "methodName":  "NetTotal",
+    "parameterTypes":  [
+                           "decimal",
+                           "bool"
+                       ],
+    "returnType":  "decimal"
+}

@@ -1,0 +1,12 @@
+{
+    "schemaVersion":  1,
+    "suiteId":  "quality-complexity-budget-001.v1",
+    "exerciseId":  "quality-complexity-budget-001",
+    "exerciseVersion":  1,
+    "typeName":  "Submission",
+    "methodName":  "WithinNestingBudget",
+    "parameterTypes":  [
+                           "int"
+                       ],
+    "returnType":  "bool"
+}

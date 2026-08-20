@@ -1,0 +1,83 @@
+{
+  "schemaVersion": 1,
+  "id": "tests-characterization-lock-001",
+  "version": 1,
+  "title": "Caractériser un calcul de frais hérité avant de le remanier",
+  "kind": "csharp",
+  "difficulty": 3,
+  "skills": ["tests.characterization"],
+  "prerequisites": ["tests-integration-database-001"],
+  "estimatedMinutes": 35,
+  "statement": "statement.md",
+  "constraints": [
+    "Conserver exactement la signature publique",
+    "Reproduire le comportement observé à l'identique, y compris la bizarrerie du seuil de gratuité",
+    "Les montants rendus gardent deux décimales, comme la facturation les affiche",
+    "Les refus observés du système historique sont reproduits, pas corrigés"
+  ],
+  "examples": [
+    {
+      "input": "60.00, 3",
+      "output": "4.90"
+    },
+    {
+      "input": "100.00, 2",
+      "output": "4.90"
+    }
+  ],
+  "reflectionFields": [
+    "reformulation",
+    "inputs",
+    "expectedOutput",
+    "edgeCases",
+    "hypothesis",
+    "plan"
+  ],
+  "starterPath": "starter/",
+  "visibleTestsPath": "tests/visible/",
+  "hiddenTestsPath": "tests/hidden/",
+  "hints": [
+    {
+      "level": 1,
+      "kind": "socratic",
+      "content": "Le relevé montre qu'un panier de cent tout rond paie les frais alors que la règle affichée promet la gratuité « dès cent ». Votre travail de caractérisation consiste-t-il à écrire ce que promet la règle, ou ce que fait le système ?"
+    },
+    {
+      "level": 2,
+      "kind": "location",
+      "content": "Le relevé d'observation se lit en trois zones : les entrées que le système refuse, celles où la gratuité s'applique, et celles où les frais se composent d'un socle plus un supplément par article au-delà d'un certain nombre."
+    },
+    {
+      "level": 3,
+      "kind": "strategy",
+      "content": "Traitez les refus d'abord, la gratuité ensuite, la composition des frais en dernier. Pour le supplément, seul l'excédent d'articles compte — pas le total — et un excédent négatif vaut zéro, jamais une remise."
+    },
+    {
+      "level": 4,
+      "kind": "partial-pseudocode",
+      "content": "refuser un panier sans article puis un sous-total négatif, avec le type d'exception relevé ; rendre zéro quand le sous-total dépasse strictement le seuil observé de gratuité ; calculer l'excédent d'articles au-delà du nombre inclus, borné à zéro ; rendre le socle observé augmenté du supplément unitaire multiplié par cet excédent"
+    }
+  ],
+  "solution": {
+    "path": "solution/",
+    "unlock": {
+      "seriousAttempts": 2,
+      "minimumDelayMinutes": 10
+    }
+  },
+  "explanation": "explanation.md",
+  "complexity": "O(1) en temps et en espace : trois comparaisons et une multiplication",
+  "commonMistakes": [
+    "Corriger la comparaison stricte du seuil de gratuité au lieu de figer le comportement observé",
+    "Appliquer le supplément à tous les articles au lieu du seul excédent au-delà du nombre inclus",
+    "Rendre un montant à l'échelle d'une décimale quand la facturation observée en affiche deux",
+    "Transformer un refus du système historique en valeur de repli inventée"
+  ],
+  "variantId": "tests-order-dependence-001",
+  "reviewCards": [
+    "card-tests-characterization-lock-001-rule",
+    "card-tests-characterization-lock-001-edge"
+  ],
+  "interviewQuestionId": "interview-tests-characterization-lock-001",
+  "license": "CC-BY-4.0"
+}

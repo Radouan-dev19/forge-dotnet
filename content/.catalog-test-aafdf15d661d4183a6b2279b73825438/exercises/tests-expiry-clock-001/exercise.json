@@ -1,0 +1,82 @@
+{
+    "schemaVersion":  1,
+    "id":  "tests-expiry-clock-001",
+    "version":  1,
+    "title":  "Fixer le temps dans un test",
+    "kind":  "csharp",
+    "difficulty":  2,
+    "skills":  [
+                   "tests.doubles"
+               ],
+    "prerequisites":  [
+                          "tests-xunit-aaa-001"
+                      ],
+    "estimatedMinutes":  35,
+    "statement":  "statement.md",
+    "constraints":  [
+                        "Conserver exactement la signature publique",
+                        "Recevoir la date observée au lieu de lire l'horloge système dans la règle.",
+                        "Ne lire aucune horloge : la date observée est un paramètre"
+                    ],
+    "examples":  [
+                     {
+                         "input":  "[\"2026-08-04\",\"2026-08-05\"]",
+                         "output":  "true"
+                     }
+                 ],
+    "reflectionFields":  [
+                             "reformulation",
+                             "inputs",
+                             "expectedOutput",
+                             "edgeCases",
+                             "hypothesis",
+                             "plan"
+                         ],
+    "starterPath":  "starter/",
+    "visibleTestsPath":  "tests/visible/",
+    "hiddenTestsPath":  "tests/hidden/",
+    "hints":  [
+                  {
+                      "level":  1,
+                      "kind":  "socratic",
+                      "content":  "Quel comportement public de « Fixer le temps dans un test » change exactement à la frontière ?"
+                  },
+                  {
+                      "level":  2,
+                      "kind":  "location",
+                      "content":  "Concentrez la validation et la décision dans IsExpired, sans état global ni journal sensible."
+                  },
+                  {
+                      "level":  3,
+                      "kind":  "strategy",
+                      "content":  "Recevoir la date observée au lieu de lire l’horloge système dans la règle."
+                  },
+                  {
+                      "level":  4,
+                      "kind":  "partial-pseudocode",
+                      "content":  "ne lire aucune horloge : comparer directement la date d'échéance à la date observée reçue en paramètre, l'échéance étant dépassée seulement lorsqu'elle précède strictement l'observation"
+                  }
+              ],
+    "solution":  {
+                     "path":  "solution/",
+                     "unlock":  {
+                                    "seriousAttempts":  2,
+                                    "minimumDelayMinutes":  10
+                                }
+                 },
+    "explanation":  "explanation.md",
+    "complexity":  "O(1) en temps et O(1) en espace",
+    "commonMistakes":  [
+                           "Lire l'horloge du système dans la règle et rendre le test dépendant du jour",
+                           "Employer une comparaison large et déclarer expirée une échéance atteinte le jour même",
+                           "Comparer des instants avec fuseau là où une date suffit",
+                           "Inverser les deux opérandes et conclure l'inverse"
+                       ],
+    "variantId":  "tests-double-choice-001",
+    "reviewCards":  [
+                        "card-tests-expiry-clock-001-rule",
+                        "card-tests-expiry-clock-001-security"
+                    ],
+    "interviewQuestionId":  "interview-tests-expiry-clock-001",
+    "license":  "CC-BY-4.0"
+}

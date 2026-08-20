@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "cases": [
+    {
+      "name": "Visible_NetThroughputDrainsTheBacklog",
+      "message": "Six cents messages, débit net de soixante : dix minutes, pas six.",
+      "arguments": [600, 40, 100],
+      "expected": 10,
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Visible_BalancedFlowsNeverDrain",
+      "message": "Consommation égale aux arrivées : l'arriéré stagne, la durée n'existe pas.",
+      "arguments": [500, 100, 100],
+      "expected": -1,
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Visible_EmptyBacklogAnswersZero",
+      "message": "Rien à résorber : zéro, même si le rapport des débits annonce que la file va grossir.",
+      "arguments": [0, 50, 10],
+      "expected": 0,
+      "argumentsUnchanged": true
+    }
+  ]
+}

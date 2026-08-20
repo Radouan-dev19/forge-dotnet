@@ -1,0 +1,82 @@
+{
+    "schemaVersion":  1,
+    "id":  "csharp-date-span-001",
+    "version":  1,
+    "title":  "Compter des jours inclusifs",
+    "kind":  "csharp",
+    "difficulty":  2,
+    "skills":  [
+                   "csharp.dates"
+               ],
+    "prerequisites":  [
+                          "collections-arrays-001"
+                      ],
+    "estimatedMinutes":  30,
+    "statement":  "statement.md",
+    "constraints":  [
+                        "Conserver exactement la signature publique",
+                        "Compter les deux bornes et retourner zéro pour un intervalle inversé.",
+                        "Ne pas modifier les entrées reçues sauf mention explicite"
+                    ],
+    "examples":  [
+                     {
+                         "input":  "[\"2026-07-01\",\"2026-07-01\"]",
+                         "output":  "1"
+                     }
+                 ],
+    "reflectionFields":  [
+                             "reformulation",
+                             "inputs",
+                             "expectedOutput",
+                             "edgeCases",
+                             "hypothesis",
+                             "plan"
+                         ],
+    "starterPath":  "starter/",
+    "visibleTestsPath":  "tests/visible/",
+    "hiddenTestsPath":  "tests/hidden/",
+    "hints":  [
+                  {
+                      "level":  1,
+                      "kind":  "socratic",
+                      "content":  "Quel invariant de « Compter des jours inclusifs » doit rester vrai pour les cas limites ?"
+                  },
+                  {
+                      "level":  2,
+                      "kind":  "location",
+                      "content":  "Concentrez la décision dans la méthode InclusiveDays, sans état global."
+                  },
+                  {
+                      "level":  3,
+                      "kind":  "strategy",
+                      "content":  "Compter les deux bornes et retourner zéro pour un intervalle inversé."
+                  },
+                  {
+                      "level":  4,
+                      "kind":  "partial-pseudocode",
+                      "content":  "si end précède start retourner zéro ; sinon soustraire les numéros de jour, puis ajouter un pour inclure les deux bornes"
+                  }
+              ],
+    "solution":  {
+                     "path":  "solution/",
+                     "unlock":  {
+                                    "seriousAttempts":  2,
+                                    "minimumDelayMinutes":  10
+                                }
+                 },
+    "explanation":  "explanation.md",
+    "complexity":  "O(1) en temps et O(1) en espace",
+    "commonMistakes":  [
+                           "Oublier le plus un et perdre un jour sur chaque intervalle",
+                           "Retourner une valeur négative pour un intervalle inversé",
+                           "Retourner zéro quand les deux dates sont identiques alors que ce jour compte",
+                           "Passer par une différence de durée et subir le fuseau ou le changement d'heure"
+                       ],
+    "variantId":  "csharp-dictionary-default-001",
+    "reviewCards":  [
+                        "card-csharp-date-span-001-rule",
+                        "card-csharp-date-span-001-edge"
+                    ],
+    "interviewQuestionId":  "interview-csharp-date-span-001",
+    "license":  "CC-BY-4.0"
+}

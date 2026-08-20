@@ -37,6 +37,8 @@ public sealed class ContentReachabilityWebTests(ForgeWebApplicationFactory facto
         [ContentDocumentType.ReviewCardBank] = "/reviews",
         [ContentDocumentType.InterviewQuestion] = "/interviews",
         [ContentDocumentType.EnglishActivity] = "/english",
+        [ContentDocumentType.CareerGuide] = "/career",
+        [ContentDocumentType.AiGuide] = "/ai",
     };
 
     [Fact]
@@ -85,6 +87,67 @@ public sealed class ContentReachabilityWebTests(ForgeWebApplicationFactory facto
         Assert.Contains("/english/english-card-01-written", english, StringComparison.Ordinal);
         Assert.Contains("/english/english-card-01-spoken", english, StringComparison.Ordinal);
         Assert.Contains("ne produit de preuve de maîtrise", english, StringComparison.Ordinal);
+
+        // Le kit carrière avait exactement ce défaut : publié, compté, servi par aucune route.
+        string career = WebUtility.HtmlDecode(await client.GetStringAsync("/career"));
+        foreach (string guideId in new[]
+        {
+            "career-cv-evidence-001", "career-star-workbook-001", "career-application-tracker-001",
+            "career-negotiation-guide-001", "career-post-hire-plan-001",
+        })
+        {
+            Assert.Contains($"/career/{guideId}", career, StringComparison.Ordinal);
+        }
+
+        Assert.Contains("ne produit de preuve de maîtrise", career, StringComparison.Ordinal);
+        Assert.Contains("Export-CareerEvidence.ps1", career, StringComparison.Ordinal);
+
+        // Le chapitre IA est hors parcours et son index tient la ligne du contrat : sans IA
+        // sur les preuves mesurées.
+        string ai = WebUtility.HtmlDecode(await client.GetStringAsync("/ai"));
+        foreach (string guideId in new[]
+        {
+            "ai-modele-mental-001", "ai-economie-tokens-001", "ai-parametrage-001",
+            "ai-skills-001", "ai-agents-sous-agents-001", "ai-boucle-quotidienne-001",
+        })
+        {
+            Assert.Contains($"/ai/{guideId}", ai, StringComparison.Ordinal);
+        }
+
+        Assert.Contains("ne produit de preuve de maîtrise", ai, StringComparison.Ordinal);
+        Assert.Contains("sans IA", ai, StringComparison.Ordinal);
+        Assert.Contains("hors parcours", ai, StringComparison.Ordinal);
+    }
+
+    /// <summary>
+    /// Un guide IA servi porte son texte intégral et tient la frontière : outil de production,
+    /// jamais instrument de mesure.
+    /// </summary>
+    [Fact]
+    public async Task AnAiGuidePageServesItsBodyAndClaimsNoMasteryProof()
+    {
+        using HttpClient client = factory.CreateClient();
+
+        string html = WebUtility.HtmlDecode(await client.GetStringAsync("/ai/ai-modele-mental-001"));
+
+        Assert.Contains("Le modèle mental : contexte, tokens et coût", html, StringComparison.Ordinal);
+        Assert.Contains("ne jamais accepter une", html, StringComparison.Ordinal);
+        Assert.Contains("aucune preuve de maîtrise", html, StringComparison.Ordinal);
+    }
+
+    /// <summary>
+    /// Un guide de carrière servi porte son texte intégral et rappelle qu'il ne prouve rien.
+    /// </summary>
+    [Fact]
+    public async Task ACareerGuidePageServesItsBodyAndClaimsNoMasteryProof()
+    {
+        using HttpClient client = factory.CreateClient();
+
+        string html = WebUtility.HtmlDecode(await client.GetStringAsync("/career/career-cv-evidence-001"));
+
+        Assert.Contains("Le CV par preuves", html, StringComparison.Ordinal);
+        Assert.Contains("Ce qu'une preuve Forge.NET démontre", html, StringComparison.Ordinal);
+        Assert.Contains("aucune preuve de maîtrise", html, StringComparison.Ordinal);
     }
 
     /// <summary>

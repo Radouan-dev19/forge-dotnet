@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "suiteId": "docker-tag-policy-001.v1",
+  "exerciseId": "docker-tag-policy-001",
+  "exerciseVersion": 1,
+  "typeName": "Submission",
+  "methodName": "RejectedReferences",
+  "parameterTypes": ["string"],
+  "returnType": "string"
+}

@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "suiteId": "ci-log-triage-001.v1",
+  "exerciseId": "ci-log-triage-001",
+  "exerciseVersion": 1,
+  "typeName": "Submission",
+  "methodName": "FirstBlockingJob",
+  "parameterTypes": ["string"],
+  "returnType": "string"
+}

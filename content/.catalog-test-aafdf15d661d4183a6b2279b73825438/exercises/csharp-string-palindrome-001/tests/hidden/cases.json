@@ -1,0 +1,39 @@
+{
+    "schemaVersion":  1,
+    "cases":  [
+                  {
+                      "name":  "Hidden_Case1",
+                      "message":  "Détecter un palindrome simple — cas 1 hidden incorrect.",
+                      "arguments":  [
+                                        "Esope reste ici et se repose"
+                                    ],
+                      "expected":  true,
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_Case2",
+                      "message":  "Détecter un palindrome simple — cas 2 hidden incorrect.",
+                      "arguments":  [
+                                        ""
+                                    ],
+                      "expected":  true,
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_NullInput",
+                      "message":  "Référence absente : refus explicite, distinct d'une chaîne vide.",
+                      "arguments":  [null],
+                      "expectedException":  "ArgumentNullException",
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_MixedCase",
+                      "message":  "Casse mélangée : la comparaison ignore la casse.",
+                      "arguments":  ["Ada"],
+                      "expected":  true,
+                      "argumentsUnchanged":  true
+                  }
+              ]
+}

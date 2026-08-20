@@ -1,3 +1,5 @@
+using ForgeDotNet.Domain.Ai;
+using ForgeDotNet.Domain.Career;
 using ForgeDotNet.Domain.English;
 using ForgeDotNet.Domain.Interviews;
 
@@ -30,4 +32,33 @@ public interface IEnglishActivitySource
     ValueTask<IReadOnlyList<EnglishActivity>> ListAsync(CancellationToken cancellationToken = default);
 
     ValueTask<EnglishActivity?> GetAsync(string activityId, CancellationToken cancellationToken = default);
+}
+
+/// <summary>
+/// Guides de carrière de la semaine 24 : ils se lisent et s'appliquent hors du produit.
+/// </summary>
+/// <remarks>
+/// Même famille de préparation que les fiches et les cartes : aucun guide ne produit d'observation
+/// de maîtrise — un CV, une candidature ou une négociation se jugent hors de toute instrumentation.
+/// </remarks>
+public interface ICareerGuideSource
+{
+    ValueTask<IReadOnlyList<CareerGuide>> ListAsync(CancellationToken cancellationToken = default);
+
+    ValueTask<CareerGuide?> GetAsync(string guideId, CancellationToken cancellationToken = default);
+}
+
+/// <summary>
+/// Guides du chapitre IA : un outillage de métier à lire selon les besoins, hors parcours.
+/// </summary>
+/// <remarks>
+/// Même famille que les autres contenus de préparation : le runner n'ayant pas de réseau par
+/// conception, aucun usage d'assistant n'est vérifiable — ces guides ne produisent donc aucune
+/// observation de maîtrise, et ne le pourront pas.
+/// </remarks>
+public interface IAiGuideSource
+{
+    ValueTask<IReadOnlyList<AiGuide>> ListAsync(CancellationToken cancellationToken = default);
+
+    ValueTask<AiGuide?> GetAsync(string guideId, CancellationToken cancellationToken = default);
 }

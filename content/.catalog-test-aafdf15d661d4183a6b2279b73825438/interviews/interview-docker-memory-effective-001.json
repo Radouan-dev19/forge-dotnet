@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "id": "interview-docker-memory-effective-001",
+  "version": 1,
+  "title": "Résoudre la limite mémoire effective d'un conteneur",
+  "level": "junior",
+  "durationMinutes": 7,
+  "skills": ["docker.resources"],
+  "question": "Un conteneur est tué par manque de mémoire alors que votre fichier de composition lui accorde deux gigaoctets. Par quoi commencez-vous, et pourquoi la valeur écrite dans votre fichier ne suffit-elle pas à répondre ?",
+  "observableCriteria": [
+    "La chaîne des plafonds est énumérée : démon, groupe de contrôle parent, composition, option de lancement",
+    "La règle du minimum est énoncée : les plafonds s'empilent, ils ne se remplacent pas",
+    "Le caractère silencieux du rabattement est identifié comme la cause du diagnostic difficile"
+  ],
+  "modelAnswer": "Je commence par établir la limite réellement appliquée, pas celle que j'ai écrite : un conteneur vit sous une chaîne de plafonds — la configuration du démon, le groupe de contrôle parent imposé par la plateforme, le fichier de composition, l'option de lancement — et c'est le plus bas qui agit. Contrairement à la configuration applicative, la valeur la plus spécifique ne gagne pas : demander deux gigaoctets sous un groupe parent limité à un en donne un, sans erreur, sans avertissement, sans trace dans les fichiers du projet. C'est ce silence qui rend l'incident trompeur : la valeur écrite et la valeur appliquée divergent et rien ne le signale. Je vérifie donc la limite vue par le noyau depuis l'intérieur du conteneur, puis je remonte la chaîne pour trouver l'étage qui porte ce minimum. La source compte autant que la valeur : l'option de lancement s'ajuste en secondes, le fichier de composition en minutes, le groupe parent exige un ticket à la plateforme — le diagnostic doit nommer le levier le moins cher qui suffit.",
+  "commonMistakes": [
+    "Augmenter la valeur du fichier de composition sans vérifier quel étage impose réellement le plafond",
+    "Croire que la limite la plus proche du conteneur écrase les autres comme en configuration applicative"
+  ],
+  "variants": [
+    "Transposer aux parts de processeur et demander ce qui change entre limite dure et pondération.",
+    "Demander comment détecter préventivement un rabattement avant l'incident, dans la chaîne de déploiement."
+  ],
+  "license": "CC-BY-4.0"
+}

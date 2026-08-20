@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "suiteId": "project-collections-library-001.normalisation.v2",
+  "exerciseId": "project-collections-library-001.normalisation",
+  "exerciseVersion": 2,
+  "typeName": "Submission",
+  "methodName": "Normalize",
+  "parameterTypes": ["string"],
+  "returnType": "string"
+}
