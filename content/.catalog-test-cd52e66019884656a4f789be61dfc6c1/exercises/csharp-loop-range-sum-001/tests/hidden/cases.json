@@ -1,9 +1,0 @@
-{
-  "schemaVersion": 1,
-  "cases": [
-    { "name": "Hidden_NegativeRange", "message": "La boucle doit fonctionner avec des bornes négatives.", "arguments": [-3, 1], "expected": -5 },
-    { "name": "Hidden_CrossZero", "message": "Une plage symétrique autour de zéro est incorrecte.", "arguments": [-2, 2], "expected": 0 },
-    { "name": "Hidden_VariedRange", "message": "La solution semble dépendre des exemples publics.", "arguments": [11, 14], "expected": 50 },
-    { "name": "Hidden_ZeroOnly", "message": "La borne unique zéro doit être prise en compte.", "arguments": [0, 0], "expected": 0 }
-  ]
-}

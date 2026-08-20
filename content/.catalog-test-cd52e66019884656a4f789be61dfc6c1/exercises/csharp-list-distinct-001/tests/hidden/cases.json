@@ -1,9 +1,0 @@
-{
-  "schemaVersion": 1,
-  "cases": [
-    { "name": "Hidden_NullRejected", "message": "Une entrée null doit être refusée.", "arguments": [null], "expectedException": "ArgumentNullException" },
-    { "name": "Hidden_NegativeValues", "message": "Les valeurs négatives doivent être dédupliquées normalement.", "arguments": [[-1, -1, 0, -2, 0]], "expected": [-1, 0, -2], "argumentsUnchanged": true },
-    { "name": "Hidden_AllSame", "message": "Des occurrences identiques doivent produire un seul élément.", "arguments": [[7, 7, 7, 7]], "expected": [7], "argumentsUnchanged": true },
-    { "name": "Hidden_Varied", "message": "La solution semble dépendre des exemples publics.", "arguments": [[8, 5, 8, 3, 5, 2]], "expected": [8, 5, 3, 2], "argumentsUnchanged": true }
-  ]
-}

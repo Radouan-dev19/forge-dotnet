@@ -1,8 +1,0 @@
-{
-  "schemaVersion": 1,
-  "cases": [
-    { "name": "Visible_PositiveRange", "message": "La somme de 3 à 6 inclus doit valoir 18.", "arguments": [3, 6], "expected": 18 },
-    { "name": "Visible_SingleValue", "message": "Une plage réduite à une borne doit retourner cette borne.", "arguments": [5, 5], "expected": 5 },
-    { "name": "Visible_EmptyRange", "message": "Une plage inversée doit retourner zéro.", "arguments": [4, 2], "expected": 0 }
-  ]
-}

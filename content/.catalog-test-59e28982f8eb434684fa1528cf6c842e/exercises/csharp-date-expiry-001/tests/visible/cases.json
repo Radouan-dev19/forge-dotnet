@@ -1,8 +1,0 @@
-{
-  "schemaVersion": 1,
-  "cases": [
-    { "name": "Visible_DueDateStillValid", "message": "Le jour d’échéance reste valide.", "arguments": ["2026-07-20", "2026-07-20", 0], "expected": false },
-    { "name": "Visible_AfterDueDate", "message": "Le jour suivant une échéance sans grâce est expiré.", "arguments": ["2026-07-20", "2026-07-21", 0], "expected": true },
-    { "name": "Visible_LastGraceDay", "message": "Le dernier jour de grâce reste valide.", "arguments": ["2026-07-20", "2026-07-22", 2], "expected": false }
-  ]
-}

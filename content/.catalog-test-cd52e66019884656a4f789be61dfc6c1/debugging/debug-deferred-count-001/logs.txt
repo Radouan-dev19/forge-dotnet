@@ -1,3 +1,0 @@
-Event=PositiveCountMismatch Level=Warning Input=[1,0,-1] Expected=1 Actual=2 CorrelationId=dbg-deferred-count-001
-Event=PositiveCount Level=Information Input=[] Expected=0 Actual=0 CorrelationId=dbg-deferred-count-001
-Event=PositiveCount Level=Information Input=[4,7] Expected=2 Actual=2 CorrelationId=dbg-deferred-count-001

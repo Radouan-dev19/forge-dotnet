@@ -1,3 +1,0 @@
-Event=PackingSlipMismatch Level=Warning Payload="[1,2]" Expected=2 Actual=1 CorrelationId=dbg-json-count-001
-Event=PackingSlipMismatch Level=Warning Payload="[1,2,3]" Expected=3 Actual=2 CorrelationId=dbg-json-count-001
-Event=PackingSlip Level=Information Payload="[]" Expected=0 Actual=0 CorrelationId=dbg-json-count-001

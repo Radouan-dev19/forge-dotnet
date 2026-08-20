@@ -1,1 +1,0 @@
-{"schemaVersion":1,"suiteId":"debug-condition-001","exerciseId":"debug-condition-001","exerciseVersion":1,"typeName":"Submission","methodName":"CalculateShipping","parameterTypes":["decimal","bool"],"returnType":"decimal"}

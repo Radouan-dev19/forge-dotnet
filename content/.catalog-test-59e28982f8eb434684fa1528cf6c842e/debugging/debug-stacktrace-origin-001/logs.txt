@@ -1,2 +1,0 @@
-Event=IncidentRouted Level=Warning TraceLines=3 SelectedLine="at Domain.B" ExpectedLine="at Domain.A" CorrelationId=dbg-stacktrace-origin-001
-Event=IncidentRouted Level=Information TraceLines=0 SelectedLine="" ExpectedLine="" CorrelationId=dbg-stacktrace-origin-001

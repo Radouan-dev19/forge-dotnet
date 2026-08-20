@@ -46,3 +46,6 @@ packages/
 
 # Preuves du rejeu des sept personas (captures, registres) : artefacts locaux, jamais versionnes.
 artifacts/
+
+# Copies temporaires du catalogue laissees par un test interrompu : jamais versionnees.
+content/.catalog-test-*/

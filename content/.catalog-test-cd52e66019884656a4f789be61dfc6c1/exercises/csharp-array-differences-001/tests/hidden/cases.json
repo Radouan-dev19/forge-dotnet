@@ -1,9 +1,0 @@
-{
-  "schemaVersion": 1,
-  "cases": [
-    { "name": "Hidden_Empty", "message": "Un tableau vide doit produire un nouveau tableau vide.", "arguments": [[]], "expected": [], "argumentsUnchanged": true },
-    { "name": "Hidden_NullRejected", "message": "Une entrée null doit être refusée.", "arguments": [null], "expectedException": "ArgumentNullException" },
-    { "name": "Hidden_RepeatedValues", "message": "Les valeurs répétées doivent produire des écarts nuls.", "arguments": [[4, 4, 4]], "expected": [0, 0], "argumentsUnchanged": true },
-    { "name": "Hidden_VariedValues", "message": "La solution semble dépendre des exemples publics.", "arguments": [[10, 1, 9, -3]], "expected": [-9, 8, -12], "argumentsUnchanged": true }
-  ]
-}

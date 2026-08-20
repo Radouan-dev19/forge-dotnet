@@ -1,9 +1,0 @@
-{
-  "schemaVersion": 1,
-  "cases": [
-    { "name": "Hidden_BelowHalfCent", "message": "L’arrondi sous le demi-centime est incorrect.", "arguments": [0.004], "expected": 0 },
-    { "name": "Hidden_LargeAmount", "message": "La conversion d’un montant élevé est incorrecte.", "arguments": [999999.99], "expected": 99999999 },
-    { "name": "Hidden_NegativeRejected", "message": "Un montant négatif doit être refusé.", "arguments": [-0.01], "expectedException": "ArgumentOutOfRangeException" },
-    { "name": "Hidden_VariedAmount", "message": "La solution semble dépendre des exemples publics.", "arguments": [42.42], "expected": 4242 }
-  ]
-}

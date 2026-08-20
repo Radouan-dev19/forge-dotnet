@@ -1,2 +1,0 @@
-Event=LabelReversed Level=Warning Input="abc" Expected="cba" Actual="abc" CorrelationId=dbg-stack-order-001
-Event=LabelReversed Level=Information Input="" Expected="" Actual="" CorrelationId=dbg-stack-order-001

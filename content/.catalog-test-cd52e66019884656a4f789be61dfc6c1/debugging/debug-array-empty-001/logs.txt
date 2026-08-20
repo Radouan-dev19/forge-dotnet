@@ -1,2 +1,0 @@
-Event=CustomerAverageComputed Level=Information CustomerOrders=[1,3] Expected=2 Actual=2 CorrelationId=dbg-array-empty-001
-Event=CustomerAverageFailed Level=Error CustomerOrders=[] Expected=0 Actual=none BatchStopped=true CorrelationId=dbg-array-empty-001

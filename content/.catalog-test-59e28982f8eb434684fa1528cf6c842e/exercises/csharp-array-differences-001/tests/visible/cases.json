@@ -1,8 +1,0 @@
-{
-  "schemaVersion": 1,
-  "cases": [
-    { "name": "Visible_SeveralValues", "message": "Les écarts successifs sont incorrects.", "arguments": [[3, 8, 6, 10]], "expected": [5, -2, 4], "argumentsUnchanged": true },
-    { "name": "Visible_SingleValue", "message": "Une valeur seule doit produire un tableau vide.", "arguments": [[7]], "expected": [], "argumentsUnchanged": true },
-    { "name": "Visible_TwoNegativeValues", "message": "L’ordre de la soustraction est incorrect.", "arguments": [[-2, -5]], "expected": [-3], "argumentsUnchanged": true }
-  ]
-}

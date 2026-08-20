@@ -1,8 +1,0 @@
-{
-  "schemaVersion": 1,
-  "cases": [
-    { "name": "Visible_StandardPaid", "message": "Une commande standard sous le seuil coûte 4,90 €.", "arguments": [50, false], "expected": 4.90 },
-    { "name": "Visible_StandardFreeAtThreshold", "message": "Le seuil standard de 80 € doit être inclus.", "arguments": [80, false], "expected": 0 },
-    { "name": "Visible_ExpressPriority", "message": "Une commande express coûte 9,90 €, même au-dessus du seuil.", "arguments": [100, true], "expected": 9.90 }
-  ]
-}

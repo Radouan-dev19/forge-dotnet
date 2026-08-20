@@ -1,8 +1,0 @@
-{
-  "schemaVersion": 1,
-  "cases": [
-    { "name": "Visible_WorkWeek", "message": "Une semaine du lundi au vendredi doit contenir cinq jours ouvrés.", "arguments": ["2026-07-20", "2026-07-24"], "expected": 5 },
-    { "name": "Visible_Weekend", "message": "Un week-end seul ne contient aucun jour ouvré.", "arguments": ["2026-07-25", "2026-07-26"], "expected": 0 },
-    { "name": "Visible_EmptyRange", "message": "Une plage inversée doit retourner zéro.", "arguments": ["2026-07-27", "2026-07-26"], "expected": 0 }
-  ]
-}

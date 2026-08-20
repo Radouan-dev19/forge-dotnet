@@ -1,1 +1,0 @@
-Event=QuantityRejected Level=Error Exception=FormatException InputKind=Text CorrelationId=dbg-conversion-001
