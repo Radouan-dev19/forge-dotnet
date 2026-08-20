@@ -1,0 +1,83 @@
+{
+  "schemaVersion": 1,
+  "id": "senior-bulkhead-budget-001",
+  "version": 1,
+  "title": "Rendre le verdict d'admission d'un cloisonnement",
+  "kind": "csharp",
+  "difficulty": 4,
+  "skills": ["quality.resilience"],
+  "prerequisites": [],
+  "estimatedMinutes": 40,
+  "statement": "statement.md",
+  "constraints": [
+    "Conserver exactement la signature publique",
+    "Le rejet rapide est une réponse saine : il n'est jamais converti en attente illimitée",
+    "Une file de capacité nulle est un cloisonnement légitime, une capacité d'exécution nulle non",
+    "Un état qui dépasse ses capacités déclarées est un relevé corrompu, pas un cas limite"
+  ],
+  "examples": [
+    {
+      "input": "10, 4, 20, 0",
+      "output": "execute|slot-available"
+    },
+    {
+      "input": "10, 10, 20, 20",
+      "output": "reject|bulkhead-saturated"
+    }
+  ],
+  "reflectionFields": [
+    "reformulation",
+    "inputs",
+    "expectedOutput",
+    "edgeCases",
+    "hypothesis",
+    "plan"
+  ],
+  "starterPath": "starter/",
+  "visibleTestsPath": "tests/visible/",
+  "hiddenTestsPath": "tests/hidden/",
+  "hints": [
+    {
+      "level": 1,
+      "kind": "socratic",
+      "content": "Un service aval ralentit et chaque requête qui l'attend retient un fil d'exécution. Sans cloison, combien de fils votre processus peut-il perdre dans cette seule dépendance — et que reste-t-il pour les autres ?"
+    },
+    {
+      "level": 2,
+      "kind": "location",
+      "content": "Le verdict se lit en deux comparaisons ordonnées : l'exécution d'abord — reste-t-il un emplacement sous la capacité —, la file ensuite. Le rejet n'est pas une troisième règle, c'est ce qui reste quand les deux sont pleines."
+    },
+    {
+      "level": 3,
+      "kind": "strategy",
+      "content": "Validez le relevé avant de juger : les capacités relèvent de la configuration, les occupations relèvent de l'état, et une occupation qui dépasse sa capacité ne décrit aucun instant réel du cloisonnement."
+    },
+    {
+      "level": 4,
+      "kind": "partial-pseudocode",
+      "content": "refuser une capacité d'exécution non positive ou une capacité de file négative ; refuser une occupation négative ou au-delà de sa capacité ; rendre l'exécution si l'occupation d'exécution est sous sa capacité ; rendre la mise en file si l'occupation de file est sous la sienne ; rendre le rejet rapide sinon"
+    }
+  ],
+  "solution": {
+    "path": "solution/",
+    "unlock": {
+      "seriousAttempts": 2,
+      "minimumDelayMinutes": 10
+    }
+  },
+  "explanation": "explanation.md",
+  "complexity": "O(1) en temps et en espace : quatre comparaisons entières",
+  "commonMistakes": [
+    "Traiter le rejet comme un échec à masquer au lieu d'une réponse rapide qui protège le reste du processus",
+    "Refuser la file de capacité nulle alors qu'elle décrit le cloisonnement sans attente, le plus strict",
+    "Accepter une occupation supérieure à sa capacité et rendre un verdict sur un état impossible",
+    "Mettre en file avant de vérifier l'exécution et faire attendre une requête qu'un emplacement attendait"
+  ],
+  "variantId": "senior-breaker-window-001",
+  "reviewCards": [
+    "card-senior-bulkhead-budget-001-rule",
+    "card-senior-bulkhead-budget-001-edge"
+  ],
+  "interviewQuestionId": "interview-senior-bulkhead-budget-001",
+  "license": "CC-BY-4.0"
+}

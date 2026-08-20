@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "suiteId": "csharp-string-frequency-001.v1",
+  "exerciseId": "csharp-string-frequency-001",
+  "exerciseVersion": 1,
+  "typeName": "Submission",
+  "methodName": "CountWords",
+  "parameterTypes": ["string"],
+  "returnType": "dictionary<string,int>"
+}

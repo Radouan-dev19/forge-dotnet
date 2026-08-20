@@ -1,0 +1,54 @@
+{
+  "schemaVersion": 1,
+  "cases": [
+    {
+      "name": "Hidden_TieGoesToTheClosestSource",
+      "message": "Deux étages portent le même minimum : la réponse désigne le levier le plus proche du conteneur.",
+      "arguments": ["run=1024;cgroup-parent=1024"],
+      "expected": "1024|run",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_SingleSourceIsItsOwnMinimum",
+      "message": "Un seul étage déclaré : il est à la fois la valeur et la raison.",
+      "arguments": ["daemon=4096"],
+      "expected": "4096|daemon",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_ZeroIsNotUnlimited",
+      "message": "Zéro mébioctet n'est pas l'absence de limite : c'est une configuration qui tue le conteneur.",
+      "arguments": ["compose=0"],
+      "expectedException": "ArgumentException",
+      "argumentsUnchanged": false
+    },
+    {
+      "name": "Hidden_RepeatedSourceIsRefused",
+      "message": "Deux valeurs pour le même étage signalent une fusion de fichiers qui a mal tourné.",
+      "arguments": ["run=512;run=256"],
+      "expectedException": "ArgumentException",
+      "argumentsUnchanged": false
+    },
+    {
+      "name": "Hidden_UnknownSourceIsRefused",
+      "message": "Un étage hors des quatre connus ne peut pas recevoir de rang de proximité.",
+      "arguments": ["swap=100"],
+      "expectedException": "ArgumentException",
+      "argumentsUnchanged": false
+    },
+    {
+      "name": "Hidden_FullChainResolvesToTheParent",
+      "message": "Les quatre étages déclarés : le groupe parent porte le plancher et la réponse le nomme.",
+      "arguments": ["cgroup-parent=256;daemon=512;compose=300;run=384"],
+      "expected": "256|cgroup-parent",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_CloserSourceLosesWhenHigher",
+      "message": "L'option de lancement demande plus que la composition : la proximité ne renverse jamais le minimum.",
+      "arguments": ["run=2048;compose=512"],
+      "expected": "512|compose",
+      "argumentsUnchanged": true
+    }
+  ]
+}

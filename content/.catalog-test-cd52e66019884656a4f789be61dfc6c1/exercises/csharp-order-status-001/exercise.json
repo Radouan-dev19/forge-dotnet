@@ -1,0 +1,82 @@
+{
+    "schemaVersion":  1,
+    "id":  "csharp-order-status-001",
+    "version":  1,
+    "title":  "Traduire un état de commande",
+    "kind":  "csharp",
+    "difficulty":  1,
+    "skills":  [
+                   "csharp.encapsulation"
+               ],
+    "prerequisites":  [
+                          "oop-encapsulation-001"
+                      ],
+    "estimatedMinutes":  30,
+    "statement":  "statement.md",
+    "constraints":  [
+                        "Conserver exactement la signature publique",
+                        "Rendre le cas inconnu explicite au lieu d’inventer un état valide.",
+                        "Ne pas modifier les entrées reçues sauf mention explicite"
+                    ],
+    "examples":  [
+                     {
+                         "input":  "[0]",
+                         "output":  "\"draft\""
+                     }
+                 ],
+    "reflectionFields":  [
+                             "reformulation",
+                             "inputs",
+                             "expectedOutput",
+                             "edgeCases",
+                             "hypothesis",
+                             "plan"
+                         ],
+    "starterPath":  "starter/",
+    "visibleTestsPath":  "tests/visible/",
+    "hiddenTestsPath":  "tests/hidden/",
+    "hints":  [
+                  {
+                      "level":  1,
+                      "kind":  "socratic",
+                      "content":  "Quel invariant de « Traduire un état de commande » doit rester vrai pour les cas limites ?"
+                  },
+                  {
+                      "level":  2,
+                      "kind":  "location",
+                      "content":  "Concentrez la décision dans la méthode StatusLabel, sans état global."
+                  },
+                  {
+                      "level":  3,
+                      "kind":  "strategy",
+                      "content":  "Rendre le cas inconnu explicite au lieu d’inventer un état valide."
+                  },
+                  {
+                      "level":  4,
+                      "kind":  "partial-pseudocode",
+                      "content":  "associer chaque code connu à son étiquette par une correspondance exhaustive ; prévoir une branche de repli qui retourne l'étiquette inconnue pour tout autre code"
+                  }
+              ],
+    "solution":  {
+                     "path":  "solution/",
+                     "unlock":  {
+                                    "seriousAttempts":  2,
+                                    "minimumDelayMinutes":  10
+                                }
+                 },
+    "explanation":  "explanation.md",
+    "complexity":  "O(1) en temps et O(1) en espace",
+    "commonMistakes":  [
+                           "Omettre la branche de repli et laisser un code inattendu sans réponse",
+                           "Rattacher un code inconnu au dernier état valide",
+                           "Décaler les codes d'une unité en supposant que la numérotation commence à un",
+                           "Retourner une étiquette dont la casse diffère du contrat"
+                       ],
+    "variantId":  "csharp-customer-name-001",
+    "reviewCards":  [
+                        "card-csharp-order-status-001-rule",
+                        "card-csharp-order-status-001-edge"
+                    ],
+    "interviewQuestionId":  "interview-csharp-order-status-001",
+    "license":  "CC-BY-4.0"
+}

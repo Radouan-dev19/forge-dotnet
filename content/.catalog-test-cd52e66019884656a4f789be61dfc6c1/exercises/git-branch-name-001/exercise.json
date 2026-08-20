@@ -1,0 +1,82 @@
+{
+  "schemaVersion": 1,
+  "id": "git-branch-name-001",
+  "version": 1,
+  "title": "Normaliser un nom de branche",
+  "kind": "csharp",
+  "difficulty": 2,
+  "skills": ["git.branches"],
+  "prerequisites": ["git-branches-conflicts-001"],
+  "estimatedMinutes": 35,
+  "statement": "statement.md",
+  "constraints": [
+    "Conserver exactement la signature publique",
+    "Seuls les minuscules, chiffres, tirets et barres obliques survivent à la normalisation",
+    "Un nom qui ne laisse rien après normalisation est refusé"
+  ],
+  "examples": [
+    {
+      "input": "[\"Feature/Import CSV\"]",
+      "output": "feature/import-csv"
+    },
+    {
+      "input": "[\"  --fix--  \"]",
+      "output": "fix"
+    }
+  ],
+  "reflectionFields": [
+    "reformulation",
+    "inputs",
+    "expectedOutput",
+    "edgeCases",
+    "hypothesis",
+    "plan"
+  ],
+  "starterPath": "starter/",
+  "visibleTestsPath": "tests/visible/",
+  "hiddenTestsPath": "tests/hidden/",
+  "hints": [
+    {
+      "level": 1,
+      "kind": "socratic",
+      "content": "Deux personnes nomment la même branche. Qu'est-ce qui doit rester identique, et qu'est-ce qui peut différer sans conséquence ?"
+    },
+    {
+      "level": 2,
+      "kind": "location",
+      "content": "Traitez la conversion caractère par caractère d'abord, la réduction des tirets consécutifs ensuite, le refus en dernier."
+    },
+    {
+      "level": 3,
+      "kind": "strategy",
+      "content": "Remplacez tout caractère non retenu par un tiret, puis réduisez les suites de tirets et détourez le résultat."
+    },
+    {
+      "level": 4,
+      "kind": "partial-pseudocode",
+      "content": "parcourir les caractères en minuscules ; garder les lettres, chiffres et barres obliques ; convertir tout le reste en tiret ; n'écrire un tiret que si le précédent n'en était pas un ; retirer les tirets de bordure ; refuser si rien ne reste"
+    }
+  ],
+  "solution": {
+    "path": "solution/",
+    "unlock": {
+      "seriousAttempts": 2,
+      "minimumDelayMinutes": 10
+    }
+  },
+  "explanation": "explanation.md",
+  "complexity": "O(n) en temps et O(n) en espace sur la longueur du nom",
+  "commonMistakes": [
+    "Conserver les majuscules, ce qui crée deux branches distinctes sur un système sensible à la casse",
+    "Laisser des tirets consécutifs, qui rendent deux noms différents pour une même intention",
+    "Retirer les caractères interdits au lieu de les convertir, ce qui colle deux mots ensemble",
+    "Rendre une chaîne vide au lieu de refuser un nom qui ne contient rien d'utilisable"
+  ],
+  "variantId": "git-rebase-or-merge-001",
+  "reviewCards": [
+    "card-git-branch-name-001-rule",
+    "card-git-branch-name-001-edge"
+  ],
+  "interviewQuestionId": "interview-git-branch-name-001",
+  "license": "CC-BY-4.0"
+}

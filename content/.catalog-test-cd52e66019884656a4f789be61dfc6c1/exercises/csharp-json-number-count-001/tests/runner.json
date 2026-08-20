@@ -1,0 +1,12 @@
+{
+    "schemaVersion":  1,
+    "suiteId":  "csharp-json-number-count-001.v1",
+    "exerciseId":  "csharp-json-number-count-001",
+    "exerciseVersion":  1,
+    "typeName":  "Submission",
+    "methodName":  "JsonNumberCount",
+    "parameterTypes":  [
+                           "string"
+                       ],
+    "returnType":  "int"
+}

@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "cases": [
+    {
+      "name": "Visible_ThreeStepsUndoInReverse",
+      "message": "Le transporteur se libère avant le remboursement, qui précède la libération du stock.",
+      "arguments": ["reserve-stock,charge-card,book-carrier"],
+      "expected": "cancel-carrier,refund-card,release-stock",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Visible_SingleStepHasASingleGesture",
+      "message": "Une seule étape accomplie : son geste attitré, rien d'autre.",
+      "arguments": ["create-order"],
+      "expected": "void-order",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Visible_FoundationUndoesLast",
+      "message": "La création de commande, exécutée la première, se défait en dernier.",
+      "arguments": ["create-order,reserve-stock,charge-card"],
+      "expected": "refund-card,release-stock,void-order",
+      "argumentsUnchanged": true
+    }
+  ]
+}

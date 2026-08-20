@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "id": "english-card-25-spoken",
+  "version": 1,
+  "title": "STAR reflection — spoken follow-up",
+  "level": "C1",
+  "durationMinutes": 10,
+  "skills": [
+    "english.spoken",
+    "career.star"
+  ],
+  "situation": "In a technical discussion, an interviewer asks about a defect you introduced. You must answer aloud accurately without overstating the evidence.",
+  "instructions": [
+    "Say aloud how you introduced a defect, what it cost, and what you changed so it cannot recur."
+  ],
+  "vocabulary": [
+    {
+      "term": "accountable reflection",
+      "meaning": "an account of your own mistake that names the cost and the correction, without diluting responsibility across the team"
+    },
+    {
+      "term": "preventive change",
+      "meaning": "the durable modification made after a defect, which is what distinguishes a lesson from an apology"
+    }
+  ],
+  "expectedElements": [
+    "Responsibility is taken without deflection",
+    "The consequence is stated in measurable terms",
+    "A durable preventive change is described"
+  ],
+  "modelAnswer": "I introduced it. We were adding a filter to the order search, and I moved the pagination before the filter, which meant the second page could skip records. It reached production and it took two days before a customer noticed, which is the part I think about: nothing in our suite would have caught it. It affected roughly forty searches. What I changed afterwards is not that I am more careful, because that is not a control. I added a test that paginates a filtered set and asserts the total count across pages, which is now the evidence that the defect cannot return. That test would have failed on my change.",
+  "commonMistakes": [
+    "Diluting responsibility across the team or the review process",
+    "Offering greater care as the preventive change instead of a control that fails"
+  ],
+  "variants": [
+    "Answer again for a defect that was caught before reaching production."
+  ],
+  "license": "CC-BY-4.0"
+}

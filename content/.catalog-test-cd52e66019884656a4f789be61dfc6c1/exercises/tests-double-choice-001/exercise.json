@@ -1,0 +1,82 @@
+{
+    "schemaVersion":  1,
+    "id":  "tests-double-choice-001",
+    "version":  1,
+    "title":  "Choisir un double de test",
+    "kind":  "csharp",
+    "difficulty":  3,
+    "skills":  [
+                   "tests.doubles"
+               ],
+    "prerequisites":  [
+                          "tests-doubles-design-001"
+                      ],
+    "estimatedMinutes":  35,
+    "statement":  "statement.md",
+    "constraints":  [
+                        "Conserver exactement la signature publique",
+                        "Choisir le constat pour l'interaction, l'implémentation simplifiée pour le comportement, la réponse fixe sinon.",
+                        "N'instancier aucun double réel : seuls les deux besoins sont fournis"
+                    ],
+    "examples":  [
+                     {
+                         "input":  "[false,false]",
+                         "output":  "\"stub\""
+                     }
+                 ],
+    "reflectionFields":  [
+                             "reformulation",
+                             "inputs",
+                             "expectedOutput",
+                             "edgeCases",
+                             "hypothesis",
+                             "plan"
+                         ],
+    "starterPath":  "starter/",
+    "visibleTestsPath":  "tests/visible/",
+    "hiddenTestsPath":  "tests/hidden/",
+    "hints":  [
+                  {
+                      "level":  1,
+                      "kind":  "socratic",
+                      "content":  "Quel comportement public de « Choisir un double de test » change exactement à la frontière ?"
+                  },
+                  {
+                      "level":  2,
+                      "kind":  "location",
+                      "content":  "Concentrez la validation et la décision dans DoubleKind, sans état global ni journal sensible."
+                  },
+                  {
+                      "level":  3,
+                      "kind":  "strategy",
+                      "content":  "Choisir spy pour l’interaction, fake pour le comportement et stub pour une réponse."
+                  },
+                  {
+                      "level":  4,
+                      "kind":  "partial-pseudocode",
+                      "content":  "poser d'abord la question de l'interaction : si l'appel lui-même est le comportement attendu, le double doit le constater ; sinon, un besoin de comportement réel demande une implémentation simplifiée, et une simple réponse suffit dans tous les autres cas"
+                  }
+              ],
+    "solution":  {
+                     "path":  "solution/",
+                     "unlock":  {
+                                    "seriousAttempts":  2,
+                                    "minimumDelayMinutes":  10
+                                }
+                 },
+    "explanation":  "explanation.md",
+    "complexity":  "O(1) en temps et O(1) en espace",
+    "commonMistakes":  [
+                           "Évaluer le besoin de comportement avant celui d'interaction",
+                           "Choisir un double qui constate l'appel alors qu'un résultat vérifiable existe",
+                           "Traiter les deux indicateurs comme indépendants alors que le premier prime",
+                           "Choisir une implémentation simplifiée là où une réponse fixe suffirait"
+                       ],
+    "variantId":  "tests-double-taxonomy-001",
+    "reviewCards":  [
+                        "card-tests-double-choice-001-rule",
+                        "card-tests-double-choice-001-security"
+                    ],
+    "interviewQuestionId":  "interview-tests-double-choice-001",
+    "license":  "CC-BY-4.0"
+}

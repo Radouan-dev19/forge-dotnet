@@ -1,0 +1,84 @@
+{
+    "schemaVersion":  1,
+    "id":  "security-jwt-signature-001",
+    "version":  1,
+    "title":  "Vérifier la signature HMAC d'un jeton",
+    "kind":  "csharp",
+    "difficulty":  4,
+    "skills":  [
+                   "security.token",
+                   "security.authentication"
+               ],
+    "prerequisites":  [
+                          "security-jwt-validation-001",
+                          "security-jwt-decode-001"
+                      ],
+    "estimatedMinutes":  40,
+    "statement":  "statement.md",
+    "constraints":  [
+                        "Conserver exactement la signature publique",
+                        "L'algorithme est HMAC-SHA256, décidé par le vérificateur : rien n'est lu dans l'en-tête du jeton",
+                        "La comparaison des condensats se fait en temps constant, jamais par égalité ordinaire"
+                    ],
+    "examples":  [
+                     {
+                         "input":  "[\"<en-tête>.<charge-utile>.<signature correcte>\", \"forge-fake-jwt-secret\"]",
+                         "output":  "true"
+                     }
+                 ],
+    "reflectionFields":  [
+                             "reformulation",
+                             "inputs",
+                             "expectedOutput",
+                             "edgeCases",
+                             "hypothesis",
+                             "plan"
+                         ],
+    "starterPath":  "starter/",
+    "visibleTestsPath":  "tests/visible/",
+    "hiddenTestsPath":  "tests/hidden/",
+    "hints":  [
+                  {
+                      "level":  1,
+                      "kind":  "socratic",
+                      "content":  "Sur quelle chaîne exacte la signature d'un jeton est-elle calculée — et le point séparateur en fait-il partie ?"
+                  },
+                  {
+                      "level":  2,
+                      "kind":  "location",
+                      "content":  "Deux étapes seulement portent la sécurité : le recalcul du condensat côté vérificateur, et la comparaison en temps constant. Tout le reste est du décodage défensif qui répond faux."
+                  },
+                  {
+                      "level":  3,
+                      "kind":  "strategy",
+                      "content":  "Un jeton indécodable n'est pas une erreur du vérificateur : chaque échec de forme se traduit par un refus, et seule la comparaison finale peut répondre vrai."
+                  },
+                  {
+                      "level":  4,
+                      "kind":  "partial-pseudocode",
+                      "content":  "refuser sans exception tout jeton qui n'a pas trois segments ; tenter de décoder le troisième en Base64Url et refuser si cela échoue ; recalculer le condensat HMAC sur les deux premiers segments joints par un point, avec la clé reçue en paramètre ; répondre par la comparaison en temps constant des deux condensats"
+                  }
+              ],
+    "solution":  {
+                     "path":  "solution/",
+                     "unlock":  {
+                                    "seriousAttempts":  2,
+                                    "minimumDelayMinutes":  10
+                                }
+                 },
+    "explanation":  "explanation.md",
+    "complexity":  "O(n) en temps, n étant la longueur du jeton, et O(1) en espace supplémentaire",
+    "commonMistakes":  [
+                           "Comparer les condensats avec SequenceEqual ou ==, ce qui fuit le point de divergence par le temps de réponse",
+                           "Signer la charge utile seule au lieu des deux segments joints par le point",
+                           "Lire l'algorithme dans l'en-tête du jeton au lieu de l'imposer côté vérificateur",
+                           "Laisser une exception de décodage remonter au lieu de traduire un jeton malformé en refus"
+                       ],
+    "variantId":  "security-jwt-algorithm-001",
+    "reviewCards":  [
+                        "card-security-jwt-signature-001-rule",
+                        "card-security-jwt-signature-001-edge"
+                    ],
+    "interviewQuestionId":  "interview-security-jwt-signature-001",
+    "license":  "CC-BY-4.0"
+}

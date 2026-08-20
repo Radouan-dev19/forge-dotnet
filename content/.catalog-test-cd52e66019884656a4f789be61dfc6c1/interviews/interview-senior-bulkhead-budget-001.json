@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "id": "interview-senior-bulkhead-budget-001",
+  "version": 1,
+  "title": "Justifier un cloisonnement et son rejet rapide, en anglais",
+  "level": "advanced",
+  "durationMinutes": 8,
+  "skills": ["quality.resilience"],
+  "question": "Une dépendance lente a absorbé tous les fils d'exécution de votre processus la semaine dernière. Quel motif posez-vous, sous quel nom anglais le présentez-vous, et comment défendez-vous le rejet rapide devant un product owner qui n'aime pas les erreurs ?",
+  "observableCriteria": [
+    "Le motif bulkhead est nommé avec son image — les cloisons de coque — et ce qu'il borne : le coût d'une dépendance",
+    "L'ordre d'admission est décrit : emplacement d'exécution, puis file bornée, puis rejet rapide",
+    "Le rejet rapide est défendu : l'attente illimitée reconstruit la propagation que la cloison devait couper",
+    "La répartition avec le disjoncteur est dite : la cloison protège l'appelant, le disjoncteur l'appelé"
+  ],
+  "modelAnswer": "Le motif se nomme bulkhead — les cloisons étanches d'une coque : la voie d'eau reste dans son compartiment. Techniquement, c'est une borne sur ce qu'une dépendance peut coûter au processus : un nombre maximal d'exécutions simultanées, une file d'attente bornée pour absorber les pointes, et au-delà, un rejet immédiat. L'admission se décide dans cet ordre — un emplacement libre exécute, une place en file patiente, sinon on rejette en microsecondes. Devant un product owner, je défends le rejet par son alternative : sans cloison, la dépendance lente retient un fil par requête jusqu'à absorber le processus entier, et les fonctionnalités qui n'ont rien à voir tombent avec elle — c'est l'incident de la semaine dernière. Le rejet rapide, lui, rend la main : la fonctionnalité dégrade proprement — cache, réponse partielle, message honnête — pendant que le reste du produit fonctionne. Une erreur localisée et immédiate vaut mieux qu'une panne globale et différée. Et je précise la répartition des rôles en une phrase : la cloison protège l'appelant, le circuit breaker protège l'appelé — Polly fournit les deux.",
+  "commonMistakes": [
+    "Confondre la cloison avec le disjoncteur alors qu'ils protègent des côtés opposés de l'appel",
+    "Convertir le rejet en attente illimitée pour éviter les erreurs, et reconstruire la propagation"
+  ],
+  "variants": [
+    "Demander comment dimensionner la capacité d'exécution d'une cloison depuis les mesures de latence.",
+    "Deux dépendances partagent un pool : demander ce que le cloisonnement sépare en premier."
+  ],
+  "license": "CC-BY-4.0"
+}

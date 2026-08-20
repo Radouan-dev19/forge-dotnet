@@ -1,0 +1,82 @@
+{
+    "schemaVersion":  1,
+    "id":  "api-location-header-001",
+    "version":  1,
+    "title":  "Construire une localisation de ressource",
+    "kind":  "csharp",
+    "difficulty":  2,
+    "skills":  [
+                   "api.http"
+               ],
+    "prerequisites":  [
+                          "api-http-semantics-001"
+                      ],
+    "estimatedMinutes":  35,
+    "statement":  "statement.md",
+    "constraints":  [
+                        "Conserver exactement la signature publique",
+                        "Refuser un identifiant non publiable puis construire un chemin relatif stable.",
+                        "Ne composer aucune adresse absolue ni lire d'hôte depuis l'environnement"
+                    ],
+    "examples":  [
+                     {
+                         "input":  "[42]",
+                         "output":  "\"/orders/42\""
+                     }
+                 ],
+    "reflectionFields":  [
+                             "reformulation",
+                             "inputs",
+                             "expectedOutput",
+                             "edgeCases",
+                             "hypothesis",
+                             "plan"
+                         ],
+    "starterPath":  "starter/",
+    "visibleTestsPath":  "tests/visible/",
+    "hiddenTestsPath":  "tests/hidden/",
+    "hints":  [
+                  {
+                      "level":  1,
+                      "kind":  "socratic",
+                      "content":  "Quel comportement public de « Construire une localisation de ressource » change exactement à la frontière ?"
+                  },
+                  {
+                      "level":  2,
+                      "kind":  "location",
+                      "content":  "Concentrez la validation et la décision dans OrderLocation, sans état global ni journal sensible."
+                  },
+                  {
+                      "level":  3,
+                      "kind":  "strategy",
+                      "content":  "Refuser un identifiant non publié puis construire une route relative stable."
+                  },
+                  {
+                      "level":  4,
+                      "kind":  "partial-pseudocode",
+                      "content":  "refuser un identifiant nul ou négatif, qui ne désigne aucune ressource ; sinon composer le chemin relatif de la collection suivi de l'identifiant"
+                  }
+              ],
+    "solution":  {
+                     "path":  "solution/",
+                     "unlock":  {
+                                    "seriousAttempts":  2,
+                                    "minimumDelayMinutes":  10
+                                }
+                 },
+    "explanation":  "explanation.md",
+    "complexity":  "O(1) en temps et O(1) en espace",
+    "commonMistakes":  [
+                           "Accepter un identifiant nul ou négatif et publier une adresse qui ne mène nulle part",
+                           "Produire une adresse absolue, qui fige l'hôte dans la réponse",
+                           "Omettre la barre de tête et produire un chemin relatif au contexte courant",
+                           "Composer l'adresse à partir d'une valeur non validée reçue de l'appelant"
+                       ],
+    "variantId":  "api-order-validation-001",
+    "reviewCards":  [
+                        "card-api-location-header-001-rule",
+                        "card-api-location-header-001-security"
+                    ],
+    "interviewQuestionId":  "interview-api-location-header-001",
+    "license":  "CC-BY-4.0"
+}

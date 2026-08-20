@@ -1,0 +1,83 @@
+{
+  "schemaVersion": 1,
+  "id": "azure-secret-channel-001",
+  "version": 1,
+  "title": "Choisir le canal d'une valeur selon sa sensibilité et son consommateur",
+  "kind": "csharp",
+  "difficulty": 3,
+  "skills": ["azure.secrets"],
+  "prerequisites": ["azure-managed-identity-key-vault-001"],
+  "estimatedMinutes": 30,
+  "statement": "statement.md",
+  "constraints": [
+    "Conserver exactement la signature publique",
+    "La sensibilité se juge avant tout : une valeur publique ne monte jamais dans un canal de secret",
+    "L'identité attestée par la plateforme prime dès que le consommateur y est hébergé",
+    "La recommandation nomme toujours sa raison, séparée par une barre verticale"
+  ],
+  "examples": [
+    {
+      "input": "sensitivity=public;consumer=platform-hosted;rotation=static",
+      "output": "configuration|not-a-secret"
+    },
+    {
+      "input": "sensitivity=secret;consumer=platform-hosted;rotation=rotated",
+      "output": "managed-identity|no-stored-credential"
+    }
+  ],
+  "reflectionFields": [
+    "reformulation",
+    "inputs",
+    "expectedOutput",
+    "edgeCases",
+    "hypothesis",
+    "plan"
+  ],
+  "starterPath": "starter/",
+  "visibleTestsPath": "tests/visible/",
+  "hiddenTestsPath": "tests/hidden/",
+  "hints": [
+    {
+      "level": 1,
+      "kind": "socratic",
+      "content": "Votre coffre central protège une chaîne de connexion — mais avec quoi votre application s'authentifie-t-elle auprès du coffre ? Où s'arrête cette régression, et qu'est-ce qui peut l'arrêter ?"
+    },
+    {
+      "level": 2,
+      "kind": "location",
+      "content": "Trois questions se posent dans un ordre strict : la valeur est-elle réellement sensible, son consommateur est-il hébergé sur la plateforme, et seulement ensuite la valeur tourne-t-elle."
+    },
+    {
+      "level": 3,
+      "kind": "strategy",
+      "content": "Chaque canal résout un problème précis : la configuration porte le non-sensible, l'identité attestée supprime le secret stocké, le magasin utilisateur garde le statique hors du dépôt, le coffre central porte la rotation pour le poste local."
+    },
+    {
+      "level": 4,
+      "kind": "partial-pseudocode",
+      "content": "analyser les trois attributs en refusant doublon, absence et valeur inconnue ; rendre la configuration pour toute valeur non sensible ; rendre l'identité attestée pour un consommateur hébergé par la plateforme ; départager le poste local par la rotation — coffre central si la valeur tourne, magasin utilisateur sinon"
+    }
+  ],
+  "solution": {
+    "path": "solution/",
+    "unlock": {
+      "seriousAttempts": 2,
+      "minimumDelayMinutes": 10
+    }
+  },
+  "explanation": "explanation.md",
+  "complexity": "O(1) en temps et en espace : trois attributs analysés puis une cascade de canaux",
+  "commonMistakes": [
+    "Monter une valeur publique dans un canal de secret et rendre la configuration illisible",
+    "Stocker un identifiant d'accès au coffre alors que l'identité attestée l'aurait supprimé",
+    "Garder une valeur tournante dans le magasin utilisateur, qui ne se resynchronise jamais",
+    "Laisser la rotation décider avant l'hébergement du consommateur"
+  ],
+  "variantId": "azure-secret-source-001",
+  "reviewCards": [
+    "card-azure-secret-channel-001-rule",
+    "card-azure-secret-channel-001-edge"
+  ],
+  "interviewQuestionId": "interview-azure-secret-channel-001",
+  "license": "CC-BY-4.0"
+}

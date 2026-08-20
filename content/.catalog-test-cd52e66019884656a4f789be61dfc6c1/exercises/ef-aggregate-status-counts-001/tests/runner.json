@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "suiteId": "ef-aggregate-status-counts-001.v1",
+  "exerciseId": "ef-aggregate-status-counts-001",
+  "exerciseVersion": 1,
+  "typeName": "Submission",
+  "methodName": "StatusCounts",
+  "parameterTypes": ["int"],
+  "returnType": "dictionary<string,int>"
+}

@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "id": "interview-azure-incident-digest-001",
+  "version": 1,
+  "title": "Produire un brief d'incident depuis le journal brut",
+  "level": "intermediate",
+  "durationMinutes": 8,
+  "skills": ["azure.incident"],
+  "question": "En plein incident, la direction demande un point en quatre lignes et vous n'avez que le journal des opérations. Quelles lignes extrayez-vous, selon quelles règles, et que répondez-vous si le journal ne permet pas de remplir le brief ?",
+  "observableCriteria": [
+    "Les quatre champs du brief sont nommés : impact, début, atténuation, propriétaire de la suite",
+    "La règle de la première occurrence est justifiée contre la réécriture du récit",
+    "Le brief incomplet est déclaré en nommant les manques, jamais maquillé en champs vides"
+  ],
+  "modelAnswer": "Le brief répond aux quatre questions que tout le monde pose : quel impact, depuis quand, l'atténuation a-t-elle commencé, qui porte la prochaine action. J'extrais chaque réponse par la règle de la première occurrence : le premier impact constaté — pas sa reformulation adoucie de la troisième heure —, le début à la première trace observable, alerte ou constat humain, selon ce qui arrive en premier — jamais à la première réaction de l'équipe, qui est flatteuse et fausse —, la première mesure d'atténuation datée, et la première attribution. Les dernières occurrences réécrivent l'histoire ; les premières figent la version contemporaine, celle dont la revue d'après-incident aura besoin. Si le journal ne permet pas de remplir le brief, je le dis en nommant les manques plutôt que de livrer des champs vides : un simulacre de brief circule et rassure, alors qu'un « incomplet : impact non nommé, aucune action attribuée » déclenche exactement les deux gestes qui manquent. Un incident sans propriétaire de la prochaine action n'est pas géré, il est observé — et le brief qui l'avoue provoque la désignation. Je vérifie enfin la chronologie : des minutes qui reculent signalent un journal recomposé, dont plus rien ne s'extrait honnêtement.",
+  "commonMistakes": [
+    "Résumer la dernière version du récit au lieu de figer les premières occurrences",
+    "Livrer un brief aux champs vides plutôt que d'avouer ce que le journal ne contient pas"
+  ],
+  "variants": [
+    "Demander ce que le brief à chaud apporte à la revue d'après-incident par rapport au récit à froid.",
+    "Deux journaux de deux équipes se contredisent : demander la démarche avant toute fusion."
+  ],
+  "license": "CC-BY-4.0"
+}

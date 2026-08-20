@@ -1,0 +1,82 @@
+{
+    "schemaVersion":  1,
+    "id":  "tests-saved-identity-001",
+    "version":  1,
+    "title":  "Vérifier une identité persistée",
+    "kind":  "csharp",
+    "difficulty":  2,
+    "skills":  [
+                   "tests.integration"
+               ],
+    "prerequisites":  [
+                          "tests-doubles-design-001"
+                      ],
+    "estimatedMinutes":  35,
+    "statement":  "statement.md",
+    "constraints":  [
+                        "Conserver exactement la signature publique",
+                        "Une intégration réussie produit un identifiant strictement positif observable.",
+                        "N'ouvrir aucune connexion : l'identifiant observé est fourni"
+                    ],
+    "examples":  [
+                     {
+                         "input":  "[1]",
+                         "output":  "true"
+                     }
+                 ],
+    "reflectionFields":  [
+                             "reformulation",
+                             "inputs",
+                             "expectedOutput",
+                             "edgeCases",
+                             "hypothesis",
+                             "plan"
+                         ],
+    "starterPath":  "starter/",
+    "visibleTestsPath":  "tests/visible/",
+    "hiddenTestsPath":  "tests/hidden/",
+    "hints":  [
+                  {
+                      "level":  1,
+                      "kind":  "socratic",
+                      "content":  "Quel comportement public de « Vérifier une identité persistée » change exactement à la frontière ?"
+                  },
+                  {
+                      "level":  2,
+                      "kind":  "location",
+                      "content":  "Concentrez la validation et la décision dans HasSavedIdentity, sans état global ni journal sensible."
+                  },
+                  {
+                      "level":  3,
+                      "kind":  "strategy",
+                      "content":  "Une intégration réussie produit un identifiant strictement positif observable."
+                  },
+                  {
+                      "level":  4,
+                      "kind":  "partial-pseudocode",
+                      "content":  "conclure qu'une écriture a eu lieu seulement lorsque l'identifiant reçu est strictement positif, la valeur nulle signalant qu'aucune clé n'a été attribuée"
+                  }
+              ],
+    "solution":  {
+                     "path":  "solution/",
+                     "unlock":  {
+                                    "seriousAttempts":  2,
+                                    "minimumDelayMinutes":  10
+                                }
+                 },
+    "explanation":  "explanation.md",
+    "complexity":  "O(1) en temps et O(1) en espace",
+    "commonMistakes":  [
+                           "Accepter un identifiant nul, qui signale au contraire l'absence d'écriture",
+                           "Accepter un identifiant négatif",
+                           "Confondre l'absence d'exception avec la preuve d'une écriture effective",
+                           "Vérifier l'écriture depuis le contexte qui vient d'écrire"
+                       ],
+    "variantId":  "tests-database-name-001",
+    "reviewCards":  [
+                        "card-tests-saved-identity-001-rule",
+                        "card-tests-saved-identity-001-security"
+                    ],
+    "interviewQuestionId":  "interview-tests-saved-identity-001",
+    "license":  "CC-BY-4.0"
+}

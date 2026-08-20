@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "id": "interview-senior-latency-percentile-001",
+  "version": 1,
+  "title": "Défendre le percentile contre la moyenne en latence",
+  "level": "advanced",
+  "durationMinutes": 8,
+  "skills": ["observability.distributed"],
+  "question": "Le rapport mensuel affiche une latence moyenne de 80 millisecondes et le support croule sous les plaintes de lenteur. Expliquez ce que la moyenne cache, définissez le percentile qui le montre avec sa méthode de calcul exacte, et dites pourquoi la queue de distribution concerne plus d'utilisateurs qu'on ne croit.",
+  "observableCriteria": [
+    "Le mensonge de la moyenne est expliqué : quelques requêtes très lentes noyées dans la masse",
+    "Le percentile est défini opérationnellement : rang le plus proche sur données triées, sans interpolation",
+    "Le vocabulaire est en place : percentile, p99, tail latency",
+    "L'argument de la queue est chiffré : une page à plusieurs appels expose la plupart des utilisateurs au p99"
+  ],
+  "modelAnswer": "La moyenne de 80 millisecondes et les plaintes disent la même chose : la distribution a une queue. Mille requêtes à 50 millisecondes et dix à 3 secondes donnent une moyenne présentable — la lenteur des dix est diluée dans la masse — et ce sont pourtant ces dix que le support entend. La grandeur qui les montre est le percentile : le p99 est la valeur sous laquelle tombent 99 % des requêtes, donc le vécu du centième le plus lent. Sa méthode de calcul mérite d'être exacte, parce que deux outils qui ne la partagent pas rendent des chiffres différents sur les mêmes mesures : je trie les latences, je prends le rang le plus proche — pour n mesures au percentile p, l'élément de rang p fois n divisé par cent, arrondi vers le haut — et je rends une valeur réellement observée, sans interpolation qui fabriquerait une latence que personne n'a vécue. Le p100 est le maximum, et le tri se fait sur une copie : une fonction de mesure qui réordonne les données de l'appelant est un effet de bord. Quant à la tail latency, elle concerne bien plus d'un pour cent des gens : une page qui déclenche vingt appels a environ dix-huit chances sur cent de croiser au moins un p99 — la queue n'est pas un cas rare, c'est l'expérience ordinaire des pages composées, et c'est elle que je mets dans le rapport mensuel à côté de la moyenne.",
+  "commonMistakes": [
+    "Piloter la latence à la moyenne et découvrir la queue par les tickets du support",
+    "Comparer des percentiles calculés par des méthodes différentes et débattre d'écarts d'outillage"
+  ],
+  "variants": [
+    "Demander pourquoi les percentiles ne se moyennent pas entre instances et ce qu'on agrège à la place.",
+    "Fixer un objectif : demander lequel de p50, p95, p99 contractualiser et pour quel usage."
+  ],
+  "license": "CC-BY-4.0"
+}

@@ -1,0 +1,32 @@
+{
+    "schemaVersion":  1,
+    "cases":  [
+                  {
+                      "name":  "Visible_Case1",
+                      "message":  "Définir un cas de base récursif — cas 1 visible incorrect.",
+                      "arguments":  [
+                                        0
+                                    ],
+                      "expected":  1,
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Visible_Case2",
+                      "message":  "Définir un cas de base récursif — cas 2 visible incorrect.",
+                      "arguments":  [
+                                        5
+                                    ],
+                      "expected":  120,
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Visible_UpperBound",
+                      "message":  "Borne haute acceptée : douze reste calculable sans dépassement.",
+                      "arguments":  [12],
+                      "expected":  479001600,
+                      "argumentsUnchanged":  true
+                  }
+              ]
+}

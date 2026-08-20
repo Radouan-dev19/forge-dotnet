@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "cases": [
+    {
+      "name": "Visible_NamingNitStaysMinorDespiteBlockerComment",
+      "message": "Une remarque de nommage faussement marquee BLOCKER reste minor:style.",
+      "arguments": ["variable-naming-nit"],
+      "expected": "minor:style",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Visible_ExtraBlankLineIsMinorStyle",
+      "message": "Une ligne vide superflue est cosmetique : minor:style.",
+      "arguments": ["extra-blank-line"],
+      "expected": "minor:style",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Visible_UnlistedFindingIsUnknown",
+      "message": "Un identifiant hors catalogue rend unknown, sans lever d'exception.",
+      "arguments": ["cosmetic-typo-in-comment"],
+      "expected": "unknown",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Visible_FormatPreferenceNitStaysMinorDespiteBlockerComment",
+      "message": "Une querelle d'accolades marquee BLOCKER par son auteur reste minor:style.",
+      "arguments": ["format-preference-nit"],
+      "expected": "minor:style",
+      "argumentsUnchanged": true
+    }
+  ]
+}

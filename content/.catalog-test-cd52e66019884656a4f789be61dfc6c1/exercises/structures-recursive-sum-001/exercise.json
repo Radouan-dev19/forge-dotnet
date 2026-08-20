@@ -1,0 +1,82 @@
+{
+    "schemaVersion":  1,
+    "id":  "structures-recursive-sum-001",
+    "version":  1,
+    "title":  "Sommer récursivement un tableau",
+    "kind":  "algorithm",
+    "difficulty":  2,
+    "skills":  [
+                   "structures.recursion"
+               ],
+    "prerequisites":  [
+                          "structures-stacks-queues-001"
+                      ],
+    "estimatedMinutes":  30,
+    "statement":  "statement.md",
+    "constraints":  [
+                        "Conserver exactement la signature publique",
+                        "L’index atteint la longueur et progresse de un à chaque appel.",
+                        "Ne pas modifier les entrées reçues sauf mention explicite"
+                    ],
+    "examples":  [
+                     {
+                         "input":  "[[1,2,3]]",
+                         "output":  "6"
+                     }
+                 ],
+    "reflectionFields":  [
+                             "reformulation",
+                             "inputs",
+                             "expectedOutput",
+                             "edgeCases",
+                             "hypothesis",
+                             "plan"
+                         ],
+    "starterPath":  "starter/",
+    "visibleTestsPath":  "tests/visible/",
+    "hiddenTestsPath":  "tests/hidden/",
+    "hints":  [
+                  {
+                      "level":  1,
+                      "kind":  "socratic",
+                      "content":  "Quel invariant de « Sommer récursivement un tableau » doit rester vrai pour les cas limites ?"
+                  },
+                  {
+                      "level":  2,
+                      "kind":  "location",
+                      "content":  "Concentrez la décision dans la méthode RecursiveSum, sans état global."
+                  },
+                  {
+                      "level":  3,
+                      "kind":  "strategy",
+                      "content":  "L’index atteint la longueur et progresse de un à chaque appel."
+                  },
+                  {
+                      "level":  4,
+                      "kind":  "partial-pseudocode",
+                      "content":  "définir une fonction interne prenant le tableau et un index ; le cas de base est atteint lorsque l'index égale la longueur et vaut zéro ; sinon additionner l'élément courant et le résultat de l'appel sur l'index suivant, l'addition étant vérifiée"
+                  }
+              ],
+    "solution":  {
+                     "path":  "solution/",
+                     "unlock":  {
+                                    "seriousAttempts":  2,
+                                    "minimumDelayMinutes":  10
+                                }
+                 },
+    "explanation":  "explanation.md",
+    "complexity":  "O(n) en temps et O(n) en pile",
+    "commonMistakes":  [
+                           "Placer le cas de base à la longueur diminuée de un et perdre le dernier élément",
+                           "Ne pas traiter le tableau vide, dont la somme vaut zéro",
+                           "Additionner sans contrôle de dépassement sur une somme qui sort de la plage entière",
+                           "Oublier d'augmenter l'index et remplir la pile"
+                       ],
+    "variantId":  "structures-factorial-001",
+    "reviewCards":  [
+                        "card-structures-recursive-sum-001-rule",
+                        "card-structures-recursive-sum-001-edge"
+                    ],
+    "interviewQuestionId":  "interview-structures-recursive-sum-001",
+    "license":  "CC-BY-4.0"
+}

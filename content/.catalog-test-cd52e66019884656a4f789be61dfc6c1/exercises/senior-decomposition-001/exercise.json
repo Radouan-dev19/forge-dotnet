@@ -1,0 +1,66 @@
+{
+    "schemaVersion": 1,
+    "id": "senior-decomposition-001",
+    "version": 1,
+    "title": "Decouper ou non : la decision argumentee",
+    "kind": "csharp",
+    "difficulty": 4,
+    "skills": ["quality.boundaries"],
+    "prerequisites": [],
+    "estimatedMinutes": 45,
+    "statement": "statement.md",
+    "constraints": [
+        "Conserver exactement la signature publique",
+        "Par defaut, garder le monolithe : l'extraction est l'exception a justifier",
+        "Des tables partagees interdisent l'extraction, meme avec plusieurs equipes",
+        "Des compteurs incoherents levent ArgumentOutOfRangeException"
+    ],
+    "examples": [
+        {
+            "input": "[3, 0, 0]",
+            "output": "\"extract-service\""
+        }
+    ],
+    "reflectionFields": ["reformulation", "inputs", "expectedOutput", "edgeCases", "hypothesis", "plan"],
+    "starterPath": "starter/",
+    "visibleTestsPath": "tests/visible/",
+    "hiddenTestsPath": "tests/hidden/",
+    "hints": [
+        {
+            "level": 1,
+            "kind": "socratic",
+            "content": "Un junior qui decoupe en services produit un systeme distribue qu'il ne sait pas exploiter. Quelle preuve, et non quelle mode, justifierait de payer le cout d'un deployable de plus ?"
+        },
+        {
+            "level": 2,
+            "kind": "location",
+            "content": "La decision par defaut est keep-monolith. Cherchez les conditions qui, ensemble seulement, renversent ce defaut : plusieurs equipes, aucun deploiement couple, aucune donnee partagee."
+        },
+        {
+            "level": 3,
+            "kind": "strategy",
+            "content": "Validez d'abord les compteurs. Une seule equipe garde le monolithe. Des tables partagees le gardent aussi. Ce n'est qu'avec plusieurs equipes, sans deploiement couple ni table partagee, que l'extraction se justifie."
+        },
+        {
+            "level": 4,
+            "kind": "partial-pseudocode",
+            "content": "refuser si teams sous un, deploysCoupled negatif ou sharedTables negatif ; si teams au plus un rendre keep-monolith ; si sharedTables positif rendre keep-monolith ; si deploysCoupled vaut zero rendre extract-service ; sinon keep-monolith"
+        }
+    ],
+    "solution": {
+        "path": "solution/",
+        "unlock": { "seriousAttempts": 2, "minimumDelayMinutes": 10 }
+    },
+    "explanation": "explanation.md",
+    "complexity": "O(1) en temps : une suite de conditions sur trois compteurs",
+    "commonMistakes": [
+        "Extraire des qu'il y a plusieurs equipes, sans verifier le couplage de deploiement ni les donnees partagees",
+        "Ignorer les tables partagees, qui trahissent une frontiere mal placee et un couplage cache",
+        "Traiter l'extraction comme le cas par defaut au lieu du monolithe",
+        "Accepter des compteurs negatifs ou une equipe nulle au lieu de lever une exception d'argument"
+    ],
+    "variantId": "senior-error-budget-001",
+    "reviewCards": ["card-senior-decomposition-001-rule", "card-senior-decomposition-001-edge"],
+    "interviewQuestionId": "interview-senior-decomposition-001",
+    "license": "CC-BY-4.0"
+}

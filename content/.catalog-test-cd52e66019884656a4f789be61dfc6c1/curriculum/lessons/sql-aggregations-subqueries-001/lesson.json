@@ -1,0 +1,36 @@
+{
+    "schemaVersion":  1,
+    "id":  "sql-aggregations-subqueries-001",
+    "version":  1,
+    "title":  "Agrégations et sous-requêtes",
+    "week":  9,
+    "skills":  [
+                   {
+                       "id":  "sql.aggregation",
+                       "weight":  1
+                   }
+               ],
+    "prerequisites":  [
+                          "sql-joins-001"
+                      ],
+    "estimatedMinutes":  70,
+    "objectives":  [
+                       "Expliquer puis appliquer Agrégations et sous-requêtes sur un cas métier borné"
+                   ],
+    "sections":  [
+                     "intuition",
+                     "explanation",
+                     "example",
+                     "counterExample",
+                     "check",
+                     "guided",
+                     "independent",
+                     "debugging",
+                     "interview",
+                     "summary",
+                     "reviewCards",
+                     "masteryTest"
+                 ],
+    "markdownPath":  "lesson.md",
+    "license":  "CC-BY-4.0"
+}

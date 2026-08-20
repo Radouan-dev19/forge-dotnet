@@ -1,0 +1,40 @@
+{
+    "schemaVersion":  1,
+    "cases":  [
+                  {
+                      "name":  "Hidden_Case1",
+                      "message":  "Appliquer une remise bornée — cas 1 hidden incorrect.",
+                      "arguments":  [
+                                        10.05,
+                                        0.5
+                                    ],
+                      "expected":  5.03,
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_Case2",
+                      "message":  "Appliquer une remise bornée — cas 2 hidden incorrect.",
+                      "arguments":  [
+                                        10,
+                                        -0.1
+                                    ],
+                      "expectedException":  "ArgumentOutOfRangeException",
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_RateAboveOne",
+                      "message":  "Taux supérieur à un : refusé, il produirait un total négatif.",
+                      "arguments":  [10,1.1],
+                      "expectedException":  "ArgumentOutOfRangeException",
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_ZeroRate",
+                      "message":  "Taux nul : le total est conservé tel quel.",
+                      "arguments":  [100,0],
+                      "expected":  100,
+                      "argumentsUnchanged":  true
+                  }
+              ]
+}

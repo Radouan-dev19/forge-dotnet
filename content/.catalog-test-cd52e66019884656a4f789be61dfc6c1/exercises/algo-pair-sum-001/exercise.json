@@ -1,0 +1,82 @@
+{
+    "schemaVersion":  1,
+    "id":  "algo-pair-sum-001",
+    "version":  1,
+    "title":  "Détecter une paire de somme cible",
+    "kind":  "algorithm",
+    "difficulty":  3,
+    "skills":  [
+                   "algorithm.search"
+               ],
+    "prerequisites":  [
+                          "algo-reformulation-complexity-001"
+                      ],
+    "estimatedMinutes":  30,
+    "statement":  "statement.md",
+    "constraints":  [
+                        "Conserver exactement la signature publique",
+                        "Chercher le complément avant d’ajouter la valeur courante pour exiger deux positions.",
+                        "Ne pas modifier les entrées reçues sauf mention explicite"
+                    ],
+    "examples":  [
+                     {
+                         "input":  "[[2,7,3],9]",
+                         "output":  "true"
+                     }
+                 ],
+    "reflectionFields":  [
+                             "reformulation",
+                             "inputs",
+                             "expectedOutput",
+                             "edgeCases",
+                             "hypothesis",
+                             "plan"
+                         ],
+    "starterPath":  "starter/",
+    "visibleTestsPath":  "tests/visible/",
+    "hiddenTestsPath":  "tests/hidden/",
+    "hints":  [
+                  {
+                      "level":  1,
+                      "kind":  "socratic",
+                      "content":  "Quel invariant de « Détecter une paire de somme cible » doit rester vrai pour les cas limites ?"
+                  },
+                  {
+                      "level":  2,
+                      "kind":  "location",
+                      "content":  "Concentrez la décision dans la méthode HasPairSum, sans état global."
+                  },
+                  {
+                      "level":  3,
+                      "kind":  "strategy",
+                      "content":  "Chercher le complément avant d’ajouter la valeur courante pour exiger deux positions."
+                  },
+                  {
+                      "level":  4,
+                      "kind":  "partial-pseudocode",
+                      "content":  "ensemble des valeurs déjà vues, vide au départ ; pour chaque valeur, chercher d'abord son complément par rapport à la cible dans cet ensemble et conclure si on l'y trouve ; sinon ajouter la valeur courante et poursuivre"
+                  }
+              ],
+    "solution":  {
+                     "path":  "solution/",
+                     "unlock":  {
+                                    "seriousAttempts":  2,
+                                    "minimumDelayMinutes":  10
+                                }
+                 },
+    "explanation":  "explanation.md",
+    "complexity":  "O(n) attendu en temps et O(n) en espace",
+    "commonMistakes":  [
+                           "Ajouter la valeur avant de chercher son complément et l'apparier avec elle-même",
+                           "Comparer chaque paire par deux boucles imbriquées, ce qui devient quadratique",
+                           "Supposer l'entrée triée et employer deux index convergents sans garantie",
+                           "Manquer une paire faite de deux éléments distincts portant la même valeur"
+                       ],
+    "variantId":  "algo-prefix-sums-001",
+    "reviewCards":  [
+                        "card-algo-pair-sum-001-rule",
+                        "card-algo-pair-sum-001-edge"
+                    ],
+    "interviewQuestionId":  "interview-algo-pair-sum-001",
+    "license":  "CC-BY-4.0"
+}

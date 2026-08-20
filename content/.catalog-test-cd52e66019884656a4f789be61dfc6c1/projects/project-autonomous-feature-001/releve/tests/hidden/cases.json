@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "cases": [
+    {
+      "name": "Hidden_GoldLevelWithTwoBonuses",
+      "message": "Trois mois actifs dont deux au seuil : le total franchit la borne de l'or.",
+      "arguments": ["2026-01-10:150.00;2026-02-10:150.00;2026-03-10:20.50", "2026-08-15"],
+      "expected": "actifs=360;expires=0;niveau=or",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_ExpiredPointsNeverEarnBonus",
+      "message": "Un gros achat expiré compte dans les expirés, sans bonus ni niveau.",
+      "arguments": ["2024-12-25:400.00;2026-06-05:99.99", "2026-08-15"],
+      "expected": "actifs=99;expires=400;niveau=bronze",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_BonusLiftsTheLevel",
+      "message": "Le bonus mensuel entre dans les actifs et peut changer le niveau.",
+      "arguments": ["2026-05-04:100.00;2025-09-09:10.10", "2026-08-15"],
+      "expected": "actifs=130;expires=0;niveau=argent",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_UpperSilverBoundIsExclusive",
+      "message": "À deux cent quatre-vingt-dix-neuf points actifs, le niveau reste argent.",
+      "arguments": ["2026-04-02:279.99", "2026-08-15"],
+      "expected": "actifs=299;expires=0;niveau=argent",
+      "argumentsUnchanged": true
+    }
+  ]
+}

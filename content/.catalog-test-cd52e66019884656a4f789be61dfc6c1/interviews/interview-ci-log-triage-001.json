@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "id": "interview-ci-log-triage-001",
+  "version": 1,
+  "title": "Trier le journal d'un pipeline rouge",
+  "level": "junior",
+  "durationMinutes": 6,
+  "skills": ["ci.diagnosis"],
+  "question": "Le pipeline est rouge avec trois travaux en échec ou annulés et deux relances dans le journal. Dans quel ordre lisez-vous tout cela, et qu'ouvrez-vous en premier ?",
+  "observableCriteria": [
+    "La consolidation par dernière entrée est appliquée avant tout jugement : une relance réussie efface l'échec",
+    "La hiérarchie cause-victime est énoncée : l'échec final avant toute annulation",
+    "Les travaux sautés sont exclus du tri avec leur justification"
+  ],
+  "modelAnswer": "Je consolide d'abord, je juge ensuite. Chaque travail peut apparaître plusieurs fois dans le journal — les relances — et son verdict est sa dernière entrée : un échec suivi d'une relance verte est un incident déjà résolu, pas un bloquant. Une fois les verdicts consolidés, j'applique la hiérarchie cause-victime : s'il existe un échec final quelque part, c'est lui la cause première, et les annulations qui l'entourent sont ses conséquences — l'orchestrateur a arrêté ce qui n'avait plus de sens. Ce n'est que sans aucun échec final qu'une annulation devient la cause, typiquement une interruption humaine ou un délai dépassé. Les travaux sautés ne concourent jamais : leur condition d'exécution a répondu non, ils n'ont pas échoué. J'ouvre donc en premier le premier travail — en ordre d'apparition — dont le verdict final est l'échec, avec la bonne question en tête : pourquoi lui, et je ne regarde ses victimes qu'après. Ce tri évite le piège classique de l'astreinte, trois pistes ouvertes pour un seul défaut.",
+  "commonMistakes": [
+    "Ouvrir le premier travail rouge du journal sans consolider les relances qui l'ont déjà rattrapé",
+    "Traiter chaque annulation comme un problème à corriger alors qu'elle découle d'un échec en amont"
+  ],
+  "variants": [
+    "Ajouter des travaux parallèles et demander ce que l'ordre du journal signifie encore.",
+    "Demander quel indicateur suivre pour distinguer un pipeline instable d'un pipeline cassé."
+  ],
+  "license": "CC-BY-4.0"
+}

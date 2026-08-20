@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "suiteId": "project-validation-pipeline-001.execution.v1",
+  "exerciseId": "project-validation-pipeline-001.execution",
+  "exerciseVersion": 1,
+  "typeName": "Submission",
+  "methodName": "Violations",
+  "parameterTypes": ["string", "int", "decimal"],
+  "returnType": "string"
+}

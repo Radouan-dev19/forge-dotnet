@@ -1,0 +1,82 @@
+{
+    "schemaVersion":  1,
+    "id":  "quality-diff-risk-001",
+    "version":  1,
+    "title":  "Estimer le risque d’un diff",
+    "kind":  "csharp",
+    "difficulty":  3,
+    "skills":  [
+                   "quality.review"
+               ],
+    "prerequisites":  [
+                          "quality-regression-refactoring-001"
+                      ],
+    "estimatedMinutes":  35,
+    "statement":  "statement.md",
+    "constraints":  [
+                        "Conserver exactement la signature publique",
+                        "Un changement d'autorisation est toujours haut risque ; le volume affine les autres cas.",
+                        "Ne lire aucun dépôt : le volume et la nature du changement sont fournis"
+                    ],
+    "examples":  [
+                     {
+                         "input":  "[20,false]",
+                         "output":  "\"low\""
+                     }
+                 ],
+    "reflectionFields":  [
+                             "reformulation",
+                             "inputs",
+                             "expectedOutput",
+                             "edgeCases",
+                             "hypothesis",
+                             "plan"
+                         ],
+    "starterPath":  "starter/",
+    "visibleTestsPath":  "tests/visible/",
+    "hiddenTestsPath":  "tests/hidden/",
+    "hints":  [
+                  {
+                      "level":  1,
+                      "kind":  "socratic",
+                      "content":  "Quel comportement public de « Estimer le risque d’un diff » change exactement à la frontière ?"
+                  },
+                  {
+                      "level":  2,
+                      "kind":  "location",
+                      "content":  "Concentrez la validation et la décision dans DiffRisk, sans état global ni journal sensible."
+                  },
+                  {
+                      "level":  3,
+                      "kind":  "strategy",
+                      "content":  "Un changement d’autorisation est toujours haut risque ; le volume affine les autres cas."
+                  },
+                  {
+                      "level":  4,
+                      "kind":  "partial-pseudocode",
+                      "content":  "refuser un nombre de lignes négatif ; classer en risque élevé dès que l'autorisation est touchée, quel que soit le volume, ou que le volume dépasse le seuil haut ; sinon départager le risque moyen du risque faible par le seuil bas"
+                  }
+              ],
+    "solution":  {
+                     "path":  "solution/",
+                     "unlock":  {
+                                    "seriousAttempts":  2,
+                                    "minimumDelayMinutes":  10
+                                }
+                 },
+    "explanation":  "explanation.md",
+    "complexity":  "O(1) en temps et O(1) en espace",
+    "commonMistakes":  [
+                           "Déduire le risque du seul volume et sous-estimer un diff de trois lignes sur l'autorisation",
+                           "Évaluer le volume avant la nature du changement",
+                           "Accepter un nombre de lignes négatif au lieu de refuser",
+                           "Employer des comparaisons larges et déplacer l'un des deux seuils"
+                       ],
+    "variantId":  "git-commit-subject-001",
+    "reviewCards":  [
+                        "card-quality-diff-risk-001-rule",
+                        "card-quality-diff-risk-001-security"
+                    ],
+    "interviewQuestionId":  "interview-quality-diff-risk-001",
+    "license":  "CC-BY-4.0"
+}

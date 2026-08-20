@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "cases": [
+    {
+      "name": "Hidden_ZeroIdentifierIsRejected",
+      "message": "Aucun client ne porte l'identifiant zéro dans ce jeu de données.",
+      "arguments": [0],
+      "expectedException": "ArgumentOutOfRangeException",
+      "argumentsUnchanged": false
+    },
+    {
+      "name": "Hidden_NegativeIdentifierIsRejected",
+      "message": "Un identifiant négatif ne désigne aucune ligne de la table.",
+      "arguments": [-1],
+      "expectedException": "ArgumentOutOfRangeException",
+      "argumentsUnchanged": false
+    },
+    {
+      "name": "Hidden_LargeIdentifierIsRejected",
+      "message": "Un identifiant hors du jeu de données est refusé, quelle que soit sa taille.",
+      "arguments": [2147483647],
+      "expectedException": "ArgumentOutOfRangeException",
+      "argumentsUnchanged": false
+    },
+    {
+      "name": "Hidden_CountIsNotTheNumberOfRows",
+      "message": "Le compte porte sur les requêtes envoyées, jamais sur les lignes rapatriées.",
+      "arguments": [3],
+      "expectedException": "ArgumentOutOfRangeException",
+      "argumentsUnchanged": false
+    }
+  ]
+}

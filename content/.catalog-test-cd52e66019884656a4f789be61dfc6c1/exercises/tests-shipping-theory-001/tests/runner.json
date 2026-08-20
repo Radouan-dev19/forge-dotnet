@@ -1,0 +1,13 @@
+{
+    "schemaVersion":  1,
+    "suiteId":  "tests-shipping-theory-001.v1",
+    "exerciseId":  "tests-shipping-theory-001",
+    "exerciseVersion":  1,
+    "typeName":  "Submission",
+    "methodName":  "ShippingCost",
+    "parameterTypes":  [
+                           "decimal",
+                           "bool"
+                       ],
+    "returnType":  "decimal"
+}

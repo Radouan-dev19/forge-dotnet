@@ -1,0 +1,32 @@
+{
+    "schemaVersion":  1,
+    "cases":  [
+                  {
+                      "name":  "Visible_Case1",
+                      "message":  "Extraire la première frame applicative — cas 1 visible incorrect.",
+                      "arguments":  [
+                                        "at System.X\nat Forge.Order.Run"
+                                    ],
+                      "expected":  "at Forge.Order.Run",
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Visible_Case2",
+                      "message":  "Extraire la première frame applicative — cas 2 visible incorrect.",
+                      "arguments":  [
+                                        ""
+                                    ],
+                      "expected":  "",
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Visible_SingleApplicationFrame",
+                      "message":  "Une seule ligne, applicative : elle est retournée telle quelle.",
+                      "arguments":  ["at Forge.X"],
+                      "expected":  "at Forge.X",
+                      "argumentsUnchanged":  true
+                  }
+              ]
+}

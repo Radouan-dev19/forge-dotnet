@@ -1,0 +1,36 @@
+{
+    "schemaVersion":  1,
+    "id":  "quality-review-diffs-001",
+    "version":  1,
+    "title":  "Revue de code centrée sur le diff",
+    "week":  17,
+    "skills":  [
+                   {
+                       "id":  "quality.review",
+                       "weight":  1
+                   }
+               ],
+    "prerequisites":  [
+                          "quality-static-analysis-001"
+                      ],
+    "estimatedMinutes":  75,
+    "objectives":  [
+                       "Appliquer Revue de code centrée sur le diff et justifier une preuve observable sur un cas nouveau"
+                   ],
+    "sections":  [
+                     "intuition",
+                     "explanation",
+                     "example",
+                     "counterExample",
+                     "check",
+                     "guided",
+                     "independent",
+                     "debugging",
+                     "interview",
+                     "summary",
+                     "reviewCards",
+                     "masteryTest"
+                 ],
+    "markdownPath":  "lesson.md",
+    "license":  "CC-BY-4.0"
+}

@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "cases": [
+    {
+      "name": "Visible_ConformingDraftIsValid",
+      "message": "Un objet conforme rend exactement le mot valide.",
+      "arguments": ["Clavier", 2, 10.00],
+      "expected": "valide",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Visible_RequiredShortCircuitsTheOthers",
+      "message": "Quand la présence manque, le pipeline n'évalue pas les autres attributs du membre.",
+      "arguments": ["", 5, 4.50],
+      "expected": "Name:obligatoire",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Visible_ZeroQuantityIsOutOfRange",
+      "message": "La borne basse de la quantité vient de l'attribut, pas d'un test écrit à la main.",
+      "arguments": ["Stylo", 0, 4.50],
+      "expected": "Quantity:intervalle",
+      "argumentsUnchanged": true
+    }
+  ]
+}

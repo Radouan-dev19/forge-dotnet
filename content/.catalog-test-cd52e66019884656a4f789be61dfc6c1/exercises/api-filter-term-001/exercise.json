@@ -1,0 +1,82 @@
+{
+    "schemaVersion":  1,
+    "id":  "api-filter-term-001",
+    "version":  1,
+    "title":  "Filtrer sans dépendre de la culture",
+    "kind":  "csharp",
+    "difficulty":  2,
+    "skills":  [
+                   "api.pagination"
+               ],
+    "prerequisites":  [
+                          "api-async-cancellation-001"
+                      ],
+    "estimatedMinutes":  35,
+    "statement":  "statement.md",
+    "constraints":  [
+                        "Conserver exactement la signature publique",
+                        "Refuser les termes vides puis employer une comparaison ordinale insensible à la casse.",
+                        "Ne dépendre d'aucune culture : la comparaison reste ordinale"
+                    ],
+    "examples":  [
+                     {
+                         "input":  "[\"Commande Ada\",\"ada\"]",
+                         "output":  "true"
+                     }
+                 ],
+    "reflectionFields":  [
+                             "reformulation",
+                             "inputs",
+                             "expectedOutput",
+                             "edgeCases",
+                             "hypothesis",
+                             "plan"
+                         ],
+    "starterPath":  "starter/",
+    "visibleTestsPath":  "tests/visible/",
+    "hiddenTestsPath":  "tests/hidden/",
+    "hints":  [
+                  {
+                      "level":  1,
+                      "kind":  "socratic",
+                      "content":  "Quel comportement public de « Filtrer sans dépendre de la culture » change exactement à la frontière ?"
+                  },
+                  {
+                      "level":  2,
+                      "kind":  "location",
+                      "content":  "Concentrez la validation et la décision dans ContainsTerm, sans état global ni journal sensible."
+                  },
+                  {
+                      "level":  3,
+                      "kind":  "strategy",
+                      "content":  "Refuser les termes vides puis utiliser une comparaison ordinale insensible à la casse."
+                  },
+                  {
+                      "level":  4,
+                      "kind":  "partial-pseudocode",
+                      "content":  "si la valeur ou le terme est absent, vide ou composé de blancs retourner faux ; sinon retirer les blancs de bordure du terme et chercher son occurrence avec une comparaison ordinale insensible à la casse"
+                  }
+              ],
+    "solution":  {
+                     "path":  "solution/",
+                     "unlock":  {
+                                    "seriousAttempts":  2,
+                                    "minimumDelayMinutes":  10
+                                }
+                 },
+    "explanation":  "explanation.md",
+    "complexity":  "O(n*m) au pire et O(n) en espace pour la normalisation",
+    "commonMistakes":  [
+                           "Accepter un terme vide, qui correspondrait alors à toutes les valeurs",
+                           "Employer une comparaison dépendante de la culture et obtenir un résultat variable",
+                           "Uniformiser la casse en construisant deux chaînes au lieu de comparer sans distinction",
+                           "Oublier de retirer les blancs de bordure du terme saisi"
+                       ],
+    "variantId":  "api-cancellation-budget-001",
+    "reviewCards":  [
+                        "card-api-filter-term-001-rule",
+                        "card-api-filter-term-001-security"
+                    ],
+    "interviewQuestionId":  "interview-api-filter-term-001",
+    "license":  "CC-BY-4.0"
+}

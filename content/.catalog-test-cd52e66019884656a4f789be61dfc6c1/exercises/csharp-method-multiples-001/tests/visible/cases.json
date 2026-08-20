@@ -1,0 +1,8 @@
+{
+  "schemaVersion": 1,
+  "cases": [
+    { "name": "Visible_PositiveRange", "message": "Il existe trois multiples de 3 entre 1 et 10.", "arguments": [1, 10, 3], "expected": 3 },
+    { "name": "Visible_CrossZero", "message": "Zéro et les bornes divisibles doivent être comptés.", "arguments": [-4, 4, 2], "expected": 5 },
+    { "name": "Visible_EmptyRange", "message": "Une plage inversée doit retourner zéro.", "arguments": [8, 3, 2], "expected": 0 }
+  ]
+}

@@ -1,0 +1,39 @@
+{
+    "schemaVersion":  1,
+    "cases":  [
+                  {
+                      "name":  "Hidden_Case1",
+                      "message":  "Inverser avec une pile — cas 1 hidden incorrect.",
+                      "arguments":  [
+                                        "été"
+                                    ],
+                      "expected":  "été",
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_Case2",
+                      "message":  "Inverser avec une pile — cas 2 hidden incorrect.",
+                      "arguments":  [
+                                        "a b"
+                                    ],
+                      "expected":  "b a",
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_TwoCharacters",
+                      "message":  "Deux caractères : le plus petit cas où l'ordre change réellement.",
+                      "arguments":  ["ab"],
+                      "expected":  "ba",
+                      "argumentsUnchanged":  true
+                  },
+                  {
+                      "name":  "Hidden_WhitespaceOnly",
+                      "message":  "Espaces uniquement : réfute une implémentation qui rognerait l'entrée.",
+                      "arguments":  ["  "],
+                      "expected":  "  ",
+                      "argumentsUnchanged":  true
+                  }
+              ]
+}

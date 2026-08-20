@@ -1,0 +1,83 @@
+{
+  "schemaVersion": 1,
+  "id": "azure-release-audit-001",
+  "version": 1,
+  "title": "Auditer le dossier de preuves d'un jalon de livraison",
+  "kind": "csharp",
+  "difficulty": 3,
+  "skills": ["azure.release"],
+  "prerequisites": ["final-project-evidence-001"],
+  "estimatedMinutes": 35,
+  "statement": "statement.md",
+  "constraints": [
+    "Conserver exactement la signature publique",
+    "Une preuve périmée ne vaut pas mieux qu'une preuve absente : les deux bloquent, chacune sous son nom",
+    "Le verdict bloqué liste toutes les preuves fautives, dans l'ordre du référentiel",
+    "Une preuve hors référentiel est refusée : un dossier n'improvise pas ses pièces"
+  ],
+  "examples": [
+    {
+      "input": "tests=fresh;security-review=fresh;rollback-plan=fresh",
+      "output": "ready"
+    },
+    {
+      "input": "tests=fresh;rollback-plan=fresh",
+      "output": "blocked|security-review=missing"
+    }
+  ],
+  "reflectionFields": [
+    "reformulation",
+    "inputs",
+    "expectedOutput",
+    "edgeCases",
+    "hypothesis",
+    "plan"
+  ],
+  "starterPath": "starter/",
+  "visibleTestsPath": "tests/visible/",
+  "hiddenTestsPath": "tests/hidden/",
+  "hints": [
+    {
+      "level": 1,
+      "kind": "socratic",
+      "content": "Le dossier montre des tests verts datés d'avant le dernier correctif. Que prouvent-ils sur le code qui va réellement partir, et en quoi valent-ils mieux — ou pas — que pas de tests du tout ?"
+    },
+    {
+      "level": 2,
+      "kind": "location",
+      "content": "Le dossier fourni et le référentiel exigé sont deux listes différentes : validez d'abord chaque pièce fournie, puis parcourez le référentiel — c'est lui qui décide de l'ordre du verdict et qui révèle les pièces jamais fournies."
+    },
+    {
+      "level": 3,
+      "kind": "strategy",
+      "content": "Trois états par pièce exigée : fraîche, périmée ou absente du dossier. Seule la fraîcheur passe ; les deux autres entrent au verdict avec leur état exact, parce que la correction diffère — rejouer une preuve périmée, produire une preuve absente."
+    },
+    {
+      "level": 4,
+      "kind": "partial-pseudocode",
+      "content": "refuser un dossier vide, une pièce illisible, une pièce hors référentiel, une pièce répétée ou un état inconnu ; parcourir le référentiel dans son ordre ; classer chaque pièce exigée selon son état dans le dossier, l'absence comptant comme manquante ; rendre le mot de prêt si tout est frais, sinon le mot de bloqué suivi des pièces fautives et de leur état"
+    }
+  ],
+  "solution": {
+    "path": "solution/",
+    "unlock": {
+      "seriousAttempts": 2,
+      "minimumDelayMinutes": 10
+    }
+  },
+  "explanation": "explanation.md",
+  "complexity": "O(n) en temps pour n pièces fournies et O(1) en espace au-delà de la table du dossier",
+  "commonMistakes": [
+    "Traiter une preuve périmée comme présente et laisser partir un code que personne n'a re-testé",
+    "S'arrêter à la première pièce fautive alors que le verdict complet évite les allers-retours",
+    "Accepter des pièces hors référentiel qui gonflent le dossier sans rien prouver",
+    "Confondre l'ordre du dossier fourni avec l'ordre du référentiel dans le verdict"
+  ],
+  "variantId": "azure-release-evidence-001",
+  "reviewCards": [
+    "card-azure-release-audit-001-rule",
+    "card-azure-release-audit-001-edge"
+  ],
+  "interviewQuestionId": "interview-azure-release-audit-001",
+  "license": "CC-BY-4.0"
+}

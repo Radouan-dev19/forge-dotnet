@@ -1,0 +1,34 @@
+{
+    "schemaVersion":  1,
+    "cases":  [
+                  {
+                      "name":  "Visible_Case1",
+                      "message":  "Appliquer une politique VIP — cas 1 visible incorrect.",
+                      "arguments":  [
+                                        100,
+                                        true
+                                    ],
+                      "expected":  90,
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Visible_Case2",
+                      "message":  "Appliquer une politique VIP — cas 2 visible incorrect.",
+                      "arguments":  [
+                                        100,
+                                        false
+                                    ],
+                      "expected":  100,
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Visible_LargeVipTotal",
+                      "message":  "Total élevé pour un client privilégié : réfute une remise forfaitaire.",
+                      "arguments":  [250,true],
+                      "expected":  225,
+                      "argumentsUnchanged":  true
+                  }
+              ]
+}

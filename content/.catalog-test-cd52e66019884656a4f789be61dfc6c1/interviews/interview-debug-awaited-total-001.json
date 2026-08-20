@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "id": "interview-debug-awaited-total-001",
+  "version": 1,
+  "title": "Agréger des résultats attendus",
+  "level": "junior",
+  "durationMinutes": 5,
+  "skills": [
+    "csharp.async"
+  ],
+  "question": "Comment résoudriez-vous « Agréger des résultats attendus » et comment prouveriez-vous les bornes ?",
+  "observableCriteria": [
+    "Chaque travail lancé est attendu, et l'oubli d'une attente est nommé comme le défaut visé",
+    "L'agrégation a lieu après les attentes, jamais pendant"
+  ],
+  "modelAnswer": "L’exercice isole l’agrégation après await ; aucun travail lancé ne doit être oublié. Je prouve par un seul travail, plusieurs travaux et un travail qui échoue, dont l'échec ne doit pas être perdu ; O(n) en temps et O(1) en espace.",
+  "commonMistakes": [
+    "Lancer les travaux et agréger avant que tous ne soient terminés"
+  ],
+  "variants": [
+    "Changer une borne ou le volume tout en conservant la même règle de agréger des résultats attendus."
+  ],
+  "license": "CC-BY-4.0"
+}

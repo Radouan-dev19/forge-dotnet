@@ -1,0 +1,36 @@
+{
+    "schemaVersion":  1,
+    "id":  "quality-regression-refactoring-001",
+    "version":  1,
+    "title":  "Non-régression avant refactoring",
+    "week":  17,
+    "skills":  [
+                   {
+                       "id":  "quality.regression",
+                       "weight":  1
+                   }
+               ],
+    "prerequisites":  [
+                          "tests-api-factory-001"
+                      ],
+    "estimatedMinutes":  75,
+    "objectives":  [
+                       "Appliquer Non-régression avant refactoring et justifier une preuve observable sur un cas nouveau"
+                   ],
+    "sections":  [
+                     "intuition",
+                     "explanation",
+                     "example",
+                     "counterExample",
+                     "check",
+                     "guided",
+                     "independent",
+                     "debugging",
+                     "interview",
+                     "summary",
+                     "reviewCards",
+                     "masteryTest"
+                 ],
+    "markdownPath":  "lesson.md",
+    "license":  "CC-BY-4.0"
+}

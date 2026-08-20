@@ -1,0 +1,10 @@
+{
+    "schemaVersion":  1,
+    "suiteId":  "english-review-comment-001.v1",
+    "exerciseId":  "english-review-comment-001",
+    "exerciseVersion":  1,
+    "typeName":  "Submission",
+    "methodName":  "CommentKind",
+    "parameterTypes":  ["string"],
+    "returnType":  "string"
+}

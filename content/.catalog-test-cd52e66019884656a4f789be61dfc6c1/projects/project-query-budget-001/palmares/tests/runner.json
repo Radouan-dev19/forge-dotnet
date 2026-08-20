@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "suiteId": "project-query-budget-001.palmares.v1",
+  "exerciseId": "project-query-budget-001.palmares",
+  "exerciseVersion": 1,
+  "typeName": "Submission",
+  "methodName": "ShelfRank",
+  "parameterTypes": ["int"],
+  "returnType": "string"
+}

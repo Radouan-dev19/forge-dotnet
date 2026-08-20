@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "id": "interview-s21-s24-033",
+  "version": 1,
+  "title": "Préparer une démonstration",
+  "level": "intermediate",
+  "durationMinutes": 9,
+  "skills": [
+    "project.demo"
+  ],
+  "question": "Comment rendez-vous une démonstration reproductible ?",
+  "observableCriteria": [
+    "L'état de départ est connu et reconstituable, et les commandes sont documentées",
+    "Un refus est montré au même titre qu'un succès, et chaque observation est reliée à un critère"
+  ],
+  "modelAnswer": "Je pars dʼun état connu, annonce le scénario, exécute les commandes documentées, montre succès et refus puis relie chaque observation au critère.",
+  "commonMistakes": [
+    "Démontrer uniquement le chemin nominal et laisser le refus hors de la démonstration"
+  ],
+  "variants": [
+    "Changez une contrainte du scénario « Préparer une démonstration » et expliquez si la décision reste valide."
+  ],
+  "license": "CC-BY-4.0"
+}

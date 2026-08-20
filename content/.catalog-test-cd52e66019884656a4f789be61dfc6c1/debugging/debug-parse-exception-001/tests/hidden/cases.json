@@ -1,0 +1,25 @@
+{
+    "schemaVersion":  1,
+    "cases":  [
+                  {
+                      "name":  "Hidden_Case1",
+                      "message":  "Conversion qui interrompt le lot — cas 1.",
+                      "arguments":  [
+                                        "-3"
+                                    ],
+                      "expected":  -3,
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_Case2",
+                      "message":  "Conversion qui interrompt le lot — cas 2.",
+                      "arguments":  [
+                                        ""
+                                    ],
+                      "expected":  0,
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  }
+              ]
+}

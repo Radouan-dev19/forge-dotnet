@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "cases": [
+    {
+      "name": "Visible_WellFormedSkuIsValid",
+      "message": "Deux lettres majuscules, un tiret, quatre chiffres : le format nominal passe.",
+      "arguments": ["AB-1234"],
+      "expected": "valide",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Visible_LowercaseLettersAreRejected",
+      "message": "Le format exige des majuscules : les minuscules sont un manquement.",
+      "arguments": ["ab-1234"],
+      "expected": "Sku:sku",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Visible_ThreeDigitsAreTooFew",
+      "message": "Quatre chiffres exactement : un de moins suffit à refuser.",
+      "arguments": ["AB-123"],
+      "expected": "Sku:sku",
+      "argumentsUnchanged": true
+    }
+  ]
+}

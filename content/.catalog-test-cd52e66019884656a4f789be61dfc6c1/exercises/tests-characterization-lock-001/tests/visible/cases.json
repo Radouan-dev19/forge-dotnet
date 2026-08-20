@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "cases": [
+    {
+      "name": "Visible_SmallBasketPaysTheBaseFee",
+      "message": "Trois articles sous le seuil : le socle observé s'applique, sans supplément.",
+      "arguments": [60.00, 3],
+      "expected": 4.90,
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Visible_ExactlyOneHundredStillPays",
+      "message": "À cent tout rond, la production facture les frais : la caractérisation fige cet écart, elle ne le corrige pas.",
+      "arguments": [100.00, 2],
+      "expected": 4.90,
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Visible_AboveOneHundredShipsFree",
+      "message": "Strictement au-delà du seuil, la gratuité observée l'emporte, quel que soit le nombre d'articles.",
+      "arguments": [100.01, 12],
+      "expected": 0.00,
+      "argumentsUnchanged": true
+    }
+  ]
+}

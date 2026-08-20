@@ -1,0 +1,84 @@
+{
+    "schemaVersion":  1,
+    "id":  "security-jwt-order-001",
+    "version":  1,
+    "title":  "Enchaîner la validation dans l'ordre imposé",
+    "kind":  "csharp",
+    "difficulty":  4,
+    "skills":  [
+                   "security.token",
+                   "security.authentication"
+               ],
+    "prerequisites":  [
+                          "security-jwt-validation-001",
+                          "security-jwt-signature-001"
+                      ],
+    "estimatedMinutes":  45,
+    "statement":  "statement.md",
+    "constraints":  [
+                        "Conserver exactement la signature publique",
+                        "Le verdict rendu est celui du premier contrôle qui échoue, dans l'ordre imposé par l'énoncé",
+                        "Aucune revendication n'est consultée avant que la signature ne soit prouvée"
+                    ],
+    "examples":  [
+                     {
+                         "input":  "[\"<jeton conforme>\", \"forge-fake-jwt-secret\", \"forge-issuer\", \"forge-api\", 1749990000]",
+                         "output":  "\"valid\""
+                     }
+                 ],
+    "reflectionFields":  [
+                             "reformulation",
+                             "inputs",
+                             "expectedOutput",
+                             "edgeCases",
+                             "hypothesis",
+                             "plan"
+                         ],
+    "starterPath":  "starter/",
+    "visibleTestsPath":  "tests/visible/",
+    "hiddenTestsPath":  "tests/hidden/",
+    "hints":  [
+                  {
+                      "level":  1,
+                      "kind":  "socratic",
+                      "content":  "Un jeton expiré porte une signature falsifiée : lequel des deux verdicts votre validateur doit-il rendre, et qu'est-ce que l'autre choix révélerait à l'attaquant ?"
+                  },
+                  {
+                      "level":  2,
+                      "kind":  "location",
+                      "content":  "Structurez la méthode comme une suite de gardes qui retournent chacune leur verdict : la lisibilité de l'ordre est le sujet même de l'exercice."
+                  },
+                  {
+                      "level":  3,
+                      "kind":  "strategy",
+                      "content":  "Groupez les contrôles en deux familles — ce qui se vérifie sans faire confiance au contenu, puis les revendications une fois la signature prouvée — et ne décodez la charge utile qu'entre les deux."
+                  },
+                  {
+                      "level":  4,
+                      "kind":  "partial-pseudocode",
+                      "content":  "vérifier la forme complète des trois segments et rendre le verdict de format au moindre échec ; confronter l'annonce d'algorithme à celle qu'impose le serveur ; recalculer et comparer la signature en temps constant ; puis seulement lire les revendications et rendre, dans l'ordre, le verdict d'expiration stricte, d'émetteur, d'audience ; sinon conclure à la validité"
+                  }
+              ],
+    "solution":  {
+                     "path":  "solution/",
+                     "unlock":  {
+                                    "seriousAttempts":  2,
+                                    "minimumDelayMinutes":  10
+                                }
+                 },
+    "explanation":  "explanation.md",
+    "complexity":  "O(n) en temps et O(n) en espace, n étant la longueur totale du jeton",
+    "commonMistakes":  [
+                           "Rendre le verdict d'expiration sur un jeton dont la signature est fausse, ce qui confirme à l'attaquant la lecture de sa charge utile",
+                           "Vérifier les revendications dans un ordre différent de celui du contrat et rendre un verdict imprévisible",
+                           "Décoder la charge utile avant la preuve de signature pour préparer les contrôles suivants",
+                           "Confondre le verdict de format et celui d'algorithme quand l'en-tête est illisible"
+                       ],
+    "variantId":  "security-jwt-lifetime-001",
+    "reviewCards":  [
+                        "card-security-jwt-order-001-rule",
+                        "card-security-jwt-order-001-edge"
+                    ],
+    "interviewQuestionId":  "interview-security-jwt-order-001",
+    "license":  "CC-BY-4.0"
+}

@@ -1,0 +1,115 @@
+{
+  "schemaVersion": 1,
+  "id": "forge-senior-reference",
+  "version": 1,
+  "title": "Forge.NET — piste senior, Senior S1 à S8",
+  "description": "Piste senior distincte, a suivre apres le socle S1-S24 et le bloc front-end S25-S27 : fondamentaux distribues, resilience, messagerie, coherence eventuelle, refus argumente du decoupage, observabilite, revue de code et base de code existante.",
+  "weeks": 32,
+  "modules": [
+    {
+      "id": "senior-25",
+      "title": "Senior S1 — Resilience d'un appel",
+      "weeks": [25],
+      "prerequisites": [],
+      "lessonIds": ["senior-resilience-001"],
+      "exerciseIds": [
+        "senior-circuit-breaker-001",
+        "senior-retry-jitter-001",
+        "senior-breaker-window-001",
+        "senior-bulkhead-budget-001"
+      ]
+    },
+    {
+      "id": "senior-26",
+      "title": "Senior S2 — Idempotence et rejeu",
+      "weeks": [26],
+      "prerequisites": ["senior-25"],
+      "lessonIds": ["senior-idempotency-001"],
+      "exerciseIds": [
+        "senior-idempotency-key-001",
+        "senior-idempotency-collision-001",
+        "senior-replay-verdict-001",
+        "senior-dedup-window-001"
+      ]
+    },
+    {
+      "id": "senior-27",
+      "title": "Senior S3 — Messagerie",
+      "weeks": [27],
+      "prerequisites": ["senior-26"],
+      "lessonIds": ["senior-messaging-001"],
+      "exerciseIds": [
+        "senior-consumer-decision-001",
+        "senior-dead-letter-verdict-001",
+        "senior-queue-backlog-001",
+        "senior-partition-order-001"
+      ]
+    },
+    {
+      "id": "senior-28",
+      "title": "Senior S4 — Coherence eventuelle et compensation",
+      "weeks": [28],
+      "prerequisites": ["senior-27"],
+      "lessonIds": ["senior-consistency-001"],
+      "exerciseIds": [
+        "senior-compensation-001",
+        "senior-compensation-plan-001",
+        "senior-saga-state-001",
+        "senior-monotonic-reads-001"
+      ]
+    },
+    {
+      "id": "senior-29",
+      "title": "Senior S5 — Decouper ou non : le refus argumente",
+      "weeks": [29],
+      "prerequisites": ["senior-28"],
+      "lessonIds": ["senior-boundaries-001"],
+      "exerciseIds": [
+        "senior-decomposition-001",
+        "senior-boundary-score-001",
+        "senior-chain-availability-001",
+        "senior-deploy-cycle-001"
+      ]
+    },
+    {
+      "id": "senior-30",
+      "title": "Senior S6 — Observabilite distribuee",
+      "weeks": [30],
+      "prerequisites": ["senior-29"],
+      "lessonIds": ["senior-observability-001"],
+      "exerciseIds": [
+        "senior-error-budget-001",
+        "senior-trace-critical-path-001",
+        "senior-burn-rate-001",
+        "senior-latency-percentile-001"
+      ]
+    },
+    {
+      "id": "senior-31",
+      "title": "Senior S7 — Revue de code",
+      "weeks": [31],
+      "prerequisites": ["senior-30"],
+      "lessonIds": ["senior-code-review-001"],
+      "exerciseIds": [
+        "senior-review-triage-001",
+        "senior-review-evidence-001",
+        "senior-merge-verdict-001",
+        "senior-review-owners-001"
+      ]
+    },
+    {
+      "id": "senior-32",
+      "title": "Senior S8 — Base de code existante",
+      "weeks": [32],
+      "prerequisites": ["senior-31"],
+      "lessonIds": ["senior-legacy-001"],
+      "exerciseIds": [
+        "senior-legacy-trace-001",
+        "senior-hotspot-ranking-001",
+        "senior-strangler-order-001",
+        "senior-flag-retirement-001"
+      ]
+    }
+  ],
+  "license": "CC-BY-4.0"
+}

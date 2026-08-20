@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "id": "english-card-01-written",
+  "version": 1,
+  "title": "Hosting decision — written update",
+  "level": "B1",
+  "durationMinutes": 12,
+  "skills": [
+    "english.written",
+    "azure.hosting"
+  ],
+  "situation": "In a technical discussion, a teammate asks why the service is not containerized. You must write the decision accurately without overstating the evidence.",
+  "instructions": [
+    "Write four sentences naming the hosting model, the operational cost it saves, and the condition that would reverse the choice."
+  ],
+  "vocabulary": [
+    {
+      "term": "hosting choice",
+      "meaning": "the runtime model a service is deployed on, chosen for its operational cost rather than its popularity"
+    },
+    {
+      "term": "reversal condition",
+      "meaning": "the future fact that would make you revisit a decision, stated when the decision is taken rather than after"
+    }
+  ],
+  "expectedElements": [
+    "The hosting model is named, not described vaguely",
+    "The reason is operational cost, not preference",
+    "One condition that would reverse the choice"
+  ],
+  "modelAnswer": "The service runs on a managed application platform instead of a container runtime. We chose it because it removes base image maintenance and patching from our workload, and the evidence is the patch backlog we no longer carry. The limitation is that we cannot route a percentage of traffic to a new revision, so releases are all or nothing. If weighted rollout becomes a requirement, we will revisit the choice and I will reopen this decision.",
+  "commonMistakes": [
+    "Defending the platform on popularity instead of on the maintenance it removes",
+    "Presenting the choice as permanent, with no condition that would reverse it"
+  ],
+  "variants": [
+    "Rewrite the update for a reader who has to approve a container migration budget."
+  ],
+  "license": "CC-BY-4.0"
+}

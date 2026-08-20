@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "id": "interview-security-login-message-001",
+  "version": 1,
+  "title": "Uniformiser un échec de connexion",
+  "level": "intermediate",
+  "durationMinutes": 6,
+  "skills": [
+    "security.authentication"
+  ],
+  "question": "Comment implémenteriez-vous « Uniformiser un échec de connexion » et quelles preuves réfutent les contournements ?",
+  "observableCriteria": [
+    "Le message public est identique quelle que soit la cause de l'échec",
+    "La distinction entre le message public et la trace interne est faite"
+  ],
+  "modelAnswer": "Retourner le même message public pour ne révéler ni existence ni nature de l’échec. Je teste un compte inconnu, un mot de passe faux et un compte verrouillé, les trois devant produire exactement la même sortie publique. O(1) en temps et O(1) en espace.",
+  "commonMistakes": [
+    "Indiquer que le compte est inconnu et fournir un moyen d'énumérer les comptes"
+  ],
+  "variants": [
+    "Changer la frontière ou le droit tout en conservant la règle de uniformiser un échec de connexion."
+  ],
+  "license": "CC-BY-4.0"
+}

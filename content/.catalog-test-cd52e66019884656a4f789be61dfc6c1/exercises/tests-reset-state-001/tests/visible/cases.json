@@ -1,0 +1,42 @@
+{
+    "schemaVersion":  1,
+    "cases":  [
+                  {
+                      "name":  "Visible_Case1",
+                      "message":  "Réinitialiser un état de test — cas 1 incorrect.",
+                      "arguments":  [
+                                        [
+                                            1,
+                                            2
+                                        ]
+                                    ],
+                      "expected":  [
+                                       0,
+                                       0
+                                   ],
+                      "expectedException":  null,
+                      "argumentsUnchanged":  true
+                  },
+                  {
+                      "name":  "Visible_Case2",
+                      "message":  "Réinitialiser un état de test — cas 2 incorrect.",
+                      "arguments":  [
+                                        [
+
+                                        ]
+                                    ],
+                      "expected":  [
+
+                                   ],
+                      "expectedException":  null,
+                      "argumentsUnchanged":  true
+                  },
+                  {
+                      "name":  "Visible_SingleValue",
+                      "message":  "Un seul emplacement : remis à zéro, l'entrée restant intacte.",
+                      "arguments":  [[7]],
+                      "expected":  [0],
+                      "argumentsUnchanged":  true
+                  }
+              ]
+}

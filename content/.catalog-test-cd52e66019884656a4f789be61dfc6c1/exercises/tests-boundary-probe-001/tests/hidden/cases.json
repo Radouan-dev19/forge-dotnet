@@ -1,0 +1,54 @@
+{
+  "schemaVersion": 1,
+  "cases": [
+    {
+      "name": "Hidden_EmptyIntervalIsRefused",
+      "message": "Un intervalle dont la borne basse dépasse la borne haute n'a aucune frontière.",
+      "arguments": [10, 3],
+      "expectedException": "ArgumentException",
+      "argumentsUnchanged": false
+    },
+    {
+      "name": "Hidden_NegativeIntervalKeepsAscendingOrder",
+      "message": "Un intervalle négatif se sonde à l'identique, et l'ordre reste croissant.",
+      "arguments": [-3, -1],
+      "expected": [-4, -3, -1, 0],
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_UpperTypeLimitHasNoOutsideProbe",
+      "message": "Aucune valeur n'existe au-delà de la limite haute du type : la sonde extérieure est absente.",
+      "arguments": [2147483647, 2147483647],
+      "expected": [2147483646, 2147483647],
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_LowerTypeLimitHasNoOutsideProbe",
+      "message": "Aucune valeur n'existe en dessous de la limite basse du type.",
+      "arguments": [-2147483648, -2147483648],
+      "expected": [-2147483648, -2147483647],
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_WholeTypeRangeYieldsOnlyItsBounds",
+      "message": "Un intervalle qui couvre tout le type n'a aucun extérieur à sonder.",
+      "arguments": [-2147483648, 2147483647],
+      "expected": [-2147483648, 2147483647],
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_SmallPositiveIntervalIsComplete",
+      "message": "Un intervalle court garde ses quatre sondes distinctes.",
+      "arguments": [7, 8],
+      "expected": [6, 7, 8, 9],
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_ZeroIsNotASpecialCase",
+      "message": "Une borne nulle se sonde comme les autres, y compris du côté négatif.",
+      "arguments": [0, 0],
+      "expected": [-1, 0, 1],
+      "argumentsUnchanged": true
+    }
+  ]
+}

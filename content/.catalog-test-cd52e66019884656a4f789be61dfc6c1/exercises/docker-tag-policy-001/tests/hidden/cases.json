@@ -1,0 +1,54 @@
+{
+  "schemaVersion": 1,
+  "cases": [
+    {
+      "name": "Hidden_EmptyManifestIsRefused",
+      "message": "Un manifeste vide n'est pas conforme : il est absent.",
+      "arguments": [""],
+      "expectedException": "ArgumentException",
+      "argumentsUnchanged": false
+    },
+    {
+      "name": "Hidden_RegistryPortIsNotATag",
+      "message": "Le deux-points appartient au port du registre : la référence est nue, pas étiquetée.",
+      "arguments": ["registry.local:5000/app"],
+      "expected": "registry.local:5000/app=untagged",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_TruncatedDigestIsMalformed",
+      "message": "Une empreinte trop courte trahit un copier-coller abîmé, pas une image flottante.",
+      "arguments": ["app@sha256:abc123"],
+      "expected": "app@sha256:abc123=invalid-digest",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_UppercaseDigestIsMalformed",
+      "message": "L'alphabet d'une empreinte est l'hexadécimal minuscule ; les majuscules sont refusées.",
+      "arguments": ["app@sha256:ABCDEF0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF0123456789"],
+      "expected": "app@sha256:ABCDEF0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF0123456789=invalid-digest",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_PortedRegistryWithRealTagIsMutable",
+      "message": "Après la dernière barre oblique, le deux-points redevient une étiquette — mutable comme les autres.",
+      "arguments": ["registry.local:5000/app:8.0"],
+      "expected": "registry.local:5000/app:8.0=mutable-tag",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_TagPlusDigestPassesButNeighbourFails",
+      "message": "L'étiquette accompagnée d'une empreinte valide est acceptée ; sa voisine sans empreinte non.",
+      "arguments": ["svc:2.1.0@sha256:0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef;jobs:nightly"],
+      "expected": "jobs:nightly=mutable-tag",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_EmptyEntryIsRefused",
+      "message": "Un trou entre deux points-virgules signale un manifeste corrompu.",
+      "arguments": ["a;;b"],
+      "expectedException": "ArgumentException",
+      "argumentsUnchanged": false
+    }
+  ]
+}

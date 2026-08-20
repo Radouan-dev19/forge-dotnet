@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "id": "interview-list-distinct-001",
+  "version": 1,
+  "title": "Préserver l’ordre pendant une déduplication",
+  "level": "junior",
+  "durationMinutes": 5,
+  "skills": ["csharp.lists", "csharp.collections"],
+  "question": "Comment dédupliquerais-tu une liste sans modifier l’entrée ni perdre l’ordre des premières occurrences ?",
+  "observableCriteria": [
+    "Les rôles distincts de la liste résultat et de l’ensemble sont expliqués",
+    "L’immutabilité, le vide et plusieurs motifs de doublons sont testés"
+  ],
+  "modelAnswer": "Je parcours l’entrée sans l’écrire, je mémorise les valeurs dans un HashSet et j’ajoute à une nouvelle liste seulement quand Add indique une première occurrence. Je vérifie aussi que l’entrée est inchangée.",
+  "commonMistakes": ["Utiliser un tri qui change l’ordre métier"],
+  "variants": ["Dédupliquer des chaînes sans tenir compte de la casse"],
+  "license": "CC-BY-4.0"
+}

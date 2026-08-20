@@ -1,0 +1,83 @@
+{
+  "schemaVersion": 1,
+  "id": "security-scope-grant-001",
+  "version": 1,
+  "title": "Accorder une portée sans jamais l'accorder par défaut",
+  "kind": "csharp",
+  "difficulty": 4,
+  "skills": ["security.authorization"],
+  "prerequisites": ["security-authorization-roles-policies-001"],
+  "estimatedMinutes": 45,
+  "statement": "statement.md",
+  "constraints": [
+    "Conserver exactement la signature publique",
+    "Un refus explicite l'emporte quelle que soit sa position dans la liste",
+    "L'absence de correspondance rend une décision négative, sans règle particulière à écrire",
+    "La comparaison des portées est sensible à la casse"
+  ],
+  "examples": [
+    {
+      "input": "[\"orders:read orders:write\", \"orders:read\"]",
+      "output": "true"
+    },
+    {
+      "input": "[\"orders:* !orders:delete\", \"orders:delete\"]",
+      "output": "false"
+    }
+  ],
+  "reflectionFields": [
+    "reformulation",
+    "inputs",
+    "expectedOutput",
+    "edgeCases",
+    "hypothesis",
+    "plan"
+  ],
+  "starterPath": "starter/",
+  "visibleTestsPath": "tests/visible/",
+  "hiddenTestsPath": "tests/hidden/",
+  "hints": [
+    {
+      "level": 1,
+      "kind": "socratic",
+      "content": "Si la première entrée qui correspond décidait, que suffirait-il de changer dans le jeton pour contourner un refus ? Et qui contrôle l'ordre des entrées d'un jeton ?"
+    },
+    {
+      "level": 2,
+      "kind": "location",
+      "content": "Séparez la question « cette entrée couvre-t-elle la portée exigée ? » de la question « que fait-on d'une entrée qui la couvre ? ». La première ignore les refus, la seconde ne parle que d'eux."
+    },
+    {
+      "level": 3,
+      "kind": "strategy",
+      "content": "Un refus qui correspond permet de conclure immédiatement ; une autorisation qui correspond ne permet que de retenir une possibilité, car un refus peut encore venir. Ces deux asymétries dictent la structure du parcours."
+    },
+    {
+      "level": 4,
+      "kind": "partial-pseudocode",
+      "content": "partir d'une décision négative ; pour chaque entrée non vide, séparer son marqueur de refus de la portée ; ignorer celle qui ne couvre pas l'exigence ; conclure négativement sur un refus qui couvre ; sur une autorisation qui couvre, retenir seulement que la voie est ouverte et continuer"
+    }
+  ],
+  "solution": {
+    "path": "solution/",
+    "unlock": {
+      "seriousAttempts": 2,
+      "minimumDelayMinutes": 10
+    }
+  },
+  "explanation": "explanation.md",
+  "complexity": "O(n × m) en temps et O(1) en espace, pour n entrées du jeton et m caractères comparés",
+  "commonMistakes": [
+    "Conclure sur la première entrée qui correspond, ce qui rend la décision dépendante de l'ordre du jeton",
+    "Comparer les portées sans tenir compte de la casse, et confondre deux droits distincts",
+    "Faire couvrir la famille elle-même par son générique, ce qui accorde une portée que personne n'a nommée",
+    "Traiter une liste vide comme une absence de contrainte plutôt que comme une absence de droit"
+  ],
+  "variantId": "security-owner-policy-001",
+  "reviewCards": [
+    "card-security-scope-grant-001-rule",
+    "card-security-scope-grant-001-edge"
+  ],
+  "interviewQuestionId": "interview-security-scope-grant-001",
+  "license": "CC-BY-4.0"
+}

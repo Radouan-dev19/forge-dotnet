@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "cases": [
+    {
+      "name": "Visible_ErrorIncidentIsSummarized",
+      "message": "Début, durée, signal dominant, pic et action : chaque champ vient des mesures.",
+      "arguments": ["0:120:0;1:120:0;2:180:25;3:180:25;4:180:25;5:120:0", "retour-arriere"],
+      "expected": "debut=2;duree=3min;signal=erreurs;pic=25;action=retour-arriere",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Visible_LatencyIncidentIsSummarized",
+      "message": "Un incident de latence rapporte le pic de latence, pas celui des erreurs.",
+      "arguments": ["0:950:0;1:950:0;2:120:0", "montee-en-charge"],
+      "expected": "debut=0;duree=2min;signal=latence;pic=950;action=montee-en-charge",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Visible_NoBreachMeansNoReport",
+      "message": "Sans dépassement, le compte rendu honnête est le mot aucun.",
+      "arguments": ["0:120:0;1:120:0", "retour-arriere"],
+      "expected": "aucun",
+      "argumentsUnchanged": true
+    }
+  ]
+}

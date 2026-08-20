@@ -1,0 +1,9 @@
+{
+  "schemaVersion": 1,
+  "cases": [
+    { "name": "Hidden_SingleMonday", "message": "Un lundi seul doit être compté.", "arguments": ["2026-07-20", "2026-07-20"], "expected": 1 },
+    { "name": "Hidden_SingleSaturday", "message": "Un samedi seul ne doit pas être compté.", "arguments": ["2026-07-25", "2026-07-25"], "expected": 0 },
+    { "name": "Hidden_FridayToMonday", "message": "La plage doit inclure vendredi et lundi mais pas le week-end.", "arguments": ["2026-07-24", "2026-07-27"], "expected": 2 },
+    { "name": "Hidden_MonthBoundary", "message": "Le changement de mois ne doit pas interrompre le parcours.", "arguments": ["2026-07-30", "2026-08-03"], "expected": 3 }
+  ]
+}

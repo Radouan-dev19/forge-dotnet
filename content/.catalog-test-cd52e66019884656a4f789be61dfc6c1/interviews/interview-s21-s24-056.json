@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "id": "interview-s21-s24-056",
+  "version": 1,
+  "title": "Ask for review evidence",
+  "level": "advanced",
+  "durationMinutes": 12,
+  "skills": [
+    "english.review"
+  ],
+  "question": "How do you request stronger evidence in a code review?",
+  "observableCriteria": [
+    "The request names the failing condition the test must exercise, not just more testing",
+    "The insufficiency of the existing success case is explained rather than asserted"
+  ],
+  "modelAnswer": "Could you add a test that fails when an unauthorized user calls this route, and include the command output? The current success case does not prove the policy.",
+  "commonMistakes": [
+    "Asking for more tests without saying which behaviour is currently unproven"
+  ],
+  "variants": [
+    "Changez une contrainte du scénario « Ask for review evidence » et expliquez si la décision reste valide."
+  ],
+  "license": "CC-BY-4.0"
+}

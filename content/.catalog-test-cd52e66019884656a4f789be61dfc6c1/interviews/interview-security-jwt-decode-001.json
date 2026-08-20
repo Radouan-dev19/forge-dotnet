@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "id": "interview-security-jwt-decode-001",
+  "version": 1,
+  "title": "Lire une revendication dans un jeton",
+  "level": "junior",
+  "durationMinutes": 6,
+  "skills": [
+    "security.token"
+  ],
+  "question": "Sans bibliothèque dédiée, comment lisez-vous une revendication dans un jeton JWT, et qu'est-ce que cette lecture ne prouve pas ?",
+  "observableCriteria": [
+    "Le découpage en trois segments et la restauration Base64Url — caractères et remplissage — sont décrits dans l'ordre",
+    "La distinction entre jeton malformé, revendication absente et revendication présente est énoncée avec le comportement de chacune",
+    "La lecture est explicitement présentée comme non probante tant que la signature n'est pas vérifiée"
+  ],
+  "modelAnswer": "Je découpe sur le point et j'exige trois segments. Sur la charge utile, je restaure l'alphabet Base64 — tiret vers plus, souligné vers barre oblique — puis le remplissage selon la longueur modulo quatre, en refusant un reste de un qui prouve une troncature. J'analyse le JSON et je distingue trois issues : malformé lève une erreur de format, revendication absente rend une valeur vide, revendication présente rend sa valeur. Et je précise toujours que rien de tout cela n'est digne de confiance : sans vérification de signature, décoder sert à router ou déboguer, jamais à décider.",
+  "commonMistakes": [
+    "Décoder avec Convert.FromBase64String sans restaurer l'alphabet ni le remplissage, et n'échouer que sur certains jetons",
+    "Présenter le contenu décodé comme fiable alors qu'aucune signature n'a été vérifiée"
+  ],
+  "variants": [
+    "Adapter la lecture à une revendication dont le type JSON varie selon l'émetteur, chaîne ou nombre.",
+    "Retourner la liste triée des noms de revendications au lieu d'une valeur unique."
+  ],
+  "license": "CC-BY-4.0"
+}

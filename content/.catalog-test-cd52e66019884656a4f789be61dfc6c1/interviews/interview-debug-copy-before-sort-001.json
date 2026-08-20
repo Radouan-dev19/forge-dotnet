@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "id": "interview-debug-copy-before-sort-001",
+  "version": 1,
+  "title": "Préserver les données observées",
+  "level": "junior",
+  "durationMinutes": 5,
+  "skills": [
+    "debugging.breakpoints"
+  ],
+  "question": "Comment résoudriez-vous « Préserver les données observées » et comment prouveriez-vous les bornes ?",
+  "observableCriteria": [
+    "Seule une copie est triée, et l'état observé par l'appelant reste intact",
+    "Le lien avec l'observation en débogage est fait : trier en place fausse ce qu'on inspecte"
+  ],
+  "modelAnswer": "Trier uniquement une copie afin que Watch et l’appelant conservent l’état initial. Je prouve en inspectant l'entrée après appel et en vérifiant qu'elle a conservé son ordre initial ; O(n log n) en temps et O(n) en espace.",
+  "commonMistakes": [
+    "Trier en place et rendre inexploitable l'état qu'on était en train d'observer"
+  ],
+  "variants": [
+    "Changer une borne ou le volume tout en conservant la même règle de préserver les données observées."
+  ],
+  "license": "CC-BY-4.0"
+}

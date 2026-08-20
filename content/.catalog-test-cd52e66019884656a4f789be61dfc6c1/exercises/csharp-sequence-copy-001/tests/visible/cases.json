@@ -1,0 +1,42 @@
+{
+    "schemaVersion":  1,
+    "cases":  [
+                  {
+                      "name":  "Visible_Case1",
+                      "message":  "Matérialiser une séquence une fois — cas 1 visible incorrect.",
+                      "arguments":  [
+                                        [
+                                            1,
+                                            2
+                                        ]
+                                    ],
+                      "expected":  [
+                                       1,
+                                       2
+                                   ],
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Visible_Case2",
+                      "message":  "Matérialiser une séquence une fois — cas 2 visible incorrect.",
+                      "arguments":  [
+                                        [
+
+                                        ]
+                                    ],
+                      "expected":  [
+
+                                   ],
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Visible_SingleElement",
+                      "message":  "Un seul élément : la copie lui est égale et l'entrée reste intacte.",
+                      "arguments":  [[5]],
+                      "expected":  [5],
+                      "argumentsUnchanged":  true
+                  }
+              ]
+}

@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "id": "english-card-07-spoken",
+  "version": 1,
+  "title": "Cost warning — spoken follow-up",
+  "level": "B1",
+  "durationMinutes": 10,
+  "skills": [
+    "english.spoken",
+    "azure.cost"
+  ],
+  "situation": "In a technical discussion, a manager asks whether a budget guarantees zero overspend. You must answer aloud accurately without overstating the evidence.",
+  "instructions": [
+    "Say aloud whether a budget can guarantee zero overspend, and correct the assumption without dismissing the question."
+  ],
+  "vocabulary": [
+    {
+      "term": "cost boundary",
+      "meaning": "a limit that is enforced rather than observed, as opposed to an alert that only reports after the fact"
+    },
+    {
+      "term": "notification delay",
+      "meaning": "the time between a spend occurring and the alert firing, during which spending continues unchecked"
+    }
+  ],
+  "expectedElements": [
+    "The difference between alerting and enforcing is made",
+    "The notification delay is acknowledged",
+    "A genuine capping control is proposed"
+  ],
+  "modelAnswer": "No, a budget does not guarantee zero overspend, and I would rather correct that now than after an invoice. A budget is an alert: it observes spending and notifies when a threshold is crossed. It does not stop anything. There is also a delay, typically several hours, during which spending continues after the threshold is passed. If we want a real cap, it has to be an enforced limit on the resource itself, or an automation that shuts the resource down when the alert fires. The evidence is the alert history set against the invoice for the same period. Which of the two controls do you want?",
+  "commonMistakes": [
+    "Confirming the assumption instead of correcting it",
+    "Correcting it without proposing a control that actually caps spending"
+  ],
+  "variants": [
+    "Answer again after the manager asks for a single number as a hard ceiling."
+  ],
+  "license": "CC-BY-4.0"
+}

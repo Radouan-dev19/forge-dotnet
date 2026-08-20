@@ -1,0 +1,12 @@
+{
+    "schemaVersion":  1,
+    "suiteId":  "api-error-status-001.v1",
+    "exerciseId":  "api-error-status-001",
+    "exerciseVersion":  1,
+    "typeName":  "Submission",
+    "methodName":  "ErrorStatus",
+    "parameterTypes":  [
+                           "string"
+                       ],
+    "returnType":  "int"
+}

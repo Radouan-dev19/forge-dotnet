@@ -1,0 +1,54 @@
+{
+  "schemaVersion": 1,
+  "cases": [
+    {
+      "name": "Hidden_ScopedConsumptionBeatsCost",
+      "message": "Cher mais consommateur d'un service de requête : la durée de requête gagne, sinon dépendance captive.",
+      "arguments": ["cost=expensive;state=none;uses-scoped=yes"],
+      "expected": "scoped|scoped-dependency",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_SharedStateGoesSingleton",
+      "message": "Un état partagé assumé vit en instance unique, protégé, jamais recréé par requête.",
+      "arguments": ["state=shared-mutable;cost=cheap;uses-scoped=no"],
+      "expected": "singleton|shared-state",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_IrreconcilableProfileIsAConflict",
+      "message": "État partagé et consommation de requête : aucun enregistrement n'est juste, le profil se corrige.",
+      "arguments": ["state=shared-mutable;cost=cheap;uses-scoped=yes"],
+      "expected": "conflict|captive-dependency",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_RequestStatePrimesOverConsumption",
+      "message": "L'état de requête classe le service avant même de regarder ce qu'il consomme.",
+      "arguments": ["state=per-request;cost=expensive;uses-scoped=yes"],
+      "expected": "scoped|request-state",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_MissingAttributeIsRefused",
+      "message": "Sans l'attribut de consommation, la règle de la dépendance captive ne peut pas se prononcer.",
+      "arguments": ["state=none;cost=cheap"],
+      "expectedException": "ArgumentException",
+      "argumentsUnchanged": false
+    },
+    {
+      "name": "Hidden_UnknownStateIsRefused",
+      "message": "Un état hors vocabulaire ne se devine pas : la recommandation serait plausible et fausse.",
+      "arguments": ["state=global;cost=cheap;uses-scoped=no"],
+      "expectedException": "ArgumentException",
+      "argumentsUnchanged": false
+    },
+    {
+      "name": "Hidden_RepeatedAttributeIsRefused",
+      "message": "Deux coûts déclarés pour le même service : le profil est corrompu, pas ambigu.",
+      "arguments": ["state=none;cost=cheap;cost=expensive;uses-scoped=no"],
+      "expectedException": "ArgumentException",
+      "argumentsUnchanged": false
+    }
+  ]
+}

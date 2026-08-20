@@ -1,0 +1,36 @@
+{
+    "schemaVersion":  1,
+    "id":  "observability-alerts-costs-001",
+    "version":  1,
+    "title":  "Alertes actionnables et coûts bornés",
+    "week":  22,
+    "skills":  [
+                   {
+                       "id":  "observability.operations",
+                       "weight":  1
+                   }
+               ],
+    "prerequisites":  [
+                          "observability-correlation-001"
+                      ],
+    "estimatedMinutes":  80,
+    "objectives":  [
+                       "Appliquer Alertes actionnables et coûts bornés à un cas nouveau et défendre la preuve observable associée"
+                   ],
+    "sections":  [
+                     "intuition",
+                     "explanation",
+                     "example",
+                     "counterExample",
+                     "check",
+                     "guided",
+                     "independent",
+                     "debugging",
+                     "interview",
+                     "summary",
+                     "reviewCards",
+                     "masteryTest"
+                 ],
+    "markdownPath":  "lesson.md",
+    "license":  "CC-BY-4.0"
+}

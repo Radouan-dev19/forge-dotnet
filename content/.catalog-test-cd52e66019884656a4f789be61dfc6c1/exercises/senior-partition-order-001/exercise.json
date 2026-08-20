@@ -1,0 +1,83 @@
+{
+  "schemaVersion": 1,
+  "id": "senior-partition-order-001",
+  "version": 1,
+  "title": "Repérer les clés dont l'ordre n'est plus garanti par le partitionnement",
+  "kind": "csharp",
+  "difficulty": 4,
+  "skills": ["quality.messaging"],
+  "prerequisites": [],
+  "estimatedMinutes": 40,
+  "statement": "statement.md",
+  "constraints": [
+    "Conserver exactement la signature publique",
+    "L'ordre n'existe qu'à l'intérieur d'une partition : une clé éclatée sur deux le perd",
+    "Deux clés différentes sur la même partition ne posent aucun problème d'ordre",
+    "Les clés à risque sortent triées par ordre ordinal, une seule fois chacune"
+  ],
+  "examples": [
+    {
+      "input": "ord-1:p0;ord-2:p1;ord-1:p0",
+      "output": "(chaîne vide)"
+    },
+    {
+      "input": "ord-1:p0;ord-1:p2",
+      "output": "ord-1"
+    }
+  ],
+  "reflectionFields": [
+    "reformulation",
+    "inputs",
+    "expectedOutput",
+    "edgeCases",
+    "hypothesis",
+    "plan"
+  ],
+  "starterPath": "starter/",
+  "visibleTestsPath": "tests/visible/",
+  "hiddenTestsPath": "tests/hidden/",
+  "hints": [
+    {
+      "level": 1,
+      "kind": "socratic",
+      "content": "La commande passe à « expédiée » puis à « annulée », et le consommateur voit l'inverse. Aucun message n'a été perdu ni corrompu : qu'est-ce qui, dans le routage, a pu inverser leur ordre ?"
+    },
+    {
+      "level": 2,
+      "kind": "location",
+      "content": "La question se pose clé par clé, pas message par message : ce qui compte est l'ensemble des partitions qu'une même clé a visitées à travers tout le journal de routage."
+    },
+    {
+      "level": 3,
+      "kind": "strategy",
+      "content": "Mémorisez la partition de la première apparition de chaque clé et marquez la clé dès qu'une apparition ultérieure la contredit — le nombre exact de partitions visitées n'ajoute rien au verdict."
+    },
+    {
+      "level": 4,
+      "kind": "partial-pseudocode",
+      "content": "refuser un journal vide ou une affectation sans ses deux champs ; pour chaque affectation : retenir la partition à la première vue de la clé, marquer la clé quand une vue suivante en donne une autre ; rendre les clés marquées, triées et jointes par des virgules"
+    }
+  ],
+  "solution": {
+    "path": "solution/",
+    "unlock": {
+      "seriousAttempts": 2,
+      "minimumDelayMinutes": 10
+    }
+  },
+  "explanation": "explanation.md",
+  "complexity": "O(n log n) en temps pour n affectations, le tri final des clés marquées dominant",
+  "commonMistakes": [
+    "Chercher le désordre dans les horodatages des messages alors qu'il naît dans l'affectation des partitions",
+    "Signaler deux clés distinctes routées vers la même partition, qui ne partagent pourtant aucun ordre",
+    "Rendre la clé autant de fois qu'elle change de partition au lieu d'une seule",
+    "Comparer chaque affectation à la précédente de la clé au lieu de la première, et dépendre du fragment reçu"
+  ],
+  "variantId": "senior-queue-backlog-001",
+  "reviewCards": [
+    "card-senior-partition-order-001-rule",
+    "card-senior-partition-order-001-edge"
+  ],
+  "interviewQuestionId": "interview-senior-partition-order-001",
+  "license": "CC-BY-4.0"
+}

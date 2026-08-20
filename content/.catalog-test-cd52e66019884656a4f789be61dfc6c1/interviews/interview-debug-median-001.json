@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "id": "interview-debug-median-001",
+  "version": 1,
+  "title": "Inspecter une médiane sans muter",
+  "level": "junior",
+  "durationMinutes": 5,
+  "skills": [
+    "debugging.data"
+  ],
+  "question": "Comment résoudriez-vous « Inspecter une médiane sans muter » et comment prouveriez-vous les bornes ?",
+  "observableCriteria": [
+    "Seule une copie est triée, l'entrée observée restant intacte",
+    "Les longueurs paires et impaires sont traitées séparément, avec la convention retenue"
+  ],
+  "modelAnswer": "Trier une copie puis traiter séparément longueurs paires et impaires. Je prouve par une longueur paire, une longueur impaire, un seul élément et une entrée vérifiée intacte après appel ; O(n log n) en temps et O(n) en espace.",
+  "commonMistakes": [
+    "Prendre l'élément central sans traiter la longueur paire et rendre une valeur qui n'est pas la médiane"
+  ],
+  "variants": [
+    "Changer une borne ou le volume tout en conservant la même règle de inspecter une médiane sans muter."
+  ],
+  "license": "CC-BY-4.0"
+}

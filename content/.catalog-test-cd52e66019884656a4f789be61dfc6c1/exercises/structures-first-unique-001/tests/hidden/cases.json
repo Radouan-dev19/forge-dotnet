@@ -1,0 +1,39 @@
+{
+    "schemaVersion":  1,
+    "cases":  [
+                  {
+                      "name":  "Hidden_Case1",
+                      "message":  "Trouver le premier caractère unique — cas 1 hidden incorrect.",
+                      "arguments":  [
+                                        "x"
+                                    ],
+                      "expected":  "x",
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_Case2",
+                      "message":  "Trouver le premier caractère unique — cas 2 hidden incorrect.",
+                      "arguments":  [
+                                        ""
+                                    ],
+                      "expected":  "",
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_NoUnique",
+                      "message":  "Tous les caractères se répètent : la réponse est vide, pas le premier caractère.",
+                      "arguments":  ["abcabc"],
+                      "expected":  "",
+                      "argumentsUnchanged":  true
+                  },
+                  {
+                      "name":  "Hidden_UniqueAfterPair",
+                      "message":  "Une paire suivie d'un caractère seul.",
+                      "arguments":  ["aab"],
+                      "expected":  "b",
+                      "argumentsUnchanged":  true
+                  }
+              ]
+}

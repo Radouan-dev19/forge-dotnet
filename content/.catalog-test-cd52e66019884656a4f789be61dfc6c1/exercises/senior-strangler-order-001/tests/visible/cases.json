@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "cases": [
+    {
+      "name": "Visible_LeastCalledExtractsFirst",
+      "message": "Personne n'appelle la facturation : elle sort d'abord, le module central ferme la marche.",
+      "arguments": ["billing:0:3;catalog:2:1;auth:5:0"],
+      "expected": "billing;catalog;auth",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Visible_OutboundBreaksTheTie",
+      "message": "Autant d'appelants chacun : le plus autonome des deux sort en premier.",
+      "arguments": ["a:1:5;b:1:2"],
+      "expected": "b;a",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Visible_SingleModuleIsItsOwnPlan",
+      "message": "Un seul module décrit : le plan se réduit à lui.",
+      "arguments": ["core:9:0"],
+      "expected": "core",
+      "argumentsUnchanged": true
+    }
+  ]
+}

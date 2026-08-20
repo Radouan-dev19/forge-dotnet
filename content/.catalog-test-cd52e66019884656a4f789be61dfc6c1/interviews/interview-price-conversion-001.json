@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "id": "interview-price-conversion-001",
+  "version": 1,
+  "title": "Conversion monétaire déterministe",
+  "level": "junior",
+  "durationMinutes": 5,
+  "skills": ["csharp.types", "csharp.conversions"],
+  "question": "Comment convertirais-tu un montant decimal en centimes sans perdre la règle d’arrondi ?",
+  "observableCriteria": [
+    "L’ordre multiplication, arrondi puis conversion est expliqué",
+    "Un cas de demi-centime et un cas invalide sont proposés comme tests"
+  ],
+  "modelAnswer": "Je valide d’abord le domaine, je multiplie le decimal par 100m, j’applique un mode d’arrondi explicite, puis je convertis en entier. Je teste zéro, un demi-centime, une valeur courante et un montant négatif.",
+  "commonMistakes": ["Convertir en entier avant la multiplication"],
+  "variants": ["Expliquer ce qui changerait pour une mesure scientifique stockée en double"],
+  "license": "CC-BY-4.0"
+}

@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "id": "reference-glossary-001",
+  "version": 1,
+  "title": "Clarifier un critère d'acceptation",
+  "level": "B1",
+  "durationMinutes": 10,
+  "skills": ["english.clarification"],
+  "situation": "Un critère d'acceptation ambigu empêche de terminer une correction locale.",
+  "instructions": ["Formuler une question précise sans supposer la réponse"],
+  "vocabulary": [
+    {
+      "term": "expected behavior",
+      "meaning": "comportement attendu"
+    },
+    {
+      "term": "edge case",
+      "meaning": "cas limite"
+    }
+  ],
+  "expectedElements": ["Une reformulation courte", "Une question sur le cas limite"],
+  "modelAnswer": "Could you confirm the expected behavior when the collection is empty?",
+  "commonMistakes": ["Transformer la question en affirmation"],
+  "variants": ["Demander si le comportement change pour une valeur nulle"],
+  "license": "CC-BY-4.0"
+}

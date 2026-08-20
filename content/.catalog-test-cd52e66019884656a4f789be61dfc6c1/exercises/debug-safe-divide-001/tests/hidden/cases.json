@@ -1,0 +1,41 @@
+{
+    "schemaVersion":  1,
+    "cases":  [
+                  {
+                      "name":  "Hidden_Case1",
+                      "message":  "Prévenir une division invalide — cas 1 hidden incorrect.",
+                      "arguments":  [
+                                        -9,
+                                        3
+                                    ],
+                      "expected":  -3,
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_Case2",
+                      "message":  "Prévenir une division invalide — cas 2 hidden incorrect.",
+                      "arguments":  [
+                                        1,
+                                        2
+                                    ],
+                      "expected":  0,
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_TruncatesTowardZero",
+                      "message":  "Quotient négatif non entier : la division entière tronque vers zéro.",
+                      "arguments":  [7,-2],
+                      "expected":  -3,
+                      "argumentsUnchanged":  true
+                  },
+                  {
+                      "name":  "Hidden_BothNegative",
+                      "message":  "Deux opérandes négatifs : le quotient est positif.",
+                      "arguments":  [-8,-2],
+                      "expected":  4,
+                      "argumentsUnchanged":  true
+                  }
+              ]
+}

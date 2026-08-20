@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "id": "english-card-24-written",
+  "version": 1,
+  "title": "CV evidence — written update",
+  "level": "C1",
+  "durationMinutes": 12,
+  "skills": [
+    "english.written",
+    "career.cv"
+  ],
+  "situation": "In a technical discussion, a project needs a concise CV line. You must write the decision accurately without overstating the evidence.",
+  "instructions": [
+    "Write four sentences drafting a verifiable achievement line: the problem, the action, the measured outcome, the artefact."
+  ],
+  "vocabulary": [
+    {
+      "term": "verifiable achievement",
+      "meaning": "a claim tied to an artefact or a number a reader could go and check, rather than to an adjective"
+    },
+    {
+      "term": "attributable contribution",
+      "meaning": "the part of a result you personally caused, distinguished from what the team or the tooling produced"
+    }
+  ],
+  "expectedElements": [
+    "The claim is tied to a checkable artefact or number",
+    "The personal contribution is distinguished from the team's",
+    "No adjective carries the weight of the claim"
+  ],
+  "modelAnswer": "The line should be one a recruiter could verify: reduced the order listing from eight seconds to under two hundred milliseconds by eliminating a query per row, with a regression test preventing recurrence. That states the problem, the action, the measured outcome, and where the evidence lives. What I cut is any adjective carrying the weight of the claim, and any part of the result the team produced rather than me. If someone else designed the fix, the line says implemented rather than designed.",
+  "commonMistakes": [
+    "Letting an adjective carry a claim that no artefact supports",
+    "Attributing a team or tooling outcome to yourself"
+  ],
+  "variants": [
+    "Rewrite the line for a project whose outcome was a refused release."
+  ],
+  "license": "CC-BY-4.0"
+}

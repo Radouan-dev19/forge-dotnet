@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "scenarioId": "debug-async-last-result-001",
+  "criteria": [
+    {
+      "id": "cause-loop-bound",
+      "label": "La cause désigne la borne de parcours qui exclut un élément.",
+      "journalField": "cause",
+      "requiredTerms": [
+        "borne",
+        "parcours",
+        "dernier",
+        "exclu"
+      ],
+      "minimumMatches": 2
+    },
+    {
+      "id": "evidence-gap",
+      "label": "La preuve relie l'écart à la valeur du dernier élément.",
+      "journalField": "evidence",
+      "requiredTerms": [
+        "écart",
+        "6",
+        "3"
+      ],
+      "minimumMatches": 2
+    },
+    {
+      "id": "test-single-item",
+      "label": "Le test isole le lot d'un seul élément.",
+      "journalField": "test",
+      "requiredTerms": [
+        "un seul",
+        "vide",
+        "échoue"
+      ],
+      "minimumMatches": 2
+    }
+  ]
+}

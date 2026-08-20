@@ -1,0 +1,13 @@
+{
+    "schemaVersion":  1,
+    "suiteId":  "algo-gcd-001.v1",
+    "exerciseId":  "algo-gcd-001",
+    "exerciseVersion":  1,
+    "typeName":  "Submission",
+    "methodName":  "GreatestCommonDivisor",
+    "parameterTypes":  [
+                           "int",
+                           "int"
+                       ],
+    "returnType":  "int"
+}

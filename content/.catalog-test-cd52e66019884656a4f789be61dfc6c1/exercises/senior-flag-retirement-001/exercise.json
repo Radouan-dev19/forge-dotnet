@@ -1,0 +1,83 @@
+{
+  "schemaVersion": 1,
+  "id": "senior-flag-retirement-001",
+  "version": 1,
+  "title": "Décider le sort des drapeaux de fonctionnalité vieillissants",
+  "kind": "csharp",
+  "difficulty": 4,
+  "skills": ["debugging.legacy"],
+  "prerequisites": [],
+  "estimatedMinutes": 40,
+  "statement": "statement.md",
+  "constraints": [
+    "Conserver exactement la signature publique",
+    "Un drapeau encore mixte ne se retire jamais : il pilote toujours quelque chose",
+    "L'âge minimal protège du retrait précoce : l'inversion doit rester possible un temps",
+    "Le sort distingue l'intégration du code de sa suppression : ce ne sont pas les mêmes chantiers"
+  ],
+  "examples": [
+    {
+      "input": "new-checkout:on-for-all:120;old-flow:off-for-all:200;beta-search:mixed:400 — âge minimal 90",
+      "output": "new-checkout=inline;old-flow=delete"
+    },
+    {
+      "input": "fresh:on-for-all:10 — âge minimal 90",
+      "output": "(chaîne vide)"
+    }
+  ],
+  "reflectionFields": [
+    "reformulation",
+    "inputs",
+    "expectedOutput",
+    "edgeCases",
+    "hypothesis",
+    "plan"
+  ],
+  "starterPath": "starter/",
+  "visibleTestsPath": "tests/visible/",
+  "hiddenTestsPath": "tests/hidden/",
+  "hints": [
+    {
+      "level": 1,
+      "kind": "socratic",
+      "content": "La base héritée compte quatre-vingts drapeaux, dont personne ne sait lesquels servent encore. Chaque lecture du code traverse leurs branchements : que coûte un drapeau dont l'issue est jouée depuis deux ans, et dans quel sens se retire-t-il ?"
+    },
+    {
+      "level": 2,
+      "kind": "location",
+      "content": "Deux questions filtrent, une troisième décide : le drapeau pilote-t-il encore — l'état mixte protège —, a-t-il l'âge requis — la jeunesse protège —, et enfin de quel côté son issue est-elle jouée."
+    },
+    {
+      "level": 3,
+      "kind": "strategy",
+      "content": "Les deux sorts ne sont pas interchangeables : le drapeau allumé partout intègre son code et retire le branchement, le drapeau éteint partout supprime la branche morte avec lui. Confondre les deux détruit du code vivant ou garde du code mort."
+    },
+    {
+      "level": 4,
+      "kind": "partial-pseudocode",
+      "content": "refuser un âge minimal non positif, un registre vide, un drapeau illisible, un état hors vocabulaire, un âge négatif ou un nom répété ; ignorer les drapeaux mixtes et ceux sous l'âge minimal ; assigner l'intégration aux allumés partout et la suppression aux éteints partout ; rendre les sorts dans l'ordre du registre"
+    }
+  ],
+  "solution": {
+    "path": "solution/",
+    "unlock": {
+      "seriousAttempts": 2,
+      "minimumDelayMinutes": 10
+    }
+  },
+  "explanation": "explanation.md",
+  "complexity": "O(n) en temps pour n drapeaux et O(n) en espace pour les sorts rendus",
+  "commonMistakes": [
+    "Retirer un drapeau mixte qui pilote encore des populations réelles",
+    "Supprimer le code d'un drapeau allumé partout au lieu de l'intégrer, en détruisant du code vivant",
+    "Retirer un drapeau jeune dont l'équipe pourrait encore devoir inverser l'issue",
+    "Rendre le même sort aux deux états stables et perdre la distinction entre les deux chantiers"
+  ],
+  "variantId": "senior-strangler-order-001",
+  "reviewCards": [
+    "card-senior-flag-retirement-001-rule",
+    "card-senior-flag-retirement-001-edge"
+  ],
+  "interviewQuestionId": "interview-senior-flag-retirement-001",
+  "license": "CC-BY-4.0"
+}

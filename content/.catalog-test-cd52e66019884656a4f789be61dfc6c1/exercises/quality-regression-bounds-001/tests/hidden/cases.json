@@ -1,0 +1,41 @@
+{
+    "schemaVersion":  1,
+    "cases":  [
+                  {
+                      "name":  "Hidden_Case1",
+                      "message":  "Fixer une non-régression de borne — cas 1 incorrect.",
+                      "arguments":  [
+                                        -1,
+                                        3
+                                    ],
+                      "expected":  false,
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_Case2",
+                      "message":  "Fixer une non-régression de borne — cas 2 incorrect.",
+                      "arguments":  [
+                                        0,
+                                        0
+                                    ],
+                      "expected":  false,
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_NegativeLength",
+                      "message":  "Longueur négative : refusée avant même l'examen de l'indice.",
+                      "arguments":  [0,-1],
+                      "expected":  false,
+                      "argumentsUnchanged":  true
+                  },
+                  {
+                      "name":  "Hidden_IndexEqualsLength",
+                      "message":  "Indice égal à la longueur : hors bornes, la comparaison est stricte.",
+                      "arguments":  [3,3],
+                      "expected":  false,
+                      "argumentsUnchanged":  true
+                  }
+              ]
+}

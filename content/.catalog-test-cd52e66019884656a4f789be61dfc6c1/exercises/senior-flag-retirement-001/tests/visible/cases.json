@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "cases": [
+    {
+      "name": "Visible_TwoRetirementsOneSurvivor",
+      "message": "Le gagnant s'intègre, le perdant se supprime, le mixte pilote encore malgré ses quatre cents jours.",
+      "arguments": ["new-checkout:on-for-all:120;old-flow:off-for-all:200;beta-search:mixed:400", 90],
+      "expected": "new-checkout=inline;old-flow=delete",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Visible_YoungFlagKeepsItsRetractionRight",
+      "message": "Dix jours d'issue stable : l'inversion reste possible, le drapeau reste.",
+      "arguments": ["fresh:on-for-all:10", 90],
+      "expected": "",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Visible_DeadBranchDeletesWithItsFlag",
+      "message": "Éteint partout depuis assez longtemps : la branche morte part avec le drapeau.",
+      "arguments": ["dead:off-for-all:91", 90],
+      "expected": "dead=delete",
+      "argumentsUnchanged": true
+    }
+  ]
+}

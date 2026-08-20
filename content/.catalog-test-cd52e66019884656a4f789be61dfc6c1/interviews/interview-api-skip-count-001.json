@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "id": "interview-api-skip-count-001",
+  "version": 1,
+  "title": "Calculer un décalage paginé",
+  "level": "junior",
+  "durationMinutes": 6,
+  "skills": [
+    "api.pagination"
+  ],
+  "question": "Comment implémenteriez-vous « Calculer un décalage paginé » et quelles preuves réfutent les contournements ?",
+  "observableCriteria": [
+    "La validation de la page et de la taille précède tout calcul de décalage",
+    "Le risque de débordement du produit est reconnu et borné"
+  ],
+  "modelAnswer": "Valider page et taille avant un calcul vérifié du décalage. Je teste la première page, une page élevée avec une grande taille pour éprouver le débordement, et une page nulle. O(1) en temps et O(1) en espace.",
+  "commonMistakes": [
+    "Calculer le décalage avant de valider et produire une valeur négative ou débordée"
+  ],
+  "variants": [
+    "Changer la frontière ou le droit tout en conservant la règle de calculer un décalage paginé."
+  ],
+  "license": "CC-BY-4.0"
+}

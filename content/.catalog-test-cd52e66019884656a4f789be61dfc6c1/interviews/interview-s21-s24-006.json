@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "id": "interview-s21-s24-006",
+  "version": 1,
+  "title": "Utiliser Key Vault",
+  "level": "junior",
+  "durationMinutes": 6,
+  "skills": [
+    "azure.identity"
+  ],
+  "question": "Quelles valeurs vont dans Key Vault et lesquelles restent dans la configuration versionnée ?",
+  "observableCriteria": [
+    "Le partage est justifié par la sensibilité et la rotation, pas par une préférence d'outil",
+    "L'interdiction de faire apparaître une valeur du coffre dans les journaux est mentionnée"
+  ],
+  "modelAnswer": "Les valeurs sensibles ou rotatives vont dans le coffre ; les noms de ressources, URI publiques et seuils non sensibles peuvent rester versionnés. Aucune valeur du coffre ne rejoint les logs.",
+  "commonMistakes": [
+    "Mettre toute la configuration dans le coffre et perdre la lisibilité des valeurs publiques"
+  ],
+  "variants": [
+    "Changez une contrainte du scénario « Utiliser Key Vault » et expliquez si la décision reste valide."
+  ],
+  "license": "CC-BY-4.0"
+}

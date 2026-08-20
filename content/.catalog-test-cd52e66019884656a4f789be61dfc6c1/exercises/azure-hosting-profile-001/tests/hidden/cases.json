@@ -1,0 +1,54 @@
+{
+  "schemaVersion": 1,
+  "cases": [
+    {
+      "name": "Hidden_EventDrivenContainerScalesToZero",
+      "message": "Le conteneur événementiel se met à zéro entre deux réveils : le rythme a tranché avant la livraison.",
+      "arguments": ["scale=event-driven;artifact=container;delivery=single-revision"],
+      "expected": "container-apps|scale-to-zero",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_BurstySingleContainerStaysManaged",
+      "message": "Un conteneur continu à version unique n'a pas besoin de révisions : l'exécution gérée l'héberge.",
+      "arguments": ["artifact=container;scale=bursty;delivery=single-revision"],
+      "expected": "app-service|single-container",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_CodeWithRevisionsUsesSlots",
+      "message": "Plusieurs versions actives de code : les emplacements d'échange portent la bascule.",
+      "arguments": ["artifact=code;scale=bursty;delivery=multi-revision"],
+      "expected": "app-service|deployment-slots",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_EventDrivenPrimesOverDelivery",
+      "message": "Même en multi-révisions, le code événementiel garde la facturation à l'événement.",
+      "arguments": ["artifact=code;scale=event-driven;delivery=multi-revision"],
+      "expected": "functions|per-event-billing",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_MissingScaleIsRefused",
+      "message": "Sans le rythme, la première question de la grille ne peut pas se poser.",
+      "arguments": ["artifact=code;delivery=single-revision"],
+      "expectedException": "ArgumentException",
+      "argumentsUnchanged": false
+    },
+    {
+      "name": "Hidden_UnknownArtifactIsRefused",
+      "message": "Un artefact hors vocabulaire ne s'héberge pas par supposition.",
+      "arguments": ["artifact=archive;scale=steady;delivery=single-revision"],
+      "expectedException": "ArgumentException",
+      "argumentsUnchanged": false
+    },
+    {
+      "name": "Hidden_RepeatedScaleIsRefused",
+      "message": "Deux rythmes déclarés : le profil est corrompu, pas nuancé.",
+      "arguments": ["artifact=code;scale=steady;scale=bursty;delivery=single-revision"],
+      "expectedException": "ArgumentException",
+      "argumentsUnchanged": false
+    }
+  ]
+}

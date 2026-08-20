@@ -1,0 +1,12 @@
+{
+    "schemaVersion":  1,
+    "suiteId":  "security-oauth-flow-001.v1",
+    "exerciseId":  "security-oauth-flow-001",
+    "exerciseVersion":  1,
+    "typeName":  "Submission",
+    "methodName":  "ChooseFlow",
+    "parameterTypes":  [
+                           "string"
+                       ],
+    "returnType":  "string"
+}

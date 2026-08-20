@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "cases": [
+    {
+      "name": "Visible_FreshNonceIsAdmitted",
+      "message": "Nonce inédit et horodatage dans la fenêtre : la requête est admise.",
+      "arguments": ["a1@100;b2@130", "c3@140", 60],
+      "expected": "admis",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Visible_ReplayedNonceIsRefused",
+      "message": "Le nonce figure au journal dans la fenêtre : c'est un rejeu.",
+      "arguments": ["a1@100;b2@130", "a1@140", 60],
+      "expected": "refus:rejeu",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Visible_StaleTimestampIsRefusedFirst",
+      "message": "Un horodatage hors fenêtre est refusé avant tout examen du nonce.",
+      "arguments": ["a1@100;b2@130", "c3@10", 60],
+      "expected": "refus:horodatage",
+      "argumentsUnchanged": true
+    }
+  ]
+}

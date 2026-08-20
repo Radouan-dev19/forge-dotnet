@@ -1,0 +1,30 @@
+{
+    "schemaVersion":  1,
+    "cases":  [
+                  {
+                      "name":  "Visible_Case1",
+                      "message":  "Moyenne d’un tableau vide — cas 1.",
+                      "arguments":  [
+                                        [
+                                            1,
+                                            3
+                                        ]
+                                    ],
+                      "expected":  2,
+                      "expectedException":  null,
+                      "argumentsUnchanged":  true
+                  },
+                  {
+                      "name":  "Visible_Case2",
+                      "message":  "Moyenne d’un tableau vide — cas 2.",
+                      "arguments":  [
+                                        [
+
+                                        ]
+                                    ],
+                      "expected":  0,
+                      "expectedException":  null,
+                      "argumentsUnchanged":  true
+                  }
+              ]
+}

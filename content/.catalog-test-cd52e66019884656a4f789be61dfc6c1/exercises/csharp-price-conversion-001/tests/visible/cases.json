@@ -1,0 +1,8 @@
+{
+  "schemaVersion": 1,
+  "cases": [
+    { "name": "Visible_RegularAmount", "message": "12,34 € doit produire 1234 centimes.", "arguments": [12.34], "expected": 1234 },
+    { "name": "Visible_Zero", "message": "Un montant nul doit rester nul.", "arguments": [0], "expected": 0 },
+    { "name": "Visible_HalfCent", "message": "Le demi-centime doit être arrondi en s’éloignant de zéro.", "arguments": [10.005], "expected": 1001 }
+  ]
+}

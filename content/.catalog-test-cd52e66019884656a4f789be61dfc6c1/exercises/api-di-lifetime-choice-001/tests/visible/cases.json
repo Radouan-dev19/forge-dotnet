@@ -1,0 +1,27 @@
+{
+    "schemaVersion":  1,
+    "cases":  [
+                  {
+                      "name":  "Visible_Case1",
+                      "message":  "Choisir une durée de vie DI — cas 1 incorrect.",
+                      "arguments":  [
+                                        true,
+                                        false
+                                    ],
+                      "expected":  "scoped",
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Visible_Case2",
+                      "message":  "Choisir une durée de vie DI — cas 2 incorrect.",
+                      "arguments":  [
+                                        false,
+                                        true
+                                    ],
+                      "expected":  "singleton",
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  }
+              ]
+}

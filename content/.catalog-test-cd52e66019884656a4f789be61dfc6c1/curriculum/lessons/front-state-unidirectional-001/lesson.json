@@ -1,0 +1,36 @@
+{
+    "schemaVersion":  1,
+    "id":  "front-state-unidirectional-001",
+    "version":  1,
+    "title":  "État et flux de données unidirectionnel",
+    "week":  25,
+    "skills":  [
+                   {
+                       "id":  "quality.state-flow",
+                       "weight":  1
+                   }
+               ],
+    "prerequisites":  [
+                          "front-rendering-reconciliation-001"
+                      ],
+    "estimatedMinutes":  60,
+    "objectives":  [
+                       "Décrire le flux descendant des données et remontant des événements, distinguer l'état stocké de l'état dérivé, et expliquer pourquoi une mutation partagée casse la prévisibilité"
+                   ],
+    "sections":  [
+                     "intuition",
+                     "explanation",
+                     "example",
+                     "counterExample",
+                     "check",
+                     "guided",
+                     "independent",
+                     "debugging",
+                     "interview",
+                     "summary",
+                     "reviewCards",
+                     "masteryTest"
+                 ],
+    "markdownPath":  "lesson.md",
+    "license":  "CC-BY-4.0"
+}

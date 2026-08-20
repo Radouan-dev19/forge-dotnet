@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "id": "interview-tests-double-taxonomy-001",
+  "version": 1,
+  "title": "Choisir les doubles d'un test par flux et contrat",
+  "level": "intermediate",
+  "durationMinutes": 8,
+  "skills": ["tests.doubles"],
+  "question": "Votre équipe débat sans fin de « mock ou pas mock » à chaque revue de test. Quelle grille proposez-vous pour rendre le choix mécanique, et quels choix cette grille interdit-elle carrément ?",
+  "observableCriteria": [
+    "Les deux axes sont posés : sens du flux et nature du contrat à honorer",
+    "Les quatre attributions sont justifiées : bouchon, simulation pour le comportement et l'état, espion pour le protocole",
+    "Les deux croisements interdits sont nommés avec leur pathologie : sur-spécification et vérification vide"
+  ],
+  "modelAnswer": "Je remplace le débat doctrinal par deux questions sur chaque dépendance. Le sens du flux d'abord : la dépendance fournit-elle des données au code, ou le code lui envoie-t-il des effets ? La nature du contrat ensuite : une réponse toute faite suffit-elle, ou le test dépend-il d'une cohérence entre écritures et lectures, d'un état relisible, d'un protocole d'appels ? Les quatre attributions tombent : bouchon pour la donnée toute faite, simulation légère — le dépôt en mémoire — pour le contrat de comportement comme pour l'effet relisible, espion pour le protocole quand l'ordre et le contenu des appels sont le contrat, comme une séquence d'annulation. La grille interdit deux croisements, et c'est sa vraie valeur. Espionner un flux entrant cimente le nombre de lectures — un remaniement honnête qui lit deux fois casse le test sans casser le comportement : c'est la sur-spécification qui fait mourir les suites. Bouchonner un flux sortant ne vérifie rien : le test passe quoi que le code envoie. Quand quelqu'un réclame quand même l'un des deux, la discussion devient intéressante : soit le contrat est mal décrit, soit le produit n'expose pas l'effet qu'il faudrait observer — et ça, c'est un problème de conception, pas de test.",
+  "commonMistakes": [
+    "Choisir le double d'après le nom de la dépendance ou l'habitude de l'équipe",
+    "Vérifier des appels sur une lecture et cimenter un détail que tout remaniement peut changer"
+  ],
+  "variants": [
+    "Demander où classer une dépendance à la fois lue et écrite, comme un cache.",
+    "Demander quand le vrai composant vaut mieux qu'un double, et ce que ce choix coûte."
+  ],
+  "license": "CC-BY-4.0"
+}

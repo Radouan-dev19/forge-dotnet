@@ -1,0 +1,32 @@
+{
+    "schemaVersion":  1,
+    "cases":  [
+                  {
+                      "name":  "Visible_Case1",
+                      "message":  "Compter les groupes consécutifs — cas 1 visible incorrect.",
+                      "arguments":  [
+                                        "aaabb"
+                                    ],
+                      "expected":  2,
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Visible_Case2",
+                      "message":  "Compter les groupes consécutifs — cas 2 visible incorrect.",
+                      "arguments":  [
+                                        ""
+                                    ],
+                      "expected":  0,
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Visible_SingleCharacter",
+                      "message":  "Un seul caractère : une seule plage.",
+                      "arguments":  ["a"],
+                      "expected":  1,
+                      "argumentsUnchanged":  true
+                  }
+              ]
+}

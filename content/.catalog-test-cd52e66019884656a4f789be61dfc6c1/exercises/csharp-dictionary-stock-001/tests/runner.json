@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "suiteId": "csharp-dictionary-stock-001.v1",
+  "exerciseId": "csharp-dictionary-stock-001",
+  "exerciseVersion": 1,
+  "typeName": "Submission",
+  "methodName": "MergeStock",
+  "parameterTypes": ["dictionary<string,int>", "dictionary<string,int>"],
+  "returnType": "dictionary<string,int>"
+}

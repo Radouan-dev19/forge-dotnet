@@ -1,0 +1,2 @@
+Event=AmountsExported Level=Warning Input=[3,1,2] Expected=[1,2,3] Actual=[3,2,1] CorrelationId=dbg-sort-swap-001
+Event=AmountsExported Level=Information Input=[] Expected=[] Actual=[] CorrelationId=dbg-sort-swap-001

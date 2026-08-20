@@ -1,0 +1,14 @@
+{
+    "schemaVersion":  1,
+    "suiteId":  "security-oauth-state-001.v1",
+    "exerciseId":  "security-oauth-state-001",
+    "exerciseVersion":  1,
+    "typeName":  "Submission",
+    "methodName":  "StateVerdict",
+    "parameterTypes":  [
+                           "string",
+                           "string",
+                           "string"
+                       ],
+    "returnType":  "string"
+}

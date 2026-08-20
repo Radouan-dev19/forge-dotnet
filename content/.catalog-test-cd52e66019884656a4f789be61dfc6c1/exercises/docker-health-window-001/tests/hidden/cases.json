@@ -1,0 +1,43 @@
+{
+    "schemaVersion":  1,
+    "cases":  [
+                  {
+                      "name":  "Hidden_Case1",
+                      "message":  "Vérifier une fenêtre de health check — cas 1 incorrect.",
+                      "arguments":  [
+                                        0,
+                                        3,
+                                        30
+                                    ],
+                      "expected":  false,
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_Case2",
+                      "message":  "Vérifier une fenêtre de health check — cas 2 incorrect.",
+                      "arguments":  [
+                                        3,
+                                        10,
+                                        30
+                                    ],
+                      "expected":  true,
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_OneSecondShort",
+                      "message":  "Une seconde de trop : réfute une comparaison large sur le budget.",
+                      "arguments":  [5,6,29],
+                      "expected":  false,
+                      "argumentsUnchanged":  true
+                  },
+                  {
+                      "name":  "Hidden_ZeroRetries",
+                      "message":  "Aucune tentative : configuration refusée plutôt que fenêtre nulle acceptée.",
+                      "arguments":  [5,0,30],
+                      "expected":  false,
+                      "argumentsUnchanged":  true
+                  }
+              ]
+}

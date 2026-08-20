@@ -1,0 +1,82 @@
+{
+    "schemaVersion":  1,
+    "id":  "algo-insertion-sort-001",
+    "version":  1,
+    "title":  "Trier par insertion",
+    "kind":  "algorithm",
+    "difficulty":  2,
+    "skills":  [
+                   "algorithm.sorting"
+               ],
+    "prerequisites":  [
+                          "algo-reformulation-complexity-001"
+                      ],
+    "estimatedMinutes":  30,
+    "statement":  "statement.md",
+    "constraints":  [
+                        "Conserver exactement la signature publique",
+                        "Insérer chaque valeur dans un préfixe déjà trié.",
+                        "Ne pas modifier les entrées reçues sauf mention explicite"
+                    ],
+    "examples":  [
+                     {
+                         "input":  "[[3,1,2]]",
+                         "output":  "[1,2,3]"
+                     }
+                 ],
+    "reflectionFields":  [
+                             "reformulation",
+                             "inputs",
+                             "expectedOutput",
+                             "edgeCases",
+                             "hypothesis",
+                             "plan"
+                         ],
+    "starterPath":  "starter/",
+    "visibleTestsPath":  "tests/visible/",
+    "hiddenTestsPath":  "tests/hidden/",
+    "hints":  [
+                  {
+                      "level":  1,
+                      "kind":  "socratic",
+                      "content":  "Quel invariant de « Trier par insertion » doit rester vrai pour les cas limites ?"
+                  },
+                  {
+                      "level":  2,
+                      "kind":  "location",
+                      "content":  "Concentrez la décision dans la méthode InsertionSort, sans état global."
+                  },
+                  {
+                      "level":  3,
+                      "kind":  "strategy",
+                      "content":  "Insérer chaque valeur dans un préfixe déjà trié."
+                  },
+                  {
+                      "level":  4,
+                      "kind":  "partial-pseudocode",
+                      "content":  "cloner l'entrée ; à partir du deuxième élément, retenir la valeur courante ; décaler vers la droite tous les éléments du préfixe qui lui sont supérieurs ; déposer la valeur retenue dans le trou ainsi ouvert"
+                  }
+              ],
+    "solution":  {
+                     "path":  "solution/",
+                     "unlock":  {
+                                    "seriousAttempts":  2,
+                                    "minimumDelayMinutes":  10
+                                }
+                 },
+    "explanation":  "explanation.md",
+    "complexity":  "O(n²) au pire et O(n) en espace pour la copie",
+    "commonMistakes":  [
+                           "Trier le tableau reçu et rendre la mutation visible par l'appelant",
+                           "Écraser la valeur courante avant de l'avoir retenue",
+                           "Décaler sur une comparaison large et perdre la stabilité du tri",
+                           "Descendre en dessous de l'indice zéro pendant le décalage"
+                       ],
+    "variantId":  "algo-minimum-index-001",
+    "reviewCards":  [
+                        "card-algo-insertion-sort-001-rule",
+                        "card-algo-insertion-sort-001-edge"
+                    ],
+    "interviewQuestionId":  "interview-algo-insertion-sort-001",
+    "license":  "CC-BY-4.0"
+}

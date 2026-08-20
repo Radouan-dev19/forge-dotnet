@@ -1,0 +1,38 @@
+{
+    "schemaVersion":  1,
+    "cases":  [
+                  {
+                      "name":  "Visible_Case1",
+                      "message":  "Calculer le maximum signé — cas 1 visible incorrect.",
+                      "arguments":  [
+                                        [
+                                            3,
+                                            1,
+                                            2
+                                        ]
+                                    ],
+                      "expected":  3,
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Visible_Case2",
+                      "message":  "Calculer le maximum signé — cas 2 visible incorrect.",
+                      "arguments":  [
+                                        [
+
+                                        ]
+                                    ],
+                      "expected":  0,
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Visible_MaximumLast",
+                      "message":  "Le maximum est en dernière position : réfute un retour du premier élément.",
+                      "arguments":  [[1,2,3]],
+                      "expected":  3,
+                      "argumentsUnchanged":  true
+                  }
+              ]
+}

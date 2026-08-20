@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "id": "interview-english-standup-order-001",
+  "version": 1,
+  "title": "Remettre un point quotidien dans l'ordre",
+  "level": "junior",
+  "durationMinutes": 6,
+  "skills": ["english.standup"],
+  "question": "Vous rejoignez une équipe anglophone et vous ouvrez votre point quotidien par ce qui vous bloque. Pourquoi cela dessert-il votre demande, et dans quel ordre auriez-vous dû parler ?",
+  "observableCriteria": [
+    "L'ordre fait, prochain, blocage est justifié par le besoin de l'auditeur, non par une convention",
+    "Le blocage est identifié comme la seule partie qui appelle une réponse",
+    "La structure est reconnue comme plus déterminante que le vocabulaire pour se faire comprendre"
+  ],
+  "modelAnswer": "J'ouvre par ce qui est fait, parce que mon interlocuteur a besoin de situer mon travail avant d'entendre autre chose. Je continue par ce qui vient ensuite, ce qui permet à quelqu'un de signaler qu'il travaille déjà dessus. Je termine par le blocage, parce que c'est la seule partie qui demande une action de l'équipe : posée en tête, elle force chacun à reconstituer le contexte pour comprendre ce que je réclame, et la demande se dilue. En anglais professionnel je me suis rendu compte que cette structure porte plus que le vocabulaire : un point bien ordonné dans un anglais approximatif passe mieux qu'un point désordonné dans un anglais correct.",
+  "commonMistakes": [
+    "Ouvrir par la demande d'aide, avant tout contexte",
+    "Mélanger les trois parties dans un récit continu"
+  ],
+  "variants": [
+    "Demander comment formuler un blocage quand on ne sait pas encore qui peut le lever.",
+    "Demander ce qui change à l'écrit, en asynchrone, par rapport à l'oral."
+  ],
+  "license": "CC-BY-4.0"
+}

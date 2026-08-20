@@ -1,0 +1,12 @@
+{
+    "schemaVersion":  1,
+    "suiteId":  "csharp-temperature-band-001.v1",
+    "exerciseId":  "csharp-temperature-band-001",
+    "exerciseVersion":  1,
+    "typeName":  "Submission",
+    "methodName":  "TemperatureBand",
+    "parameterTypes":  [
+                           "int"
+                       ],
+    "returnType":  "string"
+}

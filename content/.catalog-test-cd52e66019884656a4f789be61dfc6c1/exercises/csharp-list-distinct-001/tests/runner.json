@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "suiteId": "csharp-list-distinct-001.v1",
+  "exerciseId": "csharp-list-distinct-001",
+  "exerciseVersion": 1,
+  "typeName": "Submission",
+  "methodName": "DistinctInOrder",
+  "parameterTypes": ["list<int>"],
+  "returnType": "list<int>"
+}

@@ -1,0 +1,82 @@
+{
+    "schemaVersion":  1,
+    "id":  "csharp-input-normalize-001",
+    "version":  1,
+    "title":  "Normaliser une saisie locale",
+    "kind":  "csharp",
+    "difficulty":  1,
+    "skills":  [
+                   "csharp.conversions"
+               ],
+    "prerequisites":  [
+                          "reference-types-001"
+                      ],
+    "estimatedMinutes":  30,
+    "statement":  "statement.md",
+    "constraints":  [
+                        "Conserver exactement la signature publique",
+                        "Retirer seulement les espaces de bord sans modifier le contenu interne.",
+                        "Ne pas modifier les entrées reçues sauf mention explicite"
+                    ],
+    "examples":  [
+                     {
+                         "input":  "[\"  Ada  \"]",
+                         "output":  "\"Ada\""
+                     }
+                 ],
+    "reflectionFields":  [
+                             "reformulation",
+                             "inputs",
+                             "expectedOutput",
+                             "edgeCases",
+                             "hypothesis",
+                             "plan"
+                         ],
+    "starterPath":  "starter/",
+    "visibleTestsPath":  "tests/visible/",
+    "hiddenTestsPath":  "tests/hidden/",
+    "hints":  [
+                  {
+                      "level":  1,
+                      "kind":  "socratic",
+                      "content":  "Quel invariant de « Normaliser une saisie locale » doit rester vrai pour les cas limites ?"
+                  },
+                  {
+                      "level":  2,
+                      "kind":  "location",
+                      "content":  "Concentrez la décision dans la méthode NormalizeInput, sans état global."
+                  },
+                  {
+                      "level":  3,
+                      "kind":  "strategy",
+                      "content":  "Retirer seulement les espaces de bord sans modifier le contenu interne."
+                  },
+                  {
+                      "level":  4,
+                      "kind":  "partial-pseudocode",
+                      "content":  "si value est null lever ArgumentNullException ; sinon retirer uniquement les blancs de bordure et retourner la chaîne obtenue"
+                  }
+              ],
+    "solution":  {
+                     "path":  "solution/",
+                     "unlock":  {
+                                    "seriousAttempts":  2,
+                                    "minimumDelayMinutes":  10
+                                }
+                 },
+    "explanation":  "explanation.md",
+    "complexity":  "O(n) en temps et O(n) pour la chaîne produite",
+    "commonMistakes":  [
+                           "Retirer aussi les espaces internes et modifier le contenu",
+                           "Retourner un repli pour une chaîne de blancs alors que le contrat retourne une chaîne vide",
+                           "Absorber l'entrée absente en retournant une chaîne vide au lieu de lever",
+                           "Convertir la casse au passage, ce que le contrat n'annonce pas"
+                       ],
+    "variantId":  "csharp-temperature-band-001",
+    "reviewCards":  [
+                        "card-csharp-input-normalize-001-rule",
+                        "card-csharp-input-normalize-001-edge"
+                    ],
+    "interviewQuestionId":  "interview-csharp-input-normalize-001",
+    "license":  "CC-BY-4.0"
+}

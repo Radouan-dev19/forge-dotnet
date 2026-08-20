@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "id": "interview-s21-s24-031",
+  "version": 1,
+  "title": "Écrire une décision dʼarchitecture",
+  "level": "intermediate",
+  "durationMinutes": 9,
+  "skills": [
+    "project.architecture"
+  ],
+  "question": "Que contient une décision révisable ?",
+  "observableCriteria": [
+    "Les options écartées figurent dans la décision, pas seulement l'option retenue",
+    "Un signal de réexamen est fixé, ce qui rend la décision réouvrable sur preuve"
+  ],
+  "modelAnswer": "Contexte, forces, options, choix, conséquences, risques, date et signal de réexamen. Elle cite une preuve plutôt quʼune préférence personnelle.",
+  "commonMistakes": [
+    "Rédiger la décision comme une justification du choix déjà fait"
+  ],
+  "variants": [
+    "Changez une contrainte du scénario « Écrire une décision dʼarchitecture » et expliquez si la décision reste valide."
+  ],
+  "license": "CC-BY-4.0"
+}

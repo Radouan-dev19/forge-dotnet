@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "suiteId": "tests-coverage-floor-001.v1",
+  "exerciseId": "tests-coverage-floor-001",
+  "exerciseVersion": 1,
+  "typeName": "Submission",
+  "methodName": "CoverageBlockers",
+  "parameterTypes": ["int[]", "int[]", "int"],
+  "returnType": "int[]"
+}

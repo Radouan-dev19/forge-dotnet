@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "scenarioId": "senior-legacy-trial-002",
+  "criteria": [
+    {
+      "id": "cause-plancher",
+      "label": "Cause : reste sans plancher a zero",
+      "journalField": "cause",
+      "requiredTerms": ["plancher", "negatif", "reste"],
+      "minimumMatches": 2
+    },
+    {
+      "id": "preuve-essai-expire",
+      "label": "Preuve : consultation posterieure a l'expiration",
+      "journalField": "evidence",
+      "requiredTerms": ["expire", "zero", "20"],
+      "minimumMatches": 2
+    },
+    {
+      "id": "test-essai-expire",
+      "label": "Test : non-regression sur un essai deja expire",
+      "journalField": "test",
+      "requiredTerms": ["expire", "non-regression", "zero"],
+      "minimumMatches": 1
+    },
+    {
+      "id": "prevention-plancher",
+      "label": "Prevention : caracterisation du plancher et des bornes de dates",
+      "journalField": "prevention",
+      "requiredTerms": ["bornes", "caracterisation", "plancher"],
+      "minimumMatches": 1
+    }
+  ]
+}

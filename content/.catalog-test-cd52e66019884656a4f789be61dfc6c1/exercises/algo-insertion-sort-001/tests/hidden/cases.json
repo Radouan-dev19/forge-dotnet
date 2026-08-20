@@ -1,0 +1,53 @@
+{
+    "schemaVersion":  1,
+    "cases":  [
+                  {
+                      "name":  "Hidden_Case1",
+                      "message":  "Trier par insertion — cas 1 hidden incorrect.",
+                      "arguments":  [
+                                        [
+                                            1,
+                                            2,
+                                            3
+                                        ]
+                                    ],
+                      "expected":  [
+                                       1,
+                                       2,
+                                       3
+                                   ],
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_Case2",
+                      "message":  "Trier par insertion — cas 2 hidden incorrect.",
+                      "arguments":  [
+                                        [
+                                            0,
+                                            -1
+                                        ]
+                                    ],
+                      "expected":  [
+                                       -1,
+                                       0
+                                   ],
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_Reversed",
+                      "message":  "Ordre strictement inversé : pire cas de décalage.",
+                      "arguments":  [[5,4,3,2,1]],
+                      "expected":  [1,2,3,4,5],
+                      "argumentsUnchanged":  true
+                  },
+                  {
+                      "name":  "Hidden_AllEqual",
+                      "message":  "Valeurs toutes égales : réfute une comparaison large qui déplacerait sans raison.",
+                      "arguments":  [[7,7,7]],
+                      "expected":  [7,7,7],
+                      "argumentsUnchanged":  true
+                  }
+              ]
+}

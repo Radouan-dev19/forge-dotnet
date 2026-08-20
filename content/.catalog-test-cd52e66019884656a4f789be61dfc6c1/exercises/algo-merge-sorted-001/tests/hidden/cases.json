@@ -1,0 +1,61 @@
+{
+    "schemaVersion":  1,
+    "cases":  [
+                  {
+                      "name":  "Hidden_Case1",
+                      "message":  "Fusionner deux tableaux triés — cas 1 hidden incorrect.",
+                      "arguments":  [
+                                        [
+                                            -1,
+                                            2
+                                        ],
+                                        [
+                                            -2,
+                                            3
+                                        ]
+                                    ],
+                      "expected":  [
+                                       -2,
+                                       -1,
+                                       2,
+                                       3
+                                   ],
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_Case2",
+                      "message":  "Fusionner deux tableaux triés — cas 2 hidden incorrect.",
+                      "arguments":  [
+                                        [
+                                            1,
+                                            1
+                                        ],
+                                        [
+                                            1
+                                        ]
+                                    ],
+                      "expected":  [
+                                       1,
+                                       1,
+                                       1
+                                   ],
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_BothEmpty",
+                      "message":  "Les deux séquences sont vides : le résultat est vide, sans exception.",
+                      "arguments":  [[],[]],
+                      "expected":  [],
+                      "argumentsUnchanged":  true
+                  },
+                  {
+                      "name":  "Hidden_RightEntirelyBefore",
+                      "message":  "Toute la séquence droite précède la gauche : réfute une concaténation naïve.",
+                      "arguments":  [[5],[1]],
+                      "expected":  [1,5],
+                      "argumentsUnchanged":  true
+                  }
+              ]
+}

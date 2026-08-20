@@ -1,0 +1,61 @@
+{
+  "schemaVersion": 1,
+  "cases": [
+    {
+      "name": "Hidden_DecreasingMinutesAreRefused",
+      "message": "Une chronologie qui recule signale un journal recomposé : rien ne s'en extrait honnêtement.",
+      "arguments": ["7:impact:slow-pages;3:alert:cpu"],
+      "expectedException": "ArgumentException",
+      "argumentsUnchanged": false
+    },
+    {
+      "name": "Hidden_EqualMinutesAreLegitimate",
+      "message": "Deux entrées à la même minute restent chronologiques au sens large.",
+      "arguments": ["1:alert:errors;2:impact:orders-blocked;2:assignment:payments-team"],
+      "expected": "impact=orders-blocked|start=1|mitigation=none|next=payments-team",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_FirstMitigationWins",
+      "message": "Deux mesures d'atténuation : le brief date la première, celle qui a commencé à réduire l'effet.",
+      "arguments": ["5:impact:api-down;6:mitigation:failover;7:mitigation:scale-out;9:assignment:platform"],
+      "expected": "impact=api-down|start=5|mitigation=6|next=platform",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_EmptyJournalIsRefused",
+      "message": "Sans journal, il n'y a rien à extraire ni à avouer.",
+      "arguments": [""],
+      "expectedException": "ArgumentException",
+      "argumentsUnchanged": false
+    },
+    {
+      "name": "Hidden_UnknownTypeIsRefused",
+      "message": "Un type d'entrée hors vocabulaire rend le journal inexploitable.",
+      "arguments": ["3:surprise:thing"],
+      "expectedException": "ArgumentException",
+      "argumentsUnchanged": false
+    },
+    {
+      "name": "Hidden_NonNumericMinuteIsRefused",
+      "message": "Une minute non numérique casse la chronologie entière.",
+      "arguments": ["x:alert:cpu-spike"],
+      "expectedException": "ArgumentException",
+      "argumentsUnchanged": false
+    },
+    {
+      "name": "Hidden_OwnerWithoutImpactIsHalfIncomplete",
+      "message": "Un propriétaire désigné mais aucun impact nommé : le brief n'avoue que ce qui manque.",
+      "arguments": ["10:assignment:noc"],
+      "expected": "incomplete|impact",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_ImpactWithoutOwnerIsObservedNotManaged",
+      "message": "Un impact nommé sans attribution : l'incident est observé, pas géré, et le brief le dit.",
+      "arguments": ["1:impact:degraded"],
+      "expected": "incomplete|next-owner",
+      "argumentsUnchanged": true
+    }
+  ]
+}

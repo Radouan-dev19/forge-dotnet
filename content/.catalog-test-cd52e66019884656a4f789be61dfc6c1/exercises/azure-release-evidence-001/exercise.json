@@ -1,0 +1,82 @@
+{
+    "schemaVersion":  1,
+    "id":  "azure-release-evidence-001",
+    "version":  1,
+    "title":  "Valider les preuves dʼun jalon",
+    "kind":  "csharp",
+    "difficulty":  3,
+    "skills":  [
+                   "project.evidence"
+               ],
+    "prerequisites":  [
+                          "final-project-architecture-001"
+                      ],
+    "estimatedMinutes":  40,
+    "statement":  "statement.md",
+    "constraints":  [
+                        "Conserver exactement la signature publique",
+                        "Un jalon est révisable uniquement si tests, revue de sécurité et retour arrière documenté sont tous présents.",
+                        "N'interroger aucun système de livraison : les trois conditions sont fournies"
+                    ],
+    "examples":  [
+                     {
+                         "input":  "[true,true,true]",
+                         "output":  "true"
+                     }
+                 ],
+    "reflectionFields":  [
+                             "reformulation",
+                             "inputs",
+                             "expectedOutput",
+                             "edgeCases",
+                             "hypothesis",
+                             "plan"
+                         ],
+    "starterPath":  "starter/",
+    "visibleTestsPath":  "tests/visible/",
+    "hiddenTestsPath":  "tests/hidden/",
+    "hints":  [
+                  {
+                      "level":  1,
+                      "kind":  "socratic",
+                      "content":  "Quelle condition publique de « Valider les preuves dʼun jalon » doit faire changer le résultat ?"
+                  },
+                  {
+                      "level":  2,
+                      "kind":  "location",
+                      "content":  "Concentrez la validation et la décision dans MilestoneReady, sans réseau ni état global."
+                  },
+                  {
+                      "level":  3,
+                      "kind":  "strategy",
+                      "content":  "Un jalon est révisable uniquement si tests, revue de sécurité et retour arrière documenté sont tous présents."
+                  },
+                  {
+                      "level":  4,
+                      "kind":  "partial-pseudocode",
+                      "content":  "exiger les trois conditions ensemble : les tests passés, la revue de sécurité effectuée et le retour arrière documenté ; l'absence d'une seule rend le jalon non révisable"
+                  }
+              ],
+    "solution":  {
+                     "path":  "solution/",
+                     "unlock":  {
+                                    "seriousAttempts":  2,
+                                    "minimumDelayMinutes":  10
+                                }
+                 },
+    "explanation":  "explanation.md",
+    "complexity":  "O(1) en temps et O(1) en espace",
+    "commonMistakes":  [
+                           "Déclarer un jalon révisable sur les seuls tests verts",
+                           "Omettre le retour arrière documenté et déployer sans plan de repli",
+                           "Considérer la revue de sécurité comme facultative quand les tests passent",
+                           "Traiter les trois conditions comme alternatives plutôt que cumulatives"
+                       ],
+    "variantId":  "azure-release-audit-001",
+    "reviewCards":  [
+                        "card-azure-release-evidence-001-rule",
+                        "card-azure-release-evidence-001-proof"
+                    ],
+    "interviewQuestionId":  "interview-azure-release-evidence-001",
+    "license":  "CC-BY-4.0"
+}

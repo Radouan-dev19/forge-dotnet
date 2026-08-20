@@ -1,0 +1,32 @@
+{
+    "schemaVersion":  1,
+    "cases":  [
+                  {
+                      "name":  "Visible_Case1",
+                      "message":  "Trouver le premier caractère unique — cas 1 visible incorrect.",
+                      "arguments":  [
+                                        "swiss"
+                                    ],
+                      "expected":  "w",
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Visible_Case2",
+                      "message":  "Trouver le premier caractère unique — cas 2 visible incorrect.",
+                      "arguments":  [
+                                        "aabb"
+                                    ],
+                      "expected":  "",
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Visible_UniqueAtEnd",
+                      "message":  "Le caractère unique est en dernier : réfute un arrêt au premier caractère non répété rencontré dans le comptage.",
+                      "arguments":  ["aabbc"],
+                      "expected":  "c",
+                      "argumentsUnchanged":  true
+                  }
+              ]
+}

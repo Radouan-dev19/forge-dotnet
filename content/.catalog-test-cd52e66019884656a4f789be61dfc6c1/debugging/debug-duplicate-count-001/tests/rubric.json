@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "scenarioId": "debug-duplicate-count-001",
+  "criteria": [
+    {
+      "id": "cause-double-count",
+      "label": "La cause explique pourquoi une valeur est comptée plusieurs fois.",
+      "journalField": "cause",
+      "requiredTerms": [
+        "répétition",
+        "compté",
+        "paire",
+        "deux fois"
+      ],
+      "minimumMatches": 2
+    },
+    {
+      "id": "evidence-counts",
+      "label": "La preuve compare le compte attendu et le compte obtenu.",
+      "journalField": "evidence",
+      "requiredTerms": [
+        "2",
+        "4",
+        "attendu"
+      ],
+      "minimumMatches": 2
+    },
+    {
+      "id": "prevention-cost",
+      "label": "La prévention tient compte du coût observé sur un extrait plus grand.",
+      "journalField": "prevention",
+      "requiredTerms": [
+        "durée",
+        "quadratique",
+        "taille",
+        "coût"
+      ],
+      "minimumMatches": 2
+    }
+  ]
+}

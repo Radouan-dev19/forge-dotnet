@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "id": "interview-structures-first-unique-001",
+  "version": 1,
+  "title": "Trouver le premier caractère unique",
+  "level": "junior",
+  "durationMinutes": 5,
+  "skills": [
+    "structures.dictionary"
+  ],
+  "question": "Comment résoudriez-vous « Trouver le premier caractère unique » et comment prouveriez-vous les bornes ?",
+  "observableCriteria": [
+    "Le second parcours suit l'ordre d'origine, ce qui est nécessaire pour choisir le premier",
+    "L'absence de caractère unique reçoit une valeur de retour définie"
+  ],
+  "modelAnswer": "Compter puis reparcourir dans l’ordre d’origine pour choisir le premier. Je prouve par une chaîne sans caractère unique, un unique en dernière position et une chaîne vide ; O(n) attendu en temps et O(k) en espace.",
+  "commonMistakes": [
+    "Parcourir le dictionnaire au second passage et rendre un caractère unique arbitraire"
+  ],
+  "variants": [
+    "Changer une borne ou le volume tout en conservant la même règle de trouver le premier caractère unique."
+  ],
+  "license": "CC-BY-4.0"
+}

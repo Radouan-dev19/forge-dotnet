@@ -1,0 +1,68 @@
+{
+  "schemaVersion": 1,
+  "cases": [
+    {
+      "name": "Hidden_ExactMaximumRateIsTolerated",
+      "message": "Le taux tombe exactement sur le maximum toléré : l'inégalité est stricte, le circuit reste fermé.",
+      "arguments": ["state=closed;calls=50;failures=25;minimum-calls=20;max-rate=50"],
+      "expected": "stay-closed|healthy",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_OneFailedProbeReopensImmediately",
+      "message": "Une sonde en échec répond non : le compte de sondes passées ne se négocie pas.",
+      "arguments": ["state=half-open;probes=2;probe-failures=1;required-probes=3"],
+      "expected": "open|probe-failed",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_AllProbesPassedClosesTheCircuit",
+      "message": "Trois sondes exigées, trois passées, aucun échec : le service a répondu oui.",
+      "arguments": ["state=half-open;probes=3;probe-failures=0;required-probes=3"],
+      "expected": "closed|probes-passed",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_NotEnoughProbesKeepsProbing",
+      "message": "Une sonde passée sur trois exigées : le demi-ouvert patiente sans conclure.",
+      "arguments": ["state=half-open;probes=1;probe-failures=0;required-probes=3"],
+      "expected": "stay-half-open|probing",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_StillCoolingStaysOpen",
+      "message": "Cinq secondes écoulées sur trente : le circuit ouvert continue de refroidir.",
+      "arguments": ["state=open;elapsed=5;cooldown=30"],
+      "expected": "stay-open|cooling",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_MoreFailuresThanCallsIsRefused",
+      "message": "Plus d'échecs que d'appels : la fenêtre ne décrit aucun trafic possible.",
+      "arguments": ["state=closed;calls=20;failures=25;minimum-calls=5;max-rate=50"],
+      "expectedException": "ArgumentException",
+      "argumentsUnchanged": false
+    },
+    {
+      "name": "Hidden_UnknownStateIsRefused",
+      "message": "Un état hors des trois connus n'a aucune règle de transition.",
+      "arguments": ["state=frozen;calls=1"],
+      "expectedException": "ArgumentException",
+      "argumentsUnchanged": false
+    },
+    {
+      "name": "Hidden_HugeWindowNeedsWideMath",
+      "message": "Deux milliards d'appels : le produit du taux déborde le trente-deux bits, le calcul s'élargit.",
+      "arguments": ["state=closed;calls=2000000000;failures=1000000001;minimum-calls=100;max-rate=50"],
+      "expected": "open|rate-exceeded",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_ForeignMeasureIsRefused",
+      "message": "Un refroidissement fourni sans son écoulé : le relevé ne porte pas les mesures de son état.",
+      "arguments": ["state=open;elapsed=10"],
+      "expectedException": "ArgumentException",
+      "argumentsUnchanged": false
+    }
+  ]
+}

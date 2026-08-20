@@ -1,0 +1,82 @@
+{
+    "schemaVersion":  1,
+    "id":  "tests-boundary-values-001",
+    "version":  1,
+    "title":  "Détecter une frontière",
+    "kind":  "csharp",
+    "difficulty":  2,
+    "skills":  [
+                   "tests.boundaries"
+               ],
+    "prerequisites":  [
+                          "tests-xunit-aaa-001"
+                      ],
+    "estimatedMinutes":  35,
+    "statement":  "statement.md",
+    "constraints":  [
+                        "Conserver exactement la signature publique",
+                        "Refuser des bornes incohérentes puis comparer exactement les deux frontières.",
+                        "Ne consulter aucune collection : la valeur et les deux bornes sont fournies"
+                    ],
+    "examples":  [
+                     {
+                         "input":  "[1,1,100]",
+                         "output":  "true"
+                     }
+                 ],
+    "reflectionFields":  [
+                             "reformulation",
+                             "inputs",
+                             "expectedOutput",
+                             "edgeCases",
+                             "hypothesis",
+                             "plan"
+                         ],
+    "starterPath":  "starter/",
+    "visibleTestsPath":  "tests/visible/",
+    "hiddenTestsPath":  "tests/hidden/",
+    "hints":  [
+                  {
+                      "level":  1,
+                      "kind":  "socratic",
+                      "content":  "Quel comportement public de « Détecter une frontière » change exactement à la frontière ?"
+                  },
+                  {
+                      "level":  2,
+                      "kind":  "location",
+                      "content":  "Concentrez la validation et la décision dans IsBoundary, sans état global ni journal sensible."
+                  },
+                  {
+                      "level":  3,
+                      "kind":  "strategy",
+                      "content":  "Refuser des bornes incohérentes puis comparer exactement les deux frontières."
+                  },
+                  {
+                      "level":  4,
+                      "kind":  "partial-pseudocode",
+                      "content":  "refuser d'emblée des bornes incohérentes, qui ne définissent aucun intervalle ; sinon conclure que la valeur est une frontière lorsqu'elle égale exactement l'une des deux extrémités"
+                  }
+              ],
+    "solution":  {
+                     "path":  "solution/",
+                     "unlock":  {
+                                    "seriousAttempts":  2,
+                                    "minimumDelayMinutes":  10
+                                }
+                 },
+    "explanation":  "explanation.md",
+    "complexity":  "O(1) en temps et O(1) en espace",
+    "commonMistakes":  [
+                           "Traiter des bornes inversées comme un intervalle vide au lieu de les refuser",
+                           "Ne tester qu'une des deux extrémités",
+                           "Considérer une valeur intérieure comme une frontière",
+                           "Refuser des bornes égales, qui définissent un intervalle d'une seule valeur"
+                       ],
+    "variantId":  "tests-quantity-rule-001",
+    "reviewCards":  [
+                        "card-tests-boundary-values-001-rule",
+                        "card-tests-boundary-values-001-security"
+                    ],
+    "interviewQuestionId":  "interview-tests-boundary-values-001",
+    "license":  "CC-BY-4.0"
+}

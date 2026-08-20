@@ -1,0 +1,39 @@
+{
+    "schemaVersion":  1,
+    "cases":  [
+                  {
+                      "name":  "Hidden_Case1",
+                      "message":  "Choisir une valeur de repli — cas 1 hidden incorrect.",
+                      "arguments":  [
+                                        "   "
+                                    ],
+                      "expected":  "n/a",
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_Case2",
+                      "message":  "Choisir une valeur de repli — cas 2 hidden incorrect.",
+                      "arguments":  [
+                                        "0"
+                                    ],
+                      "expected":  "0",
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_NullUsesFallback",
+                      "message":  "Référence absente : le repli s'applique, sans exception.",
+                      "arguments":  [null],
+                      "expected":  "n/a",
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_TabOnly",
+                      "message":  "Tabulation seule : traitée comme un blanc, donc repli.",
+                      "arguments":  ["\t"],
+                      "expected":  "n/a",
+                      "argumentsUnchanged":  true
+                  }
+              ]
+}

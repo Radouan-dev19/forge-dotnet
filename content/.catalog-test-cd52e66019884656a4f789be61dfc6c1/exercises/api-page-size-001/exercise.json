@@ -1,0 +1,82 @@
+{
+    "schemaVersion":  1,
+    "id":  "api-page-size-001",
+    "version":  1,
+    "title":  "Borner une taille de page",
+    "kind":  "csharp",
+    "difficulty":  2,
+    "skills":  [
+                   "api.pagination"
+               ],
+    "prerequisites":  [
+                          "api-async-cancellation-001"
+                      ],
+    "estimatedMinutes":  35,
+    "statement":  "statement.md",
+    "constraints":  [
+                        "Conserver exactement la signature publique",
+                        "Appliquer une valeur par défaut positive et un plafond strict de cent.",
+                        "Ne lire aucun réglage externe : le défaut et le plafond sont fixés par le contrat"
+                    ],
+    "examples":  [
+                     {
+                         "input":  "[25]",
+                         "output":  "25"
+                     }
+                 ],
+    "reflectionFields":  [
+                             "reformulation",
+                             "inputs",
+                             "expectedOutput",
+                             "edgeCases",
+                             "hypothesis",
+                             "plan"
+                         ],
+    "starterPath":  "starter/",
+    "visibleTestsPath":  "tests/visible/",
+    "hiddenTestsPath":  "tests/hidden/",
+    "hints":  [
+                  {
+                      "level":  1,
+                      "kind":  "socratic",
+                      "content":  "Quel comportement public de « Borner une taille de page » change exactement à la frontière ?"
+                  },
+                  {
+                      "level":  2,
+                      "kind":  "location",
+                      "content":  "Concentrez la validation et la décision dans ClampPageSize, sans état global ni journal sensible."
+                  },
+                  {
+                      "level":  3,
+                      "kind":  "strategy",
+                      "content":  "Appliquer une valeur par défaut positive et un plafond strict de cent."
+                  },
+                  {
+                      "level":  4,
+                      "kind":  "partial-pseudocode",
+                      "content":  "si la taille demandée est nulle ou négative retourner la taille par défaut ; sinon retenir la plus petite entre la taille demandée et le plafond"
+                  }
+              ],
+    "solution":  {
+                     "path":  "solution/",
+                     "unlock":  {
+                                    "seriousAttempts":  2,
+                                    "minimumDelayMinutes":  10
+                                }
+                 },
+    "explanation":  "explanation.md",
+    "complexity":  "O(1) en temps et O(1) en espace",
+    "commonMistakes":  [
+                           "Retourner la taille demandée sans plafond et laisser une seule requête saturer la mémoire",
+                           "Refuser une taille excessive au lieu de la ramener au plafond",
+                           "Traiter une taille nulle comme une demande de collection entière",
+                           "Écrire le plafond en dur alors qu'il relève d'un réglage de configuration"
+                       ],
+    "variantId":  "api-skip-count-001",
+    "reviewCards":  [
+                        "card-api-page-size-001-rule",
+                        "card-api-page-size-001-security"
+                    ],
+    "interviewQuestionId":  "interview-api-page-size-001",
+    "license":  "CC-BY-4.0"
+}

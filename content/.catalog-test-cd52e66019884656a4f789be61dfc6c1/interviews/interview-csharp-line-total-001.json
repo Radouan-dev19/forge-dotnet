@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "id": "interview-csharp-line-total-001",
+  "version": 1,
+  "title": "Composer un total de ligne",
+  "level": "junior",
+  "durationMinutes": 5,
+  "skills": [
+    "csharp.composition"
+  ],
+  "question": "Comment résoudriez-vous « Composer un total de ligne » et comment prouveriez-vous les bornes ?",
+  "observableCriteria": [
+    "Les deux invariants sont validés avant tout calcul",
+    "L'arrondi a lieu une seule fois, à la fin, et son mode est nommé"
+  ],
+  "modelAnswer": "Valider les deux invariants puis multiplier avant l’unique arrondi. Je prouve par une quantité nulle, un prix à deux décimales et un total tombant exactement sur un demi-centime ; O(1) en temps et O(1) en espace.",
+  "commonMistakes": [
+    "Arrondir à chaque étape et accumuler un écart sur une ligne à forte quantité"
+  ],
+  "variants": [
+    "Changer une borne ou le volume tout en conservant la même règle de composer un total de ligne."
+  ],
+  "license": "CC-BY-4.0"
+}

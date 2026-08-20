@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "suiteId": "senior-queue-backlog-001.v1",
+  "exerciseId": "senior-queue-backlog-001",
+  "exerciseVersion": 1,
+  "typeName": "Submission",
+  "methodName": "DrainMinutes",
+  "parameterTypes": ["int", "int", "int"],
+  "returnType": "int"
+}

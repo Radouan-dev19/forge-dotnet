@@ -1,0 +1,46 @@
+{
+  "schemaVersion": 1,
+  "id": "csharp-shipping-decision-001",
+  "version": 1,
+  "title": "Décider des frais de livraison",
+  "kind": "csharp",
+  "difficulty": 1,
+  "skills": ["csharp.conditions", "csharp.types", "logic.edge-cases"],
+  "prerequisites": ["reference-types-001"],
+  "estimatedMinutes": 25,
+  "statement": "statement.md",
+  "constraints": [
+    "Conserver exactement la signature publique demandée",
+    "Retourner 9.90m pour toute livraison express",
+    "Offrir la livraison standard à partir de 80m inclus",
+    "Refuser un total négatif avec ArgumentOutOfRangeException"
+  ],
+  "examples": [
+    { "input": "[50,false]", "output": "4.90" },
+    { "input": "80m, false", "output": "0m" },
+    { "input": "100m, true", "output": "9.90m" }
+  ],
+  "reflectionFields": ["reformulation", "inputs", "expectedOutput", "edgeCases", "hypothesis", "plan"],
+  "starterPath": "starter/",
+  "visibleTestsPath": "tests/visible/",
+  "hiddenTestsPath": "tests/hidden/",
+  "hints": [
+    { "level": 1, "kind": "socratic", "content": "Quelle règle doit être examinée en premier pour éviter qu’une commande express devienne gratuite ?" },
+    { "level": 2, "kind": "location", "content": "Place la validation au début, puis ordonne les branches de ShippingCost de la plus prioritaire à la moins prioritaire." },
+    { "level": 3, "kind": "strategy", "content": "Après le total négatif, traite express, puis le seuil de gratuité, puis le tarif standard." },
+    { "level": 4, "kind": "partial-pseudocode", "content": "si total invalide lever erreur ; si express retourner 9,90 ; sinon si total >= 80 retourner 0 ; sinon 4,90" }
+  ],
+  "solution": { "path": "solution/", "unlock": { "seriousAttempts": 2, "minimumDelayMinutes": 10 } },
+  "explanation": "explanation.md",
+  "complexity": "O(1) en temps et O(1) en espace",
+  "commonMistakes": [
+    "Tester la gratuité avant le mode express",
+    "Employer strictement supérieur à 80 au lieu de supérieur ou égal",
+    "Retourner un double à la place d’un decimal",
+    "Accepter un total négatif"
+  ],
+  "variantId": "csharp-price-conversion-001",
+  "reviewCards": ["card-shipping-priority-001", "card-shipping-boundary-001"],
+  "interviewQuestionId": "interview-shipping-decision-001",
+  "license": "CC-BY-4.0"
+}

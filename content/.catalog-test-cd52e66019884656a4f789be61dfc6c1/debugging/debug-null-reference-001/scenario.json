@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "id": "debug-null-reference-001",
+  "version": 1,
+  "title": "Tracer une NullReferenceException",
+  "difficulty": 2,
+  "skills": ["debugging.null-reference", "debugging.call-stack"],
+  "prerequisites": ["reference-types-001"],
+  "estimatedMinutes": 35,
+  "brokenRepositoryPath": "broken/",
+  "ticketPath": "ticket.md",
+  "expectedBehavior": "Le nom client doit être normalisé en majuscules et une valeur absente ou blanche doit produire (inconnu) sans interrompre le traitement.",
+  "logsPath": "logs.txt",
+  "checklist": ["Reproduire avec une valeur absente", "Placer un point d'arrêt avant Trim", "Observer la valeur et la pile d'appels", "Ajouter un cas de non-régression absent"],
+  "observationQuestions": ["Quelle instruction déréférence la valeur absente ?", "À quel appel la valeur absente entre-t-elle dans la méthode ?", "Quel test distingue une absence d'une chaîne blanche ?"],
+  "correctionPath": "correction/",
+  "regressionTestPath": "regression-test.md",
+  "journalFields": ["symptom", "context", "hypotheses", "evidence", "cause", "fix", "test", "prevention"],
+  "license": "CC-BY-4.0"
+}

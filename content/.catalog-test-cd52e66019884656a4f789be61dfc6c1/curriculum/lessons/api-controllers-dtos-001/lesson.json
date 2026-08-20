@@ -1,0 +1,36 @@
+{
+    "schemaVersion":  1,
+    "id":  "api-controllers-dtos-001",
+    "version":  1,
+    "title":  "Contrôleurs minces et DTO explicites",
+    "week":  11,
+    "skills":  [
+                   {
+                       "id":  "api.dto",
+                       "weight":  1
+                   }
+               ],
+    "prerequisites":  [
+                          "api-routing-rest-001"
+                      ],
+    "estimatedMinutes":  75,
+    "objectives":  [
+                       "Appliquer Contrôleurs minces et DTO explicites et justifier une preuve observable sur un cas nouveau"
+                   ],
+    "sections":  [
+                     "intuition",
+                     "explanation",
+                     "example",
+                     "counterExample",
+                     "check",
+                     "guided",
+                     "independent",
+                     "debugging",
+                     "interview",
+                     "summary",
+                     "reviewCards",
+                     "masteryTest"
+                 ],
+    "markdownPath":  "lesson.md",
+    "license":  "CC-BY-4.0"
+}

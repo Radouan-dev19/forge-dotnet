@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "suiteId": "ci-retry-backoff-001.v1",
+  "exerciseId": "ci-retry-backoff-001",
+  "exerciseVersion": 1,
+  "typeName": "Submission",
+  "methodName": "RetryWindowSeconds",
+  "parameterTypes": ["int", "int", "int"],
+  "returnType": "int"
+}

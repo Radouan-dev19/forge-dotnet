@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "id": "interview-senior-consumer-decision-001",
+  "version": 1,
+  "title": "Decider du sort d'un message consomme",
+  "level": "advanced",
+  "durationMinutes": 10,
+  "skills": ["quality.messaging"],
+  "question": "Un consommateur recoit un message d'une file. Comment decidez-vous s'il faut le traiter, l'acquitter comme doublon, ou l'envoyer en lettres mortes ?",
+  "observableCriteria": [
+    "Distingue le doublon deja traite du message empoisonne qui echoue de facon repetee",
+    "Rend le consommateur idempotent en verifiant si l'identifiant a deja ete traite avant d'agir",
+    "Fixe un seuil de tentatives au-dela duquel le message part en file de lettres mortes"
+  ],
+  "modelAnswer": "Une livraison au moins une fois signifie qu'un message peut arriver plusieurs fois : le consommateur doit etre idempotent. Je regarde d'abord le nombre de tentatives : au-dela d'un seuil, le message est empoisonne et je l'envoie en lettres mortes pour ne pas bloquer la file ni boucler indefiniment. Sinon, je verifie si son identifiant figure deja parmi les messages traites ; si oui, je l'acquitte comme doublon sans rejouer l'effet metier. Sinon, je le traite, puis j'enregistre son identifiant. L'ordre compte : le message empoisonne prime, car un doublon qui echoue en boucle doit sortir de la file plutot que d'y revenir sans fin. Le patron outbox garantit en amont que la publication et l'ecriture metier sont atomiques.",
+  "commonMistakes": [
+    "Traiter chaque livraison sans verifier l'identifiant et rejouer un effet metier en double",
+    "Laisser un message empoisonne revenir indefiniment dans la file au lieu de le mettre en lettres mortes"
+  ],
+  "variants": [
+    "Comment stockez-vous les identifiants traites sans les accumuler indefiniment ?",
+    "En quoi le patron outbox complete-t-il un consommateur idempotent ?"
+  ],
+  "license": "CC-BY-4.0"
+}

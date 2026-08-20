@@ -1,0 +1,82 @@
+{
+  "schemaVersion": 1,
+  "id": "git-undo-strategy-001",
+  "version": 1,
+  "title": "Choisir comment annuler un commit",
+  "kind": "csharp",
+  "difficulty": 2,
+  "skills": ["git.commits"],
+  "prerequisites": ["git-rebase-or-merge-001"],
+  "estimatedMinutes": 35,
+  "statement": "statement.md",
+  "constraints": [
+    "Conserver exactement la signature publique",
+    "Un commit déjà publié ne s'annule que par un commit inverse",
+    "Le nombre de commits à défaire doit être strictement positif"
+  ],
+  "examples": [
+    {
+      "input": "[1, true, false]",
+      "output": "revert"
+    },
+    {
+      "input": "[2, false, true]",
+      "output": "reset-soft"
+    }
+  ],
+  "reflectionFields": [
+    "reformulation",
+    "inputs",
+    "expectedOutput",
+    "edgeCases",
+    "hypothesis",
+    "plan"
+  ],
+  "starterPath": "starter/",
+  "visibleTestsPath": "tests/visible/",
+  "hiddenTestsPath": "tests/hidden/",
+  "hints": [
+    {
+      "level": 1,
+      "kind": "socratic",
+      "content": "Annuler, est-ce faire disparaître ce qui a eu lieu, ou déclarer publiquement que cela n'aurait pas dû ?"
+    },
+    {
+      "level": 2,
+      "kind": "location",
+      "content": "Une garde sur le nombre de commits, puis trois retours anticipés dont l'ordre encode la contrainte de publication."
+    },
+    {
+      "level": 3,
+      "kind": "strategy",
+      "content": "La publication décide en premier ; ensuite seulement se pose la question de conserver ou non le travail dans la copie."
+    },
+    {
+      "level": 4,
+      "kind": "partial-pseudocode",
+      "content": "refuser un compte de commits nul ou négatif ; si les commits sont publiés retourner l'annulation par commit inverse ; sinon retourner le retrait doux quand le travail doit rester dans la copie, et le retrait dur sinon"
+    }
+  ],
+  "solution": {
+    "path": "solution/",
+    "unlock": {
+      "seriousAttempts": 2,
+      "minimumDelayMinutes": 10
+    }
+  },
+  "explanation": "explanation.md",
+  "complexity": "O(1) en temps et O(1) en espace",
+  "commonMistakes": [
+    "Réécrire l'histoire de commits déjà publiés, ce qui laisse des jumeaux chez les autres",
+    "Choisir le retrait dur alors que le travail n'était pas sauvegardé ailleurs",
+    "Traiter un compte de commits nul comme une demande sans effet au lieu de la refuser",
+    "Croire que l'annulation par commit inverse efface le commit d'origine de l'historique"
+  ],
+  "variantId": "git-rebase-or-merge-001",
+  "reviewCards": [
+    "card-git-undo-strategy-001-rule",
+    "card-git-undo-strategy-001-edge"
+  ],
+  "interviewQuestionId": "interview-git-undo-strategy-001",
+  "license": "CC-BY-4.0"
+}

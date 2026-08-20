@@ -1,0 +1,13 @@
+{
+    "schemaVersion":  1,
+    "suiteId":  "azure-correlation-signal-001.v1",
+    "exerciseId":  "azure-correlation-signal-001",
+    "exerciseVersion":  1,
+    "typeName":  "Submission",
+    "methodName":  "IncidentSignal",
+    "parameterTypes":  [
+                           "int",
+                           "int"
+                       ],
+    "returnType":  "string"
+}

@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "cases": [
+    {
+      "name": "Visible_Nominal",
+      "message": "Deux lignes conformes après l'en-tête.",
+      "arguments": ["reference;quantite;prix\nFR-1;2;19.90\nFR-2;1;5.00"],
+      "expected": 2,
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Visible_HeaderIsNeverData",
+      "message": "Un fichier réduit à son en-tête ne contient aucune donnée.",
+      "arguments": ["reference;quantite;prix"],
+      "expected": 0,
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Visible_BlankLinesIgnored",
+      "message": "Une ligne vide ou faite de blancs n'est ni valide ni rejetée.",
+      "arguments": ["en-tete\nFR-1;1;1.00\n\n   \nFR-2;3;2.50"],
+      "expected": 2,
+      "argumentsUnchanged": true
+    }
+  ]
+}

@@ -1,0 +1,82 @@
+{
+    "schemaVersion":  1,
+    "id":  "api-retry-after-001",
+    "version":  1,
+    "title":  "Calculer le Retry-After d'une fenêtre fixe",
+    "kind":  "csharp",
+    "difficulty":  3,
+    "skills":  [
+                   "api.contracts"
+               ],
+    "prerequisites":  [
+                          "api-rate-limiting-001"
+                      ],
+    "estimatedMinutes":  30,
+    "statement":  "statement.md",
+    "constraints":  [
+                        "Conserver exactement la signature publique",
+                        "Sous le quota, il n'y a rien à attendre : le délai est zéro",
+                        "Au quota atteint, le délai court jusqu'au début de la fenêtre suivante, jamais au-delà"
+                    ],
+    "examples":  [
+                     {
+                         "input":  "[5, 5, 1749990012, 60, 1749990000]",
+                         "output":  "48"
+                     }
+                 ],
+    "reflectionFields":  [
+                             "reformulation",
+                             "inputs",
+                             "expectedOutput",
+                             "edgeCases",
+                             "hypothesis",
+                             "plan"
+                         ],
+    "starterPath":  "starter/",
+    "visibleTestsPath":  "tests/visible/",
+    "hiddenTestsPath":  "tests/hidden/",
+    "hints":  [
+                  {
+                      "level":  1,
+                      "kind":  "socratic",
+                      "content":  "Un client encore sous son quota doit-il attendre quoi que ce soit ? Et un client au quota, jusqu'à quel instant précis ?"
+                  },
+                  {
+                      "level":  2,
+                      "kind":  "location",
+                      "content":  "Deux décisions : d'abord si le client est limité, ensuite, s'il l'est, le nombre de secondes jusqu'à la réinitialisation de la fenêtre."
+                  },
+                  {
+                      "level":  3,
+                      "kind":  "strategy",
+                      "content":  "La fenêtre suivante commence au début de la fenêtre courante augmenté de sa durée ; le délai est l'écart entre cet instant et l'instant courant, jamais négatif."
+                  },
+                  {
+                      "level":  4,
+                      "kind":  "partial-pseudocode",
+                      "content":  "valider une durée de fenêtre strictement positive ; si le compte est strictement inférieur au quota, rendre zéro ; sinon calculer le début de la fenêtre suivante, en soustraire l'instant courant, et rendre ce délai en le bornant à zéro par le bas"
+                  }
+              ],
+    "solution":  {
+                     "path":  "solution/",
+                     "unlock":  {
+                                    "seriousAttempts":  2,
+                                    "minimumDelayMinutes":  10
+                                }
+                 },
+    "explanation":  "explanation.md",
+    "complexity":  "O(1) en temps et en espace",
+    "commonMistakes":  [
+                           "Renvoyer un délai non nul alors que le client est encore sous son quota",
+                           "Calculer le délai jusqu'à la fin plutôt que jusqu'au début de la fenêtre suivante",
+                           "Laisser un délai négatif sortir quand l'instant courant a déjà dépassé la réinitialisation",
+                           "Soustraire les instants en 32 bits et déborder sur de grands horodatages"
+                       ],
+    "variantId":  "api-token-bucket-001",
+    "reviewCards":  [
+                        "card-api-retry-after-001-rule",
+                        "card-api-retry-after-001-edge"
+                    ],
+    "interviewQuestionId":  "interview-api-retry-after-001",
+    "license":  "CC-BY-4.0"
+}

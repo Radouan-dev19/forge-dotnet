@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "id": "interview-debug-log-errors-001",
+  "version": 1,
+  "title": "Compter des erreurs dans un journal",
+  "level": "junior",
+  "durationMinutes": 5,
+  "skills": [
+    "debugging.data"
+  ],
+  "question": "Comment résoudriez-vous « Compter des erreurs dans un journal » et comment prouveriez-vous les bornes ?",
+  "observableCriteria": [
+    "Le marqueur est cherché exactement, sans correspondance partielle",
+    "L'avancée après chaque occurrence est décrite, ce qui évite de la recompter"
+  ],
+  "modelAnswer": "Chercher le marqueur exact et avancer après chaque occurrence. Je prouve par aucune occurrence, une occurrence, deux occurrences adjacentes et un marqueur inclus dans un mot plus long ; O(n) en temps et O(1) en espace.",
+  "commonMistakes": [
+    "Rechercher sans avancer l'index et boucler sur la même occurrence"
+  ],
+  "variants": [
+    "Changer une borne ou le volume tout en conservant la même règle de compter des erreurs dans un journal."
+  ],
+  "license": "CC-BY-4.0"
+}

@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "id": "interview-azure-cost-guardrail-001",
+  "version": 1,
+  "title": "Évaluer une garde de coût",
+  "level": "intermediate",
+  "durationMinutes": 7,
+  "skills": [
+    "azure.cost"
+  ],
+  "question": "Comment implémenteriez-vous « Évaluer une garde de coût » et quelles preuves empêchent un contournement ?",
+  "observableCriteria": [
+    "Les deux conditions sont exigées ensemble : coût estimé dans le budget et plan de suppression vérifié",
+    "L'estimation est distinguée du coût réellement facturé"
+  ],
+  "modelAnswer": "Autoriser seulement un coût estimé dans le budget avec un plan de suppression vérifié. Je teste un coût à la borne du budget, un coût au-dessus, et un coût acceptable dont le plan de suppression est absent. O(1) en temps et O(1) en espace.",
+  "commonMistakes": [
+    "Autoriser sur la seule estimation, sans exiger que la suppression ait été vérifiée"
+  ],
+  "variants": [
+    "Changer une contrainte tout en conservant la règle de évaluer une garde de coût."
+  ],
+  "license": "CC-BY-4.0"
+}

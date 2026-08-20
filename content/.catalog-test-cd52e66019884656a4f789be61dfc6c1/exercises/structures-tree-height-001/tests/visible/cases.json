@@ -1,0 +1,38 @@
+{
+    "schemaVersion":  1,
+    "cases":  [
+                  {
+                      "name":  "Visible_Case1",
+                      "message":  "Calculer une hauteur depuis les parents — cas 1 visible incorrect.",
+                      "arguments":  [
+                                        [
+                                            -1,
+                                            0,
+                                            0
+                                        ]
+                                    ],
+                      "expected":  2,
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Visible_Case2",
+                      "message":  "Calculer une hauteur depuis les parents — cas 2 visible incorrect.",
+                      "arguments":  [
+                                        [
+
+                                        ]
+                                    ],
+                      "expected":  0,
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Visible_RootOnly",
+                      "message":  "Racine seule : hauteur de un dans la convention en nœuds.",
+                      "arguments":  [[-1]],
+                      "expected":  1,
+                      "argumentsUnchanged":  true
+                  }
+              ]
+}

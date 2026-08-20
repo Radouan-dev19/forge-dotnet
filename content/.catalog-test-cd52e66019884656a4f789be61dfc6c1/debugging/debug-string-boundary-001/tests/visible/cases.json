@@ -1,0 +1,25 @@
+{
+    "schemaVersion":  1,
+    "cases":  [
+                  {
+                      "name":  "Visible_Case1",
+                      "message":  "Dernier caractère hors limite — cas 1.",
+                      "arguments":  [
+                                        "abc"
+                                    ],
+                      "expected":  "c",
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Visible_Case2",
+                      "message":  "Dernier caractère hors limite — cas 2.",
+                      "arguments":  [
+                                        ""
+                                    ],
+                      "expected":  "",
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  }
+              ]
+}

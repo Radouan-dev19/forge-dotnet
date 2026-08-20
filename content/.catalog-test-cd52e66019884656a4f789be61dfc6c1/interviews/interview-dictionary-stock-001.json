@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "id": "interview-dictionary-stock-001",
+  "version": 1,
+  "title": "Fusionner deux dictionnaires métier",
+  "level": "junior",
+  "durationMinutes": 7,
+  "skills": ["csharp.dictionaries", "csharp.collections"],
+  "question": "Comment fusionnerais-tu deux dictionnaires de quantités avec des clés insensibles à la casse ?",
+  "observableCriteria": [
+    "La stratégie de normalisation et de cumul est déterministe",
+    "La validation préalable et l’absence de mutation sont vérifiées"
+  ],
+  "modelAnswer": "Je valide toutes les entrées avant de produire un résultat, je normalise les clés avec une règle invariante et j’accumule dans un nouveau dictionnaire avec TryGetValue. Je teste la casse, les clés absentes, le vide et les quantités invalides.",
+  "commonMistakes": ["Écraser la quantité existante au lieu de l’additionner"],
+  "variants": ["Fusionner des quantités en conservant aussi la date de mise à jour la plus récente"],
+  "license": "CC-BY-4.0"
+}

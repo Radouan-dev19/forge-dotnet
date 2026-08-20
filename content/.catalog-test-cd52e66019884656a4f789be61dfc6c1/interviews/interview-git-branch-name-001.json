@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "id": "interview-git-branch-name-001",
+  "version": 1,
+  "title": "Normaliser un nom de branche",
+  "level": "junior",
+  "durationMinutes": 6,
+  "skills": ["git.branches"],
+  "question": "Deux collègues créent une branche pour le même ticket, l'un l'écrit avec une majuscule. Le correctif de l'un disparaît après la fusion. Que s'est-il passé, et comment l'auriez-vous évité ?",
+  "observableCriteria": [
+    "La sensibilité à la casse du système de fichiers est identifiée comme cause",
+    "La conversion des caractères interdits est préférée à leur suppression, avec la raison",
+    "Le refus d'un nom vide après normalisation est justifié par la qualité du message d'erreur"
+  ],
+  "modelAnswer": "Sur un serveur Linux, deux noms qui ne diffèrent que par une majuscule sont deux branches distinctes ; sur le poste de l'un des deux, macOS ou Windows, ce sont souvent la même. L'équipe se retrouve avec deux branches portant le même travail et n'en fusionne qu'une. Je normalise donc à la création : minuscules, chiffres, tiret et barre oblique conservés, tout le reste converti en tiret. Convertir et non supprimer, sinon deux mots se collent et le nom devient illisible. Je traite le tiret lui-même comme un séparateur pour que deux tirets écrits à la main se réduisent comme le reste, ce qui rend la transformation idempotente. Et je refuse un nom qui ne laisse rien, au moment où j'ai encore le nom d'origine pour l'expliquer.",
+  "commonMistakes": [
+    "Supprimer les caractères interdits, ce qui colle deux mots",
+    "Rendre une chaîne vide et laisser l'outil échouer plus loin"
+  ],
+  "variants": [
+    "Demander ce qui change si l'équipe travaille exclusivement sous Windows.",
+    "Demander comment vérifier que la normalisation est idempotente."
+  ],
+  "license": "CC-BY-4.0"
+}

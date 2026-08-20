@@ -1,0 +1,82 @@
+{
+    "schemaVersion":  1,
+    "id":  "structures-balanced-parentheses-001",
+    "version":  1,
+    "title":  "Valider des parenthèses",
+    "kind":  "algorithm",
+    "difficulty":  2,
+    "skills":  [
+                   "structures.stack"
+               ],
+    "prerequisites":  [
+                          "structures-stacks-queues-001"
+                      ],
+    "estimatedMinutes":  30,
+    "statement":  "statement.md",
+    "constraints":  [
+                        "Conserver exactement la signature publique",
+                        "Refuser une fermeture sans ouverture et exiger une profondeur finale nulle.",
+                        "Ne pas modifier les entrées reçues sauf mention explicite"
+                    ],
+    "examples":  [
+                     {
+                         "input":  "[\"(a(b))\"]",
+                         "output":  "true"
+                     }
+                 ],
+    "reflectionFields":  [
+                             "reformulation",
+                             "inputs",
+                             "expectedOutput",
+                             "edgeCases",
+                             "hypothesis",
+                             "plan"
+                         ],
+    "starterPath":  "starter/",
+    "visibleTestsPath":  "tests/visible/",
+    "hiddenTestsPath":  "tests/hidden/",
+    "hints":  [
+                  {
+                      "level":  1,
+                      "kind":  "socratic",
+                      "content":  "Quel invariant de « Valider des parenthèses » doit rester vrai pour les cas limites ?"
+                  },
+                  {
+                      "level":  2,
+                      "kind":  "location",
+                      "content":  "Concentrez la décision dans la méthode Balanced, sans état global."
+                  },
+                  {
+                      "level":  3,
+                      "kind":  "strategy",
+                      "content":  "Refuser une fermeture sans ouverture et exiger une profondeur finale nulle."
+                  },
+                  {
+                      "level":  4,
+                      "kind":  "partial-pseudocode",
+                      "content":  "profondeur à zéro ; l'incrémenter à chaque ouverture ; à chaque fermeture la décrémenter et refuser immédiatement si elle passe sous zéro ; accepter seulement si la profondeur finale est nulle"
+                  }
+              ],
+    "solution":  {
+                     "path":  "solution/",
+                     "unlock":  {
+                                    "seriousAttempts":  2,
+                                    "minimumDelayMinutes":  10
+                                }
+                 },
+    "explanation":  "explanation.md",
+    "complexity":  "O(n) en temps et O(1) en espace",
+    "commonMistakes":  [
+                           "Comparer seulement le nombre total d'ouvertures et de fermetures, sans regarder l'ordre",
+                           "Attendre la fin du parcours pour refuser une fermeture qui précède son ouverture",
+                           "Accepter une profondeur finale non nulle",
+                           "Refuser une chaîne vide, qui est équilibrée"
+                       ],
+    "variantId":  "structures-stack-reverse-001",
+    "reviewCards":  [
+                        "card-structures-balanced-parentheses-001-rule",
+                        "card-structures-balanced-parentheses-001-edge"
+                    ],
+    "interviewQuestionId":  "interview-structures-balanced-parentheses-001",
+    "license":  "CC-BY-4.0"
+}

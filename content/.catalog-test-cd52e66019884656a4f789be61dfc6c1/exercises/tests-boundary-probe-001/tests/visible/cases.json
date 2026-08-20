@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "cases": [
+    {
+      "name": "Visible_WideIntervalNeedsFourProbes",
+      "message": "Quatre sondes suffisent, et pas une de moins, pour réfuter un décalage sur l'une des deux bornes.",
+      "arguments": [1, 100],
+      "expected": [0, 1, 100, 101],
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Visible_SingleValueIntervalNeedsThree",
+      "message": "Deux bornes confondues décrivent la même valeur : la sonder deux fois ne réfute rien de plus.",
+      "arguments": [5, 5],
+      "expected": [4, 5, 6],
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Visible_AdjacentBoundsStayDistinct",
+      "message": "Deux bornes contiguës restent distinctes : les quatre sondes sont toutes utiles.",
+      "arguments": [0, 1],
+      "expected": [-1, 0, 1, 2],
+      "argumentsUnchanged": true
+    }
+  ]
+}

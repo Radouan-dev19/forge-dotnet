@@ -1,0 +1,32 @@
+{
+    "schemaVersion":  1,
+    "cases":  [
+                  {
+                      "name":  "Visible_Case1",
+                      "message":  "Mesurer une profondeur maximale — cas 1 visible incorrect.",
+                      "arguments":  [
+                                        "(a(b))"
+                                    ],
+                      "expected":  2,
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Visible_Case2",
+                      "message":  "Mesurer une profondeur maximale — cas 2 visible incorrect.",
+                      "arguments":  [
+                                        "text"
+                                    ],
+                      "expected":  0,
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Visible_Empty",
+                      "message":  "Chaîne vide : profondeur nulle et non refus.",
+                      "arguments":  [""],
+                      "expected":  0,
+                      "argumentsUnchanged":  true
+                  }
+              ]
+}

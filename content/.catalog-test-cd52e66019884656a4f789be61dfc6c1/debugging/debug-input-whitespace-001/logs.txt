@@ -1,0 +1,3 @@
+Event=CustomerCreated Level=Information RawInput=" Ada " Stored=" Ada " Expected="Ada" CorrelationId=dbg-input-whitespace-001
+Event=DuplicateSuspected Level=Warning StoredA="Ada" StoredB=" Ada " EqualOrdinal=false CorrelationId=dbg-input-whitespace-001
+Event=CustomerCreated Level=Information RawInput="ok" Stored="ok" Expected="ok" CorrelationId=dbg-input-whitespace-001

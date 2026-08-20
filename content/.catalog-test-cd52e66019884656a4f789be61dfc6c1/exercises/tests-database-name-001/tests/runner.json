@@ -1,0 +1,12 @@
+{
+    "schemaVersion":  1,
+    "suiteId":  "tests-database-name-001.v1",
+    "exerciseId":  "tests-database-name-001",
+    "exerciseVersion":  1,
+    "typeName":  "Submission",
+    "methodName":  "IsIsolatedDatabase",
+    "parameterTypes":  [
+                           "string"
+                       ],
+    "returnType":  "bool"
+}

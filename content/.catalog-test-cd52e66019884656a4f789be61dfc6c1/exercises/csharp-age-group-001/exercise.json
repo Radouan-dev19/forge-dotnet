@@ -1,0 +1,82 @@
+{
+    "schemaVersion":  1,
+    "id":  "csharp-age-group-001",
+    "version":  1,
+    "title":  "Classer un âge valide",
+    "kind":  "csharp",
+    "difficulty":  1,
+    "skills":  [
+                   "csharp.control"
+               ],
+    "prerequisites":  [
+                          "oop-encapsulation-001"
+                      ],
+    "estimatedMinutes":  30,
+    "statement":  "statement.md",
+    "constraints":  [
+                        "Conserver exactement la signature publique",
+                        "Tester chaque frontière et conserver un état invalide distinct.",
+                        "Ne pas modifier les entrées reçues sauf mention explicite"
+                    ],
+    "examples":  [
+                     {
+                         "input":  "[17]",
+                         "output":  "\"minor\""
+                     }
+                 ],
+    "reflectionFields":  [
+                             "reformulation",
+                             "inputs",
+                             "expectedOutput",
+                             "edgeCases",
+                             "hypothesis",
+                             "plan"
+                         ],
+    "starterPath":  "starter/",
+    "visibleTestsPath":  "tests/visible/",
+    "hiddenTestsPath":  "tests/hidden/",
+    "hints":  [
+                  {
+                      "level":  1,
+                      "kind":  "socratic",
+                      "content":  "Quel invariant de « Classer un âge valide » doit rester vrai pour les cas limites ?"
+                  },
+                  {
+                      "level":  2,
+                      "kind":  "location",
+                      "content":  "Concentrez la décision dans la méthode AgeGroup, sans état global."
+                  },
+                  {
+                      "level":  3,
+                      "kind":  "strategy",
+                      "content":  "Tester chaque frontière et conserver un état invalide distinct."
+                  },
+                  {
+                      "level":  4,
+                      "kind":  "partial-pseudocode",
+                      "content":  "si age est négatif retourner l'état invalide ; sinon comparer à dix-huit puis à soixante-cinq avec des inégalités strictes ; la dernière tranche ne teste plus rien puisque les précédentes ont échoué"
+                  }
+              ],
+    "solution":  {
+                     "path":  "solution/",
+                     "unlock":  {
+                                    "seriousAttempts":  2,
+                                    "minimumDelayMinutes":  10
+                                }
+                 },
+    "explanation":  "explanation.md",
+    "complexity":  "O(1) en temps et O(1) en espace",
+    "commonMistakes":  [
+                           "Traiter un âge négatif comme la première tranche valide",
+                           "Comparer avec une inégalité large et décaler la tranche d'une année",
+                           "Tester les tranches du plus grand au plus petit et rendre une branche inatteignable",
+                           "Retourner une étiquette dont la casse diffère du contrat"
+                       ],
+    "variantId":  "csharp-copy-sanitized-001",
+    "reviewCards":  [
+                        "card-csharp-age-group-001-rule",
+                        "card-csharp-age-group-001-edge"
+                    ],
+    "interviewQuestionId":  "interview-csharp-age-group-001",
+    "license":  "CC-BY-4.0"
+}

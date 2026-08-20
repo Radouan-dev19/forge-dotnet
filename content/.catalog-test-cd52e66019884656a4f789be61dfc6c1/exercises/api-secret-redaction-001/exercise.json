@@ -1,0 +1,82 @@
+{
+    "schemaVersion":  1,
+    "id":  "api-secret-redaction-001",
+    "version":  1,
+    "title":  "Masquer une valeur sensible",
+    "kind":  "csharp",
+    "difficulty":  2,
+    "skills":  [
+                   "security.secrets"
+               ],
+    "prerequisites":  [
+                          "api-validation-problem-details-001"
+                      ],
+    "estimatedMinutes":  35,
+    "statement":  "statement.md",
+    "constraints":  [
+                        "Conserver exactement la signature publique",
+                        "Ne conserver aucun caractère du secret et produire au moins quatre marqueurs.",
+                        "N'écrire nulle part la valeur reçue et n'en conserver aucun caractère"
+                    ],
+    "examples":  [
+                     {
+                         "input":  "[\"fake-key\"]",
+                         "output":  "\"********\""
+                     }
+                 ],
+    "reflectionFields":  [
+                             "reformulation",
+                             "inputs",
+                             "expectedOutput",
+                             "edgeCases",
+                             "hypothesis",
+                             "plan"
+                         ],
+    "starterPath":  "starter/",
+    "visibleTestsPath":  "tests/visible/",
+    "hiddenTestsPath":  "tests/hidden/",
+    "hints":  [
+                  {
+                      "level":  1,
+                      "kind":  "socratic",
+                      "content":  "Quel comportement public de « Masquer une valeur sensible » change exactement à la frontière ?"
+                  },
+                  {
+                      "level":  2,
+                      "kind":  "location",
+                      "content":  "Concentrez la validation et la décision dans Redact, sans état global ni journal sensible."
+                  },
+                  {
+                      "level":  3,
+                      "kind":  "strategy",
+                      "content":  "Ne conserver aucun caractère du secret et produire au moins quatre marqueurs."
+                  },
+                  {
+                      "level":  4,
+                      "kind":  "partial-pseudocode",
+                      "content":  "si la valeur est absente ou vide retourner une chaîne vide ; sinon produire une suite de marqueurs, sans reprendre aucun caractère d'origine, dont la longueur ne descend jamais sous le minimum annoncé"
+                  }
+              ],
+    "solution":  {
+                     "path":  "solution/",
+                     "unlock":  {
+                                    "seriousAttempts":  2,
+                                    "minimumDelayMinutes":  10
+                                }
+                 },
+    "explanation":  "explanation.md",
+    "complexity":  "O(n) en temps et O(n) en espace",
+    "commonMistakes":  [
+                           "Conserver les premiers ou les derniers caractères du secret",
+                           "Produire un masque plus court que le minimum et révéler la brièveté du secret",
+                           "Retourner la valeur d'origine lorsqu'elle est déjà courte",
+                           "Journaliser la valeur avant de la masquer"
+                       ],
+    "variantId":  "api-error-status-001",
+    "reviewCards":  [
+                        "card-api-secret-redaction-001-rule",
+                        "card-api-secret-redaction-001-security"
+                    ],
+    "interviewQuestionId":  "interview-api-secret-redaction-001",
+    "license":  "CC-BY-4.0"
+}

@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "id": "interview-tests-saved-identity-001",
+  "version": 1,
+  "title": "Vérifier une identité persistée",
+  "level": "junior",
+  "durationMinutes": 6,
+  "skills": [
+    "tests.integration"
+  ],
+  "question": "Comment implémenteriez-vous « Vérifier une identité persistée » et quelles preuves réfutent les contournements ?",
+  "observableCriteria": [
+    "L'identifiant strictement positif est présenté comme la preuve observable de la persistance",
+    "La différence entre un identifiant attribué et un identifiant par défaut est faite"
+  ],
+  "modelAnswer": "Une intégration réussie produit un identifiant strictement positif observable. Je teste un identifiant attribué, la valeur par défaut du type et une valeur négative, les deux dernières devant être refusées. O(1) en temps et O(1) en espace.",
+  "commonMistakes": [
+    "Considérer l'absence d'exception comme la preuve que l'écriture a eu lieu"
+  ],
+  "variants": [
+    "Changer la frontière ou le droit tout en conservant la règle de vérifier une identité persistée."
+  ],
+  "license": "CC-BY-4.0"
+}

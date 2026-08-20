@@ -1,0 +1,42 @@
+{
+    "schemaVersion":  1,
+    "id":  "debug-stack-order-001",
+    "version":  1,
+    "title":  "Libellé inversé qui ressort identique à l'original",
+    "difficulty":  3,
+    "skills":  [
+                   "debugging.data"
+               ],
+    "prerequisites":  [
+                          "structures-stacks-queues-001"
+                      ],
+    "estimatedMinutes":  40,
+    "brokenRepositoryPath":  "broken/",
+    "ticketPath":  "ticket.md",
+    "expectedBehavior":  "Le libellé est retourné caractère par caractère dans l'ordre inverse, espaces compris. Un libellé vide donne une chaîne vide.",
+    "logsPath":  "logs.txt",
+    "checklist":  [
+                      "Reproduire avec un libellé de trois caractères",
+                      "Observer le contenu intermédiaire juste après le remplissage de la structure",
+                      "Comparer cet état intermédiaire au résultat retourné",
+                      "Vérifier le résultat sur un libellé de deux caractères, où l'écart reste visible"
+                  ],
+    "observationQuestions":  [
+                                 "Dans quel ordre la structure restitue-t-elle ses éléments par construction ?",
+                                 "Combien de fois l'ordre est-il changé entre l'entrée et le retour ?",
+                                 "Pour quels libellés le symptôme serait-il invisible ?"
+                             ],
+    "correctionPath":  "correction/",
+    "regressionTestPath":  "regression-test.md",
+    "journalFields":  [
+                          "symptom",
+                          "context",
+                          "hypotheses",
+                          "evidence",
+                          "cause",
+                          "fix",
+                          "test",
+                          "prevention"
+                      ],
+    "license":  "CC-BY-4.0"
+}

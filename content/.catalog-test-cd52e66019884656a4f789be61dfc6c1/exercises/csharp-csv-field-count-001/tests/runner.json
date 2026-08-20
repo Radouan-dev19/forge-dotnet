@@ -1,0 +1,12 @@
+{
+    "schemaVersion":  1,
+    "suiteId":  "csharp-csv-field-count-001.v1",
+    "exerciseId":  "csharp-csv-field-count-001",
+    "exerciseVersion":  1,
+    "typeName":  "Submission",
+    "methodName":  "FieldCount",
+    "parameterTypes":  [
+                           "string"
+                       ],
+    "returnType":  "int"
+}

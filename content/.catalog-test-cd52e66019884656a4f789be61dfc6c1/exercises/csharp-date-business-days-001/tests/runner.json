@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "suiteId": "csharp-date-business-days-001.v1",
+  "exerciseId": "csharp-date-business-days-001",
+  "exerciseVersion": 1,
+  "typeName": "Submission",
+  "methodName": "CountBusinessDays",
+  "parameterTypes": ["date", "date"],
+  "returnType": "int"
+}

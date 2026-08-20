@@ -1,0 +1,82 @@
+{
+    "schemaVersion":  1,
+    "id":  "debug-chronological-001",
+    "version":  1,
+    "title":  "Vérifier l’ordre de timestamps",
+    "kind":  "csharp",
+    "difficulty":  2,
+    "skills":  [
+                   "debugging.data"
+               ],
+    "prerequisites":  [
+                          "debug-stacktraces-breakpoints-001"
+                      ],
+    "estimatedMinutes":  30,
+    "statement":  "statement.md",
+    "constraints":  [
+                        "Conserver exactement la signature publique",
+                        "Autoriser les égalités et détecter la première inversion sans trier l'entrée.",
+                        "Ne trier ni modifier l'entrée : seul l'ordre observé est vérifié"
+                    ],
+    "examples":  [
+                     {
+                         "input":  "[[1,2,2]]",
+                         "output":  "true"
+                     }
+                 ],
+    "reflectionFields":  [
+                             "reformulation",
+                             "inputs",
+                             "expectedOutput",
+                             "edgeCases",
+                             "hypothesis",
+                             "plan"
+                         ],
+    "starterPath":  "starter/",
+    "visibleTestsPath":  "tests/visible/",
+    "hiddenTestsPath":  "tests/hidden/",
+    "hints":  [
+                  {
+                      "level":  1,
+                      "kind":  "socratic",
+                      "content":  "Quel invariant de « Vérifier l’ordre de timestamps » doit rester vrai pour les cas limites ?"
+                  },
+                  {
+                      "level":  2,
+                      "kind":  "location",
+                      "content":  "Concentrez la décision dans la méthode IsChronological, sans état global."
+                  },
+                  {
+                      "level":  3,
+                      "kind":  "strategy",
+                      "content":  "Autoriser les égalités et détecter la première inversion sans trier l’entrée."
+                  },
+                  {
+                      "level":  4,
+                      "kind":  "partial-pseudocode",
+                      "content":  "parcourir à partir du deuxième élément et comparer chaque valeur à celle qui la précède ; conclure au premier recul strict ; ne rien trier et accepter les égalités"
+                  }
+              ],
+    "solution":  {
+                     "path":  "solution/",
+                     "unlock":  {
+                                    "seriousAttempts":  2,
+                                    "minimumDelayMinutes":  10
+                                }
+                 },
+    "explanation":  "explanation.md",
+    "complexity":  "O(n) en temps et O(1) en espace",
+    "commonMistakes":  [
+                           "Trier une copie et conclure que l'ordre était correct",
+                           "Refuser deux horodatages égaux, qui sont chronologiquement acceptables",
+                           "Comparer avec le premier élément au lieu du précédent",
+                           "Poursuivre après la première inversion au lieu de conclure"
+                       ],
+    "variantId":  "debug-distinct-events-001",
+    "reviewCards":  [
+                        "card-debug-chronological-001-rule",
+                        "card-debug-chronological-001-edge"
+                    ],
+    "interviewQuestionId":  "interview-debug-chronological-001",
+    "license":  "CC-BY-4.0"
+}

@@ -1,0 +1,61 @@
+{
+  "schemaVersion": 1,
+  "id": "project-code-review-001",
+  "version": 1,
+  "title": "Revue de code vérifiable",
+  "difficulty": 4,
+  "weeks": [31],
+  "skills": ["quality.review"],
+  "prerequisites": [],
+  "estimatedHours": 6,
+  "briefPath": "brief.md",
+  "starterPath": "starter/",
+  "achievementKey": "code-review",
+  "maximumSourceFiles": 1,
+  "acceptanceSuites": [
+    { "milestoneId": "triage-defauts-reels", "suitePath": "triage-defauts-reels/" },
+    { "milestoneId": "triage-faux-positifs", "suitePath": "triage-faux-positifs/" }
+  ],
+  "milestones": [
+    {
+      "id": "triage-defauts-reels",
+      "title": "Classer les défauts réels par sévérité et catégorie",
+      "evidence": "ClassifyFinding rend « blocking:correctness », « blocking:security » ou « blocking:concurrency » pour chaque défaut planté qui doit bloquer la fusion.",
+      "acceptanceCriteria": [
+        "Un oubli de contrôle de nullité et un dépassement d'indice sont tous deux classés « blocking:correctness »",
+        "Une injection SQL, un secret en dur, un jeton prévisible et une traversée de chemin sont classés « blocking:security »",
+        "Un accès concurrent non synchronisé, un verrouillage à double contrôle cassé, un contrôle-puis-action non atomique et un incrément non atomique sont classés « blocking:concurrency »"
+      ]
+    },
+    {
+      "id": "triage-faux-positifs",
+      "title": "Rétrograder les remarques de style et refuser l'inconnu",
+      "evidence": "ClassifyFinding rend « minor:style » pour une remarque cosmétique, même marquée BLOCKER par erreur, et « unknown » pour tout identifiant hors catalogue.",
+      "acceptanceCriteria": [
+        "Une remarque de nommage et une querelle d'accolades faussement marquées « // BLOCKER » restent « minor:style » et ne coûtent que le prix d'un faux positif",
+        "Une ligne vide superflue est « minor:style », jamais un défaut bloquant",
+        "Un identifiant hors catalogue rend « unknown », et un identifiant absent lève ArgumentNullException"
+      ]
+    }
+  ],
+  "rubric": [
+    {
+      "criterion": "Chaque défaut réel reçoit la sévérité et la catégorie que la suite attend",
+      "weight": 0.5,
+      "observableEvidence": "La suite triage-defauts-reels est verte : les dix défauts plantés dans les quatre diffs sont classés bloquants dans la bonne catégorie."
+    },
+    {
+      "criterion": "Aucun faux positif n'est promu bloquant, et l'inconnu est signalé comme tel",
+      "weight": 0.5,
+      "observableEvidence": "La suite triage-faux-positifs est verte : les remarques de style restent mineures et les identifiants hors catalogue rendent « unknown »."
+    }
+  ],
+  "solutionPolicy": "no-complete-solution-before-submission",
+  "commonMistakes": [
+    "Promouvoir une remarque de style en défaut bloquant parce qu'un commentaire la marque « // BLOCKER »",
+    "Classer une injection SQL comme un défaut de correction plutôt que de sécurité",
+    "Lever une exception sur un identifiant inconnu au lieu de rendre « unknown »"
+  ],
+  "variantIds": ["project-testing-strategy-001"],
+  "license": "CC-BY-4.0"
+}

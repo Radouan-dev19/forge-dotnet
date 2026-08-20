@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "id": "interview-api-filter-term-001",
+  "version": 1,
+  "title": "Filtrer sans dépendre de la culture",
+  "level": "junior",
+  "durationMinutes": 6,
+  "skills": [
+    "api.pagination"
+  ],
+  "question": "Comment implémenteriez-vous « Filtrer sans dépendre de la culture » et quelles preuves réfutent les contournements ?",
+  "observableCriteria": [
+    "La comparaison ordinale est justifiée par l'indépendance vis-à-vis de la culture du serveur",
+    "Le refus d'un terme vide est distingué d'un terme qui ne correspond à rien"
+  ],
+  "modelAnswer": "Refuser les termes vides puis utiliser une comparaison ordinale insensible à la casse. Je teste un terme accentué, un terme en casse mixte et un terme vide, les trois cas où une comparaison culturelle donnerait un résultat différent d'une comparaison ordinale. O(n*m) au pire et O(n) en espace pour la normalisation.",
+  "commonMistakes": [
+    "Utiliser une comparaison dépendante de la culture et obtenir un résultat qui change de machine en machine"
+  ],
+  "variants": [
+    "Changer la frontière ou le droit tout en conservant la règle de filtrer sans dépendre de la culture."
+  ],
+  "license": "CC-BY-4.0"
+}

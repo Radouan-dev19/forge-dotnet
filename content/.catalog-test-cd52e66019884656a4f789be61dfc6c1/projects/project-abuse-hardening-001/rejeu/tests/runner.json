@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "suiteId": "project-abuse-hardening-001.rejeu.v1",
+  "exerciseId": "project-abuse-hardening-001.rejeu",
+  "exerciseVersion": 1,
+  "typeName": "Submission",
+  "methodName": "AdmitVerdict",
+  "parameterTypes": ["string", "string", "int"],
+  "returnType": "string"
+}

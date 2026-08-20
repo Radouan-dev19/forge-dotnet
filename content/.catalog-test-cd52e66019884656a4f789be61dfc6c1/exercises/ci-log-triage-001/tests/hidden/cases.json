@@ -1,0 +1,54 @@
+{
+  "schemaVersion": 1,
+  "cases": [
+    {
+      "name": "Hidden_EmptyLogIsRefused",
+      "message": "Sans journal, le tri n'a pas de matière : c'est un refus, pas un verdict.",
+      "arguments": [""],
+      "expectedException": "ArgumentException",
+      "argumentsUnchanged": false
+    },
+    {
+      "name": "Hidden_UnknownStatusIsRefused",
+      "message": "Un statut hors des quatre connus signale un journal corrompu.",
+      "arguments": ["build=exploded"],
+      "expectedException": "ArgumentException",
+      "argumentsUnchanged": false
+    },
+    {
+      "name": "Hidden_RetryThatFailsAgainStillBlocks",
+      "message": "Deux échecs consécutifs consolident un verdict d'échec : la relance n'a rien effacé.",
+      "arguments": ["lint=ok;test=failed;test=failed"],
+      "expected": "test|failed",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_LaterFailureBeatsEarlierCancellation",
+      "message": "L'échec final l'emporte même quand une annulation le précède dans le journal.",
+      "arguments": ["a=canceled;b=failed"],
+      "expected": "b|failed",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_SkippedJobsNeverBlock",
+      "message": "Un travail sauté n'a pas échoué : sa condition d'exécution a simplement répondu non.",
+      "arguments": ["deploy=skipped;audit=ok"],
+      "expected": "none",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_RetryInterruptedEndsCanceled",
+      "message": "Échec puis annulation à la relance : le verdict final est l'interruption, faute d'échec final.",
+      "arguments": ["build=failed;build=canceled"],
+      "expected": "build|canceled",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_ManyRetriesOneRealBlocker",
+      "message": "Trois travaux se sont rétablis en relance ; seul le téléversement porte un échec final.",
+      "arguments": ["pack=ok;sign=canceled;sign=ok;notarize=failed;notarize=ok;upload=failed"],
+      "expected": "upload|failed",
+      "argumentsUnchanged": true
+    }
+  ]
+}

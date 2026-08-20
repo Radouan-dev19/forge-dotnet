@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "id": "interview-api-config-key-001",
+  "version": 1,
+  "title": "Composer une clé de configuration",
+  "level": "junior",
+  "durationMinutes": 6,
+  "skills": [
+    "api.configuration"
+  ],
+  "question": "Comment implémenteriez-vous « Composer une clé de configuration » et quelles preuves réfutent les contournements ?",
+  "observableCriteria": [
+    "Le séparateur hiérarchique est celui que la plateforme reconnaît, pas un choix local",
+    "Un segment vide est traité comme une erreur d'appel plutôt que concaténé en silence"
+  ],
+  "modelAnswer": "Valider les deux segments et conserver le séparateur hiérarchique standard. Je teste un segment vide de chaque côté et un segment qui contient déjà le séparateur, cas où la clé produite désignerait un niveau de plus que prévu. O(n) en temps et O(n) en espace.",
+  "commonMistakes": [
+    "Concaténer sans valider et produire une clé qui ne résout jamais"
+  ],
+  "variants": [
+    "Changer la frontière ou le droit tout en conservant la règle de composer une clé de configuration."
+  ],
+  "license": "CC-BY-4.0"
+}

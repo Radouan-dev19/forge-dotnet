@@ -1,0 +1,32 @@
+{
+    "schemaVersion":  1,
+    "cases":  [
+                  {
+                      "name":  "Visible_Case1",
+                      "message":  "Mapper une erreur publique — cas 1 incorrect.",
+                      "arguments":  [
+                                        "validation"
+                                    ],
+                      "expected":  400,
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Visible_Case2",
+                      "message":  "Mapper une erreur publique — cas 2 incorrect.",
+                      "arguments":  [
+                                        "conflict"
+                                    ],
+                      "expected":  409,
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Visible_Unauthorized",
+                      "message":  "Authentification manquante et refus d'accès sont deux codes distincts.",
+                      "arguments":  ["unauthorized"],
+                      "expected":  401,
+                      "argumentsUnchanged":  true
+                  }
+              ]
+}

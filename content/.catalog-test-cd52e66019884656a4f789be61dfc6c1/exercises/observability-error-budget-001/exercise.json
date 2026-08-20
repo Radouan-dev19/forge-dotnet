@@ -1,0 +1,83 @@
+{
+  "schemaVersion": 1,
+  "id": "observability-error-budget-001",
+  "version": 1,
+  "title": "Chiffrer le budget d'erreur restant d'une fenêtre de service",
+  "kind": "csharp",
+  "difficulty": 3,
+  "skills": ["observability.slo"],
+  "prerequisites": ["observability-alerts-costs-001"],
+  "estimatedMinutes": 30,
+  "statement": "statement.md",
+  "constraints": [
+    "Conserver exactement la signature publique",
+    "Le budget alloué s'arrondit toujours vers le bas : l'objectif ne se contourne pas par l'arrondi",
+    "Un budget négatif est une réponse légitime : il chiffre le dépassement",
+    "Le calcul passe par le type décimal, jamais par le flottant binaire"
+  ],
+  "examples": [
+    {
+      "input": "10000, 5, 99.9",
+      "output": "5"
+    },
+    {
+      "input": "10000, 12, 99.9",
+      "output": "-2"
+    }
+  ],
+  "reflectionFields": [
+    "reformulation",
+    "inputs",
+    "expectedOutput",
+    "edgeCases",
+    "hypothesis",
+    "plan"
+  ],
+  "starterPath": "starter/",
+  "visibleTestsPath": "tests/visible/",
+  "hiddenTestsPath": "tests/hidden/",
+  "hints": [
+    {
+      "level": 1,
+      "kind": "socratic",
+      "content": "Votre objectif promet trois neufs et la fenêtre du mois compte un million de requêtes. Combien d'échecs pouvez-vous encore vous permettre avant de rompre la promesse — et ce nombre est-il forcément positif ?"
+    },
+    {
+      "level": 2,
+      "kind": "location",
+      "content": "Le calcul se fait en deux temps qui ne se mélangent pas : d'abord le budget alloué par la fenêtre — combien d'échecs l'objectif tolère en tout — puis la soustraction de ce qui est déjà consommé."
+    },
+    {
+      "level": 3,
+      "kind": "strategy",
+      "content": "La part tolérée est le complément de l'objectif sur cent, appliquée au volume de la fenêtre en arithmétique décimale, puis plancher : arrondir au plus proche offrirait parfois un échec gratuit que l'objectif ne concède pas."
+    },
+    {
+      "level": 4,
+      "kind": "partial-pseudocode",
+      "content": "refuser les volumes négatifs, les échecs supérieurs au volume et un objectif hors de sa plage ; calculer le complément de l'objectif sur cent ; multiplier par le volume de la fenêtre en décimal puis prendre le plancher pour obtenir l'alloué ; rendre l'alloué moins les échecs consommés, sans écrêter le négatif"
+    }
+  ],
+  "solution": {
+    "path": "solution/",
+    "unlock": {
+      "seriousAttempts": 2,
+      "minimumDelayMinutes": 10
+    }
+  },
+  "explanation": "explanation.md",
+  "complexity": "O(1) en temps et en espace : deux opérations décimales et un plancher",
+  "commonMistakes": [
+    "Arrondir le budget alloué au plus proche et offrir un échec que l'objectif ne concède pas",
+    "Écrêter le résultat à zéro et masquer l'ampleur du dépassement au moment où il faut la connaître",
+    "Passer par le flottant binaire et voir le budget bouger d'une unité selon la fenêtre",
+    "Refuser un objectif de cent pour cent alors qu'il décrit un budget légitimement nul"
+  ],
+  "variantId": "observability-alert-noise-001",
+  "reviewCards": [
+    "card-observability-error-budget-001-rule",
+    "card-observability-error-budget-001-edge"
+  ],
+  "interviewQuestionId": "interview-observability-error-budget-001",
+  "license": "CC-BY-4.0"
+}

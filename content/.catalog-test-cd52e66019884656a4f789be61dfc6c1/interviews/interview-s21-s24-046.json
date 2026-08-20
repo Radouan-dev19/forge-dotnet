@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "id": "interview-s21-s24-046",
+  "version": 1,
+  "title": "Répondre sur une lacune",
+  "level": "advanced",
+  "durationMinutes": 12,
+  "skills": [
+    "career.interview"
+  ],
+  "question": "Comment parlez-vous dʼune technologie non pratiquée ?",
+  "observableCriteria": [
+    "Ce qui n'a pas été pratiqué est dit avant les concepts transférables",
+    "Une expérience bornée est proposée, et une lecture n'est pas présentée comme une expérience"
+  ],
+  "modelAnswer": "Je dis ce que je nʼai pas encore fait, relie les concepts transférables, propose une expérience bornée et refuse de présenter une lecture comme une expérience.",
+  "commonMistakes": [
+    "Convertir une documentation lue en expérience revendiquée"
+  ],
+  "variants": [
+    "Changez une contrainte du scénario « Répondre sur une lacune » et expliquez si la décision reste valide."
+  ],
+  "license": "CC-BY-4.0"
+}

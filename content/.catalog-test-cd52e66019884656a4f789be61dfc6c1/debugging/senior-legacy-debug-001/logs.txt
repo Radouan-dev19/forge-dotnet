@@ -1,0 +1,4 @@
+Event=PageNavigationRendered Scenario=catalog-list CorrelationId=6b1f totalItems=10 pageSize=3 pagesRendered=3 elementsReachable=9
+Event=UserReport Scenario=catalog-list CorrelationId=6b1f message="dernier element introuvable" itemsMissing=1
+Event=PageNavigationRendered Scenario=catalog-list CorrelationId=9c2a totalItems=9 pageSize=3 pagesRendered=3 elementsReachable=9
+Event=PageNavigationRendered Scenario=catalog-list CorrelationId=7d3e totalItems=101 pageSize=10 pagesRendered=10 elementsReachable=100

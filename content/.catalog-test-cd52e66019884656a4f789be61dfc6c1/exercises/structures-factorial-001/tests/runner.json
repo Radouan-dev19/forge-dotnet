@@ -1,0 +1,12 @@
+{
+    "schemaVersion":  1,
+    "suiteId":  "structures-factorial-001.v1",
+    "exerciseId":  "structures-factorial-001",
+    "exerciseVersion":  1,
+    "typeName":  "Submission",
+    "methodName":  "Factorial",
+    "parameterTypes":  [
+                           "int"
+                       ],
+    "returnType":  "int"
+}

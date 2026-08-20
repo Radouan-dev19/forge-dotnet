@@ -1,0 +1,36 @@
+{
+    "schemaVersion":  1,
+    "cases":  [
+                  {
+                      "name":  "Visible_Case1",
+                      "message":  "Vérifier une fenêtre de health check — cas 1 incorrect.",
+                      "arguments":  [
+                                        5,
+                                        6,
+                                        30
+                                    ],
+                      "expected":  true,
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Visible_Case2",
+                      "message":  "Vérifier une fenêtre de health check — cas 2 incorrect.",
+                      "arguments":  [
+                                        10,
+                                        4,
+                                        30
+                                    ],
+                      "expected":  false,
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Visible_MinimalFit",
+                      "message":  "Une seule vérification tenant exactement dans le budget.",
+                      "arguments":  [1,1,1],
+                      "expected":  true,
+                      "argumentsUnchanged":  true
+                  }
+              ]
+}

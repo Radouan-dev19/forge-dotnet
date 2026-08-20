@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "id": "english-card-14-written",
+  "version": 1,
+  "title": "High cardinality — written update",
+  "level": "B2",
+  "durationMinutes": 12,
+  "skills": [
+    "english.written",
+    "observability.metrics"
+  ],
+  "situation": "In a technical discussion, a proposal uses customer identifiers as metric labels. You must write the decision accurately without overstating the evidence.",
+  "instructions": [
+    "Write four sentences on what cardinality does to a metric store, the scale at which it breaks, and the alternative."
+  ],
+  "vocabulary": [
+    {
+      "term": "cardinality control",
+      "meaning": "keeping the number of distinct label combinations bounded, because each combination becomes a separate stored series"
+    },
+    {
+      "term": "series explosion",
+      "meaning": "the growth of stored time series when an unbounded value is used as a label, which degrades the whole metric store rather than one metric"
+    }
+  ],
+  "expectedElements": [
+    "The mechanism of series creation is explained",
+    "An order of magnitude is given, not just a warning",
+    "An alternative placement for the identifier is proposed"
+  ],
+  "modelAnswer": "Customer identifiers must not be used as metric labels, because each distinct label combination creates a separate stored series. A bounded label such as status produces a handful of series; a customer identifier produces one per customer, so a hundred thousand customers means a hundred thousand series for a single metric. The consequence is not a slow dashboard but a degraded metric store affecting every team. The identifier belongs in a log line or a trace, where per-request evidence is expected and priced accordingly.",
+  "commonMistakes": [
+    "Stating the rule without explaining that each label combination becomes a series",
+    "Warning about cost without giving an order of magnitude"
+  ],
+  "variants": [
+    "Rewrite the update proposing where the identifier should go instead."
+  ],
+  "license": "CC-BY-4.0"
+}

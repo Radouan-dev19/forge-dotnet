@@ -1,0 +1,32 @@
+{
+    "schemaVersion":  1,
+    "cases":  [
+                  {
+                      "name":  "Visible_Case1",
+                      "message":  "Tester une règle de quantité — cas 1 incorrect.",
+                      "arguments":  [
+                                        1
+                                    ],
+                      "expected":  true,
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Visible_Case2",
+                      "message":  "Tester une règle de quantité — cas 2 incorrect.",
+                      "arguments":  [
+                                        0
+                                    ],
+                      "expected":  false,
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Visible_MiddleOfRange",
+                      "message":  "Valeur au milieu de l'intervalle : acceptée.",
+                      "arguments":  [50],
+                      "expected":  true,
+                      "argumentsUnchanged":  true
+                  }
+              ]
+}

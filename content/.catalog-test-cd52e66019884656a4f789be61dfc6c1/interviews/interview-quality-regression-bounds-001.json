@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "id": "interview-quality-regression-bounds-001",
+  "version": 1,
+  "title": "Fixer une non-régression de borne",
+  "level": "junior",
+  "durationMinutes": 6,
+  "skills": [
+    "quality.regression"
+  ],
+  "question": "Comment implémenteriez-vous « Fixer une non-régression de borne » et quelles preuves réfutent les contournements ?",
+  "observableCriteria": [
+    "Les deux bornes sont énoncées avec leur inclusivité, la haute étant strictement inférieure à la longueur",
+    "Le test est présenté comme fixant le comportement à la frontière, pas au milieu"
+  ],
+  "modelAnswer": "La borne supérieure est strictement inférieure à la longueur et la borne basse vaut zéro. Je teste l'indice zéro, le dernier indice valide, l'indice suivant et un indice négatif, ce dernier étant le cas qu'une comparaison non signée manquerait. O(1) en temps et O(1) en espace.",
+  "commonMistakes": [
+    "Écrire une non-régression sur une valeur du milieu, qui reste verte après un décalage de borne"
+  ],
+  "variants": [
+    "Changer la frontière ou le droit tout en conservant la règle de fixer une non-régression de borne."
+  ],
+  "license": "CC-BY-4.0"
+}

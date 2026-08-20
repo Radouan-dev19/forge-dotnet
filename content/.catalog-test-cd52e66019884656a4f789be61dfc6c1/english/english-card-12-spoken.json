@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "id": "english-card-12-spoken",
+  "version": 1,
+  "title": "Latency percentile — spoken follow-up",
+  "level": "B2",
+  "durationMinutes": 10,
+  "skills": [
+    "english.spoken",
+    "performance.metrics"
+  ],
+  "situation": "In a technical discussion, a reviewer asks what p95 means. You must answer aloud accurately without overstating the evidence.",
+  "instructions": [
+    "Say aloud what a ninety-fifth percentile actually means, and why the average would have hidden the problem."
+  ],
+  "vocabulary": [
+    {
+      "term": "percentile interpretation",
+      "meaning": "reading a latency figure as the value below which a stated share of requests fall, rather than as a typical value"
+    },
+    {
+      "term": "tail latency",
+      "meaning": "the slowest share of requests, which a mean hides and which is experienced by real users rather than by nobody"
+    }
+  ],
+  "expectedElements": [
+    "The percentile is defined in terms of a share of requests",
+    "The contrast with the average is explicit",
+    "The affected users are described, not abstracted away"
+  ],
+  "modelAnswer": "The ninety-fifth percentile is the value below which ninety-five percent of requests fall, over the stated window. It is not the maximum, and it is not a typical request. The reason we look at it rather than the average is that the average hides the tail: a small share of very slow requests barely moves the mean, so the mean can look healthy while some users are waiting seconds. And that share is not nobody. The evidence is our own traffic: five percent is a few thousand requests a day, and those are real people retrying. Do you want the distribution rather than a single figure?",
+  "commonMistakes": [
+    "Explaining the percentile as an average or as a maximum",
+    "Describing the tail as a statistical artefact rather than as affected users"
+  ],
+  "variants": [
+    "Answer again when the reviewer asks why the average is reported at all."
+  ],
+  "license": "CC-BY-4.0"
+}

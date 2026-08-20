@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "id": "english-card-01-spoken",
+  "version": 1,
+  "title": "Hosting decision — spoken follow-up",
+  "level": "B1",
+  "durationMinutes": 10,
+  "skills": [
+    "english.spoken",
+    "azure.hosting"
+  ],
+  "situation": "In a technical discussion, a teammate asks why the service is not containerized. You must answer aloud accurately without overstating the evidence.",
+  "instructions": [
+    "Say aloud, in under a minute, which hosting model you picked and name the one condition that would make you revisit it."
+  ],
+  "vocabulary": [
+    {
+      "term": "hosting choice",
+      "meaning": "the runtime model a service is deployed on, chosen for its operational cost rather than its popularity"
+    },
+    {
+      "term": "reversal condition",
+      "meaning": "the future fact that would make you revisit a decision, stated when the decision is taken rather than after"
+    }
+  ],
+  "expectedElements": [
+    "The hosting model is named, not described vaguely",
+    "The reason is operational cost, not preference",
+    "One condition that would reverse the choice"
+  ],
+  "modelAnswer": "We run it on a managed application platform rather than in a container. The reason is operational: we do not maintain a base image, and platform updates are not our work. My evidence is the deployment definition plus the health endpoint answering after a restart. The limitation is that we cannot shift a fraction of traffic to a new revision, so a risky release has to go out whole. If weighted rollout becomes a requirement, that single fact reverses the choice. Does anything in the roadmap need traffic splitting in the next quarter?",
+  "commonMistakes": [
+    "Defending the platform on popularity instead of on the maintenance it removes",
+    "Presenting the choice as permanent, with no condition that would reverse it"
+  ],
+  "variants": [
+    "Answer again assuming the team has just been asked to run a canary release next month."
+  ],
+  "license": "CC-BY-4.0"
+}

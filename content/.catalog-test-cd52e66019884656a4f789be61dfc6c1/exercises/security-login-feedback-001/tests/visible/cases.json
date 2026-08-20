@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "cases": [
+    {
+      "name": "Visible_UnknownAccountStaysAnonymous",
+      "message": "Le compte inconnu reçoit la face publique uniforme ; le journal garde la cause exacte.",
+      "arguments": ["account=unknown;password=wrong;state=active"],
+      "expected": "invalid-credentials|unknown-account",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Visible_WrongPasswordLooksIdentical",
+      "message": "Le mot de passe erroné produit la même face publique que le compte inconnu : rien à comparer.",
+      "arguments": ["account=known;password=wrong;state=active"],
+      "expected": "invalid-credentials|wrong-password",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Visible_ValidLoginSucceeds",
+      "message": "Compte connu, mot de passe correct, compte actif : les deux faces disent le succès.",
+      "arguments": ["account=known;password=correct;state=active"],
+      "expected": "success|success",
+      "argumentsUnchanged": true
+    }
+  ]
+}

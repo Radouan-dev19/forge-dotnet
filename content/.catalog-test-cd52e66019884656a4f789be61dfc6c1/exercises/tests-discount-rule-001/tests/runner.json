@@ -1,0 +1,12 @@
+{
+    "schemaVersion":  1,
+    "suiteId":  "tests-discount-rule-001.v1",
+    "exerciseId":  "tests-discount-rule-001",
+    "exerciseVersion":  1,
+    "typeName":  "Submission",
+    "methodName":  "DiscountRate",
+    "parameterTypes":  [
+                           "decimal"
+                       ],
+    "returnType":  "decimal"
+}

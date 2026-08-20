@@ -1,0 +1,82 @@
+{
+    "schemaVersion":  1,
+    "id":  "csharp-line-total-001",
+    "version":  1,
+    "title":  "Composer un total de ligne",
+    "kind":  "csharp",
+    "difficulty":  2,
+    "skills":  [
+                   "csharp.composition"
+               ],
+    "prerequisites":  [
+                          "oop-encapsulation-001"
+                      ],
+    "estimatedMinutes":  30,
+    "statement":  "statement.md",
+    "constraints":  [
+                        "Conserver exactement la signature publique",
+                        "Valider les deux invariants puis multiplier avant l’unique arrondi.",
+                        "Ne pas modifier les entrées reçues sauf mention explicite"
+                    ],
+    "examples":  [
+                     {
+                         "input":  "[2.5,3]",
+                         "output":  "7.5"
+                     }
+                 ],
+    "reflectionFields":  [
+                             "reformulation",
+                             "inputs",
+                             "expectedOutput",
+                             "edgeCases",
+                             "hypothesis",
+                             "plan"
+                         ],
+    "starterPath":  "starter/",
+    "visibleTestsPath":  "tests/visible/",
+    "hiddenTestsPath":  "tests/hidden/",
+    "hints":  [
+                  {
+                      "level":  1,
+                      "kind":  "socratic",
+                      "content":  "Quel invariant de « Composer un total de ligne » doit rester vrai pour les cas limites ?"
+                  },
+                  {
+                      "level":  2,
+                      "kind":  "location",
+                      "content":  "Concentrez la décision dans la méthode LineTotal, sans état global."
+                  },
+                  {
+                      "level":  3,
+                      "kind":  "strategy",
+                      "content":  "Valider les deux invariants puis multiplier avant l’unique arrondi."
+                  },
+                  {
+                      "level":  4,
+                      "kind":  "partial-pseudocode",
+                      "content":  "si unitPrice ou quantity est négatif lever une erreur d'argument ; sinon multiplier d'abord, puis arrondir une seule fois à deux décimales en s'éloignant de zéro"
+                  }
+              ],
+    "solution":  {
+                     "path":  "solution/",
+                     "unlock":  {
+                                    "seriousAttempts":  2,
+                                    "minimumDelayMinutes":  10
+                                }
+                 },
+    "explanation":  "explanation.md",
+    "complexity":  "O(1) en temps et O(1) en espace",
+    "commonMistakes":  [
+                           "Arrondir le prix unitaire avant la multiplication et accumuler l'écart",
+                           "Employer le mode d'arrondi par défaut, qui tranche au pair le plus proche",
+                           "Calculer en virgule flottante binaire et perdre l'exactitude décimale",
+                           "Accepter une quantité négative et produire un total négatif"
+                       ],
+    "variantId":  "csharp-payment-fee-001",
+    "reviewCards":  [
+                        "card-csharp-line-total-001-rule",
+                        "card-csharp-line-total-001-edge"
+                    ],
+    "interviewQuestionId":  "interview-csharp-line-total-001",
+    "license":  "CC-BY-4.0"
+}

@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "id": "interview-api-version-route-001",
+  "version": 1,
+  "title": "Résoudre la version d'une route",
+  "level": "intermediate",
+  "durationMinutes": 6,
+  "skills": [
+    "api.contracts"
+  ],
+  "question": "Une route porte sa version dans le chemin. Comment résolvez-vous la version à servir, et que faites-vous d'une version demandée qui n'existe pas ?",
+  "observableCriteria": [
+    "Les trois issues sont distinguées : absence de version, version prise en charge, version inconnue",
+    "La version inconnue rend un verdict d'inexistence, jamais un repli silencieux sur le défaut",
+    "L'absence de version est traitée comme un cas normal servant la version par défaut"
+  ],
+  "modelAnswer": "J'isole le premier segment du chemin et je reconnais s'il a la forme d'une version. Trois cas : pas de version demandée, je sers le défaut — la plus récente en général ; version demandée et prise en charge, je la sers ; version demandée mais absente de la liste, je rends un refus explicite. Ce dernier point est le piège : rabattre une version inconnue sur le défaut ferait croire au client qu'il parle à la version demandée alors qu'il reçoit une autre, et le décalage produit des comportements inexplicables. Je compare les versions sans tenir compte de la casse.",
+  "commonMistakes": [
+    "Confondre l'absence de version et la version inconnue, et servir le défaut dans les deux cas",
+    "Chercher le segment de version ailleurs qu'en tête du chemin"
+  ],
+  "variants": [
+    "Adapter la résolution à une version portée par un en-tête plutôt que par le chemin.",
+    "Décrire ce que le client reçoit lorsqu'il demande une version dépréciée mais encore servie."
+  ],
+  "license": "CC-BY-4.0"
+}

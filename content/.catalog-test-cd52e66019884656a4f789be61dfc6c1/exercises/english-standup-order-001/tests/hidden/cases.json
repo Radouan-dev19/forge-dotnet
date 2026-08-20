@@ -1,0 +1,54 @@
+{
+  "schemaVersion": 1,
+  "cases": [
+    {
+      "name": "Hidden_MissingInputIsRejected",
+      "message": "Une entrée absente est un appel fautif, pas un point vide.",
+      "arguments": [null],
+      "expectedException": "ArgumentNullException",
+      "argumentsUnchanged": false
+    },
+    {
+      "name": "Hidden_SameLabelKeepsArrivalOrder",
+      "message": "Deux lignes de même étiquette gardent leur ordre : c'est une chronologie, pas un classement.",
+      "arguments": ["done: wrote the parser\ndone: reviewed the schema"],
+      "expected": "done: wrote the parser\ndone: reviewed the schema",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_LabelWithoutTextIsDropped",
+      "message": "Une étiquette seule occupe une ligne sans rien dire.",
+      "arguments": ["done:   \nnext: deploy to staging"],
+      "expected": "next: deploy to staging",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_CaseAndSpacingAreNormalised",
+      "message": "L'étiquette se compare sans casse et ressort en minuscules, texte détouré.",
+      "arguments": ["  DONE :   shipped the hotfix  "],
+      "expected": "done: shipped the hotfix",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_LineWithoutSeparatorIsDropped",
+      "message": "Sans deux-points, la ligne ne porte aucune étiquette et sort du point.",
+      "arguments": ["just some free text\nblocker: no staging access"],
+      "expected": "blocker: no staging access",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_WindowsLineEndingsGiveTheSameResult",
+      "message": "Un retour chariot ne doit pas coller à l'étiquette et la rendre inconnue.",
+      "arguments": ["next: pair on the migration\r\ndone: closed the ticket"],
+      "expected": "done: closed the ticket\nnext: pair on the migration",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_NothingUsableGivesAnEmptyResult",
+      "message": "Aucune ligne exploitable : une chaîne vide, pas une exception.",
+      "arguments": ["   "],
+      "expected": "",
+      "argumentsUnchanged": true
+    }
+  ]
+}

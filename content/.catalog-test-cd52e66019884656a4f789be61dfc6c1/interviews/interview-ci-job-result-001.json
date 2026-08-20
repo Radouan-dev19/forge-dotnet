@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "id": "interview-ci-job-result-001",
+  "version": 1,
+  "title": "Calculer le résultat d’un job CI",
+  "level": "junior",
+  "durationMinutes": 6,
+  "skills": [
+    "ci.pipeline"
+  ],
+  "question": "Comment implémenteriez-vous « Calculer le résultat d’un job CI » et quelles preuves réfutent les contournements ?",
+  "observableCriteria": [
+    "La conjonction est explicite : les deux étapes doivent réussir",
+    "Le résultat par défaut en cas d'information manquante est l'échec, non le succès"
+  ],
+  "modelAnswer": "Le job réussit seulement si construction et tests réussissent tous les deux. Je couvre les quatre combinaisons des deux étapes, ce qui épuise le domaine et rend tout cas supplémentaire redondant. O(1) en temps et O(1) en espace.",
+  "commonMistakes": [
+    "Retourner un succès quand une étape n'a pas rapporté de résultat"
+  ],
+  "variants": [
+    "Changer la frontière ou le droit tout en conservant la règle de calculer le résultat d’un job ci."
+  ],
+  "license": "CC-BY-4.0"
+}

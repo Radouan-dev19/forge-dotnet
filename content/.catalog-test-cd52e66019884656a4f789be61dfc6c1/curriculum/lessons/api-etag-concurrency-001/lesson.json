@@ -1,0 +1,37 @@
+{
+    "schemaVersion":  1,
+    "id":  "api-etag-concurrency-001",
+    "version":  1,
+    "title":  "ETag et If-Match : la concurrence optimiste, côté HTTP",
+    "week":  11,
+    "skills":  [
+                   {
+                       "id":  "api.contracts",
+                       "weight":  1
+                   }
+               ],
+    "prerequisites":  [
+                          "api-http-semantics-001",
+                          "ef-core-data-access-001"
+                      ],
+    "estimatedMinutes":  65,
+    "objectives":  [
+                       "Calculer un ETag stable et décider entre 200, 304 et 412 selon If-None-Match et If-Match"
+                   ],
+    "sections":  [
+                     "intuition",
+                     "explanation",
+                     "example",
+                     "counterExample",
+                     "check",
+                     "guided",
+                     "independent",
+                     "debugging",
+                     "interview",
+                     "summary",
+                     "reviewCards",
+                     "masteryTest"
+                 ],
+    "markdownPath":  "lesson.md",
+    "license":  "CC-BY-4.0"
+}

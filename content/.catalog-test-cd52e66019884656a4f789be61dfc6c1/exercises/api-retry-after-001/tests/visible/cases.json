@@ -1,0 +1,47 @@
+{
+  "schemaVersion": 1,
+  "cases": [
+    {
+      "name": "Visible_LimitedMidWindow",
+      "message": "Au quota, en milieu de fenêtre.",
+      "arguments": [
+        5,
+        5,
+        1749990012,
+        60,
+        1749990000
+      ],
+      "expected": 48,
+      "expectedException": null,
+      "argumentsUnchanged": false
+    },
+    {
+      "name": "Visible_UnderQuota",
+      "message": "Sous le quota : rien à attendre.",
+      "arguments": [
+        3,
+        5,
+        1749990012,
+        60,
+        1749990000
+      ],
+      "expected": 0,
+      "expectedException": null,
+      "argumentsUnchanged": false
+    },
+    {
+      "name": "Visible_StartOfWindow",
+      "message": "Au quota, début de fenêtre : délai plein.",
+      "arguments": [
+        5,
+        5,
+        1749990000,
+        60,
+        1749990000
+      ],
+      "expected": 60,
+      "expectedException": null,
+      "argumentsUnchanged": false
+    }
+  ]
+}

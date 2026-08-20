@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "suiteId": "senior-deploy-cycle-001.v1",
+  "exerciseId": "senior-deploy-cycle-001",
+  "exerciseVersion": 1,
+  "typeName": "Submission",
+  "methodName": "DeployCycles",
+  "parameterTypes": ["string"],
+  "returnType": "string"
+}

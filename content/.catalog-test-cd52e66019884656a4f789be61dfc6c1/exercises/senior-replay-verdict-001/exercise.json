@@ -1,0 +1,83 @@
+{
+  "schemaVersion": 1,
+  "id": "senior-replay-verdict-001",
+  "version": 1,
+  "title": "Rendre le verdict de rejeu d'un message livré à nouveau",
+  "kind": "csharp",
+  "difficulty": 4,
+  "skills": ["quality.idempotency"],
+  "prerequisites": [],
+  "estimatedMinutes": 40,
+  "statement": "statement.md",
+  "constraints": [
+    "Conserver exactement la signature publique",
+    "Un registre vide est un état légitime : tout message y est une première livraison",
+    "Un identifiant connu avec une charge différente se rejette, jamais ne s'applique",
+    "Le verdict distingue l'échec antérieur du succès antérieur : ils n'appellent pas le même geste"
+  ],
+  "examples": [
+    {
+      "input": "m1:h1:done — m1:h1",
+      "output": "skip|already-applied"
+    },
+    {
+      "input": "m1:h1:failed — m1:h1",
+      "output": "retry|previous-failure"
+    }
+  ],
+  "reflectionFields": [
+    "reformulation",
+    "inputs",
+    "expectedOutput",
+    "edgeCases",
+    "hypothesis",
+    "plan"
+  ],
+  "starterPath": "starter/",
+  "visibleTestsPath": "tests/visible/",
+  "hiddenTestsPath": "tests/hidden/",
+  "hints": [
+    {
+      "level": 1,
+      "kind": "socratic",
+      "content": "Votre courtier promet au moins une livraison, jamais exactement une. Le même message arrive donc deux fois par conception : lequel des deux exemplaires est « le vrai », et qu'est-ce que cette question a de piégé ?"
+    },
+    {
+      "level": 2,
+      "kind": "location",
+      "content": "Le verdict se lit dans le registre en trois questions ordonnées : l'identifiant est-il connu, la charge est-elle celle enregistrée, et quel sort a connu le traitement précédent. Chaque question ferme des branches avant la suivante."
+    },
+    {
+      "level": 3,
+      "kind": "strategy",
+      "content": "Quatre verdicts couvrent tout : traiter l'inconnu, sauter le déjà-appliqué, retenter l'échec antérieur, rejeter la charge qui diverge. Le rejet prime dès que la charge diffère — un identifiant recyclé ne s'applique jamais, quel que soit le statut."
+    },
+    {
+      "level": 4,
+      "kind": "partial-pseudocode",
+      "content": "analyser le registre en refusant l'entrée illisible, le statut hors vocabulaire et l'identifiant en double ; analyser la livraison ; rendre le traitement si l'identifiant est inconnu ; rendre le rejet si la charge diffère de celle enregistrée ; rendre la relance si le traitement précédent a échoué ; rendre le saut sinon"
+    }
+  ],
+  "solution": {
+    "path": "solution/",
+    "unlock": {
+      "seriousAttempts": 2,
+      "minimumDelayMinutes": 10
+    }
+  },
+  "explanation": "explanation.md",
+  "complexity": "O(n) en temps pour n entrées de registre et O(n) en espace pour la table indexée",
+  "commonMistakes": [
+    "Sauter tout identifiant connu sans vérifier la charge, et avaler un message recyclé",
+    "Sauter aussi l'échec antérieur, condamnant le message à ne jamais être traité",
+    "Traiter le registre vide comme une erreur alors que c'est l'état de tout consommateur neuf",
+    "Vérifier le statut avant la charge et retenter un contenu qui n'est pas celui enregistré"
+  ],
+  "variantId": "senior-idempotency-collision-001",
+  "reviewCards": [
+    "card-senior-replay-verdict-001-rule",
+    "card-senior-replay-verdict-001-edge"
+  ],
+  "interviewQuestionId": "interview-senior-replay-verdict-001",
+  "license": "CC-BY-4.0"
+}

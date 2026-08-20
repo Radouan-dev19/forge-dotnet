@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "suiteId": "project-autonomous-feature-001.releve.v1",
+  "exerciseId": "project-autonomous-feature-001.releve",
+  "exerciseVersion": 1,
+  "typeName": "Submission",
+  "methodName": "Statement",
+  "parameterTypes": ["string", "string"],
+  "returnType": "string"
+}

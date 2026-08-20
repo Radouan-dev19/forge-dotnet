@@ -1,0 +1,83 @@
+{
+  "schemaVersion": 1,
+  "id": "docker-memory-effective-001",
+  "version": 1,
+  "title": "Résoudre la limite mémoire effective d'une chaîne de contraintes",
+  "kind": "csharp",
+  "difficulty": 3,
+  "skills": ["docker.resources"],
+  "prerequisites": ["docker-runtime-security-001"],
+  "estimatedMinutes": 30,
+  "statement": "statement.md",
+  "constraints": [
+    "Conserver exactement la signature publique",
+    "La limite effective est le plus bas des plafonds déclarés, quelle que soit sa provenance",
+    "En cas d'égalité, la source rapportée est la plus proche du conteneur",
+    "Une chaîne sans aucune contrainte rend le mot réservé du sans-limite"
+  ],
+  "examples": [
+    {
+      "input": "daemon=8192;compose=1024;run=512",
+      "output": "512|run"
+    },
+    {
+      "input": "compose=2048;cgroup-parent=1024",
+      "output": "1024|cgroup-parent"
+    }
+  ],
+  "reflectionFields": [
+    "reformulation",
+    "inputs",
+    "expectedOutput",
+    "edgeCases",
+    "hypothesis",
+    "plan"
+  ],
+  "starterPath": "starter/",
+  "visibleTestsPath": "tests/visible/",
+  "hiddenTestsPath": "tests/hidden/",
+  "hints": [
+    {
+      "level": 1,
+      "kind": "socratic",
+      "content": "Le fichier de composition demande deux gigaoctets et le conteneur est tué par manque de mémoire bien avant. Qui d'autre que ce fichier a son mot à dire sur le plafond réellement appliqué ?"
+    },
+    {
+      "level": 2,
+      "kind": "location",
+      "content": "Il y a deux questions distinctes dans l'énoncé : quelle valeur s'applique — une simple recherche de minimum — et qui la fournit — une règle de départage quand plusieurs sources annoncent ce minimum."
+    },
+    {
+      "level": 3,
+      "kind": "strategy",
+      "content": "Validez chaque paire au fil de la lecture — source connue, jamais répétée, valeur strictement positive — et gardez la proximité des quatre sources sous forme d'un rang comparable plutôt que d'une chaîne de conditions."
+    },
+    {
+      "level": 4,
+      "kind": "partial-pseudocode",
+      "content": "rendre le mot du sans-limite quand la chaîne est vide ; découper les paires et refuser source inconnue, doublon ou valeur non positive ; chercher la valeur minimale ; parmi les sources qui la portent, choisir celle de rang le plus proche du conteneur ; assembler la valeur et la source avec la barre verticale"
+    }
+  ],
+  "solution": {
+    "path": "solution/",
+    "unlock": {
+      "seriousAttempts": 2,
+      "minimumDelayMinutes": 10
+    }
+  },
+  "explanation": "explanation.md",
+  "complexity": "O(n) en temps pour n contraintes déclarées et O(n) en espace pour la table analysée",
+  "commonMistakes": [
+    "Croire que la source la plus proche du conteneur gagne toujours, alors que seul le plafond le plus bas s'applique",
+    "Rapporter une source arbitraire en cas d'égalité au lieu d'appliquer la règle de proximité",
+    "Accepter une valeur nulle comme absence de limite au lieu de la refuser",
+    "Laisser une source répétée écraser la première valeur et rendre la réponse dépendante de l'ordre"
+  ],
+  "variantId": "docker-memory-limit-001",
+  "reviewCards": [
+    "card-docker-memory-effective-001-rule",
+    "card-docker-memory-effective-001-edge"
+  ],
+  "interviewQuestionId": "interview-docker-memory-effective-001",
+  "license": "CC-BY-4.0"
+}

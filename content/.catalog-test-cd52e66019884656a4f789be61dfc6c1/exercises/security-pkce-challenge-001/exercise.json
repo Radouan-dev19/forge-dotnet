@@ -1,0 +1,82 @@
+{
+    "schemaVersion":  1,
+    "id":  "security-pkce-challenge-001",
+    "version":  1,
+    "title":  "Vérifier un défi PKCE S256",
+    "kind":  "csharp",
+    "difficulty":  4,
+    "skills":  [
+                   "security.token"
+               ],
+    "prerequisites":  [
+                          "oauth-pkce-001"
+                      ],
+    "estimatedMinutes":  40,
+    "statement":  "statement.md",
+    "constraints":  [
+                        "Conserver exactement la signature publique",
+                        "Le secret respecte l'alphabet non réservé et une longueur de 43 à 128 caractères, bornes incluses",
+                        "La comparaison finale des empreintes se fait en temps constant, jamais par égalité de chaînes"
+                    ],
+    "examples":  [
+                     {
+                         "input":  "[\"<secret de 43 caractères>\", \"<son empreinte S256>\"]",
+                         "output":  "true"
+                     }
+                 ],
+    "reflectionFields":  [
+                             "reformulation",
+                             "inputs",
+                             "expectedOutput",
+                             "edgeCases",
+                             "hypothesis",
+                             "plan"
+                         ],
+    "starterPath":  "starter/",
+    "visibleTestsPath":  "tests/visible/",
+    "hiddenTestsPath":  "tests/hidden/",
+    "hints":  [
+                  {
+                      "level":  1,
+                      "kind":  "socratic",
+                      "content":  "Pourquoi la norme borne-t-elle la longueur du secret par le bas — que vaudrait une preuve de possession de cinq caractères ?"
+                  },
+                  {
+                      "level":  2,
+                      "kind":  "location",
+                      "content":  "Séparez trois étages : la validation du secret reçu, le calcul de son empreinte, la comparaison — chaque étage a son propre motif de refus."
+                  },
+                  {
+                      "level":  3,
+                      "kind":  "strategy",
+                      "content":  "L'empreinte se fabrique en trois gestes ordonnés — condensat sur les octets ASCII, encodage Base64 classique, traduction vers l'alphabet urlisé sans remplissage — et le moindre geste omis produit une empreinte qui ne correspondra jamais."
+                  },
+                  {
+                      "level":  4,
+                      "kind":  "partial-pseudocode",
+                      "content":  "refuser un secret absent, hors bornes de longueur ou portant un caractère hors alphabet non réservé ; refuser une empreinte absente ; condenser les octets ASCII du secret ; encoder le condensat puis remplacer les deux caractères et retirer le remplissage ; comparer les deux empreintes octet par octet en temps constant"
+                  }
+              ],
+    "solution":  {
+                     "path":  "solution/",
+                     "unlock":  {
+                                    "seriousAttempts":  2,
+                                    "minimumDelayMinutes":  10
+                                }
+                 },
+    "explanation":  "explanation.md",
+    "complexity":  "O(n) en temps, n étant la longueur du secret ; le condensat domine",
+    "commonMistakes":  [
+                           "Encoder l'empreinte en Base64 classique sans traduire les caractères ni retirer le remplissage",
+                           "Condenser la représentation UTF-16 de la chaîne au lieu de ses octets ASCII",
+                           "Oublier les bornes de longueur du secret et accepter une preuve trop courte pour prouver quoi que ce soit",
+                           "Comparer les empreintes avec l'égalité de chaînes, qui s'arrête à la première différence"
+                       ],
+    "variantId":  "security-oidc-idtoken-001",
+    "reviewCards":  [
+                        "card-security-pkce-challenge-001-rule",
+                        "card-security-pkce-challenge-001-edge"
+                    ],
+    "interviewQuestionId":  "interview-security-pkce-challenge-001",
+    "license":  "CC-BY-4.0"
+}

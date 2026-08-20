@@ -1,0 +1,32 @@
+{
+    "schemaVersion":  1,
+    "cases":  [
+                  {
+                      "name":  "Visible_Case1",
+                      "message":  "Normaliser une saisie locale — cas 1 visible incorrect.",
+                      "arguments":  [
+                                        "  Ada  "
+                                    ],
+                      "expected":  "Ada",
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Visible_Case2",
+                      "message":  "Normaliser une saisie locale — cas 2 visible incorrect.",
+                      "arguments":  [
+                                        "commande"
+                                    ],
+                      "expected":  "commande",
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Visible_NothingToTrim",
+                      "message":  "Entrée déjà propre : elle est reproduite à l'identique.",
+                      "arguments":  ["ada"],
+                      "expected":  "ada",
+                      "argumentsUnchanged":  true
+                  }
+              ]
+}

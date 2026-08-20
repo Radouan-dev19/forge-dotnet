@@ -1,0 +1,34 @@
+{
+    "schemaVersion":  1,
+    "cases":  [
+                  {
+                      "name":  "Visible_Case1",
+                      "message":  "Borner un budget d’annulation — cas 1 incorrect.",
+                      "arguments":  [
+                                        5,
+                                        30
+                                    ],
+                      "expected":  5,
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Visible_Case2",
+                      "message":  "Borner un budget d’annulation — cas 2 incorrect.",
+                      "arguments":  [
+                                        60,
+                                        30
+                                    ],
+                      "expected":  30,
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Visible_EqualBudgets",
+                      "message":  "Demande égale au plafond : elle est retenue telle quelle.",
+                      "arguments":  [30,30],
+                      "expected":  30,
+                      "argumentsUnchanged":  true
+                  }
+              ]
+}

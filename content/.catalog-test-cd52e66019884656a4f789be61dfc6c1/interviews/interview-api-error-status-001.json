@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "id": "interview-api-error-status-001",
+  "version": 1,
+  "title": "Mapper une erreur publique",
+  "level": "junior",
+  "durationMinutes": 6,
+  "skills": [
+    "api.errors"
+  ],
+  "question": "Comment implémenteriez-vous « Mapper une erreur publique » et quelles preuves réfutent les contournements ?",
+  "observableCriteria": [
+    "La liste blanche est présentée comme la règle, et le rabattement vers une erreur générique comme le défaut",
+    "L'absence de détail interne dans la réponse publique est vérifiée explicitement"
+  ],
+  "modelAnswer": "Mettre les erreurs connues sur liste blanche et rabattre les détails internes vers 500. Je teste une erreur connue, une erreur inconnue et une erreur dont le message contient un chemin de fichier, qui ne doit jamais sortir. O(n) en temps et O(n) en espace.",
+  "commonMistakes": [
+    "Faire remonter le message d'exception au client pour faciliter le support"
+  ],
+  "variants": [
+    "Changer la frontière ou le droit tout en conservant la règle de mapper une erreur publique."
+  ],
+  "license": "CC-BY-4.0"
+}

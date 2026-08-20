@@ -1,0 +1,82 @@
+{
+  "schemaVersion": 1,
+  "id": "english-review-comment-001",
+  "version": 1,
+  "title": "Étiqueter un commentaire de revue",
+  "kind": "csharp",
+  "difficulty": 2,
+  "skills": ["english.review"],
+  "prerequisites": ["english-standup-order-001"],
+  "estimatedMinutes": 30,
+  "statement": "statement.md",
+  "constraints": [
+    "Conserver exactement la signature publique",
+    "Une étiquette absente ou inconnue rend le commentaire non étiqueté, jamais bloquant par défaut",
+    "La reconnaissance de l'étiquette ignore la casse et les blancs qui l'entourent"
+  ],
+  "examples": [
+    {
+      "input": "[\"must: this leaks the connection\"]",
+      "output": "blocking"
+    },
+    {
+      "input": "[\"looks good to me\"]",
+      "output": "unlabelled"
+    }
+  ],
+  "reflectionFields": [
+    "reformulation",
+    "inputs",
+    "expectedOutput",
+    "edgeCases",
+    "hypothesis",
+    "plan"
+  ],
+  "starterPath": "starter/",
+  "visibleTestsPath": "tests/visible/",
+  "hiddenTestsPath": "tests/hidden/",
+  "hints": [
+    {
+      "level": 1,
+      "kind": "socratic",
+      "content": "Vingt remarques sur une demande de fusion, toutes du même ton. Laquelle l'auteur doit-il traiter avant de fusionner ?"
+    },
+    {
+      "level": 2,
+      "kind": "location",
+      "content": "Isolez l'extraction de l'étiquette de tête, puis sa correspondance avec les trois conventions connues."
+    },
+    {
+      "level": 3,
+      "kind": "strategy",
+      "content": "Coupez au premier deux-points, normalisez ce qui précède, et faites correspondre à la table des conventions."
+    },
+    {
+      "level": 4,
+      "kind": "partial-pseudocode",
+      "content": "si le commentaire est vide ou sans deux-points, rendre non étiqueté ; sinon normaliser le préfixe et rendre la catégorie associée, ou non étiqueté si le préfixe n'est pas dans la table"
+    }
+  ],
+  "solution": {
+    "path": "solution/",
+    "unlock": {
+      "seriousAttempts": 2,
+      "minimumDelayMinutes": 10
+    }
+  },
+  "explanation": "explanation.md",
+  "complexity": "O(n) en temps sur la longueur du commentaire, O(1) en espace",
+  "commonMistakes": [
+    "Traiter un commentaire non étiqueté comme bloquant, ce qui fige la revue sur une préférence",
+    "Chercher l'étiquette n'importe où dans le commentaire au lieu de sa seule tête",
+    "Comparer l'étiquette en tenant compte de la casse, que la convention ignore",
+    "Rendre une catégorie par défaut différente selon la longueur ou le ton du commentaire"
+  ],
+  "variantId": "english-standup-order-001",
+  "reviewCards": [
+    "card-english-review-comment-001-rule",
+    "card-english-review-comment-001-edge"
+  ],
+  "interviewQuestionId": "interview-english-review-comment-001",
+  "license": "CC-BY-4.0"
+}

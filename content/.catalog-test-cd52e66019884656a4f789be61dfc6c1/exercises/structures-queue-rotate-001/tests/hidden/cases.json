@@ -1,0 +1,55 @@
+{
+    "schemaVersion":  1,
+    "cases":  [
+                  {
+                      "name":  "Hidden_Case1",
+                      "message":  "Faire tourner une file — cas 1 hidden incorrect.",
+                      "arguments":  [
+                                        [
+                                            1,
+                                            2,
+                                            3
+                                        ],
+                                        -1
+                                    ],
+                      "expected":  [
+                                       3,
+                                       1,
+                                       2
+                                   ],
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_Case2",
+                      "message":  "Faire tourner une file — cas 2 hidden incorrect.",
+                      "arguments":  [
+                                        [
+                                            1,
+                                            2
+                                        ],
+                                        4
+                                    ],
+                      "expected":  [
+                                       1,
+                                       2
+                                   ],
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_FullTurn",
+                      "message":  "Rotation égale à la longueur : un tour complet ramène à l'ordre initial.",
+                      "arguments":  [[1,2,3],3],
+                      "expected":  [1,2,3],
+                      "argumentsUnchanged":  true
+                  },
+                  {
+                      "name":  "Hidden_MoreThanOneTurn",
+                      "message":  "Rotation supérieure à la longueur : réfute une boucle sans réduction modulo.",
+                      "arguments":  [[1,2,3],5],
+                      "expected":  [3,1,2],
+                      "argumentsUnchanged":  true
+                  }
+              ]
+}

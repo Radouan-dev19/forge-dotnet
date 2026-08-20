@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "id": "interview-debug-retry-delay-001",
+  "version": 1,
+  "title": "Borner un délai de retry",
+  "level": "junior",
+  "durationMinutes": 5,
+  "skills": [
+    "debugging.async"
+  ],
+  "question": "Comment résoudriez-vous « Borner un délai de retry » et comment prouveriez-vous les bornes ?",
+  "observableCriteria": [
+    "Le calcul est déterministe et borné, sans attente réelle dans l'exercice",
+    "Le plafond par tentative est distingué du budget total"
+  ],
+  "modelAnswer": "Appliquer un backoff déterministe borné sans attente réelle dans l’exercice. Je prouve par la première tentative, une tentative atteignant le plafond et une tentative au-delà ; O(1) en temps et O(1) en espace.",
+  "commonMistakes": [
+    "Laisser le délai croître sans plafond et produire une attente inexploitable"
+  ],
+  "variants": [
+    "Changer une borne ou le volume tout en conservant la même règle de borner un délai de retry."
+  ],
+  "license": "CC-BY-4.0"
+}

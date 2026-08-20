@@ -1,0 +1,12 @@
+{
+    "schemaVersion":  1,
+    "suiteId":  "debug-string-boundary-001",
+    "exerciseId":  "debug-string-boundary-001",
+    "exerciseVersion":  1,
+    "typeName":  "Submission",
+    "methodName":  "LastCharacter",
+    "parameterTypes":  [
+                           "string"
+                       ],
+    "returnType":  "string"
+}

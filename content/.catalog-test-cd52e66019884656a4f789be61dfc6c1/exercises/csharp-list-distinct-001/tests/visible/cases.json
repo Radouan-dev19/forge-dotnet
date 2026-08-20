@@ -1,0 +1,8 @@
+{
+  "schemaVersion": 1,
+  "cases": [
+    { "name": "Visible_Duplicates", "message": "Les doublons doivent disparaître sans réordonner la liste.", "arguments": [[3, 1, 3, 2, 1]], "expected": [3, 1, 2], "argumentsUnchanged": true },
+    { "name": "Visible_Empty", "message": "Une liste vide doit produire une nouvelle liste vide.", "arguments": [[]], "expected": [], "argumentsUnchanged": true },
+    { "name": "Visible_AlreadyDistinct", "message": "Une liste déjà distincte doit conserver son ordre.", "arguments": [[4, 2, 9]], "expected": [4, 2, 9], "argumentsUnchanged": true }
+  ]
+}

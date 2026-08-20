@@ -1,0 +1,82 @@
+{
+  "schemaVersion": 1,
+  "id": "observability-sampling-decision-001",
+  "version": 1,
+  "title": "Décider d'échantillonner une trace",
+  "kind": "csharp",
+  "difficulty": 2,
+  "skills": ["observability.sampling"],
+  "prerequisites": ["azure-correlation-signal-001"],
+  "estimatedMinutes": 35,
+  "statement": "statement.md",
+  "constraints": [
+    "Conserver exactement la signature publique",
+    "Une trace en erreur est toujours conservée, quel que soit le taux",
+    "Le taux est un pourcentage entier de 0 à 100 ; toute autre valeur est refusée"
+  ],
+  "examples": [
+    {
+      "input": "[42, 100, false]",
+      "output": "true"
+    },
+    {
+      "input": "[42, 0, true]",
+      "output": "true"
+    }
+  ],
+  "reflectionFields": [
+    "reformulation",
+    "inputs",
+    "expectedOutput",
+    "edgeCases",
+    "hypothesis",
+    "plan"
+  ],
+  "starterPath": "starter/",
+  "visibleTestsPath": "tests/visible/",
+  "hiddenTestsPath": "tests/hidden/",
+  "hints": [
+    {
+      "level": 1,
+      "kind": "socratic",
+      "content": "Une trace sur cent suffit à mesurer une latence. Combien en faut-il pour comprendre une panne ?"
+    },
+    {
+      "level": 2,
+      "kind": "location",
+      "content": "Séparez la garde sur le taux, la règle de conservation inconditionnelle et le calcul du seuil."
+    },
+    {
+      "level": 3,
+      "kind": "strategy",
+      "content": "Ramenez l'empreinte dans l'intervalle des pourcentages, puis comparez-la au taux demandé."
+    },
+    {
+      "level": 4,
+      "kind": "partial-pseudocode",
+      "content": "refuser un taux hors bornes ; retourner vrai si la trace porte une erreur ; sinon ramener l'empreinte modulo cent dans les valeurs positives et retourner vrai si elle est strictement inférieure au taux"
+    }
+  ],
+  "solution": {
+    "path": "solution/",
+    "unlock": {
+      "seriousAttempts": 2,
+      "minimumDelayMinutes": 10
+    }
+  },
+  "explanation": "explanation.md",
+  "complexity": "O(1) en temps et O(1) en espace",
+  "commonMistakes": [
+    "Échantillonner les erreurs comme le reste, et perdre la trace qui expliquait la panne",
+    "Comparer avec une borne inclusive, ce qui conserve un pour cent de trop",
+    "Oublier qu'un reste de division entière prend le signe du dividende",
+    "Tirer un nombre au hasard, ce qui rend la décision irreproductible d'un service à l'autre"
+  ],
+  "variantId": "azure-correlation-signal-001",
+  "reviewCards": [
+    "card-observability-sampling-decision-001-rule",
+    "card-observability-sampling-decision-001-edge"
+  ],
+  "interviewQuestionId": "interview-observability-sampling-decision-001",
+  "license": "CC-BY-4.0"
+}

@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "cases": [
+    {
+      "name": "Visible_LongestPrefixSummonsTheSpecialist",
+      "message": "Le fichier d'interface convoque alice, le fichier du cœur retombe sur bob : deux relecteurs.",
+      "arguments": ["src/api/=alice;src/=bob;docs/=carol", "src/api/users.cs,src/core/db.cs"],
+      "expected": "alice,bob",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Visible_DocumentationHasItsOwner",
+      "message": "Un seul fichier touché, un seul préfixe couvrant : carol seule est convoquée.",
+      "arguments": ["src/api/=alice;src/=bob;docs/=carol", "docs/readme.md"],
+      "expected": "carol",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Visible_SameOwnerSummonedOnce",
+      "message": "Deux fichiers du même répertoire : une convocation, pas deux.",
+      "arguments": ["src/api/=alice;src/=bob;docs/=carol", "src/api/a.cs,src/api/b.cs"],
+      "expected": "alice",
+      "argumentsUnchanged": true
+    }
+  ]
+}

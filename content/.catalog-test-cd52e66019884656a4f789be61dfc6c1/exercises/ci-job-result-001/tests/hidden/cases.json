@@ -1,0 +1,27 @@
+{
+    "schemaVersion":  1,
+    "cases":  [
+                  {
+                      "name":  "Hidden_Case1",
+                      "message":  "Calculer le résultat d’un job CI — cas 1 incorrect.",
+                      "arguments":  [
+                                        false,
+                                        true
+                                    ],
+                      "expected":  "failed",
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_Case2",
+                      "message":  "Calculer le résultat d’un job CI — cas 2 incorrect.",
+                      "arguments":  [
+                                        false,
+                                        false
+                                    ],
+                      "expected":  "failed",
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  }
+              ]
+}

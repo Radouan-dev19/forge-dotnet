@@ -1,0 +1,61 @@
+{
+  "schemaVersion": 1,
+  "cases": [
+    {
+      "name": "Hidden_MissingInputIsRejected",
+      "message": "Une entrée absente reste un appel fautif, quelle que soit la quantité demandée.",
+      "arguments": [null, 3],
+      "expectedException": "ArgumentNullException",
+      "argumentsUnchanged": false
+    },
+    {
+      "name": "Hidden_ZeroRequestIsNotAFault",
+      "message": "Demander zéro valeur est légitime : la réponse est vide, pas un refus.",
+      "arguments": ["bleu;vert", 0],
+      "expected": "",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_NegativeRequestIsNotAFault",
+      "message": "Une demande négative se comporte comme une demande nulle.",
+      "arguments": ["bleu;vert", -4],
+      "expected": "",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_FrequencyBeatsOrdinalOrder",
+      "message": "L'ordre ordinal ne départage qu'à fréquence égale, jamais avant.",
+      "arguments": ["zeta;zeta;alpha", 1],
+      "expected": "zeta",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_TieAcrossThreeValues",
+      "message": "Trois valeurs à égalité sortent dans l'ordre ordinal croissant.",
+      "arguments": ["gamma;alpha;beta", 3],
+      "expected": "alpha;beta;gamma",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_CutInsideATie",
+      "message": "Quand la coupe tombe au milieu d'une égalité, c'est l'ordre ordinal qui décide qui reste.",
+      "arguments": ["gamma;alpha;beta", 2],
+      "expected": "alpha;beta",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_EmptyInput",
+      "message": "Aucune valeur à classer : chaîne vide, même pour une demande positive.",
+      "arguments": ["  ;  ", 5],
+      "expected": "",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_CaseFormsTwoCandidates",
+      "message": "La casse distinguant deux valeurs, elles se disputent le classement séparément.",
+      "arguments": ["Paris;Paris;paris", 2],
+      "expected": "Paris;paris",
+      "argumentsUnchanged": true
+    }
+  ]
+}

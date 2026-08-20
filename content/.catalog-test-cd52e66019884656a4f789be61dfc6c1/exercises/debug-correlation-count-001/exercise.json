@@ -1,0 +1,82 @@
+{
+    "schemaVersion":  1,
+    "id":  "debug-correlation-count-001",
+    "version":  1,
+    "title":  "Suivre un identifiant de corrélation",
+    "kind":  "csharp",
+    "difficulty":  2,
+    "skills":  [
+                   "debugging.data"
+               ],
+    "prerequisites":  [
+                          "debug-stacktraces-breakpoints-001"
+                      ],
+    "estimatedMinutes":  30,
+    "statement":  "statement.md",
+    "constraints":  [
+                        "Conserver exactement la signature publique",
+                        "Compter les occurrences non chevauchantes et respecter la casse du journal.",
+                        "Ne lire aucun journal réel : le texte et l'identifiant sont fournis"
+                    ],
+    "examples":  [
+                     {
+                         "input":  "[\"id=abc id=abc\",\"abc\"]",
+                         "output":  "2"
+                     }
+                 ],
+    "reflectionFields":  [
+                             "reformulation",
+                             "inputs",
+                             "expectedOutput",
+                             "edgeCases",
+                             "hypothesis",
+                             "plan"
+                         ],
+    "starterPath":  "starter/",
+    "visibleTestsPath":  "tests/visible/",
+    "hiddenTestsPath":  "tests/hidden/",
+    "hints":  [
+                  {
+                      "level":  1,
+                      "kind":  "socratic",
+                      "content":  "Quel invariant de « Suivre un identifiant de corrélation » doit rester vrai pour les cas limites ?"
+                  },
+                  {
+                      "level":  2,
+                      "kind":  "location",
+                      "content":  "Concentrez la décision dans la méthode CorrelationCount, sans état global."
+                  },
+                  {
+                      "level":  3,
+                      "kind":  "strategy",
+                      "content":  "Compter les occurrences non chevauchantes et respecter la casse du journal."
+                  },
+                  {
+                      "level":  4,
+                      "kind":  "partial-pseudocode",
+                      "content":  "refuser un journal ou un identifiant vide en retournant zéro ; chercher l'occurrence suivante depuis une position courante, de façon ordinale ; après chaque trouvaille, avancer la position de la longueur de l'identifiant pour ne pas compter de recouvrement"
+                  }
+              ],
+    "solution":  {
+                     "path":  "solution/",
+                     "unlock":  {
+                                    "seriousAttempts":  2,
+                                    "minimumDelayMinutes":  10
+                                }
+                 },
+    "explanation":  "explanation.md",
+    "complexity":  "O(n) en temps et O(1) en espace",
+    "commonMistakes":  [
+                           "Avancer d'un seul caractère et compter des occurrences qui se recouvrent",
+                           "Chercher sans distinction de casse et compter un identifiant voisin",
+                           "Découper le journal en lignes et manquer les occurrences multiples d'une même ligne",
+                           "Boucler indéfiniment en oubliant d'avancer la position de recherche"
+                       ],
+    "variantId":  "debug-anomaly-count-001",
+    "reviewCards":  [
+                        "card-debug-correlation-count-001-rule",
+                        "card-debug-correlation-count-001-edge"
+                    ],
+    "interviewQuestionId":  "interview-debug-correlation-count-001",
+    "license":  "CC-BY-4.0"
+}

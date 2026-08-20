@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "id": "interview-s21-s24-004",
+  "version": 1,
+  "title": "Appliquer le moindre privilège Storage",
+  "level": "junior",
+  "durationMinutes": 6,
+  "skills": [
+    "azure.data"
+  ],
+  "question": "Un service doit seulement lire un conteneur de documents. Quel droit et quelle preuve proposez-vous ?",
+  "observableCriteria": [
+    "Le rôle attribué est nommé au périmètre le plus étroit, pas au niveau du compte",
+    "Une preuve négative est proposée : une écriture refusée, et non seulement une lecture réussie"
+  ],
+  "modelAnswer": "Jʼattribue un rôle de lecture au périmètre le plus étroit. Une preuve positive lit un objet autorisé et une preuve négative montre que lʼécriture est refusée.",
+  "commonMistakes": [
+    "Prouver le droit par une lecture qui réussit, sans jamais montrer ce qui est refusé"
+  ],
+  "variants": [
+    "Changez une contrainte du scénario « Appliquer le moindre privilège Storage » et expliquez si la décision reste valide."
+  ],
+  "license": "CC-BY-4.0"
+}

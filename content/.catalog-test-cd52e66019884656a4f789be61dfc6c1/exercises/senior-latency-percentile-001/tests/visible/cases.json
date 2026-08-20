@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "cases": [
+    {
+      "name": "Visible_MedianOfFiveMeasures",
+      "message": "Le p50 de cinq mesures vise le troisième rang du tri : le client médian.",
+      "arguments": [[120, 80, 200, 150, 90], 50],
+      "expected": 120,
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Visible_HighPercentileFindsTheWorst",
+      "message": "Le p99 de cinq mesures atteint le dernier rang : le client le plus mal servi.",
+      "arguments": [[120, 80, 200, 150, 90], 99],
+      "expected": 200,
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Visible_QuarterOfFourIsTheFirstRank",
+      "message": "Le p25 de quatre mesures couvre exactement le quart : premier rang du tri.",
+      "arguments": [[10, 20, 30, 40], 25],
+      "expected": 10,
+      "argumentsUnchanged": true
+    }
+  ]
+}

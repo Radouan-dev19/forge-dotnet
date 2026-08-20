@@ -1,0 +1,32 @@
+{
+    "schemaVersion":  1,
+    "cases":  [
+                  {
+                      "name":  "Visible_Case1",
+                      "message":  "Classer une température — cas 1 visible incorrect.",
+                      "arguments":  [
+                                        -1
+                                    ],
+                      "expected":  "gel",
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Visible_Case2",
+                      "message":  "Classer une température — cas 2 visible incorrect.",
+                      "arguments":  [
+                                        12
+                                    ],
+                      "expected":  "frais",
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Visible_LastCoolDegree",
+                      "message":  "Dernier degré frais : réfute une borne haute incluse à tort.",
+                      "arguments":  [19],
+                      "expected":  "frais",
+                      "argumentsUnchanged":  true
+                  }
+              ]
+}

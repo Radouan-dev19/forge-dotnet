@@ -1,0 +1,83 @@
+{
+  "schemaVersion": 1,
+  "id": "quality-assertion-survival-001",
+  "version": 1,
+  "title": "Trier les assertions qui survivent à un remaniement",
+  "kind": "csharp",
+  "difficulty": 3,
+  "skills": ["quality.refactoring"],
+  "prerequisites": ["quality-regression-refactoring-001"],
+  "estimatedMinutes": 30,
+  "statement": "statement.md",
+  "constraints": [
+    "Conserver exactement la signature publique",
+    "Les natures d'assertion conservées gardent leur ordre d'apparition et leurs répétitions",
+    "Une nature inconnue est refusée plutôt qu'ignorée",
+    "Le tri se fonde sur ce que l'assertion observe, jamais sur son intitulé"
+  ],
+  "examples": [
+    {
+      "input": "result;calls;state",
+      "output": "result;state"
+    },
+    {
+      "input": "order;timing",
+      "output": "(chaîne vide)"
+    }
+  ],
+  "reflectionFields": [
+    "reformulation",
+    "inputs",
+    "expectedOutput",
+    "edgeCases",
+    "hypothesis",
+    "plan"
+  ],
+  "starterPath": "starter/",
+  "visibleTestsPath": "tests/visible/",
+  "hiddenTestsPath": "tests/hidden/",
+  "hints": [
+    {
+      "level": 1,
+      "kind": "socratic",
+      "content": "Vous remplacez une boucle par une requête équivalente et quarante tests cassent alors que le comportement n'a pas changé. Que vérifiaient ces quarante tests pour être sensibles à un changement que l'utilisateur ne peut pas voir ?"
+    },
+    {
+      "level": 2,
+      "kind": "location",
+      "content": "Posez la question à chaque nature d'assertion : ce qu'elle observe est-il accessible à un appelant ordinaire du code — une valeur rendue, une exception du contrat, un état relisible — ou faut-il des instruments de mesure internes pour le voir ?"
+    },
+    {
+      "level": 3,
+      "kind": "strategy",
+      "content": "Trois natures observent le contrat et survivent ; quatre épient la mécanique et cassent. Classez chaque élément du flux dans l'une des deux familles, et traitez tout intrus comme une donnée corrompue, pas comme un cas à deviner."
+    },
+    {
+      "level": 4,
+      "kind": "partial-pseudocode",
+      "content": "refuser un flux vide ou blanc ; découper sur le séparateur ; pour chaque nature dans l'ordre : la conserver si elle appartient à la famille du contrat observable, la sauter si elle appartient à la famille de la mécanique interne, lever l'exception sinon ; joindre les natures conservées avec le séparateur d'origine"
+    }
+  ],
+  "solution": {
+    "path": "solution/",
+    "unlock": {
+      "seriousAttempts": 2,
+      "minimumDelayMinutes": 10
+    }
+  },
+  "explanation": "explanation.md",
+  "complexity": "O(n) en temps pour n assertions et O(n) en espace pour la liste conservée",
+  "commonMistakes": [
+    "Ignorer silencieusement une nature d'assertion inconnue au lieu de refuser le flux",
+    "Classer le comptage d'appels internes comme observable parce qu'il se mesure facilement",
+    "Dédupliquer les natures conservées alors qu'une suite répète légitimement ses assertions",
+    "Trier la sortie alphabétiquement et perdre l'ordre d'apparition du flux"
+  ],
+  "variantId": "quality-review-matrix-001",
+  "reviewCards": [
+    "card-quality-assertion-survival-001-rule",
+    "card-quality-assertion-survival-001-edge"
+  ],
+  "interviewQuestionId": "interview-quality-assertion-survival-001",
+  "license": "CC-BY-4.0"
+}

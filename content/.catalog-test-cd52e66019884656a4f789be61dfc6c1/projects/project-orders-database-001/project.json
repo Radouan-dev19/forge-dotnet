@@ -1,0 +1,78 @@
+{
+  "schemaVersion": 1,
+  "id": "project-orders-database-001",
+  "version": 2,
+  "title": "Base commandes mini-ERP",
+  "difficulty": 4,
+  "weeks": [10],
+  "skills": ["efcore.data-access"],
+  "prerequisites": ["sql-index-plans-001"],
+  "estimatedHours": 16,
+  "briefPath": "brief.md",
+  "starterPath": "starter/",
+  "achievementKey": "ef-core",
+  "maximumSourceFiles": 4,
+  "acceptanceSuites": [
+    { "milestoneId": "modele", "suitePath": "modele/" },
+    { "milestoneId": "chargement", "suitePath": "chargement/" },
+    { "milestoneId": "ecriture", "suitePath": "ecriture/" }
+  ],
+  "milestones": [
+    {
+      "id": "modele",
+      "title": "Traverser les relations plutôt que les deviner",
+      "evidence": "OrderSummary rend le client, le nombre de lignes et le total d'une commande, obtenus par le modèle et non par une requête écrite à la main.",
+      "acceptanceCriteria": [
+        "Le nom du client vient de la relation suivie, jamais d'une seconde requête improvisée",
+        "Le total multiplie chaque prix unitaire par sa quantité avant d'additionner",
+        "Une commande absente est refusée, elle ne rend pas un résumé vide"
+      ]
+    },
+    {
+      "id": "chargement",
+      "title": "Charger trois niveaux en une requête",
+      "evidence": "LoadRoundTrips rend le nombre de commandes SQL réellement envoyées, compté par un intercepteur, et non une estimation.",
+      "acceptanceCriteria": [
+        "Le chargement du client, de ses commandes et de leurs lignes tient en une seule requête",
+        "Le compte porte sur les requêtes émises, jamais sur les lignes rapatriées",
+        "Un client absent est refusé plutôt que compté à zéro"
+      ]
+    },
+    {
+      "id": "ecriture",
+      "title": "Prouver que l'écriture est allée jusqu'à la base",
+      "evidence": "ApplyDiscount modifie, enregistre, puis relit dans un contexte neuf : le total rendu vient de la base, pas du suivi d'entités.",
+      "acceptanceCriteria": [
+        "La relecture se fait dans un contexte distinct de celui qui a écrit",
+        "L'arrondi porte sur le prix unitaire de chaque ligne, avant multiplication",
+        "Un taux hors de l'intervalle admis est refusé avant toute écriture"
+      ]
+    }
+  ],
+  "rubric": [
+    {
+      "criterion": "Les requêtes envoyées correspondent à celles que l'on croit envoyer",
+      "weight": 0.4,
+      "observableEvidence": "Le compte d'un intercepteur confirme le nombre attendu, sans lecture du journal."
+    },
+    {
+      "criterion": "L'écriture est vérifiée par relecture, jamais par le suivi d'entités",
+      "weight": 0.35,
+      "observableEvidence": "Un contexte neuf rend la même valeur que celle qui vient d'être enregistrée."
+    },
+    {
+      "criterion": "Les décimaux ne perdent pas de précision entre le modèle et la base",
+      "weight": 0.25,
+      "observableEvidence": "Un montant à deux décimales relu depuis la base est identique à celui qui y a été écrit."
+    }
+  ],
+  "solutionPolicy": "no-complete-solution-before-submission",
+  "commonMistakes": [
+    "Charger la collection sans inclusion, ce qui déclenche une requête par élément parcouru",
+    "Vérifier une écriture depuis le contexte qui vient d'écrire, où l'entité est encore suivie",
+    "Additionner des décimaux côté base sur SQLite, qui les stocke en texte et ne sait pas les agréger",
+    "Compter les lignes rapatriées en croyant compter les requêtes envoyées"
+  ],
+  "variantIds": ["project-collections-library-001"],
+  "license": "CC-BY-4.0"
+}

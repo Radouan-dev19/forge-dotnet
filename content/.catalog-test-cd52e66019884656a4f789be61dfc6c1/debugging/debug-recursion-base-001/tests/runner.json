@@ -1,0 +1,12 @@
+{
+    "schemaVersion":  1,
+    "suiteId":  "debug-recursion-base-001",
+    "exerciseId":  "debug-recursion-base-001",
+    "exerciseVersion":  1,
+    "typeName":  "Submission",
+    "methodName":  "Factorial",
+    "parameterTypes":  [
+                           "int"
+                       ],
+    "returnType":  "int"
+}

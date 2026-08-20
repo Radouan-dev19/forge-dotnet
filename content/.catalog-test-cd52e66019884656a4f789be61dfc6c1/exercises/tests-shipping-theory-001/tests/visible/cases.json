@@ -1,0 +1,34 @@
+{
+    "schemaVersion":  1,
+    "cases":  [
+                  {
+                      "name":  "Visible_Case1",
+                      "message":  "Paramétrer une règle de livraison — cas 1 incorrect.",
+                      "arguments":  [
+                                        49.99,
+                                        false
+                                    ],
+                      "expected":  4.9,
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Visible_Case2",
+                      "message":  "Paramétrer une règle de livraison — cas 2 incorrect.",
+                      "arguments":  [
+                                        50,
+                                        false
+                                    ],
+                      "expected":  0,
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Visible_ExpressAboveThreshold",
+                      "message":  "Express au-dessus du seuil : le tarif express prime sur la gratuité.",
+                      "arguments":  [100,true],
+                      "expected":  9.9,
+                      "argumentsUnchanged":  true
+                  }
+              ]
+}

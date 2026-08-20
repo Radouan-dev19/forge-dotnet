@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "id": "interview-ef-aggregate-status-counts-001",
+  "version": 1,
+  "title": "Filtrer des groupes plutôt que des lignes",
+  "level": "junior",
+  "durationMinutes": 7,
+  "skills": ["sql.ef-aggregations"],
+  "question": "Un tableau de bord veut le nombre de commandes par statut, mais seulement pour les statuts qui reviennent assez souvent. Où se pose ce filtre dans la requête, et que se passe-t-il si on le pose au mauvais endroit ?",
+  "observableCriteria": [
+    "La distinction ligne contre groupe est posée : le seuil d'occurrences est une propriété du groupe",
+    "L'équivalent du having relationnel est identifié dans la position de l'appel de filtrage",
+    "Le rapport volume traité contre volume transféré est énoncé pour refuser le regroupement en mémoire"
+  ],
+  "modelAnswer": "Le seuil d'occurrences ne se vérifie sur aucune commande individuelle : c'est une propriété du groupe, qui n'existe qu'après le regroupement. Le filtre se pose donc après lui — regrouper par statut, puis ne garder que les groupes dont le compte atteint le plancher, puis projeter la clé et le compte. C'est l'équivalent du having relationnel, et le traducteur de requêtes le traduit ainsi côté serveur. Posé avant le regroupement, le même prédicat filtrerait des lignes et répondrait à une autre question, sans erreur ni avertissement : c'est ce qui rend la faute durable, la position d'un appel dans la chaîne porte la sémantique que le SQL manuscrit rend visible avec deux mots-clés distincts. Je refuse aussi la variante en mémoire — tout charger puis regrouper — pour une raison de rapport de forces : bien placée, l'agrégation traite tout le volume côté serveur et ne transfère que les groupes survivants, trois lignes pour un million de commandes ; en mémoire, tout le volume traverse le réseau pour finir écrasé en trois entrées. Enfin, les statuts sous le plancher sont omis, pas mis à zéro : le filtre de groupes élimine les groupes, il ne les vide pas.",
+  "commonMistakes": [
+    "Poser le prédicat de compte avant le regroupement et répondre à une question différente sans s'en apercevoir",
+    "Rapatrier toutes les lignes pour regrouper en mémoire et inverser le rapport volume traité sur volume transféré"
+  ],
+  "variants": [
+    "Ajouter une somme de montants au compte et demander ce qui change dans la traduction.",
+    "Demander comment paginer un résultat d'agrégation et pourquoi l'ordre y redevient central."
+  ],
+  "license": "CC-BY-4.0"
+}

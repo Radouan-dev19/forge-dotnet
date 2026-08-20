@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "id": "english-card-18-written",
+  "version": 1,
+  "title": "Security under load — written update",
+  "level": "B2",
+  "durationMinutes": 12,
+  "skills": [
+    "english.written",
+    "performance.security"
+  ],
+  "situation": "In a technical discussion, someone proposes bypassing authorization in a benchmark. You must write the decision accurately without overstating the evidence.",
+  "instructions": [
+    "Write four sentences on what a benchmark without authorization measures, what it does not, and what you would run instead."
+  ],
+  "vocabulary": [
+    {
+      "term": "representative testing",
+      "meaning": "measuring the system in the configuration it actually runs in, since removing a layer measures a system nobody deploys"
+    },
+    {
+      "term": "omitted layer",
+      "meaning": "a component left out of a measurement, whose own cost then disappears from the reported figure"
+    }
+  ],
+  "expectedElements": [
+    "What the shortcut actually measures is stated",
+    "The omitted layer is identified as a real cost",
+    "A workable alternative protocol is proposed"
+  ],
+  "modelAnswer": "Disabling authorization would measure a configuration we never deploy. Every production request passes through that check, which itself costs a token validation and a lookup, and removing it moves that cost out of the figure we would then quote. The measurement would be real evidence for a question nobody asked. I propose running the same benchmark with a pre-issued token, which keeps the layer in place while removing the variability the proposal was trying to avoid.",
+  "commonMistakes": [
+    "Rejecting the shortcut without acknowledging the noise it was meant to remove",
+    "Failing to name the omitted layer as a real cost in the reported figure"
+  ],
+  "variants": [
+    "Rewrite the update as the agreed benchmark protocol."
+  ],
+  "license": "CC-BY-4.0"
+}

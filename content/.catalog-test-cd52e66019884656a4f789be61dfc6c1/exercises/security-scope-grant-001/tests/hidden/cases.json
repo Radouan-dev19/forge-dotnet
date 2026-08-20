@@ -1,0 +1,75 @@
+{
+  "schemaVersion": 1,
+  "cases": [
+    {
+      "name": "Hidden_MissingGrantedIsRejected",
+      "message": "Un jeton absent est un appel fautif, pas un jeton sans portée.",
+      "arguments": [null, "orders:read"],
+      "expectedException": "ArgumentNullException",
+      "argumentsUnchanged": false
+    },
+    {
+      "name": "Hidden_MissingRequiredIsRejected",
+      "message": "Une opération qui n'exige rien de nommé ne peut pas être autorisée.",
+      "arguments": ["orders:read", null],
+      "expectedException": "ArgumentNullException",
+      "argumentsUnchanged": false
+    },
+    {
+      "name": "Hidden_WildcardRequirementIsRefused",
+      "message": "La portée exigée doit être concrète : un générique exigé autoriserait une famille entière.",
+      "arguments": ["orders:read", "orders:*"],
+      "expectedException": "ArgumentException",
+      "argumentsUnchanged": false
+    },
+    {
+      "name": "Hidden_DenialAfterTheGrantStillWins",
+      "message": "Le refus l'emporte sur le générique qui l'accorderait.",
+      "arguments": ["orders:* !orders:delete", "orders:delete"],
+      "expected": false,
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_DenialBeforeTheGrantAlsoWins",
+      "message": "La position du refus dans la liste ne change pas la décision.",
+      "arguments": ["!orders:delete orders:*", "orders:delete"],
+      "expected": false,
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_GlobalWildcardCoversEverything",
+      "message": "Le générique global couvre toute portée concrète.",
+      "arguments": ["*", "invoices:archive"],
+      "expected": true,
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_CaseDifferenceIsAnotherScope",
+      "message": "Une portée est un identifiant : deux graphies ne désignent pas le même droit.",
+      "arguments": ["Orders:Read", "orders:read"],
+      "expected": false,
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_FamilyWildcardDoesNotCoverTheFamilyItself",
+      "message": "Le générique de famille couvre ce qui suit les deux points, pas la famille seule.",
+      "arguments": ["orders:*", "orders"],
+      "expected": false,
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_EmptyTokenGrantsNothing",
+      "message": "Un jeton sans portée n'accorde rien : le moindre privilège est le défaut.",
+      "arguments": ["", "orders:read"],
+      "expected": false,
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_FamilyWildcardCoversNestedScopes",
+      "message": "Tout ce qui commence par le préfixe et ses deux points est couvert, sur un niveau comme sur deux.",
+      "arguments": ["orders:*", "orders:read:all"],
+      "expected": true,
+      "argumentsUnchanged": true
+    }
+  ]
+}

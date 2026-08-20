@@ -1,0 +1,32 @@
+{
+    "schemaVersion":  1,
+    "cases":  [
+                  {
+                      "name":  "Visible_Case1",
+                      "message":  "Détecter un conflit non résolu — cas 1 incorrect.",
+                      "arguments":  [
+                                        "\u003c\u003c\u003c\u003c\u003c\u003c\u003c HEAD\nvalue"
+                                    ],
+                      "expected":  true,
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Visible_Case2",
+                      "message":  "Détecter un conflit non résolu — cas 2 incorrect.",
+                      "arguments":  [
+                                        "clean"
+                                    ],
+                      "expected":  false,
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Visible_ClosingMarker",
+                      "message":  "Marqueur de fin seul : il suffit à signaler un conflit.",
+                      "arguments":  ["a\u003E\u003E\u003E\u003E\u003E\u003E\u003Eb"],
+                      "expected":  true,
+                      "argumentsUnchanged":  true
+                  }
+              ]
+}

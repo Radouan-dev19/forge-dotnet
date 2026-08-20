@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "cases": [
+    {
+      "name": "Visible_EachStatusHasItsLevel",
+      "message": "Succès, échec et reprise sortent chacun au niveau que leur nature impose.",
+      "arguments": ["demarrage:ok;paiement:echec:delai;paiement:reprise;paiement:ok", "information"],
+      "expected": "INF demarrage terminé|ERR paiement en échec : delai|WRN paiement rejoué|INF paiement terminé",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Visible_ErrorThresholdKeepsOnlyFailures",
+      "message": "Au seuil error, seules les entrées d'échec traversent le puits.",
+      "arguments": ["demarrage:ok;paiement:echec:delai;paiement:reprise;paiement:ok", "error"],
+      "expected": "ERR paiement en échec : delai",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Visible_QuietRunRendersEmpty",
+      "message": "Un déroulé entièrement nominal sous seuil warning ne laisse aucune entrée.",
+      "arguments": ["import:ok;controle:ok", "warning"],
+      "expected": "(vide)",
+      "argumentsUnchanged": true
+    }
+  ]
+}

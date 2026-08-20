@@ -1,0 +1,1 @@
+Event=ServiceResolutionMismatch Level=Warning Contract=IGreeting ActualType=FormalGreeting ExpectedType=FrenchGreeting CorrelationId=dbg-di-001

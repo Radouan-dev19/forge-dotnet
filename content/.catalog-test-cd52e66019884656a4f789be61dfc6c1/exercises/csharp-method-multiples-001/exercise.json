@@ -1,0 +1,46 @@
+{
+  "schemaVersion": 1,
+  "id": "csharp-method-multiples-001",
+  "version": 1,
+  "title": "Compter les multiples d’une plage",
+  "kind": "csharp",
+  "difficulty": 2,
+  "skills": ["csharp.methods", "csharp.loops", "logic.edge-cases"],
+  "prerequisites": ["csharp-loop-range-sum-001"],
+  "estimatedMinutes": 30,
+  "statement": "statement.md",
+  "constraints": [
+    "Conserver exactement la signature publique demandée",
+    "Compter les bornes lorsqu’elles sont divisibles",
+    "Accepter un diviseur négatif avec la même règle de divisibilité",
+    "Refuser le diviseur zéro avec ArgumentOutOfRangeException"
+  ],
+  "examples": [
+    { "input": "[1,10,3]", "output": "3" },
+    { "input": "-4, 4, 2", "output": "5" },
+    { "input": "8, 3, 2", "output": "0" }
+  ],
+  "reflectionFields": ["reformulation", "inputs", "expectedOutput", "edgeCases", "hypothesis", "plan"],
+  "starterPath": "starter/",
+  "visibleTestsPath": "tests/visible/",
+  "hiddenTestsPath": "tests/hidden/",
+  "hints": [
+    { "level": 1, "kind": "socratic", "content": "Quel résultat de l’opérateur modulo indique qu’un entier est divisible par un autre ?" },
+    { "level": 2, "kind": "location", "content": "Valide divisor au début de CountMultiples, puis place le test de divisibilité dans la boucle." },
+    { "level": 3, "kind": "strategy", "content": "Parcours la plage inclusive et incrémente un compteur lorsque current % divisor vaut zéro." },
+    { "level": 4, "kind": "partial-pseudocode", "content": "si divisor == 0 lever erreur ; compteur = 0 ; pour chaque valeur incluse, si reste == 0 compteur++ ; retourner compteur" }
+  ],
+  "solution": { "path": "solution/", "unlock": { "seriousAttempts": 2, "minimumDelayMinutes": 10 } },
+  "explanation": "explanation.md",
+  "complexity": "O(n) en temps pour n valeurs et O(1) en espace",
+  "commonMistakes": [
+    "Diviser au lieu d’utiliser le reste modulo",
+    "Oublier la borne de fin",
+    "Traiter un diviseur négatif comme invalide sans que le contrat le demande",
+    "Laisser une division par zéro se produire indirectement"
+  ],
+  "variantId": "csharp-loop-range-sum-001",
+  "reviewCards": ["card-method-contract-001", "card-modulo-divisibility-001"],
+  "interviewQuestionId": "interview-method-multiples-001",
+  "license": "CC-BY-4.0"
+}

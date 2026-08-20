@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "id": "interview-tests-database-name-001",
+  "version": 1,
+  "title": "Reconnaître une base de test isolée",
+  "level": "intermediate",
+  "durationMinutes": 6,
+  "skills": [
+    "tests.integration"
+  ],
+  "question": "Comment implémenteriez-vous « Reconnaître une base de test isolée » et quelles preuves réfutent les contournements ?",
+  "observableCriteria": [
+    "Le préfixe réservé et l'unicité du suffixe sont exigés tous les deux",
+    "La comparaison ordinale est justifiée par l'indépendance vis-à-vis de la culture"
+  ],
+  "modelAnswer": "Exiger un préfixe réservé et un suffixe suffisamment unique, avec comparaison ordinale. Je teste un nom conforme, un préfixe manquant, un suffixe trop court et un préfixe dont seule la casse diffère. O(n) en temps et O(1) en espace.",
+  "commonMistakes": [
+    "Accepter un nom sans suffixe unique et faire partager la base à deux exécutions parallèles"
+  ],
+  "variants": [
+    "Changer la frontière ou le droit tout en conservant la règle de reconnaître une base de test isolée."
+  ],
+  "license": "CC-BY-4.0"
+}

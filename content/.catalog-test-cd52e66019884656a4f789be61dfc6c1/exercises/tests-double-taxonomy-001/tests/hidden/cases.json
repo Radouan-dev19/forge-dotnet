@@ -1,0 +1,54 @@
+{
+  "schemaVersion": 1,
+  "cases": [
+    {
+      "name": "Hidden_CannedOutgoingIsIncoherent",
+      "message": "Une réponse toute faite sur un flux sortant ne vérifie rien : le descriptif est refusé.",
+      "arguments": ["gateway:outgoing:canned"],
+      "expectedException": "ArgumentException",
+      "argumentsUnchanged": false
+    },
+    {
+      "name": "Hidden_ProtocolOnIncomingIsOverreach",
+      "message": "Vérifier le protocole d'une lecture cimente le nombre d'appels : sur-spécification refusée.",
+      "arguments": ["feed:incoming:protocol"],
+      "expectedException": "ArgumentException",
+      "argumentsUnchanged": false
+    },
+    {
+      "name": "Hidden_DuplicateDependencyIsRefused",
+      "message": "Deux doubles pour la même dépendance ne cohabitent pas dans un test.",
+      "arguments": ["cache:incoming:canned;cache:incoming:behavioural"],
+      "expectedException": "ArgumentException",
+      "argumentsUnchanged": false
+    },
+    {
+      "name": "Hidden_EmptyInventoryIsRefused",
+      "message": "Un descriptif vide ne prépare aucun test.",
+      "arguments": [""],
+      "expectedException": "ArgumentException",
+      "argumentsUnchanged": false
+    },
+    {
+      "name": "Hidden_FourDependenciesFourAssignments",
+      "message": "Un vrai test mélange les doubles : bouchon, simulations et espion cohabitent dans l'ordre d'entrée.",
+      "arguments": ["clock:incoming:canned;repo:incoming:behavioural;bus:outgoing:protocol;log:outgoing:state"],
+      "expected": "clock=stub;repo=fake;bus=spy;log=fake",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_TwoFieldEntryIsRefused",
+      "message": "Sans son contrat, une dépendance ne se classe pas.",
+      "arguments": ["clock:incoming"],
+      "expectedException": "ArgumentException",
+      "argumentsUnchanged": false
+    },
+    {
+      "name": "Hidden_BehaviouralIncomingAlone",
+      "message": "Une lecture à contrat de comportement se simule, même isolée.",
+      "arguments": ["catalog:incoming:behavioural"],
+      "expected": "catalog=fake",
+      "argumentsUnchanged": true
+    }
+  ]
+}

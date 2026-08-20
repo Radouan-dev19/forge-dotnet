@@ -1,0 +1,82 @@
+{
+    "schemaVersion":  1,
+    "id":  "debug-anomaly-count-001",
+    "version":  1,
+    "title":  "Compter des anomalies de seuil",
+    "kind":  "csharp",
+    "difficulty":  2,
+    "skills":  [
+                   "debugging.breakpoints"
+               ],
+    "prerequisites":  [
+                          "debug-stacktraces-breakpoints-001"
+                      ],
+    "estimatedMinutes":  30,
+    "statement":  "statement.md",
+    "constraints":  [
+                        "Conserver exactement la signature publique",
+                        "La borne est strictement dépassée et la valeur absolue est calculée dans un type plus large.",
+                        "Ne lire aucune source externe : les valeurs et le seuil sont fournis"
+                    ],
+    "examples":  [
+                     {
+                         "input":  "[[1,9,-10],8]",
+                         "output":  "2"
+                     }
+                 ],
+    "reflectionFields":  [
+                             "reformulation",
+                             "inputs",
+                             "expectedOutput",
+                             "edgeCases",
+                             "hypothesis",
+                             "plan"
+                         ],
+    "starterPath":  "starter/",
+    "visibleTestsPath":  "tests/visible/",
+    "hiddenTestsPath":  "tests/hidden/",
+    "hints":  [
+                  {
+                      "level":  1,
+                      "kind":  "socratic",
+                      "content":  "Quel invariant de « Compter des anomalies de seuil » doit rester vrai pour les cas limites ?"
+                  },
+                  {
+                      "level":  2,
+                      "kind":  "location",
+                      "content":  "Concentrez la décision dans la méthode AnomalyCount, sans état global."
+                  },
+                  {
+                      "level":  3,
+                      "kind":  "strategy",
+                      "content":  "La borne est strictement dépassée et Abs utilise long pour Int32.MinValue."
+                  },
+                  {
+                      "level":  4,
+                      "kind":  "partial-pseudocode",
+                      "content":  "compteur à zéro ; pour chaque valeur, prendre sa valeur absolue dans un type plus large que l'entrée, puis incrémenter seulement si elle dépasse strictement le seuil"
+                  }
+              ],
+    "solution":  {
+                     "path":  "solution/",
+                     "unlock":  {
+                                    "seriousAttempts":  2,
+                                    "minimumDelayMinutes":  10
+                                }
+                 },
+    "explanation":  "explanation.md",
+    "complexity":  "O(n) en temps et O(1) en espace",
+    "commonMistakes":  [
+                           "Prendre la valeur absolue dans le type d'origine et déborder sur la plus petite valeur signée",
+                           "Employer une comparaison large et compter une valeur exactement égale au seuil",
+                           "Compter les valeurs négatives sans passer par la valeur absolue",
+                           "Modifier le tableau reçu pendant le parcours"
+                       ],
+    "variantId":  "debug-correlation-count-001",
+    "reviewCards":  [
+                        "card-debug-anomaly-count-001-rule",
+                        "card-debug-anomaly-count-001-edge"
+                    ],
+    "interviewQuestionId":  "interview-debug-anomaly-count-001",
+    "license":  "CC-BY-4.0"
+}

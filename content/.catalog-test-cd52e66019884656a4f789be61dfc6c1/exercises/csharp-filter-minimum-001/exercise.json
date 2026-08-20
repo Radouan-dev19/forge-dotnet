@@ -1,0 +1,82 @@
+{
+    "schemaVersion":  1,
+    "id":  "csharp-filter-minimum-001",
+    "version":  1,
+    "title":  "Filtrer une collection",
+    "kind":  "csharp",
+    "difficulty":  2,
+    "skills":  [
+                   "csharp.linq"
+               ],
+    "prerequisites":  [
+                          "generics-delegates-001"
+                      ],
+    "estimatedMinutes":  30,
+    "statement":  "statement.md",
+    "constraints":  [
+                        "Conserver exactement la signature publique",
+                        "Préserver l’ordre d’entrée et inclure la borne.",
+                        "Ne pas modifier les entrées reçues sauf mention explicite"
+                    ],
+    "examples":  [
+                     {
+                         "input":  "[[1,3,2],2]",
+                         "output":  "[3,2]"
+                     }
+                 ],
+    "reflectionFields":  [
+                             "reformulation",
+                             "inputs",
+                             "expectedOutput",
+                             "edgeCases",
+                             "hypothesis",
+                             "plan"
+                         ],
+    "starterPath":  "starter/",
+    "visibleTestsPath":  "tests/visible/",
+    "hiddenTestsPath":  "tests/hidden/",
+    "hints":  [
+                  {
+                      "level":  1,
+                      "kind":  "socratic",
+                      "content":  "Quel invariant de « Filtrer une collection » doit rester vrai pour les cas limites ?"
+                  },
+                  {
+                      "level":  2,
+                      "kind":  "location",
+                      "content":  "Concentrez la décision dans la méthode AtLeast, sans état global."
+                  },
+                  {
+                      "level":  3,
+                      "kind":  "strategy",
+                      "content":  "Préserver l’ordre d’entrée et inclure la borne."
+                  },
+                  {
+                      "level":  4,
+                      "kind":  "partial-pseudocode",
+                      "content":  "si values est null lever ArgumentNullException ; conserver les éléments supérieurs ou égaux à minimum, dans l'ordre de lecture ; matérialiser le résultat en tableau"
+                  }
+              ],
+    "solution":  {
+                     "path":  "solution/",
+                     "unlock":  {
+                                    "seriousAttempts":  2,
+                                    "minimumDelayMinutes":  10
+                                }
+                 },
+    "explanation":  "explanation.md",
+    "complexity":  "O(n) en temps et O(n) en espace",
+    "commonMistakes":  [
+                           "Utiliser une comparaison stricte et exclure la borne annoncée inclusive",
+                           "Trier le résultat alors que le contrat conserve l'ordre d'entrée",
+                           "Retourner la séquence paresseuse sans la matérialiser",
+                           "Retirer les éléments du tableau reçu au lieu d'en produire un nouveau"
+                       ],
+    "variantId":  "csharp-average-001",
+    "reviewCards":  [
+                        "card-csharp-filter-minimum-001-rule",
+                        "card-csharp-filter-minimum-001-edge"
+                    ],
+    "interviewQuestionId":  "interview-csharp-filter-minimum-001",
+    "license":  "CC-BY-4.0"
+}

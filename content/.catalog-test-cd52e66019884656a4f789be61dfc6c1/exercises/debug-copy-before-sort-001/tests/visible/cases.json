@@ -1,0 +1,42 @@
+{
+    "schemaVersion":  1,
+    "cases":  [
+                  {
+                      "name":  "Visible_Case1",
+                      "message":  "Préserver les données observées — cas 1 visible incorrect.",
+                      "arguments":  [
+                                        [
+                                            3,
+                                            1
+                                        ]
+                                    ],
+                      "expected":  [
+                                       1,
+                                       3
+                                   ],
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Visible_Case2",
+                      "message":  "Préserver les données observées — cas 2 visible incorrect.",
+                      "arguments":  [
+                                        [
+
+                                        ]
+                                    ],
+                      "expected":  [
+
+                                   ],
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Visible_TwoElements",
+                      "message":  "Deux éléments à échanger, l'entrée devant rester intacte.",
+                      "arguments":  [[2,1]],
+                      "expected":  [1,2],
+                      "argumentsUnchanged":  true
+                  }
+              ]
+}

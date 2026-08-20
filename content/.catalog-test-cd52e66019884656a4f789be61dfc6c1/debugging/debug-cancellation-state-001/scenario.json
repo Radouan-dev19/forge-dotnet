@@ -1,0 +1,42 @@
+{
+    "schemaVersion":  1,
+    "id":  "debug-cancellation-state-001",
+    "version":  1,
+    "title":  "Traitements abandonnés comptés parmi les réussites",
+    "difficulty":  3,
+    "skills":  [
+                   "debugging.async"
+               ],
+    "prerequisites":  [
+                          "debug-stacktraces-breakpoints-001"
+                      ],
+    "estimatedMinutes":  40,
+    "brokenRepositoryPath":  "broken/",
+    "ticketPath":  "ticket.md",
+    "expectedBehavior":  "Trois issues distinctes sont possibles : mené à terme, interrompu avant la fin, en erreur. Chacune reçoit sa propre étiquette ; aucune n'est fondue dans une autre.",
+    "logsPath":  "logs.txt",
+    "checklist":  [
+                      "Reproduire avec le code d'un traitement interrompu",
+                      "Lister les codes possibles et l'étiquette attendue pour chacun",
+                      "Vérifier quelles branches capturent effectivement chaque code",
+                      "Ajouter les trois issues au jeu de non-régression"
+                  ],
+    "observationQuestions":  [
+                                 "Combien d'issues distinctes la classification produit-elle réellement ?",
+                                 "Quel code se retrouve rattaché à une issue qui n'est pas la sienne ?",
+                                 "Un traitement interrompu doit-il être compté avec les réussites ?"
+                             ],
+    "correctionPath":  "correction/",
+    "regressionTestPath":  "regression-test.md",
+    "journalFields":  [
+                          "symptom",
+                          "context",
+                          "hypotheses",
+                          "evidence",
+                          "cause",
+                          "fix",
+                          "test",
+                          "prevention"
+                      ],
+    "license":  "CC-BY-4.0"
+}

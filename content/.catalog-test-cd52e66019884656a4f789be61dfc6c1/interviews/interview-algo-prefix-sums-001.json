@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "id": "interview-algo-prefix-sums-001",
+  "version": 1,
+  "title": "Construire des sommes préfixes",
+  "level": "junior",
+  "durationMinutes": 5,
+  "skills": [
+    "algorithm.arrays"
+  ],
+  "question": "Comment résoudriez-vous « Construire des sommes préfixes » et comment prouveriez-vous les bornes ?",
+  "observableCriteria": [
+    "La convention d'inclusion est fixée : chaque case contient le préfixe se terminant à son index",
+    "L'usage attendu — une somme d'intervalle par soustraction — est mentionné"
+  ],
+  "modelAnswer": "Chaque case contient la somme du préfixe se terminant à cet index. Je prouve par le premier et le dernier index, un tableau à un élément et des valeurs négatives ; O(n) en temps et O(n) en espace.",
+  "commonMistakes": [
+    "Décaler la convention d'un rang et fausser toute somme d'intervalle calculée ensuite"
+  ],
+  "variants": [
+    "Changer une borne ou le volume tout en conservant la même règle de construire des sommes préfixes."
+  ],
+  "license": "CC-BY-4.0"
+}

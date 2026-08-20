@@ -1,0 +1,32 @@
+{
+    "schemaVersion":  1,
+    "cases":  [
+                  {
+                      "name":  "Visible_Case1",
+                      "message":  "Classer un âge valide — cas 1 visible incorrect.",
+                      "arguments":  [
+                                        17
+                                    ],
+                      "expected":  "minor",
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Visible_Case2",
+                      "message":  "Classer un âge valide — cas 2 visible incorrect.",
+                      "arguments":  [
+                                        18
+                                    ],
+                      "expected":  "adult",
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Visible_UpperAdultBound",
+                      "message":  "Dernier âge adulte : réfute une borne haute incluse à tort.",
+                      "arguments":  [64],
+                      "expected":  "adult",
+                      "argumentsUnchanged":  true
+                  }
+              ]
+}

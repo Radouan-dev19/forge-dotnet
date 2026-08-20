@@ -1,0 +1,82 @@
+{
+    "schemaVersion":  1,
+    "id":  "azure-incident-brief-001",
+    "version":  1,
+    "title":  "Structurer un bref dʼincident en anglais",
+    "kind":  "csharp",
+    "difficulty":  3,
+    "skills":  [
+                   "english.incident"
+               ],
+    "prerequisites":  [
+                          "final-defense-english-001"
+                      ],
+    "estimatedMinutes":  40,
+    "statement":  "statement.md",
+    "constraints":  [
+                        "Conserver exactement la signature publique",
+                        "Un bref est prêt seulement s'il nomme l'impact, cite une preuve et attribue la prochaine action.",
+                        "N'interroger aucune source distante : les trois éléments sont fournis"
+                    ],
+    "examples":  [
+                     {
+                         "input":  "[true,true,true]",
+                         "output":  "\"ready\""
+                     }
+                 ],
+    "reflectionFields":  [
+                             "reformulation",
+                             "inputs",
+                             "expectedOutput",
+                             "edgeCases",
+                             "hypothesis",
+                             "plan"
+                         ],
+    "starterPath":  "starter/",
+    "visibleTestsPath":  "tests/visible/",
+    "hiddenTestsPath":  "tests/hidden/",
+    "hints":  [
+                  {
+                      "level":  1,
+                      "kind":  "socratic",
+                      "content":  "Quelle condition publique de « Structurer un bref dʼincident en anglais » doit faire changer le résultat ?"
+                  },
+                  {
+                      "level":  2,
+                      "kind":  "location",
+                      "content":  "Concentrez la validation et la décision dans IncidentBriefStatus, sans réseau ni état global."
+                  },
+                  {
+                      "level":  3,
+                      "kind":  "strategy",
+                      "content":  "Un bref est prêt seulement sʼil nomme lʼimpact, cite une preuve et attribue la prochaine action."
+                  },
+                  {
+                      "level":  4,
+                      "kind":  "partial-pseudocode",
+                      "content":  "exiger les trois éléments ensemble : l'impact nommé, une preuve citée et la prochaine action attribuée ; l'absence d'un seul rend le bref incomplet"
+                  }
+              ],
+    "solution":  {
+                     "path":  "solution/",
+                     "unlock":  {
+                                    "seriousAttempts":  2,
+                                    "minimumDelayMinutes":  10
+                                }
+                 },
+    "explanation":  "explanation.md",
+    "complexity":  "O(1) en temps et O(1) en espace",
+    "commonMistakes":  [
+                           "Considérer prêt un bref qui décrit sans citer aucune preuve",
+                           "Omettre l'attribution de la prochaine action et produire un document sans effet",
+                           "Remplacer l'impact par une excuse",
+                           "Traiter les trois éléments comme alternatifs plutôt que cumulatifs"
+                       ],
+    "variantId":  "azure-incident-digest-001",
+    "reviewCards":  [
+                        "card-azure-incident-brief-001-rule",
+                        "card-azure-incident-brief-001-proof"
+                    ],
+    "interviewQuestionId":  "interview-azure-incident-brief-001",
+    "license":  "CC-BY-4.0"
+}

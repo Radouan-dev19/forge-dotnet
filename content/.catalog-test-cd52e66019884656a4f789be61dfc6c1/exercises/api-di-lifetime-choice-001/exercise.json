@@ -1,0 +1,82 @@
+{
+    "schemaVersion":  1,
+    "id":  "api-di-lifetime-choice-001",
+    "version":  1,
+    "title":  "Choisir une durée de vie DI",
+    "kind":  "csharp",
+    "difficulty":  2,
+    "skills":  [
+                   "api.di"
+               ],
+    "prerequisites":  [
+                          "api-validation-problem-details-001"
+                      ],
+    "estimatedMinutes":  35,
+    "statement":  "statement.md",
+    "constraints":  [
+                        "Conserver exactement la signature publique",
+                        "L'état de requête impose la durée courte ; un service partagé doit être explicitement sans état.",
+                        "Ne dépendre d'aucun conteneur d'injection : la décision se déduit des seuls indicateurs"
+                    ],
+    "examples":  [
+                     {
+                         "input":  "[true,false]",
+                         "output":  "\"scoped\""
+                     }
+                 ],
+    "reflectionFields":  [
+                             "reformulation",
+                             "inputs",
+                             "expectedOutput",
+                             "edgeCases",
+                             "hypothesis",
+                             "plan"
+                         ],
+    "starterPath":  "starter/",
+    "visibleTestsPath":  "tests/visible/",
+    "hiddenTestsPath":  "tests/hidden/",
+    "hints":  [
+                  {
+                      "level":  1,
+                      "kind":  "socratic",
+                      "content":  "Quel comportement public de « Choisir une durée de vie DI » change exactement à la frontière ?"
+                  },
+                  {
+                      "level":  2,
+                      "kind":  "location",
+                      "content":  "Concentrez la validation et la décision dans LifetimeFor, sans état global ni journal sensible."
+                  },
+                  {
+                      "level":  3,
+                      "kind":  "strategy",
+                      "content":  "L’état de requête impose scoped ; un service partagé doit être explicitement sans état."
+                  },
+                  {
+                      "level":  4,
+                      "kind":  "partial-pseudocode",
+                      "content":  "poser d'abord la question de l'état de requête : s'il est porté, la durée est celle de la requête ; sinon, un service à la fois sans état et partageable prend une instance unique, et tout le reste prend une instance par résolution"
+                  }
+              ],
+    "solution":  {
+                     "path":  "solution/",
+                     "unlock":  {
+                                    "seriousAttempts":  2,
+                                    "minimumDelayMinutes":  10
+                                }
+                 },
+    "explanation":  "explanation.md",
+    "complexity":  "O(1) en temps et O(1) en espace",
+    "commonMistakes":  [
+                           "Évaluer le partage avant l'état de requête et produire une dépendance captive",
+                           "Choisir l'instance unique pour un service qui porte un état mutable",
+                           "Traiter les deux indicateurs comme indépendants alors que le premier prime",
+                           "Retenir l'instance par résolution comme choix universel et perdre le bénéfice du partage"
+                       ],
+    "variantId":  "api-di-lifetime-analysis-001",
+    "reviewCards":  [
+                        "card-api-di-lifetime-choice-001-rule",
+                        "card-api-di-lifetime-choice-001-security"
+                    ],
+    "interviewQuestionId":  "interview-api-di-lifetime-choice-001",
+    "license":  "CC-BY-4.0"
+}

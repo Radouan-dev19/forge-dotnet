@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "cases": [
+    {
+      "name": "Visible_MonthReachingThresholdEarnsBonus",
+      "message": "Deux achats du même mois totalisent cent cinq : le mois rapporte vingt points.",
+      "arguments": ["2026-07-01:60.00;2026-07-15:45.00", "2026-08-15"],
+      "expected": 20,
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Visible_SplitAcrossMonthsEarnsNothing",
+      "message": "Les mêmes montants répartis sur deux mois ne franchissent le seuil nulle part.",
+      "arguments": ["2026-07-01:60.00;2026-06-15:45.00", "2026-08-15"],
+      "expected": 0,
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Visible_ExactThresholdTriggersTheBonus",
+      "message": "Le seuil exactement atteint déclenche le bonus.",
+      "arguments": ["2026-05-01:100.00", "2026-08-15"],
+      "expected": 20,
+      "argumentsUnchanged": true
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "suiteId": "api-di-lifetime-analysis-001.v1",
+  "exerciseId": "api-di-lifetime-analysis-001",
+  "exerciseVersion": 1,
+  "typeName": "Submission",
+  "methodName": "RecommendedLifetime",
+  "parameterTypes": ["string"],
+  "returnType": "string"
+}

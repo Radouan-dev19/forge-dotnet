@@ -1,0 +1,45 @@
+{
+    "schemaVersion":  1,
+    "cases":  [
+                  {
+                      "name":  "Hidden_Case1",
+                      "message":  "Lire un stock absent — cas 1 hidden incorrect.",
+                      "arguments":  [
+                                        {
+
+                                        },
+                                        "pen"
+                                    ],
+                      "expected":  0,
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_Case2",
+                      "message":  "Lire un stock absent — cas 2 hidden incorrect.",
+                      "arguments":  [
+                                        {
+                                            "pen":  3
+                                        },
+                                        " "
+                                    ],
+                      "expected":  0,
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_NullDictionary",
+                      "message":  "Dictionnaire absent : refus explicite, distinct d'une clé introuvable.",
+                      "arguments":  [null,"pen"],
+                      "expectedException":  "ArgumentNullException",
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_CaseSensitiveKey",
+                      "message":  "Clé de casse différente : la recherche est ordinale, donc introuvable.",
+                      "arguments":  [{"pen":3},"PEN"],
+                      "expected":  0,
+                      "argumentsUnchanged":  true
+                  }
+              ]
+}

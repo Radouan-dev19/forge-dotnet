@@ -1,0 +1,82 @@
+{
+    "schemaVersion":  1,
+    "id":  "quality-null-guard-001",
+    "version":  1,
+    "title":  "Rendre une garde nullable explicite",
+    "kind":  "csharp",
+    "difficulty":  2,
+    "skills":  [
+                   "quality.analysis"
+               ],
+    "prerequisites":  [
+                          "quality-regression-refactoring-001"
+                      ],
+    "estimatedMinutes":  35,
+    "statement":  "statement.md",
+    "constraints":  [
+                        "Conserver exactement la signature publique",
+                        "Traiter absence et blanc avant toute déréférence, sans opérateur de suppression.",
+                        "N'employer aucun opérateur affirmant une non-nullité que rien ne garantit"
+                    ],
+    "examples":  [
+                     {
+                         "input":  "[\" value \"]",
+                         "output":  "\"value\""
+                     }
+                 ],
+    "reflectionFields":  [
+                             "reformulation",
+                             "inputs",
+                             "expectedOutput",
+                             "edgeCases",
+                             "hypothesis",
+                             "plan"
+                         ],
+    "starterPath":  "starter/",
+    "visibleTestsPath":  "tests/visible/",
+    "hiddenTestsPath":  "tests/hidden/",
+    "hints":  [
+                  {
+                      "level":  1,
+                      "kind":  "socratic",
+                      "content":  "Quel comportement public de « Rendre une garde nullable explicite » change exactement à la frontière ?"
+                  },
+                  {
+                      "level":  2,
+                      "kind":  "location",
+                      "content":  "Concentrez la validation et la décision dans NormalizeOptional, sans état global ni journal sensible."
+                  },
+                  {
+                      "level":  3,
+                      "kind":  "strategy",
+                      "content":  "Traiter absence et blanc avant toute déréférence, sans opérateur de suppression."
+                  },
+                  {
+                      "level":  4,
+                      "kind":  "partial-pseudocode",
+                      "content":  "traiter ensemble, en tête de méthode, la valeur absente, la chaîne vide et la chaîne de blancs, en retournant le repli ; sinon retirer les blancs de bordure et retourner la valeur normalisée"
+                  }
+              ],
+    "solution":  {
+                     "path":  "solution/",
+                     "unlock":  {
+                                    "seriousAttempts":  2,
+                                    "minimumDelayMinutes":  10
+                                }
+                 },
+    "explanation":  "explanation.md",
+    "complexity":  "O(n) en temps et O(n) en espace",
+    "commonMistakes":  [
+                           "Affirmer la non-nullité par un opérateur au lieu d'écrire une garde",
+                           "Traiter l'absence sans traiter la chaîne de blancs, qui passe alors pour une valeur",
+                           "Retourner le repli sans avoir retiré les blancs sur le chemin nominal",
+                           "Lever sur une absence que le contrat prévoit de replier"
+                       ],
+    "variantId":  "quality-regression-bounds-001",
+    "reviewCards":  [
+                        "card-quality-null-guard-001-rule",
+                        "card-quality-null-guard-001-security"
+                    ],
+    "interviewQuestionId":  "interview-quality-null-guard-001",
+    "license":  "CC-BY-4.0"
+}

@@ -1,0 +1,36 @@
+{
+    "schemaVersion":  1,
+    "id":  "senior-boundaries-001",
+    "version":  1,
+    "title":  "Découper ou non : le refus argumenté",
+    "week":  29,
+    "skills":  [
+                   {
+                       "id":  "quality.boundaries",
+                       "weight":  1
+                   }
+               ],
+    "prerequisites":  [
+                          "senior-consistency-001"
+                      ],
+    "estimatedMinutes":  75,
+    "objectives":  [
+                       "Justifier le coût d'un déployable supplémentaire, situer une vraie frontière de service, et rédiger une note de décision qui refuse un découpage prématuré"
+                   ],
+    "sections":  [
+                     "intuition",
+                     "explanation",
+                     "example",
+                     "counterExample",
+                     "check",
+                     "guided",
+                     "independent",
+                     "debugging",
+                     "interview",
+                     "summary",
+                     "reviewCards",
+                     "masteryTest"
+                 ],
+    "markdownPath":  "lesson.md",
+    "license":  "CC-BY-4.0"
+}

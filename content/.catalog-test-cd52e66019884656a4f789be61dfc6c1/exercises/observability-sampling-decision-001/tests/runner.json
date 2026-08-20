@@ -1,0 +1,10 @@
+{
+    "schemaVersion":  1,
+    "suiteId":  "observability-sampling-decision-001.v1",
+    "exerciseId":  "observability-sampling-decision-001",
+    "exerciseVersion":  1,
+    "typeName":  "Submission",
+    "methodName":  "ShouldSample",
+    "parameterTypes":  ["int", "int", "bool"],
+    "returnType":  "bool"
+}

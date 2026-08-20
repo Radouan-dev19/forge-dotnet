@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "id": "interview-front-route-guard-001",
+  "version": 1,
+  "title": "Autoriser l'accès à une route depuis un jeton",
+  "level": "advanced",
+  "durationMinutes": 10,
+  "skills": [
+    "security.token"
+  ],
+  "question": "Un garde de route lit un JWT pour décider d'un accès. Quelles issues distinguez-vous, et pourquoi ce garde ne devrait-il pas revérifier la signature du jeton ?",
+  "observableCriteria": [
+    "Sépare l'accès autorisé, l'accès interdit et la redirection vers la connexion selon le profil du porteur",
+    "Explique que la validation de signature se fait en amont et que la refaire ici mélange les responsabilités",
+    "Insiste sur la comparaison exacte des droits et sur le traitement uniforme des jetons illisibles"
+  ],
+  "modelAnswer": "Je distingue trois issues. Laisser passer vaut pour un utilisateur authentifié qui possède le droit exigé. Interdire vaut pour un utilisateur authentifié à qui ce droit manque : il est connu, mais cette porte ne lui est pas ouverte, et le renvoyer vers la connexion ne changerait rien. Rediriger vers la connexion vaut pour un porteur que je ne peux pas authentifier, qu'il s'agisse d'un jeton absent, illisible ou expiré ; toutes ces défaillances convergent vers la même issue plutôt que de remonter en erreur. Sur la signature, je pars du principe qu'elle a déjà été validée par une couche dédiée, en amont : la refaire dans le garde mélangerait deux responsabilités et risquerait de diverger de la référence. Le garde se concentre sur les revendications d'un jeton déjà réputé intègre. Enfin, je compare les droits à l'identique et non par préfixe, sinon un droit voisin comme orders.readonly satisferait à tort orders.read, et je considère expiré un jeton dont l'instant d'expiration égale l'instant courant.",
+  "commonMistakes": [
+    "Rediriger vers la connexion un utilisateur déjà authentifié à qui il ne manque qu'un droit",
+    "Valider la signature dans le garde et dupliquer une responsabilité qui appartient à la couche amont"
+  ],
+  "variants": [
+    "Comment éviteriez-vous qu'un jeton révoqué avant son expiration reste accepté par ce garde ?",
+    "Que changeriez-vous pour supporter une hiérarchie de droits où un droit large en implique de plus fins ?"
+  ],
+  "license": "CC-BY-4.0"
+}

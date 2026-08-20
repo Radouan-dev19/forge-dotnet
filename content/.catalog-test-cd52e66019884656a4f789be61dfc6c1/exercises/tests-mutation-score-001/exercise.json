@@ -1,0 +1,83 @@
+{
+  "schemaVersion": 1,
+  "id": "tests-mutation-score-001",
+  "version": 1,
+  "title": "Compter les mutants de borne qui survivent à une suite",
+  "kind": "csharp",
+  "difficulty": 3,
+  "skills": ["tests.mutation"],
+  "prerequisites": ["tests-boundaries-theories-001"],
+  "estimatedMinutes": 35,
+  "statement": "statement.md",
+  "constraints": [
+    "Conserver exactement la signature publique",
+    "Un mutant impossible à exprimer dans le type est équivalent et ne compte jamais comme survivant",
+    "Aucun calcul de voisin ne doit déborder quand une borne touche une limite du type",
+    "Un intervalle vide est refusé avant tout comptage"
+  ],
+  "examples": [
+    {
+      "input": "[0, 1, 100, 101], 1, 100",
+      "output": "0"
+    },
+    {
+      "input": "[50], 1, 100",
+      "output": "4"
+    }
+  ],
+  "reflectionFields": [
+    "reformulation",
+    "inputs",
+    "expectedOutput",
+    "edgeCases",
+    "hypothesis",
+    "plan"
+  ],
+  "starterPath": "starter/",
+  "visibleTestsPath": "tests/visible/",
+  "hiddenTestsPath": "tests/hidden/",
+  "hints": [
+    {
+      "level": 1,
+      "kind": "socratic",
+      "content": "Votre suite vérifie dix valeurs prises au milieu de l'intervalle et elle est verte. Si quelqu'un remplace la comparaison large de la borne basse par une comparaison stricte, laquelle de ces dix valeurs s'en apercevrait ?"
+    },
+    {
+      "level": 2,
+      "kind": "location",
+      "content": "Chacun des quatre mutants ne se distingue de la règle d'origine que sur une seule et unique valeur d'entrée. Commencez par nommer cette valeur pour chaque mutant : le reste du problème devient un simple test d'appartenance."
+    },
+    {
+      "level": 3,
+      "kind": "strategy",
+      "content": "Un mutant meurt si sa valeur distinctive figure parmi les sondes. Quand cette valeur devrait exister au-delà d'une limite du type, le mutant est indiscernable de la règle : classez-le équivalent au lieu de le compter."
+    },
+    {
+      "level": 4,
+      "kind": "partial-pseudocode",
+      "content": "refuser l'intervalle dont la borne basse dépasse la haute ; examiner le mutant qui durcit la borne basse : survivant si la borne basse n'est pas sondée ; examiner celui qui l'élargit : équivalent si la valeur d'en dessous n'existe pas dans le type, survivant sinon quand elle n'est pas sondée ; refaire les deux examens du côté haut ; rendre le total des survivants"
+    }
+  ],
+  "solution": {
+    "path": "solution/",
+    "unlock": {
+      "seriousAttempts": 2,
+      "minimumDelayMinutes": 10
+    }
+  },
+  "explanation": "explanation.md",
+  "complexity": "O(n) en temps pour n sondes et O(1) en espace : quatre mutants au plus sont examinés",
+  "commonMistakes": [
+    "Calculer la valeur voisine d'une borne en int et déborder quand elle touche une limite du type",
+    "Compter comme survivant un mutant équivalent qu'aucune entrée ne peut distinguer de la règle",
+    "Ne créditer qu'un seul mutant tué quand les deux bornes confondues partagent la même valeur distinctive",
+    "Croire qu'une valeur du milieu de l'intervalle contribue au score de mutation des bornes"
+  ],
+  "variantId": "tests-boundary-probe-001",
+  "reviewCards": [
+    "card-tests-mutation-score-001-rule",
+    "card-tests-mutation-score-001-edge"
+  ],
+  "interviewQuestionId": "interview-tests-mutation-score-001",
+  "license": "CC-BY-4.0"
+}

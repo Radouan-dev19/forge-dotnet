@@ -1,0 +1,83 @@
+{
+  "schemaVersion": 1,
+  "id": "senior-breaker-window-001",
+  "version": 1,
+  "title": "Décider la transition d'un disjoncteur depuis sa fenêtre mesurée",
+  "kind": "csharp",
+  "difficulty": 4,
+  "skills": ["quality.resilience"],
+  "prerequisites": [],
+  "estimatedMinutes": 45,
+  "statement": "statement.md",
+  "constraints": [
+    "Conserver exactement la signature publique",
+    "Une fenêtre sous le minimum d'appels ne déclenche jamais l'ouverture, quel que soit son taux",
+    "Le taux se compare en produits d'entiers larges, jamais en pourcentage flottant",
+    "Chaque état exige exactement ses mesures : une mesure d'un autre état est un relevé corrompu"
+  ],
+  "examples": [
+    {
+      "input": "state=closed;calls=50;failures=26;minimum-calls=20;max-rate=50",
+      "output": "open|rate-exceeded"
+    },
+    {
+      "input": "state=open;elapsed=30;cooldown=30",
+      "output": "half-open|probe-allowed"
+    }
+  ],
+  "reflectionFields": [
+    "reformulation",
+    "inputs",
+    "expectedOutput",
+    "edgeCases",
+    "hypothesis",
+    "plan"
+  ],
+  "starterPath": "starter/",
+  "visibleTestsPath": "tests/visible/",
+  "hiddenTestsPath": "tests/hidden/",
+  "hints": [
+    {
+      "level": 1,
+      "kind": "socratic",
+      "content": "Deux appels, deux échecs : cent pour cent d'échec. Faut-il couper le service pour autant — et que dirait la même proportion mesurée sur deux mille appels ?"
+    },
+    {
+      "level": 2,
+      "kind": "location",
+      "content": "L'état courant choisit la règle : la fenêtre fermée juge un volume et un taux, l'état ouvert juge un refroidissement écoulé, le demi-ouvert juge des sondes. Analysez l'état d'abord, exigez ensuite les seules mesures de cet état."
+    },
+    {
+      "level": 3,
+      "kind": "strategy",
+      "content": "Dans la fenêtre fermée, deux gardes se posent dans l'ordre : le volume minimal d'abord — un taux sur trois appels ne prouve rien — puis le taux en produits croisés d'entiers larges, strictement au-delà du maximum toléré."
+    },
+    {
+      "level": 4,
+      "kind": "partial-pseudocode",
+      "content": "analyser les paires et l'état, refuser mesures manquantes, étrangères, répétées ou incohérentes ; en fermé : rendre l'insuffisance sous le volume minimal, l'ouverture quand le produit échecs fois cent dépasse strictement le produit taux fois appels, la bonne santé sinon ; en ouvert : comparer l'écoulé au refroidissement ; en demi-ouvert : rouvrir sur tout échec de sonde, fermer quand les sondes exigées sont passées, patienter sinon"
+    }
+  ],
+  "solution": {
+    "path": "solution/",
+    "unlock": {
+      "seriousAttempts": 2,
+      "minimumDelayMinutes": 10
+    }
+  },
+  "explanation": "explanation.md",
+  "complexity": "O(1) en temps et en espace : une poignée de mesures analysées puis une cascade par état",
+  "commonMistakes": [
+    "Ouvrir sur un taux calculé sur trois appels, sans garde de volume minimal",
+    "Comparer un pourcentage flottant au taux maximal et laisser l'arrondi décider de l'ouverture",
+    "Fermer depuis le demi-ouvert malgré une sonde en échec parce que le compte de sondes est atteint",
+    "Accepter les mesures d'un autre état et rendre une décision sur un relevé qui n'a pas de sens"
+  ],
+  "variantId": "senior-retry-jitter-001",
+  "reviewCards": [
+    "card-senior-breaker-window-001-rule",
+    "card-senior-breaker-window-001-edge"
+  ],
+  "interviewQuestionId": "interview-senior-breaker-window-001",
+  "license": "CC-BY-4.0"
+}

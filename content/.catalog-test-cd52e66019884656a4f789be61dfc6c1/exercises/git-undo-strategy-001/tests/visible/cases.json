@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "cases": [
+    {
+      "name": "Visible_PublishedCommitIsReverted",
+      "message": "Publié : seule l'annulation par commit inverse ne réécrit rien.",
+      "arguments": [1, true, false],
+      "expected": "revert",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Visible_LocalWorkIsKept",
+      "message": "Local, travail à recommitter autrement : le retrait doux le ramène dans la copie.",
+      "arguments": [2, false, true],
+      "expected": "reset-soft",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Visible_LocalWorkIsDiscarded",
+      "message": "Local, travail à jeter : le retrait dur, et il ne se rattrape pas.",
+      "arguments": [1, false, false],
+      "expected": "reset-hard",
+      "argumentsUnchanged": true
+    }
+  ]
+}

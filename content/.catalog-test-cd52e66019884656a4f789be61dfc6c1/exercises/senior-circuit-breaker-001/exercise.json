@@ -1,0 +1,80 @@
+{
+  "schemaVersion": 1,
+  "id": "senior-circuit-breaker-001",
+  "version": 1,
+  "title": "Faire avancer l'automate d'un disjoncteur",
+  "kind": "csharp",
+  "difficulty": 4,
+  "skills": [
+    "quality.resilience"
+  ],
+  "prerequisites": [],
+  "estimatedMinutes": 45,
+  "statement": "statement.md",
+  "constraints": [
+    "Conserver exactement la signature publique",
+    "L'etat open ignore les jetons ok et fail jusqu'a un tick",
+    "Un echec en essai probatoire rouvre le circuit sans attendre le seuil"
+  ],
+  "examples": [
+    {
+      "input": "[\"fail;fail;fail\"]",
+      "output": "\"open\""
+    }
+  ],
+  "reflectionFields": [
+    "reformulation",
+    "inputs",
+    "expectedOutput",
+    "edgeCases",
+    "hypothesis",
+    "plan"
+  ],
+  "starterPath": "starter/",
+  "visibleTestsPath": "tests/visible/",
+  "hiddenTestsPath": "tests/hidden/",
+  "hints": [
+    {
+      "level": 1,
+      "kind": "socratic",
+      "content": "Que doit prouver un unique essai apres l'ouverture avant qu'on ose refermer le circuit, et que se passe-t-il si cet essai echoue ?"
+    },
+    {
+      "level": 2,
+      "kind": "location",
+      "content": "Le comportement d'un jeton depend de l'etat courant ; traitez separement la branche closed, la branche half-open et l'etat open qui reste passif."
+    },
+    {
+      "level": 3,
+      "kind": "strategy",
+      "content": "Tenez un etat et un compteur d'echecs ; le compteur ne compte que dans l'etat closed, et chaque transition qui change d'etat remet ce compteur a zero."
+    },
+    {
+      "level": 4,
+      "kind": "partial-pseudocode",
+      "content": "partir de state closed et fails a zero ; pour chaque jeton de events decoupe sur le point-virgule : sur fail depuis half-open passer a open, sinon depuis closed incrementer fails et passer a open au seuil ; sur ok depuis half-open revenir a closed, sinon depuis closed annuler fails ; sur tick depuis open passer a half-open ; rendre l'etat final"
+    }
+  ],
+  "solution": {
+    "path": "solution/",
+    "unlock": {
+      "seriousAttempts": 2,
+      "minimumDelayMinutes": 10
+    }
+  },
+  "explanation": "explanation.md",
+  "complexity": "O(n) en temps, n etant le nombre de jetons de la trace",
+  "commonMistakes": [
+    "Traiter un echec probatoire comme un echec ordinaire au lieu de rouvrir aussitot le circuit",
+    "Oublier de remettre le compteur d'echecs a zero apres une ouverture ou une fermeture",
+    "Laisser l'etat open reagir a un ok ou un fail alors que seul un tick le fait evoluer",
+    "Compter les echecs dans tous les etats plutot que dans le seul etat closed"
+  ],
+  "variantId": "senior-consumer-decision-001",
+  "reviewCards": [
+    "card-senior-circuit-breaker-001-rule",
+    "card-senior-circuit-breaker-001-edge"
+  ],
+  "interviewQuestionId": "interview-senior-circuit-breaker-001",
+  "license": "CC-BY-4.0"
+}

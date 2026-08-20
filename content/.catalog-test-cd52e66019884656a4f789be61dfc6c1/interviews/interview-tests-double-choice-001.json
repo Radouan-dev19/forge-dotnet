@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "id": "interview-tests-double-choice-001",
+  "version": 1,
+  "title": "Choisir un double de test",
+  "level": "intermediate",
+  "durationMinutes": 6,
+  "skills": [
+    "tests.doubles"
+  ],
+  "question": "Comment implémenteriez-vous « Choisir un double de test » et quelles preuves réfutent les contournements ?",
+  "observableCriteria": [
+    "Les trois doubles sont rattachés à ce qu'on cherche à vérifier, non à leur nom",
+    "L'interaction est distinguée de l'état comme objet de la vérification"
+  ],
+  "modelAnswer": "Choisir spy pour l’interaction, fake pour le comportement et stub pour une réponse. Je teste les trois intentions distinctement, puis un cas ambigu où deux doubles conviendraient, pour montrer ce qui tranche. O(1) en temps et O(1) en espace.",
+  "commonMistakes": [
+    "Vérifier une interaction avec un double qui ne l'enregistre pas"
+  ],
+  "variants": [
+    "Changer la frontière ou le droit tout en conservant la règle de choisir un double de test."
+  ],
+  "license": "CC-BY-4.0"
+}

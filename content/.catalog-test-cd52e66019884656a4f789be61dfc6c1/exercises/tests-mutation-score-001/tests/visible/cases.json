@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "cases": [
+    {
+      "name": "Visible_FullBoundarySuiteKillsEveryMutant",
+      "message": "Les deux bornes et leurs deux voisines extérieures tuent chacune un mutant : aucun ne survit.",
+      "arguments": [[0, 1, 100, 101], 1, 100],
+      "expected": 0,
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Visible_MiddleValueKillsNothing",
+      "message": "Une valeur du milieu obtient la même réponse de la règle et des quatre mutants : elle ne réfute rien.",
+      "arguments": [[50], 1, 100],
+      "expected": 4,
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Visible_BoundsAloneLetTheLooseningsLive",
+      "message": "Sonder les bornes tue les deux durcissements, mais les deux élargissements restent indétectés.",
+      "arguments": [[1, 100], 1, 100],
+      "expected": 2,
+      "argumentsUnchanged": true
+    }
+  ]
+}

@@ -1,0 +1,83 @@
+{
+  "schemaVersion": 1,
+  "id": "docker-hardening-audit-001",
+  "version": 1,
+  "title": "Relever les écarts de durcissement d'une configuration de conteneur",
+  "kind": "csharp",
+  "difficulty": 3,
+  "skills": ["docker.hardening"],
+  "prerequisites": ["docker-runtime-security-001"],
+  "estimatedMinutes": 35,
+  "statement": "statement.md",
+  "constraints": [
+    "Conserver exactement la signature publique",
+    "Les écarts sortent triés par gravité décroissante, puis dans l'ordre du référentiel",
+    "Une configuration conforme rend le mot réservé de conformité",
+    "Les cinq réglages arrivent dans un ordre quelconque et chacun est obligatoire"
+  ],
+  "examples": [
+    {
+      "input": "user=app;filesystem=read-only;escalation=blocked;capabilities=dropped;network=bridge",
+      "output": "compliant"
+    },
+    {
+      "input": "user=root;filesystem=read-only;escalation=blocked;capabilities=dropped;network=bridge",
+      "output": "root-user=critical"
+    }
+  ],
+  "reflectionFields": [
+    "reformulation",
+    "inputs",
+    "expectedOutput",
+    "edgeCases",
+    "hypothesis",
+    "plan"
+  ],
+  "starterPath": "starter/",
+  "visibleTestsPath": "tests/visible/",
+  "hiddenTestsPath": "tests/hidden/",
+  "hints": [
+    {
+      "level": 1,
+      "kind": "socratic",
+      "content": "Un correctif de sécurité liste dix-sept écarts sans gravité : lequel l'équipe corrige-t-elle ce soir, lequel attend le sprint prochain ? Que manque-t-il à cette liste pour devenir un plan ?"
+    },
+    {
+      "level": 2,
+      "kind": "location",
+      "content": "L'audit se joue en deux temps disjoints : valider les cinq réglages — présents une fois chacun, valeurs du vocabulaire — puis confronter chaque réglage à sa valeur durcie et collecter l'écart avec la gravité du référentiel."
+    },
+    {
+      "level": 3,
+      "kind": "strategy",
+      "content": "Le référentiel est une liste ordonnée d'écarts possibles, du plus grave au moins grave : parcourez-la dans son ordre plutôt que dans l'ordre d'entrée, et la sortie sera triée par construction, sans tri explicite."
+    },
+    {
+      "level": 4,
+      "kind": "partial-pseudocode",
+      "content": "analyser les cinq réglages en refusant doublon, absence et valeur inconnue ; parcourir le référentiel ordonné des écarts — identité, élévation, réseau, capacités, système de fichiers — et collecter chaque réglage non durci avec sa gravité ; rendre le mot de conformité si rien n'est collecté, sinon joindre les écarts"
+    }
+  ],
+  "solution": {
+    "path": "solution/",
+    "unlock": {
+      "seriousAttempts": 2,
+      "minimumDelayMinutes": 10
+    }
+  },
+  "explanation": "explanation.md",
+  "complexity": "O(1) en temps et en espace : cinq réglages confrontés à un référentiel fixe",
+  "commonMistakes": [
+    "Rendre les écarts dans l'ordre d'entrée et produire un relevé instable d'un audit à l'autre",
+    "S'arrêter au premier écart critique alors que le plan de correction a besoin du relevé complet",
+    "Traiter un réglage manquant comme durci par défaut au lieu de refuser la configuration",
+    "Donner la même gravité à tous les écarts et priver l'équipe de l'ordre de correction"
+  ],
+  "variantId": "docker-hardening-policy-001",
+  "reviewCards": [
+    "card-docker-hardening-audit-001-rule",
+    "card-docker-hardening-audit-001-edge"
+  ],
+  "interviewQuestionId": "interview-docker-hardening-audit-001",
+  "license": "CC-BY-4.0"
+}

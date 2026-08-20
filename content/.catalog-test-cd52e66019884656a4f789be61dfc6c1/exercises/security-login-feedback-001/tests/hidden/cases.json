@@ -1,0 +1,54 @@
+{
+  "schemaVersion": 1,
+  "cases": [
+    {
+      "name": "Hidden_LockBeatsCorrectPassword",
+      "message": "Même le bon mot de passe ne connecte pas un compte verrouillé, et le public n'en saura rien.",
+      "arguments": ["password=correct;account=known;state=locked"],
+      "expected": "invalid-credentials|locked-account",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_ExpiryIsNamedAfterProof",
+      "message": "Le mot de passe correct mais périmé se nomme publiquement : l'appelant a prouvé qu'il est titulaire.",
+      "arguments": ["account=known;password=expired;state=active"],
+      "expected": "password-expired|expired-password",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_UnknownAccountPrimesEverything",
+      "message": "Compte inconnu : ni le mot de passe ni le verrou n'ont voix au chapitre.",
+      "arguments": ["account=unknown;password=correct;state=locked"],
+      "expected": "invalid-credentials|unknown-account",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_LockPrimesExpiry",
+      "message": "Le verrou se vérifie avant l'expiration : un compte gelé ne discute pas de son mot de passe.",
+      "arguments": ["account=known;password=expired;state=locked"],
+      "expected": "invalid-credentials|locked-account",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_MissingAttributeIsRefused",
+      "message": "Sans l'état du compte, la cascade ne peut pas vérifier le verrou.",
+      "arguments": ["account=known;password=correct"],
+      "expectedException": "ArgumentException",
+      "argumentsUnchanged": false
+    },
+    {
+      "name": "Hidden_UnknownValueIsRefused",
+      "message": "Un état de compte hors vocabulaire ne se devine pas.",
+      "arguments": ["account=known;password=correct;state=suspended"],
+      "expectedException": "ArgumentException",
+      "argumentsUnchanged": false
+    },
+    {
+      "name": "Hidden_WrongPasswordOnLockedAccount",
+      "message": "Verrou et mot de passe erroné : le journal retient le verrou, cause la plus en amont après l'existence.",
+      "arguments": ["account=known;password=wrong;state=locked"],
+      "expected": "invalid-credentials|locked-account",
+      "argumentsUnchanged": true
+    }
+  ]
+}

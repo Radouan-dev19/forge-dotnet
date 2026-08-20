@@ -1,0 +1,80 @@
+{
+    "schemaVersion": 1,
+    "id": "front-form-field-state-001",
+    "version": 1,
+    "title": "Calculer l'état d'interaction d'un champ de formulaire",
+    "kind": "csharp",
+    "difficulty": 3,
+    "skills": [
+        "csharp.state-machine"
+    ],
+    "prerequisites": [],
+    "estimatedMinutes": 35,
+    "statement": "statement.md",
+    "constraints": [
+        "Conserver exactement la signature publique",
+        "Un focus n'a aucun effet sur l'état du champ",
+        "Un reset ramène la valeur initiale et efface la marque de contact"
+    ],
+    "examples": [
+        {
+            "input": "[\"required\", \"input=hello;blur\"]",
+            "output": "\"dirty-touched-valid\""
+        }
+    ],
+    "reflectionFields": [
+        "reformulation",
+        "inputs",
+        "expectedOutput",
+        "edgeCases",
+        "hypothesis",
+        "plan"
+    ],
+    "starterPath": "starter/",
+    "visibleTestsPath": "tests/visible/",
+    "hiddenTestsPath": "tests/hidden/",
+    "hints": [
+        {
+            "level": 1,
+            "kind": "socratic",
+            "content": "Un champ affiche une erreur alors que l'utilisateur ne l'a même pas encore effleuré : d'où vient la différence entre avoir touché un champ et l'avoir rempli, et pourquoi l'interface a-t-elle besoin des deux ?"
+        },
+        {
+            "level": 2,
+            "kind": "location",
+            "content": "Tenez deux informations d'état pendant la lecture de interactions : la valeur courante, qui commence vide, et un drapeau de contact. La validité, elle, ne se calcule qu'à la toute fin, à partir de la valeur finale et des règles de field."
+        },
+        {
+            "level": 3,
+            "kind": "strategy",
+            "content": "input remplace la valeur, blur lève le contact, focus ne change rien, reset remet la valeur initiale et retombe le contact. dirty vient de la valeur non vide, touched d'au moins un blur depuis le dernier reset, la validité confronte la valeur aux règles."
+        },
+        {
+            "level": 4,
+            "kind": "partial-pseudocode",
+            "content": "lire field en drapeaux required, optional et un seuil minlen ; partir valeur vide et contact faux ; pour chaque event de interactions : input=... pose la valeur, blur met contact vrai, focus ne fait rien, reset vide la valeur et remet contact faux ; enfin valide = non (required et valeur vide) et non (minlen actif et valeur non vide plus courte que le seuil) ; composer pristine ou dirty, untouched ou touched, valid ou invalid"
+        }
+    ],
+    "solution": {
+        "path": "solution/",
+        "unlock": {
+            "seriousAttempts": 2,
+            "minimumDelayMinutes": 10
+        }
+    },
+    "explanation": "explanation.md",
+    "complexity": "O(n) en temps, n étant le nombre d'événements d'interaction lus",
+    "commonMistakes": [
+        "Marquer un champ invalide dès l'ouverture au lieu d'attendre un contact pour afficher l'erreur",
+        "Confondre touché et rempli, en tirant dirty d'un blur ou touched d'une saisie",
+        "Oublier que reset efface la marque de contact autant que la valeur saisie",
+        "Appliquer minlen à une valeur vide et déclarer invalide un champ facultatif laissé vide"
+    ],
+    "variantId": "front-state-reducer-001",
+    "reviewCards": [
+        "card-front-form-field-state-001-rule",
+        "card-front-form-field-state-001-edge"
+    ],
+    "interviewQuestionId": "interview-front-form-field-state-001",
+    "license": "CC-BY-4.0"
+}

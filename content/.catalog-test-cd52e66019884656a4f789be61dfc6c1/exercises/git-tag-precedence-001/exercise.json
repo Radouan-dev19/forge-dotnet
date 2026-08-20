@@ -1,0 +1,82 @@
+{
+  "schemaVersion": 1,
+  "id": "git-tag-precedence-001",
+  "version": 1,
+  "title": "Ordonner deux versions publiées",
+  "kind": "csharp",
+  "difficulty": 3,
+  "skills": ["git.versions"],
+  "prerequisites": ["git-version-patch-001"],
+  "estimatedMinutes": 40,
+  "statement": "statement.md",
+  "constraints": [
+    "Conserver exactement la signature publique",
+    "Chaque segment se compare comme un nombre, jamais comme du texte",
+    "Une version qui ne porte pas exactement trois segments entiers est refusée"
+  ],
+  "examples": [
+    {
+      "input": "[\"1.2.10\", \"1.2.9\"]",
+      "output": "1"
+    },
+    {
+      "input": "[\"2.0.0\", \"2.0.0\"]",
+      "output": "0"
+    }
+  ],
+  "reflectionFields": [
+    "reformulation",
+    "inputs",
+    "expectedOutput",
+    "edgeCases",
+    "hypothesis",
+    "plan"
+  ],
+  "starterPath": "starter/",
+  "visibleTestsPath": "tests/visible/",
+  "hiddenTestsPath": "tests/hidden/",
+  "hints": [
+    {
+      "level": 1,
+      "kind": "socratic",
+      "content": "Rangées dans l'ordre du dictionnaire, laquelle de deux versions arriverait avant l'autre à tort ?"
+    },
+    {
+      "level": 2,
+      "kind": "location",
+      "content": "Séparez la lecture d'une version, qui produit trois nombres ou refuse, de la comparaison, qui les parcourt."
+    },
+    {
+      "level": 3,
+      "kind": "strategy",
+      "content": "Comparez segment par segment de gauche à droite et arrêtez-vous au premier écart : les suivants ne comptent plus."
+    },
+    {
+      "level": 4,
+      "kind": "partial-pseudocode",
+      "content": "découper les deux versions sur le point ; refuser si le compte de segments diffère de trois ou si l'un n'est pas un entier positif ; parcourir les trois rangs, retourner le signe du premier écart rencontré ; retourner zéro si aucun"
+    }
+  ],
+  "solution": {
+    "path": "solution/",
+    "unlock": {
+      "seriousAttempts": 2,
+      "minimumDelayMinutes": 10
+    }
+  },
+  "explanation": "explanation.md",
+  "complexity": "O(1) en temps et O(1) en espace, le nombre de segments étant fixe",
+  "commonMistakes": [
+    "Comparer les versions comme du texte, ce qui place la dixième correction avant la neuvième",
+    "Poursuivre la comparaison après le premier écart, ce qui laisse un segment mineur renverser un majeur",
+    "Accepter un nombre de segments variable et comparer ce qui n'est pas comparable",
+    "Traiter un segment négatif comme valide, alors qu'aucune version n'en porte"
+  ],
+  "variantId": "git-undo-strategy-001",
+  "reviewCards": [
+    "card-git-tag-precedence-001-rule",
+    "card-git-tag-precedence-001-edge"
+  ],
+  "interviewQuestionId": "interview-git-tag-precedence-001",
+  "license": "CC-BY-4.0"
+}

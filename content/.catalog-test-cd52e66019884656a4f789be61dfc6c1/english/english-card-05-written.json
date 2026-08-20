@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "id": "english-card-05-written",
+  "version": 1,
+  "title": "Key Vault use — written update",
+  "level": "B1",
+  "durationMinutes": 12,
+  "skills": [
+    "english.written",
+    "azure.identity"
+  ],
+  "situation": "In a technical discussion, a teammate suggests copying a sensitive value into configuration. You must write the decision accurately without overstating the evidence.",
+  "instructions": [
+    "Write four sentences on where the sensitive value lives, why configuration is the wrong place, and what remains visible in a review."
+  ],
+  "vocabulary": [
+    {
+      "term": "sensitive configuration",
+      "meaning": "a setting whose value must never appear in source control, logs, or a support export"
+    },
+    {
+      "term": "exposure surface",
+      "meaning": "the full set of places a value reaches once it is stored somewhere, usually wider than the place it was written to"
+    }
+  ],
+  "expectedElements": [
+    "The storage location is named precisely",
+    "The exposure surface of the wrong choice is described",
+    "What a reviewer can still see is stated honestly"
+  ],
+  "modelAnswer": "The value should not be placed in configuration. Configuration reaches source control, build logs, and support exports, so writing it once exposes it in several places we do not control. Instead the application resolves it from a secret store at startup, and the reviewable evidence is a setting holding a reference rather than the value itself. The remaining exposure is process memory during a crash dump, which is a smaller surface but not an empty one.",
+  "commonMistakes": [
+    "Refusing the shortcut without naming where configuration actually travels",
+    "Presenting a secret store as removing every exposure rather than narrowing it"
+  ],
+  "variants": [
+    "Rewrite the update as a short policy note for the whole team."
+  ],
+  "license": "CC-BY-4.0"
+}

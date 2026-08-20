@@ -1,0 +1,40 @@
+{
+    "schemaVersion":  1,
+    "cases":  [
+                  {
+                      "name":  "Hidden_Case1",
+                      "message":  "Paramétrer une règle de livraison — cas 1 incorrect.",
+                      "arguments":  [
+                                        20,
+                                        true
+                                    ],
+                      "expected":  9.9,
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_Case2",
+                      "message":  "Paramétrer une règle de livraison — cas 2 incorrect.",
+                      "arguments":  [
+                                        -1,
+                                        false
+                                    ],
+                      "expectedException":  "ArgumentOutOfRangeException",
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Hidden_ZeroTotalStandard",
+                      "message":  "Total nul en standard : le tarif de base s'applique, ce n'est pas la gratuité.",
+                      "arguments":  [0,false],
+                      "expected":  4.9,
+                      "argumentsUnchanged":  true
+                  },
+                  {
+                      "name":  "Hidden_ExpressAtThreshold",
+                      "message":  "Express exactement au seuil de gratuité : le mode l'emporte sur le montant.",
+                      "arguments":  [50,true],
+                      "expected":  9.9,
+                      "argumentsUnchanged":  true
+                  }
+              ]
+}

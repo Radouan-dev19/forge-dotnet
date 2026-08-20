@@ -1,0 +1,54 @@
+{
+  "schemaVersion": 1,
+  "cases": [
+    {
+      "name": "Hidden_NegativeTotalIsRejected",
+      "message": "Le refus vient avant tout calcul de remise.",
+      "arguments": [-5.00, 1, true],
+      "expectedException": "ArgumentOutOfRangeException",
+      "argumentsUnchanged": false
+    },
+    {
+      "name": "Hidden_MembershipBeatsBasketOnLargeTotal",
+      "message": "Sur un gros panier, la remise proportionnelle dépasse la remise fixe.",
+      "arguments": [300.00, 1, true],
+      "expected": 15.00,
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_RoundedOnceAtTheEnd",
+      "message": "Quinze pour cent de ce total tombe à un demi-millième : l'arrondi s'éloigne de zéro.",
+      "arguments": [33.33, 10, false],
+      "expected": 5.00,
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_ZeroTotalGivesZeroDiscount",
+      "message": "La règle s'applique toujours ; son montant, lui, est nul.",
+      "arguments": [0.00, 15, true],
+      "expected": 0.00,
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_RulesAreNeverCumulated",
+      "message": "Les trois règles applicables cumulées donneraient bien davantage.",
+      "arguments": [100.00, 10, true],
+      "expected": 15.00,
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_BasketBoundaryPaysTheFixedAmount",
+      "message": "À la borne exacte, la règle de panier s'ouvre et rend son montant fixe.",
+      "arguments": [100.00, 1, false],
+      "expected": 12.00,
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_EmptyCart",
+      "message": "Panier vide sans adhésion : aucune règle, aucune remise.",
+      "arguments": [0.00, 0, false],
+      "expected": 0.00,
+      "argumentsUnchanged": true
+    }
+  ]
+}

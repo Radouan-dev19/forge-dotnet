@@ -1,0 +1,82 @@
+{
+    "schemaVersion":  1,
+    "id":  "csharp-payment-fee-001",
+    "version":  1,
+    "title":  "Calculer des frais par interface",
+    "kind":  "csharp",
+    "difficulty":  2,
+    "skills":  [
+                   "csharp.interfaces"
+               ],
+    "prerequisites":  [
+                          "oop-encapsulation-001"
+                      ],
+    "estimatedMinutes":  30,
+    "statement":  "statement.md",
+    "constraints":  [
+                        "Conserver exactement la signature publique",
+                        "La branche représente deux implémentations d’une petite politique de frais.",
+                        "Ne pas modifier les entrées reçues sauf mention explicite"
+                    ],
+    "examples":  [
+                     {
+                         "input":  "[100,true]",
+                         "output":  "1.5"
+                     }
+                 ],
+    "reflectionFields":  [
+                             "reformulation",
+                             "inputs",
+                             "expectedOutput",
+                             "edgeCases",
+                             "hypothesis",
+                             "plan"
+                         ],
+    "starterPath":  "starter/",
+    "visibleTestsPath":  "tests/visible/",
+    "hiddenTestsPath":  "tests/hidden/",
+    "hints":  [
+                  {
+                      "level":  1,
+                      "kind":  "socratic",
+                      "content":  "Quel invariant de « Calculer des frais par interface » doit rester vrai pour les cas limites ?"
+                  },
+                  {
+                      "level":  2,
+                      "kind":  "location",
+                      "content":  "Concentrez la décision dans la méthode PaymentFee, sans état global."
+                  },
+                  {
+                      "level":  3,
+                      "kind":  "strategy",
+                      "content":  "La branche représente deux implémentations d’une petite politique de frais."
+                  },
+                  {
+                      "level":  4,
+                      "kind":  "partial-pseudocode",
+                      "content":  "si amount est négatif lever une erreur d'argument ; choisir le taux selon le moyen de paiement ; multiplier puis arrondir une seule fois à deux décimales en s'éloignant de zéro"
+                  }
+              ],
+    "solution":  {
+                     "path":  "solution/",
+                     "unlock":  {
+                                    "seriousAttempts":  2,
+                                    "minimumDelayMinutes":  10
+                                }
+                 },
+    "explanation":  "explanation.md",
+    "complexity":  "O(1) en temps et O(1) en espace",
+    "commonMistakes":  [
+                           "Arrondir le taux ou le montant avant la multiplication",
+                           "Employer le mode d'arrondi par défaut, qui tranche au pair le plus proche",
+                           "Écrire le taux en virgule flottante binaire et perdre l'exactitude décimale",
+                           "Accepter un montant négatif et produire des frais négatifs"
+                       ],
+    "variantId":  "csharp-line-total-001",
+    "reviewCards":  [
+                        "card-csharp-payment-fee-001-rule",
+                        "card-csharp-payment-fee-001-edge"
+                    ],
+    "interviewQuestionId":  "interview-csharp-payment-fee-001",
+    "license":  "CC-BY-4.0"
+}

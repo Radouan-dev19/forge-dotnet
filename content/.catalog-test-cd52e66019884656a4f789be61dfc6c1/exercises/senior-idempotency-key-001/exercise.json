@@ -1,0 +1,80 @@
+{
+  "schemaVersion": 1,
+  "id": "senior-idempotency-key-001",
+  "version": 1,
+  "title": "Distinguer un traitement d'un rejeu par cle d'idempotence",
+  "kind": "csharp",
+  "difficulty": 3,
+  "skills": [
+    "api.idempotency"
+  ],
+  "prerequisites": [],
+  "estimatedMinutes": 35,
+  "statement": "statement.md",
+  "constraints": [
+    "Conserver exactement la signature publique",
+    "Preserver l'ordre des cles dans la sortie",
+    "Ignorer les segments vides sans les compter comme des cles"
+  ],
+  "examples": [
+    {
+      "input": "[\"a;b;a\"]",
+      "output": "\"processed;processed;replayed\""
+    }
+  ],
+  "reflectionFields": [
+    "reformulation",
+    "inputs",
+    "expectedOutput",
+    "edgeCases",
+    "hypothesis",
+    "plan"
+  ],
+  "starterPath": "starter/",
+  "visibleTestsPath": "tests/visible/",
+  "hiddenTestsPath": "tests/hidden/",
+  "hints": [
+    {
+      "level": 1,
+      "kind": "socratic",
+      "content": "Qu'est-ce qui distingue la toute premiere apparition d'une cle de toutes celles qui la suivent, et que doit-on retenir pour trancher ?"
+    },
+    {
+      "level": 2,
+      "kind": "location",
+      "content": "La decision se prend cle par cle, dans l'ordre de lecture ; il vous faut une memoire des cles deja vues, consultee puis mise a jour a chaque cle."
+    },
+    {
+      "level": 3,
+      "kind": "strategy",
+      "content": "Un ensemble des cles deja rencontrees suffit : si la cle y est absente, c'est un traitement et on l'ajoute ; si elle y est deja, c'est un rejeu et l'ensemble ne change pas."
+    },
+    {
+      "level": 4,
+      "kind": "partial-pseudocode",
+      "content": "decouper keys sur le point-virgule, ignorer les segments vides ; tenir un ensemble seen ; pour chaque cle dans l'ordre, si seen ne la contient pas ajouter processed a la sortie et inserer la cle, sinon ajouter replayed ; joindre la sortie par le point-virgule ; refuser une entree nulle"
+    }
+  ],
+  "solution": {
+    "path": "solution/",
+    "unlock": {
+      "seriousAttempts": 2,
+      "minimumDelayMinutes": 10
+    }
+  },
+  "explanation": "explanation.md",
+  "complexity": "O(n) en temps, n etant le nombre de cles lues",
+  "commonMistakes": [
+    "Compter les segments vides comme des cles au lieu de les ignorer",
+    "Perdre l'ordre des cles en construisant la sortie a partir de l'ensemble",
+    "Marquer une cle comme rejeu des sa premiere apparition en inserant avant de tester",
+    "Renvoyer un seul verdict global au lieu d'un verdict par cle"
+  ],
+  "variantId": "senior-compensation-001",
+  "reviewCards": [
+    "card-senior-idempotency-key-001-rule",
+    "card-senior-idempotency-key-001-edge"
+  ],
+  "interviewQuestionId": "interview-senior-idempotency-key-001",
+  "license": "CC-BY-4.0"
+}

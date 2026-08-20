@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "id": "interview-tests-characterization-lock-001",
+  "version": 1,
+  "title": "Caractériser un code hérité avant de le remanier",
+  "level": "intermediate",
+  "durationMinutes": 8,
+  "skills": ["tests.characterization"],
+  "question": "On vous confie un calcul métier de huit ans, sans test, dont la documentation contredit visiblement le comportement. Que livrez-vous avant de toucher à la moindre ligne, et que faites-vous du défaut que vous découvrez en chemin ?",
+  "observableCriteria": [
+    "La caractérisation est définie comme la photographie exécutable du comportement réel, pas de la règle documentée",
+    "Le défaut découvert est figé et signalé, jamais corrigé en silence pendant la caractérisation",
+    "Les refus et leurs types d'exception sont traités comme du contrat au même titre que les valeurs"
+  ],
+  "modelAnswer": "Je livre d'abord un filet : une suite de caractérisation qui fige ce que le code fait réellement — pas ce que la documentation promet. Sur un code de huit ans, c'est le code qui a raison au sens opérationnel : les clients et les systèmes en aval ont intégré son comportement, bizarreries comprises. Si je découvre un défaut — un seuil strict là où la règle annonce un seuil large — je le fige dans la suite avec un nom explicite et je le signale à part : corriger pendant la caractérisation mélangerait deux opérations, établir le référentiel et changer le comportement, et le remaniement qui suit ne pourrait plus distinguer ses régressions des écarts volontaires. Je caractérise aussi les refus : le type d'exception levé sur une entrée invalide est du contrat, un appelant peut router dessus. Une fois le filet en place, je remanie ; et si l'équipe décide ensuite de corriger le défaut, cette correction devient un changement de comportement assumé, annoncé, avec sa propre mise à jour de la suite.",
+  "commonMistakes": [
+    "Écrire les tests de la règle documentée et déclarer le code faux au lieu de le photographier",
+    "Corriger la bizarrerie en douce pendant la caractérisation et perdre le référentiel"
+  ],
+  "variants": [
+    "Demander comment échantillonner les entrées de caractérisation quand le domaine est trop vaste pour l'exhaustivité.",
+    "Le code dépend d'une horloge système : demander ce que la caractérisation en fait."
+  ],
+  "license": "CC-BY-4.0"
+}

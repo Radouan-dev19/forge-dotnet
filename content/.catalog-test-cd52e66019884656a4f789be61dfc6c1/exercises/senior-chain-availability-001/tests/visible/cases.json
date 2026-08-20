@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "cases": [
+    {
+      "name": "Visible_ThreeLinksCompoundTheirOutages",
+      "message": "Trois maillons honorables composent bien moins que le plus faible d'entre eux.",
+      "arguments": ["99.9;99.9;99.5"],
+      "expected": 99.3,
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Visible_TwoFourNinesLoseACentime",
+      "message": "Deux maillons à quatre neufs : le produit mange déjà un centième.",
+      "arguments": ["99.99;99.99"],
+      "expected": 99.98,
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Visible_FiveDecentLinksSinkTheChain",
+      "message": "Cinq maillons à deux neufs : l'ensemble tombe sous 95,1 % sans qu'aucun soit mauvais.",
+      "arguments": ["99;99;99;99;99"],
+      "expected": 95.09,
+      "argumentsUnchanged": true
+    }
+  ]
+}

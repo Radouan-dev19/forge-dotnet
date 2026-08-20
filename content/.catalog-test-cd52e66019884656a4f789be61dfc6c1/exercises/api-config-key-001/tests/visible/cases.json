@@ -1,0 +1,34 @@
+{
+    "schemaVersion":  1,
+    "cases":  [
+                  {
+                      "name":  "Visible_Case1",
+                      "message":  "Composer une clé de configuration — cas 1 incorrect.",
+                      "arguments":  [
+                                        "Authentication",
+                                        "ApiKey"
+                                    ],
+                      "expected":  "Authentication:ApiKey",
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Visible_Case2",
+                      "message":  "Composer une clé de configuration — cas 2 incorrect.",
+                      "arguments":  [
+                                        "Logging ",
+                                        " Level"
+                                    ],
+                      "expected":  "Logging:Level",
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Visible_BothPadded",
+                      "message":  "Section et clé toutes deux entourées d'espaces : les deux sont rognées.",
+                      "arguments":  ["  Db  ","  Timeout  "],
+                      "expected":  "Db:Timeout",
+                      "argumentsUnchanged":  true
+                  }
+              ]
+}

@@ -1,0 +1,36 @@
+{
+    "schemaVersion":  1,
+    "id":  "front-controlled-forms-001",
+    "version":  1,
+    "title":  "Formulaires contrôlés et validation côté client",
+    "week":  25,
+    "skills":  [
+                   {
+                       "id":  "quality.forms",
+                       "weight":  1
+                   }
+               ],
+    "prerequisites":  [
+                          "front-state-unidirectional-001"
+                      ],
+    "estimatedMinutes":  60,
+    "objectives":  [
+                       "Distinguer un champ contrôlé d'un champ non contrôlé, décrire la machine d'états pristine, dirty et touched, et expliquer pourquoi la validation côté client est un confort et non une barrière de sécurité"
+                   ],
+    "sections":  [
+                     "intuition",
+                     "explanation",
+                     "example",
+                     "counterExample",
+                     "check",
+                     "guided",
+                     "independent",
+                     "debugging",
+                     "interview",
+                     "summary",
+                     "reviewCards",
+                     "masteryTest"
+                 ],
+    "markdownPath":  "lesson.md",
+    "license":  "CC-BY-4.0"
+}

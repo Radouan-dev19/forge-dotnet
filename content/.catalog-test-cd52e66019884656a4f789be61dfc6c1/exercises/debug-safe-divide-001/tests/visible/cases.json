@@ -1,0 +1,34 @@
+{
+    "schemaVersion":  1,
+    "cases":  [
+                  {
+                      "name":  "Visible_Case1",
+                      "message":  "Prévenir une division invalide — cas 1 visible incorrect.",
+                      "arguments":  [
+                                        8,
+                                        2
+                                    ],
+                      "expected":  4,
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Visible_Case2",
+                      "message":  "Prévenir une division invalide — cas 2 visible incorrect.",
+                      "arguments":  [
+                                        8,
+                                        0
+                                    ],
+                      "expected":  0,
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Visible_ZeroDividend",
+                      "message":  "Dividende nul : le quotient est nul, ce n'est pas le cas du diviseur nul.",
+                      "arguments":  [0,5],
+                      "expected":  0,
+                      "argumentsUnchanged":  true
+                  }
+              ]
+}

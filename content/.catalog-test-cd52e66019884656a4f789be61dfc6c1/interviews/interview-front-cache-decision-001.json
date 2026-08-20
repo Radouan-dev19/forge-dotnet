@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "id": "interview-front-cache-decision-001",
+  "version": 1,
+  "title": "Décider la fraîcheur d'une entrée en cache",
+  "level": "advanced",
+  "durationMinutes": 8,
+  "skills": [
+    "api.caching"
+  ],
+  "question": "Expliquez la stratégie stale-while-revalidate et pourquoi elle définit deux seuils plutôt qu'un seul. Que décidez-vous à l'instant exact où l'âge atteint un seuil ?",
+  "observableCriteria": [
+    "Décrit trois régimes délimités par deux seuils, pas une simple date d'expiration binaire",
+    "Justifie la fenêtre intermédiaire par le service immédiat couplé à une revalidation en arrière-plan",
+    "Prend position claire sur l'inclusivité des bornes à l'instant pile égal à un seuil"
+  ],
+  "modelAnswer": "Avec une seule date d'expiration, une réponse est fraîche puis brutalement inutilisable, et l'utilisateur qui arrive juste après paie une requête complète. Stale-while-revalidate ajoute une fenêtre entre deux seuils. Sous le premier, la réponse est fraîche et servie telle quelle. Entre les deux, elle est un peu ancienne mais encore acceptable : je la sers immédiatement pour ne pas faire attendre l'utilisateur, et je déclenche en parallèle une revalidation qui la rafraîchira pour la fois suivante. Au-delà du second seuil, elle est trop vieille et je refuse de la servir. Sur les bornes, je me positionne clairement : à l'instant pile égal au premier seuil, je bascule déjà en revalidation, et à l'instant pile égal au second, je considère l'entrée expirée. Ce détail d'un cran change le comportement à la seconde près et doit être décidé, pas laissé au hasard. Je gère aussi l'âge négatif dû à une horloge décalée en le traitant comme frais.",
+  "commonMistakes": [
+    "Réduire la stratégie à une date d'expiration unique et perdre la fenêtre de revalidation",
+    "Laisser flou le comportement à l'instant exact du seuil, ce qui produit des bogues à la seconde près"
+  ],
+  "variants": [
+    "Comment éviteriez-vous que plusieurs lecteurs déclenchent la même revalidation en même temps ?",
+    "Comment cette logique se transpose-t-elle au renouvellement d'un jeton d'accès avant son expiration ?"
+  ],
+  "license": "CC-BY-4.0"
+}

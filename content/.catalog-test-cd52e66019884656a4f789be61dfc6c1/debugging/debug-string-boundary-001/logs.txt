@@ -1,0 +1,2 @@
+Event=ReferenceSuffixFailed Level=Error Input="abc" Expected="c" Actual=none Index=3 Length=3 CorrelationId=dbg-string-boundary-001
+Event=ReferenceSuffixFailed Level=Error Input="" Expected="" Actual=none Index=0 Length=0 CorrelationId=dbg-string-boundary-001

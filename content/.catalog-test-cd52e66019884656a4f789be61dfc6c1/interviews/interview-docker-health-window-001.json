@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "id": "interview-docker-health-window-001",
+  "version": 1,
+  "title": "Vérifier une fenêtre de health check",
+  "level": "junior",
+  "durationMinutes": 6,
+  "skills": [
+    "docker.health"
+  ],
+  "question": "Comment implémenteriez-vous « Vérifier une fenêtre de health check » et quelles preuves réfutent les contournements ?",
+  "observableCriteria": [
+    "La fenêtre totale est calculée à partir des trois valeurs, et le calcul est explicité",
+    "La comparaison au budget porte sur la fenêtre totale, pas sur l'intervalle seul"
+  ],
+  "modelAnswer": "Valider les trois valeurs et comparer la fenêtre totale au budget. Je teste une fenêtre exactement au budget, une fenêtre juste au-dessus et une valeur invalide parmi les trois. O(1) en temps et O(1) en espace.",
+  "commonMistakes": [
+    "Comparer l'intervalle au budget en oubliant le délai de démarrage et les tentatives"
+  ],
+  "variants": [
+    "Changer la frontière ou le droit tout en conservant la règle de vérifier une fenêtre de health check."
+  ],
+  "license": "CC-BY-4.0"
+}

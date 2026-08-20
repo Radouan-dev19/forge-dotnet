@@ -1,0 +1,9 @@
+{
+  "schemaVersion": 1,
+  "cases": [
+    { "name": "Hidden_NegativeDivisor", "message": "Un diviseur négatif doit conserver la divisibilité.", "arguments": [1, 12, -4], "expected": 3 },
+    { "name": "Hidden_ZeroDivisor", "message": "Le diviseur zéro doit être refusé explicitement.", "arguments": [1, 5, 0], "expectedException": "ArgumentOutOfRangeException" },
+    { "name": "Hidden_SingleMultiple", "message": "Une borne unique divisible doit être comptée.", "arguments": [7, 7, 7], "expected": 1 },
+    { "name": "Hidden_VariedRange", "message": "La solution semble dépendre des exemples publics.", "arguments": [11, 29, 5], "expected": 3 }
+  ]
+}

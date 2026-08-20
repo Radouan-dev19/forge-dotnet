@@ -1,0 +1,83 @@
+{
+  "schemaVersion": 1,
+  "id": "senior-monotonic-reads-001",
+  "version": 1,
+  "title": "Détecter la première régression dans les lectures d'un client",
+  "kind": "csharp",
+  "difficulty": 4,
+  "skills": ["quality.consistency"],
+  "prerequisites": [],
+  "estimatedMinutes": 40,
+  "statement": "statement.md",
+  "constraints": [
+    "Conserver exactement la signature publique",
+    "Deux lectures égales consécutives ne sont pas une régression : la donnée n'a pas bougé",
+    "L'indice rendu est celui de la lecture qui recule, pas celui de la lecture de référence",
+    "L'absence de régression est une réponse, pas une exception"
+  ],
+  "examples": [
+    {
+      "input": "5;7;7;6",
+      "output": "3"
+    },
+    {
+      "input": "1;2;3",
+      "output": "-1"
+    }
+  ],
+  "reflectionFields": [
+    "reformulation",
+    "inputs",
+    "expectedOutput",
+    "edgeCases",
+    "hypothesis",
+    "plan"
+  ],
+  "starterPath": "starter/",
+  "visibleTestsPath": "tests/visible/",
+  "hiddenTestsPath": "tests/hidden/",
+  "hints": [
+    {
+      "level": 1,
+      "kind": "socratic",
+      "content": "L'utilisateur rafraîchit sa page et voit son commentaire disparaître, puis réapparaître au rafraîchissement suivant. Aucune donnée n'a été perdue : que s'est-il passé entre ses deux lectures, côté réplication ?"
+    },
+    {
+      "level": 2,
+      "kind": "location",
+      "content": "La détection tient dans une comparaison de voisines : chaque lecture face à la précédente, dans l'ordre du journal. Aucune structure au-delà de la version précédente n'est nécessaire."
+    },
+    {
+      "level": 3,
+      "kind": "strategy",
+      "content": "La régression est un recul strict : l'égalité de deux lectures consécutives dit que la donnée n'a pas bougé, pas que le client a changé de réplique. La première violation suffit — le rapport nomme un début d'enquête, pas un inventaire."
+    },
+    {
+      "level": 4,
+      "kind": "partial-pseudocode",
+      "content": "refuser un journal vide, une version illisible ou négative ; parcourir les lectures en gardant la précédente ; rendre l'indice courant à la première version strictement inférieure à la précédente ; rendre moins un si la fin arrive sans recul"
+    }
+  ],
+  "solution": {
+    "path": "solution/",
+    "unlock": {
+      "seriousAttempts": 2,
+      "minimumDelayMinutes": 10
+    }
+  },
+  "explanation": "explanation.md",
+  "complexity": "O(n) en temps pour n lectures et O(1) en espace",
+  "commonMistakes": [
+    "Traiter l'égalité de deux lectures comme un recul alors que la donnée n'a simplement pas bougé",
+    "Rendre l'indice de la lecture haute au lieu de celle qui recule, et pointer la mauvaise réplique",
+    "Comparer chaque lecture au maximum global au lieu de la précédente, et changer la question posée",
+    "Lever une exception quand aucun recul n'existe au lieu de le dire comme un verdict"
+  ],
+  "variantId": "senior-saga-state-001",
+  "reviewCards": [
+    "card-senior-monotonic-reads-001-rule",
+    "card-senior-monotonic-reads-001-edge"
+  ],
+  "interviewQuestionId": "interview-senior-monotonic-reads-001",
+  "license": "CC-BY-4.0"
+}

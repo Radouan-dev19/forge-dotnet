@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "suiteId": "project-log-analyzer-001.synthese.v2",
+  "exerciseId": "project-log-analyzer-001.synthese",
+  "exerciseVersion": 2,
+  "typeName": "Submission",
+  "methodName": "ErrorReport",
+  "parameterTypes": ["string"],
+  "returnType": "string"
+}

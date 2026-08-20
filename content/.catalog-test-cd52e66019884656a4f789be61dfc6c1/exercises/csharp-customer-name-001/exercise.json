@@ -1,0 +1,82 @@
+{
+    "schemaVersion":  1,
+    "id":  "csharp-customer-name-001",
+    "version":  1,
+    "title":  "Normaliser un nom client",
+    "kind":  "csharp",
+    "difficulty":  1,
+    "skills":  [
+                   "csharp.nullable"
+               ],
+    "prerequisites":  [
+                          "oop-encapsulation-001"
+                      ],
+    "estimatedMinutes":  30,
+    "statement":  "statement.md",
+    "constraints":  [
+                        "Conserver exactement la signature publique",
+                        "Traiter absence et blanc avant toute déréférence ou conversion.",
+                        "Ne pas modifier les entrées reçues sauf mention explicite"
+                    ],
+    "examples":  [
+                     {
+                         "input":  "[\" ada \"]",
+                         "output":  "\"ADA\""
+                     }
+                 ],
+    "reflectionFields":  [
+                             "reformulation",
+                             "inputs",
+                             "expectedOutput",
+                             "edgeCases",
+                             "hypothesis",
+                             "plan"
+                         ],
+    "starterPath":  "starter/",
+    "visibleTestsPath":  "tests/visible/",
+    "hiddenTestsPath":  "tests/hidden/",
+    "hints":  [
+                  {
+                      "level":  1,
+                      "kind":  "socratic",
+                      "content":  "Quel invariant de « Normaliser un nom client » doit rester vrai pour les cas limites ?"
+                  },
+                  {
+                      "level":  2,
+                      "kind":  "location",
+                      "content":  "Concentrez la décision dans la méthode NormalizeCustomer, sans état global."
+                  },
+                  {
+                      "level":  3,
+                      "kind":  "strategy",
+                      "content":  "Traiter absence et blanc avant toute déréférence ou conversion."
+                  },
+                  {
+                      "level":  4,
+                      "kind":  "partial-pseudocode",
+                      "content":  "si name est absent ou uniquement composé de blancs retourner le repli annoncé ; sinon retirer les blancs de bordure, puis passer en majuscules avec la culture invariante"
+                  }
+              ],
+    "solution":  {
+                     "path":  "solution/",
+                     "unlock":  {
+                                    "seriousAttempts":  2,
+                                    "minimumDelayMinutes":  10
+                                }
+                 },
+    "explanation":  "explanation.md",
+    "complexity":  "O(n) en temps et O(n) en espace",
+    "commonMistakes":  [
+                           "Déréférencer name avant d'avoir traité son absence",
+                           "Accepter une chaîne de blancs comme un nom valide et retourner une chaîne vide",
+                           "Employer la casse de la culture courante, dont le résultat dépend de la machine",
+                           "Passer en majuscules avant de retirer les blancs, ce qui les laisse en bordure"
+                       ],
+    "variantId":  "csharp-order-status-001",
+    "reviewCards":  [
+                        "card-csharp-customer-name-001-rule",
+                        "card-csharp-customer-name-001-edge"
+                    ],
+    "interviewQuestionId":  "interview-csharp-customer-name-001",
+    "license":  "CC-BY-4.0"
+}

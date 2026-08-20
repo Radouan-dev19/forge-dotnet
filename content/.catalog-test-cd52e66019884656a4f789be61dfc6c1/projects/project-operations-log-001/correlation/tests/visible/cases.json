@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "cases": [
+    {
+      "name": "Visible_ScopeCarriesTheIdentifier",
+      "message": "Chaque entrée porte l'identifiant par la portée, sans qu'aucun message ne le répète.",
+      "arguments": ["R42", "validation;facturation"],
+      "expected": "INF cid=R42 validation|INF cid=R42 facturation",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Visible_NestedScopeClosesBeforeTheNextStep",
+      "message": "La portée du groupe se referme : l'étape suivante ne la porte plus.",
+      "arguments": ["A7", "controle;paiement/autorisation;expedition"],
+      "expected": "INF cid=A7 controle|INF cid=A7>paiement autorisation|INF cid=A7 expedition",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Visible_SingleNestedStep",
+      "message": "Une sous-étape seule porte la chaîne complète des portées.",
+      "arguments": ["B9", "paiement/capture"],
+      "expected": "INF cid=B9>paiement capture",
+      "argumentsUnchanged": true
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "id": "interview-csharp-date-span-001",
+  "version": 1,
+  "title": "Compter des jours inclusifs",
+  "level": "junior",
+  "durationMinutes": 5,
+  "skills": [
+    "csharp.dates"
+  ],
+  "question": "Comment résoudriez-vous « Compter des jours inclusifs » et comment prouveriez-vous les bornes ?",
+  "observableCriteria": [
+    "L'inclusivité des deux bornes est énoncée avant tout calcul",
+    "L'intervalle inversé reçoit une valeur définie plutôt qu'un compte négatif"
+  ],
+  "modelAnswer": "Compter les deux bornes et retourner zéro pour un intervalle inversé. Je prouve par deux dates identiques, deux dates consécutives et un intervalle inversé ; O(1) en temps et O(1) en espace.",
+  "commonMistakes": [
+    "Soustraire les dates sans ajouter un jour et perdre systématiquement une borne"
+  ],
+  "variants": [
+    "Changer une borne ou le volume tout en conservant la même règle de compter des jours inclusifs."
+  ],
+  "license": "CC-BY-4.0"
+}

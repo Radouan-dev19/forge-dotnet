@@ -1,0 +1,39 @@
+{
+    "schemaVersion":  1,
+    "cases":  [
+                  {
+                      "name":  "Visible_Case1",
+                      "message":  "Vérifier l’ordre de timestamps — cas 1 visible incorrect.",
+                      "arguments":  [
+                                        [
+                                            1,
+                                            2,
+                                            2
+                                        ]
+                                    ],
+                      "expected":  true,
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Visible_Case2",
+                      "message":  "Vérifier l’ordre de timestamps — cas 2 visible incorrect.",
+                      "arguments":  [
+                                        [
+                                            2,
+                                            1
+                                        ]
+                                    ],
+                      "expected":  false,
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Visible_SingleTimestamp",
+                      "message":  "Un seul horodatage : trivialement ordonné.",
+                      "arguments":  [[5]],
+                      "expected":  true,
+                      "argumentsUnchanged":  true
+                  }
+              ]
+}

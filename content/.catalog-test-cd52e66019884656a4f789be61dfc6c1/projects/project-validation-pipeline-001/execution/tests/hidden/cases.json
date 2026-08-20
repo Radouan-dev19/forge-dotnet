@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "cases": [
+    {
+      "name": "Hidden_TwoCharactersAreTooShort",
+      "message": "Présent mais trop court : seule la longueur manque.",
+      "arguments": ["OK", 5, 4.50],
+      "expected": "Name:longueur",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_UpperBoundsAreInclusive",
+      "message": "Les bornes hautes des attributs sont incluses dans l'intervalle admis.",
+      "arguments": ["Cahier grand format", 100, 999.99],
+      "expected": "valide",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_FreePriceIsOutOfRange",
+      "message": "Un prix nul est sous la borne basse déclarée sur l'attribut.",
+      "arguments": ["Stylo", 5, 0.00],
+      "expected": "UnitPrice:intervalle",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_EveryMemberFailureIsReported",
+      "message": "Trois membres fautifs à la fois : rien n'est fusionné ni perdu.",
+      "arguments": ["", 0, 1000.00],
+      "expected": "Name:obligatoire|Quantity:intervalle|UnitPrice:intervalle",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_TwoCodesOnTheSameMember",
+      "message": "Présent mais trop court et hors alphabet : les deux codes du membre apparaissent, triés.",
+      "arguments": ["!!", 5, 4.50],
+      "expected": "Name:caracteres|Name:longueur",
+      "argumentsUnchanged": true
+    }
+  ]
+}

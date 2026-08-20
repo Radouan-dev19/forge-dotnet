@@ -1,0 +1,82 @@
+{
+    "schemaVersion":  1,
+    "id":  "algo-maximum-value-001",
+    "version":  1,
+    "title":  "Calculer le maximum signé",
+    "kind":  "algorithm",
+    "difficulty":  1,
+    "skills":  [
+                   "algorithm.search"
+               ],
+    "prerequisites":  [
+                          "algo-reformulation-complexity-001"
+                      ],
+    "estimatedMinutes":  30,
+    "statement":  "statement.md",
+    "constraints":  [
+                        "Conserver exactement la signature publique",
+                        "Initialiser depuis le premier élément pour respecter les tableaux négatifs.",
+                        "Ne pas modifier les entrées reçues sauf mention explicite"
+                    ],
+    "examples":  [
+                     {
+                         "input":  "[[3,1,2]]",
+                         "output":  "3"
+                     }
+                 ],
+    "reflectionFields":  [
+                             "reformulation",
+                             "inputs",
+                             "expectedOutput",
+                             "edgeCases",
+                             "hypothesis",
+                             "plan"
+                         ],
+    "starterPath":  "starter/",
+    "visibleTestsPath":  "tests/visible/",
+    "hiddenTestsPath":  "tests/hidden/",
+    "hints":  [
+                  {
+                      "level":  1,
+                      "kind":  "socratic",
+                      "content":  "Quel invariant de « Calculer le maximum signé » doit rester vrai pour les cas limites ?"
+                  },
+                  {
+                      "level":  2,
+                      "kind":  "location",
+                      "content":  "Concentrez la décision dans la méthode Maximum, sans état global."
+                  },
+                  {
+                      "level":  3,
+                      "kind":  "strategy",
+                      "content":  "Initialiser depuis le premier élément pour respecter les tableaux négatifs."
+                  },
+                  {
+                      "level":  4,
+                      "kind":  "partial-pseudocode",
+                      "content":  "si values est absent ou vide retourner zéro ; sinon initialiser le maximum avec le premier élément, puis parcourir à partir du deuxième et remplacer dès qu'une valeur est strictement plus grande"
+                  }
+              ],
+    "solution":  {
+                     "path":  "solution/",
+                     "unlock":  {
+                                    "seriousAttempts":  2,
+                                    "minimumDelayMinutes":  10
+                                }
+                 },
+    "explanation":  "explanation.md",
+    "complexity":  "O(n) en temps et O(1) en espace",
+    "commonMistakes":  [
+                           "Initialiser le maximum à zéro et se tromper sur un tableau entièrement négatif",
+                           "Reparcourir depuis le premier élément alors qu'il sert déjà d'initialisation",
+                           "Lever sur une collection vide alors que le contrat annonce zéro",
+                           "Comparer les indices au lieu des valeurs"
+                       ],
+    "variantId":  "algo-unique-count-001",
+    "reviewCards":  [
+                        "card-algo-maximum-value-001-rule",
+                        "card-algo-maximum-value-001-edge"
+                    ],
+    "interviewQuestionId":  "interview-algo-maximum-value-001",
+    "license":  "CC-BY-4.0"
+}

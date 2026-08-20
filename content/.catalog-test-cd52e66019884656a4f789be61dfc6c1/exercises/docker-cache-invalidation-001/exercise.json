@@ -1,0 +1,83 @@
+{
+  "schemaVersion": 1,
+  "id": "docker-cache-invalidation-001",
+  "version": 1,
+  "title": "Localiser la première couche invalidée par un fichier modifié",
+  "kind": "csharp",
+  "difficulty": 3,
+  "skills": ["docker.layers"],
+  "prerequisites": ["docker-images-layers-001"],
+  "estimatedMinutes": 30,
+  "statement": "statement.md",
+  "constraints": [
+    "Conserver exactement la signature publique",
+    "Seule une instruction de copie peut être invalidée par un fichier modifié",
+    "Un détail terminé par une barre oblique couvre un répertoire ; sinon il désigne un fichier exact",
+    "La première instruction du fichier de construction est obligatoirement l'image de base"
+  ],
+  "examples": [
+    {
+      "input": "from:sdk-base;copy:project.csproj;run:restore;copy:src/;run:publish — src/Program.cs",
+      "output": "2"
+    },
+    {
+      "input": "from:sdk-base;copy:project.csproj;run:restore;copy:src/;run:publish — project.csproj",
+      "output": "4"
+    }
+  ],
+  "reflectionFields": [
+    "reformulation",
+    "inputs",
+    "expectedOutput",
+    "edgeCases",
+    "hypothesis",
+    "plan"
+  ],
+  "starterPath": "starter/",
+  "visibleTestsPath": "tests/visible/",
+  "hiddenTestsPath": "tests/hidden/",
+  "hints": [
+    {
+      "level": 1,
+      "kind": "socratic",
+      "content": "Vous modifiez un commentaire dans un fichier source et la restauration des dépendances se rejoue entièrement. Quelle instruction du fichier de construction a bien pu relier ces deux événements ?"
+    },
+    {
+      "level": 2,
+      "kind": "location",
+      "content": "Le problème se joue en deux temps : trouver la première instruction de copie dont la portée contient le fichier modifié, puis compter ce qui reste depuis cette position jusqu'à la fin."
+    },
+    {
+      "level": 3,
+      "kind": "strategy",
+      "content": "La portée d'une copie dépend de la forme de son détail : la barre oblique finale en fait un préfixe de répertoire, son absence exige l'égalité exacte. Les instructions d'exécution et de répertoire de travail ne regardent jamais le fichier modifié."
+    },
+    {
+      "level": 4,
+      "kind": "partial-pseudocode",
+      "content": "refuser un chemin modifié vide, une liste vide, une instruction illisible ou une première instruction qui n'est pas l'image de base ; parcourir les instructions en retenant l'indice de la première copie dont la portée contient le chemin ; rendre zéro si aucune ne correspond, sinon le nombre d'instructions depuis cet indice inclus jusqu'à la fin"
+    }
+  ],
+  "solution": {
+    "path": "solution/",
+    "unlock": {
+      "seriousAttempts": 2,
+      "minimumDelayMinutes": 10
+    }
+  },
+  "explanation": "explanation.md",
+  "complexity": "O(n) en temps pour n instructions et O(1) en espace au-delà du découpage",
+  "commonMistakes": [
+    "Compter seulement la couche invalidée en oubliant que toutes celles qui la suivent se reconstruisent",
+    "Traiter un détail sans barre oblique finale comme un préfixe et invalider sur un simple début de nom",
+    "Laisser une instruction d'exécution être invalidée par un fichier qu'elle ne copie pas",
+    "Chercher la dernière copie correspondante au lieu de la première dans l'ordre du fichier"
+  ],
+  "variantId": "docker-layer-cache-001",
+  "reviewCards": [
+    "card-docker-cache-invalidation-001-rule",
+    "card-docker-cache-invalidation-001-edge"
+  ],
+  "interviewQuestionId": "interview-docker-cache-invalidation-001",
+  "license": "CC-BY-4.0"
+}

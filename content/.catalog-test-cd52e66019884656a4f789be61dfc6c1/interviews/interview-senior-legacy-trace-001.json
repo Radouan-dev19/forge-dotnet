@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "id": "interview-senior-legacy-trace-001",
+  "version": 1,
+  "title": "Reprendre un calcul hérité sans documentation",
+  "level": "advanced",
+  "durationMinutes": 10,
+  "skills": ["debugging.legacy"],
+  "question": "On vous confie un calcul de solde hérité, sans documentation, avec une operation dont le nom ne dit pas ce qu'elle fait. Comment procedez-vous avant de le modifier ?",
+  "observableCriteria": [
+    "Reconstitue la regle a partir du comportement observe plutot que de supposer l'intention de l'auteur",
+    "Ecrit des tests de caracterisation figeant le comportement avant tout changement",
+    "Identifie l'etat a suivre pour reproduire l'operation ambigue, ici l'annulation de la derniere entree"
+  ],
+  "modelAnswer": "Je ne suppose pas l'intention : je la deduis. Je rassemble des entrees representatives et j'observe la sortie, puis j'ecris des tests de caracterisation qui figent le comportement actuel, y compris les cas limites. Pour une operation dont le nom est trompeur, comme un void, je formule une hypothese, ici qu'il annule l'effet de la derniere entree appliquee et non qu'il remet le solde a zero, et je la confirme sur un cas ou credit et debit se suivent. Je remarque qu'il faut suivre l'effet signe de chaque entree, dans une pile, pour annuler correctement plusieurs operations et pour defaire un debit dans le bon sens. Ce n'est qu'une fois le comportement fige par des tests que je me permets de le modifier, sans casser ce qui tourne deja en production.",
+  "commonMistakes": [
+    "Supposer l'intention de l'auteur au lieu de prouver le comportement par des cas",
+    "Modifier le code avant d'avoir des tests de caracterisation, et casser un comportement en production"
+  ],
+  "variants": [
+    "Comment ecrivez-vous un test de caracterisation quand vous ne connaissez pas encore la sortie attendue ?",
+    "Que faites-vous si deux comportements hérités se contredisent selon l'entree ?"
+  ],
+  "license": "CC-BY-4.0"
+}

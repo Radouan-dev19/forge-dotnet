@@ -1,0 +1,25 @@
+{
+    "schemaVersion":  1,
+    "cases":  [
+                  {
+                      "name":  "Visible_Case1",
+                      "message":  "État annulé présenté comme réussi — cas 1.",
+                      "arguments":  [
+                                        0
+                                    ],
+                      "expected":  "succeeded",
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Visible_Case2",
+                      "message":  "État annulé présenté comme réussi — cas 2.",
+                      "arguments":  [
+                                        1
+                                    ],
+                      "expected":  "cancelled",
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  }
+              ]
+}

@@ -1,0 +1,12 @@
+{
+    "schemaVersion":  1,
+    "suiteId":  "debug-awaited-total-001.v1",
+    "exerciseId":  "debug-awaited-total-001",
+    "exerciseVersion":  1,
+    "typeName":  "Submission",
+    "methodName":  "AwaitedTotal",
+    "parameterTypes":  [
+                           "int[]"
+                       ],
+    "returnType":  "int"
+}

@@ -1,0 +1,12 @@
+{
+    "schemaVersion":  1,
+    "suiteId":  "debug-chronological-001.v1",
+    "exerciseId":  "debug-chronological-001",
+    "exerciseVersion":  1,
+    "typeName":  "Submission",
+    "methodName":  "IsChronological",
+    "parameterTypes":  [
+                           "int[]"
+                       ],
+    "returnType":  "bool"
+}

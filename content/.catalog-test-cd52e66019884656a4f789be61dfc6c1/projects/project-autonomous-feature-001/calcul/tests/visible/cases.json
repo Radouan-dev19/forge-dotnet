@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "cases": [
+    {
+      "name": "Visible_ActivePurchasesAreFloored",
+      "message": "Chaque achat actif rapporte l'entier inférieur de son montant.",
+      "arguments": ["2026-07-01:40.50;2026-08-02:10.99", "2026-08-15"],
+      "expected": 50,
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Visible_ExpiredPurchaseIsExcluded",
+      "message": "Un achat hors de la fenêtre de douze mois civils ne rapporte rien.",
+      "arguments": ["2025-06-30:80.00;2026-01-10:25.75", "2026-08-15"],
+      "expected": 25,
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Visible_EmptyHistoryIsZero",
+      "message": "Un historique vide vaut zéro point, sans erreur.",
+      "arguments": ["", "2026-08-15"],
+      "expected": 0,
+      "argumentsUnchanged": true
+    }
+  ]
+}

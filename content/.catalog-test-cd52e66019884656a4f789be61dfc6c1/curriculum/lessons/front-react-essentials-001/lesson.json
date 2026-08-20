@@ -1,0 +1,37 @@
+{
+    "schemaVersion":  1,
+    "id":  "front-react-essentials-001",
+    "version":  1,
+    "title":  "React : hooks, dépendances d'effet et état dérivé",
+    "week":  26,
+    "skills":  [
+                   {
+                       "id":  "quality.react",
+                       "weight":  1
+                   }
+               ],
+    "prerequisites":  [
+                          "front-state-unidirectional-001",
+                          "front-client-server-contract-001"
+                      ],
+    "estimatedMinutes":  60,
+    "objectives":  [
+                       "Appliquer les règles des hooks, régler correctement le tableau de dépendances d'un effet, distinguer état dérivé et état stocké, et corriger un effet qui reboucle sur une dépendance réallouée à chaque rendu"
+                   ],
+    "sections":  [
+                     "intuition",
+                     "explanation",
+                     "example",
+                     "counterExample",
+                     "check",
+                     "guided",
+                     "independent",
+                     "debugging",
+                     "interview",
+                     "summary",
+                     "reviewCards",
+                     "masteryTest"
+                 ],
+    "markdownPath":  "lesson.md",
+    "license":  "CC-BY-4.0"
+}

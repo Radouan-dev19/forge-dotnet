@@ -1,0 +1,47 @@
+{
+  "schemaVersion": 1,
+  "cases": [
+    {
+      "name": "Hidden_UnknownKindIsRefused",
+      "message": "Une nature hors vocabulaire rendrait l'inventaire incomplet en silence : le flux est refusé.",
+      "arguments": ["result;mood"],
+      "expectedException": "ArgumentException",
+      "argumentsUnchanged": false
+    },
+    {
+      "name": "Hidden_EmptyInventoryIsRefused",
+      "message": "Un flux vide ne décrit aucune suite : il n'y a rien à trier.",
+      "arguments": [""],
+      "expectedException": "ArgumentException",
+      "argumentsUnchanged": false
+    },
+    {
+      "name": "Hidden_RepeatedSpiesAllDisappear",
+      "message": "Deux comptages d'appels tombent tous les deux ; seul le résultat reste.",
+      "arguments": ["calls;calls;result"],
+      "expected": "result",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_MixedFlowKeepsOriginalOrder",
+      "message": "Les trois natures du contrat ressortent dans leur ordre d'apparition, pas triées.",
+      "arguments": ["state;order;result;private-state;error-contract"],
+      "expected": "state;result;error-contract",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_AllFourMechanicsVanish",
+      "message": "Espion, ordre, champ privé et chronomètre : rien de tout cela ne survit au remaniement.",
+      "arguments": ["timing;calls;order;private-state"],
+      "expected": "",
+      "argumentsUnchanged": true
+    },
+    {
+      "name": "Hidden_LegitimateRepetitionIsPreserved",
+      "message": "Deux assertions de résultat distinctes partagent la même nature : la répétition est conservée.",
+      "arguments": ["result;result"],
+      "expected": "result;result",
+      "argumentsUnchanged": true
+    }
+  ]
+}

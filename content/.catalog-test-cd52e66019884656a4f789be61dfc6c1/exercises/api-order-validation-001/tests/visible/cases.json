@@ -1,0 +1,32 @@
+{
+    "schemaVersion":  1,
+    "cases":  [
+                  {
+                      "name":  "Visible_Case1",
+                      "message":  "Valider une quantité de commande — cas 1 incorrect.",
+                      "arguments":  [
+                                        1
+                                    ],
+                      "expected":  "valid",
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Visible_Case2",
+                      "message":  "Valider une quantité de commande — cas 2 incorrect.",
+                      "arguments":  [
+                                        0
+                                    ],
+                      "expected":  "required",
+                      "expectedException":  null,
+                      "argumentsUnchanged":  false
+                  },
+                  {
+                      "name":  "Visible_UpperBound",
+                      "message":  "Quantité exactement à la borne haute : acceptée.",
+                      "arguments":  [100],
+                      "expected":  "valid",
+                      "argumentsUnchanged":  true
+                  }
+              ]
+}

@@ -1,0 +1,13 @@
+{
+    "schemaVersion":  1,
+    "suiteId":  "structures-window-sums-001.v1",
+    "exerciseId":  "structures-window-sums-001",
+    "exerciseVersion":  1,
+    "typeName":  "Submission",
+    "methodName":  "WindowSums",
+    "parameterTypes":  [
+                           "int[]",
+                           "int"
+                       ],
+    "returnType":  "int[]"
+}
