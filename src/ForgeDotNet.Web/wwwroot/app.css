@@ -1,27 +1,489 @@
+/* ==========================================================================
+   Forge.NET — feuille de style applicative
+   Identité : atelier calme, encre marine, accent forge (ambre) et acier (teal).
+   Chaque classe historique est conservée : seuls les rendus changent.
+   ========================================================================== */
+
+:root {
+    --ink-900: #0b1f33;
+    --ink-800: #102a43;
+    --ink-700: #243b53;
+    --ink-600: #334e68;
+    --ink-500: #486581;
+    --ink-400: #627d98;
+    --ink-300: #829ab1;
+    --ink-200: #bcccdc;
+    --ink-100: #d9e2ec;
+    --ink-050: #f0f4f8;
+    --paper: #ffffff;
+    --canvas: #f5f7fb;
+    --teal-700: #0b7285;
+    --teal-600: #0e8aa0;
+    --teal-050: #e3fafc;
+    --amber-500: #f0b429;
+    --amber-600: #de911d;
+    --amber-050: #fff8e1;
+    --green-700: #176b3a;
+    --green-050: #e6f7ed;
+    --red-700: #c92a2a;
+    --red-800: #7d1a1a;
+    --red-050: #ffe9e9;
+    --radius-lg: .9rem;
+    --radius-md: .6rem;
+    --radius-sm: .4rem;
+    --shadow-sm: 0 1px 2px rgba(16, 42, 67, .06), 0 1px 1px rgba(16, 42, 67, .04);
+    --shadow-md: 0 2px 6px rgba(16, 42, 67, .08), 0 8px 24px -12px rgba(16, 42, 67, .18);
+    --font-sans: "Segoe UI Variable Text", "Segoe UI", system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
+    --font-mono: "Cascadia Code", Consolas, "Courier New", monospace;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+
+    *, *::before, *::after {
+        animation-duration: .01ms !important;
+        transition-duration: .01ms !important;
+    }
+}
+
 html, body {
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-family: var(--font-sans);
 }
 
-a, .btn-link {
-    color: #006bb7;
+body {
+    background:
+        radial-gradient(60rem 24rem at 85% -8rem, rgba(11, 114, 133, .07), transparent 65%),
+        radial-gradient(48rem 20rem at -10% -6rem, rgba(240, 180, 41, .08), transparent 60%),
+        var(--canvas);
+    color: var(--ink-800);
+    line-height: 1.6;
 }
 
-.btn-primary {
-    color: #fff;
-    background-color: #1b6ec2;
-    border-color: #1861ac;
-}
+/* --------------------------------------------------------------------------
+   Typographie
+   -------------------------------------------------------------------------- */
 
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
-}
-
-.content {
-    padding-top: 1.1rem;
+h1 {
+    font-size: clamp(1.9rem, 4.5vw, 2.9rem);
+    font-weight: 750;
+    letter-spacing: -.02em;
+    line-height: 1.15;
+    margin-bottom: 1rem;
 }
 
 h1:focus {
     outline: none;
+}
+
+h2 {
+    font-size: 1.35rem;
+    font-weight: 700;
+    letter-spacing: -.01em;
+}
+
+h3 {
+    font-size: 1.1rem;
+    font-weight: 700;
+}
+
+p {
+    max-width: 72ch;
+}
+
+a, .btn-link {
+    color: var(--teal-700);
+    text-decoration-thickness: 1px;
+    text-underline-offset: 2px;
+}
+
+a:hover {
+    color: var(--teal-600);
+}
+
+/* Un titre de section de carte porte une barre d'accent discrète. */
+.hero h2,
+.info-panel > h2,
+.practice-panel > h2,
+.quiz-panel > h2,
+.note-panel > h2,
+.reading-progress > h2 {
+    align-items: center;
+    display: flex;
+    gap: .6rem;
+    margin-bottom: .85rem;
+}
+
+.hero h2::before,
+.info-panel > h2::before,
+.practice-panel > h2::before,
+.quiz-panel > h2::before,
+.note-panel > h2::before,
+.reading-progress > h2::before {
+    background: linear-gradient(180deg, var(--amber-500), var(--teal-700));
+    border-radius: 2px;
+    content: "";
+    display: inline-block;
+    flex: none;
+    height: 1.15em;
+    width: .3rem;
+}
+
+/* --------------------------------------------------------------------------
+   Boutons
+   -------------------------------------------------------------------------- */
+
+.btn {
+    border-radius: .55rem;
+    font-weight: 600;
+    padding: .55rem 1.1rem;
+    transition: transform .08s ease, box-shadow .15s ease, background-color .15s ease;
+}
+
+.btn:active {
+    transform: translateY(1px);
+}
+
+.btn-primary {
+    background: linear-gradient(180deg, #16558f, var(--ink-800));
+    border: 1px solid var(--ink-900);
+    box-shadow: var(--shadow-sm), inset 0 1px 0 rgba(255, 255, 255, .12);
+    color: #fff;
+}
+
+.btn-primary:hover {
+    background: linear-gradient(180deg, #1b6ec2, #163f66);
+    border-color: var(--ink-900);
+}
+
+.btn-outline-secondary,
+.btn-secondary {
+    background: var(--paper);
+    border: 1px solid var(--ink-300);
+    color: var(--ink-700);
+}
+
+.btn-outline-secondary:hover,
+.btn-secondary:hover {
+    background: var(--ink-050);
+    border-color: var(--ink-500);
+    color: var(--ink-900);
+}
+
+.btn-outline-primary {
+    background: var(--paper);
+    border: 1px solid var(--teal-700);
+    color: var(--teal-700);
+}
+
+.btn-outline-primary:hover {
+    background: var(--teal-050);
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+    box-shadow: 0 0 0 .1rem #fff, 0 0 0 .25rem var(--amber-500);
+}
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+summary:focus-visible {
+    box-shadow: 0 0 0 5px var(--ink-800);
+    outline: 3px solid var(--amber-500);
+    outline-offset: 2px;
+}
+
+/* --------------------------------------------------------------------------
+   Cartes et panneaux — toutes les familles historiques partagent le rendu
+   -------------------------------------------------------------------------- */
+
+.hero,
+.info-panel,
+.practice-panel,
+.reader-search,
+.reader-library-header,
+.reader-module,
+.lesson-header,
+.reading-progress,
+.quiz-panel,
+.note-panel,
+.lesson-toc,
+.lesson-section,
+.diagnostic-intro,
+.diagnostic-resume,
+.diagnostic-start,
+.diagnostic-coverage,
+.diagnostic-history,
+.diagnostic-status,
+.diagnostic-timer,
+.diagnostic-action-panel,
+.diagnostic-terminal,
+.diagnostic-evaluation-summary,
+.diagnostic-evaluation-details,
+.diagnostic-evaluation-gaps,
+.diagnostic-evaluation-reliability,
+.diagnostic-evaluation-limits,
+.weekly-plan-summary,
+.weekly-plan-recommendations,
+.weekly-plan-adjustment,
+.weekly-plan-accepted,
+.weekly-plan-weeks,
+.weekly-plan-limits {
+    background: var(--paper);
+    border: 1px solid var(--ink-100);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    margin-bottom: 1.4rem;
+    padding: clamp(1.1rem, 3vw, 1.9rem);
+}
+
+/* Une carte imbriquée dans une carte s'aplatit pour éviter l'effet mille-feuille. */
+.practice-panel .practice-panel,
+.info-panel .info-panel {
+    background: linear-gradient(180deg, #fbfcfe, var(--paper));
+    border: 1px solid var(--ink-100);
+    box-shadow: none;
+}
+
+.hero {
+    background:
+        radial-gradient(38rem 16rem at 110% -20%, rgba(240, 180, 41, .16), transparent 60%),
+        linear-gradient(160deg, var(--paper) 55%, #eef6f8);
+    border: 1px solid var(--ink-100);
+    padding: clamp(1.6rem, 5vw, 3rem);
+}
+
+.eyebrow {
+    color: var(--teal-700);
+    font-size: .82rem;
+    font-weight: 700;
+    letter-spacing: .09em;
+    text-transform: uppercase;
+}
+
+.actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .75rem;
+    margin-top: 1.4rem;
+}
+
+/* --------------------------------------------------------------------------
+   Accueil — vitrine
+   -------------------------------------------------------------------------- */
+
+.home-highlights {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+    list-style: none;
+    margin: 0 0 1.4rem;
+    padding: 0;
+}
+
+.home-highlights li {
+    background: var(--paper);
+    border: 1px solid var(--ink-100);
+    border-radius: var(--radius-lg);
+    border-top: 3px solid var(--teal-700);
+    box-shadow: var(--shadow-sm);
+    padding: 1.1rem 1.25rem;
+}
+
+.home-highlights li:nth-child(2) {
+    border-top-color: var(--amber-500);
+}
+
+.home-highlights li:nth-child(3) {
+    border-top-color: var(--ink-600);
+}
+
+.home-highlights h3 {
+    margin-bottom: .35rem;
+}
+
+.home-highlights p {
+    color: var(--ink-600);
+    font-size: .95rem;
+    margin: 0;
+}
+
+.home-map {
+    display: grid;
+    gap: .75rem;
+    grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
+    list-style: none;
+    margin: .5rem 0 0;
+    padding: 0;
+}
+
+.home-map a {
+    background: var(--paper);
+    border: 1px solid var(--ink-100);
+    border-radius: var(--radius-md);
+    display: block;
+    font-weight: 650;
+    padding: .8rem 1rem;
+    text-decoration: none;
+    transition: border-color .15s ease, box-shadow .15s ease, transform .12s ease;
+}
+
+.home-map a:hover {
+    border-color: var(--teal-600);
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+}
+
+.home-map .home-map-hint {
+    color: var(--ink-500);
+    display: block;
+    font-size: .85rem;
+    font-weight: 400;
+    margin-top: .15rem;
+}
+
+/* --------------------------------------------------------------------------
+   Listes d'items — leçons, exercices, historiques, priorités
+   -------------------------------------------------------------------------- */
+
+.summary-list {
+    display: grid;
+    gap: .5rem 1rem;
+    grid-template-columns: minmax(10rem, 1fr) 2fr;
+}
+
+.summary-list dt {
+    color: var(--ink-600);
+    font-weight: 700;
+}
+
+.lesson-list,
+.practice-exercise-list,
+.practice-history {
+    display: grid;
+    gap: .8rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.lesson-list li,
+.practice-exercise-list li,
+.practice-history li {
+    background: linear-gradient(90deg, rgba(11, 114, 133, .05), transparent 12rem);
+    border: 1px solid var(--ink-100);
+    border-left: .3rem solid var(--teal-700);
+    border-radius: var(--radius-md);
+    min-width: 0;
+    padding: .85rem 1.1rem;
+    transition: border-color .15s ease, box-shadow .15s ease, transform .12s ease;
+}
+
+.lesson-list li:hover,
+.practice-exercise-list li:hover {
+    border-left-color: var(--amber-500);
+    box-shadow: var(--shadow-md);
+    transform: translateX(2px);
+}
+
+.lesson-list a,
+.practice-exercise-list a {
+    font-size: 1.1rem;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.lesson-list a:hover,
+.practice-exercise-list a:hover {
+    text-decoration: underline;
+}
+
+.lesson-meta {
+    color: var(--ink-500);
+    font-size: .9rem;
+}
+
+.weekly-plan-priorities,
+.weekly-plan-week-list {
+    display: grid;
+    gap: .8rem;
+    padding-left: 1.5rem;
+}
+
+.weekly-plan-priorities > li,
+.weekly-plan-week-list > li {
+    background: #fbfcfe;
+    border: 1px solid var(--ink-100);
+    border-left: .3rem solid var(--teal-700);
+    border-radius: var(--radius-sm);
+    padding: .75rem 1rem;
+}
+
+.weekly-plan-priorities h3 {
+    font-size: 1.02rem;
+}
+
+.diagnostic-domain-results {
+    display: grid;
+    gap: .8rem;
+    grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+    list-style: none;
+    padding: 0;
+}
+
+.diagnostic-domain-results li {
+    background: #fbfcfe;
+    border: 1px solid var(--ink-100);
+    border-left: .3rem solid var(--teal-700);
+    border-radius: var(--radius-sm);
+    padding: .75rem 1rem;
+}
+
+.diagnostic-domain-results h3 {
+    font-size: 1.02rem;
+}
+
+/* --------------------------------------------------------------------------
+   Messages d'état
+   -------------------------------------------------------------------------- */
+
+.notice {
+    background: var(--amber-050);
+    border: 1px solid #ffe08a;
+    border-left: .3rem solid var(--amber-600);
+    border-radius: var(--radius-sm);
+    padding: .85rem 1rem;
+}
+
+.error-message {
+    background: var(--red-050);
+    border: 1px solid #ffc9c9;
+    border-left: .3rem solid var(--red-700);
+    border-radius: var(--radius-sm);
+    color: var(--red-800);
+    padding: .85rem 1rem;
+}
+
+.success-message {
+    background: var(--green-050);
+    border: 1px solid #b7e4c7;
+    border-left: .3rem solid var(--green-700);
+    border-radius: var(--radius-sm);
+    color: var(--green-700);
+    font-weight: 650;
+    margin-top: 1rem;
+    padding: .7rem 1rem;
+}
+
+.validation-message {
+    color: #e50000;
 }
 
 .valid.modified:not([type=checkbox]) {
@@ -32,93 +494,38 @@ h1:focus {
     outline: 1px solid #e50000;
 }
 
-.validation-message {
-    color: #e50000;
+.field-help {
+    color: var(--ink-500);
+    font-size: .92rem;
 }
 
-.blazor-error-boundary {
-    background: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNTYiIGhlaWdodD0iNDkiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIG92ZXJmbG93PSJoaWRkZW4iPjxkZWZzPjxjbGlwUGF0aCBpZD0iY2xpcDAiPjxyZWN0IHg9IjIzNSIgeT0iNTEiIHdpZHRoPSI1NiIgaGVpZ2h0PSI0OSIvPjwvY2xpcFBhdGg+PC9kZWZzPjxnIGNsaXAtcGF0aD0idXJsKCNjbGlwMCkiIHRyYW5zZm9ybT0idHJhbnNsYXRlKC0yMzUgLTUxKSI+PHBhdGggZD0iTTI2My41MDYgNTFDMjY0LjcxNyA1MSAyNjUuODEzIDUxLjQ4MzcgMjY2LjYwNiA1Mi4yNjU4TDI2Ny4wNTIgNTIuNzk4NyAyNjcuNTM5IDUzLjYyODMgMjkwLjE4NSA5Mi4xODMxIDI5MC41NDUgOTIuNzk1IDI5MC42NTYgOTIuOTk2QzI5MC44NzcgOTMuNTEzIDI5MSA5NC4wODE1IDI5MSA5NC42NzgyIDI5MSA5Ny4wNjUxIDI4OS4wMzggOTkgMjg2LjYxNyA5OUwyNDAuMzgzIDk5QzIzNy45NjMgOTkgMjM2IDk3LjA2NTEgMjM2IDk0LjY3ODIgMjM2IDk0LjM3OTkgMjM2LjAzMSA5NC4wODg2IDIzNi4wODkgOTMuODA3MkwyMzYuMzM4IDkzLjAxNjIgMjM2Ljg1OCA5Mi4xMzE0IDI1OS40NzMgNTMuNjI5NCAyNTkuOTYxIDUyLjc5ODUgMjYwLjQwNyA1Mi4yNjU4QzI2MS4yIDUxLjQ4MzcgMjYyLjI5NiA1MSAyNjMuNTA2IDUxWk0yNjMuNTg2IDY2LjAxODNDMjYwLjczNyA2Ni4wMTgzIDI1OS4zMTMgNjcuMTI0NSAyNTkuMzEzIDY5LjMzNyAyNTkuMzEzIDY5LjYxMDIgMjU5LjMzMiA2OS44NjA4IDI1OS4zNzEgNzAuMDg4N0wyNjEuNzk1IDg0LjAxNjEgMjY1LjM4IDg0LjAxNjEgMjY3LjgyMSA2OS43NDc1QzI2Ny44NiA2OS43MzA5IDI2Ny44NzkgNjkuNTg3NyAyNjcuODc5IDY5LjMxNzkgMjY3Ljg3OSA2Ny4xMTgyIDI2Ni40NDggNjYuMDE4MyAyNjMuNTg2IDY2LjAxODNaTTI2My41NzYgODYuMDU0N0MyNjEuMDQ5IDg2LjA1NDcgMjU5Ljc4NiA4Ny4zMDA1IDI1OS43ODYgODkuNzkyMSAyNTkuNzg2IDkyLjI4MzcgMjYxLjA0OSA5My41Mjk1IDI2My41NzYgOTMuNTI5NSAyNjYuMTE2IDkzLjUyOTUgMjY3LjM4NyA5Mi4yODM3IDI2Ny4zODcgODkuNzkyMSAyNjcuMzg3IDg3LjMwMDUgMjY2LjExNiA4Ni4wNTQ3IDI2My41NzYgODYuMDU0N1oiIGZpbGw9IiNGRkU1MDAiIGZpbGwtcnVsZT0iZXZlbm9kZCIvPjwvZz48L3N2Zz4=) no-repeat 1rem/1.8rem, #b32121;
-    padding: 1rem 1rem 1rem 3.7rem;
-    color: white;
-}
-
-    .blazor-error-boundary::after {
-        content: "An error has occurred."
-    }
-
-.darker-border-checkbox.form-check-input {
-    border-color: #929292;
-}
-
-body {
-    background: #f7f9fc;
-    color: #102a43;
-}
-
-a:focus-visible,
-button:focus-visible,
-input:focus-visible,
-select:focus-visible,
-textarea:focus-visible {
-    outline: 3px solid #f0b429;
-    outline-offset: 2px;
-    box-shadow: 0 0 0 5px #102a43;
-}
-
-h1 {
-    font-size: clamp(2rem, 5vw, 3.25rem);
-    margin-bottom: 1rem;
-}
-
-h2 {
-    font-size: 1.4rem;
-}
-
-.hero,
-.info-panel {
-    background: #fff;
-    border: 1px solid #bcccdc;
-    border-radius: .65rem;
-    margin-bottom: 1.5rem;
-    padding: clamp(1.25rem, 4vw, 2.5rem);
-}
-
-.eyebrow {
-    color: #0b7285;
-    font-weight: 700;
-    letter-spacing: .04em;
-    text-transform: uppercase;
-}
-
-.actions {
-    display: flex;
-    flex-wrap: wrap;
-    gap: .75rem;
-    margin-top: 1.5rem;
-}
-
-.summary-list {
-    display: grid;
-    gap: .5rem 1rem;
-    grid-template-columns: minmax(10rem, 1fr) 2fr;
-}
-
-.summary-list dt {
+.completion-label {
+    color: var(--green-700);
     font-weight: 700;
 }
 
-.notice {
-    background: #fff3bf;
-    border-left: .3rem solid #e67700;
-    padding: .85rem 1rem;
-}
+/* --------------------------------------------------------------------------
+   Formulaires
+   -------------------------------------------------------------------------- */
 
 form {
-    background: #fff;
-    border: 1px solid #bcccdc;
-    border-radius: .65rem;
+    background: var(--paper);
+    border: 1px solid var(--ink-100);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
     max-width: 48rem;
     padding: clamp(1.25rem, 4vw, 2rem);
+}
+
+/* Un formulaire déjà posé dans une carte ne rajoute pas sa propre carte. */
+.practice-panel form,
+.quiz-panel form,
+.weekly-plan-adjustment form,
+.info-panel form {
+    border: none;
+    box-shadow: none;
+    max-width: none;
+    padding: 0;
 }
 
 .form-field {
@@ -134,18 +541,34 @@ legend {
 
 .form-field input,
 .form-field select,
-.form-field textarea {
-    border: 1px solid #829ab1;
-    border-radius: .35rem;
-    padding: .65rem;
+.form-field textarea,
+.note-panel textarea,
+.search-row input {
+    background: #fbfcfe;
+    border: 1px solid var(--ink-300);
+    border-radius: var(--radius-sm);
+    padding: .65rem .75rem;
+    transition: border-color .15s ease, background-color .15s ease;
     width: 100%;
 }
 
+.form-field input:hover,
+.form-field select:hover,
+.form-field textarea:hover {
+    border-color: var(--ink-500);
+}
+
+.form-field input:focus,
+.form-field select:focus,
+.form-field textarea:focus {
+    background: #fff;
+}
+
 fieldset {
-    border: 1px solid #bcccdc;
-    border-radius: .35rem;
+    border: 1px solid var(--ink-200);
+    border-radius: var(--radius-md);
     margin: 1.5rem 0;
-    padding: 1rem;
+    padding: 1rem 1.15rem;
 }
 
 .checkbox-field {
@@ -154,38 +577,13 @@ fieldset {
     gap: .65rem;
 }
 
-.field-help {
-    color: #486581;
-    font-size: .95rem;
+.darker-border-checkbox.form-check-input {
+    border-color: #929292;
 }
 
-.success-message {
-    color: #176b3a;
-    font-weight: 700;
-    margin-top: 1rem;
-}
-
-.error-message {
-    background: #ffe3e3;
-    border-left: .3rem solid #c92a2a;
-    color: #7d1a1a;
-    padding: .85rem 1rem;
-}
-
-.reader-search,
-.reader-library-header,
-.reader-module,
-.lesson-header,
-.reading-progress,
-.quiz-panel,
-.note-panel {
-    background: #fff;
-    border: 1px solid #bcccdc;
-    border-radius: .65rem;
-    margin-bottom: 1.5rem;
-    max-width: none;
-    padding: clamp(1rem, 3vw, 1.75rem);
-}
+/* --------------------------------------------------------------------------
+   Lecteur de leçon
+   -------------------------------------------------------------------------- */
 
 .reader-search label,
 .note-panel label {
@@ -200,34 +598,8 @@ fieldset {
 }
 
 .search-row input {
-    border: 1px solid #829ab1;
-    border-radius: .35rem;
     flex: 1;
     min-width: 0;
-    padding: .65rem;
-}
-
-.lesson-list {
-    display: grid;
-    gap: 1rem;
-    list-style: none;
-    margin: 0;
-    padding: 0;
-}
-
-.lesson-list li {
-    border-left: .3rem solid #0b7285;
-    padding-left: 1rem;
-}
-
-.lesson-list a {
-    font-size: 1.15rem;
-    font-weight: 700;
-}
-
-.lesson-meta {
-    color: #486581;
-    font-size: .9rem;
 }
 
 .reading-progress {
@@ -235,8 +607,11 @@ fieldset {
     gap: .5rem;
 }
 
-.reading-progress progress {
-    height: 1.25rem;
+progress {
+    accent-color: var(--teal-700);
+    border-radius: 999px;
+    height: .9rem;
+    overflow: hidden;
     width: min(100%, 35rem);
 }
 
@@ -248,10 +623,8 @@ fieldset {
 }
 
 .lesson-toc {
-    background: #fff;
-    border: 1px solid #bcccdc;
-    border-radius: .65rem;
-    padding: 1rem;
+    margin-bottom: 0;
+    padding: 1rem 1.15rem;
     position: sticky;
     top: 1rem;
 }
@@ -259,7 +632,18 @@ fieldset {
 .lesson-toc ol {
     display: grid;
     gap: .35rem;
+    margin: 0;
     padding-left: 1.4rem;
+}
+
+.lesson-toc a {
+    color: var(--ink-600);
+    text-decoration: none;
+}
+
+.lesson-toc a:hover {
+    color: var(--teal-700);
+    text-decoration: underline;
 }
 
 .lesson-content {
@@ -267,49 +651,12 @@ fieldset {
 }
 
 .lesson-section {
-    background: #fff;
-    border: 1px solid #d9e2ec;
-    border-radius: .65rem;
-    margin-bottom: 1.25rem;
-    padding: clamp(1rem, 3vw, 2rem);
     scroll-margin-top: 1rem;
 }
 
 .lesson-section:focus {
-    outline: 3px solid #f0b429;
+    outline: 3px solid var(--amber-500);
     outline-offset: 2px;
-}
-
-.lesson-section pre {
-    background: #102a43;
-    border-radius: .4rem;
-    color: #f0f4f8;
-    max-width: 100%;
-    overflow-x: auto;
-    padding: 1rem;
-}
-
-.completion-label {
-    color: #176b3a;
-    font-weight: 700;
-}
-
-.quiz-panel fieldset {
-    margin-top: 0;
-}
-
-.quiz-option {
-    align-items: flex-start;
-    display: flex;
-    gap: .6rem;
-    margin-bottom: .75rem;
-}
-
-.note-panel textarea {
-    border: 1px solid #829ab1;
-    border-radius: .35rem;
-    padding: .65rem;
-    width: 100%;
 }
 
 .lesson-navigation {
@@ -321,124 +668,94 @@ fieldset {
     margin: 2rem 0;
 }
 
-.diagnostic-intro,
-.diagnostic-resume,
-.diagnostic-start,
-.diagnostic-coverage,
-.diagnostic-history,
-.diagnostic-status,
-.diagnostic-timer,
-.diagnostic-action-panel,
-.diagnostic-terminal {
-    background: #fff;
-    border: 1px solid #bcccdc;
-    border-radius: .65rem;
-    margin-bottom: 1.5rem;
-    max-width: 60rem;
-    padding: clamp(1rem, 3vw, 1.75rem);
+.quiz-panel fieldset {
+    margin-top: 0;
 }
 
-.diagnostic-evaluation-summary,
-.diagnostic-evaluation-details,
-.diagnostic-evaluation-gaps,
-.diagnostic-evaluation-reliability,
-.diagnostic-evaluation-limits {
-    background: #fff;
-    border: 1px solid #bcccdc;
-    border-radius: .65rem;
-    margin-bottom: 1.5rem;
-    max-width: 60rem;
-    padding: clamp(1rem, 3vw, 1.75rem);
+.quiz-option,
+.diagnostic-option {
+    align-items: flex-start;
+    border: 1px solid transparent;
+    border-radius: var(--radius-sm);
+    display: flex;
+    gap: .65rem;
+    margin: .4rem 0;
+    padding: .5rem .6rem;
+    transition: background-color .12s ease, border-color .12s ease;
 }
 
-.weekly-plan-summary,
-.weekly-plan-recommendations,
-.weekly-plan-adjustment,
-.weekly-plan-accepted,
-.weekly-plan-weeks,
-.weekly-plan-limits {
-    background: #fff;
-    border: 1px solid #bcccdc;
-    border-radius: .65rem;
-    margin-bottom: 1.5rem;
-    max-width: 70rem;
-    padding: clamp(1rem, 3vw, 1.75rem);
+.quiz-option:hover,
+.diagnostic-option:hover {
+    background: var(--ink-050);
+    border-color: var(--ink-100);
 }
 
-.weekly-plan-priorities,
-.weekly-plan-week-list {
-    display: grid;
-    gap: .85rem;
-    padding-left: 1.5rem;
+.diagnostic-option input,
+.quiz-option input {
+    margin-top: .3rem;
 }
 
-.weekly-plan-priorities > li,
-.weekly-plan-week-list > li {
-    border-left: .3rem solid #0b7285;
-    padding: .75rem 1rem;
+/* --------------------------------------------------------------------------
+   Code et sorties d'exécution
+   -------------------------------------------------------------------------- */
+
+.lesson-section pre,
+.practice-content,
+.runner-output {
+    background: linear-gradient(180deg, #0d2338, var(--ink-800));
+    border: 1px solid #1f3d5c;
+    border-radius: var(--radius-sm);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, .04);
+    color: var(--ink-050);
+    font-family: var(--font-mono);
+    font-size: .92rem;
+    line-height: 1.55;
+    max-width: 100%;
+    overflow-x: auto;
+    padding: 1rem 1.1rem;
 }
 
-.weekly-plan-priorities h3 {
-    font-size: 1.05rem;
+.practice-content,
+.runner-output {
+    white-space: pre-wrap;
 }
 
-.weekly-plan-week-list summary {
-    cursor: pointer;
+.runner-output {
+    max-height: 16rem;
+    overflow: auto;
 }
 
-.weekly-plan-allocation {
-    display: grid;
-    gap: .35rem 1rem;
-    grid-template-columns: minmax(10rem, 1fr) 1fr;
-    max-width: 32rem;
+.code-editor {
+    background: #0f172a;
+    border: 1px solid var(--ink-300);
+    border-radius: var(--radius-sm);
+    color: #e2e8f0;
+    font-family: var(--font-mono);
+    line-height: 1.5;
+    min-height: 12rem;
+    padding: .8rem;
+    tab-size: 4;
+    width: 100%;
 }
 
-.weekly-plan-allocation dt {
-    font-weight: 700;
+code {
+    background: var(--ink-050);
+    border-radius: .25rem;
+    color: var(--ink-800);
+    font-family: var(--font-mono);
+    font-size: .9em;
+    padding: .1em .35em;
 }
 
-.weekly-plan-accept {
-    margin-top: 1rem;
-}
-
-.practice-panel {
-    background: #fff;
-    border: 1px solid #bcccdc;
-    border-radius: .65rem;
-    margin-bottom: 1.5rem;
-    max-width: 70rem;
-    padding: clamp(1rem, 3vw, 1.75rem);
-}
-
-.practice-exercise-list,
-.practice-history {
-    display: grid;
-    gap: 1rem;
-    list-style: none;
+pre code {
+    background: transparent;
+    color: inherit;
     padding: 0;
 }
 
-.practice-exercise-list li,
-.practice-history li {
-    border-left: .3rem solid #0b7285;
-    min-width: 0;
-    padding: .75rem 1rem;
-}
-
-.practice-exercise-list a {
-    font-size: 1.15rem;
-    font-weight: 700;
-}
-
-.practice-content {
-    background: #102a43;
-    border-radius: .4rem;
-    color: #f0f4f8;
-    max-width: 100%;
-    overflow-x: auto;
-    padding: 1rem;
-    white-space: pre-wrap;
-}
+/* --------------------------------------------------------------------------
+   Runner et pratique
+   -------------------------------------------------------------------------- */
 
 .practice-examples,
 .practice-reflection-summary {
@@ -449,11 +766,12 @@ fieldset {
 
 .practice-examples dt,
 .practice-reflection-summary dt {
+    color: var(--ink-600);
     font-weight: 700;
 }
 
 .practice-solution {
-    border-top: 1px solid #bcccdc;
+    border-top: 1px solid var(--ink-100);
     margin-top: 1.25rem;
     padding-top: 1.25rem;
 }
@@ -464,11 +782,12 @@ fieldset {
 }
 
 .runner-result {
-    border: 1px solid #829ab1;
-    border-left: .35rem solid #0b7285;
-    border-radius: .4rem;
+    background: #fbfcfe;
+    border: 1px solid var(--ink-100);
+    border-left: .35rem solid var(--teal-700);
+    border-radius: var(--radius-md);
     min-width: 0;
-    padding: 1rem;
+    padding: 1rem 1.15rem;
 }
 
 .runner-result h4,
@@ -486,38 +805,42 @@ fieldset {
     min-width: 0;
 }
 
-.runner-output {
-    background: #102a43;
-    border-radius: .35rem;
-    color: #f0f4f8;
-    max-height: 16rem;
-    max-width: 100%;
-    overflow: auto;
-    padding: .75rem;
-    white-space: pre-wrap;
+/* --------------------------------------------------------------------------
+   Diagnostic
+   -------------------------------------------------------------------------- */
+
+.diagnostic-intro,
+.diagnostic-resume,
+.diagnostic-start,
+.diagnostic-coverage,
+.diagnostic-history,
+.diagnostic-status,
+.diagnostic-timer,
+.diagnostic-action-panel,
+.diagnostic-terminal,
+.diagnostic-evaluation-summary,
+.diagnostic-evaluation-details,
+.diagnostic-evaluation-gaps,
+.diagnostic-evaluation-reliability,
+.diagnostic-evaluation-limits {
+    max-width: 60rem;
+}
+
+.weekly-plan-summary,
+.weekly-plan-recommendations,
+.weekly-plan-adjustment,
+.weekly-plan-accepted,
+.weekly-plan-weeks,
+.weekly-plan-limits {
+    max-width: 70rem;
 }
 
 .diagnostic-score {
-    color: #0b7285;
+    color: var(--teal-700);
     font-size: clamp(2rem, 8vw, 3.5rem);
+    font-weight: 750;
+    letter-spacing: -.02em;
     margin: .5rem 0 1rem;
-}
-
-.diagnostic-domain-results {
-    display: grid;
-    gap: .8rem;
-    grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
-    list-style: none;
-    padding: 0;
-}
-
-.diagnostic-domain-results li {
-    border-left: .3rem solid #0b7285;
-    padding: .75rem 1rem;
-}
-
-.diagnostic-domain-results h3 {
-    font-size: 1.05rem;
 }
 
 .diagnostic-coverage ul {
@@ -534,20 +857,22 @@ fieldset {
 }
 
 .diagnostic-section-state {
-    background: #fff;
-    border-left: .3rem solid #0b7285;
+    background: var(--paper);
+    border: 1px solid var(--ink-100);
+    border-left: .3rem solid var(--teal-700);
+    border-radius: var(--radius-sm);
     display: grid;
     gap: .25rem;
     padding: .8rem 1rem;
 }
 
 .diagnostic-timer {
-    border-left: .4rem solid #0b7285;
+    border-left: .4rem solid var(--teal-700);
 }
 
 .diagnostic-timer-warning {
-    background: #fff3bf;
-    border-left-color: #e67700;
+    background: var(--amber-050);
+    border-left-color: var(--amber-600);
 }
 
 .diagnostic-question-list {
@@ -557,7 +882,7 @@ fieldset {
 }
 
 .diagnostic-question {
-    background: #fff;
+    background: var(--paper);
     margin: 0;
 }
 
@@ -567,32 +892,116 @@ fieldset {
 }
 
 .diagnostic-question-meta {
-    color: #486581;
+    color: var(--ink-500);
     font-size: .9rem;
     font-weight: 400;
 }
 
-.diagnostic-option {
-    align-items: flex-start;
-    display: flex;
-    gap: .65rem;
-    margin: .75rem 0;
+/* --------------------------------------------------------------------------
+   Tableaux et blocs repliables
+   -------------------------------------------------------------------------- */
+
+.table {
+    border-collapse: separate;
+    border-spacing: 0;
 }
 
-.diagnostic-option input {
-    margin-top: .25rem;
+.table thead th {
+    background: var(--ink-050);
+    border-bottom: 2px solid var(--ink-200);
+    color: var(--ink-700);
+    font-size: .88rem;
+    letter-spacing: .03em;
+    text-transform: uppercase;
 }
+
+.table tbody tr:hover {
+    background: #f2f7fb;
+}
+
+.table td, .table th {
+    border-color: var(--ink-100);
+}
+
+.table-responsive {
+    border: 1px solid var(--ink-100);
+    border-radius: var(--radius-sm);
+}
+
+details > summary {
+    cursor: pointer;
+    font-weight: 600;
+    list-style: none;
+    padding: .35rem 0;
+}
+
+details > summary::-webkit-details-marker {
+    display: none;
+}
+
+details > summary::before {
+    color: var(--teal-700);
+    content: "▸";
+    display: inline-block;
+    margin-right: .5rem;
+    transition: transform .15s ease;
+}
+
+details[open] > summary::before {
+    transform: rotate(90deg);
+}
+
+/* --------------------------------------------------------------------------
+   Divers hérités
+   -------------------------------------------------------------------------- */
+
+.content {
+    padding-top: 1.1rem;
+}
+
+.weekly-plan-allocation {
+    display: grid;
+    gap: .35rem 1rem;
+    grid-template-columns: minmax(10rem, 1fr) 1fr;
+    max-width: 32rem;
+}
+
+.weekly-plan-allocation dt {
+    color: var(--ink-600);
+    font-weight: 700;
+}
+
+.weekly-plan-accept {
+    margin-top: 1rem;
+}
+
+.blazor-error-boundary {
+    background: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNTYiIGhlaWdodD0iNDkiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIG92ZXJmbG93PSJoaWRkZW4iPjxkZWZzPjxjbGlwUGF0aCBpZD0iY2xpcDAiPjxyZWN0IHg9IjIzNSIgeT0iNTEiIHdpZHRoPSI1NiIgaGVpZ2h0PSI0OSIvPjwvY2xpcFBhdGg+PC9kZWZzPjxnIGNsaXAtcGF0aD0idXJsKCNjbGlwMCkiIHRyYW5zZm9ybT0idHJhbnNsYXRlKC0yMzUgLTUxKSI+PHBhdGggZD0iTTI2My41MDYgNTFDMjY0LjcxNyA1MSAyNjUuODEzIDUxLjQ4MzcgMjY2LjYwNiA1Mi4yNjU4TDI2Ny4wNTIgNTIuNzk4NyAyNjcuNTM5IDUzLjYyODMgMjkwLjE4NSA5Mi4xODMxIDI5MC41NDUgOTIuNzk1IDI5MC42NTYgOTIuOTk2QzI5MC44NzcgOTMuNTEzIDI5MSA5NC4wODE1IDI5MSA5NC42NzgyIDI5MSA5Ny4wNjUxIDI4OS4wMzggOTkgMjg2LjYxNyA5OUwyNDAuMzgzIDk5QzIzNy45NjMgOTkgMjM2IDk3LjA2NTEgMjM2IDk0LjY3ODIgMjM2IDk0LjM3OTkgMjM2LjAzMSA5NC4wODg2IDIzNi4wODkgOTMuODA3MkwyMzYuMzM4IDkzLjAxNjIgMjM2Ljg1OCA5Mi4xMzE0IDI1OS40NzMgNTMuNjI5NCAyNTkuOTYxIDUyLjc5ODUgMjYwLjQwNyA1Mi4yNjU4QzI2MS4yIDUxLjQ4MzcgMjYyLjI5NiA1MSAyNjMuNTA2IDUxWk0yNjMuNTg2IDY2LjAxODNDMjYwLjczNyA2Ni4wMTgzIDI1OS4zMTMgNjcuMTI0NSAyNTkuMzEzIDY5LjMzNyAyNTkuMzEzIDY5LjYxMDIgMjU5LjMzMiA2OS44NjA4IDI1OS4zNzEgNzAuMDg4N0wyNjEuNzk1IDg0LjAxNjEgMjY1LjM4IDg0LjAxNjEgMjY3LjgyMSA2OS43NDc1QzI2Ny44NiA2OS43MzA5IDI2Ny44NzkgNjkuNTg3NyAyNjcuODc5IDY5LjMxNzkgMjY3Ljg3OSA2Ny4xMTgyIDI2Ni40NDggNjYuMDE4MyAyNjMuNTg2IDY2LjAxODNaTTI2My41NzYgODYuMDU0N0MyNjEuMDQ5IDg2LjA1NDcgMjU5Ljc4NiA4Ny4zMDA1IDI1OS43ODYgODkuNzkyMSAyNTkuNzg2IDkyLjI4MzcgMjYxLjA0OSA5My41Mjk1IDI2My41NzYgOTMuNTI5NSAyNjYuMTE2IDkzLjUyOTUgMjY3LjM4NyA5Mi4yODM3IDI2Ny4zODcgODkuNzkyMSAyNjcuMzg3IDg3LjMwMDUgMjY2LjExNiA4Ni4wNTQ3IDI2My41NzYgODYuMDU0N1oiIGZpbGw9IiNGRkU1MDAiIGZpbGwtcnVsZT0iZXZlbm9kZCIvPjwvZz48L3N2Zz4=) no-repeat 1rem/1.8rem, #b32121;
+    color: white;
+    padding: 1rem 1rem 1rem 3.7rem;
+}
+
+    .blazor-error-boundary::after {
+        content: "An error has occurred.";
+    }
+
+.form-floating > .form-control-plaintext::placeholder, .form-floating > .form-control::placeholder {
+    color: var(--bs-secondary-color);
+    text-align: end;
+}
+
+.form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
+    text-align: start;
+}
+
+/* --------------------------------------------------------------------------
+   Réactif
+   -------------------------------------------------------------------------- */
 
 @media (max-width: 36rem) {
-    .summary-list {
-        grid-template-columns: 1fr;
-    }
-
+    .summary-list,
     .practice-examples,
-    .practice-reflection-summary {
-        grid-template-columns: 1fr;
-    }
-
+    .practice-reflection-summary,
     .runner-stage-grid {
         grid-template-columns: 1fr;
     }
@@ -618,25 +1027,4 @@ fieldset {
     .diagnostic-coverage ul {
         columns: 1;
     }
-}
-
-.form-floating > .form-control-plaintext::placeholder, .form-floating > .form-control::placeholder {
-    color: var(--bs-secondary-color);
-    text-align: end;
-}
-
-.form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
-    text-align: start;
-}
-.code-editor {
-    width: 100%;
-    min-height: 12rem;
-    padding: 0.8rem;
-    border: 1px solid #a9b5c4;
-    border-radius: 0.35rem;
-    background: #0f172a;
-    color: #e2e8f0;
-    font-family: Consolas, "Courier New", monospace;
-    line-height: 1.45;
-    tab-size: 4;
 }

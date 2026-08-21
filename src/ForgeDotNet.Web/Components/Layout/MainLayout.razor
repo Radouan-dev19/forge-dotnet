@@ -4,29 +4,44 @@
 
 <header class="site-header">
     <div class="header-content">
-        <a class="brand" href="/">Forge.NET</a>
+        <a class="brand" href="/"><span class="brand-mark" aria-hidden="true"></span>Forge.NET</a>
         <nav aria-label="Navigation principale">
-            <NavLink href="/" Match="NavLinkMatch.All">Accueil</NavLink>
-            <NavLink href="dashboard">Tableau de bord</NavLink>
-            <NavLink href="learn">Apprendre</NavLink>
-            <NavLink href="learn-senior">Piste senior</NavLink>
-            <NavLink href="practice">Pratiquer</NavLink>
-            <NavLink href="projects">Projets</NavLink>
-            <NavLink href="labs">Laboratoires</NavLink>
-            <NavLink href="debug-lab">DebugLab</NavLink>
-            <NavLink href="sql-lab">SqlLab</NavLink>
-            <NavLink href="mastery">Maîtrise</NavLink>
-            <NavLink href="human-review">Revue humaine</NavLink>
-            <NavLink href="reviews">Révisions</NavLink>
-            <NavLink href="exams">Examens</NavLink>
-            <NavLink href="interviews">Entretiens</NavLink>
-            <NavLink href="english">Anglais</NavLink>
-            <NavLink href="career">Carrière</NavLink>
-            <NavLink href="ai">IA</NavLink>
-            <NavLink href="diagnostic">Diagnostic</NavLink>
-            <NavLink href="profile">Profil</NavLink>
-            <NavLink href="settings">Paramètres</NavLink>
-            <NavLink href="about">À propos</NavLink>
+            <div class="nav-group" role="group" aria-label="Parcours">
+                <span class="nav-group-label" aria-hidden="true">Parcours</span>
+                <NavLink href="/" Match="NavLinkMatch.All">Accueil</NavLink>
+                <NavLink href="learn">Apprendre</NavLink>
+                <NavLink href="learn-senior">Piste senior</NavLink>
+                <NavLink href="diagnostic">Diagnostic</NavLink>
+            </div>
+            <div class="nav-group" role="group" aria-label="Pratique">
+                <span class="nav-group-label" aria-hidden="true">Pratique</span>
+                <NavLink href="practice">Pratiquer</NavLink>
+                <NavLink href="projects">Projets</NavLink>
+                <NavLink href="debug-lab">DebugLab</NavLink>
+                <NavLink href="sql-lab">SqlLab</NavLink>
+                <NavLink href="labs">Laboratoires</NavLink>
+            </div>
+            <div class="nav-group" role="group" aria-label="Mesure">
+                <span class="nav-group-label" aria-hidden="true">Mesure</span>
+                <NavLink href="dashboard">Tableau de bord</NavLink>
+                <NavLink href="mastery">Maîtrise</NavLink>
+                <NavLink href="reviews">Révisions</NavLink>
+                <NavLink href="exams">Examens</NavLink>
+                <NavLink href="human-review">Revue humaine</NavLink>
+            </div>
+            <div class="nav-group" role="group" aria-label="Préparation">
+                <span class="nav-group-label" aria-hidden="true">Préparation</span>
+                <NavLink href="interviews">Entretiens</NavLink>
+                <NavLink href="english">Anglais</NavLink>
+                <NavLink href="career">Carrière</NavLink>
+                <NavLink href="ai">IA</NavLink>
+            </div>
+            <div class="nav-group" role="group" aria-label="Réglages">
+                <span class="nav-group-label" aria-hidden="true">Réglages</span>
+                <NavLink href="profile">Profil</NavLink>
+                <NavLink href="settings">Paramètres</NavLink>
+                <NavLink href="about">À propos</NavLink>
+            </div>
         </nav>
     </div>
 </header>
