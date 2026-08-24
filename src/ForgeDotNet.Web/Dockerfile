@@ -9,14 +9,13 @@ COPY src/ForgeDotNet.Application/ForgeDotNet.Application.csproj src/ForgeDotNet.
 COPY src/ForgeDotNet.Infrastructure/ForgeDotNet.Infrastructure.csproj src/ForgeDotNet.Infrastructure/
 COPY src/ForgeDotNet.CodeRunner/ForgeDotNet.CodeRunner.csproj src/ForgeDotNet.CodeRunner/
 COPY src/ForgeDotNet.Web/ForgeDotNet.Web.csproj src/ForgeDotNet.Web/
-RUN --mount=type=cache,id=forge-dotnet-nuget,target=/root/.nuget/packages \
+RUN --mount=type=cache,id=forge-dotnet-nuget-v2,target=/root/.nuget/packages,sharing=locked \
     dotnet restore src/ForgeDotNet.Web/ForgeDotNet.Web.csproj --disable-parallel
 
 COPY src/ src/
-RUN --mount=type=cache,id=forge-dotnet-nuget,target=/root/.nuget/packages \
+RUN --mount=type=cache,id=forge-dotnet-nuget-v2,target=/root/.nuget/packages,sharing=locked \
     dotnet publish src/ForgeDotNet.Web/ForgeDotNet.Web.csproj \
     --configuration Release \
-    --no-restore \
     --output /app/publish \
     /p:UseAppHost=false
 
