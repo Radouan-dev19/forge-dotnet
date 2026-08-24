@@ -59,4 +59,19 @@ public enum ContentDocumentType
     /// de produire les preuves comptées du parcours.
     /// </remarks>
     AiGuide,
+
+    /// <summary>
+    /// Guide du chapitre Cloud : modèle mental du cloud, panorama Azure, des conteneurs à
+    /// l'orchestration, Kubernetes, et sécurité/coûts.
+    /// </summary>
+    /// <remarks>
+    /// Chapitre volontairement <b>hors parcours</b>, comme le chapitre IA : aucun prérequis, aucune
+    /// semaine, aucun ordre imposé au-delà d'une suggestion de lecture. Le bloc Azure noté (semaines
+    /// 21-22) reste distinct et continue de produire ses preuves de maîtrise par les exercices
+    /// <c>azure-*</c> ; ces guides ne le remplacent pas, ils apportent la vue d'ensemble et couvrent
+    /// Kubernetes, absent du parcours noté. Aucun bac à sable ne peut vérifier l'usage réel d'un
+    /// cloud ou d'un cluster : ces guides ne produisent aucune preuve de maîtrise et chaque page
+    /// l'annonce.
+    /// </remarks>
+    CloudGuide,
 }

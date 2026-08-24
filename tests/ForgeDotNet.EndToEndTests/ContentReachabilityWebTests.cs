@@ -39,6 +39,7 @@ public sealed class ContentReachabilityWebTests(ForgeWebApplicationFactory facto
         [ContentDocumentType.EnglishActivity] = "/english",
         [ContentDocumentType.CareerGuide] = "/career",
         [ContentDocumentType.AiGuide] = "/ai",
+        [ContentDocumentType.CloudGuide] = "/cloud",
     };
 
     [Fact]
@@ -117,6 +118,20 @@ public sealed class ContentReachabilityWebTests(ForgeWebApplicationFactory facto
         Assert.Contains("ne produit de preuve de maîtrise", ai, StringComparison.Ordinal);
         Assert.Contains("sans IA", ai, StringComparison.Ordinal);
         Assert.Contains("hors parcours", ai, StringComparison.Ordinal);
+
+        // Le chapitre Cloud est hors parcours et distinct du bloc Azure noté.
+        string cloud = WebUtility.HtmlDecode(await client.GetStringAsync("/cloud"));
+        foreach (string guideId in new[]
+        {
+            "cloud-fondamentaux-001", "cloud-panorama-azure-001", "cloud-conteneurs-orchestration-001",
+            "cloud-kubernetes-concepts-001", "cloud-kubernetes-managed-aks-001", "cloud-securite-couts-001",
+        })
+        {
+            Assert.Contains($"/cloud/{guideId}", cloud, StringComparison.Ordinal);
+        }
+
+        Assert.Contains("ne produit de preuve de maîtrise", cloud, StringComparison.Ordinal);
+        Assert.Contains("hors parcours", cloud, StringComparison.Ordinal);
     }
 
     /// <summary>
@@ -132,6 +147,22 @@ public sealed class ContentReachabilityWebTests(ForgeWebApplicationFactory facto
 
         Assert.Contains("Le modèle mental : contexte, tokens et coût", html, StringComparison.Ordinal);
         Assert.Contains("ne jamais accepter une", html, StringComparison.Ordinal);
+        Assert.Contains("aucune preuve de maîtrise", html, StringComparison.Ordinal);
+    }
+
+    /// <summary>
+    /// Un guide Cloud servi porte son texte intégral et tient la même frontière que le chapitre IA :
+    /// culture de métier, jamais preuve du parcours.
+    /// </summary>
+    [Fact]
+    public async Task ACloudGuidePageServesItsBodyAndClaimsNoMasteryProof()
+    {
+        using HttpClient client = factory.CreateClient();
+
+        string html = WebUtility.HtmlDecode(await client.GetStringAsync("/cloud/cloud-fondamentaux-001"));
+
+        Assert.Contains("Le cloud en un modèle mental", html, StringComparison.Ordinal);
+        Assert.Contains("IaaS", html, StringComparison.Ordinal);
         Assert.Contains("aucune preuve de maîtrise", html, StringComparison.Ordinal);
     }
 

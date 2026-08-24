@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "id": "cloud-kubernetes-concepts-001",
+  "version": 1,
+  "title": "Kubernetes : les concepts qui comptent",
+  "summary": "Pod, Deployment, Service, Namespace, ConfigMap et Secret expliqués par le problème que chacun résout, et la boucle de réconciliation qui les relie — de quoi lire un cluster sans en avoir déployé un.",
+  "order": 4,
+  "documentPath": "kubernetes-concepts.md",
+  "license": "CC-BY-4.0"
+}

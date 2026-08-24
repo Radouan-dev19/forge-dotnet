@@ -108,6 +108,13 @@ Les 16 critères du prompt maître sont normatifs. Leur preuve prendra la forme 
 
 ## Décisions ouvertes non bloquantes
 
-- Monaco Editor versus éditeur plus léger : mesurer poids, accessibilité et usage hors ligne pendant l'incrément CodeRunner.
 - SQL Server Developer versus image Edge selon architecture hôte : choisir après test sur machines cibles.
 - Export PDF natif versus impression navigateur : commencer par Markdown et impression, ajouter un moteur PDF seulement si nécessaire.
+
+## Décisions tranchées
+
+- **Éditeur de code des exercices (24 août 2026)** : coloration syntaxique par recouvrement
+  (Prism.js vendoré, ~15 Ko) plutôt que Monaco Editor. Monaco aurait remplacé le `<textarea>`
+  `#attempt-submission` par un conteneur non compatible avec `page.FillAsync`, cassant
+  l'automatisation Playwright existante sur les personas de pratique ; le recouvrement garde le
+  vrai `<textarea>` en place et n'a nécessité aucun changement de test.

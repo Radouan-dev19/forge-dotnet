@@ -5,6 +5,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <base href="/" />
+    <script src="@Assets["js/theme.js"]"></script>
     <ResourcePreloader />
     <link rel="stylesheet" href="@Assets["lib/bootstrap/dist/css/bootstrap.min.css"]" />
     <link rel="stylesheet" href="@Assets["app.css"]" />
@@ -17,6 +18,10 @@
 <body>
     <Routes @rendermode="InteractiveServer" />
     <script src="@Assets["manual-download.js"]"></script>
+    <script src="@Assets["lib/prismjs/prism-core.min.js"]"></script>
+    <script src="@Assets["lib/prismjs/prism-clike.min.js"]"></script>
+    <script src="@Assets["lib/prismjs/prism-csharp.min.js"]"></script>
+    <script src="@Assets["js/codeEditor.js"]"></script>
     <script src="@Assets["_framework/blazor.web.js"]"></script>
 </body>
 

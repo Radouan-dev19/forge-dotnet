@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "id": "cloud-fondamentaux-001",
+  "version": 1,
+  "title": "Le cloud en un modèle mental",
+  "summary": "Ce que loue vraiment une facture cloud — du matériel, une plateforme ou une fonction —, pourquoi région et zone de disponibilité ne sont pas des détails, et le compromis permanent entre contrôle et responsabilité opérationnelle.",
+  "order": 1,
+  "documentPath": "fondamentaux.md",
+  "license": "CC-BY-4.0"
+}

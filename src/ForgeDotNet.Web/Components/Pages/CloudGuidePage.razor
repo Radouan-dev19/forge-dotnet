@@ -1,0 +1,52 @@
+@page "/cloud/{GuideId}"
+@using ForgeDotNet.Application.Preparation
+@using ForgeDotNet.Domain.Cloud
+@inject ICloudGuideSource Guides
+
+<PageTitle>@(_guide?.Title ?? "Guide Cloud") — Forge.NET</PageTitle>
+
+@if (_error is not null)
+{
+    <p class="error-message" role="alert">@_error</p>
+}
+else if (_guide is null)
+{
+    <p role="status">Chargement du guide…</p>
+}
+else
+{
+    <h1>@_guide.Title</h1>
+    <p>@_guide.Summary</p>
+    <p class="notice" role="status">
+        Ce guide ne produit aucune preuve de maîtrise. Il outille votre culture cloud hors des preuves
+        du parcours : le bloc Azure noté garde ses propres exercices et son propre examen.
+    </p>
+
+    <section class="practice-panel" aria-labelledby="cloud-guide-body-title">
+        <h2 id="cloud-guide-body-title">Guide</h2>
+        <pre class="runner-output">@_guide.Body</pre>
+    </section>
+
+    <p><a href="/cloud">Retour au chapitre Cloud</a></p>
+}
+
+@code {
+    [Parameter]
+    public string GuideId { get; set; } = string.Empty;
+
+    private CloudGuide? _guide;
+    private string? _error;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        try
+        {
+            _guide = await Guides.GetAsync(GuideId);
+            _error = _guide is null ? "Guide Cloud introuvable." : null;
+        }
+        catch (Exception exception) when (exception is InvalidDataException or InvalidOperationException)
+        {
+            _error = exception.Message;
+        }
+    }
+}

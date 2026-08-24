@@ -1,5 +1,6 @@
 using ForgeDotNet.Domain.Ai;
 using ForgeDotNet.Domain.Career;
+using ForgeDotNet.Domain.Cloud;
 using ForgeDotNet.Domain.English;
 using ForgeDotNet.Domain.Interviews;
 
@@ -61,4 +62,19 @@ public interface IAiGuideSource
     ValueTask<IReadOnlyList<AiGuide>> ListAsync(CancellationToken cancellationToken = default);
 
     ValueTask<AiGuide?> GetAsync(string guideId, CancellationToken cancellationToken = default);
+}
+
+/// <summary>
+/// Guides du chapitre Cloud : Azure, conteneurs, Kubernetes — à lire selon les besoins, hors parcours.
+/// </summary>
+/// <remarks>
+/// Même famille que les autres contenus de préparation : le runner n'ayant pas de réseau par
+/// conception, aucun usage de cloud réel n'est vérifiable — ces guides ne produisent donc aucune
+/// observation de maîtrise, et ne le pourront pas.
+/// </remarks>
+public interface ICloudGuideSource
+{
+    ValueTask<IReadOnlyList<CloudGuide>> ListAsync(CancellationToken cancellationToken = default);
+
+    ValueTask<CloudGuide?> GetAsync(string guideId, CancellationToken cancellationToken = default);
 }

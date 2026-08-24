@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "id": "cloud-securite-couts-001",
+  "version": 1,
+  "title": "Sécurité et coûts dans le cloud : les deux factures qu'on découvre trop tard",
+  "summary": "Identité managée et moindre privilège pour ne plus stocker de secret en clair, puis tags, budgets et alertes pour qu'une facture cloud ne surprenne jamais — les deux disciplines qui distinguent un compte de démonstration d'un système en production.",
+  "order": 6,
+  "documentPath": "securite-couts.md",
+  "license": "CC-BY-4.0"
+}

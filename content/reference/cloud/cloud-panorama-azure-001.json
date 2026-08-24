@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "id": "cloud-panorama-azure-001",
+  "version": 1,
+  "title": "Panorama Azure : les services qui reviennent tout le temps",
+  "summary": "Une carte de lecture d'Azure — abonnement, groupe de ressources, App Service, Container Apps, Functions, Azure SQL, Storage, Key Vault, Monitor — pour situer chaque service plutôt que les mémoriser un par un.",
+  "order": 2,
+  "documentPath": "panorama-azure.md",
+  "license": "CC-BY-4.0"
+}

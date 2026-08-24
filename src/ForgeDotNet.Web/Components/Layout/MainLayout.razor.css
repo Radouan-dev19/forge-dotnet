@@ -115,11 +115,33 @@ nav {
 }
 
 footer {
-    border-top: 1px solid #d9e2ec;
-    color: #627d98;
+    border-top: 1px solid var(--ink-100);
+    color: var(--ink-500);
     font-size: .9rem;
     padding: 1.25rem;
     text-align: center;
+}
+
+.theme-toggle {
+    align-items: center;
+    background: rgba(255, 255, 255, .08);
+    border: 1px solid rgba(255, 255, 255, .18);
+    border-radius: 999px;
+    color: #fff;
+    cursor: pointer;
+    display: inline-flex;
+    flex: none;
+    font-size: 1rem;
+    gap: .4rem;
+    line-height: 1;
+    margin-left: auto;
+    margin-top: .8rem;
+    padding: .4rem .7rem;
+    transition: background-color .12s ease;
+}
+
+.theme-toggle:hover {
+    background: rgba(255, 255, 255, .16);
 }
 
 #blazor-error-ui {

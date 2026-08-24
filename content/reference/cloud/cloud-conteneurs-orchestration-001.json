@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "id": "cloud-conteneurs-orchestration-001",
+  "version": 1,
+  "title": "Des conteneurs à l'orchestration",
+  "summary": "Ce qu'un conteneur isolé ne résout jamais — plusieurs machines, plusieurs instances, des pannes, des mises à jour sans coupure — et pourquoi cette liste de problèmes fait naître un orchestrateur plutôt qu'un simple script.",
+  "order": 3,
+  "documentPath": "conteneurs-orchestration.md",
+  "license": "CC-BY-4.0"
+}

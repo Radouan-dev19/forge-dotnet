@@ -158,6 +158,19 @@ vérifier aucun usage d'assistant — et chaque guide rappelle la frontière du 
 l'IA outille la production du développeur, jamais les preuves mesurées du parcours (exercices
 comptés, examens, réflexions, explications, journaux de débogage).
 
+## Chapitre Cloud (hors parcours, libre accès)
+
+Depuis le 24 août 2026, six guides `CloudGuide` servis sur `/cloud` donnent une vue d'ensemble du
+cloud, d'Azure et de Kubernetes : modèle mental du cloud (IaaS/PaaS/serverless, régions, zones,
+élasticité, résilience), panorama Azure, des conteneurs à l'orchestration, les concepts Kubernetes,
+Kubernetes managé sur Azure (AKS), sécurité et coûts. Le chapitre est volontairement **sans
+semaine, sans prérequis et sans ordre imposé**, comme le chapitre IA. Il est distinct du bloc Azure
+noté du parcours (semaines 21-22, exercices `azure-*` et examen `azure-observability-v1`), qui
+continue de produire ses propres preuves de maîtrise ; ce chapitre les complète d'une vue
+d'ensemble et couvre Kubernetes, absent du parcours noté. Il ne produit lui-même aucune preuve de
+maîtrise — le bac à sable, sans réseau par conception, ne peut vérifier aucun usage réel d'un
+cloud ou d'un cluster.
+
 ## Après les 24 semaines
 
 Parcours distinct de 12–24 mois : systèmes distribués, messaging, cache, résilience, observabilité avancée, architecture, mentoring, estimation, incidents, anglais B2/C1, allemand A2/B1 et leadership. Il ne fait pas partie du MVP.

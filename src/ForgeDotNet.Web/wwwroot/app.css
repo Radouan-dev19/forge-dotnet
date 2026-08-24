@@ -28,6 +28,13 @@
     --red-700: #c92a2a;
     --red-800: #7d1a1a;
     --red-050: #ffe9e9;
+    --surface-sunken: #fbfcfe;
+    --hero-tint: #eef6f8;
+    --notice-border: #ffe08a;
+    --error-border: #ffc9c9;
+    --success-border: #b7e4c7;
+    --validation-invalid: #e50000;
+    --validation-valid: #26b050;
     --radius-lg: .9rem;
     --radius-md: .6rem;
     --radius-sm: .4rem;
@@ -35,6 +42,57 @@
     --shadow-md: 0 2px 6px rgba(16, 42, 67, .08), 0 8px 24px -12px rgba(16, 42, 67, .18);
     --font-sans: "Segoe UI Variable Text", "Segoe UI", system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
     --font-mono: "Cascadia Code", Consolas, "Courier New", monospace;
+}
+
+/* Mode sombre : le script wwwroot/js/theme.js pose toujours une valeur explicite sur
+   data-theme (jamais absente), donc un seul bloc suffit — pas besoin de dupliquer une variante
+   @media (prefers-color-scheme) ici, le script a déjà tranché avant le premier rendu. Les
+   familles volontairement sombres en permanence (en-tête, panneaux de code, bannière d'erreur
+   Blazor) ne sont pas concernées : elles n'utilisent pas ces jetons. */
+:root[data-theme="dark"] {
+    --ink-900: #060d16;
+    --ink-800: #eef3f8;
+    --ink-700: #d3dfec;
+    --ink-600: #b0c1d6;
+    --ink-500: #8ea3bd;
+    --ink-400: #71879f;
+    --ink-300: #3d5a78;
+    --ink-200: #2c435c;
+    --ink-100: #22384c;
+    --ink-050: #1a2c3d;
+    --paper: #101f30;
+    --canvas: #0a1420;
+    --teal-700: #3bc9db;
+    --teal-600: #66d9e8;
+    --teal-050: #123844;
+    --green-700: #63e6a4;
+    --green-050: #113322;
+    --red-700: #ff8787;
+    --red-800: #ffb3b3;
+    --red-050: #3a1414;
+    --surface-sunken: #16283b;
+    --hero-tint: #123040;
+    --notice-border: #7a5b12;
+    --error-border: #7a2b2b;
+    --success-border: #1f5c3d;
+    --validation-invalid: #ff6b6b;
+    --validation-valid: #51cf66;
+    --amber-050: #3a2f10;
+}
+
+/* Bouton de bascule de thème (structure/couleurs de base dans MainLayout.razor.css, isolé au
+   composant). Réglé ici, hors CSS isolé, parce que le sélecteur porte sur <html>, qui n'appartient
+   à aucun composant Blazor et n'aurait donc pas reçu l'attribut de portée. */
+.theme-toggle-dark-icon {
+    display: none;
+}
+
+html[data-theme="dark"] .theme-toggle-light-icon {
+    display: none;
+}
+
+html[data-theme="dark"] .theme-toggle-dark-icon {
+    display: inline;
 }
 
 html {
@@ -186,7 +244,7 @@ a:hover {
 }
 
 .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-    box-shadow: 0 0 0 .1rem #fff, 0 0 0 .25rem var(--amber-500);
+    box-shadow: 0 0 0 .1rem var(--paper), 0 0 0 .25rem var(--amber-500);
 }
 
 a:focus-visible,
@@ -195,7 +253,7 @@ input:focus-visible,
 select:focus-visible,
 textarea:focus-visible,
 summary:focus-visible {
-    box-shadow: 0 0 0 5px var(--ink-800);
+    box-shadow: 0 0 0 5px var(--paper);
     outline: 3px solid var(--amber-500);
     outline-offset: 2px;
 }
@@ -247,7 +305,7 @@ summary:focus-visible {
 /* Une carte imbriquée dans une carte s'aplatit pour éviter l'effet mille-feuille. */
 .practice-panel .practice-panel,
 .info-panel .info-panel {
-    background: linear-gradient(180deg, #fbfcfe, var(--paper));
+    background: linear-gradient(180deg, var(--surface-sunken), var(--paper));
     border: 1px solid var(--ink-100);
     box-shadow: none;
 }
@@ -255,7 +313,7 @@ summary:focus-visible {
 .hero {
     background:
         radial-gradient(38rem 16rem at 110% -20%, rgba(240, 180, 41, .16), transparent 60%),
-        linear-gradient(160deg, var(--paper) 55%, #eef6f8);
+        linear-gradient(160deg, var(--paper) 55%, var(--hero-tint));
     border: 1px solid var(--ink-100);
     padding: clamp(1.6rem, 5vw, 3rem);
 }
@@ -419,7 +477,7 @@ summary:focus-visible {
 
 .weekly-plan-priorities > li,
 .weekly-plan-week-list > li {
-    background: #fbfcfe;
+    background: var(--surface-sunken);
     border: 1px solid var(--ink-100);
     border-left: .3rem solid var(--teal-700);
     border-radius: var(--radius-sm);
@@ -439,7 +497,7 @@ summary:focus-visible {
 }
 
 .diagnostic-domain-results li {
-    background: #fbfcfe;
+    background: var(--surface-sunken);
     border: 1px solid var(--ink-100);
     border-left: .3rem solid var(--teal-700);
     border-radius: var(--radius-sm);
@@ -456,7 +514,7 @@ summary:focus-visible {
 
 .notice {
     background: var(--amber-050);
-    border: 1px solid #ffe08a;
+    border: 1px solid var(--notice-border);
     border-left: .3rem solid var(--amber-600);
     border-radius: var(--radius-sm);
     padding: .85rem 1rem;
@@ -464,7 +522,7 @@ summary:focus-visible {
 
 .error-message {
     background: var(--red-050);
-    border: 1px solid #ffc9c9;
+    border: 1px solid var(--error-border);
     border-left: .3rem solid var(--red-700);
     border-radius: var(--radius-sm);
     color: var(--red-800);
@@ -473,7 +531,7 @@ summary:focus-visible {
 
 .success-message {
     background: var(--green-050);
-    border: 1px solid #b7e4c7;
+    border: 1px solid var(--success-border);
     border-left: .3rem solid var(--green-700);
     border-radius: var(--radius-sm);
     color: var(--green-700);
@@ -483,15 +541,15 @@ summary:focus-visible {
 }
 
 .validation-message {
-    color: #e50000;
+    color: var(--validation-invalid);
 }
 
 .valid.modified:not([type=checkbox]) {
-    outline: 1px solid #26b050;
+    outline: 1px solid var(--validation-valid);
 }
 
 .invalid {
-    outline: 1px solid #e50000;
+    outline: 1px solid var(--validation-invalid);
 }
 
 .field-help {
@@ -544,7 +602,7 @@ legend {
 .form-field textarea,
 .note-panel textarea,
 .search-row input {
-    background: #fbfcfe;
+    background: var(--surface-sunken);
     border: 1px solid var(--ink-300);
     border-radius: var(--radius-sm);
     padding: .65rem .75rem;
@@ -561,7 +619,7 @@ legend {
 .form-field input:focus,
 .form-field select:focus,
 .form-field textarea:focus {
-    background: #fff;
+    background: var(--paper);
 }
 
 fieldset {
@@ -702,11 +760,11 @@ progress {
 .lesson-section pre,
 .practice-content,
 .runner-output {
-    background: linear-gradient(180deg, #0d2338, var(--ink-800));
+    background: linear-gradient(180deg, #0d2338, #102a43);
     border: 1px solid #1f3d5c;
     border-radius: var(--radius-sm);
     box-shadow: inset 0 1px 0 rgba(255, 255, 255, .04);
-    color: var(--ink-050);
+    color: #f0f4f8;
     font-family: var(--font-mono);
     font-size: .92rem;
     line-height: 1.55;
@@ -727,7 +785,7 @@ progress {
 
 .code-editor {
     background: #0f172a;
-    border: 1px solid var(--ink-300);
+    border: 1px solid #3d5a78;
     border-radius: var(--radius-sm);
     color: #e2e8f0;
     font-family: var(--font-mono);
@@ -736,6 +794,90 @@ progress {
     padding: .8rem;
     tab-size: 4;
     width: 100%;
+}
+
+/* Éditeur avec coloration syntaxique par recouvrement : un <pre> coloré par Prism.js sous un
+   <textarea> réel devenu transparent. Les deux éléments partagent exactement boîte, police et
+   interligne pour que le texte tapé et le texte coloré restent alignés au pixel. */
+.code-editor-live {
+    background: #0f172a;
+    border: 1px solid #3d5a78;
+    border-radius: var(--radius-sm);
+    position: relative;
+}
+
+.code-editor-highlight,
+.code-editor-input {
+    box-sizing: border-box;
+    font-family: var(--font-mono);
+    font-size: .92rem;
+    line-height: 1.5;
+    margin: 0;
+    min-height: 12rem;
+    overflow: auto;
+    padding: .8rem;
+    tab-size: 4;
+    white-space: pre-wrap;
+    width: 100%;
+    word-wrap: break-word;
+}
+
+.code-editor-highlight {
+    border: 1px solid transparent;
+    color: #e2e8f0;
+    inset: 0;
+    pointer-events: none;
+    position: absolute;
+}
+
+.code-editor-input {
+    position: relative;
+    resize: vertical;
+}
+
+/* `.form-field textarea`/`:hover`/`:focus` (plus haut dans ce fichier) ciblent aussi ce
+   <textarea> avec une spécificité supérieure à une seule classe ; ces règles doivent donc
+   reprendre le sélecteur parent pour les emporter, sinon le recouvrement redevient un
+   textarea blanc ordinaire au focus. */
+.form-field .code-editor-input,
+.form-field .code-editor-input:hover,
+.form-field .code-editor-input:focus {
+    background: transparent;
+    border: 0;
+    border-radius: 0;
+    caret-color: #e2e8f0;
+    color: transparent;
+    padding: .8rem;
+}
+
+.token.comment {
+    color: #94a3b8;
+}
+
+.token.string {
+    color: #86efac;
+}
+
+.token.number,
+.token.boolean {
+    color: #fca5a5;
+}
+
+.token.keyword {
+    color: #93c5fd;
+}
+
+.token.function {
+    color: #fcd34d;
+}
+
+.token.class-name {
+    color: #c4b5fd;
+}
+
+.token.punctuation,
+.token.operator {
+    color: #cbd5e1;
 }
 
 code {
@@ -782,7 +924,7 @@ pre code {
 }
 
 .runner-result {
-    background: #fbfcfe;
+    background: var(--surface-sunken);
     border: 1px solid var(--ink-100);
     border-left: .35rem solid var(--teal-700);
     border-radius: var(--radius-md);
@@ -916,7 +1058,7 @@ pre code {
 }
 
 .table tbody tr:hover {
-    background: #f2f7fb;
+    background: var(--ink-050);
 }
 
 .table td, .table th {

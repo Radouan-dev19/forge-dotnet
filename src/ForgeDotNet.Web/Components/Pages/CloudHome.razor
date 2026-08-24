@@ -1,0 +1,66 @@
+@page "/cloud"
+@using ForgeDotNet.Application.Preparation
+@using ForgeDotNet.Domain.Cloud
+@inject ICloudGuideSource Guides
+
+<PageTitle>Chapitre Cloud — Forge.NET</PageTitle>
+
+<h1>Chapitre Cloud</h1>
+
+<section class="practice-panel" aria-labelledby="cloud-intro-title">
+    <h2 id="cloud-intro-title">Le cloud, Azure et Kubernetes, en libre accès</h2>
+    <p>
+        Ces guides donnent une vue d'ensemble du cloud, d'Azure et de Kubernetes : le modèle mental
+        des trois niveaux de service, un panorama des services Azure les plus courants, le passage
+        des conteneurs à l'orchestration, les concepts de Kubernetes, Kubernetes managé sur Azure
+        (AKS), puis sécurité et coûts. Le chapitre est <strong>hors parcours</strong> : aucun
+        prérequis, aucune semaine — l'ordre proposé n'est qu'une suggestion, lisez selon vos besoins
+        du moment.
+    </p>
+    <p class="notice" role="status">
+        <strong>Aucun de ces guides ne produit de preuve de maîtrise</strong> : le bac à sable n'a pas
+        de réseau, par conception, et ne peut vérifier aucun usage réel d'un cloud ou d'un cluster.
+        Le bloc Azure noté du parcours (semaines 21-22) reste distinct et continue de produire ses
+        propres preuves par ses exercices dédiés ; ce chapitre les complète d'une vue d'ensemble et
+        couvre Kubernetes, absent du parcours noté.
+    </p>
+</section>
+
+@if (_error is not null)
+{
+    <p class="error-message" role="alert">@_error</p>
+}
+else if (_guides is null)
+{
+    <p role="status">Chargement des guides…</p>
+}
+else
+{
+    <ul class="lesson-list">
+        @foreach (CloudGuide guide in _guides)
+        {
+            <li>
+                <a href="@($"/cloud/{guide.Id}")">@guide.Title</a>
+                <p>@guide.Summary</p>
+            </li>
+        }
+    </ul>
+}
+
+@code {
+    private List<CloudGuide>? _guides;
+    private string? _error;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            IReadOnlyList<CloudGuide> guides = await Guides.ListAsync();
+            _guides = guides.OrderBy(guide => guide.Order).ThenBy(guide => guide.Id, StringComparer.Ordinal).ToList();
+        }
+        catch (Exception exception) when (exception is InvalidDataException or InvalidOperationException)
+        {
+            _error = exception.Message;
+        }
+    }
+}

@@ -5,6 +5,7 @@ using ForgeDotNet.Application.Content;
 using ForgeDotNet.Application.Preparation;
 using ForgeDotNet.Domain.Ai;
 using ForgeDotNet.Domain.Career;
+using ForgeDotNet.Domain.Cloud;
 using ForgeDotNet.Domain.Content;
 using ForgeDotNet.Domain.English;
 using ForgeDotNet.Domain.Interviews;
@@ -303,6 +304,53 @@ public sealed class FileSystemAiGuideSource(
         if (!info.Exists || info.Length == 0 || info.Length > MaximumGuideBytes)
         {
             throw new InvalidDataException($"Document de guide IA absent, vide ou trop volumineux : {documentPath}.");
+        }
+
+        return StrictGuideUtf8.GetString(File.ReadAllBytes(resolved));
+    }
+}
+
+public sealed class FileSystemCloudGuideSource(
+    ContentCatalogProvider catalogProvider,
+    PracticeContentOptions options)
+    : FileSystemPreparationSource<CloudGuide>(
+        catalogProvider,
+        options,
+        ContentDocumentType.CloudGuide,
+        "cloud"), ICloudGuideSource
+{
+    private const int MaximumGuideBytes = 65_536;
+    private static readonly UTF8Encoding StrictGuideUtf8 = new(false, true);
+
+    private readonly string _cloudDirectory = Path.TrimEndingDirectorySeparator(Path.GetFullPath(
+        Path.Combine(options.CatalogDirectoryPath, "cloud")));
+
+    protected override string IdentifierOf(CloudGuide value) => value.Id;
+
+    protected override CloudGuide Read(ContentCatalogItem item, JsonElement root) => new(
+        item.Id,
+        item.Version,
+        root.GetProperty("title").GetString()!,
+        root.GetProperty("summary").GetString()!,
+        root.GetProperty("order").GetInt32(),
+        ReadBody(root.GetProperty("documentPath").GetString()!));
+
+    /// <summary>
+    /// Le nom du Markdown vient d'un manifeste validé par schéma ; la garde de descendance reste
+    /// appliquée par principe, comme pour chaque famille plate du catalogue.
+    /// </summary>
+    private string ReadBody(string documentPath)
+    {
+        string resolved = Path.GetFullPath(Path.Combine(_cloudDirectory, documentPath));
+        if (!resolved.StartsWith(_cloudDirectory + Path.DirectorySeparatorChar, StringComparison.Ordinal))
+        {
+            throw new InvalidOperationException("Le document d'un guide Cloud sort de son dossier.");
+        }
+
+        var info = new FileInfo(resolved);
+        if (!info.Exists || info.Length == 0 || info.Length > MaximumGuideBytes)
+        {
+            throw new InvalidDataException($"Document de guide Cloud absent, vide ou trop volumineux : {documentPath}.");
         }
 
         return StrictGuideUtf8.GetString(File.ReadAllBytes(resolved));

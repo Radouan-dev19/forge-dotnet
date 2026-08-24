@@ -1,0 +1,25 @@
+{
+  "name": "forge-dotnet",
+  "version": "1.0.0",
+  "description": "Forge.NET est une application locale d'apprentissage actif de C# et .NET. Le MVP couvre un diagnostic prudent, un plan personnalisé de 24 semaines, leçons, pratique C#, DebugLab, SqlLab, maîtrise anti-contournement, révisions espacées, examens et dashboard factuel. Le contenu S1–S24 est versionné sous `content/` et la progression reste dans SQLite. Le CodeRunner et SqlLab sont des adaptations Docker optionnelles et isolées ; le mode manuel ne prétend jamais avoir validé du code automatiquement.",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs",
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Radouan-dev19/forge-dotnet.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Radouan-dev19/forge-dotnet/issues"
+  },
+  "homepage": "https://github.com/Radouan-dev19/forge-dotnet#readme"
+}

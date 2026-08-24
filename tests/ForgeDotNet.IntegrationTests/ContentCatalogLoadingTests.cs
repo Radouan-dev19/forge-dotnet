@@ -23,8 +23,8 @@ public sealed class ContentCatalogLoadingTests
         Assert.True(second.Succeeded, FormatIssues(second.Issues));
         ContentCatalog catalog = Assert.IsType<ContentCatalog>(first.Catalog);
         ContentCatalog secondCatalog = Assert.IsType<ContentCatalog>(second.Catalog);
-        // 737 documents pédagogiques, plus la banque de cartes de révision.
-        Assert.Equal(738, catalog.Items.Count);
+        // 743 documents pédagogiques, plus la banque de cartes de révision.
+        Assert.Equal(744, catalog.Items.Count);
         Assert.Single(catalog.GetByType(ContentDocumentType.ReviewCardBank));
         Assert.Equal(238, catalog.GetByType(ContentDocumentType.Exercise).Count);
         Assert.Equal(293, catalog.GetByType(ContentDocumentType.InterviewQuestion).Count);
@@ -32,6 +32,8 @@ public sealed class ContentCatalogLoadingTests
         Assert.Equal(5, catalog.GetByType(ContentDocumentType.CareerGuide).Count);
         // Les six guides du chapitre IA, hors parcours et en libre accès.
         Assert.Equal(6, catalog.GetByType(ContentDocumentType.AiGuide).Count);
+        // Les six guides du chapitre Cloud, hors parcours et en libre accès.
+        Assert.Equal(6, catalog.GetByType(ContentDocumentType.CloudGuide).Count);
         // Deux parcours désormais : le socle junior forge-reference et la piste senior forge-senior-reference.
         Assert.Equal(2, catalog.GetByType(ContentDocumentType.Curriculum).Count);
         Assert.Equal(96, catalog.GetByType(ContentDocumentType.Lesson).Count);

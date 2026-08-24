@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "id": "cloud-kubernetes-managed-aks-001",
+  "version": 1,
+  "title": "Kubernetes managé : ce qu'Azure Kubernetes Service retire de la charge",
+  "summary": "Ce que le plan de contrôle managé d'AKS gère à votre place, ce qui reste de votre ressort, et comment décider entre App Service, Container Apps et un cluster Kubernetes sans céder à la mode.",
+  "order": 5,
+  "documentPath": "kubernetes-managed-aks.md",
+  "license": "CC-BY-4.0"
+}

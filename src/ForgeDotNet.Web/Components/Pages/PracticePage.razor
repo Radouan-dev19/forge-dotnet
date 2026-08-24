@@ -138,8 +138,14 @@ else
             <EditForm Model="_attempt" OnSubmit="SubmitAttemptAsync" FormName="practice-attempt">
                 <div class="form-field">
                     <label for="attempt-submission">Proposition ou code travaillé</label>
-                    <textarea id="attempt-submission" rows="10" maxlength="@PracticeRules.MaximumAttemptLength" @bind="_attempt.SubmissionText" @bind:event="oninput"></textarea>
-                    <p class="field-help">80 caractères minimum pour pouvoir compter comme tentative sérieuse.</p>
+                    <div class="code-editor-live">
+                        <pre id="attempt-submission-highlight" class="code-editor-highlight" aria-hidden="true"><code class="language-csharp"></code></pre>
+                        <textarea id="attempt-submission" class="code-editor-input" rows="10" spellcheck="false" maxlength="@PracticeRules.MaximumAttemptLength" @bind="_attempt.SubmissionText" @bind:event="oninput"></textarea>
+                    </div>
+                    <p class="field-help">
+                        80 caractères minimum pour pouvoir compter comme tentative sérieuse.
+                        @_attempt.SubmissionText.Length / @PracticeRules.MaximumAttemptLength caractères.
+                    </p>
                 </div>
                 <div class="form-field">
                     <label for="attempt-verification">Observations de vérification manuelle</label>
@@ -337,6 +343,14 @@ else
     private string? _runnerError;
 
     protected override async Task OnParametersSetAsync() => await LoadAsync();
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (_activity?.CanSubmitAttempt == true)
+        {
+            await JavaScript.InvokeVoidAsync("forgeCodeEditor.attach", "attempt-submission", "attempt-submission-highlight");
+        }
+    }
 
     private async Task LoadAsync()
     {

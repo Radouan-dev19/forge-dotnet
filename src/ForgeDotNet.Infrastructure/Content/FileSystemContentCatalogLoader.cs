@@ -440,6 +440,9 @@ public sealed class FileSystemContentCatalogLoader : IContentCatalogLoader
 
         // Même contrat pour un guide du chapitre IA : le résumé déclaré nourrit l'index.
         ContentDocumentType.AiGuide => root.GetProperty("summary").GetString()!,
+
+        // Même contrat pour un guide du chapitre Cloud : le résumé déclaré nourrit l'index.
+        ContentDocumentType.CloudGuide => root.GetProperty("summary").GetString()!,
         _ => string.Empty,
     };
 
