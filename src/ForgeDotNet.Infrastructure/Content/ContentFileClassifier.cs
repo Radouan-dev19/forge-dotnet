@@ -103,6 +103,11 @@ internal static class ContentFileClassifier
             return ContentDocumentType.CloudGuide;
         }
 
+        if (normalized.Contains("/week-0/", StringComparison.OrdinalIgnoreCase))
+        {
+            return ContentDocumentType.WeekZeroGuide;
+        }
+
         if (normalized.Contains("/projects/", StringComparison.OrdinalIgnoreCase))
         {
             return ContentDocumentType.Project;
@@ -131,6 +136,7 @@ internal static class ContentFileClassifier
         ContentDocumentType.CareerGuide => "career.schema.json",
         ContentDocumentType.AiGuide => "ai.schema.json",
         ContentDocumentType.CloudGuide => "cloud.schema.json",
+        ContentDocumentType.WeekZeroGuide => "week-zero.schema.json",
         _ => throw new ArgumentOutOfRangeException(nameof(documentType)),
     };
 

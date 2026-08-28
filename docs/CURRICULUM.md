@@ -171,6 +171,17 @@ d'ensemble et couvre Kubernetes, absent du parcours noté. Il ne produit lui-mê
 maîtrise — le bac à sable, sans réseau par conception, ne peut vérifier aucun usage réel d'un
 cloud ou d'un cluster.
 
+## Semaine 0 (hors parcours, libre accès)
+
+Depuis le 28 août 2026, quatre guides `WeekZeroGuide` servis dans l'onglet « Semaine 0 » de la
+page Apprendre (`/learn`, détail sur `/learn/week-0/{id}`) posent des notions d'appoint à
+connaître avant ou en marge du parcours : Vue.js 3 et TypeScript (composants, réactivité, props et
+emits typés, composables), Azure Service Bus (files, sujets, peek-lock, lettres mortes), Azure
+DevOps (Boards, Repos, Pipelines, Artifacts) et IIS (sites, pools d'applications, hébergement
+ASP.NET Core). Comme les chapitres IA et Cloud, cet onglet est volontairement **sans semaine
+numérotée dans `forge-reference`, sans prérequis et sans ordre imposé**, et ne produit aucune
+preuve de maîtrise.
+
 ## Après les 24 semaines
 
 Parcours distinct de 12–24 mois : systèmes distribués, messaging, cache, résilience, observabilité avancée, architecture, mentoring, estimation, incidents, anglais B2/C1, allemand A2/B1 et leadership. Il ne fait pas partie du MVP.

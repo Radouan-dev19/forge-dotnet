@@ -1,0 +1,52 @@
+@page "/learn/week-0/{GuideId}"
+@using ForgeDotNet.Application.Preparation
+@using ForgeDotNet.Domain.WeekZero
+@inject IWeekZeroGuideSource Guides
+
+<PageTitle>@(_guide?.Title ?? "Guide Semaine 0") — Forge.NET</PageTitle>
+
+@if (_error is not null)
+{
+    <p class="error-message" role="alert">@_error</p>
+}
+else if (_guide is null)
+{
+    <p role="status">Chargement du guide…</p>
+}
+else
+{
+    <h1>@_guide.Title</h1>
+    <p>@_guide.Summary</p>
+    <p class="notice" role="status">
+        Ce guide ne produit aucune preuve de maîtrise. Il pose les bases d'une notion à connaître,
+        hors des preuves comptées du parcours.
+    </p>
+
+    <section class="practice-panel" aria-labelledby="week-zero-guide-body-title">
+        <h2 id="week-zero-guide-body-title">Guide</h2>
+        <pre class="runner-output">@_guide.Body</pre>
+    </section>
+
+    <p><a href="/learn">Retour à Semaine 0</a></p>
+}
+
+@code {
+    [Parameter]
+    public string GuideId { get; set; } = string.Empty;
+
+    private WeekZeroGuide? _guide;
+    private string? _error;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        try
+        {
+            _guide = await Guides.GetAsync(GuideId);
+            _error = _guide is null ? "Guide de la Semaine 0 introuvable." : null;
+        }
+        catch (Exception exception) when (exception is InvalidDataException or InvalidOperationException)
+        {
+            _error = exception.Message;
+        }
+    }
+}

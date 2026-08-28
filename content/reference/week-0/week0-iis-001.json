@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "id": "week0-iis-001",
+  "version": 1,
+  "title": "IIS : héberger une application .NET sur Windows",
+  "summary": "Sites, liaisons et pools d'applications, le relais du module ASP.NET Core vers Kestrel en in-process ou out-of-process, HTTPS et certificats, et les pannes classiques de mise en production.",
+  "order": 4,
+  "documentPath": "iis.md",
+  "license": "CC-BY-4.0"
+}

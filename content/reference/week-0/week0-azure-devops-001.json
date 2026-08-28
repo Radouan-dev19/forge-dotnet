@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "id": "week0-azure-devops-001",
+  "version": 1,
+  "title": "Azure DevOps : Boards, Repos, Pipelines et Artifacts en un coup d'œil",
+  "summary": "Les cinq services de la suite, la structure étapes/jobs/steps d'un pipeline YAML, variables et secrets, environnements avec approbations, politiques de branche, et les pièges de publication d'artefacts.",
+  "order": 3,
+  "documentPath": "azure-devops.md",
+  "license": "CC-BY-4.0"
+}

@@ -62,8 +62,10 @@ public sealed class ContentS21S24CoverageTests
         // chapitre IA hors parcours ajoute six guides AiGuide (manifeste plus Markdown chacun). Le
         // 24 août 2026, le chapitre Cloud hors parcours ajoute six guides CloudGuide (manifeste plus
         // Markdown chacun) — modèle mental du cloud, panorama Azure, conteneurs vers orchestration,
-        // concepts Kubernetes, AKS managé, sécurité et coûts.
-        Assert.Equal(3_320, Directory.GetFiles(CatalogRoot, "*", SearchOption.AllDirectories).Length);
+        // concepts Kubernetes, AKS managé, sécurité et coûts. Le 28 août 2026, l'onglet Semaine 0 de
+        // la page Apprendre ajoute quatre guides WeekZeroGuide (manifeste plus Markdown chacun) :
+        // Vue.js 3/TypeScript, Azure Service Bus, Azure DevOps, IIS.
+        Assert.Equal(3_328, Directory.GetFiles(CatalogRoot, "*", SearchOption.AllDirectories).Length);
     }
 
     [Fact]

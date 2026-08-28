@@ -1,9 +1,40 @@
 @page "/learn"
+@using ForgeDotNet.Application.Preparation
+@using ForgeDotNet.Domain.WeekZero
 @inject BrowseLessons BrowseLessons
+@inject IWeekZeroGuideSource WeekZeroGuides
 
 <PageTitle>Apprendre — Forge.NET</PageTitle>
 
 <h1>Apprendre</h1>
+
+<section class="reader-module" aria-labelledby="week-zero-title">
+    <h2 id="week-zero-title">Semaine 0 — Notions d'appoint</h2>
+    <p>
+        Des bases à connaître avant ou en marge du parcours, hors semaines numérotées et sans
+        preuve de maîtrise : Vue.js 3/TypeScript, Azure Service Bus, Azure DevOps, IIS.
+    </p>
+    @if (_weekZeroError is not null)
+    {
+        <p class="error-message" role="alert">@_weekZeroError</p>
+    }
+    else if (_weekZeroGuides is null)
+    {
+        <p role="status">Chargement de la Semaine 0…</p>
+    }
+    else
+    {
+        <ul class="lesson-list">
+            @foreach (WeekZeroGuide guide in _weekZeroGuides)
+            {
+                <li>
+                    <a href="@($"/learn/week-0/{guide.Id}")">@guide.Title</a>
+                    <p>@guide.Summary</p>
+                </li>
+            }
+        </ul>
+    }
+</section>
 
 <form class="reader-search" method="get" action="/learn">
     <label for="lesson-search">Rechercher une leçon par titre, objectif ou compétence</label>
@@ -63,6 +94,21 @@ else
 
     private LessonLibraryView? _library;
     private string _searchQuery = string.Empty;
+    private IReadOnlyList<WeekZeroGuide>? _weekZeroGuides;
+    private string? _weekZeroError;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            IReadOnlyList<WeekZeroGuide> guides = await WeekZeroGuides.ListAsync();
+            _weekZeroGuides = guides.OrderBy(guide => guide.Order).ThenBy(guide => guide.Id, StringComparer.Ordinal).ToList();
+        }
+        catch (Exception exception) when (exception is InvalidDataException or InvalidOperationException)
+        {
+            _weekZeroError = exception.Message;
+        }
+    }
 
     protected override async Task OnParametersSetAsync()
     {

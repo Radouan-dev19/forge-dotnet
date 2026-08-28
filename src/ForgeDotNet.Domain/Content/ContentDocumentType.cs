@@ -74,4 +74,17 @@ public enum ContentDocumentType
     /// l'annonce.
     /// </remarks>
     CloudGuide,
+
+    /// <summary>
+    /// Guide de la Semaine 0 : notions d'appoint à connaître avant ou en marge du parcours —
+    /// Vue.js 3/TypeScript, Azure Service Bus, Azure DevOps, IIS.
+    /// </summary>
+    /// <remarks>
+    /// Onglet « Semaine 0 » de la page Apprendre, volontairement <b>hors parcours</b> : ni
+    /// semaine numérotée dans <c>forge-reference</c>, ni prérequis, ni preuve de maîtrise. Le
+    /// bac à sable ne peut vérifier ni un projet front-end réel ni un service Azure réel : ces
+    /// guides ne produisent donc aucune observation de maîtrise, comme les chapitres IA et
+    /// Cloud.
+    /// </remarks>
+    WeekZeroGuide,
 }

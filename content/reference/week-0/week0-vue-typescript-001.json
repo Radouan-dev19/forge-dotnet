@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "id": "week0-vue-typescript-001",
+  "version": 1,
+  "title": "Vue.js 3 et TypeScript : lire et écrire un composant",
+  "summary": "Composants en script setup, réactivité avec ref et reactive, computed, props et emits typés, composables, et les pièges qui cassent la réactivité sans prévenir.",
+  "order": 1,
+  "documentPath": "vue-typescript.md",
+  "license": "CC-BY-4.0"
+}

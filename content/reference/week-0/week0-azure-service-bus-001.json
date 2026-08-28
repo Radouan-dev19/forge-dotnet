@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "id": "week0-azure-service-bus-001",
+  "version": 1,
+  "title": "Azure Service Bus : files, sujets et livraison fiable de messages",
+  "summary": "Namespace, files point à point et sujets publication-abonnement, anatomie d'un message, peek-lock contre réception-suppression, file de lettres mortes, et les pièges de complétion et d'ordre.",
+  "order": 2,
+  "documentPath": "azure-service-bus.md",
+  "license": "CC-BY-4.0"
+}

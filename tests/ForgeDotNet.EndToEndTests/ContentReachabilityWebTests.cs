@@ -40,6 +40,7 @@ public sealed class ContentReachabilityWebTests(ForgeWebApplicationFactory facto
         [ContentDocumentType.CareerGuide] = "/career",
         [ContentDocumentType.AiGuide] = "/ai",
         [ContentDocumentType.CloudGuide] = "/cloud",
+        [ContentDocumentType.WeekZeroGuide] = "/learn",
     };
 
     [Fact]
@@ -132,6 +133,20 @@ public sealed class ContentReachabilityWebTests(ForgeWebApplicationFactory facto
 
         Assert.Contains("ne produit de preuve de maîtrise", cloud, StringComparison.Ordinal);
         Assert.Contains("hors parcours", cloud, StringComparison.Ordinal);
+
+        // L'onglet Semaine 0 de la page Apprendre est le plus récent à porter cette exigence :
+        // publié et compté ne suffit pas, il doit être listé par une route réellement servie.
+        string learn = WebUtility.HtmlDecode(await client.GetStringAsync("/learn"));
+        foreach (string guideId in new[]
+        {
+            "week0-vue-typescript-001", "week0-azure-service-bus-001",
+            "week0-azure-devops-001", "week0-iis-001",
+        })
+        {
+            Assert.Contains($"/learn/week-0/{guideId}", learn, StringComparison.Ordinal);
+        }
+
+        Assert.Contains("Semaine 0", learn, StringComparison.Ordinal);
     }
 
     /// <summary>
@@ -178,6 +193,22 @@ public sealed class ContentReachabilityWebTests(ForgeWebApplicationFactory facto
 
         Assert.Contains("Le CV par preuves", html, StringComparison.Ordinal);
         Assert.Contains("Ce qu'une preuve Forge.NET démontre", html, StringComparison.Ordinal);
+        Assert.Contains("aucune preuve de maîtrise", html, StringComparison.Ordinal);
+    }
+
+    /// <summary>
+    /// Un guide de la Semaine 0 servi porte son texte intégral et tient la même frontière que les
+    /// chapitres IA et Cloud : notion d'appoint, jamais preuve du parcours.
+    /// </summary>
+    [Fact]
+    public async Task AWeekZeroGuidePageServesItsBodyAndClaimsNoMasteryProof()
+    {
+        using HttpClient client = factory.CreateClient();
+
+        string html = WebUtility.HtmlDecode(await client.GetStringAsync("/learn/week-0/week0-vue-typescript-001"));
+
+        Assert.Contains("Vue.js 3 et TypeScript : lire et écrire un composant", html, StringComparison.Ordinal);
+        Assert.Contains("script setup", html, StringComparison.Ordinal);
         Assert.Contains("aucune preuve de maîtrise", html, StringComparison.Ordinal);
     }
 

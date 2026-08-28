@@ -113,6 +113,7 @@ builder.Services.AddSingleton<IEnglishActivitySource, FileSystemEnglishActivityS
 builder.Services.AddSingleton<ICareerGuideSource, FileSystemCareerGuideSource>();
 builder.Services.AddSingleton<IAiGuideSource, FileSystemAiGuideSource>();
 builder.Services.AddSingleton<ICloudGuideSource, FileSystemCloudGuideSource>();
+builder.Services.AddSingleton<IWeekZeroGuideSource, FileSystemWeekZeroGuideSource>();
 builder.Services.AddSingleton<PracticeCoordinator>();
 builder.Services.AddScoped<PracticeService>();
 builder.Services.AddSingleton(new DebugContentOptions

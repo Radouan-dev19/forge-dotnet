@@ -3,6 +3,7 @@ using ForgeDotNet.Domain.Career;
 using ForgeDotNet.Domain.Cloud;
 using ForgeDotNet.Domain.English;
 using ForgeDotNet.Domain.Interviews;
+using ForgeDotNet.Domain.WeekZero;
 
 namespace ForgeDotNet.Application.Preparation;
 
@@ -77,4 +78,20 @@ public interface ICloudGuideSource
     ValueTask<IReadOnlyList<CloudGuide>> ListAsync(CancellationToken cancellationToken = default);
 
     ValueTask<CloudGuide?> GetAsync(string guideId, CancellationToken cancellationToken = default);
+}
+
+/// <summary>
+/// Guides de la Semaine 0 de la page Apprendre : des notions d'appoint à connaître — Vue.js
+/// 3/TypeScript, Azure Service Bus, Azure DevOps, IIS — à lire selon les besoins, hors parcours.
+/// </summary>
+/// <remarks>
+/// Même famille que les autres contenus de préparation : le runner n'ayant pas de réseau par
+/// conception, aucun projet front-end réel ni aucun service Azure réel n'est vérifiable — ces
+/// guides ne produisent donc aucune observation de maîtrise, et ne le pourront pas.
+/// </remarks>
+public interface IWeekZeroGuideSource
+{
+    ValueTask<IReadOnlyList<WeekZeroGuide>> ListAsync(CancellationToken cancellationToken = default);
+
+    ValueTask<WeekZeroGuide?> GetAsync(string guideId, CancellationToken cancellationToken = default);
 }
