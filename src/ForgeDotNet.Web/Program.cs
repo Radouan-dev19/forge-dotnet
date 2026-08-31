@@ -106,6 +106,10 @@ builder.Services.AddSingleton(new PrepAccessOptions
         builder.Configuration["Prep:PasswordFile"],
         Path.Combine(repositoryRoot, ".secrets", "prep-password.txt"),
         builder.Environment.ContentRootPath),
+    // Hébergement sans fichier local (conteneur reconstruit à chaque déploiement) : le mot de
+    // passe peut venir de la variable d'environnement Prep__Password, définie comme secret chez
+    // l'hébergeur. Le fichier local reste prioritaire quand il existe.
+    Password = builder.Configuration["Prep:Password"],
     RequirePassword = builder.Configuration.GetValue("Prep:RequirePassword", true),
 });
 builder.Services.AddScoped<PrepAccessState>();

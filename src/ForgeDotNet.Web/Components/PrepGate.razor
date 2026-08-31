@@ -19,13 +19,24 @@ else
         @if (!Access.PasswordConfigured)
         {
             <p class="notice" role="alert">
-                Aucun mot de passe n'est configuré : l'accès reste fermé. Sur le poste qui héberge
-                l'application, créez le fichier secret (une ligne, votre mot de passe) :
+                Aucun mot de passe n'est configuré : l'accès reste fermé. Deux façons de le définir,
+                selon l'installation :
             </p>
-            <pre class="practice-content">.secrets/prep-password.txt</pre>
+            <ul>
+                <li>
+                    Sur un poste local : créez le fichier secret (une ligne, votre mot de passe) :
+                    <pre class="practice-content">.secrets/prep-password.txt</pre>
+                </li>
+                <li>
+                    Sur un hébergeur qui reconstruit le conteneur à chaque déploiement (Render, etc.) :
+                    définissez la variable d'environnement <code>Prep__Password</code> comme secret dans
+                    son tableau de bord, puis redéployez.
+                </li>
+            </ul>
             <p class="field-help">
                 Le dossier <code>.secrets/</code> est ignoré par Git, comme le secret du SqlLab. Le mot
-                de passe n'apparaît ni dans la configuration versionnée, ni dans les journaux.
+                de passe n'apparaît ni dans la configuration versionnée, ni dans les journaux, ni dans
+                cette page.
             </p>
         }
         else

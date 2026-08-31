@@ -37,6 +37,33 @@ public sealed class PrepAccessWebTests(PrepAccessWebTests.LockedPrepFactory fact
         Assert.DoesNotContain("ICube —", html, StringComparison.Ordinal);
     }
 
+    [Fact]
+    public async Task AnEnvironmentPasswordShowsTheUnlockFormInsteadOfTheSetupNotice()
+    {
+        using var envFactory = new EnvPasswordPrepFactory();
+        using HttpClient client = envFactory.CreateClient();
+
+        string html = WebUtility.HtmlDecode(await client.GetStringAsync("/prep"));
+
+        Assert.Contains("Accès protégé", html, StringComparison.Ordinal);
+        Assert.Contains("Déverrouiller", html, StringComparison.Ordinal);
+        Assert.DoesNotContain("Aucun mot de passe n'est configuré", html, StringComparison.Ordinal);
+        // Le mot de passe configuré n'apparaît jamais dans la page.
+        Assert.DoesNotContain("secret-env-pour-test", html, StringComparison.Ordinal);
+        Assert.DoesNotContain("Plan de la veille", html, StringComparison.Ordinal);
+    }
+
+    public sealed class EnvPasswordPrepFactory : ForgeWebApplicationFactory
+    {
+        protected override void ConfigureWebHost(IWebHostBuilder builder)
+        {
+            base.ConfigureWebHost(builder);
+            builder.UseSetting("Prep:RequirePassword", "true");
+            builder.UseSetting("Prep:PasswordFile", Path.Combine(DataDirectory, "prep-password-absent.txt"));
+            builder.UseSetting("Prep:Password", "secret-env-pour-test");
+        }
+    }
+
     public sealed class LockedPrepFactory : ForgeWebApplicationFactory
     {
         protected override void ConfigureWebHost(IWebHostBuilder builder)

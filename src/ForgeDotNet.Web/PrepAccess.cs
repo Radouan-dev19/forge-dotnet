@@ -18,6 +18,13 @@ public sealed class PrepAccessOptions
 {
     public required string PasswordFile { get; init; }
 
+    /// <summary>
+    /// Mot de passe fourni par la configuration (variable d'environnement <c>Prep__Password</c>),
+    /// pour les hébergements où aucun fichier local ne peut être déposé — un conteneur reconstruit
+    /// à chaque déploiement, par exemple. Le fichier local reste prioritaire quand il existe.
+    /// </summary>
+    public string? Password { get; init; }
+
     public bool RequirePassword { get; init; } = true;
 }
 
@@ -89,18 +96,24 @@ public sealed class PrepAccessState(PrepAccessOptions options)
     {
         try
         {
-            if (!File.Exists(options.PasswordFile))
+            if (File.Exists(options.PasswordFile))
             {
-                return null;
+                string content = File.ReadAllText(options.PasswordFile).Trim();
+                if (content.Length > 0)
+                {
+                    return content;
+                }
             }
-
-            string content = File.ReadAllText(options.PasswordFile).Trim();
-            return content.Length == 0 ? null : content;
         }
         catch (Exception exception) when (exception is IOException or UnauthorizedAccessException)
         {
             // Illisible = verrouillé : l'accès échoue fermé, jamais ouvert.
             return null;
         }
+
+        // Repli d'hébergement : la variable d'environnement Prep__Password, pour les conteneurs
+        // reconstruits à chaque déploiement où aucun fichier local ne survit.
+        string? fromConfiguration = options.Password?.Trim();
+        return string.IsNullOrEmpty(fromConfiguration) ? null : fromConfiguration;
     }
 }

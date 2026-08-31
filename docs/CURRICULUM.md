@@ -194,8 +194,10 @@ réponse aux questions sensibles du poste visé. Premier sous-thème : `icube` (
 .NET / Azure / Vue.js), deux dossiers. Aucune donnée personnelle n'entre dans un dossier — ni nom,
 ni contact, ni employeur — et aucun dossier ne produit de preuve de maîtrise. L'onglet est en outre
 **verrouillé par mot de passe** (fichier local `.secrets/prep-password.txt`, hors Git, comme le
-secret du SqlLab) : sur une installation publiée, la liste comme les dossiers n'affichent rien tant
-que la session de navigation n'est pas déverrouillée, et l'absence de fichier secret ferme l'accès
+secret du SqlLab ; sur un hébergeur qui reconstruit le conteneur à chaque déploiement, la variable
+d'environnement `Prep__Password` définie comme secret joue le même rôle, le fichier local restant
+prioritaire) : sur une installation publiée, la liste comme les dossiers n'affichent rien tant
+que la session de navigation n'est pas déverrouillée, et l'absence de tout secret ferme l'accès
 au lieu de l'ouvrir.
 
 ## Après les 24 semaines
