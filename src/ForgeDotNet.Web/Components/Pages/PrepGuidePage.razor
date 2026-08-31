@@ -1,0 +1,57 @@
+@page "/prep/{GuideId}"
+@using ForgeDotNet.Application.Preparation
+@using ForgeDotNet.Domain.Prep
+@inject IPrepGuideSource Guides
+
+@* Le titre de l'onglet reste générique tant que la session n'est pas déverrouillée : le nom d'un
+   dossier est déjà une information personnelle. *@
+<PageTitle>Dossier de préparation — Forge.NET</PageTitle>
+
+<PrepGate>
+    @if (_error is not null)
+    {
+        <p class="error-message" role="alert">@_error</p>
+    }
+    else if (_guide is null)
+    {
+        <p role="status">Chargement du dossier…</p>
+    }
+    else
+    {
+        <p class="eyebrow">@_guide.ThemeTitle</p>
+        <h1>@_guide.Title</h1>
+        <p>@_guide.Summary</p>
+        <p class="notice" role="status">
+            Ce dossier ne produit aucune preuve de maîtrise : il prépare un rendez-vous jugé par des
+            humains, hors du produit.
+        </p>
+
+        <section class="practice-panel" aria-labelledby="prep-guide-body-title">
+            <h2 id="prep-guide-body-title">Dossier</h2>
+            <MarkdownDocument Markdown="@_guide.Body" />
+        </section>
+
+        <p><a href="/prep">Retour aux entretiens ciblés</a></p>
+    }
+</PrepGate>
+
+@code {
+    [Parameter]
+    public string GuideId { get; set; } = string.Empty;
+
+    private PrepGuide? _guide;
+    private string? _error;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        try
+        {
+            _guide = await Guides.GetAsync(GuideId);
+            _error = _guide is null ? "Dossier de préparation introuvable." : null;
+        }
+        catch (Exception exception) when (exception is InvalidDataException or InvalidOperationException)
+        {
+            _error = exception.Message;
+        }
+    }
+}

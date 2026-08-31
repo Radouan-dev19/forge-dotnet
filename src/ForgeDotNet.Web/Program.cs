@@ -98,6 +98,17 @@ string contentRoot = ResolveConfiguredPath(
 // Documents du dépôt cités par les pages (protocole de revue, kit de panel, README) : servis en
 // lecture seule sur /docs/{nom}, liste blanche fermée.
 builder.Services.AddSingleton(new ServedDocumentsOptions(repositoryRoot));
+// Les dossiers d'entretiens ciblés sont personnels sur une application publiable : accès par mot
+// de passe local (.secrets/, hors Git), verrouillé par défaut, état porté par le circuit.
+builder.Services.AddSingleton(new PrepAccessOptions
+{
+    PasswordFile = ResolveConfiguredPath(
+        builder.Configuration["Prep:PasswordFile"],
+        Path.Combine(repositoryRoot, ".secrets", "prep-password.txt"),
+        builder.Environment.ContentRootPath),
+    RequirePassword = builder.Configuration.GetValue("Prep:RequirePassword", true),
+});
+builder.Services.AddScoped<PrepAccessState>();
 string catalogDirectory = ResolveConfiguredPath(
     builder.Configuration["Content:CatalogDirectoryPath"],
     Path.Combine(contentRoot, "reference"),
@@ -118,6 +129,7 @@ builder.Services.AddSingleton<ICareerGuideSource, FileSystemCareerGuideSource>()
 builder.Services.AddSingleton<IAiGuideSource, FileSystemAiGuideSource>();
 builder.Services.AddSingleton<ICloudGuideSource, FileSystemCloudGuideSource>();
 builder.Services.AddSingleton<IWeekZeroGuideSource, FileSystemWeekZeroGuideSource>();
+builder.Services.AddSingleton<IPrepGuideSource, FileSystemPrepGuideSource>();
 builder.Services.AddSingleton<PracticeCoordinator>();
 builder.Services.AddScoped<PracticeService>();
 builder.Services.AddSingleton(new DebugContentOptions

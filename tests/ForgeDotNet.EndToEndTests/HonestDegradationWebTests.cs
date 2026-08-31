@@ -152,6 +152,27 @@ public sealed class HonestDegradationWebTests(ForgeWebApplicationFactory factory
         Assert.Contains("href=\"/labs/api-mini-erp\" target=\"_blank\"", html, StringComparison.Ordinal);
     }
 
+    /// <summary>
+    /// Un dossier de préparation relie les cours de la plateforme : ses liens internes doivent être
+    /// rendus comme de vrais liens, pas comme du texte — c'est sa seule raison d'être.
+    /// </summary>
+    [Fact]
+    public async Task APrepDossierRendersItsInternalCourseLinks()
+    {
+        using HttpClient client = factory.CreateClient();
+
+        string plan = WebUtility.HtmlDecode(await client.GetStringAsync("/prep/icube-plan-veille-001"));
+        Assert.Contains("href=\"/learn/week-0/week0-microservices-001\"", plan, StringComparison.Ordinal);
+        Assert.Contains("href=\"/learn/week-0/week0-azure-service-bus-001\"", plan, StringComparison.Ordinal);
+        Assert.Contains("href=\"/career/career-star-workbook-001\"", plan, StringComparison.Ordinal);
+        Assert.Contains("href=\"/prep/icube-scripts-entretien-001\"", plan, StringComparison.Ordinal);
+        Assert.Contains("href=\"/learn-senior/senior-boundaries-001\"", plan, StringComparison.Ordinal);
+
+        string scripts = WebUtility.HtmlDecode(await client.GetStringAsync("/prep/icube-scripts-entretien-001"));
+        Assert.Contains("Zone sensible", scripts, StringComparison.Ordinal);
+        Assert.Contains("aucune preuve de maîtrise", scripts, StringComparison.Ordinal);
+    }
+
     [Fact]
     public async Task GateRequirementLabelsReadAsRequirementsNotAsStates()
     {

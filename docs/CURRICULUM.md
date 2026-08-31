@@ -184,6 +184,20 @@ guides. Comme les chapitres IA et Cloud, cet onglet est volontairement **sans se
 numérotée dans `forge-reference`, sans prérequis et sans ordre imposé**, et ne produit aucune
 preuve de maîtrise.
 
+## Entretiens ciblés (hors parcours, libre accès)
+
+Depuis le 31 août 2026, l'onglet « Entretiens ciblés » (`/prep`, détail sur `/prep/{id}`) sert des
+dossiers `PrepGuide` groupés par sous-thème — un entretien précis chacun. Un dossier ordonne la
+préparation dans le temps disponible et **relie** les cours de la plateforme (Semaine 0, piste
+senior, kit carrière, fiches d'entretien) au lieu de les recopier ; il porte aussi les scripts de
+réponse aux questions sensibles du poste visé. Premier sous-thème : `icube` (ingénieur logiciel
+.NET / Azure / Vue.js), deux dossiers. Aucune donnée personnelle n'entre dans un dossier — ni nom,
+ni contact, ni employeur — et aucun dossier ne produit de preuve de maîtrise. L'onglet est en outre
+**verrouillé par mot de passe** (fichier local `.secrets/prep-password.txt`, hors Git, comme le
+secret du SqlLab) : sur une installation publiée, la liste comme les dossiers n'affichent rien tant
+que la session de navigation n'est pas déverrouillée, et l'absence de fichier secret ferme l'accès
+au lieu de l'ouvrir.
+
 ## Après les 24 semaines
 
 Parcours distinct de 12–24 mois : systèmes distribués, messaging, cache, résilience, observabilité avancée, architecture, mentoring, estimation, incidents, anglais B2/C1, allemand A2/B1 et leadership. Il ne fait pas partie du MVP.

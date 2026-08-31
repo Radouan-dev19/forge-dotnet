@@ -9,6 +9,7 @@ using ForgeDotNet.Domain.Cloud;
 using ForgeDotNet.Domain.Content;
 using ForgeDotNet.Domain.English;
 using ForgeDotNet.Domain.Interviews;
+using ForgeDotNet.Domain.Prep;
 using ForgeDotNet.Domain.WeekZero;
 using ForgeDotNet.Infrastructure.Practice;
 
@@ -399,6 +400,55 @@ public sealed class FileSystemWeekZeroGuideSource(
         if (!info.Exists || info.Length == 0 || info.Length > MaximumGuideBytes)
         {
             throw new InvalidDataException($"Document de guide de la Semaine 0 absent, vide ou trop volumineux : {documentPath}.");
+        }
+
+        return StrictGuideUtf8.GetString(File.ReadAllBytes(resolved));
+    }
+}
+
+public sealed class FileSystemPrepGuideSource(
+    ContentCatalogProvider catalogProvider,
+    PracticeContentOptions options)
+    : FileSystemPreparationSource<PrepGuide>(
+        catalogProvider,
+        options,
+        ContentDocumentType.PrepGuide,
+        "prep"), IPrepGuideSource
+{
+    private const int MaximumGuideBytes = 65_536;
+    private static readonly UTF8Encoding StrictGuideUtf8 = new(false, true);
+
+    private readonly string _prepDirectory = Path.TrimEndingDirectorySeparator(Path.GetFullPath(
+        Path.Combine(options.CatalogDirectoryPath, "prep")));
+
+    protected override string IdentifierOf(PrepGuide value) => value.Id;
+
+    protected override PrepGuide Read(ContentCatalogItem item, JsonElement root) => new(
+        item.Id,
+        item.Version,
+        root.GetProperty("title").GetString()!,
+        root.GetProperty("summary").GetString()!,
+        root.GetProperty("theme").GetString()!,
+        root.GetProperty("themeTitle").GetString()!,
+        root.GetProperty("order").GetInt32(),
+        ReadBody(root.GetProperty("documentPath").GetString()!));
+
+    /// <summary>
+    /// Le nom du Markdown vient d'un manifeste validé par schéma ; la garde de descendance reste
+    /// appliquée par principe, comme pour chaque famille plate du catalogue.
+    /// </summary>
+    private string ReadBody(string documentPath)
+    {
+        string resolved = Path.GetFullPath(Path.Combine(_prepDirectory, documentPath));
+        if (!resolved.StartsWith(_prepDirectory + Path.DirectorySeparatorChar, StringComparison.Ordinal))
+        {
+            throw new InvalidOperationException("Le document d'un dossier de préparation sort de son dossier.");
+        }
+
+        var info = new FileInfo(resolved);
+        if (!info.Exists || info.Length == 0 || info.Length > MaximumGuideBytes)
+        {
+            throw new InvalidDataException($"Document de dossier de préparation absent, vide ou trop volumineux : {documentPath}.");
         }
 
         return StrictGuideUtf8.GetString(File.ReadAllBytes(resolved));

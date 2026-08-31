@@ -87,4 +87,16 @@ public enum ContentDocumentType
     /// Cloud.
     /// </remarks>
     WeekZeroGuide,
+
+    /// <summary>
+    /// Dossier de préparation à un entretien précis, groupé par sous-thème (une entreprise, un
+    /// poste) : plan de travail, liens vers les cours de la plateforme, scripts de réponse.
+    /// </summary>
+    /// <remarks>
+    /// Onglet « Entretiens ciblés », volontairement <b>hors parcours</b> : ni semaine, ni prérequis,
+    /// ni preuve de maîtrise. Un dossier référence les leçons et guides déjà publiés plutôt que de
+    /// les recopier — la règle anti-recopie du validateur s'applique à lui comme au reste — et ne
+    /// contient aucune donnée personnelle : pas de nom, pas de contact, pas d'employeur actuel.
+    /// </remarks>
+    PrepGuide,
 }

@@ -7,7 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace ForgeDotNet.EndToEndTests;
 
-public sealed class ForgeWebApplicationFactory : WebApplicationFactory<Program>
+public class ForgeWebApplicationFactory : WebApplicationFactory<Program>
 {
     public ForgeWebApplicationFactory()
     {
@@ -21,6 +21,9 @@ public sealed class ForgeWebApplicationFactory : WebApplicationFactory<Program>
         builder.UseEnvironment("Development");
         builder.UseSetting("LocalData:DirectoryPath", DataDirectory);
         builder.UseSetting("SqlLab:Enabled", "false");
+        // Les tests Web ne peuvent pas dérouler le formulaire interactif de déverrouillage : la
+        // garde des dossiers de préparation est levée ici, et testée par sa propre factory.
+        builder.UseSetting("Prep:RequirePassword", "false");
         builder.ConfigureAppConfiguration((_, configuration) => configuration.AddInMemoryCollection(
             new Dictionary<string, string?>
             {
@@ -28,6 +31,7 @@ public sealed class ForgeWebApplicationFactory : WebApplicationFactory<Program>
                 // Le profil Development active SqlLab pour le poste du développeur ; les tests Web
                 // n'ont pas de SQL Server et vérifient le mode désactivé, honnête et déterministe.
                 ["SqlLab:Enabled"] = "false",
+                ["Prep:RequirePassword"] = "false",
             }));
         builder.ConfigureServices(services =>
             services.AddDataProtection().UseEphemeralDataProtectionProvider());

@@ -1,0 +1,75 @@
+@page "/prep"
+@using ForgeDotNet.Application.Preparation
+@using ForgeDotNet.Domain.Prep
+@inject IPrepGuideSource Guides
+
+<PageTitle>Entretiens ciblés — Forge.NET</PageTitle>
+
+<h1>Entretiens ciblés</h1>
+
+<section class="practice-panel" aria-labelledby="prep-intro-title">
+    <h2 id="prep-intro-title">Un dossier par entretien, relié aux cours de la plateforme</h2>
+    <p>
+        Chaque sous-thème rassemble les dossiers de préparation d'un entretien précis : le plan de
+        travail dans le temps disponible, les liens vers les leçons et guides à lire ici même, et les
+        scripts de réponse aux questions attendues. Le chapitre est <strong>hors parcours</strong> :
+        aucun prérequis, aucune semaine — il se lit la veille, pas sur six mois.
+    </p>
+    <p class="notice" role="status">
+        <strong>Aucun de ces dossiers ne produit de preuve de maîtrise</strong> : un entretien se juge
+        par des humains, hors du produit. Les fiches d'entretien générales restent sur la page
+        <a href="/interviews">Entretiens</a> ; ici, tout est ciblé sur un rendez-vous daté.
+    </p>
+</section>
+
+<PrepGate>
+    @if (_error is not null)
+    {
+        <p class="error-message" role="alert">@_error</p>
+    }
+    else if (_themes is null)
+    {
+        <p role="status">Chargement des dossiers…</p>
+    }
+    else
+    {
+        @foreach (IGrouping<string, PrepGuide> theme in _themes)
+        {
+            <section class="reader-module" aria-labelledby="prep-theme-@theme.Key">
+                <h2 id="prep-theme-@theme.Key">@theme.First().ThemeTitle</h2>
+                <ul class="lesson-list">
+                    @foreach (PrepGuide guide in theme)
+                    {
+                        <li>
+                            <a href="@($"/prep/{guide.Id}")">@guide.Title</a>
+                            <p>@guide.Summary</p>
+                        </li>
+                    }
+                </ul>
+            </section>
+        }
+    }
+</PrepGate>
+
+@code {
+    private List<IGrouping<string, PrepGuide>>? _themes;
+    private string? _error;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            IReadOnlyList<PrepGuide> guides = await Guides.ListAsync();
+            _themes = guides
+                .OrderBy(guide => guide.Order)
+                .ThenBy(guide => guide.Id, StringComparer.Ordinal)
+                .GroupBy(guide => guide.Theme, StringComparer.Ordinal)
+                .OrderBy(theme => theme.Key, StringComparer.Ordinal)
+                .ToList();
+        }
+        catch (Exception exception) when (exception is InvalidDataException or InvalidOperationException)
+        {
+            _error = exception.Message;
+        }
+    }
+}

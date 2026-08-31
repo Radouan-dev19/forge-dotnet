@@ -41,6 +41,7 @@ public sealed class ContentReachabilityWebTests(ForgeWebApplicationFactory facto
         [ContentDocumentType.AiGuide] = "/ai",
         [ContentDocumentType.CloudGuide] = "/cloud",
         [ContentDocumentType.WeekZeroGuide] = "/learn",
+        [ContentDocumentType.PrepGuide] = "/prep",
     };
 
     [Fact]
@@ -147,6 +148,13 @@ public sealed class ContentReachabilityWebTests(ForgeWebApplicationFactory facto
         }
 
         Assert.Contains("Semaine 0", learn, StringComparison.Ordinal);
+
+        // L'onglet Entretiens ciblés liste ses dossiers, groupés par sous-thème.
+        string prep = WebUtility.HtmlDecode(await client.GetStringAsync("/prep"));
+        Assert.Contains("/prep/icube-plan-veille-001", prep, StringComparison.Ordinal);
+        Assert.Contains("/prep/icube-scripts-entretien-001", prep, StringComparison.Ordinal);
+        Assert.Contains("ICube", prep, StringComparison.Ordinal);
+        Assert.Contains("ne produit de preuve de maîtrise", prep, StringComparison.Ordinal);
     }
 
     /// <summary>

@@ -446,6 +446,9 @@ public sealed class FileSystemContentCatalogLoader : IContentCatalogLoader
 
         // Même contrat pour un guide de la Semaine 0 : le résumé déclaré nourrit l'index.
         ContentDocumentType.WeekZeroGuide => root.GetProperty("summary").GetString()!,
+
+        // Même contrat pour un dossier de préparation d'entretien.
+        ContentDocumentType.PrepGuide => root.GetProperty("summary").GetString()!,
         _ => string.Empty,
     };
 

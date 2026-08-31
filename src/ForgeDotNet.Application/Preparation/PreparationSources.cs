@@ -3,6 +3,7 @@ using ForgeDotNet.Domain.Career;
 using ForgeDotNet.Domain.Cloud;
 using ForgeDotNet.Domain.English;
 using ForgeDotNet.Domain.Interviews;
+using ForgeDotNet.Domain.Prep;
 using ForgeDotNet.Domain.WeekZero;
 
 namespace ForgeDotNet.Application.Preparation;
@@ -95,4 +96,19 @@ public interface IWeekZeroGuideSource
     ValueTask<IReadOnlyList<WeekZeroGuide>> ListAsync(CancellationToken cancellationToken = default);
 
     ValueTask<WeekZeroGuide?> GetAsync(string guideId, CancellationToken cancellationToken = default);
+}
+
+/// <summary>
+/// Dossiers de préparation d'entretien, groupés par sous-thème : un plan de travail et des scripts
+/// de réponse qui relient les cours de la plateforme, à lire avant un entretien précis.
+/// </summary>
+/// <remarks>
+/// Même famille que les autres contenus de préparation : un entretien se juge par des humains, hors
+/// du produit — ces dossiers ne produisent aucune observation de maîtrise, et ne le pourront pas.
+/// </remarks>
+public interface IPrepGuideSource
+{
+    ValueTask<IReadOnlyList<PrepGuide>> ListAsync(CancellationToken cancellationToken = default);
+
+    ValueTask<PrepGuide?> GetAsync(string guideId, CancellationToken cancellationToken = default);
 }

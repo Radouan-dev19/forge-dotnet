@@ -1,0 +1,80 @@
+@inject PrepAccessState Access
+
+@* Garde des dossiers de préparation : contenu personnel sur une application potentiellement
+   publiée. Verrouillé par défaut — y compris pendant le prérendu — et déverrouillé pour la seule
+   session de navigation en cours. Rien du contenu protégé n'est rendu tant que la session n'est
+   pas déverrouillée. *@
+@if (Access.IsUnlocked)
+{
+    @ChildContent
+}
+else
+{
+    <section class="practice-panel" aria-labelledby="prep-gate-title">
+        <h2 id="prep-gate-title">Accès protégé</h2>
+        <p>
+            Les dossiers de préparation d'entretien sont personnels : cet onglet est verrouillé par un
+            mot de passe local. Le déverrouillage vaut pour la session de navigation en cours.
+        </p>
+        @if (!Access.PasswordConfigured)
+        {
+            <p class="notice" role="alert">
+                Aucun mot de passe n'est configuré : l'accès reste fermé. Sur le poste qui héberge
+                l'application, créez le fichier secret (une ligne, votre mot de passe) :
+            </p>
+            <pre class="practice-content">.secrets/prep-password.txt</pre>
+            <p class="field-help">
+                Le dossier <code>.secrets/</code> est ignoré par Git, comme le secret du SqlLab. Le mot
+                de passe n'apparaît ni dans la configuration versionnée, ni dans les journaux.
+            </p>
+        }
+        else
+        {
+            <div class="form-field">
+                <label for="prep-password">Mot de passe</label>
+                <input id="prep-password" type="password" maxlength="200"
+                       @bind="_password" @bind:event="oninput"
+                       @onkeydown="@(async args => { if (args.Key == "Enter") { await UnlockAsync(); } })" />
+            </div>
+            <button class="btn btn-primary" type="button" disabled="@_busy" @onclick="UnlockAsync">Déverrouiller</button>
+            @if (_error is not null)
+            {
+                <p class="error-message" role="alert">@_error</p>
+            }
+        }
+    </section>
+}
+
+@code {
+    [Parameter, EditorRequired]
+    public RenderFragment? ChildContent { get; set; }
+
+    private string _password = string.Empty;
+    private string? _error;
+    private bool _busy;
+
+    protected override void OnInitialized() => Access.ApplyDefault();
+
+    private async Task UnlockAsync()
+    {
+        if (_busy)
+        {
+            return;
+        }
+
+        _busy = true;
+        _error = null;
+        try
+        {
+            if (!await Access.TryUnlockAsync(_password))
+            {
+                _error = "Mot de passe refusé.";
+            }
+        }
+        finally
+        {
+            _password = string.Empty;
+            _busy = false;
+        }
+    }
+}

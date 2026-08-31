@@ -23,8 +23,8 @@ public sealed class ContentCatalogLoadingTests
         Assert.True(second.Succeeded, FormatIssues(second.Issues));
         ContentCatalog catalog = Assert.IsType<ContentCatalog>(first.Catalog);
         ContentCatalog secondCatalog = Assert.IsType<ContentCatalog>(second.Catalog);
-        // 748 documents pédagogiques, plus la banque de cartes de révision.
-        Assert.Equal(749, catalog.Items.Count);
+        // 750 documents pédagogiques, plus la banque de cartes de révision.
+        Assert.Equal(751, catalog.Items.Count);
         Assert.Single(catalog.GetByType(ContentDocumentType.ReviewCardBank));
         Assert.Equal(238, catalog.GetByType(ContentDocumentType.Exercise).Count);
         Assert.Equal(293, catalog.GetByType(ContentDocumentType.InterviewQuestion).Count);
@@ -37,6 +37,8 @@ public sealed class ContentCatalogLoadingTests
         // Les cinq guides de la Semaine 0 de la page Apprendre, hors parcours et en libre accès :
         // Vue.js 3/TypeScript, Azure Service Bus, Azure DevOps, IIS, Microservices.
         Assert.Equal(5, catalog.GetByType(ContentDocumentType.WeekZeroGuide).Count);
+        // Les dossiers de préparation d'entretien, groupés par sous-thème (icube pour l'instant).
+        Assert.Equal(2, catalog.GetByType(ContentDocumentType.PrepGuide).Count);
         // Deux parcours désormais : le socle junior forge-reference et la piste senior forge-senior-reference.
         Assert.Equal(2, catalog.GetByType(ContentDocumentType.Curriculum).Count);
         Assert.Equal(96, catalog.GetByType(ContentDocumentType.Lesson).Count);

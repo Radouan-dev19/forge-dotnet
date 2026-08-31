@@ -65,8 +65,9 @@ public sealed class ContentS21S24CoverageTests
         // concepts Kubernetes, AKS managé, sécurité et coûts. Le 28 août 2026, l'onglet Semaine 0 de
         // la page Apprendre ajoute quatre guides WeekZeroGuide (manifeste plus Markdown chacun) :
         // Vue.js 3/TypeScript, Azure Service Bus, Azure DevOps, IIS — puis un cinquième le
-        // 31 août 2026, Microservices.
-        Assert.Equal(3_330, Directory.GetFiles(CatalogRoot, "*", SearchOption.AllDirectories).Length);
+        // 31 août 2026, Microservices. Le même jour, l'onglet « Entretiens ciblés » ajoute deux
+        // dossiers PrepGuide (manifeste plus Markdown chacun) sous le sous-thème icube.
+        Assert.Equal(3_334, Directory.GetFiles(CatalogRoot, "*", SearchOption.AllDirectories).Length);
     }
 
     [Fact]
