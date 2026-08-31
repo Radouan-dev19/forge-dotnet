@@ -24,6 +24,8 @@ dotnet test --no-build --filter "Category=SqlLabSecurity"
 powershell -ExecutionPolicy Bypass -File scripts/stop-sql-lab.ps1
 ```
 
+Depuis le 28 août 2026, le profil `Development` (`appsettings.Development.json`, donc `dotnet run` et Visual Studio) active SqlLab par défaut : le poste du développeur n'a qu'à démarrer le conteneur avec le script ci-dessus, puis cliquer « Revérifier » sur `/sql-lab`. La page indisponible affiche cette procédure au lieu d'un simple constat. La disponibilité commence par une sonde TCP de 1,5 s : un conteneur arrêté se signale immédiatement au lieu de bloquer la page pendant `ConnectTimeoutSeconds`. Les tests Web forcent `SqlLab:Enabled=false` pour rester déterministes sans SQL Server. Une leçon peut pointer un scénario par `/sql-lab?scenario={id}`, présélectionné à l'ouverture.
+
 Le script crée `.secrets/sql-lab-sa-password.txt` avec un générateur cryptographique. Le dossier est ignoré par Git et Docker. Compose monte le fichier en lecture seule ; le mot de passe n'apparaît ni dans `Config.Env`, ni dans la configuration rendue, ni dans les vues Web. `-IncludeWeb` démarre également le Web avec SqlLab activé. `-PurgeSecret` sur le script d'arrêt supprime volontairement le secret après contrôle de son chemin.
 
 ## Cycle d'une session

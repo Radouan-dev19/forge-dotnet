@@ -14,6 +14,9 @@ else
 {
     <p class="notice">@_dashboard.MeasurementNote</p>
 
+    <RunnerUnavailablePanel Title="Ces mesures décrivent une installation, pas votre niveau"
+                            Consequence="« aucune preuve de maîtrise mesurée » signifie ici que l’installation ne peut rien mesurer, pas que vous n’avez pas travaillé." />
+
     <section class="info-panel" aria-labelledby="objective-title">
         <h2 id="objective-title">Objectif</h2>
         <p><strong>Objectif professionnel déclaré :</strong> @DisplayOrUnavailable(_profile.ProfessionalGoal)</p>

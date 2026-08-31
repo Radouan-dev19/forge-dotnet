@@ -895,6 +895,24 @@ pre code {
     padding: 0;
 }
 
+/* Identifiant d'activité résolu en lien direct depuis une leçon. */
+.lesson-activity-link {
+    text-decoration: none;
+}
+
+.lesson-activity-link code {
+    border: 1px solid currentColor;
+    color: inherit;
+    text-decoration: underline;
+    text-underline-offset: .15em;
+}
+
+.lesson-activity-link:hover code,
+.lesson-activity-link:focus-visible code {
+    background: var(--ink-800);
+    color: var(--ink-050);
+}
+
 /* --------------------------------------------------------------------------
    Runner et pratique
    -------------------------------------------------------------------------- */

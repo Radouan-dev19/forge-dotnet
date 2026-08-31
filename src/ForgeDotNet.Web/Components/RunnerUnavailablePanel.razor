@@ -1,0 +1,47 @@
+@inject CodeRunnerModeDescriptor RunnerMode
+
+@* Même recette que le panneau d'indisponibilité du SqlLab : l'état, la commande exacte, et ce que
+   cela change. Sans lui, une page « fermée » ou un résultat « indisponible » ne distinguent pas un
+   apprenant qui n'a pas encore travaillé d'une installation incapable de produire la moindre preuve —
+   et la seconde ne se répare pas en travaillant davantage. *@
+@if (RunnerMode.IsManual)
+{
+    <section class="practice-panel runner-unavailable" aria-labelledby="@_titleId">
+        <h2 id="@_titleId">@Title</h2>
+        <p class="notice" role="alert">
+            <strong>Cette installation ne peut produire aucune preuve.</strong> Le mode manuel n’exécute ni ne teste
+            aucun code : @Consequence
+        </p>
+        <ol>
+            <li>Lancez Docker Desktop (moteur 25 ou plus récent, conteneurs Linux).</li>
+            <li>
+                À la racine du dépôt, construisez l’image du bac à sable — le script affiche la référence
+                immuable <code>sha256:…</code> à reprendre :
+                <pre class="practice-content">./scripts/build-code-runner.ps1</pre>
+            </li>
+            <li>
+                Redémarrez l’application en mode Docker avec cette référence :
+                <pre class="practice-content">dotnet run --project src/ForgeDotNet.Web `
+  --CodeRunner:Mode Docker `
+  --CodeRunner:Docker:ImageReference sha256:…</pre>
+            </li>
+        </ol>
+        <p class="field-help">
+            Le mode Compose (<code>docker compose up</code>) reste volontairement en mode manuel : il sert à lire,
+            planifier et réviser, jamais à valider. Détail dans le README, section « Valider des exercices ».
+        </p>
+    </section>
+}
+
+@code {
+    /// <summary>Titre du panneau, adapté à la page qui l’affiche.</summary>
+    [Parameter]
+    public string Title { get; set; } = "Activer la validation automatique";
+
+    /// <summary>Phrase qui dit ce que le mode manuel change sur cette page précise.</summary>
+    [Parameter]
+    public string Consequence { get; set; } =
+        "toute soumission est enregistrée comme déclarée, et la politique refuse une déclaration comme preuve.";
+
+    private readonly string _titleId = $"runner-unavailable-{Guid.NewGuid():N}";
+}

@@ -17,6 +17,10 @@
     </p>
 </section>
 
+@* Le DebugLab n'admet que l'exécution automatique : sans bac à sable, la méthode en quatre temps se
+   déroule entièrement puis la correction revient « indisponible ». Autant le dire avant d'ouvrir. *@
+<RunnerUnavailablePanel Consequence="une correction soumise revient « indisponible » sans être exécutée ; le journal d’observations reste utile, mais aucun scénario ne peut se terminer." />
+
 @if (_error is not null)
 {
     <p class="error-message" role="alert">@_error</p>
@@ -28,7 +32,7 @@ else if (_scenarios is null)
 else
 {
     <section class="practice-panel" aria-labelledby="debug-list-title">
-        <h2 id="debug-list-title">Huit scénarios initiaux</h2>
+        <h2 id="debug-list-title">@_scenarios.Count scénario(s) publié(s)</h2>
         <ul class="practice-exercise-list">
             @foreach (DebugScenarioSummaryView scenario in _scenarios)
             {

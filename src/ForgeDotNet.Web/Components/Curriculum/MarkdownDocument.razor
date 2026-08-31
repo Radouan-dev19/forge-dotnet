@@ -1,0 +1,50 @@
+@using ForgeDotNet.Infrastructure.Curriculum
+
+@* Rend un document Markdown libre (guide, brief) avec le parseur sûr des leçons : titres de niveau 2,
+   paragraphes, listes et blocs de code typés, encodés par Razor — jamais d'HTML injecté. Un document
+   que le parseur refuse (clôture de code jamais fermée) retombe sur le texte brut plutôt que sur une
+   page en erreur : le lecteur garde toujours accès au contenu. *@
+<div class="lesson-content markdown-document">
+    @if (_fallback is not null)
+    {
+        <pre class="runner-output">@_fallback</pre>
+    }
+    else
+    {
+        @foreach (LessonSectionView section in _sections)
+        {
+            <section id="@section.Id" class="lesson-section" aria-labelledby="@(section.Title.Length == 0 ? null : $"title-{section.Id}")">
+                @if (section.Title.Length > 0)
+                {
+                    <h3 id="title-@section.Id">@section.Title</h3>
+                }
+                @foreach (LessonBlockView block in section.Blocks)
+                {
+                    <LessonBlock Block="block" />
+                }
+            </section>
+        }
+    }
+</div>
+
+@code {
+    [Parameter, EditorRequired]
+    public string Markdown { get; set; } = string.Empty;
+
+    private IReadOnlyList<LessonSectionView> _sections = [];
+    private string? _fallback;
+
+    protected override void OnParametersSet()
+    {
+        try
+        {
+            _sections = SafeMarkdownLessonParser.ParseDocument(Markdown);
+            _fallback = null;
+        }
+        catch (InvalidDataException)
+        {
+            _sections = [];
+            _fallback = Markdown;
+        }
+    }
+}

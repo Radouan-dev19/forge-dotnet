@@ -19,6 +19,10 @@ public sealed class SqlLabWebTests(ForgeWebApplicationFactory factory)
         Assert.Equal(HttpStatusCode.OK, response.StatusCode);
         Assert.Contains("Sans service SQL Server isolé", html, StringComparison.Ordinal);
         Assert.Contains("aucune validation SQL", html, StringComparison.OrdinalIgnoreCase);
+        // Indisponible ne veut pas dire muet : la page donne la commande exacte qui rend les
+        // scénarios jouables, sans exposer ni port ni secret.
+        Assert.Contains("scripts/start-sql-lab.ps1", html, StringComparison.Ordinal);
+        Assert.Contains("Revérifier", WebUtility.HtmlDecode(html), StringComparison.Ordinal);
         Assert.DoesNotContain("MSSQL_SA_PASSWORD", html, StringComparison.Ordinal);
         Assert.DoesNotContain("forge_user_", html, StringComparison.Ordinal);
         Assert.DoesNotContain("14333", html, StringComparison.Ordinal);

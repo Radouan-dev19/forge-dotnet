@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "id": "week0-microservices-001",
+  "version": 1,
+  "title": "Microservices : les concepts pour en parler",
+  "summary": "Monolithe et ses limites, découpage par capacité métier, données par service et cohérence éventuelle, API synchrone contre bus asynchrone, indépendance de déploiement, coûts réels et motif de l'étrangleur pour une migration.",
+  "order": 5,
+  "documentPath": "microservices.md",
+  "license": "CC-BY-4.0"
+}

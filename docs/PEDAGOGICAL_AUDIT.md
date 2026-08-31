@@ -720,6 +720,29 @@ panel humain indépendant (P2-02) — reste ouverte et ne dépend d'aucun outill
 REFUSÉ** tant qu'elle ne l'est pas. La discipline du rapport vaut plus que sa conclusion : rien ici
 ne déclare le verdict levé.
 
+### Reprise du 28 août 2026 — honnêteté du mode dégradé et joignabilité par document
+
+Sans nouvel essai de persona, une relecture croisée (dépendances, pédagogie, parcours) a relevé et
+fermé des défauts de la même classe que P1-03 et que l'angle mort des 293 documents :
+
+- `/exams` et `/debug-lab` ne portaient aucune bannière de mode manuel — un examen de deux heures
+  pouvait être passé puis noté zéro item par item. Le panneau `RunnerUnavailablePanel` (état, script de
+  construction, commande CLI avec digest, rappel « Compose ne valide pas ») est désormais affiché sur
+  `/practice`, `/projects`, `/debug-lab`, `/exams`, `/dashboard`, `/reviews`, et le démarrage d'un
+  examen est refusé en mode manuel ; `sql-ef-core-v1` annonce son exigence SqlLab.
+- La piste senior citait ses huit exercices sans lien et son quiz n'avait pas de bouton ; les leçons
+  citaient les laboratoires par chemin de fichier. Le résolveur d'activités est partagé par les deux
+  parcours et connaît les laboratoires ; `LessonActivityReachabilityWebTests` refuse toute citation
+  non reliée, leçon par leçon.
+- P3-05 corrigé : les exigences de porte se lisent « Exige : Porte A ouverte ». P3-06 : la page
+  `/diagnostic` annonce que la première section démarre à la création de la session.
+- `/about` niait l'existence du diagnostic, des exercices et des scores ; les guides et briefs étaient
+  rendus en texte brut ; `docs/HUMAN_REVIEW.md` et le kit de panel n'étaient atteignables qu'avec un
+  clone du dépôt. Corrigés (`/docs/{nom}`, `MarkdownDocument`).
+
+Le verdict ne bouge pas : ces corrections n'ont pas été rejouées par les personas et la condition 2
+reste ouverte.
+
 ## Panel — protocole prêt, non exécuté
 
 La seconde condition de levée (P2-02) ne se code pas, mais son matériel existe depuis le

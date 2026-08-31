@@ -80,16 +80,30 @@ else
 
             <section class="quiz-panel" aria-labelledby="senior-quiz-title">
                 <h2 id="senior-quiz-title">Quiz de compréhension</h2>
-                <p>@_lesson.Quiz.Prompt</p>
-                <ul>
+                <fieldset>
+                    <legend>@_lesson.Quiz.Prompt</legend>
                     @foreach (LessonQuizOptionView option in _lesson.Quiz.Options)
                     {
-                        <li>@option.Text</li>
+                        <label class="quiz-option">
+                            <input type="radio"
+                                   name="senior-lesson-quiz"
+                                   value="@option.Id"
+                                   checked="@(_selectedOptionId == option.Id)"
+                                   @onchange="() => _selectedOptionId = option.Id" />
+                            @option.Text
+                        </label>
                     }
-                </ul>
+                </fieldset>
+                <button class="btn btn-primary" type="button" disabled="@(_selectedOptionId is null)" @onclick="CheckQuizAsync">
+                    Vérifier ma réponse
+                </button>
+                @if (!string.IsNullOrWhiteSpace(_quizFeedback))
+                {
+                    <p class="@(_quizWasCorrect ? "success-message" : "notice")" role="status">@_quizFeedback</p>
+                }
                 <p class="field-help">
                     La piste senior se lit sans suivi de progression : ce quiz est un contrôle
-                    personnel, il n'enregistre aucune preuve de maîtrise.
+                    personnel, vérifié mais jamais enregistré — il ne produit aucune preuve de maîtrise.
                 </p>
             </section>
         </div>
@@ -123,9 +137,14 @@ else
     private LessonLibraryView? _library;
     private LessonView? _lesson;
     private bool _isLoadingLesson;
+    private int? _selectedOptionId;
+    private string? _quizFeedback;
+    private bool _quizWasCorrect;
 
     protected override async Task OnParametersSetAsync()
     {
+        _selectedOptionId = null;
+        _quizFeedback = null;
         if (string.IsNullOrWhiteSpace(LessonId))
         {
             _lesson = null;
@@ -137,5 +156,17 @@ else
             _lesson = await Senior.GetLessonAsync(LessonId);
             _isLoadingLesson = false;
         }
+    }
+
+    private async Task CheckQuizAsync()
+    {
+        if (LessonId is null || _selectedOptionId is null)
+        {
+            return;
+        }
+
+        LessonQuizResultView? result = await Senior.CheckQuizAsync(LessonId, _selectedOptionId.Value);
+        _quizWasCorrect = result?.IsCorrect ?? false;
+        _quizFeedback = result?.Feedback ?? "Réponse inconnue pour cette leçon.";
     }
 }

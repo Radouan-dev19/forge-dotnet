@@ -47,7 +47,14 @@ public sealed class SqlServerLabGateway : ISqlLabGateway, IAsyncDisposable
     {
         if (!_options.Enabled)
         {
-            return new SqlLabAvailability(false, "SqlLab est désactivé. Démarrez le profil Compose sql-lab.");
+            return new SqlLabAvailability(false, "SqlLab est désactivé dans la configuration (SqlLab:Enabled).");
+        }
+
+        // Sonde TCP courte avant toute connexion SQL : quand le conteneur est arrêté, l'ouverture
+        // SqlClient attendrait ConnectTimeoutSeconds (15 s par défaut) à chaque affichage de la page.
+        if (!await CanReachServerAsync(cancellationToken))
+        {
+            return new SqlLabAvailability(false, "SQL Server de laboratoire ne répond pas : le conteneur Docker sql-lab est probablement arrêté.");
         }
 
         try
@@ -394,6 +401,23 @@ public sealed class SqlServerLabGateway : ISqlLabGateway, IAsyncDisposable
             IF SUSER_ID(N'{loginName}') IS NOT NULL DROP LOGIN [{loginName}];
             """,
             cancellationToken);
+    }
+
+    private async Task<bool> CanReachServerAsync(CancellationToken cancellationToken)
+    {
+        using var client = new System.Net.Sockets.TcpClient();
+        using var timeout = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
+        timeout.CancelAfter(TimeSpan.FromMilliseconds(1_500));
+        try
+        {
+            await client.ConnectAsync(_options.Server, _options.Port, timeout.Token);
+            return client.Connected;
+        }
+        catch (Exception exception) when (exception is System.Net.Sockets.SocketException or OperationCanceledException)
+        {
+            cancellationToken.ThrowIfCancellationRequested();
+            return false;
+        }
     }
 
     private async Task<SqlConnection> OpenAdministratorConnectionAsync(

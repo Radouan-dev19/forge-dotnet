@@ -12,6 +12,34 @@
     <p class="notice" role="status">
         Sans service SQL Server isolé disponible, SqlLab reste indisponible et n’affirme aucune validation automatique.
     </p>
+    @if (!_loading)
+    {
+        <section class="practice-panel" aria-labelledby="sql-lab-start-title">
+            <h2 id="sql-lab-start-title">Démarrer le laboratoire en une commande</h2>
+            @if (_home is not null)
+            {
+                <p><strong>État :</strong> @_home.StatusMessage</p>
+            }
+            <ol>
+                <li>Lancez Docker Desktop.</li>
+                <li>
+                    À la racine du dépôt, exécutez :
+                    <pre class="practice-content">powershell -ExecutionPolicy Bypass -File scripts/start-sql-lab.ps1</pre>
+                    Le script crée le secret local, démarre SQL Server dans un conteneur isolé et attend
+                    qu’il soit sain (une à trois minutes au premier lancement).
+                </li>
+                <li>
+                    Revenez ici et cliquez sur « Revérifier ». Lancée en environnement Development, l’application
+                    active SqlLab d’elle-même ; ailleurs, passez <code>SqlLab:Enabled</code> à <code>true</code>.
+                </li>
+            </ol>
+            <p>
+                Pour l’arrêter : <code>scripts/stop-sql-lab.ps1</code>. Tout se joue sur votre poste ; aucune
+                donnée ne quitte le conteneur, détruit avec ses bases jetables.
+            </p>
+            <button class="btn btn-primary" type="button" disabled="@_loading" @onclick="RecheckAsync">Revérifier</button>
+        </section>
+    }
 }
 
 @if (_loading)
@@ -168,6 +196,13 @@ else
 }
 
 @code {
+    /// <summary>
+    /// Scénario présélectionné par un lien direct depuis une leçon (<c>/sql-lab?scenario=…</c>).
+    /// Un identifiant inconnu est ignoré : la page s'ouvre alors sur le bac à sable technique.
+    /// </summary>
+    [SupplyParameterFromQuery(Name = "scenario")]
+    public string? Scenario { get; set; }
+
     private SqlLabHomeView? _home;
     private SqlScenarioView? _scenario;
     private string? _scenarioId;
@@ -182,12 +217,34 @@ else
     private bool _busy;
     private bool _running;
 
-    protected override async Task OnInitializedAsync()
+    protected override Task OnInitializedAsync() => LoadHomeAsync();
+
+    private async Task RecheckAsync()
+    {
+        _loading = true;
+        _error = null;
+        await LoadHomeAsync();
+    }
+
+    private async Task LoadHomeAsync()
     {
         try
         {
             _home = await SqlLab.GetHomeAsync();
-            _query = _home.DefaultQuery;
+            if (_scenarioId is null)
+            {
+                _query = _home.DefaultQuery;
+            }
+
+            string requested = Scenario?.Trim() ?? string.Empty;
+            if (_scenarioId is null
+                && requested.Length > 0
+                && _home.Scenarios.Any(summary => string.Equals(summary.Id, requested, StringComparison.Ordinal)))
+            {
+                _scenarioId = requested;
+                _scenario = await SqlLab.GetScenarioAsync(requested);
+                _query = string.Empty;
+            }
         }
         catch (Exception exception)
         {

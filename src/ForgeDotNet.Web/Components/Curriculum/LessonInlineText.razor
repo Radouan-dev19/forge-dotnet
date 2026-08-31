@@ -11,6 +11,16 @@
         case LessonInlineKind.Link:
             <a href="@inline.Href" rel="noopener noreferrer">@inline.Text</a>
             break;
+        case LessonInlineKind.ActivityLink:
+            @if (inline.OpenInNewTab)
+            {
+                <a class="lesson-activity-link" href="@inline.Href" target="_blank" rel="noopener noreferrer"><code>@inline.Text</code><span class="visually-hidden"> (ouvre l'activité dans un nouvel onglet)</span><span aria-hidden="true"> ↗</span></a>
+            }
+            else
+            {
+                <a class="lesson-activity-link" href="@inline.Href"><code>@inline.Text</code></a>
+            }
+            break;
         default:
             @inline.Text
             break;

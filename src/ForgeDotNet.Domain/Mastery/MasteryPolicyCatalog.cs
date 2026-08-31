@@ -97,7 +97,8 @@ public static class MasteryPolicyCatalog
         "B — Backend .NET",
         WithPrevious(
             MasteryGate.A,
-            "Porte A ouverte",
+            // Libellé d'exigence, pas d'état : « Porte A ouverte » se lisait comme une ouverture (P3-05).
+            "Exige : Porte A ouverte",
             Achievement(ApiFunctional, "API fonctionnelle"),
             Achievement(EfCore, "EF Core"),
             Achievement(ValidationAndErrors, "Validation et erreurs"),
@@ -111,7 +112,7 @@ public static class MasteryPolicyCatalog
         "C — Équipe moderne",
         WithPrevious(
             MasteryGate.B,
-            "Porte B ouverte",
+            "Exige : Porte B ouverte",
             Achievement(Docker, "Docker"),
             Achievement(ContinuousIntegration, "Intégration continue"),
             Achievement(AuthenticationAuthorization, "Authentification et autorisation"),
@@ -125,7 +126,7 @@ public static class MasteryPolicyCatalog
         "D — Intermédiaire en construction",
         WithPrevious(
             MasteryGate.C,
-            "Porte C ouverte",
+            "Exige : Porte C ouverte",
             Achievement(Performance, "Performance"),
             Achievement(Security, "Sécurité"),
             Achievement(PragmaticArchitecture, "Architecture pragmatique"),

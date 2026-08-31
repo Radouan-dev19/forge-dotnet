@@ -145,7 +145,7 @@ Senior S7 est le premier producteur de l'accomplissement `code-review`, qui n'en
 
 **Ce que la piste ne remplace pas, sans l'enjoliver.** Recevoir la revue d'un humain qui n'est pas d'accord, arbitrer sous pression, traverser un désaccord d'équipe : aucun contenu ne remplace ces situations. La piste entraîne le raisonnement distribué, le classement d'une revue et la navigation en terrain inconnu ; elle ne fabrique ni relecteur humain, ni interlocuteur qui conteste. Cette limite est écrite ici et sur la page de la piste, par la même discipline que le projet s'impose partout ailleurs.
 
-Le catalogue compte désormais **neuf examens** : le huitième reste la synthèse S1–S24, le neuvième (`senior-readiness-v1`) tire **8 exercices parmi les 32** de la piste senior — le tirage a suivi la densité pour rester proportionnel au vivier.
+Le catalogue compte désormais **dix examens** (dont `sql-ef-core-v1`, qui exige le SqlLab) : le huitième reste la synthèse S1–S24, le neuvième (`senior-readiness-v1`) tire **8 exercices parmi les 32** de la piste senior — le tirage a suivi la densité pour rester proportionnel au vivier.
 
 ## Chapitre IA (hors parcours, libre accès)
 
@@ -173,12 +173,14 @@ cloud ou d'un cluster.
 
 ## Semaine 0 (hors parcours, libre accès)
 
-Depuis le 28 août 2026, quatre guides `WeekZeroGuide` servis dans l'onglet « Semaine 0 » de la
-page Apprendre (`/learn`, détail sur `/learn/week-0/{id}`) posent des notions d'appoint à
-connaître avant ou en marge du parcours : Vue.js 3 et TypeScript (composants, réactivité, props et
-emits typés, composables), Azure Service Bus (files, sujets, peek-lock, lettres mortes), Azure
-DevOps (Boards, Repos, Pipelines, Artifacts) et IIS (sites, pools d'applications, hébergement
-ASP.NET Core). Comme les chapitres IA et Cloud, cet onglet est volontairement **sans semaine
+Depuis le 28 août 2026, l'onglet « Semaine 0 » de la page Apprendre (`/learn`, détail sur
+`/learn/week-0/{id}`) sert des guides `WeekZeroGuide` : des notions d'appoint à connaître avant ou
+en marge du parcours — Vue.js 3 et TypeScript (composants, réactivité, props et emits typés,
+composables), Azure Service Bus (files, sujets, peek-lock, lettres mortes), Azure DevOps (Boards,
+Repos, Pipelines, Artifacts), IIS (sites, pools d'applications, hébergement ASP.NET Core) et,
+depuis le 31 août 2026, Microservices (découpage par capacité métier, données par service,
+synchrone contre asynchrone, indépendance de déploiement, motif de l'étrangleur) — soit cinq
+guides. Comme les chapitres IA et Cloud, cet onglet est volontairement **sans semaine
 numérotée dans `forge-reference`, sans prérequis et sans ordre imposé**, et ne produit aucune
 preuve de maîtrise.
 

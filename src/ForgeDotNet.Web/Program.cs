@@ -32,6 +32,7 @@ using ForgeDotNet.Infrastructure.Preparation;
 using ForgeDotNet.Infrastructure.Projects;
 using ForgeDotNet.Infrastructure.SqlLab;
 using ForgeDotNet.Infrastructure.WeeklyPlanning;
+using ForgeDotNet.Web;
 using ForgeDotNet.Web.Components;
 using ForgeDotNet.Web.Health;
 using Microsoft.AspNetCore.DataProtection;
@@ -94,6 +95,9 @@ string contentRoot = ResolveConfiguredPath(
     builder.Configuration["Content:RootPath"],
     Path.Combine(repositoryRoot, "content"),
     builder.Environment.ContentRootPath);
+// Documents du dépôt cités par les pages (protocole de revue, kit de panel, README) : servis en
+// lecture seule sur /docs/{nom}, liste blanche fermée.
+builder.Services.AddSingleton(new ServedDocumentsOptions(repositoryRoot));
 string catalogDirectory = ResolveConfiguredPath(
     builder.Configuration["Content:CatalogDirectoryPath"],
     Path.Combine(contentRoot, "reference"),
@@ -273,8 +277,15 @@ builder.Services.AddSingleton(new LessonContentOptions
     CurriculumId = builder.Configuration["Content:CurriculumId"] ?? "forge-reference",
 });
 builder.Services.AddSingleton<ILessonContentSource, FileSystemLessonContentSource>();
+// Les identifiants d'activité cités dans une leçon deviennent des liens directs vers /practice,
+// /sql-lab, /debug-lab, /projects ou /labs : l'apprenant n'a plus à les retrouver dans un index.
+builder.Services.AddSingleton<ILessonActivityLinkResolver>(serviceProvider => new CatalogLessonActivityLinkResolver(
+    serviceProvider.GetRequiredService<ContentCatalogProvider>(),
+    serviceProvider.GetRequiredService<ISqlScenarioSource>(),
+    serviceProvider.GetRequiredService<ILabSource>()));
 builder.Services.AddScoped<BrowseLessons>();
-// Piste senior : un second lecteur, cable sur le parcours forge-senior-reference, distinct du junior.
+// Piste senior : un second lecteur, cable sur le parcours forge-senior-reference, distinct du junior,
+// mais relié par le même résolveur d'activités.
 builder.Services.AddScoped(serviceProvider => new ForgeDotNet.Application.Curriculum.BrowseSeniorTrack(
     new FileSystemLessonContentSource(
         serviceProvider.GetRequiredService<ForgeDotNet.Application.Content.ContentCatalogProvider>(),
@@ -283,7 +294,8 @@ builder.Services.AddScoped(serviceProvider => new ForgeDotNet.Application.Curric
             ContentRootPath = contentRoot,
             CatalogDirectoryPath = catalogDirectory,
             CurriculumId = "forge-senior-reference",
-        })));
+        }),
+    serviceProvider.GetRequiredService<ILessonActivityLinkResolver>()));
 builder.Services.AddScoped<GetLessonReaderState>();
 builder.Services.AddScoped<SaveLessonNote>();
 builder.Services.AddScoped<SetLessonBookmark>();
@@ -391,6 +403,12 @@ app.MapHealthChecks("/health/sql-lab", new Microsoft.AspNetCore.Diagnostics.Heal
 {
     Predicate = registration => string.Equals(registration.Name, "sql-lab", StringComparison.Ordinal),
 });
+// Le script d'export des preuves de carrière est proposé en téléchargement plutôt que cité par son
+// chemin : un apprenant sans clone du dépôt ne pouvait pas l'atteindre.
+app.MapGet("/career/export-script", (ServedDocumentsOptions documents) =>
+    File.Exists(documents.ExportCareerEvidenceScriptPath)
+        ? Results.File(documents.ExportCareerEvidenceScriptPath, "text/plain; charset=utf-8", "Export-CareerEvidence.ps1")
+        : Results.NotFound());
 app.MapRazorComponents<App>().AddInteractiveServerRenderMode();
 
 app.Run();

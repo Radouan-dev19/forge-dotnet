@@ -5,7 +5,8 @@ namespace ForgeDotNet.Application.Curriculum;
 
 public sealed class BrowseLessons(
     ContentCatalogProvider catalogProvider,
-    ILessonContentSource contentSource)
+    ILessonContentSource contentSource,
+    ILessonActivityLinkResolver? activityLinks = null)
 {
     public async ValueTask<LessonLibraryView> GetLibraryAsync(
         string? searchQuery = null,
@@ -73,6 +74,7 @@ public sealed class BrowseLessons(
             : null;
         return document.PublicView with
         {
+            Sections = await LessonActivityLinker.LinkAsync(document.PublicView.Sections, activityLinks, cancellationToken),
             PreviousLesson = previous,
             NextLesson = next,
         };

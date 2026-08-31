@@ -6,12 +6,35 @@ public enum LessonInlineKind
     Strong,
     Code,
     Link,
+
+    /// <summary>
+    /// Identifiant d'activité publiée (exercice, scénario SQL ou de débogage, projet, laboratoire,
+    /// leçon) cité en code inline et résolu vers la page qui le sert.
+    /// </summary>
+    /// <remarks>
+    /// Les leçons écrivent « Ouvrez l'exercice <c>`api-cors-origin-001`</c> dans <c>`/practice`</c> » :
+    /// le lecteur devait retrouver l'activité à la main dans l'index. Le lien direct s'ouvre dans un
+    /// nouvel onglet pour revenir finir la leçon sans perdre sa position.
+    /// </remarks>
+    ActivityLink,
 }
 
 public sealed record LessonInlineView(
     LessonInlineKind Kind,
     string Text,
-    string? Href = null);
+    string? Href = null,
+    bool OpenInNewTab = false);
+
+/// <summary>Cible résolue d'un identifiant d'activité cité dans une leçon.</summary>
+public sealed record LessonActivityLink(string Href, bool OpenInNewTab);
+
+/// <summary>
+/// Résout un identifiant cité en code inline vers la page qui sert l'activité, s'il en existe une.
+/// </summary>
+public interface ILessonActivityLinkResolver
+{
+    ValueTask<LessonActivityLink?> ResolveAsync(string identifier, CancellationToken cancellationToken = default);
+}
 
 public abstract record LessonBlockView;
 

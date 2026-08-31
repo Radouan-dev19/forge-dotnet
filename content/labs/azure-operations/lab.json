@@ -55,6 +55,6 @@
   ],
   "evidencePolicy": "learner-declared-outside-sandbox",
   "requiresDocker": false,
-  "requiresNetwork": false,
+  "requiresNetwork": true,
   "license": "CC-BY-4.0"
 }

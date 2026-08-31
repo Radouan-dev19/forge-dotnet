@@ -140,7 +140,7 @@ public sealed class ContentReachabilityWebTests(ForgeWebApplicationFactory facto
         foreach (string guideId in new[]
         {
             "week0-vue-typescript-001", "week0-azure-service-bus-001",
-            "week0-azure-devops-001", "week0-iis-001",
+            "week0-azure-devops-001", "week0-iis-001", "week0-microservices-001",
         })
         {
             Assert.Contains($"/learn/week-0/{guideId}", learn, StringComparison.Ordinal);

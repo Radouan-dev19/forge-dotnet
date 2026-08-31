@@ -82,7 +82,8 @@ public interface ICloudGuideSource
 
 /// <summary>
 /// Guides de la Semaine 0 de la page Apprendre : des notions d'appoint à connaître — Vue.js
-/// 3/TypeScript, Azure Service Bus, Azure DevOps, IIS — à lire selon les besoins, hors parcours.
+/// 3/TypeScript, Azure Service Bus, Azure DevOps, IIS, Microservices — à lire selon les besoins,
+/// hors parcours.
 /// </summary>
 /// <remarks>
 /// Même famille que les autres contenus de préparation : le runner n'ayant pas de réseau par

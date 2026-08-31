@@ -102,6 +102,79 @@ public sealed partial class SafeMarkdownLessonParser
         }
     }
 
+    /// <summary>
+    /// Lit un document Markdown libre — guide, brief de laboratoire ou de projet — en sections typées,
+    /// sans exiger le contrat des quatorze sections d'une leçon ni de quiz.
+    /// </summary>
+    /// <remarks>
+    /// Les guides et briefs étaient rendus en <c>&lt;pre&gt;</c> brut, dièses et accents graves compris.
+    /// Le même parseur sûr que celui des leçons les rend en titres, paragraphes, listes et blocs de code
+    /// que Razor encode : aucun HTML n'est jamais injecté. Le titre de niveau 1 est ignoré — la page le
+    /// porte déjà — et le texte qui précède le premier titre de niveau 2 forme une section sans titre.
+    /// </remarks>
+    public static IReadOnlyList<LessonSectionView> ParseDocument(string markdown)
+    {
+        ArgumentNullException.ThrowIfNull(markdown);
+        string[] lines = markdown.Replace("\r\n", "\n", StringComparison.Ordinal).Split('\n');
+        var sections = new List<LessonSectionView>();
+        var sectionLines = new List<string>();
+        string sectionTitle = string.Empty;
+        int index = 0;
+        bool insideFence = false;
+
+        foreach (string line in lines)
+        {
+            // Un dièse à l'intérieur d'un bloc de code clôturé est du code, pas un titre : un document
+            // qui montre du Markdown en exemple ne doit pas être découpé au milieu de sa clôture.
+            if (line.StartsWith("```", StringComparison.Ordinal))
+            {
+                insideFence = !insideFence;
+                sectionLines.Add(line);
+                continue;
+            }
+
+            if (insideFence)
+            {
+                sectionLines.Add(line);
+                continue;
+            }
+
+            if (line.StartsWith("# ", StringComparison.Ordinal) && sections.Count == 0 && sectionLines.All(string.IsNullOrWhiteSpace))
+            {
+                continue;
+            }
+
+            if (line.StartsWith("## ", StringComparison.Ordinal))
+            {
+                AddSection();
+                sectionTitle = line[3..].Trim();
+                sectionLines = [];
+                continue;
+            }
+
+            // Un sous-titre devient un paragraphe en gras : le lecteur ne connaît que deux niveaux.
+            sectionLines.Add(line.StartsWith("### ", StringComparison.Ordinal)
+                ? $"**{line[4..].Trim()}**"
+                : line);
+        }
+
+        AddSection();
+        return Array.AsReadOnly(sections.ToArray());
+
+        void AddSection()
+        {
+            LessonBlockView[] blocks = ParseBlocks(sectionLines).ToArray();
+            if (blocks.Length == 0 && sectionTitle.Length == 0)
+            {
+                return;
+            }
+
+            string id = sectionTitle.Length == 0 ? $"section-{index}" : $"{Slug(sectionTitle)}-{index}";
+            index++;
+            sections.Add(new LessonSectionView(id, sectionTitle, Array.AsReadOnly(blocks)));
+        }
+    }
+
     private static void ValidateSections(List<LessonSectionView> sections)
     {
         if (sections.Count != ExpectedSections.Length)

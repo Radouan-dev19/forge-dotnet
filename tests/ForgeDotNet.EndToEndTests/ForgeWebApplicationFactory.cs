@@ -20,10 +20,14 @@ public sealed class ForgeWebApplicationFactory : WebApplicationFactory<Program>
     {
         builder.UseEnvironment("Development");
         builder.UseSetting("LocalData:DirectoryPath", DataDirectory);
+        builder.UseSetting("SqlLab:Enabled", "false");
         builder.ConfigureAppConfiguration((_, configuration) => configuration.AddInMemoryCollection(
             new Dictionary<string, string?>
             {
                 ["LocalData:DirectoryPath"] = DataDirectory,
+                // Le profil Development active SqlLab pour le poste du développeur ; les tests Web
+                // n'ont pas de SQL Server et vérifient le mode désactivé, honnête et déterministe.
+                ["SqlLab:Enabled"] = "false",
             }));
         builder.ConfigureServices(services =>
             services.AddDataProtection().UseEphemeralDataProtectionProvider());

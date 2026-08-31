@@ -77,7 +77,7 @@ public enum ContentDocumentType
 
     /// <summary>
     /// Guide de la Semaine 0 : notions d'appoint à connaître avant ou en marge du parcours —
-    /// Vue.js 3/TypeScript, Azure Service Bus, Azure DevOps, IIS.
+    /// Vue.js 3/TypeScript, Azure Service Bus, Azure DevOps, IIS, Microservices.
     /// </summary>
     /// <remarks>
     /// Onglet « Semaine 0 » de la page Apprendre, volontairement <b>hors parcours</b> : ni

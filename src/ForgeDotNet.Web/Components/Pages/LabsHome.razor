@@ -85,7 +85,9 @@ else
 
         if (lab.RequiresNetwork)
         {
-            needs.Add("un accès réseau local");
+            // La restauration de paquets (NuGet, npm) au premier lancement est un accès réseau, même
+            // quand le laboratoire tourne ensuite hors ligne : il est annoncé plutôt que découvert.
+            needs.Add("un accès réseau au premier lancement (restauration de paquets)");
         }
 
         return needs.Count == 0

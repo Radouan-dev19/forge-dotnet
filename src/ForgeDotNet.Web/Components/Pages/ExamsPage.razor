@@ -1,6 +1,7 @@
 @page "/exams"
 @rendermode InteractiveServer
 @inject ExamService ExamService
+@inject CodeRunnerModeDescriptor RunnerMode
 
 <PageTitle>Examens sans aide — Forge.NET</PageTitle>
 
@@ -9,6 +10,12 @@
     L’échéance et la clôture sont contrôlées par le serveur. Le blocage du copier-coller ou le plein écran ne seraient que des frictions :
     Forge.NET ne prétend pas surveiller votre poste, votre caméra ou vos autres applications.
 </p>
+
+@* Sans ce panneau, un apprenant en mode manuel pouvait démarrer un examen de deux heures, soumettre
+   ses huit items et découvrir au rapport un zéro par item « indisponible ». Le démarrage est refusé
+   tant que l'installation ne peut pas noter. *@
+<RunnerUnavailablePanel Title="Un examen ne peut pas être noté sur cette installation"
+                        Consequence="chaque item soumis reviendrait « indisponible » et le rapport afficherait zéro, quel que soit votre travail. Le démarrage est donc désactivé jusqu’à l’activation du mode Docker." />
 
 @if (!string.IsNullOrWhiteSpace(_message))
 {
@@ -93,7 +100,13 @@ else
             <article>
                 <h3>@exam.Title</h3>
                 <p>@exam.DrawCount item(s) tiré(s) parmi @exam.CandidateCount ; @exam.DurationMinutes minutes ; seuil @exam.PassingScore.ToString("0.##") / 100.</p>
-                <button class="btn btn-primary" type="button" disabled="@_busy" @onclick="() => StartAsync(exam.Id)">Démarrer l’examen</button>
+                @if (string.Equals(exam.Id, "sql-ef-core-v1", StringComparison.Ordinal))
+                {
+                    <p class="field-help">Cette banque exige en plus le SqlLab démarré : ses items SQL sont notés contre une base jetable.</p>
+                }
+                <button class="btn btn-primary" type="button" disabled="@(_busy || RunnerMode.IsManual)" @onclick="() => StartAsync(exam.Id)">
+                    @(RunnerMode.IsManual ? "Démarrage désactivé — mode manuel" : "Démarrer l’examen")
+                </button>
             </article>
         }
     </section>

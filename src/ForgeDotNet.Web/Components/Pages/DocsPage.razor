@@ -1,0 +1,50 @@
+@page "/docs/{Name}"
+@inject ServedDocumentsOptions Documents
+
+<PageTitle>@(_title ?? "Document") — Forge.NET</PageTitle>
+
+@if (_error is not null)
+{
+    <h1>Document introuvable</h1>
+    <p class="error-message" role="alert">@_error</p>
+}
+else if (_markdown is null)
+{
+    <p role="status">Chargement du document…</p>
+}
+else
+{
+    <h1>@_title</h1>
+    <p class="notice" role="status">
+        Document du dépôt servi en lecture seule, tel que versionné. Il décrit un protocole ou une procédure ;
+        il ne produit aucune preuve de maîtrise.
+    </p>
+    <MarkdownDocument Markdown="@_markdown" />
+}
+
+@code {
+    [Parameter]
+    public string Name { get; set; } = string.Empty;
+
+    private string? _markdown;
+    private string? _title;
+    private string? _error;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        _markdown = null;
+        _error = null;
+        // Liste blanche fermée : le nom vient de l'URL et ne compose jamais un chemin librement.
+        string? path = Documents.Resolve(Name);
+        if (path is null)
+        {
+            _error = "Ce document n'est pas publié par l'application.";
+            return;
+        }
+
+        string text = await File.ReadAllTextAsync(path);
+        _title = text.Split('\n').FirstOrDefault(line => line.StartsWith("# ", StringComparison.Ordinal))?[2..].Trim()
+            ?? Name;
+        _markdown = text;
+    }
+}

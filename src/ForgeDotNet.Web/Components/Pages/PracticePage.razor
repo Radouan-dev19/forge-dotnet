@@ -189,6 +189,7 @@ else
             La compilation et les tests sont présentés séparément. Un échec caché reste expurgé et un runner
             indisponible ne produit aucune validation automatique. L’export ZIP permet un travail manuel hors Forge.NET.
         </p>
+        <RunnerUnavailablePanel Consequence="« Lancer compilation et tests » enregistre une tentative déclarée avec zéro test ; seul l’export ZIP, à exécuter vous-même, reste utile ici." />
         @if (_activity.CanSubmitAttempt)
         {
             <div class="actions">
