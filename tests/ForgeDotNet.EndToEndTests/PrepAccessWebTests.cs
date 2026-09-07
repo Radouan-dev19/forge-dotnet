@@ -33,6 +33,9 @@ public sealed class PrepAccessWebTests(PrepAccessWebTests.LockedPrepFactory fact
         // Rien du contenu personnel ne fuit : ni identifiant, ni titre, ni script.
         Assert.DoesNotContain("icube-plan-veille-001\"", html, StringComparison.Ordinal);
         Assert.DoesNotContain("Plan de la veille", html, StringComparison.Ordinal);
+        Assert.DoesNotContain("Programme sur 2 jours", html, StringComparison.Ordinal);
+        Assert.DoesNotContain("Fiches techniques, entretien blanc", html, StringComparison.Ordinal);
+        Assert.DoesNotContain("Sommaire du dossier", html, StringComparison.Ordinal);
         Assert.DoesNotContain("Zone sensible", html, StringComparison.Ordinal);
         Assert.DoesNotContain("ICube —", html, StringComparison.Ordinal);
     }

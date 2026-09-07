@@ -39,6 +39,52 @@ Chaque incrément est une tranche démontrable. Il exige critères observables, 
 
 Chaque lot reste révisable : 3–6 leçons ou 5–10 exercices, avec schéma, contenu, solutions et tests dans le même changement. Un tableau de couverture suivra semaine, compétence, difficulté, type de preuve et volumes cumulés. Aucun lot ne contient de placeholder.
 
+### Préparation technique ICube en deux jours et demi — 7 septembre 2026
+
+Tranche : reprise des deux dossiers protégés sous `/prep`, sans changement d'identifiant ni de
+schéma. Le programme v2 répartit 310 minutes entre deux soirées, deux pauses et le jour J ; chaque
+créneau nomme ses ressources, son action et une production observable. Le deuxième dossier porte
+les repères techniques, les relances, l'entretien blanc de 35 minutes et les récits professionnels
+fondés sur les faits de l'apprenant. La version réduite totalise 180 minutes.
+
+L'interface nomme désormais le menu « Entretiens personnalisés » et fournit un sommaire dans
+chaque dossier. Les vérifications attendues couvrent validation du contenu, résolution des liens
+internes, correspondance sommaire/sections et absence de contenu ou de sommaire avant déverrouillage.
+Le mot de passe, les contrats de maîtrise et les suites d'exercices restent inchangés. Aucun état
+de checklist ni score de préparation n'est enregistré. Les commandes de référence doivent passer
+avant de considérer cette tranche validée.
+
+La vérification sous Windows a révélé un défaut préalable : la clôture d'un bloc de code CRLF
+n'était pas reconnue par `MarkdownProse`, d'où 47 faux `raw-html` et un démarrage Web refusé.
+La reconnaissance accepte désormais CRLF comme LF ; les tests couvrent les deux fins de ligne,
+les exemples de code contenant des balises et le refus maintenu du HTML réel après une clôture.
+Le test CRLF sans HTML en prose échouait avant le correctif. Aucun contenu pédagogique existant
+n'a besoin d'être réécrit et le registre de dette reste vide.
+
+Vérifications locales : SDK stable 10.0.302 installé sous `artifacts/dotnet-sdk-10.0.302`
+(répertoire ignoré, installation système inchangée), restauration et compilation réussies,
+`dotnet format --verify-no-changes --no-restore` réussi, `docker compose config --quiet` réussi.
+Le validateur accepte 755 documents et 3338 fichiers sans erreur ; 44 liens internes des deux
+dossiers ont aussi été contrôlés. L'avertissement préexistant `NU1902` sur AngleSharp 1.2.0
+reste signalé par la restauration du laboratoire Blazor.
+
+La suite globale `dotnet test --no-build` a été interrompue après constat de l'indisponibilité
+du moteur Docker Linux et du laboratoire SQL. Erreur observée : « SQL Server de laboratoire ne
+répond pas : le conteneur Docker sql-lab est probablement arrêté. » Les tests unitaires (211)
+et ceux du client Blazor (3) avaient réussi. La validation globale reste donc incomplète ; les
+tests Web et de contenu de cette reprise ont été exécutés séparément : **119 tests Web réussis**,
+dont les routes protégées, le sommaire et ses ressources, et **23 tests de contenu réussis**,
+dont les quatre cas LF/CRLF du correctif. Commandes reproductibles avec le SDK local :
+
+```powershell
+.\artifacts\dotnet-sdk-10.0.302\dotnet.exe test tests/ForgeDotNet.EndToEndTests --no-build
+.\artifacts\dotnet-sdk-10.0.302\dotnet.exe test tests/ForgeDotNet.IntegrationTests --no-build --filter 'FullyQualifiedName~ContentValidationTests|FullyQualifiedName~ContentAuthenticityTests|FullyQualifiedName~ContentCatalogLoadingTests'
+```
+
+Les rapports TRX sont sous `artifacts/prep-web-verification` et
+`artifacts/prep-content-verification`. Le navigateur intégré ne dispose d'aucune connexion :
+aucune vérification visuelle interactive n'est revendiquée.
+
 ## Risques et atténuations
 
 | Risque | Impact | Réponse |

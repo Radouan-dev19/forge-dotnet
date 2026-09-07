@@ -19,7 +19,8 @@ internal static partial class MarkdownProse
 
     public static bool ContainsCodeFence(string markdown) => CodeFenceRegex().IsMatch(markdown);
 
-    [GeneratedRegex(@"^[ \t]*```.*?^[ \t]*```[ \t]*$",
+    // En mode Multiline, $ se place avant LF mais pas avant CR : accepter explicitement CRLF.
+    [GeneratedRegex(@"^[ \t]*```.*?^[ \t]*```[ \t]*\r?$",
         RegexOptions.Multiline | RegexOptions.Singleline | RegexOptions.CultureInvariant,
         1000)]
     private static partial Regex CodeFenceRegex();

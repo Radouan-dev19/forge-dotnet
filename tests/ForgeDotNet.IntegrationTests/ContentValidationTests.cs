@@ -62,8 +62,12 @@ public sealed class ContentValidationTests
         Assert.All(report.Issues, issue => Assert.Equal(expectedCode, issue.Code));
     }
 
-    [Fact]
-    public async Task GenericTypeCitedAsCodeIsNotMistakenForRawHtml()
+    [Theory]
+    [InlineData("\n", false)]
+    [InlineData("\r\n", false)]
+    [InlineData("\n", true)]
+    [InlineData("\r\n", true)]
+    public async Task CodeFencesRespectLineEndingsWithoutHidingRawHtmlInProse(string lineEnding, bool rawHtmlAfterFence)
     {
         string fixtureRoot = CreateTemporaryContentDirectory();
         string source = Path.Combine(ContentRoot, "fixtures", "valid", "curriculum", "lessons", "lesson-types-001");
@@ -74,16 +78,19 @@ public sealed class ContentValidationTests
             manifestPath,
             (await File.ReadAllTextAsync(manifestPath))
                 .Replace("lesson-types-001", "generic-prose", StringComparison.Ordinal));
+        string markdown = "# Générique\n\nUne méthode retourne `IReadOnlyList<T>` et accepte `Func<int, bool>`.\n\n"
+            + "```csharp\npublic static int Count<T>(IReadOnlyList<T> items) => items.Count;\n```\n"
+            + "\n```html\n<div>Exemple encodé par le lecteur</div>\n```\n"
+            + (rawHtmlAfterFence ? "\n<script>alert('x')</script>\n" : "\nUne prose sans balise.\n");
         await File.WriteAllTextAsync(
             Path.Combine(destination, "lesson.md"),
-            "# Générique\n\nUne méthode retourne `IReadOnlyList<T>` et accepte `Func<int, bool>`.\n\n"
-            + "```csharp\npublic static int Count<T>(IReadOnlyList<T> items) => items.Count;\n```\n");
+            markdown.Replace("\n", lineEnding, StringComparison.Ordinal));
 
         try
         {
             var report = await CreateValidator().ValidateAsync(fixtureRoot);
 
-            Assert.DoesNotContain(report.Issues, issue => issue.Code == "raw-html");
+            Assert.Equal(rawHtmlAfterFence, report.Issues.Any(issue => issue.Code == "raw-html"));
         }
         finally
         {

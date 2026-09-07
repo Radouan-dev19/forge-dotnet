@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
   "id": "icube-scripts-entretien-001",
-  "version": 1,
-  "title": "Scripts d'entretien : zones sensibles, récits et questions à poser",
-  "summary": "Les réponses préparées mot pour mot aux questions qui fâchent — API, certifications, front-end, années d'expérience — l'ossature des trois récits STAR, le positionnement salaire en évolution et les questions qui montrent l'esprit d'initiative.",
+  "version": 2,
+  "title": "2 — Fiches techniques, entretien blanc et checklist du jour J",
+  "summary": "Les repères à expliquer sur C#, ASP.NET Core, EF Core, tests, Vue 3/TypeScript, Service Bus, microservices, Azure DevOps, IIS et sécurité. Un entretien blanc de 35 min, des relances, deux récits professionnels à préparer et une checklist pour cibler les dernières lacunes sans confondre révision et maîtrise.",
   "theme": "icube",
   "themeTitle": "ICube — ingénieur logiciel .NET / Azure / Vue.js",
   "order": 2,

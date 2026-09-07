@@ -1,4 +1,5 @@
 using System.Net;
+using System.Text.RegularExpressions;
 
 namespace ForgeDotNet.EndToEndTests;
 
@@ -171,6 +172,40 @@ public sealed class HonestDegradationWebTests(ForgeWebApplicationFactory factory
         string scripts = WebUtility.HtmlDecode(await client.GetStringAsync("/prep/icube-scripts-entretien-001"));
         Assert.Contains("Zone sensible", scripts, StringComparison.Ordinal);
         Assert.Contains("aucune preuve de maîtrise", scripts, StringComparison.Ordinal);
+    }
+
+    [Theory]
+    [InlineData("/prep/icube-plan-veille-001")]
+    [InlineData("/prep/icube-scripts-entretien-001")]
+    public async Task APrepDossierHasNavigableSectionsAndOnlyPublishedInternalResources(string route)
+    {
+        using HttpClient client = factory.CreateClient();
+        string html = WebUtility.HtmlDecode(await client.GetStringAsync(route));
+
+        Assert.Contains("Sommaire du dossier", html, StringComparison.Ordinal);
+        Assert.DoesNotContain("<pre class=\"runner-output\">#", html, StringComparison.Ordinal);
+
+        MatchCollection anchors = Regex.Matches(html, $"href=\"{Regex.Escape(route)}#([^\"]+)\"");
+        Assert.True(anchors.Count > 1, "Les liens du sommaire doivent conserver la route du dossier malgré la base HTML.");
+        foreach (Match anchor in anchors)
+        {
+            Assert.Contains($"id=\"{anchor.Groups[1].Value}\"", html, StringComparison.Ordinal);
+        }
+
+        string[] resources = Regex.Matches(
+                html,
+                "href=\"(/(?:learn(?:-senior)?|practice|labs|career|prep)/[^\"#?]+)\"")
+            .Select(match => match.Groups[1].Value)
+            .Distinct(StringComparer.Ordinal)
+            .ToArray();
+        Assert.NotEmpty(resources);
+        foreach (string resource in resources)
+        {
+            using HttpResponseMessage response = await client.GetAsync(resource);
+            string body = WebUtility.HtmlDecode(await response.Content.ReadAsStringAsync());
+            Assert.True(response.IsSuccessStatusCode, $"Ressource inaccessible : {resource}");
+            Assert.DoesNotContain("class=\"error-message\"", body, StringComparison.Ordinal);
+        }
     }
 
     [Fact]

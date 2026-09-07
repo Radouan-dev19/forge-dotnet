@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
   "id": "icube-plan-veille-001",
-  "version": 1,
-  "title": "Plan de la veille : quoi lire, dans quel ordre, en combien de temps",
-  "summary": "Le parcours de révision chronométré pour l'entretien ICube — ingénieur logiciel .NET, Azure, Vue.js en délégation — avec les liens directs vers chaque cours de la plateforme et le geste pratique qui compte plus qu'une lecture.",
+  "version": 2,
+  "title": "1 — Programme sur 2 jours et demi : 5 h 10 pour préparer le technique",
+  "summary": "Commencer ici : deux soirées de 2 h, deux pauses de 20 min et 30 min le jour J. C#, API, SQL/EF et tests, puis Vue, Service Bus, Azure/IIS et entretien blanc. Chaque créneau précise quoi ouvrir, quoi produire et comment vérifier sa compréhension, avec un plan réduit en cas d'imprévu.",
   "theme": "icube",
   "themeTitle": "ICube — ingénieur logiciel .NET / Azure / Vue.js",
   "order": 1,

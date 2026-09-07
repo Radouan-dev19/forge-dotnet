@@ -184,7 +184,7 @@ guides. Comme les chapitres IA et Cloud, cet onglet est volontairement **sans se
 numérotée dans `forge-reference`, sans prérequis et sans ordre imposé**, et ne produit aucune
 preuve de maîtrise.
 
-## Entretiens ciblés (hors parcours, libre accès)
+## Entretiens personnalisés (hors parcours, accès protégé)
 
 Depuis le 31 août 2026, l'onglet « Entretiens ciblés » (`/prep`, détail sur `/prep/{id}`) sert des
 dossiers `PrepGuide` groupés par sous-thème — un entretien précis chacun. Un dossier ordonne la
@@ -199,6 +199,16 @@ d'environnement `Prep__Password` définie comme secret joue le même rôle, le f
 prioritaire) : sur une installation publiée, la liste comme les dossiers n'affichent rien tant
 que la session de navigation n'est pas déverrouillée, et l'absence de tout secret ferme l'accès
 au lieu de l'ouvrir.
+
+**Préparation technique courte, 7 septembre 2026.** Les deux dossiers ICube passent en version 2,
+avec leurs identifiants et routes conservés : programme de 5 h 10 sur deux jours et demi compatible
+avec un emploi, puis fiches techniques et entretien blanc de 35 min. Les créneaux relient les leçons,
+exercices et laboratoires existants ; les productions attendues distinguent exécution réelle,
+brouillon et restitution orale. Une variante de trois heures et une checklist d'auto-évaluation
+permettent d'adapter l'effort. Les récits professionnels sont à construire sur les faits de
+l'apprenant, sans réalisation ou chiffre présumé. Le lecteur propose un sommaire de sections,
+protégé par la même garde que le corps. Aucune nouvelle preuve ni validation automatique n'est
+attribuée par ces dossiers ; les exercices liés conservent les règles de maîtrise du parcours.
 
 ## Thib : quiz théorique senior (hors parcours, libre accès)
 
