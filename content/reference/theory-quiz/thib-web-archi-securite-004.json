@@ -1,0 +1,341 @@
+{
+  "schemaVersion": 1,
+  "id": "thib-web-archi-securite-004",
+  "version": 1,
+  "title": "ASP.NET Core, architecture et sécurité",
+  "summary": "Pipeline de middlewares, durées de vie de l'injection de dépendances, HttpClient, sémantique HTTP, JWT, CSRF et CORS, configuration typée, frontières d'architecture, observabilité, conteneurs et livraison : les décisions de plateforme qu'un senior prend et défend en revue.",
+  "order": 4,
+  "questions": [
+    {
+      "id": "thib-web-001-middleware",
+      "topic": "Pipeline de middlewares",
+      "prompt": "Le pipeline de middlewares d'ASP.NET Core : quelles affirmations sont exactes ?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Les middlewares par convention sont instanciés à chaque requête, comme les contrôleurs, ce qui permet d'injecter sans risque un DbContext ou tout autre service Scoped dans leur constructeur pour la durée de la requête."
+        },
+        {
+          "id": "b",
+          "text": "Un middleware par convention est construit une seule fois au démarrage : ses dépendances de constructeur doivent être des singletons, et les services Scoped (DbContext, contexte utilisateur) s'injectent en paramètres supplémentaires de la méthode Invoke ou InvokeAsync, résolus par requête."
+        },
+        {
+          "id": "c",
+          "text": "UseRouting doit être placé après UseEndpoints pour que la correspondance de route ait lieu."
+        },
+        {
+          "id": "d",
+          "text": "L'ordre d'enregistrement définit l'ordre d'exécution : UseAuthentication doit précéder UseAuthorization."
+        },
+        {
+          "id": "e",
+          "text": "Un middleware qui n'appelle pas le délégué suivant court-circuite le reste du pipeline."
+        }
+      ],
+      "correctOptionIds": [
+        "b",
+        "d",
+        "e"
+      ],
+      "rationale": "Un middleware par convention vit aussi longtemps que l'application : injecter un DbContext dans son constructeur crée une dépendance captive qui partage un contexte entre toutes les requêtes. Pour un middleware instancié par requête, il faut IMiddleware et une fabrique. UseRouting précède tout ce qui dépend de l'endpoint sélectionné (autorisation, CORS d'endpoint), puis UseEndpoints ou le mappage minimal exécute."
+    },
+    {
+      "id": "thib-web-002-di-lifetimes",
+      "topic": "Injection de dépendances",
+      "prompt": "Durées de vie dans le conteneur d'ASP.NET Core : quelles affirmations sont exactes ?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Injecter un service Scoped dans un Singleton crée une dépendance captive : le scoped vit aussi longtemps que le singleton."
+        },
+        {
+          "id": "b",
+          "text": "En environnement Development, le conteneur valide ce cas au démarrage (ValidateScopes) et échoue."
+        },
+        {
+          "id": "c",
+          "text": "Transient signifie une instance par requête HTTP."
+        },
+        {
+          "id": "d",
+          "text": "Un BackgroundService (singleton) crée un scope par itération via IServiceScopeFactory pour utiliser un DbContext."
+        },
+        {
+          "id": "e",
+          "text": "Un service Transient IDisposable résolu depuis le conteneur racine est libéré dès que la référence qui le tient devient injoignable : le conteneur ne garde aucune trace des instances transitoires, précisément pour ne pas les retenir en mémoire."
+        }
+      ],
+      "correctOptionIds": [
+        "a",
+        "b",
+        "d"
+      ],
+      "rationale": "Transient crée une instance à chaque résolution ; Scoped est l'instance par requête. Un Transient jetable résolu depuis le conteneur racine est retenu par ce conteneur jusqu'à l'arrêt de l'application : c'est une fuite mémoire classique, que ValidateScopes ne détecte pas. La validation au démarrage n'est active par défaut qu'en Development ; on la force en production par ValidateOnBuild et ValidateScopes."
+    },
+    {
+      "id": "thib-web-003-httpclient",
+      "topic": "HttpClient",
+      "prompt": "HttpClient et IHttpClientFactory : quelles affirmations sont exactes ?",
+      "options": [
+        {
+          "id": "a",
+          "text": "HttpClient n'est pas thread-safe : deux SendAsync concurrents sur la même instance partagent le même tampon de réponse, et la documentation recommande un verrou ou une instance par thread, ce qui explique le rôle de la fabrique."
+        },
+        {
+          "id": "b",
+          "text": "SocketsHttpHandler.PooledConnectionLifetime est inutile avec une instance statique de HttpClient."
+        },
+        {
+          "id": "c",
+          "text": "Créer et jeter un HttpClient par requête épuise les sockets (TIME_WAIT) ; un client statique unique ne suit pas les changements DNS."
+        },
+        {
+          "id": "d",
+          "text": "IHttpClientFactory recycle les handlers primaires après une durée de vie configurable (deux minutes par défaut) : les connexions restent poolées pendant cette fenêtre, puis un nouveau handler relit le DNS, ce qui concilie réutilisation des sockets et prise en compte des bascules d'adresse."
+        },
+        {
+          "id": "e",
+          "text": "Un client typé (AddHttpClient<T>) est enregistré Transient et le HttpClient injecté peut être jeté sans conséquence sur le pool."
+        }
+      ],
+      "correctOptionIds": [
+        "c",
+        "d",
+        "e"
+      ],
+      "rationale": "HttpClient est conçu pour être partagé et appelé concurremment. Le problème du client statique est le DNS, pas les threads ; PooledConnectionLifetime est justement la réponse quand on veut une instance statique sans fabrique. Avec la fabrique, jeter le HttpClient ne jette pas le handler sous-jacent, qui reste dans le pool."
+    },
+    {
+      "id": "thib-web-004-http-semantics",
+      "topic": "Sémantique HTTP",
+      "prompt": "Sémantique HTTP dans la conception d'une API : quelles affirmations sont exactes ?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Une réponse 204 No Content ne doit pas porter de corps."
+        },
+        {
+          "id": "b",
+          "text": "401 signifie non authentifié ; 403 signifie authentifié mais non autorisé."
+        },
+        {
+          "id": "c",
+          "text": "PATCH remplace intégralement la ressource par la représentation envoyée."
+        },
+        {
+          "id": "d",
+          "text": "Un GET peut légitimement modifier l'état du serveur dès lors que la documentation de l'API le précise et que l'effet est idempotent : la spécification HTTP n'impose la sûreté qu'à HEAD et OPTIONS, GET n'étant que « généralement » sans effet."
+        },
+        {
+          "id": "e",
+          "text": "PUT est idempotent ; POST ne l'est pas par contrat, d'où l'usage d'une clé d'idempotence pour les créations rejouées."
+        }
+      ],
+      "correctOptionIds": [
+        "a",
+        "b",
+        "e"
+      ],
+      "rationale": "PATCH applique une modification partielle ; c'est PUT qui remplace. GET est sûr par définition : caches, préchargeurs et robots le rejouent librement, une documentation ne change pas ce contrat. La clé d'idempotence rend un POST rejouable : le serveur mémorise la réponse associée à la clé et la renvoie au lieu de créer un doublon."
+    },
+    {
+      "id": "thib-web-005-jwt",
+      "topic": "JWT",
+      "prompt": "Jetons JWT et authentification : quelles affirmations sont exactes ?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Un secret HMAC de huit caractères suffit dès lors que l'algorithme est HS256."
+        },
+        {
+          "id": "b",
+          "text": "La signature d'un JWT garantit l'intégrité, pas la confidentialité : les claims se lisent en base64url."
+        },
+        {
+          "id": "c",
+          "text": "Il faut valider émetteur, audience, durée de vie et signature ; un jeton déclarant alg=none doit être refusé."
+        },
+        {
+          "id": "d",
+          "text": "Un JWT révoqué cesse d'être accepté immédiatement par le serveur, sans mécanisme supplémentaire : le middleware d'authentification interroge l'émetteur à chaque requête pour vérifier que le jeton n'a pas été révoqué, via le point de terminaison d'introspection."
+        },
+        {
+          "id": "e",
+          "text": "Stocker le JWT dans localStorage l'expose au vol par tout script injecté (XSS) ; un cookie HttpOnly, Secure et SameSite le met hors de portée du script, mais rouvre la question du CSRF puisque le navigateur l'envoie alors automatiquement, d'où le jeton anti-falsification."
+        }
+      ],
+      "correctOptionIds": [
+        "b",
+        "c",
+        "e"
+      ],
+      "rationale": "Un JWT signé reste valide jusqu'à son expiration : la révocation exige une liste de blocage, une rotation de clé ou une durée courte avec jeton de rafraîchissement. Un secret HMAC court se force hors ligne à partir d'un seul jeton capturé ; la clé doit avoir au moins la taille du condensat (256 bits pour HS256), ou l'on préfère une signature asymétrique."
+    },
+    {
+      "id": "thib-web-006-csrf-cors",
+      "topic": "CSRF et CORS",
+      "prompt": "CSRF et CORS : quelles affirmations sont exactes ?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Autoriser toutes les origines avec identifiants (AllowAnyOrigin plus AllowCredentials) est accepté par la spécification et par ASP.NET Core : le navigateur envoie alors les cookies à toute origine, ce qui convient à une API publique consommée par des applications tierces."
+        },
+        {
+          "id": "b",
+          "text": "Une requête simple (GET sans en-tête personnalisé) part sans préflight : le serveur peut l'avoir exécutée même si le navigateur bloque la lecture de la réponse."
+        },
+        {
+          "id": "c",
+          "text": "SameSite=Lax bloque tout envoi de cookie intersite, y compris les navigations de premier niveau en GET."
+        },
+        {
+          "id": "d",
+          "text": "Le CSRF exploite l'envoi automatique des identifiants (cookies) ; une API à jeton porteur dans l'en-tête Authorization n'y est pas exposée."
+        },
+        {
+          "id": "e",
+          "text": "CORS est appliqué par le navigateur ; il ne protège pas le serveur d'un client non navigateur."
+        }
+      ],
+      "correctOptionIds": [
+        "b",
+        "d",
+        "e"
+      ],
+      "rationale": "Le joker d'origine avec identifiants est interdit par la spécification et refusé par ASP.NET Core au démarrage. Lax laisse passer le cookie sur les navigations de premier niveau en GET : c'est Strict qui bloque tout. CORS gouverne ce que le script d'une page peut lire, pas ce que le serveur reçoit : la protection du serveur passe par l'authentification et, pour les cookies, par les jetons anti-falsification."
+    },
+    {
+      "id": "thib-web-007-options",
+      "topic": "Configuration typée",
+      "prompt": "Configuration et motif Options : quelles affirmations sont exactes ?",
+      "options": [
+        {
+          "id": "a",
+          "text": "IOptions<T> est un singleton figé à la première résolution ; IOptionsSnapshot<T> est un service Scoped recalculé à chaque requête ; IOptionsMonitor<T> est un singleton qui expose la valeur courante et notifie les changements via OnChange quand la source de configuration est rechargée."
+        },
+        {
+          "id": "b",
+          "text": "Une variable d'environnement nommée Section__Key se lie à la clé de configuration Section:Key."
+        },
+        {
+          "id": "c",
+          "text": "ValidateDataAnnotations().ValidateOnStart() fait échouer le démarrage sur une configuration invalide au lieu d'attendre la première utilisation."
+        },
+        {
+          "id": "d",
+          "text": "appsettings.Development.json est chargé avant appsettings.json : les valeurs du fichier de base l'emportent, et c'est pourquoi les réglages propres à un environnement doivent être placés dans des variables d'environnement plutôt que dans un fichier."
+        },
+        {
+          "id": "e",
+          "text": "Les secrets utilisateur (user-secrets) sont chargés dans tous les environnements par défaut."
+        }
+      ],
+      "correctOptionIds": [
+        "a",
+        "b",
+        "c"
+      ],
+      "rationale": "Dans la configuration, la dernière source chargée gagne : le fichier d'environnement surcharge bien le fichier de base, puis les variables d'environnement surchargent les deux. Les secrets utilisateur ne sont ajoutés qu'en Development par l'hôte par défaut ; en production, les secrets viennent des variables d'environnement ou d'un coffre."
+    },
+    {
+      "id": "thib-web-008-architecture",
+      "topic": "Architecture",
+      "prompt": "Décisions d'architecture : quelles affirmations sont exactes ?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Un agrégat DDD est la frontière de cohérence transactionnelle : une transaction ne devrait modifier qu'un seul agrégat."
+        },
+        {
+          "id": "b",
+          "text": "Un monolithe modulaire est un anti-pattern par rapport aux microservices."
+        },
+        {
+          "id": "c",
+          "text": "En architecture en oignon, le domaine ne dépend d'aucune infrastructure : les ports de persistance sont déclarés au centre et implémentés à l'extérieur."
+        },
+        {
+          "id": "d",
+          "text": "CQRS impose deux bases de données distinctes pour les écritures et les lectures, synchronisées par événements : sans cette séparation physique, on ne parle que de séparation commande/requête au sens de Meyer, pas de CQRS."
+        },
+        {
+          "id": "e",
+          "text": "Le motif Outbox garantit qu'un événement est publié si et seulement si la transaction métier est validée, via une table écrite dans la même transaction."
+        }
+      ],
+      "correctOptionIds": [
+        "a",
+        "c",
+        "e"
+      ],
+      "rationale": "CQRS sépare les modèles de commande et de requête ; la séparation des bases est une option, pas une exigence. Le monolithe modulaire est aujourd'hui le point de départ recommandé : il préserve les frontières sans payer le réseau, l'observabilité distribuée et la cohérence éventuelle des microservices. La règle d'un agrégat par transaction est ce qui rend l'Outbox nécessaire pour coordonner le reste."
+    },
+    {
+      "id": "thib-web-009-observability",
+      "topic": "Observabilité",
+      "prompt": "Observabilité d'un service .NET : quelles affirmations sont exactes ?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Les journaux structurés (propriétés nommées dans le gabarit de message) sont indexables et interrogeables par valeur dans un puits comme Seq ou Elastic ; interpoler la chaîne avant l'appel fond les valeurs dans le texte, perd les propriétés et fait exploser le nombre de messages distincts."
+        },
+        {
+          "id": "b",
+          "text": "ILogger formate toujours le message avec ses arguments, même si le niveau est désactivé : le filtrage par niveau n'intervient qu'au moment d'écrire vers les fournisseurs, c'est pourquoi les analyseurs recommandent de tester IsEnabled avant chaque appel."
+        },
+        {
+          "id": "c",
+          "text": "Un histogramme de latence (p50, p95, p99) renseigne mieux qu'une moyenne sur l'expérience réelle des utilisateurs."
+        },
+        {
+          "id": "d",
+          "text": "Les sondes readiness et liveness doivent renvoyer le même résultat."
+        },
+        {
+          "id": "e",
+          "text": "Un identifiant de trace propagé (en-tête W3C traceparent) corrèle journaux et spans d'une requête à travers les services."
+        }
+      ],
+      "correctOptionIds": [
+        "a",
+        "c",
+        "e"
+      ],
+      "rationale": "Le gabarit n'est formaté que si le niveau est actif : c'est la raison de passer les valeurs en arguments et non de les interpoler dans la chaîne. Readiness dit si l'instance peut recevoir du trafic (dépendances prêtes) ; liveness dit si le processus doit être redémarré : confondre les deux fait redémarrer une instance saine dès qu'une dépendance tousse."
+    },
+    {
+      "id": "thib-web-010-containers",
+      "topic": "Conteneurs et livraison",
+      "prompt": "Conteneurisation et livraison d'une application ASP.NET Core : quelles affirmations sont exactes ?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Laisser l'environnement Development en production est acceptable si la page d'erreur détaillée est désactivée."
+        },
+        {
+          "id": "b",
+          "text": "Une image multi-étapes (construction avec le SDK, exécution sur l'image runtime) réduit la taille et la surface d'attaque de l'image finale."
+        },
+        {
+          "id": "c",
+          "text": "Copier les fichiers de projet et restaurer avant de copier le reste des sources exploite le cache de couches."
+        },
+        {
+          "id": "d",
+          "text": "Exécuter le conteneur en root est sans risque puisque le noyau isole complètement les espaces de noms : un processus root dans le conteneur n'a aucun privilège sur l'hôte, même en cas de montage d'un volume ou de faille dans le runtime."
+        },
+        {
+          "id": "e",
+          "text": "épingler l'image de base par digest rend la construction reproductible."
+        }
+      ],
+      "correctOptionIds": [
+        "b",
+        "c",
+        "e"
+      ],
+      "rationale": "L'isolation d'un conteneur n'est pas une frontière de sécurité absolue : un processus root dans le conteneur exploite plus facilement une évasion ou un montage mal configuré, d'où l'utilisateur non root des images officielles récentes. L'environnement Development active aussi les secrets utilisateur, la validation des scopes et des comportements de diagnostic : le nom d'environnement n'est pas un simple réglage d'affichage."
+    }
+  ],
+  "license": "CC-BY-4.0"
+}

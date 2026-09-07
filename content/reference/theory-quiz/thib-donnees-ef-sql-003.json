@@ -1,0 +1,341 @@
+{
+  "schemaVersion": 1,
+  "id": "thib-donnees-ef-sql-003",
+  "version": 1,
+  "title": "Données : EF Core et SQL Server",
+  "summary": "Suivi des modifications, chargement des relations et N+1, concurrence optimiste, niveaux d'isolation, index et prédicats sargables, plans d'exécution, transactions, migrations, évaluation des requêtes et performance : ce qu'un senior doit savoir avant de toucher une base en production.",
+  "order": 3,
+  "questions": [
+    {
+      "id": "thib-data-001-tracking",
+      "topic": "Suivi des modifications",
+      "prompt": "Le change tracker d'EF Core : quelles affirmations sont exactes ?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Update marque toutes les propriétés Modified et génère un UPDATE complet même si rien n'a changé."
+        },
+        {
+          "id": "b",
+          "text": "Un DbContext peut vivre pendant toute la durée de l'application sans effet sur la mémoire."
+        },
+        {
+          "id": "c",
+          "text": "AsNoTracking allège une lecture et désactive la résolution d'identité, sauf avec AsNoTrackingWithIdentityResolution."
+        },
+        {
+          "id": "d",
+          "text": "SaveChanges détecte les modifications par comparaison d'instantané : le suivi conserve une copie des valeurs d'origine de chaque entité suivie et les compare aux valeurs courantes lors de DetectChanges, sauf si une stratégie de notification (INotifyPropertyChanged) a été configurée."
+        },
+        {
+          "id": "e",
+          "text": "Attach marque l'entité et toutes ses propriétés comme Modified, de sorte que le prochain SaveChanges émet un UPDATE complet ; c'est la méthode à utiliser pour réenregistrer une entité désérialisée sans avoir à la recharger depuis la base."
+        }
+      ],
+      "correctOptionIds": [
+        "a",
+        "c",
+        "d"
+      ],
+      "rationale": "Attach place l'entité en état Unchanged : c'est à l'appelant de marquer ce qui a changé, ou de laisser DetectChanges le faire après modification. Un DbContext longue durée accumule toutes les entités suivies et leurs instantanés : la mémoire croît et DetectChanges ralentit à chaque SaveChanges. Le contexte est une unité de travail courte."
+    },
+    {
+      "id": "thib-data-002-loading",
+      "topic": "Chargement et N+1",
+      "prompt": "Chargement des relations et problème N+1 : quelles affirmations sont exactes ?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Le chargement paresseux par proxies déclenche une requête à chaque navigation accédée : source classique de N+1."
+        },
+        {
+          "id": "b",
+          "text": "Projeter vers un DTO avec Select évite de charger des entités complètes et supprime le suivi."
+        },
+        {
+          "id": "c",
+          "text": "Inclure plusieurs collections en requête unique ne produit jamais d'explosion cartésienne : EF Core émet une jointure par collection et déduplique les lignes côté serveur avec DISTINCT avant de matérialiser les entités."
+        },
+        {
+          "id": "d",
+          "text": "Le chargement explicite via Entry(...).Collection(...).Load() est asynchrone par défaut."
+        },
+        {
+          "id": "e",
+          "text": "Include génère par défaut une requête unique avec jointures ; AsSplitQuery émet une requête par collection incluse."
+        }
+      ],
+      "correctOptionIds": [
+        "a",
+        "b",
+        "e"
+      ],
+      "rationale": "Deux collections incluses en requête unique multiplient les lignes (produit cartésien des deux collections par parent) : c'est l'avertissement que journalise EF Core et la raison d'être d'AsSplitQuery. Load() est synchrone ; sa version asynchrone est LoadAsync. La projection reste l'arme la plus sûre : elle ne rapporte que les colonnes nécessaires."
+    },
+    {
+      "id": "thib-data-003-optimistic",
+      "topic": "Concurrence optimiste",
+      "prompt": "Concurrence optimiste avec EF Core et SQL Server : quelles affirmations sont exactes ?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Un jeton de concurrence est nécessaire pour que SaveChanges soit transactionnel."
+        },
+        {
+          "id": "b",
+          "text": "Un jeton de concurrence ajoute sa valeur d'origine au WHERE de l'UPDATE ; zéro ligne affectée lève DbUpdateConcurrencyException."
+        },
+        {
+          "id": "c",
+          "text": "La concurrence optimiste pose un verrou partagé sur la ligne dès sa lecture et le conserve pendant toute l'édition côté client, ce qui garantit qu'aucun autre utilisateur ne peut la modifier avant l'appel à SaveChanges."
+        },
+        {
+          "id": "d",
+          "text": "Pour résoudre un conflit, on recharge les valeurs actuelles de la base avec GetDatabaseValues, on met à jour les valeurs d'origine de l'entrée pour refléter cette lecture, puis l'on choisit une stratégie explicite : le client gagne, la base gagne, ou une fusion propriété par propriété."
+        },
+        {
+          "id": "e",
+          "text": "Une colonne rowversion est mise à jour par SQL Server à chaque modification de la ligne, sans code applicatif."
+        }
+      ],
+      "correctOptionIds": [
+        "b",
+        "d",
+        "e"
+      ],
+      "rationale": "L'optimisme consiste précisément à ne rien verrouiller : on détecte le conflit au moment d'écrire. SaveChanges est transactionnel par défaut, jeton ou pas. rowversion (alias timestamp) est l'implémentation la plus robuste sous SQL Server ; l'alternative est de déclarer des propriétés métier comme jetons, au prix d'un WHERE plus long."
+    },
+    {
+      "id": "thib-data-004-isolation",
+      "topic": "Niveaux d'isolation",
+      "prompt": "Niveaux d'isolation de SQL Server : quelles affirmations sont exactes ?",
+      "options": [
+        {
+          "id": "a",
+          "text": "SERIALIZABLE pose des verrous de plage et maximise le risque d'interblocage."
+        },
+        {
+          "id": "b",
+          "text": "READ UNCOMMITTED (NOLOCK) est sûr pour les rapports : il évite les verrous partagés sans autre effet que d'exposer des lignes non validées, et garantit de ne jamais lire deux fois la même ligne ni d'en manquer une pendant un scan."
+        },
+        {
+          "id": "c",
+          "text": "REPEATABLE READ empêche les lectures fantômes."
+        },
+        {
+          "id": "d",
+          "text": "READ COMMITTED, le niveau par défaut, empêche les lectures sales mais autorise lectures non répétables et fantômes."
+        },
+        {
+          "id": "e",
+          "text": "SNAPSHOT lit une version cohérente au début de la transaction et échoue à la mise à jour en cas de conflit (erreur 3960)."
+        }
+      ],
+      "correctOptionIds": [
+        "a",
+        "d",
+        "e"
+      ],
+      "rationale": "NOLOCK n'est pas gratuit : un scan sous READ UNCOMMITTED peut lire une ligne deux fois ou la manquer lors d'un déplacement de page, en plus des lectures sales. REPEATABLE READ verrouille les lignes lues mais pas les plages : de nouvelles lignes (fantômes) peuvent apparaître ; seul SERIALIZABLE, ou SNAPSHOT par versionnage, les empêche."
+    },
+    {
+      "id": "thib-data-005-index",
+      "topic": "Index",
+      "prompt": "Indexation sous SQL Server : quelles affirmations sont exactes ?",
+      "options": [
+        {
+          "id": "a",
+          "text": "L'index cluster définit l'ordre physique des lignes ; une table n'en possède qu'un."
+        },
+        {
+          "id": "b",
+          "text": "Un index couvrant (colonnes clés plus INCLUDE) évite les key lookups pour la requête qu'il couvre."
+        },
+        {
+          "id": "c",
+          "text": "Un index non cluster sur (A, B) sert un prédicat sur B seul aussi efficacement que sur A, parce que SQL Server maintient un arbre secondaire trié par chaque colonne de la clé composite."
+        },
+        {
+          "id": "d",
+          "text": "Appliquer une fonction à la colonne dans le WHERE (UPPER, CAST, YEAR, ou une conversion implicite de type) rend le prédicat non sargable : l'optimiseur ne peut plus faire de recherche par index et doit évaluer l'expression sur chaque ligne, même si un index existe sur la colonne."
+        },
+        {
+          "id": "e",
+          "text": "Ajouter des index accélère toujours les écritures."
+        }
+      ],
+      "correctOptionIds": [
+        "a",
+        "b",
+        "d"
+      ],
+      "rationale": "Un index composite est trié par sa première colonne : filtrer sur la seconde seule impose un scan de l'index. Chaque index supplémentaire est une structure à maintenir à chaque INSERT, UPDATE ou DELETE : les écritures ralentissent. La sargabilité se règle côté requête : comparer la colonne nue à une expression calculée, ou créer une colonne calculée persistante indexée."
+    },
+    {
+      "id": "thib-data-006-plans",
+      "topic": "Plans d'exécution",
+      "prompt": "Plans d'exécution et paramètres : quelles affirmations sont exactes ?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Concaténer des valeurs dans une chaîne SQL passée à FromSqlRaw est sûr tant que les valeurs sont des entiers."
+        },
+        {
+          "id": "b",
+          "text": "Un plan comportant un Index Scan est toujours pire qu'un plan avec Index Seek : l'optimiseur ne choisit un Scan qu'en l'absence de statistiques à jour ou d'index utilisable, jamais parce que le volume à lire le rend plus économique qu'une recherche."
+        },
+        {
+          "id": "c",
+          "text": "Le parameter sniffing : le plan compilé pour la première valeur d'un paramètre peut être médiocre pour d'autres distributions de données."
+        },
+        {
+          "id": "d",
+          "text": "OPTION (RECOMPILE) force une compilation à chaque exécution, au prix du CPU."
+        },
+        {
+          "id": "e",
+          "text": "EF Core paramètre les valeurs des requêtes LINQ, ce qui favorise la réutilisation des plans."
+        }
+      ],
+      "correctOptionIds": [
+        "c",
+        "d",
+        "e"
+      ],
+      "rationale": "FromSqlRaw avec concaténation est une injection en attente : FromSql (interpolée) ou FromSqlInterpolated paramètrent automatiquement. Un Scan est parfois le bon choix quand la requête ramène une grande part de la table ; le Seek n'est pas une fin en soi. Le sniffing se traite au cas par cas : RECOMPILE, OPTIMIZE FOR, ou la réécriture de la requête."
+    },
+    {
+      "id": "thib-data-007-transactions",
+      "topic": "Transactions",
+      "prompt": "Transactions avec EF Core et SQL Server : quelles affirmations sont exactes ?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Database.BeginTransaction permet d'englober plusieurs SaveChanges dans une même transaction."
+        },
+        {
+          "id": "b",
+          "text": "Avec EnableRetryOnFailure, une transaction manuelle doit être confiée à la stratégie d'exécution (CreateExecutionStrategy().ExecuteAsync) pour être rejouable en bloc ; sinon EF Core refuse de la commencer, car un réessai partiel au milieu d'une transaction laisserait des écritures orphelines."
+        },
+        {
+          "id": "c",
+          "text": "TransactionScope fonctionne avec async sans TransactionScopeAsyncFlowOption.Enabled."
+        },
+        {
+          "id": "d",
+          "text": "Un interblocage SQL Server se résout tout seul en attendant : le moteur ne termine jamais de transaction de sa propre initiative, il met les deux sessions en file et laisse la première libérer ses verrous à son commit, sans erreur applicative."
+        },
+        {
+          "id": "e",
+          "text": "SaveChanges enveloppe toutes les modifications d'un appel dans une transaction unique par défaut."
+        }
+      ],
+      "correctOptionIds": [
+        "a",
+        "b",
+        "e"
+      ],
+      "rationale": "SQL Server détecte les interblocages et choisit une victime dont la transaction est annulée avec l'erreur 1205 : l'application doit rejouer. Sans l'option de flux asynchrone, l'ambiance du TransactionScope ne traverse pas les await et les opérations s'exécutent hors transaction. La stratégie de réessai ne peut rejouer qu'une unité complète, d'où l'obligation de lui confier la transaction manuelle."
+    },
+    {
+      "id": "thib-data-008-migrations",
+      "topic": "Migrations",
+      "prompt": "Migrations EF Core : quelles affirmations sont exactes ?",
+      "options": [
+        {
+          "id": "a",
+          "text": "EnsureCreated et Migrate sont interchangeables en production : les deux créent la base et le schéma à partir du modèle courant, et EnsureCreated enregistre également l'historique des migrations pour que les mises à niveau suivantes s'appliquent normalement."
+        },
+        {
+          "id": "b",
+          "text": "Une migration porte Up et Down, plus un instantané du modèle (ModelSnapshot) qui sert de base au calcul de la suivante."
+        },
+        {
+          "id": "c",
+          "text": "Appeler Database.Migrate() au démarrage de chaque instance est la pratique recommandée pour la production, la migration au déploiement exigeant des droits DDL dans le pipeline."
+        },
+        {
+          "id": "d",
+          "text": "Renommer une propriété peut produire une suppression de colonne suivie d'un ajout : la migration générée doit être relue et corrigée en RenameColumn."
+        },
+        {
+          "id": "e",
+          "text": "Un script idempotent (migrations script --idempotent) s'exécute sur une base à n'importe quelle version connue."
+        }
+      ],
+      "correctOptionIds": [
+        "b",
+        "d",
+        "e"
+      ],
+      "rationale": "Plusieurs instances qui migrent en même temps se disputent le schéma et l'historique des migrations : la migration appartient au pipeline de déploiement, pas au démarrage de chaque réplique. EnsureCreated crée la base sans historique de migrations et rend Migrate inutilisable ensuite : c'est un outil de test. La détection de renommage n'existe pas ; le générateur voit une colonne disparaître et une autre apparaître."
+    },
+    {
+      "id": "thib-data-009-evaluation",
+      "topic": "évaluation des requêtes",
+      "prompt": "IQueryable, IEnumerable et évaluation côté client : quelles affirmations sont exactes ?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Appeler ToList() avant Where charge toute la table, puis filtre en mémoire."
+        },
+        {
+          "id": "b",
+          "text": "Une méthode C# personnalisée utilisée dans un Where est traduite automatiquement en SQL : le fournisseur décompile son corps en arbre d'expression au moment de la première exécution et met la traduction en cache pour les appels suivants."
+        },
+        {
+          "id": "c",
+          "text": "FirstOrDefault sans OrderBy renvoie toujours la ligne insérée en premier."
+        },
+        {
+          "id": "d",
+          "text": "IQueryable compose un arbre d'expression traduit en SQL à l'exécution ; dès que l'on passe en IEnumerable, la suite s'exécute en mémoire."
+        },
+        {
+          "id": "e",
+          "text": "Depuis EF Core 3, l'évaluation côté client n'est tolérée que dans la projection finale (le dernier Select) : un Where, un OrderBy ou un GroupBy qui contient une expression non traduisible fait échouer la requête à l'exécution avec une exception explicite, au lieu de rapatrier la table."
+        }
+      ],
+      "correctOptionIds": [
+        "a",
+        "d",
+        "e"
+      ],
+      "rationale": "Sans ORDER BY, SQL ne promet aucun ordre : le résultat dépend du plan et peut changer avec un index. Une méthode inconnue du fournisseur ne peut pas être traduite ; il faut la remplacer par une expression traduisible, une fonction mappée (DbFunction) ou du SQL brut. La frontière IQueryable/IEnumerable est la ligne de démarcation à surveiller dans chaque requête."
+    },
+    {
+      "id": "thib-data-010-performance",
+      "topic": "Performance",
+      "prompt": "Performance côté EF Core : quelles affirmations sont exactes ?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Les requêtes compilées (EF.CompileAsyncQuery) suppriment le coût de compilation LINQ sur les requêtes chaudes."
+        },
+        {
+          "id": "b",
+          "text": "AddDbContextPool réutilise les instances de DbContext et interdit d'y stocker un état propre à une requête."
+        },
+        {
+          "id": "c",
+          "text": "ExecuteUpdate et ExecuteDelete modifient les lignes en base sans charger les entités en mémoire."
+        },
+        {
+          "id": "d",
+          "text": "AddRange sur cent mille entités puis un seul SaveChanges est la méthode la plus performante pour un import massif : EF Core regroupe les insertions en lots MERGE, ce qui rivalise avec SqlBulkCopy tout en conservant la génération des clés et le suivi."
+        },
+        {
+          "id": "e",
+          "text": "Désactiver AutoDetectChangesEnabled n'a aucun effet sur le coût des insertions massives."
+        }
+      ],
+      "correctOptionIds": [
+        "a",
+        "b",
+        "c"
+      ],
+      "rationale": "L'import massif passe par SqlBulkCopy ou une bibliothèque de bulk : SaveChanges reste borné par le suivi de chaque entité et le nombre d'ordres envoyés. Avec beaucoup d'entités suivies, DetectChanges est appelé à chaque Add ; le désactiver pendant le chargement change radicalement le temps d'exécution. Le pooling ne dispense pas de la discipline : un DbContext poolé revient avec son état réinitialisé, mais pas les champs ajoutés par héritage."
+    }
+  ],
+  "license": "CC-BY-4.0"
+}

@@ -99,4 +99,17 @@ public enum ContentDocumentType
     /// contient aucune donnée personnelle : pas de nom, pas de contact, pas d'employeur actuel.
     /// </remarks>
     PrepGuide,
+
+    /// <summary>
+    /// Banque de quiz théorique de niveau senior : questions à choix multiples, une ou plusieurs
+    /// réponses justes par question, réponse vérifiée dans la session puis oubliée.
+    /// </summary>
+    /// <remarks>
+    /// Onglet « Thib », volontairement <b>hors parcours</b> : ni semaine, ni prérequis, ni preuve de
+    /// maîtrise. Une banque ressemble à une banque de cartes de révision, mais elle ne se rattache à
+    /// aucun exercice et n'alimente aucune file : elle sonde la théorie qu'un profil senior doit
+    /// tenir sans hésiter — sémantique du runtime, asynchronisme, données, plateforme web. Le
+    /// corrigé d'une question n'est jamais rendu avant la vérification, et rien n'est enregistré.
+    /// </remarks>
+    TheoryQuizBank,
 }

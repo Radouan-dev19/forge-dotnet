@@ -134,6 +134,7 @@ builder.Services.AddSingleton<IAiGuideSource, FileSystemAiGuideSource>();
 builder.Services.AddSingleton<ICloudGuideSource, FileSystemCloudGuideSource>();
 builder.Services.AddSingleton<IWeekZeroGuideSource, FileSystemWeekZeroGuideSource>();
 builder.Services.AddSingleton<IPrepGuideSource, FileSystemPrepGuideSource>();
+builder.Services.AddSingleton<ITheoryQuizBankSource, FileSystemTheoryQuizBankSource>();
 builder.Services.AddSingleton<PracticeCoordinator>();
 builder.Services.AddScoped<PracticeService>();
 builder.Services.AddSingleton(new DebugContentOptions

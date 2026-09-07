@@ -200,6 +200,19 @@ prioritaire) : sur une installation publiée, la liste comme les dossiers n'affi
 que la session de navigation n'est pas déverrouillée, et l'absence de tout secret ferme l'accès
 au lieu de l'ouvrir.
 
+## Thib : quiz théorique senior (hors parcours, libre accès)
+
+Depuis le 7 septembre 2026, l'onglet « Thib » (`/thib`, banque sur `/thib/{id}`) sert des banques
+`TheoryQuizBank` : des questions à choix multiples de niveau senior ++, cinq propositions par
+question, **une ou plusieurs réponses justes**, le nombre à trouver étant annoncé. Une question
+n'est comptée juste que si la sélection coïncide exactement avec la clé ; la barre senior est
+fixée à 80 % sur une banque entière. Quatre banques de dix questions : runtime .NET et langage C#,
+asynchronisme et concurrence, données (EF Core et SQL Server), plateforme web, architecture et
+sécurité. Comme les autres chapitres hors parcours, l'onglet est **sans semaine, sans prérequis**
+et ne produit aucune preuve de maîtrise : la réponse est vérifiée dans la session de navigation
+puis oubliée, rien n'est enregistré, et la clé comme l'explication ne sont rendues qu'après la
+vérification.
+
 ## Après les 24 semaines
 
 Parcours distinct de 12–24 mois : systèmes distribués, messaging, cache, résilience, observabilité avancée, architecture, mentoring, estimation, incidents, anglais B2/C1, allemand A2/B1 et leadership. Il ne fait pas partie du MVP.

@@ -1,0 +1,76 @@
+@page "/thib"
+@using ForgeDotNet.Application.Preparation
+@using ForgeDotNet.Domain.TheoryQuiz
+@inject ITheoryQuizBankSource Banks
+
+<PageTitle>Thib — quiz théorique senior — Forge.NET</PageTitle>
+
+<h1>Thib</h1>
+
+<section class="practice-panel" aria-labelledby="thib-intro-title">
+    <h2 id="thib-intro-title">Le quiz théorique du niveau senior, sans filet</h2>
+    <p>
+        Chaque banque pose des questions à choix multiples sur ce qu'un développeur .NET très
+        opérationnel doit tenir sans hésiter : sémantique du runtime et du langage, asynchronisme,
+        accès aux données, plateforme web et architecture. Cinq propositions par question,
+        <strong>une ou plusieurs réponses justes</strong> ; le nombre à trouver est annoncé, et la
+        réponse n'est comptée juste que si la sélection coïncide exactement avec la clé.
+    </p>
+    <p>
+        Le chapitre est <strong>hors parcours</strong> : aucun prérequis, aucune semaine. La barre
+        senior est fixée à @TheoryQuizScore.SeniorBarPercent&nbsp;% de bonnes réponses sur une banque
+        entière ; en dessous, la théorie n'est pas jugée acquise, quel que soit le vécu.
+    </p>
+    <p class="notice" role="status">
+        <strong>Aucune banque ne produit de preuve de maîtrise</strong> : les réponses sont vérifiées
+        dans la session de navigation puis oubliées — rien n'est enregistré, rien n'entre dans le score
+        du parcours. Un quiz dit ce que l'on croit savoir ; les exercices et les examens disent ce que
+        l'on sait faire.
+    </p>
+</section>
+
+@if (_error is not null)
+{
+    <p class="error-message" role="alert">@_error</p>
+}
+else if (_banks is null)
+{
+    <p role="status">Chargement des banques…</p>
+}
+else
+{
+    <section class="reader-module" aria-labelledby="thib-banks-title">
+        <h2 id="thib-banks-title">Banques</h2>
+        <ul class="lesson-list">
+            @foreach (TheoryQuizBank bank in _banks)
+            {
+                <li>
+                    <a href="@($"/thib/{bank.Id}")">@bank.Title</a>
+                    <p class="lesson-meta">@bank.Questions.Count questions · @bank.Questions.Sum(question => question.CorrectCount) réponses justes à trouver</p>
+                    <p>@bank.Summary</p>
+                </li>
+            }
+        </ul>
+    </section>
+}
+
+@code {
+    private List<TheoryQuizBank>? _banks;
+    private string? _error;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            IReadOnlyList<TheoryQuizBank> banks = await Banks.ListAsync();
+            _banks = banks
+                .OrderBy(bank => bank.Order)
+                .ThenBy(bank => bank.Id, StringComparer.Ordinal)
+                .ToList();
+        }
+        catch (Exception exception) when (exception is InvalidDataException or InvalidOperationException)
+        {
+            _error = exception.Message;
+        }
+    }
+}

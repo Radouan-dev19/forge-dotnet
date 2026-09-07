@@ -449,6 +449,9 @@ public sealed class FileSystemContentCatalogLoader : IContentCatalogLoader
 
         // Même contrat pour un dossier de préparation d'entretien.
         ContentDocumentType.PrepGuide => root.GetProperty("summary").GetString()!,
+
+        // Même contrat pour une banque de quiz théorique : le résumé déclaré nourrit l'index.
+        ContentDocumentType.TheoryQuizBank => root.GetProperty("summary").GetString()!,
         _ => string.Empty,
     };
 

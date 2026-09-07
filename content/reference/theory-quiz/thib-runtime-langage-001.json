@@ -1,0 +1,342 @@
+{
+  "schemaVersion": 1,
+  "id": "thib-runtime-langage-001",
+  "version": 1,
+  "title": "Runtime .NET et langage C#",
+  "summary": "Ramasse-miettes, types valeur et copies défensives, variance, records, Span, exceptions, boxing, chaînes, finaliseurs et interfaces modernes : la sémantique qu'un senior doit tenir sans hésiter, sans documentation sous la main.",
+  "order": 1,
+  "questions": [
+    {
+      "id": "thib-rt-001-gc",
+      "topic": "Ramasse-miettes",
+      "prompt": "À propos du ramasse-miettes de .NET (CoreCLR), quelles affirmations sont exactes ?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Un objet de plus de 85 000 octets est alloué dans le Large Object Heap, qui n'est collecté qu'avec la génération 2 et n'est pas compacté par défaut ; c'est ce qui rend coûteuse l'allocation répétée de grands tableaux et justifie ArrayPool<T> pour les tampons temporaires."
+        },
+        {
+          "id": "b",
+          "text": "Une collecte de génération 0 promeut systématiquement les survivants directement en génération 2."
+        },
+        {
+          "id": "c",
+          "text": "En mode Server GC, chaque cœur logique dispose de son propre tas et de son propre thread de collecte."
+        },
+        {
+          "id": "d",
+          "text": "GC.Collect() est synchrone et bloquant : à son retour, tous les objets injoignables ont été récupérés et tous les finaliseurs en attente ont été exécutés, ce qui en fait un moyen fiable de libérer des ressources natives avant une opération sensible."
+        },
+        {
+          "id": "e",
+          "text": "Un objet épinglé (pinned) ne peut pas être déplacé par le compactage, ce qui fragmente le tas."
+        }
+      ],
+      "correctOptionIds": [
+        "a",
+        "c",
+        "e"
+      ],
+      "rationale": "Les survivants de la génération 0 passent en génération 1, puis en génération 2 s'ils survivent encore : la promotion est graduelle. GC.Collect() déclenche la collecte, mais les finaliseurs tournent sur un thread dédié ; il faut GC.WaitForPendingFinalizers() pour attendre leur exécution. Le seuil du LOH est bien 85 000 octets, le Server GC est bien un tas par cœur, et l'épinglage empêche bien le déplacement lors du compactage, d'où la fragmentation et l'intérêt du Pinned Object Heap depuis .NET 5."
+    },
+    {
+      "id": "thib-rt-002-struct-copies",
+      "topic": "Types valeur et copies défensives",
+      "prompt": "Une struct mutable est exposée par un champ readonly, un paramètre in, ou l'indexeur d'une List<T>. Quels comportements sont vrais ?",
+      "options": [
+        {
+          "id": "a",
+          "text": "list[i].Mutate() modifie l'élément stocké dans la liste."
+        },
+        {
+          "id": "b",
+          "text": "Passer une struct non readonly par in évite la copie à l'appel, mais chaque appel de membre peut recréer une copie défensive."
+        },
+        {
+          "id": "c",
+          "text": "Appeler une méthode mutatrice sur un champ readonly de type struct agit sur une copie défensive : le champ ne change pas."
+        },
+        {
+          "id": "d",
+          "text": "Le compilateur refuse de compiler l'appel d'une méthode d'instance non readonly sur un champ readonly de type struct, avec l'erreur CS1648, exactement comme il refuse l'affectation directe d'un de ses champs hors du constructeur."
+        },
+        {
+          "id": "e",
+          "text": "Déclarer la struct readonly struct supprime les copies défensives sur l'appel de ses membres."
+        }
+      ],
+      "correctOptionIds": [
+        "b",
+        "c",
+        "e"
+      ],
+      "rationale": "Le compilateur ne refuse rien : il compile et protège silencieusement l'invariant readonly en travaillant sur une copie, ce qui rend la mutation invisible. L'indexeur d'une List<T> renvoie une copie de la struct, donc list[i].Mutate() modifie cette copie et non l'élément ; seul un accès par ref (tableau, CollectionsMarshal.AsSpan) permet la mutation en place. Marquer la struct readonly, ou ses membres readonly, est la façon d'éliminer ces copies, y compris avec in et ref readonly."
+    },
+    {
+      "id": "thib-rt-003-variance",
+      "topic": "Variance générique",
+      "prompt": "Covariance et contravariance des génériques en C# : quelles affirmations sont exactes ?",
+      "options": [
+        {
+          "id": "a",
+          "text": "La variance s'applique aux types valeur : un IEnumerable<int> est assignable à un IEnumerable<object>."
+        },
+        {
+          "id": "b",
+          "text": "Action<in T> est contravariant : une Action<object> est assignable à une Action<string>."
+        },
+        {
+          "id": "c",
+          "text": "Les tableaux de types référence sont covariants de façon non sûre : un string[] se laisse assigner à un object[], et l'écriture d'un élément incompatible n'est détectée qu'à l'exécution par ArrayTypeMismatchException, ce qui impose une vérification de type à chaque stockage."
+        },
+        {
+          "id": "d",
+          "text": "List<T> est covariant puisqu'il implémente IEnumerable<out T> : une List<string> est directement assignable à une variable de type List<object>, le compilateur vérifiant seulement que l'argument de type est un type référence."
+        },
+        {
+          "id": "e",
+          "text": "IEnumerable<out T> est covariant : un IEnumerable<string> est assignable à un IEnumerable<object>."
+        }
+      ],
+      "correctOptionIds": [
+        "b",
+        "c",
+        "e"
+      ],
+      "rationale": "La variance ne concerne que les types référence : un int devrait être boxé pour devenir un object, et une conversion de variance doit préserver la représentation. List<T> n'est pas une interface et n'est pas déclaré variant ; c'est seulement la vue IEnumerable<T> d'une List<string> qui est convertible. La covariance des tableaux est un héritage de Java : écrire un object dans un string[] vu comme object[] compile et échoue à l'exécution."
+    },
+    {
+      "id": "thib-rt-004-records",
+      "topic": "Records",
+      "prompt": "Quelles affirmations sont exactes à propos des records C# ?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Un record class dont une propriété est un tableau ou une List<T> compare cette collection élément par élément dans Equals et GetHashCode, le compilateur générant une comparaison structurelle pour tout type implémentant IEnumerable<T>."
+        },
+        {
+          "id": "b",
+          "text": "L'égalité d'un record class compare l'EqualityContract (le type d'exécution) puis chaque champ, jamais la référence."
+        },
+        {
+          "id": "c",
+          "text": "Deux records de types différents liés par héritage et portant les mêmes valeurs sont égaux."
+        },
+        {
+          "id": "d",
+          "text": "Un record struct est mutable par défaut, sauf s'il est déclaré readonly record struct."
+        },
+        {
+          "id": "e",
+          "text": "L'expression with clone l'instance par le constructeur de copie synthétisé (ou redéfini) puis applique les initialiseurs."
+        }
+      ],
+      "correctOptionIds": [
+        "b",
+        "d",
+        "e"
+      ],
+      "rationale": "L'EqualityContract fait partie de la comparaison : un Derived et un Base aux mêmes valeurs ne sont pas égaux. Les champs sont comparés via EqualityComparer<T>.Default ; pour un tableau, c'est l'égalité de référence, d'où les surprises quand on met un tableau dans un record. Le record struct positionnel est mutable (propriétés init mais champs modifiables via with et setters) sauf avec readonly."
+    },
+    {
+      "id": "thib-rt-005-span",
+      "topic": "Span et Memory",
+      "prompt": "Span<T> et Memory<T> : quelles affirmations sont exactes ?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Un Span<T> peut référencer de la mémoire du tas managé, de la pile (stackalloc) ou de la mémoire native."
+        },
+        {
+          "id": "b",
+          "text": "Slice copie les éléments dans un nouveau tampon alloué sur le tas managé, ce qui explique qu'une tranche reste valide même après la libération du tampon d'origine et qu'on recommande de limiter le nombre de tranches par appel."
+        },
+        {
+          "id": "c",
+          "text": "string.AsSpan() alloue une copie des caractères de la chaîne."
+        },
+        {
+          "id": "d",
+          "text": "Span<T> est une ref struct : impossible de le stocker dans un champ de classe, de le boxer, de le capturer dans une lambda ou de le conserver au travers d'un await dans une méthode async, le compilateur refusant chacun de ces usages pour garantir qu'il ne survit pas à la pile courante."
+        },
+        {
+          "id": "e",
+          "text": "Memory<T> peut traverser un await et être stocké dans un champ."
+        }
+      ],
+      "correctOptionIds": [
+        "a",
+        "d",
+        "e"
+      ],
+      "rationale": "Toute la valeur du Span tient dans l'absence de copie : Slice, AsSpan et les tranches de tableau ne font que déplacer un pointeur et une longueur. Le prix de cette efficacité est la contrainte ref struct, qui interdit au Span de survivre à la pile courante ; Memory<T> est la version stockable et attendable, que l'on convertit en Span au moment d'y toucher."
+    },
+    {
+      "id": "thib-rt-006-exceptions",
+      "topic": "Exceptions",
+      "prompt": "À propos du mécanisme d'exceptions en .NET, quelles affirmations sont exactes ?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Un filtre when s'exécute pendant la première passe, avant le déroulement de la pile, ce qui préserve l'état pour le débogage."
+        },
+        {
+          "id": "b",
+          "text": "throw ex; réinitialise la trace de pile alors que throw; la préserve."
+        },
+        {
+          "id": "c",
+          "text": "ExceptionDispatchInfo.Capture(ex).Throw() relance depuis un autre contexte en conservant la trace d'origine."
+        },
+        {
+          "id": "d",
+          "text": "Une exception levée dans un bloc finally est ignorée par le runtime."
+        },
+        {
+          "id": "e",
+          "text": "Un bloc try/catch coûte cher même quand aucune exception n'est levée, parce que le JIT insère une sauvegarde de registres à l'entrée du bloc protégé ; il faut donc le sortir des boucles chaudes et l'envelopper autour de la boucle entière."
+        }
+      ],
+      "correctOptionIds": [
+        "a",
+        "b",
+        "c"
+      ],
+      "rationale": "Le coût des exceptions est presque entièrement dans le throw et le déroulement, pas dans la présence du try. Une exception dans finally remplace celle en cours de propagation, ce qui la masque : c'est un vrai piège, pas une ignorance du runtime. Les filtres when tournent lors de la première passe (recherche du gestionnaire), donc avant que finally ne s'exécute et avant que la pile ne soit déroulée."
+    },
+    {
+      "id": "thib-rt-007-boxing",
+      "topic": "Boxing",
+      "prompt": "Quels cas provoquent un boxing d'un type valeur ?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Insérer un int dans une chaîne interpolée en .NET 6 ou plus récent."
+        },
+        {
+          "id": "b",
+          "text": "Stocker un int dans une variable de type object ou dans une ArrayList."
+        },
+        {
+          "id": "c",
+          "text": "Passer une struct à un paramètre déclaré avec un type interface qu'elle implémente."
+        },
+        {
+          "id": "d",
+          "text": "Appeler une méthode générique contrainte where T : IComparable<T> avec un int : la contrainte d'interface impose au runtime de convertir la valeur en référence d'interface avant d'invoquer CompareTo, comme pour un paramètre déclaré IComparable<int>."
+        },
+        {
+          "id": "e",
+          "text": "Utiliser une struct comme clé de Dictionary<TKey, TValue> sans qu'elle implémente IEquatable<TKey> : le comparateur par défaut retombe sur Equals(object), qui boxe la clé comparée à chaque recherche et à chaque insertion, en plus d'utiliser une égalité par réflexion sur les champs."
+        }
+      ],
+      "correctOptionIds": [
+        "b",
+        "c",
+        "e"
+      ],
+      "rationale": "Les génériques sont spécialisés par type valeur : l'appel contraint n'alloue rien. Depuis .NET 6, l'interpolation passe par DefaultInterpolatedStringHandler et ISpanFormattable, sans boxing des primitives. En revanche, sans IEquatable<T>, EqualityComparer<T>.Default retombe sur Equals(object), qui boxe l'argument à chaque comparaison de clé ; c'est la raison d'implémenter IEquatable<T> sur toute struct servant de clé."
+    },
+    {
+      "id": "thib-rt-008-strings",
+      "topic": "Chaînes",
+      "prompt": "Concernant les chaînes de caractères en .NET, quelles affirmations sont exactes ?",
+      "options": [
+        {
+          "id": "a",
+          "text": "StringComparison.Ordinal compare les unités UTF-16 sans aucune règle de culture."
+        },
+        {
+          "id": "b",
+          "text": "string.Compare(a, b) sans paramètre de comparaison est ordinal."
+        },
+        {
+          "id": "c",
+          "text": "StringBuilder est toujours plus rapide qu'une concaténation directe, même pour deux fragments, parce que string.Concat alloue une chaîne intermédiaire par opérande alors que le StringBuilder n'alloue qu'une seule fois au ToString() final."
+        },
+        {
+          "id": "d",
+          "text": "string.GetHashCode() est randomisé par processus en .NET Core : sa valeur ne doit jamais être persistée."
+        },
+        {
+          "id": "e",
+          "text": "Les chaînes sont immuables ; les littéraux identiques d'un assembly sont internés dans un pool partagé."
+        }
+      ],
+      "correctOptionIds": [
+        "a",
+        "d",
+        "e"
+      ],
+      "rationale": "string.Compare sans argument utilise la culture courante, ce qui rend le tri dépendant de la machine ; les tris techniques exigent Ordinal ou OrdinalIgnoreCase. La randomisation du hachage protège contre les attaques par collision et interdit de stocker ces valeurs ou de les comparer entre processus. Pour deux ou trois fragments, string.Concat est optimisé et évite l'allocation intermédiaire du StringBuilder."
+    },
+    {
+      "id": "thib-rt-009-dispose",
+      "topic": "IDisposable et finaliseurs",
+      "prompt": "IDisposable, IAsyncDisposable et finaliseurs : quelles affirmations sont exactes ?",
+      "options": [
+        {
+          "id": "a",
+          "text": "await using appelle DisposeAsync et n'appelle pas Dispose() si le type implémente les deux interfaces."
+        },
+        {
+          "id": "b",
+          "text": "Un finaliseur s'exécute sur un thread dédié, après détection de l'injoignabilité de l'objet, sans ordre garanti entre objets."
+        },
+        {
+          "id": "c",
+          "text": "Dispose() est appelé automatiquement par le ramasse-miettes quand l'objet devient injoignable, dès lors que le type implémente IDisposable : c'est le mécanisme qui rend le using facultatif pour les types sans ressource native."
+        },
+        {
+          "id": "d",
+          "text": "Encapsuler un handle natif dans un SafeHandle dispense la classe englobante d'écrire un finaliseur : le SafeHandle porte son propre finaliseur critique, un comptage de références qui empêche la libération pendant un appel P/Invoke, et sa méthode ReleaseHandle libère la ressource."
+        },
+        {
+          "id": "e",
+          "text": "GC.SuppressFinalize(this) dans Dispose retire l'objet de la file de finalisation, lui épargnant une survie d'une génération supplémentaire."
+        }
+      ],
+      "correctOptionIds": [
+        "a",
+        "b",
+        "d",
+        "e"
+      ],
+      "rationale": "Le ramasse-miettes ne connaît pas IDisposable : il n'appelle que les finaliseurs, et seulement pour les objets qui en déclarent un. Un objet finalisable survit au moins une collecte de plus, d'où SuppressFinalize quand Dispose a fait le travail. SafeHandle porte son propre finaliseur critique et son comptage de références, ce qui règle la libération du handle natif sans finaliseur dans la classe qui l'utilise."
+    },
+    {
+      "id": "thib-rt-010-interfaces",
+      "topic": "Interfaces modernes",
+      "prompt": "Fonctionnalités d'interface introduites de C# 8 à C# 12 : quelles affirmations sont exactes ?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Une interface peut déclarer des champs d'instance privés depuis C# 8, pour soutenir ses méthodes par défaut, à condition qu'ils soient initialisés en ligne : c'est ce qui permet aux implémentations par défaut de conserver un état entre deux appels."
+        },
+        {
+          "id": "b",
+          "text": "Une struct qui hérite d'une méthode d'interface par défaut est boxée pour l'appeler."
+        },
+        {
+          "id": "c",
+          "text": "Une interface générique peut être déclarée variante (in ou out) sur un paramètre utilisé à la fois en retour et en paramètre d'entrée."
+        },
+        {
+          "id": "d",
+          "text": "Une méthode d'interface avec implémentation par défaut n'est accessible qu'à travers une référence typée interface, pas depuis la classe."
+        },
+        {
+          "id": "e",
+          "text": "Les membres static abstract d'interface permettent les maths génériques (INumber<T>) et se résolvent sur le type T de l'appel."
+        }
+      ],
+      "correctOptionIds": [
+        "b",
+        "d",
+        "e"
+      ],
+      "rationale": "Les interfaces restent sans état d'instance : seuls des membres statiques peuvent porter des champs. Un paramètre utilisé en entrée et en sortie est invariant, le compilateur refuse in comme out. Le boxing des structs sur les méthodes par défaut est la raison de réimplémenter explicitement ces méthodes dans une struct sensible aux performances."
+    }
+  ],
+  "license": "CC-BY-4.0"
+}

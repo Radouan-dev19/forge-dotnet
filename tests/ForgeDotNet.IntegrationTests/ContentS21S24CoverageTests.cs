@@ -66,8 +66,9 @@ public sealed class ContentS21S24CoverageTests
         // la page Apprendre ajoute quatre guides WeekZeroGuide (manifeste plus Markdown chacun) :
         // Vue.js 3/TypeScript, Azure Service Bus, Azure DevOps, IIS — puis un cinquième le
         // 31 août 2026, Microservices. Le même jour, l'onglet « Entretiens ciblés » ajoute deux
-        // dossiers PrepGuide (manifeste plus Markdown chacun) sous le sous-thème icube.
-        Assert.Equal(3_334, Directory.GetFiles(CatalogRoot, "*", SearchOption.AllDirectories).Length);
+        // dossiers PrepGuide (manifeste plus Markdown chacun) sous le sous-thème icube. Le 7 septembre
+        // 2026, l'onglet « Thib » ajoute quatre banques TheoryQuizBank (un manifeste chacune).
+        Assert.Equal(3_338, Directory.GetFiles(CatalogRoot, "*", SearchOption.AllDirectories).Length);
     }
 
     [Fact]

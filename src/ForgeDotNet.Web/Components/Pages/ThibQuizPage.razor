@@ -1,0 +1,205 @@
+@page "/thib/{BankId}"
+@using ForgeDotNet.Application.Preparation
+@using ForgeDotNet.Domain.TheoryQuiz
+@inject ITheoryQuizBankSource Banks
+
+<PageTitle>Thib — quiz théorique senior — Forge.NET</PageTitle>
+
+@if (_error is not null)
+{
+    <p class="error-message" role="alert">@_error</p>
+}
+else if (_bank is null)
+{
+    <p role="status">Chargement de la banque…</p>
+}
+else
+{
+    <p class="eyebrow">Thib · quiz théorique senior</p>
+    <h1>@_bank.Title</h1>
+    <p>@_bank.Summary</p>
+    <p class="notice" role="status">
+        Ce quiz ne produit aucune preuve de maîtrise : les réponses sont vérifiées ici puis oubliées,
+        rien n'est enregistré. Une question n'est juste que si la sélection coïncide exactement avec la
+        clé — le nombre de bonnes réponses à trouver est indiqué à chaque fois.
+    </p>
+
+    <section class="practice-panel" aria-labelledby="thib-score-title" aria-live="polite">
+        <h2 id="thib-score-title">Tableau de score</h2>
+        <p>
+            @Answered / @_bank.Questions.Count question(s) vérifiée(s) · @Correct juste(s)
+            @if (Answered > 0)
+            {
+                <span> · @TheoryQuizScore.Percentage(Correct, Answered)&nbsp;% sur les questions vérifiées</span>
+            }
+        </p>
+        @switch (TheoryQuizScore.Read(Answered, Correct, _bank.Questions.Count))
+        {
+            case TheoryQuizReading.AtSeniorBar:
+                <p class="success-message" role="status">
+                    Banque terminée à @TheoryQuizScore.Percentage(Correct, _bank.Questions.Count)&nbsp;% :
+                    la barre senior (@TheoryQuizScore.SeniorBarPercent&nbsp;%) est tenue sur cette théorie.
+                </p>
+                break;
+            case TheoryQuizReading.BelowSeniorBar:
+                <p class="notice" role="status">
+                    Banque terminée à @TheoryQuizScore.Percentage(Correct, _bank.Questions.Count)&nbsp;% :
+                    sous la barre senior (@TheoryQuizScore.SeniorBarPercent&nbsp;%). Relisez les explications
+                    des questions manquées avant de recommencer.
+                </p>
+                break;
+            default:
+                <p class="field-help">
+                    Barre senior : @TheoryQuizScore.SeniorBarPercent&nbsp;% de bonnes réponses sur la banque entière.
+                </p>
+                break;
+        }
+        <button class="btn btn-secondary" type="button" disabled="@(Answered == 0)" @onclick="Restart">Recommencer</button>
+    </section>
+
+    @for (int index = 0; index < _bank.Questions.Count; index++)
+    {
+        TheoryQuizQuestion question = _bank.Questions[index];
+        QuestionState state = StateOf(question.Id);
+        int number = index + 1;
+        <article class="practice-panel quiz-panel" aria-labelledby="thib-question-@question.Id">
+            <h2 id="thib-question-@question.Id">Question @number — @question.Topic</h2>
+            <fieldset disabled="@(state.Verdict is not null)">
+                <legend>@question.Prompt</legend>
+                <p class="field-help">
+                    @(question.CorrectCount == 1 ? "Une seule réponse juste." : $"{question.CorrectCount} réponses justes à cocher.")
+                </p>
+                @foreach (TheoryQuizOption option in question.Options)
+                {
+                    <label class="quiz-option">
+                        <input type="checkbox"
+                               checked="@state.Selected.Contains(option.Id)"
+                               @onchange="args => Toggle(state, option.Id, args.Value)" />
+                        <span>
+                            <strong>@option.Id.ToUpperInvariant().</strong> @option.Text
+                            @if (state.Verdict is not null)
+                            {
+                                @if (question.CorrectOptionIds.Contains(option.Id, StringComparer.Ordinal))
+                                {
+                                    <span class="completion-label"> — juste</span>
+                                }
+                                else if (state.Selected.Contains(option.Id))
+                                {
+                                    <span class="error-label"> — coché à tort</span>
+                                }
+                            }
+                        </span>
+                    </label>
+                }
+            </fieldset>
+            @if (state.Verdict is null)
+            {
+                <button class="btn btn-primary" type="button" disabled="@(state.Selected.Count == 0)" @onclick="() => Check(question, state)">
+                    Vérifier ma réponse
+                </button>
+            }
+            else
+            {
+                <p class="@(state.Verdict.IsCorrect ? "success-message" : "notice")" role="status">
+                    @if (state.Verdict.IsCorrect)
+                    {
+                        <strong>Juste.</strong>
+                    }
+                    else
+                    {
+                        <strong>Manqué.</strong>
+                        @if (state.Verdict.MissingOptionIds.Count > 0)
+                        {
+                            <span> Oublié : @Letters(state.Verdict.MissingOptionIds).</span>
+                        }
+                        @if (state.Verdict.WrongOptionIds.Count > 0)
+                        {
+                            <span> En trop : @Letters(state.Verdict.WrongOptionIds).</span>
+                        }
+                    }
+                    <span> Clé : @Letters(question.CorrectOptionIds).</span>
+                </p>
+                <p>@question.Rationale</p>
+            }
+        </article>
+    }
+
+    <p><a href="/thib">Retour aux banques</a></p>
+}
+
+@code {
+    [Parameter]
+    public string BankId { get; set; } = string.Empty;
+
+    private TheoryQuizBank? _bank;
+    private string? _error;
+    private readonly Dictionary<string, QuestionState> _states = new(StringComparer.Ordinal);
+
+    private int Answered => _states.Values.Count(state => state.Verdict is not null);
+
+    private int Correct => _states.Values.Count(state => state.Verdict?.IsCorrect == true);
+
+    protected override async Task OnParametersSetAsync()
+    {
+        _states.Clear();
+        try
+        {
+            _bank = await Banks.GetAsync(BankId);
+            _error = _bank is null ? "Banque de quiz introuvable." : null;
+        }
+        catch (Exception exception) when (exception is InvalidDataException or InvalidOperationException)
+        {
+            _error = exception.Message;
+        }
+    }
+
+    private QuestionState StateOf(string questionId)
+    {
+        if (!_states.TryGetValue(questionId, out QuestionState? state))
+        {
+            state = new QuestionState();
+            _states.Add(questionId, state);
+        }
+
+        return state;
+    }
+
+    private static void Toggle(QuestionState state, string optionId, object? value)
+    {
+        if (state.Verdict is not null)
+        {
+            return;
+        }
+
+        if (value is true)
+        {
+            state.Selected.Add(optionId);
+        }
+        else
+        {
+            state.Selected.Remove(optionId);
+        }
+    }
+
+    private static void Check(TheoryQuizQuestion question, QuestionState state)
+    {
+        if (state.Selected.Count == 0)
+        {
+            return;
+        }
+
+        state.Verdict = question.Evaluate(state.Selected);
+    }
+
+    private void Restart() => _states.Clear();
+
+    private static string Letters(IEnumerable<string> optionIds) =>
+        string.Join(", ", optionIds.Select(id => id.ToUpperInvariant()));
+
+    private sealed class QuestionState
+    {
+        public HashSet<string> Selected { get; } = new(StringComparer.Ordinal);
+
+        public TheoryQuizVerdict? Verdict { get; set; }
+    }
+}

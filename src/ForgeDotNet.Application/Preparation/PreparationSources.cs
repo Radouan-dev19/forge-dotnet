@@ -4,6 +4,7 @@ using ForgeDotNet.Domain.Cloud;
 using ForgeDotNet.Domain.English;
 using ForgeDotNet.Domain.Interviews;
 using ForgeDotNet.Domain.Prep;
+using ForgeDotNet.Domain.TheoryQuiz;
 using ForgeDotNet.Domain.WeekZero;
 
 namespace ForgeDotNet.Application.Preparation;
@@ -111,4 +112,20 @@ public interface IPrepGuideSource
     ValueTask<IReadOnlyList<PrepGuide>> ListAsync(CancellationToken cancellationToken = default);
 
     ValueTask<PrepGuide?> GetAsync(string guideId, CancellationToken cancellationToken = default);
+}
+
+/// <summary>
+/// Banques de quiz théorique senior de l'onglet Thib : des questions à réponses multiples que l'on
+/// vérifie pour soi, sans enregistrement ni file de révision.
+/// </summary>
+/// <remarks>
+/// Même famille que les autres contenus de préparation : un quiz auto-vérifié dit ce que l'on croit
+/// savoir, pas ce que l'on sait faire — il ne produit aucune observation de maîtrise, et ne le pourra
+/// pas.
+/// </remarks>
+public interface ITheoryQuizBankSource
+{
+    ValueTask<IReadOnlyList<TheoryQuizBank>> ListAsync(CancellationToken cancellationToken = default);
+
+    ValueTask<TheoryQuizBank?> GetAsync(string bankId, CancellationToken cancellationToken = default);
 }

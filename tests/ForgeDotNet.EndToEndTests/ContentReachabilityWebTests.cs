@@ -42,6 +42,7 @@ public sealed class ContentReachabilityWebTests(ForgeWebApplicationFactory facto
         [ContentDocumentType.CloudGuide] = "/cloud",
         [ContentDocumentType.WeekZeroGuide] = "/learn",
         [ContentDocumentType.PrepGuide] = "/prep",
+        [ContentDocumentType.TheoryQuizBank] = "/thib",
     };
 
     [Fact]
@@ -155,6 +156,12 @@ public sealed class ContentReachabilityWebTests(ForgeWebApplicationFactory facto
         Assert.Contains("/prep/icube-scripts-entretien-001", prep, StringComparison.Ordinal);
         Assert.Contains("ICube", prep, StringComparison.Ordinal);
         Assert.Contains("ne produit de preuve de maîtrise", prep, StringComparison.Ordinal);
+
+        // L'onglet Thib liste ses banques de quiz théorique senior.
+        string thib = WebUtility.HtmlDecode(await client.GetStringAsync("/thib"));
+        Assert.Contains("/thib/thib-runtime-langage-001", thib, StringComparison.Ordinal);
+        Assert.Contains("/thib/thib-web-archi-securite-004", thib, StringComparison.Ordinal);
+        Assert.Contains("ne produit de preuve de maîtrise", thib, StringComparison.Ordinal);
     }
 
     /// <summary>

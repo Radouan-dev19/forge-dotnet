@@ -1,0 +1,341 @@
+{
+  "schemaVersion": 1,
+  "id": "thib-async-concurrence-002",
+  "version": 1,
+  "title": "Asynchronisme, threads et concurrence",
+  "summary": "async/await, contexte de synchronisation, ValueTask, annulation coopérative, interblocages, famine du pool de threads, modèle mémoire, collections concurrentes, flux asynchrones et parallélisme : là où les intuitions approximatives coûtent des incidents en production.",
+  "order": 2,
+  "questions": [
+    {
+      "id": "thib-async-001-basics",
+      "topic": "async/await",
+      "prompt": "À propos du modèle async/await en C#, quelles affirmations sont exactes ?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Par défaut, await capture le SynchronizationContext courant et y planifie la suite de la méthode."
+        },
+        {
+          "id": "b",
+          "text": "Une méthode async void propage ses exceptions directement au SynchronizationContext ambiant, jamais à l'appelant, qui ne peut ni les attraper ni attendre la fin de l'opération : c'est ce qui la réserve aux gestionnaires d'événements et fait tomber le processus quand elle échoue ailleurs."
+        },
+        {
+          "id": "c",
+          "text": "Marquer une méthode async planifie systématiquement son corps sur un thread du pool : l'appelant reprend immédiatement et la méthode s'exécute en parallèle, comme si elle avait été enveloppée dans Task.Run, d'où l'inutilité de Task.Run dans du code déjà async."
+        },
+        {
+          "id": "d",
+          "text": "await Task.Delay(0) force la reprise sur un autre thread."
+        },
+        {
+          "id": "e",
+          "text": "Une méthode async s'exécute de façon synchrone sur le thread appelant jusqu'au premier await d'une tâche non terminée."
+        }
+      ],
+      "correctOptionIds": [
+        "a",
+        "b",
+        "e"
+      ],
+      "rationale": "async ne crée aucun thread : c'est une réécriture en machine à états. Task.Delay(0) renvoie une tâche déjà terminée, donc await continue de façon synchrone sur le même thread. La capture de contexte est le comportement par défaut, dont ConfigureAwait(false) permet de se dispenser. Le comportement des async void justifie l'analyseur qui les interdit hors gestionnaires."
+    },
+    {
+      "id": "thib-async-002-configureawait",
+      "topic": "ConfigureAwait",
+      "prompt": "ConfigureAwait(false) : quelles affirmations sont exactes ?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Seul le dernier await d'une méthode a besoin de ConfigureAwait(false) : c'est lui qui décide du thread sur lequel la méthode rend son résultat à l'appelant, les await précédents ne faisant que suspendre la machine à états sans toucher au contexte."
+        },
+        {
+          "id": "b",
+          "text": "ASP.NET Core n'installe aucun SynchronizationContext : ConfigureAwait(false) n'y change pas le thread de reprise."
+        },
+        {
+          "id": "c",
+          "text": "Dans une bibliothèque, ConfigureAwait(false) évite l'interblocage quand un appelant bloque avec .Result sur un contexte à thread unique."
+        },
+        {
+          "id": "d",
+          "text": "ConfigureAwait(false) rend l'appel synchrone."
+        },
+        {
+          "id": "e",
+          "text": "Après ConfigureAwait(false), la suite peut s'exécuter sur un thread du pool : toucher l'interface utilisateur y est interdit."
+        }
+      ],
+      "correctOptionIds": [
+        "b",
+        "c",
+        "e"
+      ],
+      "rationale": "Chaque await capture ou non le contexte indépendamment : le premier await sans ConfigureAwait(false) suffit à repartir sur le contexte capturé et à bloquer un appelant qui attend de façon synchrone. Rien ne devient synchrone : on choisit seulement le lieu de la reprise. En ASP.NET Core, le contexte est absent, mais la règle reste utile pour une bibliothèque consommée ailleurs."
+    },
+    {
+      "id": "thib-async-003-valuetask",
+      "topic": "ValueTask",
+      "prompt": "ValueTask et ValueTask<T> : quelles affirmations sont exactes ?",
+      "options": [
+        {
+          "id": "a",
+          "text": "ValueTask évite l'allocation d'un objet Task quand le résultat est disponible de façon synchrone."
+        },
+        {
+          "id": "b",
+          "text": "AsTask() convertit en Task pour les usages multiples, WhenAll ou la mise en cache."
+        },
+        {
+          "id": "c",
+          "text": "ValueTask est préférable à Task pour toute méthode asynchrone publique d'une bibliothèque : le type est plus léger, se convertit implicitement en Task quand l'appelant l'exige, et supprime l'allocation dans tous les cas."
+        },
+        {
+          "id": "d",
+          "text": "Un ValueTask ne doit être attendu qu'une seule fois, et jamais de façon concurrente : son IValueTaskSource sous-jacent peut être recyclé dès la première consommation, de sorte qu'un second await ou un IsCompleted suivi de .Result peuvent lire le résultat d'une autre opération."
+        },
+        {
+          "id": "e",
+          "text": "Appeler .Result sur un ValueTask<T> non terminé est sûr et bloque jusqu'au résultat."
+        }
+      ],
+      "correctOptionIds": [
+        "a",
+        "b",
+        "d"
+      ],
+      "rationale": "Un ValueTask peut s'appuyer sur un IValueTaskSource réutilisé : lire .Result avant la fin ou l'attendre deux fois est un comportement non défini, pas seulement un blocage. Son intérêt se limite aux chemins chauds où la complétion synchrone est fréquente ; ailleurs, Task reste plus simple et plus sûr, et sa consommation ne réserve pas de surprise."
+    },
+    {
+      "id": "thib-async-004-cancellation",
+      "topic": "Annulation",
+      "prompt": "Annulation coopérative avec CancellationToken : quelles affirmations sont exactes ?",
+      "options": [
+        {
+          "id": "a",
+          "text": "ThrowIfCancellationRequested lève OperationCanceledException ; une Task qui l'observe avec le même token passe à l'état Canceled."
+        },
+        {
+          "id": "b",
+          "text": "Annuler un CancellationTokenSource interrompt de force le thread qui exécute l'opération."
+        },
+        {
+          "id": "c",
+          "text": "CancellationTokenSource est IDisposable ; les registrations posées par Register sur un token longue durée doivent être libérées."
+        },
+        {
+          "id": "d",
+          "text": "CreateLinkedTokenSource combine plusieurs tokens en un seul, annulé dès que l'un d'eux l'est."
+        },
+        {
+          "id": "e",
+          "text": "Passer CancellationToken.None à la place de HttpContext.RequestAborted dans une API est sans conséquence : Kestrel interrompt lui-même les opérations en cours dès que le client se déconnecte, en levant une OperationCanceledException dans le pipeline de la requête."
+        }
+      ],
+      "correctOptionIds": [
+        "a",
+        "c",
+        "d"
+      ],
+      "rationale": "L'annulation est coopérative : rien n'interrompt un code qui ne consulte pas le token. Ignorer RequestAborted laisse tourner requêtes SQL et appels sortants pour des clients déjà partis, ce qui consomme connexions et CPU sous charge. Les registrations non libérées sur un token de longue durée sont une fuite mémoire classique."
+    },
+    {
+      "id": "thib-async-005-deadlock",
+      "topic": "Interblocage",
+      "prompt": "Le blocage synchrone sur du code asynchrone (.Result, .Wait()) : quelles affirmations sont exactes ?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Task.Run(() => MethodAsync()).Result contourne l'interblocage au prix d'un thread du pool bloqué pendant l'attente."
+        },
+        {
+          "id": "b",
+          "text": "GetAwaiter().GetResult() est asynchrone, contrairement à .Result."
+        },
+        {
+          "id": "c",
+          "text": "Depuis un thread doté d'un SynchronizationContext exclusif (UI WPF ou WinForms, ASP.NET classique), .Result ou .Wait() sur une méthode async peut bloquer indéfiniment : la continuation attend le thread que l'appel bloquant occupe, et rien ne vient jamais la débloquer."
+        },
+        {
+          "id": "d",
+          "text": "L'interblocage vient de la continuation qui attend le contexte occupé par l'appel bloquant lui-même."
+        },
+        {
+          "id": "e",
+          "text": "En ASP.NET Core, appeler .Result sur une tâche est sans danger puisqu'il n'y a pas de SynchronizationContext : le thread courant rend sa place au pool pendant l'attente, comme le ferait un await."
+        }
+      ],
+      "correctOptionIds": [
+        "a",
+        "c",
+        "d"
+      ],
+      "rationale": "Sans contexte, l'interblocage classique disparaît, mais .Result bloque toujours un thread du pool jusqu'à la fin : sous charge, c'est la famine de threads. GetAwaiter().GetResult() bloque exactement comme .Result ; sa seule différence est de ne pas emballer l'exception dans une AggregateException. La seule solution propre est async jusqu'en haut de la pile."
+    },
+    {
+      "id": "thib-async-006-starvation",
+      "topic": "Pool de threads",
+      "prompt": "Pool de threads et famine (starvation) : quelles affirmations sont exactes ?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Relever ThreadPool.SetMinThreads masque le symptôme sans corriger la cause."
+        },
+        {
+          "id": "b",
+          "text": "Les I/O asynchrones (sockets, fichiers) n'occupent aucun thread du pool pendant l'attente."
+        },
+        {
+          "id": "c",
+          "text": "Task.Run est recommandé dans ASP.NET Core pour paralléliser le travail CPU de chaque requête : le pool étant dimensionné par cœur, répartir chaque requête sur plusieurs threads augmente le débit global du serveur sous charge soutenue."
+        },
+        {
+          "id": "d",
+          "text": "Chaque await immobilise un thread en attente."
+        },
+        {
+          "id": "e",
+          "text": "Bloquer massivement des threads du pool provoque une famine : l'injection de nouveaux threads est lente et la latence s'envole."
+        }
+      ],
+      "correctOptionIds": [
+        "a",
+        "b",
+        "e"
+      ],
+      "rationale": "Un serveur web est déjà parallèle par ses requêtes : ajouter du Task.Run par requête vole des threads aux autres requêtes et réduit le débit global. Pendant un await d'I/O réel, aucun thread n'attend : la reprise est planifiée par la complétion (IOCP ou epoll). C'est précisément ce que casse le blocage synchrone, d'où la famine."
+    },
+    {
+      "id": "thib-async-007-memory-model",
+      "topic": "Modèle mémoire",
+      "prompt": "Synchronisation et modèle mémoire : quelles affirmations sont exactes ?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Depuis .NET 9 et C# 13, System.Threading.Lock est le type recommandé pour lock, avec EnterScope."
+        },
+        {
+          "id": "b",
+          "text": "lock (Monitor) fournit une barrière mémoire complète à l'entrée et à la sortie."
+        },
+        {
+          "id": "c",
+          "text": "volatile garantit l'atomicité d'une incrémentation avec l'opérateur ++."
+        },
+        {
+          "id": "d",
+          "text": "Interlocked.Increment est atomique et agit comme une barrière mémoire complète : l'opération lecture-modification-écriture est exécutée en une instruction verrouillée, et aucune lecture ni écriture ne peut être réordonnée au travers de l'appel, sur x64 comme sur ARM64."
+        },
+        {
+          "id": "e",
+          "text": "Lire ou écrire un long ou un double sans synchronisation est atomique sur toutes les plateformes prises en charge par .NET, y compris en 32 bits, parce que le runtime aligne ces champs sur 8 octets."
+        }
+      ],
+      "correctOptionIds": [
+        "a",
+        "b",
+        "d"
+      ],
+      "rationale": "volatile ne concerne que la visibilité et l'ordre des lectures/écritures ; ++ reste une lecture puis une écriture, donc une course. L'atomicité d'un long n'est garantie que sur les processus 64 bits ; en 32 bits, une écriture peut être déchirée. Interlocked et lock sont les outils corrects ; le nouveau type Lock évite le boxing et les erreurs de verrouillage sur un objet quelconque."
+    },
+    {
+      "id": "thib-async-008-collections",
+      "topic": "Collections concurrentes",
+      "prompt": "Collections concurrentes et immuables : quelles affirmations sont exactes ?",
+      "options": [
+        {
+          "id": "a",
+          "text": "ImmutableList<T>.Add renvoie une nouvelle liste : l'original reste inchangé et partageable sans verrou."
+        },
+        {
+          "id": "b",
+          "text": "Un Dictionary<TKey, TValue> peut être lu concurremment par plusieurs threads tant que personne ne le modifie."
+        },
+        {
+          "id": "c",
+          "text": "List<T> est sûr en lectures et écritures concurrentes."
+        },
+        {
+          "id": "d",
+          "text": "ConcurrentDictionary.GetOrAdd peut exécuter la fabrique plusieurs fois pour la même clé sous concurrence, mais n'insère qu'une seule valeur."
+        },
+        {
+          "id": "e",
+          "text": "ConcurrentDictionary.Count est une opération sans verrou en temps constant : chaque segment tient un compteur incrémenté par Interlocked, et Count ne fait qu'additionner ces compteurs, ce qui le rend aussi bon marché que IsEmpty dans une boucle chaude."
+        }
+      ],
+      "correctOptionIds": [
+        "a",
+        "b",
+        "d"
+      ],
+      "rationale": "Count sur ConcurrentDictionary acquiert tous les verrous internes : c'est coûteux et il faut lui préférer IsEmpty ou un compteur maintenu à part. La fabrique de GetOrAdd s'exécute hors verrou, d'où les exécutions multiples ; on l'enveloppe dans un Lazy<T> quand elle a des effets de bord. Les lectures concurrentes d'un Dictionary sont sûres uniquement en l'absence totale d'écriture."
+    },
+    {
+      "id": "thib-async-009-streams",
+      "topic": "Flux asynchrones",
+      "prompt": "IAsyncEnumerable<T> et System.Threading.Channels : quelles affirmations sont exactes ?",
+      "options": [
+        {
+          "id": "a",
+          "text": "await foreach tire les éléments un à un, au rythme du consommateur."
+        },
+        {
+          "id": "b",
+          "text": "WithCancellation côté appelant et [EnumeratorCancellation] côté itérateur relient le token de la boucle à la méthode async."
+        },
+        {
+          "id": "c",
+          "text": "Un Channel borné avec BoundedChannelFullMode.Wait applique une contre-pression au producteur : WriteAsync suspend l'écrivain tant que la capacité est atteinte, et les modes DropOldest, DropNewest ou DropWrite permettent au contraire de perdre des éléments plutôt que d'attendre."
+        },
+        {
+          "id": "d",
+          "text": "IAsyncEnumerable<T> charge tous les éléments en mémoire avant le premier MoveNextAsync."
+        },
+        {
+          "id": "e",
+          "text": "Un Channel non borné ne peut jamais saturer la mémoire : l'écrivain est mis en attente dès que le lecteur prend du retard, le runtime ajustant automatiquement la capacité interne du canal au rythme de consommation observé."
+        }
+      ],
+      "correctOptionIds": [
+        "a",
+        "b",
+        "c"
+      ],
+      "rationale": "Le flux asynchrone est paresseux par construction : c'est ce qui le distingue d'un Task<List<T>>. Un canal non borné accepte tout ce que le producteur écrit ; si le consommateur est plus lent, la file croît sans limite jusqu'à l'épuisement mémoire. La contre-pression exige un canal borné et un mode d'attente ou de rejet choisi consciemment."
+    },
+    {
+      "id": "thib-async-010-parallel-dbcontext",
+      "topic": "Parallélisme et DbContext",
+      "prompt": "Parallélisme et accès aux données avec EF Core : quelles affirmations sont exactes ?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Parallel.ForEach avec un corps async (lambda async void) perd les exceptions et n'attend pas la fin du travail."
+        },
+        {
+          "id": "b",
+          "text": "Parallel.For est idéal pour des appels HTTP car il libère les threads pendant l'attente."
+        },
+        {
+          "id": "c",
+          "text": "DbContext n'est pas thread-safe : deux opérations simultanées sur la même instance lèvent InvalidOperationException."
+        },
+        {
+          "id": "d",
+          "text": "Parallel.ForEachAsync convient au travail asynchrone borné par MaxDegreeOfParallelism."
+        },
+        {
+          "id": "e",
+          "text": "Task.WhenAll sur plusieurs requêtes du même DbContext est sûr : chaque requête ouvre sa propre connexion depuis le pool, et le suivi des modifications est synchronisé par un verrou interne, de sorte que seul SaveChanges doit être appelé sans concurrence."
+        }
+      ],
+      "correctOptionIds": [
+        "a",
+        "c",
+        "d"
+      ],
+      "rationale": "Les requêtes concurrentes sur un DbContext partagent le même suivi et la même connexion : c'est l'erreur « A second operation was started on this context ». Il faut un contexte par flux (via IDbContextFactory) ou une exécution séquentielle. Parallel.For et Parallel.ForEach sont pensés pour le CPU et bloquent des threads ; le travail asynchrone passe par Parallel.ForEachAsync ou un SemaphoreSlim."
+    }
+  ],
+  "license": "CC-BY-4.0"
+}

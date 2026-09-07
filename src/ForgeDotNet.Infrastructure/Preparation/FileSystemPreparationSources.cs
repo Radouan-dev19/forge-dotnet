@@ -10,6 +10,7 @@ using ForgeDotNet.Domain.Content;
 using ForgeDotNet.Domain.English;
 using ForgeDotNet.Domain.Interviews;
 using ForgeDotNet.Domain.Prep;
+using ForgeDotNet.Domain.TheoryQuiz;
 using ForgeDotNet.Domain.WeekZero;
 using ForgeDotNet.Infrastructure.Practice;
 
@@ -453,4 +454,40 @@ public sealed class FileSystemPrepGuideSource(
 
         return StrictGuideUtf8.GetString(File.ReadAllBytes(resolved));
     }
+}
+
+public sealed class FileSystemTheoryQuizBankSource(
+    ContentCatalogProvider catalogProvider,
+    PracticeContentOptions options)
+    : FileSystemPreparationSource<TheoryQuizBank>(
+        catalogProvider,
+        options,
+        ContentDocumentType.TheoryQuizBank,
+        "theory-quiz"), ITheoryQuizBankSource
+{
+    protected override string IdentifierOf(TheoryQuizBank value) => value.Id;
+
+    /// <summary>
+    /// Le schéma garantit cinq options identifiées a–e et une clé de une à quatre réponses ; la
+    /// lecture ne fait donc que projeter le manifeste, sans réinterpréter ses règles.
+    /// </summary>
+    protected override TheoryQuizBank Read(ContentCatalogItem item, JsonElement root) => new(
+        item.Id,
+        item.Version,
+        root.GetProperty("title").GetString()!,
+        root.GetProperty("summary").GetString()!,
+        root.GetProperty("order").GetInt32(),
+        Array.AsReadOnly(root.GetProperty("questions").EnumerateArray()
+            .Select(question => new TheoryQuizQuestion(
+                question.GetProperty("id").GetString()!,
+                question.GetProperty("topic").GetString()!,
+                question.GetProperty("prompt").GetString()!,
+                Array.AsReadOnly(question.GetProperty("options").EnumerateArray()
+                    .Select(option => new TheoryQuizOption(
+                        option.GetProperty("id").GetString()!,
+                        option.GetProperty("text").GetString()!))
+                    .ToArray()),
+                ReadStrings(question, "correctOptionIds"),
+                question.GetProperty("rationale").GetString()!))
+            .ToArray()));
 }
